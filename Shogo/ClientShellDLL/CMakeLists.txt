@@ -116,7 +116,7 @@ include_directories (ClientShellShared
 	../../Engine/libs/CryptMgr
 	../../Engine/libs/lith
 	../../Engine/libs/RegMgr
-	C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Include)
+	C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Include)
 target_link_libraries(ClientShellDLL
 	MFCStub
 	Lib_StdLith

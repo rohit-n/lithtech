@@ -97,7 +97,7 @@ set_property(TARGET LIB_D3DRender
 	PROPERTY COMPILE_DEFINITIONS_DEBUG D3D_DEBUG_INFO)
 	
 if(WIN32) # FIXME: find directx path
-	include_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Include")
+	include_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Include")
 endif(WIN32)
 
 if(MSVC)

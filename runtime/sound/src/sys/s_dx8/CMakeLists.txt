@@ -2,9 +2,9 @@ cmake_minimum_required (VERSION 2.8)
 project (DLL_dx8)
 
 if(CMAKE_CL_64)
-	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Lib\\x64")
+	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x64")
 else(CMAKE_CL_64)
-	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Lib\\x86")
+	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x86")
 endif(CMAKE_CL_64)
 
 add_library (DLL_dx8 SHARED

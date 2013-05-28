@@ -3,9 +3,9 @@ project (EXE_Lithtech)
 
 add_definitions(-DDE_LOCAL_SERVERBIND -DDE_CLIENT_COMPILE -DDSNDMGR_NO_MFC -DDIRECTENGINE_COMPILE -DMODEL_SUPPORT_ABC)
 if(CMAKE_CL_64)
-	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Lib\\x64")
+	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x64")
 else(CMAKE_CL_64)
-	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Lib\\x86")
+	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x86")
 endif(CMAKE_CL_64)
 	
 add_executable (EXE_Lithtech WIN32
@@ -218,9 +218,9 @@ endif(WIN32)
 
 if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 	include_directories(../../libs/Lib_DShow
-		"C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Include")
+		"C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Include")
 		#if(CMAKE_CL_64)
-		#	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (February 2006)\\Lib\\x64")
+		#	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x64")
 		#else(CMAKE_CL_64)
 			
 			# FIXME: Why is this not working??
