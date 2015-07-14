@@ -273,9 +273,10 @@ inline void trk_UpdatePositionInterpolant(LTAnimTracker *pTracker)
 		pCurFrame = pTracker->GetCurFrame();
 
 		// Calculate the percentage into the current keyframe.
+		// MW-TODO: Why do we need to clamp this here?!
 		pTracker->m_TimeRef.m_Percent = 
-			(float)(pTracker->m_TimeRef.m_Cur.m_Time - pPrevFrame->m_Time) / 
-			(pCurFrame->m_Time - pPrevFrame->m_Time);
+			Min( (float)(pTracker->m_TimeRef.m_Cur.m_Time - pPrevFrame->m_Time) / 
+			(pCurFrame->m_Time - pPrevFrame->m_Time), 1.0F );
 
 	}
 }
