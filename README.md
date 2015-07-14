@@ -42,3 +42,15 @@ Games I want to support and the order to work on them
 6. Blood II: The Chosen (if I can find a copy)
 
 These are all the Lithtech I am aware of that had a public source release. If there are more out there, I want to eventually support them too.
+
+Recent Developments
+===================
+Hai, MWisBest here.
+
+It turns out that the NOLF2 assets included with the "GPL" release are indeed different than the retail NOLF2 assets. This code is technically working OK in its current state, but only with those "GPL" assets; the problem is that the "GPL" assets aren't complete. They really only include the first part of the first level (world) of the game for the campaign. The old (retail) versions of the WORLD files do not work directly with this newer Lithtech engine build.
+
+There's a few options to maybe get the entirety of NOLF2 working with this code:
+
+1. Figure out the difference between formats and rework the engine to support both. (very unlikely)
+2. Locate an old version of Maya or 3ds Max (version 3 or 4 of either) to use the retail game's import plugin for, and then this release's export plugin, to "convert" them to the new format. (haven't been able to find an old Maya or 3ds Max so far)
+3. Recreate the levels from scratch. Really give the entire game a proper remake. (beyond *my* capabilities)
