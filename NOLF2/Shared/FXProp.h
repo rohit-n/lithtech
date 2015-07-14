@@ -12,6 +12,15 @@
 #ifndef __FXPROP_H__
 #define __FXPROP_H__
 
+
+// "warning C4482: nonstandard extension used: enum 'FX_PROP::eDataType' used in qualified name"
+// Annoying...
+#if defined(_MSC_VER) && _MSC_VER == 1600
+#pragma warning(push)
+#pragma warning(disable: 4482)
+#endif
+
+
 	struct FX_PROP
 	{
 		struct FX_CLRKEY
@@ -171,5 +180,11 @@
 			FX_CLRKEY						m_clrKey;
 		}									m_data;
 	};
+
+
+#if defined(_MSC_VER) && _MSC_VER == 1600
+#pragma warning(pop)
+#endif
+
 
 #endif // __FXPROP_H__
