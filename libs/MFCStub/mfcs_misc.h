@@ -21,7 +21,11 @@ inline void MFCStubTrace(const char *pFormat, ...)
 #ifdef _DEBUG
 #define TRACE MFCStubTrace
 #else
+#ifdef _MSC_VER
+#define TRACE __noop
+#else
 #define TRACE (void)0
+#endif
 #endif
 
 #define DEBUG_NEW new
