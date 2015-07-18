@@ -3,7 +3,10 @@ add_library(Lib_ZLib STATIC
 	compress.c
 	crc32.c
 	deflate.c
-	gzio.c
+	gzclose.c
+	gzlib.c
+	gzread.c
+	gzwrite.c
 	infback.c
 	inffast.c
 	inflate.c
