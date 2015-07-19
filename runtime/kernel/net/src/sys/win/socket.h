@@ -5,8 +5,10 @@
 #include <winsock.h>
 #endif //_WINSOCKAPI_
 
-const int EWOULDBLOCK = WSAEWOULDBLOCK;
-const int ECONNRESET = WSAECONNRESET;
+#define EWOULDBLOCK WSAEWOULDBLOCK
+#define ECONNRESET WSAECONNRESET
+//const int EWOULDBLOCK = WSAEWOULDBLOCK;
+//const int ECONNRESET = WSAECONNRESET;
 
 typedef int socklen_t;
 

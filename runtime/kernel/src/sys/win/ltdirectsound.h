@@ -2473,7 +2473,7 @@ void MSSBreakPoint();
 
 #else
 
-#define MSSBreakPoint() __asm {int 3}
+#define MSSBreakPoint() __debugbreak();
 
 #endif
 

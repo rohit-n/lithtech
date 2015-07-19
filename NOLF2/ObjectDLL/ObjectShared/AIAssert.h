@@ -42,7 +42,7 @@ extern CVarTrack g_vtMuteAIAssertsVar;
 	#define CALL_UBER_ASSERT( exp, description ) \
 		if( g_vtMuteAIAssertsVar.GetFloat() == 0.f ) { \
 			if( UberAssert( #exp, description, __LINE__, __FILE__ ) ) { \
-				_asm { int 3 } \
+				__debugbreak(); \
 		} }  
 
 #else	// ndef _DEBUG

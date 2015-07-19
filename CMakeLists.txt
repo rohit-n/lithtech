@@ -11,7 +11,7 @@ option(BUILD_SHOGO "Build Shogo game code" OFF)
 option(BUILD_TOOLS "Build tools" OFF)
 option(ENABLE_D3D "Enable Direct3D" ON)
 option(ENABLE_DIRECTX "Enable DirectX" ON)
-option(ENABLE_DIRECTSHOW "Enable DirectShow" ON)		
+option(ENABLE_DIRECTSHOW "Enable DirectShow" ON)
 option(USE_INTERNAL_ZLIB "Use bundled zlib" ON)			# eventually want default to be OFF
 option(USE_INTERNAL_FREETYPE "Use bundled freetype" ON)	# eventually want default to be OFF
 
@@ -22,20 +22,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/OUT")
 if(ENABLE_D3D)
 	add_definitions(-D__D3D -D__D3DREND)
 endif(ENABLE_D3D)
-
-if(USE_INTERNAL_ZLIB)
-	#set zlib vars
-	add_subdirectory(libs/zlib)
-else(USE_INTERNAL_ZLIB)
-	find_package(ZLIB)
-endif(USE_INTERNAL_ZLIB)
-
-# move to Lib_UI CMakeLists.txt?
-if(USE_INTERNAL_FREETYPE)	
-	#set freetype vars
-else(USE_INTERNAL_FREETYPE)
-	find_package(Freetype)
-endif(USE_INTERNAL_FREETYPE)
 
 if(WIN32)
 	add_definitions(-D_WINDOWS)
@@ -52,6 +38,22 @@ if(DEBUG)
 else(DEBUG)
 	add_definitions(-D_FINAL)
 endif(DEBUG)
+
+
+if(USE_INTERNAL_ZLIB)
+	#set zlib vars
+	add_subdirectory(libs/zlib)
+else(USE_INTERNAL_ZLIB)
+	find_package(ZLIB)
+endif(USE_INTERNAL_ZLIB)
+
+# move to Lib_UI CMakeLists.txt?
+if(USE_INTERNAL_FREETYPE)
+	#set freetype vars
+else(USE_INTERNAL_FREETYPE)
+	find_package(Freetype)
+endif(USE_INTERNAL_FREETYPE)
+
 
 add_subdirectory(libs/lith)						# Lib_Lith
 add_subdirectory(libs/stdlith)					# Lib_StdLith
