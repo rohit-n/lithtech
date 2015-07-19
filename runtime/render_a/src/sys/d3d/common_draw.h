@@ -78,9 +78,8 @@ void d3d_IncrementFrameCode(RenderContext *pContext);
 // MW-TODO: Move this somewhere else, or axe it entirely.
 inline void d3d_SetFPState()
 {
-#if defined(_MSC_VER) && defined(_M_IX86)
-	unsigned int curstate;
-	_controlfp_s(&curstate, _PC_24, _MCW_PC);
+#if defined(_MSC_VER)
+	_controlfp(_PC_24, _MCW_PC);
 #elif defined(_M_IX86)
 	short control;
 
