@@ -1,9 +1,9 @@
 #ifndef __AABB_TREE_H__
 #define __AABB_TREE_H__
 
-#ifndef __AABB_H__
+//#ifndef __AABB_H__
 #include "aabb.h"
-#endif
+//#endif
 
 
 //---------------------------------------------------------------------------//
