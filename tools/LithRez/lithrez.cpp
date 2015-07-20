@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
@@ -9,8 +8,8 @@
 #include <sys\stat.h>
 #include <sys\types.h>
 #include <fcntl.h>
+#include <ctype.h>
 #include "rezutils.h"
-#include "tdguard.h"
 
 #define kMaxStr 2048
 
@@ -64,12 +63,6 @@ void DisplayHelp() {
 //---------------------------------------------------------------------------------------------------
 // The main program
 int main ( int argc, char *argv[ ], char *envp[ ]) {
-
-	if (!TdGuard::Aegis::GetSingleton().Init() ||
-		!TdGuard::Aegis::GetSingleton().DoWork())
-	{
-		return 1;
-	}
 
   // if not enough input parameters
   if (argc < 3){

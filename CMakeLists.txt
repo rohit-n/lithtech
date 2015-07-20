@@ -116,5 +116,6 @@ if(BUILD_TRON)
 endif(BUILD_TRON)
 
 if(BUILD_TOOLS)
-	add_subdirectory(tools/DtxView)			# EXE_DtxView
+	add_subdirectory(tools/DtxView)			# TOOLS_DtxView
+	add_subdirectory(tools/LithRez)			# TOOLS_LithRez
 endif(BUILD_TOOLS)
