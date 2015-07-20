@@ -1,7 +1,8 @@
-cmake_minimum_required (VERSION 2.8)
-project (NOLF2_ServerRes)
-add_library (NOLF2_ServerRes SHARED 
+project(NOLF2_ServerRes)
+
+add_library(${PROJECT_NAME} SHARED
 	main.cpp
 	ServerRes.rc)
-set_target_properties(NOLF2_ServerRes 
+
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME SRes)

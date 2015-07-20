@@ -1,5 +1,6 @@
-cmake_minimum_required (VERSION 2.8)
-project (RegMgr)
-add_library (RegMgr STATIC 
+project(LIB_RegMgr)
+
+add_library(${PROJECT_NAME} STATIC
 	regmgr.cpp)
-include_directories (../lith) 
+
+include_directories(../lith)

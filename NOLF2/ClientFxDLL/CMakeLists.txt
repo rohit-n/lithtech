@@ -1,7 +1,7 @@
 # FIXME: Looks like the code in Engine/clientfx is newer
-cmake_minimum_required (VERSION 2.8)
-project (NOLF2_ClientFXDLL)
-add_library (NOLF2_ClientFXDLL SHARED
+project(NOLF2_ClientFXDLL)
+
+add_library(${PROJECT_NAME} SHARED
 	BaseFX.cpp
 	bouncychunkfx.cpp
 	camjitterfx.cpp
@@ -27,18 +27,18 @@ add_library (NOLF2_ClientFXDLL SHARED
 	spritefx.cpp
 	spritesystemfx.cpp
 	stdafx.cpp)
-set_target_properties(NOLF2_ClientFXDLL
+
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME ClientFx
 	SUFFIX .fxd)
-add_definitions (-DNOPS2 -DMEMTRACK_CLIENTFX)
-include_directories (../Shared 
+
+add_definitions(-DNOPS2 -DMEMTRACK_CLIENTFX)
+
+include_directories(../Shared
 	../../sdk/inc
 	../../libs/MFCStub
 	../../libs/stdlith)
-	
-if(MSVC)
-	set_target_properties(NOLF2_ClientFXDLL PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)
+
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(NOLF2_ClientFXDLL PROPERTIES COMPILE_FLAGS "-fpermissive")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
 endif(CMAKE_COMPILER_IS_GNUCXX)

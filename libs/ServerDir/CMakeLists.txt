@@ -1,14 +1,12 @@
-cmake_minimum_required (VERSION 2.8)
-project (ServerDir)
+project(ServerDir)
 
-add_library (ServerDir SHARED
+add_library(${PROJECT_NAME} SHARED
 	CServerDir_Titan.cpp
 	stdafx.cpp)
-include_directories (../../sdk/inc
+
+include_directories(../../sdk/inc
 	../WONAPI
 	../../NOLF2/ClientRes/Shared)
-target_link_libraries(ServerDir
-	WONAPI)
-if(MSVC)
-	set_target_properties(ServerDir PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)
+
+target_link_libraries(${PROJECT_NAME}
+	LIB_WONAPI)

@@ -1,16 +1,14 @@
-cmake_minimum_required (VERSION 2.8)
-project (Lib_RezMgr)
-add_library (Lib_RezMgr STATIC 
+project(LIB_RezMgr)
+
+add_library(${PROJECT_NAME} STATIC
 	rezfile.cpp
 	rezhash.cpp
 	rezmgr.cpp
 	rezutils.cpp)
-include_directories (../../sdk/inc
+
+include_directories(../../sdk/inc
 	../lith)
-	
-if(MSVC)
-	set_target_properties(Lib_RezMgr PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)
+
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(Lib_RezMgr PROPERTIES COMPILE_FLAGS "-fpermissive")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
 endif(CMAKE_COMPILER_IS_GNUCXX)

@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 2.8)
-project (LTGUIMgr)
+project(LIB_LTGUIMgr)
 
-add_library (LTGUIMgr STATIC
+add_library(${PROJECT_NAME} STATIC
 	ltguibutton.cpp
 	ltguicolumnctrl.cpp
 	ltguicommandhandler.cpp
@@ -15,5 +14,7 @@ add_library (LTGUIMgr STATIC
 	ltguitextitemctrl.cpp
 	ltguitoggle.cpp
 	ltguiwindow.cpp)
-add_definitions (-D_LITHTECH2 -DLT15_COMPAT)
-include_directories (../../sdk/inc)
+
+add_definitions(-D_LITHTECH2 -DLT15_COMPAT)
+
+include_directories(../../sdk/inc)

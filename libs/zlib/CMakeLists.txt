@@ -1,4 +1,6 @@
-add_library(Lib_ZLib STATIC
+project(LIB_ZLib)
+
+add_library(${PROJECT_NAME} STATIC
 	adler32.c
 	compress.c
 	crc32.c

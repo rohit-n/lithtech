@@ -1,5 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
-project (EXE_Lithtech)
+project(EXE_Lithtech)
 
 add_definitions(-DDE_LOCAL_SERVERBIND -DDE_CLIENT_COMPILE -DDSNDMGR_NO_MFC -DDIRECTENGINE_COMPILE -DMODEL_SUPPORT_ABC)
 if(CMAKE_CL_64)
@@ -7,8 +6,8 @@ if(CMAKE_CL_64)
 else(CMAKE_CL_64)
 	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x86")
 endif(CMAKE_CL_64)
-	
-add_executable (EXE_Lithtech WIN32
+
+add_executable(${PROJECT_NAME} WIN32
 	../controlfilemgr/controlfilemgr.cpp
 	src/client_filemgr.cpp
 	../kernel/src/icommandlineargs.cpp
@@ -184,9 +183,10 @@ add_executable (EXE_Lithtech WIN32
 	src/sys/win/winclientde_impl.cpp
 	src/sys/win/winconsole_impl.cpp
 	../world/src/world_tree.cpp)
-set_target_properties(EXE_Lithtech
+
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME Lithtech)
-	
+
 include_directories(src
 	../../sdk/inc
 	../../sdk/inc/physics
@@ -217,7 +217,7 @@ if(WIN32)
 endif(WIN32)
 
 if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
-	include_directories(../../libs/Lib_DShow
+	include_directories(../../libs/dshow
 		"C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Include")
 		#if(CMAKE_CL_64)
 		#	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x64")
@@ -227,7 +227,7 @@ if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 			
 		
 		#endif(CMAKE_CL_64)
-		target_link_libraries(EXE_Lithtech
+		target_link_libraries(${PROJECT_NAME}
 			ddraw
 			d3dx9
 			d3d9
@@ -238,29 +238,25 @@ if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 			strmiids)
 endif(ENABLE_DIRECTX)
 
-target_link_libraries(EXE_Lithtech
-	Lib_Lith
-	Lib_StdLith
-	Lib_ZLib
-	Lib_DShow
-	ltmem
-	Lib_RezMgr
-	Lib_Info
+target_link_libraries(${PROJECT_NAME}
+	LIB_Lith
+	LIB_StdLith
+	LIB_ZLib
+	LIB_DShow
+	LIB_LTMem
+	LIB_RezMgr
+	LIB_Info
 	LIB_D3DRender
-	Lib_ILTSound
-	Lib_UI)
-	
+	LIB_ILTSound
+	LIB_UI)
+
 if(WIN32)
 	include_directories(../kernel/src/sys/win
 		../shared/src/sys/win)
-	target_link_libraries(EXE_Lithtech
+	target_link_libraries(${PROJECT_NAME}
 		winmm)
 endif(WIN32)
 
 if(ENABLE_D3D)
 	include_directories(../render_a/src/sys/d3d)
 endif(ENABLE_D3D)
-
-if(MSVC)
-	set_target_properties(EXE_Lithtech PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)

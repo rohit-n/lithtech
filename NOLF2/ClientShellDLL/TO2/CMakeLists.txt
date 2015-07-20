@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 2.8)
-project (NOLF2_ClientShellDLL)
+project(NOLF2_ClientShellDLL)
 
-add_library (NOLF2_ClientShellDLL SHARED
+add_library(${PROJECT_NAME} SHARED
 	../ClientShellShared/ActivateObjectFX.cpp
 	../../Shared/ActivateTypeMgr.cpp
 	../../Shared/Animator.cpp
@@ -74,7 +73,7 @@ add_library (NOLF2_ClientShellDLL SHARED
 	../ClientShellShared/HUDDamage.cpp
 	../ClientShellShared/HUDDecision.cpp
 	../ClientShellShared/HUDDisplayMeter.cpp
-	../ClientShellShared/HUDDistance.cpp	
+	../ClientShellShared/HUDDistance.cpp
 	../ClientShellShared/HUDMessage.cpp
 	../ClientShellShared/HUDMessageQueue.cpp
 	../ClientShellShared/HUDMeter.cpp
@@ -280,34 +279,34 @@ add_library (NOLF2_ClientShellDLL SHARED
 	TO2PlayerStats.cpp
 	TO2ScreenMgr.cpp
 	../../Shared/TO2/TO2VersionMgr.cpp)
-set_target_properties(NOLF2_ClientShellDLL 
+
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME CShell)
-add_definitions (-D_CLIENTBUILD -DNOPS2 -DMEMTRACK_CLIENT)
-include_directories (../ClientShellShared
+
+add_definitions(-D_CLIENTBUILD -DNOPS2 -DMEMTRACK_CLIENT)
+
+include_directories(../ClientShellShared
 	../../Shared 
 	../../Shared/TO2
 	../../../sdk/inc
 	../../../libs/MFCStub
 	../../../libs/stdlith
-	../../../libs/ButeMgr
-	../../../libs/CryptMgr
+	../../../libs/butemgr
+	../../../libs/cryptmgr
 	../../../libs/lith
-	../../../libs/RegMgr
+	../../../libs/regmgr
 	../../../libs/LTGUIMgr
 	../../../libs/ServerDir
 	../../ClientRes/Shared
 	../../ClientRes/TO2)
-target_link_libraries(NOLF2_ClientShellDLL
-	MFCStub
-	Lib_StdLith
-	ButeMgr
-	CryptMgr
-	Lib_Lith
-	RegMgr
-	LTGUIMgr
+
+target_link_libraries(${PROJECT_NAME}
+	LIB_MFCStub
+	LIB_StdLith
+	LIB_ButeMgr
+	LIB_CryptMgr
+	LIB_Lith
+	LIB_RegMgr
+	LIB_LTGUIMgr
 	ServerDir
 	winmm)
-	
-if(MSVC)
-	set_target_properties(NOLF2_ClientShellDLL PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)

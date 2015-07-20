@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 2.8)
-project (NOLF2_ObjectDLL)
+project(NOLF2_ObjectDLL)
 
-add_library (NOLF2_ObjectDLL SHARED
+add_library(${PROJECT_NAME} SHARED
 	../../Shared/ActivateTypeMgr.cpp
 	../ObjectShared/ActiveWorldModel.cpp
 	../ObjectShared/AI.cpp
@@ -332,31 +331,31 @@ add_library (NOLF2_ObjectDLL SHARED
 	TO2GameServerShell.cpp
 	../../Shared/TO2/TO2MissionButeMgr.cpp
 	../../Shared/TO2/TO2VersionMgr.cpp)
-set_target_properties(NOLF2_ObjectDLL 
+
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME Object
-			   SUFFIX .lto)
-add_definitions (-DNOPS2 -D_SERVERBUILD -DMEMTRACK_SERVER -D_NO_AI_ASSERT)
-include_directories (../ObjectShared
+	SUFFIX .lto)
+
+add_definitions(-DNOPS2 -D_SERVERBUILD -DMEMTRACK_SERVER -D_NO_AI_ASSERT)
+
+include_directories(../ObjectShared
 	../../../sdk/inc
 	../../../libs/MFCStub
 	../../../libs/stdlith
-	../../../libs/ButeMgr
-	../../../libs/CryptMgr
+	../../../libs/butemgr
+	../../../libs/cryptmgr
 	../../../libs/lith
-	../../../libs/RegMgr
+	../../../libs/regmgr
 	../../../libs/ServerDir
 	../../Shared
 	../../Shared/TO2)
-target_link_libraries(NOLF2_ObjectDLL
-	ltmem
-	ButeMgr
-	CryptMgr
-	Lib_Lith
-	MFCStub
-	RegMgr
-	Lib_StdLith
+
+target_link_libraries(${PROJECT_NAME}
+	LIB_LTMem
+	LIB_ButeMgr
+	LIB_CryptMgr
+	LIB_Lith
+	LIB_MFCStub
+	LIB_RegMgr
+	LIB_StdLith
 	ServerDir)
-	
-if(MSVC)
-	set_target_properties(NOLF2_ObjectDLL PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)

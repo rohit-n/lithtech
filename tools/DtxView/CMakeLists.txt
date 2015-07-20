@@ -1,10 +1,9 @@
-cmake_minimum_required(VERSION 2.8)
-project(EXE_DtxView)
+project(TOOLS_DtxView)
 
 add_definitions(-DDIRECTEDITOR_BUILD -DSTDLITH_MFC -DBDEFS_MFC -DPRE_FLOAT -DPREPROCESSOR_BUILD -DNO_PRAGMA_LIBS -DLT15_COMPAT -D_AFXDLL -D_WIN32_WINNT=0x500)
 link_directories("${CMAKE_CURRENT_SOURCE_DIR}/../shared/world/")
 
-add_executable(EXE_DtxView WIN32
+add_executable(${PROJECT_NAME} WIN32
 	AboutDlg.cpp
 	../shared/engine/bdefs.cpp
 	../shared/engine/dtxmgr.cpp
@@ -19,7 +18,7 @@ add_executable(EXE_DtxView WIN32
 	../shared/engine/streamsim.cpp
 	TextureProp.cpp)
 
-set_target_properties(EXE_DtxView
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME DtxView)
 
 include_directories(../shared/engine
@@ -29,10 +28,10 @@ include_directories(../shared/engine
 	../shared/world
 	../dedit/misc)
 
-target_link_libraries(EXE_DtxView
-	Lib_StdLith
+target_link_libraries(${PROJECT_NAME}
+	LIB_StdLith
 	s3tc)
 
 if(MSVC)
-	set_target_properties(EXE_DtxView PROPERTIES LINK_FLAGS "/SAFESEH:NO /NODEFAULTLIB:libc.lib")	# needed for s3tc.lib :/
+	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/SAFESEH:NO /NODEFAULTLIB:libc.lib")	# needed for s3tc.lib :/
 endif(MSVC)

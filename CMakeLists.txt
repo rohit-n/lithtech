@@ -1,5 +1,5 @@
-cmake_minimum_required (VERSION 2.8)
-project (Lithtech)
+cmake_minimum_required(VERSION 2.8)
+project(Lithtech)
 
 option(BUILD_ENGINE "Build engine" ON)
 option(BUILD_NOLF2 "Build No One Lives Forever 2 game code" ON)
@@ -30,7 +30,7 @@ else(WIN32)
 endif(WIN32)
 
 if(MSVC)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
 endif(MSVC)
 
 if(DEBUG)
@@ -42,7 +42,7 @@ endif(DEBUG)
 
 if(USE_INTERNAL_ZLIB)
 	#set zlib vars
-	add_subdirectory(libs/zlib)
+	add_subdirectory(libs/zlib)							# LIB_ZLib
 else(USE_INTERNAL_ZLIB)
 	find_package(ZLIB)
 endif(USE_INTERNAL_ZLIB)
@@ -55,59 +55,60 @@ else(USE_INTERNAL_FREETYPE)
 endif(USE_INTERNAL_FREETYPE)
 
 
-add_subdirectory(libs/lith)						# Lib_Lith
-add_subdirectory(libs/stdlith)					# Lib_StdLith
-add_subdirectory(libs/ltmem)					# ltmem
-add_subdirectory(libs/rezmgr)					# Lib_RezMgr
+add_subdirectory(libs/lith)								# LIB_Lith
+add_subdirectory(libs/stdlith)							# LIB_StdLith
+add_subdirectory(libs/ltmem)							# LIB_LTMem
+add_subdirectory(libs/rezmgr)							# LIB_RezMgr
 
 if(BUILD_ENGINE)
-	add_subdirectory(runtime/ui)				# Lib_UI
-	add_subdirectory(runtime/info)				# Lib_Info
-	add_subdirectory(runtime/sound)				# Lib_ILTSound
-	add_subdirectory(runtime/server)			# DLL_Server 
-	add_subdirectory(runtime/client)			# EXE_Lithtech
+	add_subdirectory(runtime/ui)						# LIB_UI
+	add_subdirectory(runtime/info)						# LIB_Info
+	add_subdirectory(runtime/sound)						# LIB_ILTSound
+	add_subdirectory(runtime/server)					# DLL_Server 
+	add_subdirectory(runtime/client)					# EXE_Lithtech
+
 	if(ENABLE_D3D)
-		add_subdirectory(runtime/render_a/src/sys/d3d)
+		add_subdirectory(runtime/render_a/src/sys/d3d)	# LIB_D3DRender
 	endif(ENABLE_D3D)
 
 	if(ENABLE_DIRECTX)
-		add_subdirectory(runtime/sound/src/sys/s_dx8)
+		add_subdirectory(runtime/sound/src/sys/s_dx8)	# DLL_SndDrvDX8
 	endif(ENABLE_DIRECTX)
 
 	if(ENABLE_DIRECTSHOW)
-		add_subdirectory(libs/Lib_DShow)
+		add_subdirectory(libs/dshow)					# LIB_DShow
 	endif(ENABLE_DIRECTSHOW)
 
 	if(WIN32)
-		add_subdirectory(runtime/winbuild/ltmsg)
+		add_subdirectory(runtime/winbuild/ltmsg)		# DLL_LTMsg
 	endif(WIN32)
 endif(BUILD_ENGINE)
 
 if(BUILD_NOLF2)
-	add_subdirectory(libs/MFCStub)
-	add_subdirectory(libs/ButeMgr)
-	add_subdirectory(libs/CryptMgr)
-	add_subdirectory(libs/RegMgr)
-	add_subdirectory(libs/LTGUIMgr)
-	add_subdirectory(libs/ServerDir)
-	add_subdirectory(libs/WONAPI)
-	add_subdirectory(NOLF2/ClientFxDLL)			# ClientFXDLL
-	add_subdirectory(NOLF2/ClientRes/TO2)		# ClientRes
-	add_subdirectory(NOLF2/ClientShellDLL/TO2)	# ClientShellDLL
-	add_subdirectory(NOLF2/ObjectDLL/TO2)		# ObjectDLL
-	add_subdirectory(NOLF2/ServerRes/TO2)		# ServerRes
+	add_subdirectory(libs/MFCStub)						# LIB_MFCStub
+	add_subdirectory(libs/butemgr)						# LIB_ButeMgr
+	add_subdirectory(libs/cryptmgr)						# LIB_CryptMgr
+	add_subdirectory(libs/regmgr)						# LIB_RegMgr
+	add_subdirectory(libs/LTGUIMgr)						# LIB_LTGUIMgr
+	add_subdirectory(libs/ServerDir)					# ServerDir
+	add_subdirectory(libs/WONAPI)						# LIB_WONAPI
+	add_subdirectory(NOLF2/ClientFxDLL)					# ClientFXDLL
+	add_subdirectory(NOLF2/ClientRes/TO2)				# ClientRes
+	add_subdirectory(NOLF2/ClientShellDLL/TO2)			# ClientShellDLL
+	add_subdirectory(NOLF2/ObjectDLL/TO2)				# ObjectDLL
+	add_subdirectory(NOLF2/ServerRes/TO2)				# ServerRes
 endif(BUILD_NOLF2)
 
 if(BUILD_TRON)
 	if(NOT BUILD_NOLF2)
 		add_subdirectory(libs/MFCStub)
-		add_subdirectory(libs/ButeMgr)
-		add_subdirectory(libs/CryptMgr)
-		add_subdirectory(libs/RegMgr)
+		add_subdirectory(libs/butemgr)
+		add_subdirectory(libs/cryptmgr)
+		add_subdirectory(libs/regmgr)
 		add_subdirectory(libs/LTGUIMgr)
 		add_subdirectory(libs/ServerDir)
 		add_subdirectory(libs/WONAPI)
-		add_subdirectory(NOLF2/ClientFxDLL)			# ClientFXDLL
+		add_subdirectory(NOLF2/ClientFxDLL)		# ClientFXDLL
 	endif(NOT BUILD_NOLF2)
 	add_subdirectory(NOLF2/ClientRes/TRON)		# ClientRes
 	add_subdirectory(NOLF2/ClientShellDLL/TRON)	# ClientShellDLL

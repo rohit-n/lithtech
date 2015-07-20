@@ -1,5 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
-project (DLL_Server)
+project(DLL_Server)
 
 add_definitions(-DDE_SERVER_COMPILE -DDIRECTENGINE_COMPILE -DSTDLITH_ALLOC_OVERRIDE -DLT15_COMPAT -DNO_PRAGMA_LIBS)
 
@@ -99,7 +98,7 @@ set(libsources
 	../world/src/world_tree.cpp)
 
 if(WIN32)
-	SET(libsources ${libsources}
+	set(libsources ${libsources}
 		../kernel/src/sys/win/counter.cpp
 		../kernel/io/src/sys/win/de_file.cpp
 		../kernel/mem/src/sys/win/de_memory.cpp
@@ -111,7 +110,7 @@ if(WIN32)
 		../kernel/src/sys/win/systeminfo.cpp
 		../kernel/src/sys/win/timemgr.cpp)
 else(WIN32)
-	SET(libsources ${libsources}
+	set(libsources ${libsources}
 		../kernel/src/sys/linux/counter.cpp
 		../kernel/io/src/sys/linux/linuxfile.cpp
 		../kernel/mem/src/sys/linux/de_memory.cpp
@@ -146,7 +145,7 @@ include_directories(src
 	../render_b/src
 	../ui/src
 	../controlfilemgr)
-	
+
 if(NOT MSVC)	# FIXME: this is a hack for geomroutines.h:309
 	include_directories(../../tools/PreProcessor)
 endif(NOT MSVC)
@@ -163,28 +162,25 @@ endif(ENABLE_D3D)
 if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 	include_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Include")
 endif(ENABLE_DIRECTX)
-	
-add_library (DLL_Server SHARED ${libsources})
 
-set_target_properties(DLL_Server
+add_library(${PROJECT_NAME} SHARED ${libsources})
+
+set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME Server)
-target_link_libraries(DLL_Server
-	Lib_RezMgr
-	Lib_Info
-	Lib_Lith
-	Lib_StdLith
-	ltmem)
-	
+
+target_link_libraries(${PROJECT_NAME}
+	LIB_RezMgr
+	LIB_Info
+	LIB_Lith
+	LIB_StdLith
+	LIB_LTMem)
+
 if(WIN32)
-	target_link_libraries(DLL_Server 
+	target_link_libraries(${PROJECT_NAME}
 		winmm
 		ws2_32)
 endif(WIN32)
 
-if(MSVC)
-	set_target_properties(DLL_Server PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)
-
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(DLL_Server PROPERTIES COMPILE_FLAGS "-fpermissive")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
 endif(CMAKE_COMPILER_IS_GNUCXX)

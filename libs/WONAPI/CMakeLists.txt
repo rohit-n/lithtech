@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 2.8)
-project (WONAPI)
+project(LIB_WONAPI)
 
-add_library (WONAPI STATIC
+add_library(${PROJECT_NAME} STATIC
 	WONAuth/Auth.cpp
 	WONCommon/Common.cpp
 	WONCrypt/Crypt.cpp
@@ -15,8 +14,10 @@ add_library (WONAPI STATIC
 	WONSocket/Socket.cpp
 	WONAPI.cpp
 	WONStatus.cpp)
-add_definitions (-D__WON_MASTER_CPP_BUILD__)
-include_directories (.
+
+add_definitions(-D__WON_MASTER_CPP_BUILD__)
+
+include_directories(.
 	WONAuth
 	WONCommon
 	WONConfig
@@ -28,6 +29,3 @@ include_directories (.
 	WONServer
 	WONSocket
 	WONUpdate)
-if(MSVC)
-	set_target_properties(WONAPI PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)

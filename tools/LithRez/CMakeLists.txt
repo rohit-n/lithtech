@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 2.8)
 project(TOOLS_LithRez)
 
 add_definitions(-D_CONSOLE -DREZMGRFULL)
@@ -13,8 +12,8 @@ include_directories(../../libs/lith
 	../../libs/rezmgr)
 
 target_link_libraries(${PROJECT_NAME}
-	Lib_Lith
-	Lib_RezMgr)
+	LIB_Lith
+	LIB_RezMgr)
 
 if(MSVC)
 	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")	# Need Console subsystem for console apps

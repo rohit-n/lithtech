@@ -1,5 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
-project (Lib_UI)
+project(LIB_UI)
 
 set(libsources
 	src/cuibase.cpp
@@ -42,14 +41,14 @@ set(libsources
 	src/cuiwidgetmanager.cpp
 	src/cuiwindow.cpp
 	src/cuiwindow_impl.cpp)
-	
+
 if(ENABLE_D3D)
 	set(libsources ${libsources}
 		src/sys/d3d/cuidebug.cpp)
 	include_directories(sys/d3d)
 endif(ENABLE_D3D)
 
-include_directories (src
+include_directories(src
 	../../sdk/inc
 	../../libs/stdlith
 	../shared/src
@@ -58,8 +57,8 @@ include_directories (src
 	../kernel/mem/src
 	../kernel/src/sys/win)
 
-add_library(Lib_UI STATIC ${libsources})
+add_library(${PROJECT_NAME} STATIC ${libsources})
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(Lib_UI PROPERTIES COMPILE_FLAGS "-fpermissive")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
 endif(CMAKE_COMPILER_IS_GNUCXX)

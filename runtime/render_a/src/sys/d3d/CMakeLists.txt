@@ -1,4 +1,6 @@
-add_library(LIB_D3DRender STATIC
+project(LIB_D3DRender)
+
+add_library(${PROJECT_NAME} STATIC
 	../shadows/d3dshadowtexture.cpp
 	3d_ops.cpp
 	aabb.cpp
@@ -79,7 +81,8 @@ add_library(LIB_D3DRender STATIC
 	texturescriptmgr.cpp
 	texturescriptvarmgr.cpp
 	VertexBufferController.cpp)
-include_directories (.
+
+include_directories(.
 	../../../../../sdk/inc
 	../../../../../sdk/inc/physics
 	../../../../../libs/stdlith
@@ -93,13 +96,10 @@ include_directories (.
 	../../../../world/src
 	../../../../model/src
 	../../../../lithtemplate)
-set_property(TARGET LIB_D3DRender
+
+set_property(TARGET ${PROJECT_NAME}
 	PROPERTY COMPILE_DEFINITIONS_DEBUG D3D_DEBUG_INFO)
-	
+
 if(WIN32) # FIXME: find directx path
 	include_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Include")
 endif(WIN32)
-
-if(MSVC)
-	set_target_properties(LIB_D3DRender PROPERTIES COMPILE_FLAGS "/wd4996")
-endif(MSVC)
