@@ -19,10 +19,6 @@
 #include <ltassert.h>
 #include <dsys.h>
 
-#ifndef _assert
-#define _assert assert
-#endif
-
 //	-------------------------------------------------------------------------
 bool COutputRedir::OpenLogFile(ECOutput_ReDir logfile, const char* pFilename)
 {
@@ -85,12 +81,7 @@ void COutputRedir::OutputToASSERT()
 	//assert
 	//(void)( (0) || (_assert(m_pPrintBuffer, __FILE__, __LINE__), 0) );
 
-#ifdef _WIN32
-	_assert(m_pPrintBuffer, __FILE__, __LINE__);
-#else
 	ASSERT(!m_pPrintBuffer);
-#endif
-
 }
 
 
