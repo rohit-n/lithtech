@@ -53,7 +53,7 @@ AsyncSocket::~AsyncSocket()
 ///////////////////////////////////////////////////////////////////////////////
 int AsyncSocket::TimeLeft(DWORD theTotalTime, DWORD theStartTime)
 {
-	int deltaTime = GetTickCount() - theStartTime;
+	DWORD deltaTime = GetTickCount() - theStartTime;
 	if(deltaTime >= theTotalTime)
 		return 0;
 	else

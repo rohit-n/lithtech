@@ -177,7 +177,7 @@ bool CDKey::Init(const string& theKey)
 
 	// remove skip chars such as dashes
 	string aKey;
-	int aPos = 0;
+	unsigned int aPos = 0;
 	while(aPos < theKey.length()) 
 	{
 		unsigned char aChar = theKey[aPos];
@@ -198,7 +198,7 @@ bool CDKey::Init(const string& theKey)
 	memset(aBuf,0,8);
 	
 	int anOffset = 0;
-	for (int i=0; i < STRINGKEY_LEN; i++)
+	for (unsigned int i=0; i < STRINGKEY_LEN; i++)
 	{
 		bool aTst = true;
 		switch (STRINGKEY_MAP[i])
@@ -330,7 +330,7 @@ string CDKey::GetString() const
 	int anOffset = 0;
 	string aKey = "";
 
-	for (int i=0; i < STRINGKEY_LEN;)
+	for (unsigned int i=0; i < STRINGKEY_LEN;)
 	{
 		switch (STRINGKEY_MAP[i])
 		{
@@ -387,7 +387,7 @@ void CDKey::GetSymmetricKey(Blowfish &theSymKey, bool useNewMethod) const
 	aBuf.append(reinterpret_cast<unsigned char*>(&aCheckSum), sizeof(aCheckSum));
 
 	// CRC each of 1st 3 chars of product and add them to key.
-	for (int i=0; (i < 3) && (i < mProduct.size()); i++)
+	for (unsigned int i=0; (i < 3) && (i < mProduct.size()); i++)
 	{
 		char aChar = mProduct[i];
 		aCRC.Put(&aChar,1);

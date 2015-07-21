@@ -215,14 +215,14 @@ void CAIGoalMgr::Load(ILTMessage_Read *pMsg)
 	// Load queued goals.
 
 	LOAD_DWORD( cGoals );
-	for(int iGoal=0; iGoal < cGoals; ++iGoal )
+	for(uint32 iGoal=0; iGoal < cGoals; ++iGoal )
 	{
 		LOAD_DWORD_CAST( eGoalType, EnumAIGoalType);
 		m_lstQueuedGoals.push_back( eGoalType );
 	}
 
 	HSTRING hstrQueuedGoalArgs;
-	for(int iGoal=0; iGoal < cGoals; ++iGoal )
+	for(uint32 iGoal=0; iGoal < cGoals; ++iGoal )
 	{
 		LOAD_HSTRING( hstrQueuedGoalArgs );
 		m_lstQueuedGoalArgs.push_back( hstrQueuedGoalArgs );
@@ -231,13 +231,13 @@ void CAIGoalMgr::Load(ILTMessage_Read *pMsg)
 	// Load queued goal prefix commands.
 
 	LOAD_DWORD( cGoals );
-	for(int iGoal=0; iGoal < cGoals; ++iGoal )
+	for(uint32 iGoal=0; iGoal < cGoals; ++iGoal )
 	{
 		LOAD_DWORD_CAST( eGoalType, EnumAIGoalType);
 		m_lstQueuedPrefixCmdGoals.push_back( eGoalType );
 	}
 
-	for(int iGoal=0; iGoal < cGoals; ++iGoal )
+	for(uint32 iGoal=0; iGoal < cGoals; ++iGoal )
 	{
 		LOAD_HSTRING( hstrQueuedGoalArgs );
 		m_lstQueuedPrefixCmdGoalArgs.push_back( hstrQueuedGoalArgs );

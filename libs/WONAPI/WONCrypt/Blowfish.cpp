@@ -215,7 +215,7 @@ ByteBufferPtr Blowfish::Encrypt(const void *inOrig, int inLen) const
 	unsigned char *out = new unsigned char[outLen];
 
 	// Calc first 8 Bytes (includes length of encrypted block)
-	int j;
+	unsigned int j;
 	int littleEndianInLen = LongToLittleEndian(inLen);
 	for(j=0; j<4; j++)
 		XOR_MASK[j] ^= ((unsigned char*)&littleEndianInLen)[j];
@@ -273,7 +273,7 @@ ByteBufferPtr Blowfish::Decrypt(const void *inOrig, int inLen) const
 
 	// Decrypt first 8 bytes (first four bytes indicates size of encrypted data)
 	decryptBlock(in, aBuf);
-	int j;
+	unsigned int j;
 	for(j=0; j<XOR_MASK.length(); j++)
 	{
 		aBuf[j]^=XOR_MASK[j];

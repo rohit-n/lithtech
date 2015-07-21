@@ -1515,11 +1515,11 @@ void BigInteger::fromString(const std::string& theString)
 
 	st_zero(*this);
 
-	int aPos = 0;
+	unsigned int aPos = 0;
 	while(aPos<theString.length() && isspace(theString[aPos]))
 		aPos++;
 
-	int lastPos = aPos;
+	unsigned int lastPos = aPos;
 	while(lastPos<theString.length() && isdigit(theString[lastPos]))
 		lastPos++;
 

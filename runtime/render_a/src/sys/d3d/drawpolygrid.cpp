@@ -1369,7 +1369,7 @@ void d3d_DrawPolyGrid(const ViewParams &Params, LTObject *pObj)
 						UINT nPasses = 0;
 						pD3DEffect->Begin(&nPasses, 0);
 
-						for(int i = 0; i < nPasses; ++i)
+						for(UINT i = 0; i < nPasses; ++i)
 						{
 							pD3DEffect->BeginPass(i);
 							D3D_CALL(PD3DDEVICE->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST,0,nNumVerts,nPoliesThisFrame,&pGrid->m_Indices[nCurrentVertPosition],D3DFMT_INDEX16,g_TriVertList, nVertexSize));
@@ -1404,7 +1404,7 @@ void d3d_DrawPolyGrid(const ViewParams &Params, LTObject *pObj)
 					UINT nPasses = 0;
 					pD3DEffect->Begin(&nPasses, 0);
 					
-					for(int i = 0; i < nPasses; ++i)
+					for(UINT i = 0; i < nPasses; ++i)
 					{
 						pD3DEffect->BeginPass(i);
 						D3D_CALL(PD3DDEVICE->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST,0,nNumVerts,(pGrid->m_nIndices)/3,pGrid->m_Indices,D3DFMT_INDEX16,g_TriVertList, nVertexSize));
