@@ -683,7 +683,7 @@ uint16 CBaseScreen::NextSelection()
 {
 	uint16 select = m_nSelection;
 	if (select == kNoSelection)
-		select = m_controlArray.size()-1;
+		select = (uint16)(m_controlArray.size()-1);
 	uint16 oldSelect = select;
 	
 	CLTGUICtrl* pCtrl = LTNULL;	
@@ -719,7 +719,7 @@ uint16 CBaseScreen::PreviousSelection()
 	{
 		if (select == 0)
 		{
-			select = m_controlArray.size()-1;
+			select = (uint16)(m_controlArray.size()-1);
 		}
 		else
 			select--;
@@ -953,7 +953,7 @@ uint16 CBaseScreen::SetSelection(uint16 select, LTBOOL bFindSelectable)
 	if (select >= 0)
 	{
 		if (select >= m_controlArray.size())
-			select = m_controlArray.size()-1;
+			select = (uint16)(m_controlArray.size()-1);
 	}
 
 
@@ -1036,7 +1036,7 @@ LTBOOL CBaseScreen::GetControlUnderPoint(int xPos, int yPos, uint16 *pnIndex)
 	for (uint16 i=0; i < m_controlArray.size() ; i++)
 	{
 		//start with last control
-		int ndx = (m_controlArray.size()-1) - i;
+		int ndx = (int)(m_controlArray.size()-1) - i;
 
 		// Check to see if the click is in the bounding box for the control
 		if (m_controlArray[i]->IsOnMe(xPos,yPos) && m_controlArray[i]->IsEnabled())
@@ -1086,7 +1086,7 @@ void CBaseScreen::RemoveAll(LTBOOL bDelete)
 uint16 CBaseScreen::AddControl(CLTGUICtrl* pCtrl)
 {
 	m_controlArray.push_back(pCtrl);
-	uint16 num = m_controlArray.size();
+	uint16 num = (uint16)(m_controlArray.size());
 	if (num == m_nSelection+1)
         pCtrl->Select(LTTRUE);
 	if (num > 0)

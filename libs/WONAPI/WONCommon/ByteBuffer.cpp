@@ -18,7 +18,7 @@ ByteBuffer::ByteBuffer(const char *theStr)
 	}
 	else
 	{
-		mDataLen = strlen(theStr)+1;
+		mDataLen = (unsigned long)strlen(theStr)+1;
 		mData = new char[mDataLen];
 		memcpy(mData,theStr,mDataLen);
 	}

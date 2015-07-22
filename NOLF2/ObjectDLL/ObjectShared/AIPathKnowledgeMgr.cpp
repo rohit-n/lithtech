@@ -68,7 +68,7 @@ void CAIPathKnowledgeMgr::Init(CAI* pAI)
 void CAIPathKnowledgeMgr::Save(ILTMessage_Write *pMsg)
 {
 	AIPATH_KNOWLEDGE_MAP::iterator it;
-	SAVE_DWORD( m_mapPathKnowledge.size() );
+	SAVE_DWORD( (uint32)(m_mapPathKnowledge.size()) );
 	for( it = m_mapPathKnowledge.begin(); it != m_mapPathKnowledge.end(); ++it )
 	{
 		SAVE_COBJECT( it->first );

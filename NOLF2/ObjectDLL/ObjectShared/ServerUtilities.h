@@ -263,7 +263,7 @@ inline void ConvertLTBFilename(char* szFilename)
 	// Make sure string is valid 
 	if (!szFilename || !(*szFilename)) return;
 
-	int nLen = strlen(szFilename);
+	int nLen = (int)strlen(szFilename);
 	
 	if (nLen > 0)
 	{

@@ -379,8 +379,8 @@ void WorldProperties::ReadProps()
 			{
                 g_pLTServer->SetGameConVar(szMusicControlFile, pLastPos);
 
-				int nLen = strlen(buf);
-				int nCFileLen = strlen(pLastPos);
+				int nLen = (int)strlen(buf);
+				int nCFileLen = (int)strlen(pLastPos);
 
 				buf[nLen - (nCFileLen + 1)] = '\0';
                 g_pLTServer->SetGameConVar(szMusicDirectory, buf);

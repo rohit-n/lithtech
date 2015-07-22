@@ -828,7 +828,7 @@ void CRenderShadowList::RenderQueuedShadows(const ViewParams& Params)
 	}
 	else
 	{
-		nShadowsToRender = m_cShadowList.size();
+		nShadowsToRender = (uint32)(m_cShadowList.size());
 	}
 
 	//see if we have any shadows to render
@@ -897,7 +897,7 @@ void CRenderShadowList::RenderQueuedShadows(const ViewParams& Params)
 
 	//the current shadow tex that we want to render to
 	uint32 nCurrShadowTex = 0;
-	uint32 nNumShadowTex = m_cTextureList.size();
+	uint32 nNumShadowTex = (uint32)(m_cTextureList.size());
 
 	//we also need to consider that if we are blurring we can only use an even number of textures
 	if(bBlurShadows && (nNumShadowTex % 2))

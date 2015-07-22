@@ -1137,7 +1137,7 @@ void Prop::PlayRandomWorldAnim()
 {
 	if( !m_lstWorldAnims.empty() )
 	{
-		uint32 iWorldAnim = GetRandom( 0, m_lstWorldAnims.size()-1 );
+		uint32 iWorldAnim = GetRandom( 0, (int)(m_lstWorldAnims.size())-1 );
 		HMODELANIM hWorldAnim = m_lstWorldAnims[iWorldAnim];
 
 		g_pLTServer->SetModelAnimation( m_hObject, hWorldAnim );
@@ -1231,7 +1231,7 @@ void Prop::Save(ILTMessage_Write *pMsg, uint32 dwSaveFlags)
 	SAVE_DWORD(m_dwFlags2);
 */
 
-	SAVE_DWORD(m_lstWorldAnims.size());
+	SAVE_DWORD((uint32)(m_lstWorldAnims.size()));
 	for( HMODELANIM_LIST::iterator it = m_lstWorldAnims.begin(); it != m_lstWorldAnims.end(); ++it )
 	{
 		SAVE_DWORD(*it);

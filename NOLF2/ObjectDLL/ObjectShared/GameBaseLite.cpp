@@ -54,7 +54,8 @@ uint32 GameBaseLite::ObjectMessageFn(HOBJECT hSender, ILTMessage_Read *pMsg)
 	{
 		case MID_TRIGGER:
 		{
-			const char* szMsg = (const char*)pMsg->Readuint32();
+			// MW-TODO Previously Readuint32
+			const char* szMsg = (const char*)pMsg->Readuintptr();
 			TriggerMsg(hSender, szMsg);
 		}
 		break;

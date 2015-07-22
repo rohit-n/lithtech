@@ -424,7 +424,7 @@ SEARCH_ITEM* CSearchItemMgr::GetItem(const char *pszName)
 			pszName++;
 
 	//ignore trailing whitespace
-	int nLen = strlen(pszName);
+	int nLen = (int)strlen(pszName);
 	const char* pszTmp = strpbrk(pszName," \t");
 	if (pszTmp)
 		nLen = (pszTmp-pszName);
@@ -538,7 +538,7 @@ LTBOOL CSearchItemMgrPlugin::PopulateStringList(char** aszStrings, uint32* pcStr
 		pSet = g_pSearchItemMgr->GetSet(i);
 		if (pSet && pSet->szName[0])
 		{
-            uint32 dwNameLen = strlen(pSet->szName);
+            uint32 dwNameLen = (uint32)strlen(pSet->szName);
 
 			if (dwNameLen < cMaxStringLength && ((*pcStrings) + 1) < cMaxStrings)
 			{

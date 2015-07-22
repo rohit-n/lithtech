@@ -1048,20 +1048,20 @@ void WorldModel::OnSave( ILTMessage_Write *pMsg, uint32 dwSaveFlags )
 	ObjRefNotifierList::iterator iter;
 
 	// First the Attachment List
-	SAVE_BYTE( m_AttachmentList.size( ));
+	SAVE_BYTE( (uint8)(m_AttachmentList.size()) );
 	for( iter = m_AttachmentList.begin( ); iter != m_AttachmentList.end( ); iter++ )
 	{
 		SAVE_HOBJECT( *iter );
 	}
 	
-	SAVE_BYTE( m_AttachMsgObjList.size( ));
+	SAVE_BYTE( (uint8)(m_AttachMsgObjList.size()) );
 	for( iter = m_AttachMsgObjList.begin( ); iter != m_AttachMsgObjList.end( ); iter++ )
 	{
 		SAVE_HOBJECT( *iter );
 	}
 
 	// Then the Mark List
-	SAVE_BYTE( m_MarkList.size( ));
+	SAVE_BYTE( (uint8)(m_MarkList.size()) );
 	for( iter = m_MarkList.begin( ); iter != m_MarkList.end( ); iter++ )
 	{
 		SAVE_HOBJECT( *iter );
@@ -1200,7 +1200,7 @@ bool WorldModel::CreateServerMark(CLIENTWEAPONFX & theStruct)
     HOBJECT hMoveObj = LTNULL;
     HOBJECT hFarObj  = LTNULL;
 
-    uint32 nNumMarks = m_MarkList.size( );
+    uint32 nNumMarks = (uint32)(m_MarkList.size());
 
     LTFLOAT  fClosestMarkDist  = REGION_DIAMETER;
     LTFLOAT  fFarthestMarkDist = 0.0f;

@@ -253,7 +253,7 @@ static LTBOOL ValidateMsgGoalPrefix( ILTPreInterface *pInterface, ConParse &cpMs
 	if( !g_pAIGoalButeMgr )
 		return LTTRUE;
 
-	uint8 len = strlen(GOAL_CMD_PREFIX);
+	uint8 len = (uint8)strlen(GOAL_CMD_PREFIX);
 
 	// Check to see if this is a goal prefix command and verrify the goal...
 
@@ -4776,7 +4776,7 @@ void CAI::Save(ILTMessage_Write *pMsg, uint32 dwSaveFlags)
 	// save the defense variables
 	SAVE_BOOL(m_bDefenseOn);
 
-	SAVE_INT( m_InvalidNodeList.size() );
+	SAVE_INT( (int32)(m_InvalidNodeList.size()) );
 
 	std::vector<INVALID_NODE*>::iterator it;
 	for( it = m_InvalidNodeList.begin(); it != m_InvalidNodeList.end(); ++it )

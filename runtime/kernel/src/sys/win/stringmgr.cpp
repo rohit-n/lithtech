@@ -236,7 +236,7 @@ HSTRING str_CreateStringAnsi(const char *pStringData)
 		return (HSTRING)&g_ZeroLengthStringWrapper;
 	}
 
-	nChars = strlen(pStringData);
+	nChars = (int)strlen(pStringData);
 	nBytes = nChars+1;
 	
 	pString = AllocateStringWrapper(nBytes);

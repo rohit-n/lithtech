@@ -71,7 +71,7 @@ void CParsedMsg::ReCreateMsg(char *pBuffer, uint32 nBufferSize, uint32 nOffset) 
 	char *pEndOfBuffer = pBuffer + nBufferSize;
 	for (uint32 nCurArg = nOffset; (nCurArg < m_nArgCount) && (pFinger < pEndOfBuffer); ++nCurArg)
 	{
-		uint32 nArgLen = strlen(m_aTokens[nCurArg]);
+		uint32 nArgLen = (uint32)strlen(m_aTokens[nCurArg]);
 		strncpy(pFinger, m_aTokens[nCurArg], pEndOfBuffer - pFinger);
 		pFinger += nArgLen;
 		if ((nCurArg != (m_nArgCount - 1)) && (pFinger < pEndOfBuffer))

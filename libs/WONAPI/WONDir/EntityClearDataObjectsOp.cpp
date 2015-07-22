@@ -43,7 +43,7 @@ WONStatus EntityClearDataObjectsOp::GetNextRequest()
 		aMsg.AppendBuffer(mNetAddr,1);
 	}
 
-	aMsg.AppendShort(mDataTypes.size());
+	aMsg.AppendShort((short)(mDataTypes.size()));
 	DirDataTypeSet::iterator anItr = mDataTypes.begin();
 	while(anItr!=mDataTypes.end())
 	{

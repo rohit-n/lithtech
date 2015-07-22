@@ -286,7 +286,7 @@ CUI_RESULTTYPE CUICheck_Impl::SetText(const char* pText)
 	float y		= m_Rect.y + m_GutterTop; 
 	uint32 wrap	= (uint32) (m_Rect.width - m_GutterRight - m_GutterLeft);
 
-	int32 len = strlen(pText);
+	int32 len = (int32)strlen(pText);
 
 	// if not polystring exists, make one
 	if (!m_pPolyStr) {

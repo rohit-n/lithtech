@@ -582,7 +582,7 @@ void CRelationButeMgr::ReadTemplate(const char* const szTagName,
 	CButeTools::GetValidatedString(m_buteMgr, szTagName, "RelationSet", pCC_Template->m_szRelationSet, sizeof(pCC_Template->m_szRelationSet), "" );
 
 	// Keep track of the template ID, for lookups later without a string compare.
-	pCC_Template->m_nTemplateID = m_listpCollectiveTemplates.size();
+	pCC_Template->m_nTemplateID = (int)(m_listpCollectiveTemplates.size());
 }
 
 //----------------------------------------------------------------------------
@@ -602,7 +602,7 @@ void CRelationButeMgr::ReadTemplate(const char* const szTagName,
 	CButeTools::GetValidatedString(m_buteMgr, szTagName, "RelationData", pORM_Template->m_szDataSet, sizeof(pORM_Template->m_szDataSet), "" );
 
 	// Keep track of the template ID, for lookups later without a string compare.
-	pORM_Template->m_nTemplateID = m_listpObjectRelationMgrTemplates.size();
+	pORM_Template->m_nTemplateID = (int)(m_listpObjectRelationMgrTemplates.size());
 }
 
 //----------------------------------------------------------------------------
@@ -618,7 +618,7 @@ void CRelationButeMgr::ReadTemplate(const char* const szTagName, RelationUser_Te
 	CButeTools::GetValidatedString(m_buteMgr, szTagName, "Name", pRU_Template->m_szKey, sizeof(pRU_Template->m_szKey) );
 
 	// Keep track of the template ID, for lookups later without a string compare.
-	pRU_Template->m_nTemplateID = m_listpRelationUserTemplates.size();
+	pRU_Template->m_nTemplateID = (int)(m_listpRelationUserTemplates.size());
 
 	// Fill the new relation Maintainer with all relations listed under it.
 	int		nRelation = 0;
@@ -659,7 +659,7 @@ void CRelationButeMgr::ReadTemplate(const char* const szTagName, DataUser_Templa
 	CButeTools::GetValidatedString(m_buteMgr, szTagName, "Name", pRD_Template->m_szKey, sizeof(pRD_Template->m_szKey) );
 
 	// Keep track of the template ID, for lookups later without a string compare.
-	pRD_Template->m_nTemplateID = m_listpRelationDataTemplates.size();
+	pRD_Template->m_nTemplateID = (int)(m_listpRelationDataTemplates.size());
 
 	// Fill the new relation Maintainer with all relations listed under it.
 
@@ -865,7 +865,7 @@ int CRelationUser::Save(ILTMessage_Write *pMsg)
 {
 	m_RelationSet.Save(pMsg);
 
-	SAVE_INT( m_Momentos.size() );
+	SAVE_INT( (int32)(m_Momentos.size()) );
 
 	// Save each of the Active Relationships
 	std::for_each( m_Momentos.begin(),

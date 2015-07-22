@@ -4687,7 +4687,7 @@ LTBOOL CFXButeMgrPlugin::PopulateStringList(char** aszStrings, uint32* pcStrings
 		_ASSERT(cMaxStrings > (*pcStrings) + 1);
 
 		pImpactFX = g_pFXButeMgr->GetImpactFX(i);
-        uint32 dwImpactFXNameLen = strlen(pImpactFX->szName);
+        uint32 dwImpactFXNameLen = (uint32)strlen(pImpactFX->szName);
 
 		if (pImpactFX && pImpactFX->szName[0] &&
 			dwImpactFXNameLen < cMaxStringLength &&

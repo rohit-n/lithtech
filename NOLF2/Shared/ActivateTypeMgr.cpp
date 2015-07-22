@@ -349,7 +349,7 @@ bool CActivateTypeMgrPlugin::PopulateStringList( char** aszStrings,
 		pActivateType = g_pActivateTypeMgr->GetActivateType( i );
 		if( pActivateType && pActivateType->szName[0] )
 		{
-			uint32 dwATNameLen = strlen( pActivateType->szName );
+			uint32 dwATNameLen = (uint32)strlen( pActivateType->szName );
 			if( dwATNameLen < cMaxStringLength && ((*pcStrings) + 1) < cMaxStrings )
 			{
 				strcpy( aszStrings[(*pcStrings)++], pActivateType->szName );
@@ -744,7 +744,7 @@ void CActivateTypeHandler::Save( ILTMessage_Write *pMsg )
 
 	// Save our inherited objects
 
-	SAVE_DWORD( m_lstInheritedObjs.size() );
+	SAVE_DWORD( (uint32)(m_lstInheritedObjs.size()) );
 	ObjRefNotifierList::iterator iter;
 	for( iter = m_lstInheritedObjs.begin(); iter != m_lstInheritedObjs.end(); ++iter )
 	{

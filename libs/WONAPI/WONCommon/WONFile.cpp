@@ -163,7 +163,7 @@ void WONFile::CalcFileInfo()
 ///////////////////////////////////////////////////////////////////////////////
 void WONFile::CalcFileDirectory()
 {
-	int aSlashPos = mFilePath.find_last_of('/');
+	int aSlashPos = (int)(mFilePath.find_last_of('/'));
 	if(aSlashPos!=string::npos)
 		mFileDirectory = mFilePath.substr(0,aSlashPos);
 
@@ -178,7 +178,7 @@ void WONFile::CalcFileExtension()
 {
 	GetFileName();
 
-	int aDotPos = mFileName.find_last_of('.');
+	int aDotPos = (int)(mFileName.find_last_of('.'));
 	if(aDotPos!=string::npos)
 	{
 		mFileExtension = mFileName.substr(aDotPos+1);

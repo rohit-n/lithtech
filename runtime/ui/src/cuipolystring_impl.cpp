@@ -272,7 +272,7 @@ CUI_RESULTTYPE	CUIPolyString_Impl::SetText(const char* buf)
 		return CUIR_INVALID_POLYSTRING;
 	}
 
-	m_Length = strlen(buf);
+	m_Length = (uint16)strlen(buf);
 	
 	// allocate the characters if they don't exist or the buffer
 	// ain't big enough

@@ -424,7 +424,7 @@ ILTStream* streamsim_MemStreamFromFile(char *pFilename)
 		LT_MEM_TRACK_ALLOC(pRet = new SSMemStream(256),LT_MEM_TYPE_FILE);
 		if(pRet->m_Buffer.SetSize(len))
 		{
-			amtRead = fread(pRet->m_Buffer.GetArray(), 1, len, fp);
+			amtRead = (long)fread(pRet->m_Buffer.GetArray(), 1, len, fp);
 			if(amtRead != len)
 			{
 				delete pRet;

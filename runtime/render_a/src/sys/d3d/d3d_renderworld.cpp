@@ -604,7 +604,7 @@ void CD3D_RenderWorld::Draw(const ViewParams& Params, bool bTransformed)
 			GetFrustumRBList(Params, m_aVisibleRBs);
 		else
 		{
-			IncFrameStat(eFS_Occluders, m_aFrameOccluders.size());
+			IncFrameStat(eFS_Occluders, (int32)(m_aFrameOccluders.size()));
 
 			CountAdder cOccludeCollect(&nOccludeTime);
 

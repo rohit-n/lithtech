@@ -1083,7 +1083,7 @@ static std::wstring GetWord(const std::wstring &s1, int &thePos, bool doToUpper,
 	std::wstring aWord;
 	if(checkQuotes && s1[thePos]==L'"')
 	{
-		int anEndQuotePos = s1.find_first_of(L'"',thePos+1);
+		int anEndQuotePos = (int)(s1.find_first_of(L'"',thePos+1));
 		if(anEndQuotePos!=string::npos)
 		{
 			aWord = s1.substr(thePos+1,anEndQuotePos-thePos-1);
@@ -1122,7 +1122,7 @@ static std::wstring GetRestOfLine(const std::wstring &s1, int thePos)
 	std::wstring aWord;
 	if(s1[thePos]==L'"')
 	{
-		int anEndQuotePos = s1.find_first_of(L'"',thePos+1);
+		int anEndQuotePos = (int)(s1.find_first_of(L'"',thePos+1));
 		if(anEndQuotePos!=string::npos)
 		{
 			aWord = s1.substr(thePos+1,anEndQuotePos-thePos-1);
@@ -1130,7 +1130,7 @@ static std::wstring GetRestOfLine(const std::wstring &s1, int thePos)
 		}
 	}
 
-	int anEndLinePos = s1.find_last_not_of(' ');
+	int anEndLinePos = (int)(s1.find_last_not_of(' '));
 	if(anEndLinePos==string::npos || anEndLinePos<=thePos)
 		return L"";
 

@@ -79,7 +79,7 @@ void GetEntityRequest::Pack(WriteBuffer *aMsg, PACKFLAG thePackType)
 		aMsg->AppendByte('D');				// Type = 'D' (directory)
 	
 	aMsg->AppendWString(mPath);				// Directory Path
-	aMsg->AppendShort(mDataTypes.size());	// Number of data types requested
+	aMsg->AppendShort((short)(mDataTypes.size()));	// Number of data types requested
 	
 	// Once per data type
 	std::set<std::string>::iterator anItr = mDataTypes.begin();

@@ -57,7 +57,8 @@ uint32 CEditable::ObjectMessageFn(LPBASECLASS pObject, HOBJECT hSender, ILTMessa
 	{
 		case MID_TRIGGER:
 		{
-			const char* szMsg = (const char*)pMsg->Readuint32();
+			// MW-TODO Previously Readuint32
+			const char* szMsg = (const char*)pMsg->Readuintptr();
 			TriggerMsg(pObject, hSender, szMsg);
 		}
 		break;

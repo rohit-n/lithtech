@@ -40,7 +40,7 @@ public:
 		}
 		COutline &operator=(const COutline &cOther) 
 		{ 
-			uint32 nSize = cOther.size();
+			uint32 nSize = (uint32)(cOther.size());
 			m_pEndVert = iterator(m_aVerts) + nSize;
 			memcpy(m_aVerts, cOther.m_aVerts, sizeof(m_aVerts[0]) * k_nDataStride * nSize);
 			return *this; 
@@ -102,7 +102,7 @@ public:
 		const_iterator end() const { return m_pEndVert; }
 		iterator begin() { return iterator(m_aVerts); }
 		iterator end() { return m_pEndVert; }
-		uint32 size() const { return const_iterator(m_pEndVert) - const_iterator(m_aVerts); }
+		uint32 size() const { return (uint32)(const_iterator(m_pEndVert) - const_iterator(m_aVerts)); }
 		void resize(uint32 nSize) { ASSERT(nSize <= k_MaxVerts); m_pEndVert = iterator(m_aVerts) + nSize; }
 		bool empty() const { return const_iterator(m_pEndVert) == const_iterator(m_aVerts); }
 		LTVector &front() { return *iterator(m_aVerts); }

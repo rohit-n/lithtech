@@ -138,7 +138,7 @@ int FileReader::ReadMaxBytes(void *theBuf, int theMaxBytes)
 		if(mFile==NULL)
 			throw FileReaderException("NULL File.");
 
-		int aNumBytes = fread(theBuf,1,theMaxBytes,mFile);
+		int aNumBytes = (int)fread(theBuf,1,theMaxBytes,mFile);
 		return aNumBytes;
 	}
 }

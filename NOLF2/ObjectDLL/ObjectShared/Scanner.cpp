@@ -965,7 +965,7 @@ void CScanner::Save(ILTMessage_Write *pMsg)
 
 	SAVE_BOOL( m_bDoneProcessingStimuli );
 
-	SAVE_DWORD( m_mapProcessedStimuli.size() );
+	SAVE_DWORD( (uint32)(m_mapProcessedStimuli.size()) );
 	AI_PROCESSED_STIMULI_MAP::iterator psit;
 	for( psit = m_mapProcessedStimuli.begin(); psit != m_mapProcessedStimuli.end(); ++psit )
 	{

@@ -4920,7 +4920,7 @@ char* CPlayerObj::GetDamageSound(DamageType eType)
 	}
 	else
 	{
-		uint32 nRandSelection = GetRandom( 0, pInfo->saPlayerDamageSounds.size( ) - 1 );
+		uint32 nRandSelection = GetRandom( 0, (int)(pInfo->saPlayerDamageSounds.size()) - 1 );
 		char const* pszDamageSound = pInfo->saPlayerDamageSounds[nRandSelection].c_str( );
 		strcat( s_FileBuffer, pszDamageSound );
 	}
@@ -7242,7 +7242,7 @@ void CPlayerObj::TransferWeapons(Body *pBody, bool bRemove )
 
 						PickupItem *pItem = dynamic_cast<PickupItem *>(g_pLTServer->HandleToObject(pObj->m_hObject ));
 						int n = 0;
-						int sz = PUList.size();
+						int sz = (int)(PUList.size());
 						if (sz > 1)
 							n = GetRandom(0,sz-1);
 						iter = PUList.begin();
@@ -7279,7 +7279,7 @@ void CPlayerObj::TransferWeapons(Body *pBody, bool bRemove )
 
 					PickupItem *pItem = dynamic_cast<PickupItem *>(g_pLTServer->HandleToObject(pObj->m_hObject ));
 					int n = 0;
-					int sz = PUList.size();
+					int sz = (int)(PUList.size());
 					if (sz > 1)
 						n = GetRandom(0,sz-1);
 					

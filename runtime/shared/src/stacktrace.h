@@ -465,7 +465,11 @@ public      :
                                       ModuleInfo     ) ) ;
     }
 
+#ifdef _M_IX86
     DWORD SymGetModuleBase ( IN DWORD dwAddr )
+#else
+	DWORD64 SymGetModuleBase ( IN DWORD64 dwAddr )
+#endif
     {
         return ( ::SymGetModuleBase ( m_hProcess , dwAddr ) ) ;
     }

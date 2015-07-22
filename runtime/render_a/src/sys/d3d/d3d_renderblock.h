@@ -262,7 +262,7 @@ public:
 	void ExtendSkyBounds(const ViewParams& Params, float &fMinX, float &fMinY, float &fMaxX, float &fMaxY) const;
 
 	// Occluder access
-	inline uint32 GetNumOccluders() const { return m_aOccluders.size(); }
+	inline uint32 GetNumOccluders() const { return (uint32)(m_aOccluders.size()); }
 	inline SRBOccluder &GetOccluder(uint32 nIndex) { ASSERT(nIndex < m_aOccluders.size()); return m_aOccluders[nIndex]; }
 	// Returns true/false as to whether or not the occluder with that name existed
 	bool SetOccluderEnabled(uint32 nID, bool bEnabled);

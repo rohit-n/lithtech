@@ -127,7 +127,7 @@ void* dalloc(size_t size)
 	}
 	*/
 
-	unsigned long fullAllocSize;
+	size_t fullAllocSize;
 
 	// Add 4 bytes if we're tracking memory usage.
 	#ifdef TRACK_MEMORY_USAGE
@@ -142,7 +142,7 @@ void* dalloc(size_t size)
 	// Try to allocate the memory.
 	{
 		CountAdder cntAdd(&g_PD_Malloc);
-		LT_MEM_TRACK_ALLOC(ptr = (char*)LTMemAlloc((size_t)fullAllocSize),LT_MEM_TYPE_UNKNOWN);
+		LT_MEM_TRACK_ALLOC(ptr = (char*)LTMemAlloc(fullAllocSize),LT_MEM_TYPE_UNKNOWN);
 	}
 
 	if(!ptr)

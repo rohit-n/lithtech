@@ -1073,7 +1073,7 @@ void CAIPathMgr::BuildPath(CAI* pAI, CAIPath* pPath, AIVolume* pVolume, const LT
 		}
 
 		pWaypt = AI_FACTORY_NEW( CAIPathWaypoint );
-		pWaypt->SetControlPoint( pAI, CAIPathWaypoint::eInstructionMoveTo, vEntryPoint, s_lstControlPoints.size() );
+		pWaypt->SetControlPoint( pAI, CAIPathWaypoint::eInstructionMoveTo, vEntryPoint, (uint32)(s_lstControlPoints.size()) );
 
 		// Add context-dependent waypoints, depending on the type of volume.
 
@@ -1182,7 +1182,7 @@ void CAIPathMgr::BuildPath(CAI* pAI, CAIPath* pPath, AIVolume* pVolume, const LT
 				}
 
 				pWaypt = AI_FACTORY_NEW( CAIPathWaypoint );
-				pWaypt->SetControlPoint( pAI, CAIPathWaypoint::eInstructionMoveTo, vEntryPoint, s_lstControlPoints.size() );
+				pWaypt->SetControlPoint( pAI, CAIPathWaypoint::eInstructionMoveTo, vEntryPoint, (uint32)(s_lstControlPoints.size()) );
 				BuildDoorPath( pAI, pPath, fRadius, pVolumeCur, pLastVolumeNeighbor->GetConnectionPerpDir(), pWaypt, pLastWaypt );
 				s_lstControlPoints.back() = pLastWaypt->GetArgumentVector1();
 				pPath->AddWaypoint( pWaypt );
@@ -1195,7 +1195,7 @@ void CAIPathMgr::BuildPath(CAI* pAI, CAIPath* pPath, AIVolume* pVolume, const LT
 	// Add MoveTo waypoint to the final dest.
 
 	pWaypt = AI_FACTORY_NEW( CAIPathWaypoint );
-	pWaypt->SetControlPoint( pAI, CAIPathWaypoint::eInstructionMoveTo, vPosFinal, s_lstControlPoints.size() );
+	pWaypt->SetControlPoint( pAI, CAIPathWaypoint::eInstructionMoveTo, vPosFinal, (uint32)(s_lstControlPoints.size()) );
 	s_lstControlPoints.push_back( vPosFinal );
 	pPath->AddWaypoint( pWaypt );
 

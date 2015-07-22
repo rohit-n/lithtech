@@ -372,7 +372,7 @@ LTBOOL CMenuMgr::PreviousMenu()
 
 	uint8 index = m_nMenuIndex;
 	if (index == 0)
-		index = m_MenuArray.size();
+		index = (uint8)(m_MenuArray.size());
 	index--;
 
 	while (index != m_nMenuIndex)
@@ -382,7 +382,7 @@ LTBOOL CMenuMgr::PreviousMenu()
 		else
 		{
 			if (index == 0)
-				index = m_MenuArray.size();
+				index = (uint8)(m_MenuArray.size());
 			index--;
 		}
 	}

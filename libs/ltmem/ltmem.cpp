@@ -111,7 +111,7 @@ void LTMemTerm()
 
 
 // LTMem Allocation function
-void* LTMemAlloc(uint32 nSize)
+void* LTMemAlloc(size_t nSize)
 {
 #ifdef USELTMEM
 	void* pRet;

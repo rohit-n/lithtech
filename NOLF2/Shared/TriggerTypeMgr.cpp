@@ -346,7 +346,7 @@ bool CTriggerTypeMgrPlugin::PopulateStringList( char** aszStrings,
 		pTriggerType = g_pTriggerTypeMgr->GetTriggerType( i );
 		if( pTriggerType && pTriggerType->szName[0] )
 		{
-			uint32 dwATNameLen = strlen( pTriggerType->szName );
+			uint32 dwATNameLen = (uint32)strlen( pTriggerType->szName );
 			if( dwATNameLen < cMaxStringLength && ((*pcStrings) + 1) < cMaxStrings )
 			{
 				strcpy( aszStrings[(*pcStrings)++], pTriggerType->szName );

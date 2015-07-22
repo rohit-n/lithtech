@@ -456,7 +456,7 @@ HTTPGetOp::HTTPGetOp(const std::string &theURL) : mNumRedirects(0)
 	ReadProxyHostFile(false);
 
 	string aStr = theURL;
-	int aPos = aStr.find("://");
+	int aPos = (int)(aStr.find("://"));
 	if(aPos!=string::npos)
 		aStr = aStr.substr(aPos+3);
 

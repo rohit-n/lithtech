@@ -76,11 +76,11 @@ bool GetBrowserCommandLineFromRegistry(std::string& sBrowser)
 		return false;
 
 	sTemp = sValue;
-	int nLocation = sTemp.find('\"');
+	int nLocation = (int)(sTemp.find('\"'));
 	if (nLocation == 0)
 	{
 		sTemp.erase(0, 1); // Remove the leading quote.
-		nLocation = sTemp.find('\"', 1);
+		nLocation = (int)(sTemp.find('\"', 1));
 		if (nLocation != -1)
 			sTemp.erase(nLocation, sTemp.length() - nLocation); // Remove the traling quote (and anything following it).
 

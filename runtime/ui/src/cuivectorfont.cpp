@@ -908,7 +908,7 @@ bool CUIVectorFont::CreateFontTextureAndTable( InstalledFontFace& installedFontF
 	}
 
 	// Get the number of characters to put in font.
-	int nLen = strlen( pszChars );
+	int nLen = (int)strlen( pszChars );
 
 	// These will hold the info on the bitmap.
 	HBITMAP hBitmap = NULL;

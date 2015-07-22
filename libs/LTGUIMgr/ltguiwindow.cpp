@@ -271,7 +271,7 @@ uint16 CLTGUIWindow::AddControl ( CLTGUICtrl *pControl, LTIntPt offset )
 
 	m_controlArray.push_back(pControl);
 
-	return m_controlArray.size()-1;
+	return (uint16)(m_controlArray.size()-1);
 }
 
 // Remove a control
@@ -423,7 +423,7 @@ uint16 CLTGUIWindow::NextSelection()
 {
 	uint16 select = m_nCurrentIndex;
 	if (select == kNoSelection)
-		select = m_controlArray.size()-1;
+		select = (uint16)(m_controlArray.size()-1);
 	uint16 oldSelect = select;
 	
 	CLTGUICtrl* pCtrl = LTNULL;	
@@ -459,7 +459,7 @@ uint16 CLTGUIWindow::PreviousSelection()
 	{
 		if (select == 0)
 		{
-			select = m_controlArray.size()-1;
+			select = (uint16)(m_controlArray.size()-1);
 		}
 		else
 			select--;

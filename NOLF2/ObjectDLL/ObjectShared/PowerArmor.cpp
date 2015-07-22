@@ -152,7 +152,8 @@ PowerArmor::~PowerArmor()
 			UBER_ASSERT( !(flags & FLAG_TOUCH_NOTIFY), "Touch Notify Enabled!" );
 			UBER_ASSERT( !(flags & FLAG_RAYHIT), "Ray Hit Enabled!" );
 
-			const char* szMsg = (const char*)pMsg->Readuint32();
+			// MW-TODO Previously Readuint32
+			const char* szMsg = (const char*)pMsg->Readuintptr();
 
 			if ( !strcmp(szMsg, KEY_TURNON) )
 			{
@@ -426,7 +427,8 @@ ShellArmor::ShellArmor()
 		case MID_TRIGGER:
 		{
 			// If this is an attach message, then the sender is the owner.
-			const char* szMsg = reinterpret_cast<const char*>(pMsg->Readuint32());
+			// MW-TODO Previously Readuint32
+			const char* szMsg = reinterpret_cast<const char*>(pMsg->Readuintptr());
 			if ( 0 == strcmp( KEY_ATTACH, szMsg ) )
 			{
 				m_hParentObject = hSender;

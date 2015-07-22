@@ -56,7 +56,7 @@ WONStatus AddEntityOp::GetNextRequest()
 
 	aMsg.AppendWString(mDisplayName);		// Entity display name
 	aMsg.AppendLong(mLifespan);				// Entity lifespan
-	aMsg.AppendShort(mDataObjects.size());	// num data objects
+	aMsg.AppendShort((short)(mDataObjects.size()));	// num data objects
 	
 	DirDataObjectList::iterator anItr = mDataObjects.begin();
 	while(anItr!=mDataObjects.end())

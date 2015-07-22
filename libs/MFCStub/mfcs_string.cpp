@@ -146,7 +146,7 @@ void CString::FormatV(LPCTSTR pFormat, va_list args)
 					   nItemLen = 6; // "(null)"
 					else
 					{
-					   nItemLen = strlen(pstrNextArg);
+					   nItemLen = (int)strlen(pstrNextArg);
 					   nItemLen = max(1, nItemLen);
 					}
 				}
@@ -195,7 +195,7 @@ void CString::FormatV(LPCTSTR pFormat, va_list args)
 
 					f = va_arg(args, double);
 					sprintf( pszTemp, "%*.*f", nWidth, nPrecision+6, f );
-					nItemLen = strlen(pszTemp);
+					nItemLen = (int)strlen(pszTemp);
 				}
 				break;
 
@@ -239,10 +239,10 @@ int CString::Replace(LPCTSTR pOld, LPCTSTR pNew)
 {
 	// can't have empty or NULL pOld
 
-	int nSourceLen = strlen(pOld);
+	int nSourceLen = (int)strlen(pOld);
 	if (nSourceLen == 0)
 		return 0;
-	int nReplacementLen = strlen(pNew);
+	int nReplacementLen = (int)strlen(pNew);
 
 	// loop once to figure out the size of the result string
 	int nCount = 0;

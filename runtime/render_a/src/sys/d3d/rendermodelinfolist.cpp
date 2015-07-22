@@ -13,7 +13,7 @@ CRenderModelInfoList& CRenderModelInfoList::GetSingleton()
 uint32 CRenderModelInfoList::QueueModelInfo(ModelInstance* pInstance)
 {
 	//figure out what index it will be in
-	uint32 nIndex = m_cInfoList.size();
+	uint32 nIndex = (uint32)(m_cInfoList.size());
 
 	//grow the list
 	LT_MEM_TRACK_ALLOC(m_cInfoList.resize(nIndex + 1), LT_MEM_TYPE_RENDERER);
@@ -56,7 +56,7 @@ void CRenderModelInfoList::Clear()
 //gets the number of models that are queued up
 uint32 CRenderModelInfoList::GetNumQueuedModelInfo() const
 {
-	return m_cInfoList.size();
+	return (uint32)(m_cInfoList.size());
 }
 
 //gets the instance of the specified index

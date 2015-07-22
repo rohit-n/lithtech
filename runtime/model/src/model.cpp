@@ -179,7 +179,7 @@ const char* ModelStringList::AddString(const char *pString)
 	}
 
 	// Ok, add a new string.
-	len = strlen(pString) + 1;
+	len = (int)strlen(pString) + 1;
 	dwSize = sizeof(ModelString) - 1 + len;
 	pRet = (ModelString*)GetAlloc()->Alloc(dwSize);
 	if(!pRet)
@@ -980,7 +980,7 @@ bool Model::SetFilename(const char *pInFilename)
 	char *pFilename;
 
 	FreeFilename();
-	uint32 nStrLen = strlen(pInFilename);
+	uint32 nStrLen = (uint32)strlen(pInFilename);
 
 	LT_MEM_TRACK_ALLOC(pFilename = new char[nStrLen + 1],LT_MEM_TYPE_MODEL);
 	if(!pFilename)

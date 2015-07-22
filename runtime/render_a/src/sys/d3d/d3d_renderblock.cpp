@@ -395,7 +395,7 @@ ILTStream &operator>>(ILTStream &cStream, SRBLightGroup &cLightGroup)
 
 bool CD3D_RenderBlock::IsSpriteTexture(const char *pFilename)
 {
-	uint32 nTexNameLen = strlen(pFilename);
+	uint32 nTexNameLen = (uint32)strlen(pFilename);
 
 	if (nTexNameLen < 4)
 		return false;
@@ -866,7 +866,7 @@ bool CD3D_RenderBlock::Draw(const ViewParams& Params)
 		pShader->Draw(cDrawState, m_aShaderIndices[nShaderLoop]);
 	}
 
-	IncFrameStat(eFS_RBSections, m_aSections.size());
+	IncFrameStat(eFS_RBSections, (int32)(m_aSections.size()));
 	
 	return true;
 }
@@ -1503,7 +1503,7 @@ uint32 CD3D_RenderBlock::IntersectRay(const SRay &sRay, TIntersectionList &sResu
 	if (pTrisChecked)
 		*pTrisChecked = nIndexLoop + 1;
 
-	return sResults.size();
+	return (uint32)(sResults.size());
 }
 
 void CD3D_RenderBlock::DebugTri(const SIntersection &sIntersect, float fX, float fY, float fSizeX, float fSizeY) const
@@ -1658,11 +1658,11 @@ void CD3D_RenderBlock::GetMemStats(CMemStats_World &cMemStats) const
 	CRenderShader_DynamicLight::GetSingleton()->GetMemStats(cMemStats);
 
 	// Add in the light animation data
-	cMemStats.m_nLightAnimData += sizeof(SRBLightGroup) * m_aLightGroups.size();
+	cMemStats.m_nLightAnimData += sizeof(SRBLightGroup) * (uint32)(m_aLightGroups.size());
 	TLightGroupList::const_iterator iCurLG = m_aLightGroups.begin();
 	for (; iCurLG != m_aLightGroups.end(); ++iCurLG)
 	{
-		cMemStats.m_nLightAnimData += iCurLG->m_aVertexIntensities.size();
+		cMemStats.m_nLightAnimData += (uint32)(iCurLG->m_aVertexIntensities.size());
 	}
 }
 

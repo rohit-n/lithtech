@@ -361,7 +361,7 @@ void CClassData::DisplayObjectTicks()
 
 			LTStrCpy(szObjectName, pCurObjectTickData->m_ObjectName, sizeof(szObjectName));
 
-			for (uint32 i = strlen(szObjectName); i < sizeof(szObjectName) - 2; i++)
+			for (uint32 i = (uint32)strlen(szObjectName); i < sizeof(szObjectName) - 2; i++)
 			{
 				szObjectName[i] = ' ';
 			}
@@ -385,7 +385,7 @@ void CClassData::GetClassName(char* pClassNameBuffer, uint32 nBufferLen, LTBOOL 
 
 	if (bPadWithSpace)
 	{
-		for (uint32 i = strlen(pClassNameBuffer); i < nBufferLen - 2; i++)
+		for (uint32 i = (uint32)strlen(pClassNameBuffer); i < nBufferLen - 2; i++)
 		{
 			pClassNameBuffer[i] = ' ';
 		}
@@ -448,7 +448,7 @@ void CClassMgr::Term()
 
 CClassData* CClassMgr::FindClassData(const char *pName)
 {
-    HHashElement *hElement = hs_FindElement(m_hClassNameHash, pName, strlen(pName));
+    HHashElement *hElement = hs_FindElement(m_hClassNameHash, pName, (uint32)strlen(pName));
 
     if (hElement)
     {
@@ -726,7 +726,7 @@ static LTRESULT InitExtraClassData(CClassMgr *pClassMgr)
             pClassData->m_pClass = pClass;
             pClass->m_pInternal[pClassMgr->m_ClassIndex] = pClassData;
 
-            hElement = hs_AddElement(pClassMgr->m_hClassNameHash, pClass->m_ClassName, strlen(pClass->m_ClassName));
+            hElement = hs_AddElement(pClassMgr->m_hClassNameHash, pClass->m_ClassName, (uint32)strlen(pClass->m_ClassName));
             if (!hElement)
                 RETURN_ERROR(1, InitExtraClassData, LT_ERROR);
 

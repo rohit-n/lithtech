@@ -462,7 +462,7 @@ uint16 CLTGUIListCtrl::AddControl ( CLTGUICtrl *pControl )
 	}
 
 	m_bNeedsRecalculation = LTTRUE;
-	return m_controlArray.size()-1;
+	return (uint16)(m_controlArray.size()-1);
 }
 
 // Remove a control
@@ -668,7 +668,7 @@ void CLTGUIListCtrl::CalculatePositions()
 
 	if (m_nLastShown > m_controlArray.size())
 	{
-		m_nLastShown = m_controlArray.size()-1;
+		m_nLastShown = (uint16)(m_controlArray.size()-1);
 	}
 
 	float frameW = ((float)m_nFrameWidth * m_fScale);
@@ -760,7 +760,7 @@ uint16 CLTGUIListCtrl::NextSelection()
 {
 	uint16 select = m_nCurrentIndex;
 	if (select == kNoSelection)
-		select = m_controlArray.size();
+		select = (uint16)(m_controlArray.size());
 	uint16 oldSelect = select;
 	
 	CLTGUICtrl* pCtrl = LTNULL;	
@@ -773,7 +773,7 @@ uint16 CLTGUIListCtrl::NextSelection()
 				select = 0;
 			else
 			{
-				select = m_controlArray.size() - 1;
+				select = (uint16)(m_controlArray.size() - 1);
 				oldSelect = select;
 			}
 
@@ -804,7 +804,7 @@ uint16 CLTGUIListCtrl::PreviousSelection()
 		if (select == 0)
 		{
 			if (m_bScrollWrap)
-				select = m_controlArray.size()-1;
+				select = (uint16)(m_controlArray.size()-1);
 			else
 			{
 				select = 0;

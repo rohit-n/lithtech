@@ -199,7 +199,7 @@ bool CServerMissionMgr::Save( ILTMessage_Write& msg, uint32 dwSaveFlags )
 {
 	msg.WriteString( m_sCampaignFile );
 
-	msg.Writeuint8( m_Campaign.size( ));
+	msg.Writeuint8( (uint8)(m_Campaign.size()) );
 	for( Campaign::iterator iter = m_Campaign.begin( ); iter != m_Campaign.end( ); iter++ )
 	{
 		msg.Writeuint8( *iter );

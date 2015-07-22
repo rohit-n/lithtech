@@ -604,7 +604,7 @@ void RelationSet::Save(ILTMessage_Write *pMsg)
 	for( int i = 0; i < RelationTraits::kTrait_Count; i++ )
 	{
 		// Save the size, so we know how many elements this RelationSet has when we load
-		SAVE_INT( m_RelationSet[i].size() );
+		SAVE_INT( (int32)(m_RelationSet[i].size()) );
 
 		// Save each of the _EnumString/int pairs
 		_mapEnumStringsToAlignment::iterator itMapToString;

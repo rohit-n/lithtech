@@ -756,7 +756,8 @@ void SendTriggerMsgToObject(LPBASECLASS pSender, LPBASECLASS pObj, LTBOOL, const
 
 	CAutoMessage cMsg;
 	cMsg.Writeuint32(MID_TRIGGER);
-	cMsg.Writeuint32((uint32)szMessage);
+	// MW-TODO: Previously Writeuint32
+	cMsg.Writeuintptr((uintptr_t)szMessage);
 	pObj->ObjectMessageFn((pSender) ? pSender->m_hObject : LTNULL, cMsg.Read());
 }
 
@@ -1050,7 +1051,7 @@ uint8 TeamStringToTeamId( char const* pszTeamString )
 		return INVALID_TEAM;
 
 	static char const szTeam[] = "Team";
-	static int nLen = strlen( szTeam );
+	static int nLen = (int)strlen( szTeam );
 	uint32 nTeamId = INVALID_TEAM;
 	if( !_strnicmp( pszTeamString, szTeam, nLen ))
 	{

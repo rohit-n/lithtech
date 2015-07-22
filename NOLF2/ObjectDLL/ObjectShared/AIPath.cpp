@@ -177,7 +177,7 @@ void CAIPath::Load(ILTMessage_Read *pMsg)
 
 void CAIPath::Save(ILTMessage_Write *pMsg)
 {
-	SAVE_INT(m_lstWaypoints.size());
+	SAVE_INT((uint32)(m_lstWaypoints.size()));
 	SAVE_INT(m_iWaypoint);
 
 	AI_WAYPOINT_LIST::iterator it;

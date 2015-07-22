@@ -426,7 +426,7 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 			
 			if( bCanUseAttractors && (!bCanUseRadius || GetRandom(0,1)) )
 			{
-				uint8	nIndex = GetRandom( 0, m_lstAttractors.size() - 1 );
+				uint8	nIndex = GetRandom( 0, (int)(m_lstAttractors.size()) - 1 );
 				CAttractor cAttractor = m_lstAttractors[nIndex];
 
 				if( cAttractor.GetTransform( lTrans, true ) == LT_OK )

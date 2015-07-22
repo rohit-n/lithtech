@@ -716,7 +716,7 @@ bool CBodyFX::HandleDeathFXKey( HLOCALOBJ hObj, ArgList* pArgList )
 	g_pLTClient->GetModelLT()->GetModelDBFilename(m_hServerObject,szFullModelPath,512);
 
 	// Remove the .ltb from the model
-	int nIndex = strlen(szFullModelPath)-4;
+	int nIndex = (int)strlen(szFullModelPath)-4;
 	szFullModelPath[nIndex] = '\0'; // 4 characters from end
 	
 	// Strip off the directory information

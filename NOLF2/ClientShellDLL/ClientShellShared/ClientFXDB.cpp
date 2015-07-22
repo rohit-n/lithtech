@@ -61,7 +61,7 @@ inline void	ReadTextFile( ILTStream *pStream, const char *szFormat, T *t1, T *t2
 	strtok( szLine, "\n" );
 	sscanf( szLine, szFormat, szTag, t1, t2, t3, t4, t5 );
 	
-	if( LT_OK != pStream->SeekTo( dwPos + strlen( szLine ) ))
+	if( LT_OK != pStream->SeekTo( dwPos + (uint32)strlen( szLine ) ))
 	{
 		g_pLTClient->CPrint( "Couldn't set the file ptr position for *.fxf file" );
 	}

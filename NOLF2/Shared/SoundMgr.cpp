@@ -120,7 +120,7 @@ void CGameSoundMgr::GetRandomSoundFilename(const char* pTag, const char* pAttrib
 
 	for (int i=0; i < nNumSounds; i++)
 	{
-		int nLen = strlen(pBuf);
+		int nLen = (int)strlen(pBuf);
 
 		// If the current sound is marked, find a new one...
 
@@ -166,7 +166,7 @@ void CGameSoundMgr::GetRandomSoundFilename(const char* pTag, const char* pAttrib
 				sprintf(s_aAttName, "%s%d", pAttributeBase, j);
 				m_buteMgr.GetString(pTag, s_aAttName, szTempSnd, sizeof(szTempSnd));
 
-				nLen = strlen(szTempSnd);
+				nLen = (int)strlen(szTempSnd);
 
 				if (c_chMark != szTempSnd[nLen - 1])
 				{
@@ -188,7 +188,7 @@ void CGameSoundMgr::GetRandomSoundFilename(const char* pTag, const char* pAttrib
 					sprintf(s_aAttName, "%s%d", pAttributeBase, j);
 					m_buteMgr.GetString(pTag, s_aAttName, szTempSnd, sizeof(szTempSnd));
 
-					nLen = strlen(szTempSnd);
+					nLen = (int)strlen(szTempSnd);
 					szTempSnd[nLen - 1] = '\0'; // unmark the sound
 
 					// Save out the unmarked sound...
@@ -223,7 +223,7 @@ void CGameSoundMgr::GetSoundFilename(const char* pTag, const char* pAttribute, c
 	// [KLS - 6/29/02] check to see if the sound was marked from a call to
 	// GetRandomSoundFilename().  If so remove the mark from the filename...
 
-	int nLen = strlen(pBuf);
+	int nLen = (int)strlen(pBuf);
 	if (pBuf[nLen - 1] == c_chMark)
 	{
 		pBuf[nLen - 1] = '\0';
@@ -304,7 +304,7 @@ uint32 CGameSoundMgr::GetSoundIdFromFilename(const char* pSoundFile)
 
 	if (pStr && strstr(pStr, ".wav"))
 	{
-		int nStrLen = strlen(pStr);
+		int nStrLen = (int)strlen(pStr);
 
 		char buf[255];
 		strncpy(buf, pStr, nStrLen - 4);

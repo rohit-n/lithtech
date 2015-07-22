@@ -71,7 +71,7 @@ WONStatus GetMultiDirOp::GetNextRequest()
 	aMsg.AppendShort(113);					// MultiGetEntityEx
 
 	aMsg.AppendShort(0);					// MaxEntitiesPerReply
-	aMsg.AppendByte(mRequestList.size());	// Number of entities requests
+	aMsg.AppendByte((char)(mRequestList.size()));	// Number of entities requests
 
 	// Once per request
 	GetEntityRequestList::const_iterator anItr = mRequestList.begin();

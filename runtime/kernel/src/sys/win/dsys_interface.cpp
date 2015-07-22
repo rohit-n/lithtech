@@ -704,7 +704,7 @@ void dsi_PrintToConsole(const char *pMsg, ...) {
     LTVSNPrintF(msg, sizeof(msg), pMsg, marker);
     va_end(marker);
 	
-	int32 len = strlen(msg);
+	int32 len = (int32)strlen(msg);
 	if (msg[len-1] != '\n')
 	{
 		msg[len] = '\n';

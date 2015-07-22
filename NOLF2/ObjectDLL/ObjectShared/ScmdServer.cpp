@@ -616,7 +616,7 @@ bool ScmdServer_Impl::HandleListMissions( HCLIENT hClient, ILTMessage_Read& msg 
 	Campaign& campaign = g_pServerMissionMgr->GetCampaign( );
 
 	// Write out the number of entries.
-	cMsg.Writeuint8( campaign.size( ));
+	cMsg.Writeuint8( (uint8)(campaign.size()) );
 
 	// Write out all the missions.
 	char fname[_MAX_FNAME] = "";
@@ -933,7 +933,7 @@ bool ScmdServer_Impl::HandleListBans( HCLIENT hClient, ILTMessage_Read& msg )
 
 	// Tell client about all the bans.
 	BanIPMgr::BanList const& banList = BanIPMgr::Instance( ).GetBanList( );
-	cMsg.Writeuint16( banList.size( ));
+	cMsg.Writeuint16( (uint16)(banList.size()) );
 	for( BanIPMgr::BanList::const_iterator iter = banList.begin( ); iter != banList.end( ); iter++ )
 	{
 		BanIPMgr::ClientIP const& clientIP = *iter;

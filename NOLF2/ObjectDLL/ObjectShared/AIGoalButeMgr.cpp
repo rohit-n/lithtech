@@ -524,7 +524,7 @@ void CAIGoalButeMgr::ReadSmartObjectTemplate(uint32 nID)
 
 		// Read states.
 
-		uint32 nSkip = strlen("SmartObject");
+		uint32 nSkip = (uint32)strlen("SmartObject");
 		uint32 iStateType;
 		for( iStateType = kState_SmartObjectBegin + 1; iStateType != kState_SmartObjectEnd; ++iStateType )
 		{

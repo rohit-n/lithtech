@@ -118,7 +118,7 @@ bool LTEffectInclude::PushPath(const char* szPath)
 
 	// Chop off the file name. We just want the path.
 	strncpy(szBuf, szPath, _MAX_PATH - 1);
-	int nLen = strlen(szBuf);
+	int nLen = (int)strlen(szBuf);
 	int nFilenameStart = 0;
 	if(nLen > 0)
 	{
@@ -197,9 +197,9 @@ bool LTEffectInclude::PushPath(const char* szPath)
 			dsi_ConsolePrint("EFFECT INCLUDE DEBUG:  Parent path: %s", szTempBuf);
 		}
 
-		int nTempLen = strlen(szTempBuf);
+		int nTempLen = (int)strlen(szTempBuf);
 		szTempBuf[nTempLen - 1] = '\0';
-		nTempLen = strlen(szTempBuf);
+		nTempLen = (int)strlen(szTempBuf);
 		for(int i = (nTempLen - 1); i >= 0; --i)
 		{
 			if( (szTempBuf[i] == '\\') || (szTempBuf[i] == '/') )
@@ -273,7 +273,7 @@ void LTEffectInclude::PopPath()
 void LTEffectInclude::BuildPath(char* szBuffer, const char* szPath, int nMaxLength)
 {
 	//build filename
-	int nLen = strlen(szPath);
+	int nLen = (int)strlen(szPath);
 
 	//rewind until we find a slash or end of string
 	int i = 0;

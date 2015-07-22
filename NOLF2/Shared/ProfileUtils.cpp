@@ -82,9 +82,9 @@ static void DelimitedStringToStringSet( std::string const& sDelimitedString, Str
 	uint32 nPos = 0;
 	while( nPos < sDelimitedString.size( ))
 	{
-		uint32 nNextPos = sDelimitedString.find( ',', nPos );
+		uint32 nNextPos = (uint32)(sDelimitedString.find( ',', nPos ));
 		if( nNextPos == std::string::npos )
-			nNextPos = sDelimitedString.size( );
+			nNextPos = (uint32)(sDelimitedString.size());
 
 		uint32 nNumChars = nNextPos - nPos;
 		std::string sItem = sDelimitedString.substr( nPos, nNumChars );

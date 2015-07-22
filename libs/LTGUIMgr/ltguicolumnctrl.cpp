@@ -101,7 +101,7 @@ uint8 CLTGUIColumnCtrl::AddColumn(const char *pString, uint16 nWidth, LTBOOL bCl
 	CalculateSize();
 
 
-    return m_columnArray.size() - 1;
+    return (uint8)(m_columnArray.size() - 1);
 }
 
 

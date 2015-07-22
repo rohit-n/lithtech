@@ -304,7 +304,7 @@ LTBOOL CLTGUICycleCtrl::OnLeft ( )
 	uint8 newSel = m_nSelIndex;
 	if ( newSel == 0 )
 	{
-		newSel=m_stringArray.size()-1;
+		newSel=(uint8)(m_stringArray.size()-1);
 	}
 	else
 		newSel--;

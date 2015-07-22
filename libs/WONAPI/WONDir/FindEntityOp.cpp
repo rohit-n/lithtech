@@ -62,7 +62,7 @@ WONStatus FindEntityOp::GetNextRequest()
 
 	aMsg.AppendWString(mDisplayName);		// Match DisplayName
 
-	aMsg.AppendShort(mFindDataObjects.size());	// num data objects
+	aMsg.AppendShort((short)(mFindDataObjects.size()));	// num data objects
 	
 	DirDataObjectList::iterator aFindItr = mFindDataObjects.begin();
 	while(aFindItr!=mFindDataObjects.end())
@@ -74,7 +74,7 @@ WONStatus FindEntityOp::GetNextRequest()
 		++aFindItr;
 	}
 
-	aMsg.AppendShort(mGetDataTypes.size()); // Num Get DataObjects
+	aMsg.AppendShort((short)(mGetDataTypes.size())); // Num Get DataObjects
 	DirDataTypeSet::iterator aGetItr = mGetDataTypes.begin();
 	while(aGetItr!=mGetDataTypes.end())
 	{

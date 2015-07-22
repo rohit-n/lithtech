@@ -43,7 +43,7 @@ WONStatus EntityModifyDataObjectsOp::GetNextRequest()
 		aMsg.AppendBuffer(mNetAddr,1);
 	}
 
-	aMsg.AppendShort(mDataObjectMods.size());
+	aMsg.AppendShort((short)(mDataObjectMods.size()));
 	DataObjectModList::iterator anItr = mDataObjectMods.begin();
 	while(anItr!=mDataObjectMods.end())
 	{

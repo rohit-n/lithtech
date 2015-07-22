@@ -696,7 +696,7 @@ LTBOOL CSurfaceMgrPlugin::PopulateStringList(char** aszStrings, uint32* pcString
 
 		if (*pCurSurf && (*pCurSurf)->szName[0])
 		{
-            uint32 dwSurfaceNameLen = strlen((*pCurSurf)->szName);
+            uint32 dwSurfaceNameLen = (uint32)strlen((*pCurSurf)->szName);
 
 			if (dwSurfaceNameLen < cMaxStringLength && ((*pcStrings) + 1) < cMaxStrings)
 			{

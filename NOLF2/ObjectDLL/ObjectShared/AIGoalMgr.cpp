@@ -61,7 +61,7 @@ void CAIGoalMgr::Save(ILTMessage_Write *pMsg)
 {
 	// Save list of goals.
 
-	SAVE_DWORD(m_lstGoals.size());
+	SAVE_DWORD((uint32)(m_lstGoals.size()));
 
 	CAIGoalAbstract* pGoal;
 	AIGOAL_LIST::iterator it;
@@ -100,7 +100,7 @@ void CAIGoalMgr::Save(ILTMessage_Write *pMsg)
 
 	// Save goal script.
 
-	SAVE_DWORD(m_lstScriptGoals.size());
+	SAVE_DWORD((uint32)(m_lstScriptGoals.size()));
 
 	GOAL_SCRIPT_STRUCT* gss;
 	GOAL_SCRIPT_LIST::iterator gsit;
@@ -116,7 +116,7 @@ void CAIGoalMgr::Save(ILTMessage_Write *pMsg)
 
 	// Save queued goals.
 
-	SAVE_DWORD( m_lstQueuedGoals.size() );
+	SAVE_DWORD( (uint32)(m_lstQueuedGoals.size()) );
 	QUEUED_AIGOAL_LIST::iterator qgit;
 	for(qgit = m_lstQueuedGoals.begin(); qgit != m_lstQueuedGoals.end(); ++qgit)
 	{
@@ -131,7 +131,7 @@ void CAIGoalMgr::Save(ILTMessage_Write *pMsg)
 
 	// Save queued goal prefix commands.
 
-	SAVE_DWORD( m_lstQueuedPrefixCmdGoals.size() );
+	SAVE_DWORD( (uint32)(m_lstQueuedPrefixCmdGoals.size()) );
 	for(qgit = m_lstQueuedPrefixCmdGoals.begin(); qgit != m_lstQueuedPrefixCmdGoals.end(); ++qgit)
 	{
 		SAVE_DWORD( *qgit );
@@ -1353,7 +1353,7 @@ bool CAIGoalMgr::HandleCommand(const CParsedMsg &cMsg)
 	static CParsedMsg::CToken s_cTok_RemoveGoal(GOAL_CMD_REMOVEGOAL);
 	static CParsedMsg::CToken s_cTok_GoalScript(GOAL_CMD_GOALSCRIPT);
 
-	uint8 len = strlen(GOAL_CMD_PREFIX);
+	uint8 len = (uint8)strlen(GOAL_CMD_PREFIX);
 
 	if( _strnicmp( cMsg.GetArg(0), GOAL_CMD_PREFIX, len ) == 0 )
 	{

@@ -837,7 +837,7 @@ LTRESULT CLTDirectMusicMgr::InitLevel(const char* sWorkingDirectory, const char*
 	{
 		// create a string to hold the new control file name
 		char * sNewControlFileName;
-		uint32 nNewControlFileNameLen = strlen(sWorkingDirectory)+strlen(sControlFileName)+2;
+		uint32 nNewControlFileNameLen = (uint32)(strlen(sWorkingDirectory)+strlen(sControlFileName)+2);
 		LT_MEM_TRACK_ALLOC(sNewControlFileName = new char[nNewControlFileNameLen], LT_MEM_TYPE_MUSIC);
 		if (sNewControlFileName == LTNULL) return LT_ERROR;
 
@@ -847,7 +847,7 @@ LTRESULT CLTDirectMusicMgr::InitLevel(const char* sWorkingDirectory, const char*
 		// see if we need to append a backslash to directory
 		if (strlen(sWorkingDirectory) > 0)
 		{
-			int nLastPos = strlen(sWorkingDirectory)-1;
+			int nLastPos = (int)strlen(sWorkingDirectory)-1;
 			if ((sWorkingDirectory[nLastPos] != '\\') && 
 				(sWorkingDirectory[nLastPos] != '/') &&
 				(sWorkingDirectory[nLastPos] != ':'))
@@ -2860,7 +2860,7 @@ bool CLTDirectMusicMgr::CSegment::SetSegmentName(const char* sSegmentName)
 	else
 	{
 		// find out the length of the string
-		int nLen = strlen(sSegmentName);
+		int nLen = (int)strlen(sSegmentName);
 
 		// check if we need to use the long storage method
 		if (nLen > 63)
@@ -3051,7 +3051,7 @@ bool CLTDirectMusicMgr::CStyle::SetStyleName(const char* sStyleName)
 	else
 	{
 		// find out the length of the string
-		int nLen = strlen(sStyleName);
+		int nLen = (int)strlen(sStyleName);
 
 		// check if we need to use the long storage method
 		if (nLen > 63)

@@ -51,7 +51,7 @@ WONStatus GetServiceOp::GetNextRequest()
 	aMsg.AppendWString(mPath);				// Directory Path
 	aMsg.AppendWString(mName);				// Name of service
 	aMsg.AppendBuffer(mNetAddr,1);			// Net address
-	aMsg.AppendShort(mDataTypes.size());	// Number of data types requested
+	aMsg.AppendShort((short)(mDataTypes.size()));	// Number of data types requested
 	
 	DirDataTypeSet::iterator anItr = mDataTypes.begin();
 	while(anItr!=mDataTypes.end())

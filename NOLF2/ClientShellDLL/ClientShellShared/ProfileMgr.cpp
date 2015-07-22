@@ -1613,7 +1613,7 @@ void CProfileMgr::Term()
 void CProfileMgr::GetProfileList(StringSet& profileList)
 {
 	struct _finddata_t file;
-	long hFile;
+	intptr_t hFile;
 
 	std::string directory = GetProfileFile( "*" );
 

@@ -700,7 +700,7 @@ LPBASECLASS	CGameServerShell::OnClientEnterWorld(HCLIENT hClient)
 	}
 
 	// Set our clientname from the netclientdata.
-	g_pLTServer->SetClientName( hClient, pszClientName, strlen( pszClientName ) + 1 );
+	g_pLTServer->SetClientName( hClient, pszClientName, (int)strlen( pszClientName ) + 1 );
 
 	// See if we can use a player from one of the clientrefs.
 	pPlayer = PickClientRefPlayer( hClient );
@@ -799,7 +799,7 @@ void CGameServerShell::SendObjectivesDataToClient( HCLIENT hClient )
 	CAutoMessage cMsg;
 	cMsg.Writeuint8( MID_OBJECTIVES_DATA );
 
-	int nNumObj = m_Objectives.m_IDArray.size();
+	int nNumObj = (int)(m_Objectives.m_IDArray.size());
 
 	//send total number of objectives
     cMsg.Writeuint8((uint8)nNumObj);
@@ -812,7 +812,7 @@ void CGameServerShell::SendObjectivesDataToClient( HCLIENT hClient )
 	}
 
 	//send total number of optional objectives
-	nNumObj = m_OptionalObjectives.m_IDArray.size();
+	nNumObj = (int)(m_OptionalObjectives.m_IDArray.size());
     cMsg.Writeuint8((uint8)nNumObj);
 
 	//send list of optional objectives
@@ -822,7 +822,7 @@ void CGameServerShell::SendObjectivesDataToClient( HCLIENT hClient )
 	}
 
 	//send total number of completed objectives
-	nNumObj = m_CompletedObjectives.m_IDArray.size();
+	nNumObj = (int)(m_CompletedObjectives.m_IDArray.size());
     cMsg.Writeuint8((uint8)nNumObj);
 
 	//send list of general completed objectives
@@ -832,7 +832,7 @@ void CGameServerShell::SendObjectivesDataToClient( HCLIENT hClient )
 	}
 
 	//send total number of mission parameters
-	nNumObj = m_Parameters.m_IDArray.size();
+	nNumObj = (int)(m_Parameters.m_IDArray.size());
     cMsg.Writeuint8((uint8)nNumObj);
 
 	//send list of mission parameters
@@ -2890,7 +2890,7 @@ GameStartPoint* CGameServerShell::FindStartPoint(CPlayerObj* pPlayer)
 	std::sort(lstValidStartPts.begin(),lstValidStartPts.end(),GameStartPointLesser() );
 
     pStartPt = LTNULL;
-	int nCount = lstValidStartPts.size();
+	int nCount = (int)(lstValidStartPts.size());
 
 	// Get the index into the valid list based on game type...
 
@@ -4220,7 +4220,7 @@ bool CGameServerShell::OnServerShellInit( )
 	char const* pszFirstMission = NULL;
 
 	Campaign& campaign = g_pServerMissionMgr->GetCampaign( );
-	cLevelsMsg.Writeuint8( campaign.size( ));
+	cLevelsMsg.Writeuint8( (uint8)(campaign.size()) );
 	char fname[_MAX_FNAME] = "";
 	for( Campaign::iterator iter = campaign.begin( ); iter != campaign.end( ); iter++ )
 	{

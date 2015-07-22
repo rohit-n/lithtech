@@ -100,7 +100,7 @@ LTBOOL CScreenPerformance::Build()
 	m_nextPos.y = GetPageTop();
 
 	m_pPerformance = AddCycle(IDS_PERFORMANCE,IDS_HELP_PERFORMANCE,kGap,&m_nOverall);
-	kNumCfg = g_pPerformanceMgr->m_ConfigList.size();
+	kNumCfg = (int)(g_pPerformanceMgr->m_ConfigList.size());
 
 	for (int i = 0; i < kNumCfg; i++)
 	{

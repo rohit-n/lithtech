@@ -319,7 +319,7 @@ void CSoundButeMgr::LoadSoundButes(const char * szTagName, SoundBute * pButes, S
 		sprintf(aAttribName, "%s%d", SOUND_BUTE_PATH, nNumSoundButes);
 	}
 
-	pFiles->m_nNumSounds = pFiles->m_szSounds.size();
+	pFiles->m_nNumSounds = (uint32)(pFiles->m_szSounds.size());
 
 	ASSERT( pFiles->m_fWeights.size() == pFiles->m_nNumSounds );
 

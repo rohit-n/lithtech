@@ -63,7 +63,7 @@ CUI_RESULTTYPE CUIStaticText_Impl::SetText(const char* pText)
 	float y		= m_Rect.y + m_GutterTop; 
 	uint32 wrap	= (uint32) (m_Rect.width - m_GutterRight - m_GutterLeft);
 
-	int32 len = strlen(pText);
+	int32 len = (int32)strlen(pText);
 
 	// make sure there's a font
 	if (!m_pFont) return CUIR_NO_FONT;

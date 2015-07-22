@@ -136,7 +136,7 @@ public:
 		return false;
 	}
 
-	virtual uint32					GetRenderPassCount()									{ return m_RenderPasses.size(); }
+	virtual uint32					GetRenderPassCount()									{ return (uint32)(m_RenderPasses.size()); }
 
 	// Platform Options: Direct3D...
 	virtual bool					SetDirect3D_Options(RSD3DOptions& Options)

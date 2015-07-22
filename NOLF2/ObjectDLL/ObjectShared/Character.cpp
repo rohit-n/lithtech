@@ -3866,7 +3866,7 @@ void CCharacter::Save(ILTMessage_Write *pMsg)
 	SAVE_FLOAT(m_fLastPitch);
 
 	// Inventory
-	SAVE_INT(m_lstInventory.size());
+	SAVE_INT((int32)(m_lstInventory.size()));
 
 	GEN_INVENTORY_LIST::iterator iter;
 	for(iter=m_lstInventory.begin();iter!=m_lstInventory.end();iter++)

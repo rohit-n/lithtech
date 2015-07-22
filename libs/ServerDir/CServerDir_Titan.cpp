@@ -35,7 +35,7 @@ HMODULE g_hResourceModule = NULL;
 // Functions which are handy for dealing with Titan...
 static std::wstring Make_wstring(const std::string &cString)
 {
-	uint32 nStrLen = cString.length();
+	uint32 nStrLen = (uint32)(cString.length());
 	wchar_t *pTempBuffer = (wchar_t*)alloca(sizeof(wchar_t) * (nStrLen + 1));
 
 	// Convert it into our temporary buffer
@@ -59,7 +59,7 @@ static std::wstring Make_wstring(const std::string &cString)
 static void Make_string(const std::wstring &cString, std::string& cOutString )
 {
 	cOutString.erase( );
-	uint32 nStrLen = cString.length();
+	uint32 nStrLen = (uint32)(cString.length());
 	char *pTempBuffer = (char*)alloca(sizeof(char) * (nStrLen + 1));
 
 	// Convert it into our temporary buffer
@@ -2155,8 +2155,8 @@ bool CServerDirectory_Titan::HandleNetMsg_DetailInfo_Query(ILTMessage_Read &cMsg
 	pResponse->Writeuint8(eSDTitan_Msg_DetailInfo_Response);
 	m_cPeerCS.Enter();
 	SPeerData::TRawData &cDetails = m_aPeerInfo.front().m_cDetails;
-	pResponse->Writeuint32(cDetails.size());
-	pResponse->WriteData(&(*(cDetails.begin())), cDetails.size() * 8);
+	pResponse->Writeuint32((uint32)(cDetails.size()));
+	pResponse->WriteData(&(*(cDetails.begin())), (uint32)(cDetails.size() * 8));
 	m_cPeerCS.Leave();
 
 	// Send it off

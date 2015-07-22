@@ -503,7 +503,7 @@ static void packet_send(qr_t qrec, struct sockaddr *addr, char *buffer)
 	qrec->packetnumber++; //packet numbers start at 1
 	sprintf(keyvalue,"\\queryid\\%d.%d",qrec->queryid, qrec->packetnumber);
 	strcat(buffer,keyvalue);
-	sendto(qrec->querysock, buffer, strlen(buffer), 0, addr, sizeof(struct sockaddr_in));
+	sendto(qrec->querysock, buffer, (int)strlen(buffer), 0, addr, sizeof(struct sockaddr_in));
 	buffer[0]='\0';
 }
 
@@ -615,10 +615,10 @@ static void send_final(qr_t qrec, struct sockaddr *sender, char *outbuf,char *va
 	
 	if (validation[0])
 	{
-		keylen = strlen(validation);
+		keylen = (int)strlen(validation);
 		if (keylen > 128) return;
 		strcpy(encrypted_val, validation);
-		gs_encrypt((uchar *)qrec->secret_key, strlen(qrec->secret_key), (uchar *)encrypted_val, keylen);
+		gs_encrypt((uchar *)qrec->secret_key, (int)strlen(qrec->secret_key), (uchar *)encrypted_val, keylen);
 		gs_encode((uchar *)encrypted_val,keylen, (uchar *)encoded_val);
 		sprintf(keyvalue,"\\validate\\%s",encoded_val);
 		buffer_send(qrec,sender, outbuf, keyvalue);
@@ -710,7 +710,7 @@ static void send_heartbeat(qr_t qrec, int statechanged)
 			send(qrec->hbsock, buf, strlen(buf), 0); /* try again */
 	}
 #else
-	ret = sendto(qrec->hbsock, buf, strlen(buf), 0, (struct sockaddr *)&hbaddr, sizeof(struct sockaddr_in));
+	ret = sendto(qrec->hbsock, buf, (int)strlen(buf), 0, (struct sockaddr *)&hbaddr, sizeof(struct sockaddr_in));
 #endif
 
 	qrec->lastheartbeat = current_time();

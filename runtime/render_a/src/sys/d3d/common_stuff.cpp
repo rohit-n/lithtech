@@ -28,7 +28,7 @@ void AddDebugMessage(uint32 debugLevel, const char *pMsg, ...)
 
 		va_end(marker);
 
-		int32 len = strlen(msg);
+		int32 len = (int32)strlen(msg);
 		if (msg[len-1] != '\n')
 		{
 			msg[len] = '\n';

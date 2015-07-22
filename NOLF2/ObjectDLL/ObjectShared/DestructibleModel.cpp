@@ -346,7 +346,8 @@ uint32 CDestructibleModel::ObjectMessageFn(LPBASECLASS pObject, HOBJECT hSender,
 
 		case MID_TRIGGER:
 		{
-			const char* szMsg = (const char*)pMsg->Readuint32();
+			// MW-TODO Previously Readuint32
+			const char* szMsg = (const char*)pMsg->Readuintptr();
 
 			// ConParse does not destroy szMsg, so this is safe
 			ConParse parse;

@@ -821,7 +821,7 @@ char* InsertCommandFile(const char* pszCmdFile, const char* pszCurrCmdLine, uint
 	uint32 nNewBufferSize = nFileSize;
 
 	//add in the old string
-	uint32 nCurrCmdLineLen = strlen(pszCurrCmdLine);
+	uint32 nCurrCmdLineLen = (uint32)strlen(pszCurrCmdLine);
 	nNewBufferSize += nCurrCmdLineLen;
 
 	//and remove the section that held the -cmdfile

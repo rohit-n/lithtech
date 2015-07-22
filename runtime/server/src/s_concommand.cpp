@@ -187,7 +187,7 @@ static void con_ObjectInfo(int argc, char *argv[])
     {
         totalBytes += totalClassBytes[i];
                 
-		for (int32 j = strlen(classNames[i]); j < 30; j++)
+		for (int32 j = (int32)strlen(classNames[i]); j < 30; j++)
         {
 			(classNames[i])[j] = ' ';
         }

@@ -51,7 +51,7 @@ public:
 	bool AtomicClearAndAddAddressesFromDir(const DirEntityMap &theDir, const std::wstring &thePath, const wchar_t *theNameFilter = NULL);
 
 
-	unsigned long GetNumAddresses() { return mAddrMap.size(); }
+	unsigned long GetNumAddresses() { return (unsigned long)(mAddrMap.size()); }
 	bool IsEmpty() { return mAddrMap.empty(); }
 };
 

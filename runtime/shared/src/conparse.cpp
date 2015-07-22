@@ -86,11 +86,15 @@ static GNTResult cp_GetNextToken(const char* &pCurPos, char* &pTokenPos)
 
 	parenCount = 0;
 	
+	// Is there even a string?
+	if(pCurPos[0] == 0)
+		return GNT_NoToken;
+
 	// Skip spaces.
 	while(pCurPos[0] == ' ')
 		pCurPos++;
 
-	// Is there even a string?
+	// Is there anything left?
 	if(pCurPos[0] == 0)
 		return GNT_NoToken;
 

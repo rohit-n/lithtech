@@ -312,7 +312,7 @@ void CMusicMgr::DoEvent(Event eEvent)
 bool CMusicMgr::SetMood( Mood eMood )
 {
 	char szMusic[128];
-	uint32 iLevel = GetRandom(0, m_acMoods[eMood]-1);
+	uint32 iLevel = GetRandom(0, m_acMoods[eMood]); // MW-TODO: 64-bit crashes here with the minus 1? -1);
 	sprintf(szMusic, "MUSIC I %d measure", m_aanMoods[eMood][iLevel]);
 
 #ifndef _FINAL

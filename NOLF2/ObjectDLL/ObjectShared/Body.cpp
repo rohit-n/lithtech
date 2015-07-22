@@ -2126,7 +2126,7 @@ void Body::CapNumberOfBodies( )
 	}
 
 	// Get the number of bodies that will be removed by the radius check.
-	int nNumCapByRadius = queRadius.size( ) - nBodyCapRadiusCount;
+	int nNumCapByRadius = (int)(queRadius.size( )) - nBodyCapRadiusCount;
 	nNumCapByRadius = Max( 0, nNumCapByRadius );
 
 	// Remove all the farthest bodies until the density is good.
@@ -2148,7 +2148,7 @@ void Body::CapNumberOfBodies( )
 
 	// Keep the whole level capped by removing the very farthest bodies.  Consider
 	// bodies removed by radius as not part of the total count.
-	int nTotalCount = queTotal.size( ) - nNumCapByRadius - nBodyCapTotalCount;
+	int nTotalCount = (int)(queTotal.size()) - nNumCapByRadius - nBodyCapTotalCount;
 	while( nTotalCount > 0 )
 	{
 		// Get the farthest body.

@@ -2306,7 +2306,7 @@ AINodeChangeWeapons::AINodeChangeWeapons()
 	// 
 	AINode::Save(pMsg);
 
-	SAVE_DWORD(m_WeaponSets.size());
+	SAVE_DWORD((uint32)(m_WeaponSets.size()));
 	for ( unsigned int x = 0; x < m_WeaponSets.size(); x++ )
 	{
 		ChangeWeaponSet& WeaponSet = m_WeaponSets.at(x);

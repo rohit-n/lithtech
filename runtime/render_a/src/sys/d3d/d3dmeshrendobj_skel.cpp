@@ -91,7 +91,7 @@ void CD3DSkelMesh::CalcUsedNodes( Model *pModel )
 	}
 
 	// transfer the new information from here to the renderobject.
-	CreateUsedNodeList(node_list.size());
+	CreateUsedNodeList((uint32)(node_list.size()));
 	for( uint32 iNodeCnt =0 ; iNodeCnt < node_list.size() ; iNodeCnt++ )
 	{
 		m_pUsedNodeList[iNodeCnt] = node_list[iNodeCnt];

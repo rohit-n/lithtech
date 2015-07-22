@@ -93,7 +93,7 @@ char* CRegMgr::Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* s
 Default:
   if (sDef != NULL) {
     strcpy(sBuf,sDef);
-    nBufSize = strlen(sBuf);
+    nBufSize = (UINT32)strlen(sBuf);
     return sBuf;
   }
   else {

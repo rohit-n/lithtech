@@ -101,7 +101,7 @@ bool IPAddr::Set(const std::string &theHost, unsigned short thePort)
 ///////////////////////////////////////////////////////////////////////////////
 bool IPAddr::Set(const std::string &theHostAndPort)
 {
-	int aColonIdx = theHostAndPort.find(':');
+	int aColonIdx = (int)(theHostAndPort.find(':'));
 	if(aColonIdx==string::npos)
 	{
 		mIsValid = false;
@@ -154,7 +154,7 @@ void IPAddr::Set(long theHost, unsigned short thePort)
 ///////////////////////////////////////////////////////////////////////////////
 bool IPAddr::SetWithDefaultPort(const std::string &theHostAndPort, unsigned short theDefaultPort)
 {
-	int aColonIdx = theHostAndPort.find(':');
+	int aColonIdx = (int)(theHostAndPort.find(':'));
 	if(aColonIdx==string::npos)
 		return Set(theHostAndPort,theDefaultPort);
 	else

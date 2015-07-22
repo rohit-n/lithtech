@@ -92,7 +92,7 @@ void CAIGoalInvestigate::Save(ILTMessage_Write *pMsg)
 	SAVE_BOOL(m_bLookOnly);
 
 	AI_INVESTIGATION_MEMORY_MAP::iterator it;
-	SAVE_DWORD(m_mapInvestMemory.size());
+	SAVE_DWORD((uint32)(m_mapInvestMemory.size()));
 	for( it = m_mapInvestMemory.begin(); it != m_mapInvestMemory.end(); ++it )
 	{
 		SAVE_DWORD(it->first);

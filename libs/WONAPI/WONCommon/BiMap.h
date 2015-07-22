@@ -175,7 +175,7 @@ public:
 	ConstKeyItr end()   const { return mKeyMap.end(); }
 	
 	bool empty() const { return mKeyMap.empty(); }
-	int size() const { return mKeyMap.size(); }
+	size_t size() const { return mKeyMap.size(); }
 protected:
 	void Copy(const BiMap& theOtherR)
 	{ 

@@ -235,7 +235,7 @@ public:
 			LeaveCriticalSection(&m_pTree->m_CriticalSection);
 			#endif
 			
-			m_SeekOffset += sizeRead;
+			m_SeekOffset += (uint32)sizeRead;
 			g_pDeFileLastRezItm = m_pRezItm;
 			g_nDeFileLastRezPos = m_SeekOffset;
 			if(sizeRead != size)
@@ -283,7 +283,7 @@ struct LTFindData
 {
 	FileTree		*m_pTree;
 	_finddata_t		m_Data;
-	long			m_Handle;
+	intptr_t		m_Handle;
 	CRezDir*		m_pCurDir;
 	CRezTyp*		m_pCurTyp;
 	CRezItm*		m_pCurItm;
@@ -309,7 +309,8 @@ void df_Term()
 int df_OpenTree(const char *pName, HLTFileTree *&pTreePointer)
 {
 	_finddata_t data;
-	long handle, allocSize;
+	size_t allocSize;
+	intptr_t handle;
 	FileTree *pTree;
 
 	
@@ -402,7 +403,7 @@ TreeType df_GetTreeType(HLTFileTree *hTree)
 bool df_GetFileInfo(HLTFileTree *hTree, const char *pName, LTFindInfo *pInfo) {
 	FileTree *pTree;
 	_finddata_t data;
-	long handle, curRet;
+	intptr_t handle, curRet;
 	char fullName[500];
 	CRezItm* pRezItm;
 
@@ -459,7 +460,7 @@ int df_GetDirInfo(HLTFileTree *hTree, char *pName)
 {
 	FileTree *pTree;
 	_finddata_t data;
-	long handle, curRet;
+	intptr_t handle, curRet;
 	char fullName[500];
 	CRezDir* pRezDir;
 
@@ -576,7 +577,7 @@ int df_FindNext(HLTFileTree *hTree, const char *pDirName, LTFindInfo *pInfo)
 	LTFindData *pFindData;
 	char filter[400];
 	FileTree *pTree;
-	long curRet;
+	intptr_t curRet;
 	CRezItm* pRezItm;
 	CRezDir* pRezDir;
 	CRezTyp* pRezTyp;

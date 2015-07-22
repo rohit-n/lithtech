@@ -134,7 +134,7 @@ bool CConIterator::Next( const char *pValue )
 	if ( !pValue )
 		return NextItem();
 
-	int iLength = strlen( pValue );
+	int iLength = (int)strlen( pValue );
 
 	bool bFound = false;
 
@@ -158,7 +158,7 @@ bool CConIterator::Prev( const char *pValue )
 	if ( !pValue )
 		return PrevItem();
 
-	int iLength = strlen( pValue );
+	int iLength = (int)strlen( pValue );
 
 	bool bFound = false;
 
@@ -245,7 +245,7 @@ void CConCommandBox::SetCommand( const char *pCommand )
 	{
 		// Copy the string
 		LTStrCpy( m_CurCommand, pCommand, MAX_CONSOLE_TEXTLEN );
-		m_iCurLength = strlen( m_CurCommand );
+		m_iCurLength = (int)strlen( m_CurCommand );
 		// Move to the end of the string
 		MoveCursor( m_iCurLength );
 	}

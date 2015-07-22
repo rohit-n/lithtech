@@ -256,7 +256,7 @@ void CKeyMgr::Save( ILTMessage_Write *pMsg, uint32 dwSaveFlags )
 	if( !pMsg )
 		return;
 
-	uint32 dwEntries = m_mapKeyControl.size();
+	uint32 dwEntries = (uint32)(m_mapKeyControl.size());
 	pMsg->Writeuint32( dwEntries );
 
 	KeyControlMap::iterator iter = m_mapKeyControl.begin();
@@ -368,7 +368,7 @@ LTBOOL CKeyMgrPlugin::PopulateStringList(char** aszStrings, uint32* pcStrings,
 		pKey = g_pKeyMgr->GetKey(i);
 		if (pKey && pKey->szName[0])
 		{
-            uint32 dwImpactFXNameLen = strlen(pKey->szName);
+            uint32 dwImpactFXNameLen = (uint32)strlen(pKey->szName);
 
 			if (dwImpactFXNameLen < cMaxStringLength && ((*pcStrings) + 1) < cMaxStrings)
 			{

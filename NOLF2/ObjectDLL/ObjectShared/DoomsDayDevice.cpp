@@ -293,7 +293,7 @@ bool DoomsDayDevice::ReadProp( ObjectCreateStruct* pStruct )
 			{
 				// The team string should be TeamN, when N is the team id.
 				char const szTeam[] = "Team";
-				int nLen = strlen( szTeam );
+				int nLen = (int)strlen( szTeam );
 				if( !_strnicmp( genProp.m_String, szTeam, nLen ))
 				{
 					uint32 nTeamId = atoi( &genProp.m_String[ nLen ] );
@@ -932,7 +932,7 @@ void DoomsDayDevice::Save(ILTMessage_Write *pMsg, uint32 dwSaveFlags)
 	SAVE_BYTE( m_nOwningTeamID );
 	SAVE_FLOAT( m_fDropZoneRadius );
 
-	SAVE_DWORD( m_lsthTargets.size() );
+	SAVE_DWORD( (uint32)(m_lsthTargets.size()) );
 
 	TargetList::const_iterator iter;
 	for( iter = m_lsthTargets.begin(); iter != m_lsthTargets.end(); ++iter )

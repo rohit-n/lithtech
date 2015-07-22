@@ -184,7 +184,7 @@ void CPerformanceMgr::BuildConfigList()
 	m_ConfigList.push_back(&cfgDefaultLow);
 
 	struct _finddata_t file;
-	long hFile;
+	intptr_t hFile;
 
 	std::string directory = CONFIG_DIR + "*" + CONFIG_EXT;
 

@@ -8,7 +8,7 @@ void RoutingSendDataOp::SendRequest()
 	InitSendMsg(RoutingSendDataRequest);
 	mSendMsg.AppendByte(mFlags);
 	mSendMsg.AppendBuffer(mData,2);
-	mSendMsg.AppendShort(mRecipients.size());
+	mSendMsg.AppendShort((short)(mRecipients.size()));
 	RoutingRecipientList::iterator anItr = mRecipients.begin();
 	while(anItr!=mRecipients.end())
 	{

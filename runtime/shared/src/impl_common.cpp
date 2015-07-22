@@ -214,7 +214,11 @@ FileEntry* ic_GetFileList(HLTFileTree **trees, int nTrees, const char *pDirName)
 {	
 	IC_FileEntry *pEntry, *pList;
 	LTFindInfo findInfo;
+#ifdef _M_IX86
 	unsigned long allocSize;
+#else
+	size_t allocSize;
+#endif
 	char fullName[_MAX_PATH + 1];
 	int i;
 

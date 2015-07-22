@@ -37,15 +37,15 @@ bool VersionBaseOp::IsFiltered(const std::string &theVersion, const std::string&
 
 	while (aLineStart != -1 && aKey != "pt")
 	{
-		aSpacePos = versionDescription.find(' ',aLineStart);
+		aSpacePos = (unsigned int)(versionDescription.find(' ',aLineStart));
 		aKey = versionDescription.substr(aLineStart, aSpacePos-aLineStart);
 
-		aLineStart = versionDescription.find('\n',aSpacePos);
+		aLineStart = (unsigned int)(versionDescription.find('\n',aSpacePos));
 		if (aLineStart != -1)
 			++aLineStart;
 		else
 		{
-			aLineStart = versionDescription.find('\r',aSpacePos);
+			aLineStart = (unsigned int)(versionDescription.find('\r',aSpacePos));
 			if (aLineStart != -1)
 				++aLineStart;
 		}
@@ -59,7 +59,7 @@ bool VersionBaseOp::IsFiltered(const std::string &theVersion, const std::string&
 
 			// Depending upon how the info was entered, we might have '\n' or '\r\n' line breaks, 
 			// so assume the worst and remove both as needed.
-			unsigned int aRemove = aKeyValue.find('\n');
+			unsigned int aRemove = (unsigned int)(aKeyValue.find('\n'));
 			if (aRemove != std::string::npos)
 				aKeyValue = aKeyValue.erase(aRemove, 1);
 
@@ -168,7 +168,7 @@ void VersionBaseOp::BuildVersionFilterSet(const std::string &theFilterString, Fi
 {
 	// Parse each token and append to the list
 	unsigned int lastPos = 0;
-	unsigned int commaPos = theFilterString.find(',');
+	unsigned int commaPos = (unsigned int)(theFilterString.find(','));
 
 	theFilterSet.clear();
 	if (theFilterString.length() == 0)

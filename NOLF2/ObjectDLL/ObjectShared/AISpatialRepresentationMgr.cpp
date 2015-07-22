@@ -82,7 +82,7 @@ void CAISpatialRepresentationMgr::Save(ILTMessage_Write *pMsg)
 {
 	SAVE_BOOL(m_bInitialized);
 
-	SAVE_INT(m_listpVolumes.size());
+	SAVE_INT((int32)(m_listpVolumes.size()));
 	for ( uint32 iVolume = 0; iVolume < m_listpVolumes.size(); iVolume++ )
 	{
 		SAVE_COBJECT(m_listpVolumes[iVolume]);

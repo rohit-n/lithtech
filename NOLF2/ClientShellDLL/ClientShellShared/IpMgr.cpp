@@ -275,13 +275,13 @@ BOOL CIpMgr::GetAllIpString(char* sBuf, int nBufSize)
 			const char* sIp = pIp->GetAddress();
 			if (sIp)
 			{
-				int nLen = strlen(sIp);
+				int nLen = (int)strlen(sIp);
 
 				if (nTotalSize + nLen + 2 < nBufSize)
 				{
 					if (nTotalSize > 0) strcat(sBuf, ";");
 					strcat(sBuf, sIp);
-					nTotalSize = strlen(sBuf);
+					nTotalSize = (int)strlen(sBuf);
 				}
 			}
 		}

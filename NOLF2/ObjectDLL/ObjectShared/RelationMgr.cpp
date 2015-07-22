@@ -100,7 +100,7 @@ CRelationMgr::~CRelationMgr()
 void CRelationMgr::Save(ILTMessage_Write *pMsg)
 {
 	// Save each of the collectives
-	SAVE_INT( m_listCollectives.size() );
+	SAVE_INT( (int32)(m_listCollectives.size()) );
 	std::for_each( m_listCollectives.begin(),
 		m_listCollectives.end(),
 		std::bind2nd( std::mem_fun1(&CCollectiveRelationMgr::Save), pMsg ));

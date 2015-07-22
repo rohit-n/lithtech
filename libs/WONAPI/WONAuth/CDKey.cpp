@@ -8,7 +8,7 @@ namespace
 {
 	const char* SKIPCHAR_MAP = "- \t";
 	const char*         STRINGKEY_MAP  = "CVCNCVCNCVCNCVCNNNNN";
-	const unsigned int  STRINGKEY_LEN  = strlen(STRINGKEY_MAP);
+	const unsigned int  STRINGKEY_LEN  = (unsigned int)strlen(STRINGKEY_MAP);
 	const int           DASH_OFFSET    = 4;
 	const unsigned char BETA_MASK      = 0x01;
 }
@@ -531,7 +531,7 @@ bool CDKey::LoadFromFile(const std::string &theFileName)
 		return false;
 
 	char aBuf[2048];
-	int aReadLen = fread(aBuf,1,2048,aFile);
+	int aReadLen = (int)fread(aBuf,1,2048,aFile);
 	fclose(aFile);
 	
 	return InitEncrypted(aBuf,aReadLen);

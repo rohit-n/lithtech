@@ -53,7 +53,7 @@ void WONAPI::Random::setSeed(__int64 seed)
 
 void WONAPI::Random::nextBytes(RawBuffer& bytes) 
 {
-	int numRequested = bytes.length();
+	int numRequested = (int)(bytes.length());
 	int numGot = 0;
 
 	while (numGot < numRequested) 

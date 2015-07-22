@@ -442,7 +442,7 @@ LTBOOL CGadgetTargetMgrPlugin::PopulateStringList( char** aszStrings, uint32* pc
 
 			if( GT_TYPE_TO_FLAG( pGadgetTarget->nType ) & m_dwFilterTypes ) continue;
 
-            uint32 dwGTNameLen = strlen( pGadgetTarget->szName );
+            uint32 dwGTNameLen = (uint32)strlen( pGadgetTarget->szName );
 
 			if( dwGTNameLen < cMaxStringLength && ((*pcStrings) + 1) < cMaxStrings )
 			{

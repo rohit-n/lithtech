@@ -309,7 +309,7 @@ void TransferDir(CRezDir* pDir, const char* sParamPath, const char * sExts ) {
   strcat(sFindPath,"*.*" );
 
   // being search for everything in this directory using findfirst and findnext
-  long nFindHandle = _findfirst( sFindPath, &fileinfo );
+  intptr_t nFindHandle = _findfirst( sFindPath, &fileinfo );
   if (nFindHandle >= 0) {
 
     // loop through all entries in this directory
@@ -413,7 +413,7 @@ void TransferDir(CRezDir* pDir, const char* sParamPath, const char * sExts ) {
         // figure out the ID for this file (if name is all digits use it as ID number, otherwise assign a number)
         REZID nID;
         {
-          int nNameLen = strlen(sName);
+          int nNameLen = (int)strlen(sName);
 		  int i;
           for (i = 0; i < nNameLen; i++) {
             if ((sName[i] < '0') || (sName[i] > '9')) break;
@@ -551,7 +551,7 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
   strcat(sFindPath,"*.*");
 
   // being search for everything in this directory using findfirst and findnext
-  long nFindHandle = _findfirst( sFindPath, &fileinfo );
+  intptr_t nFindHandle = _findfirst( sFindPath, &fileinfo );
   if (nFindHandle >= 0) {
 
     // loop through all entries in this directory
@@ -668,7 +668,7 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
         // figure out the ID for this file (if name is all digits use it as ID number, otherwise assign a number)
         REZID nID;
         {
-          int nNameLen = strlen(sName);
+          int nNameLen = (int)strlen(sName);
           int i;
           for (i = 0; i < nNameLen; i++) {
             if ((sName[i] < '0') || (sName[i] > '9')) break;
@@ -829,7 +829,7 @@ BOOL CheckLithHeader(CRezMgr* pMgr)
 BOOL IsCommandSet(char cFlag, const char* pszCommand)
 {
 	//get the length of the command
-	int nCommandLen = strlen(pszCommand);
+	int nCommandLen = (int)strlen(pszCommand);
 
 	//get the uppercase version of the flag
 	char cUpperFlag = toupper(cFlag);

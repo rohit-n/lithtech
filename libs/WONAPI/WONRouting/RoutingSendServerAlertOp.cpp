@@ -9,7 +9,7 @@ void RoutingSendServerAlertOp::SendRequest()
 	mSendMsg.AppendWString(mAlertText);
 
 	// Apend the user id's
-	mSendMsg.AppendShort(mRecipientList.size());
+	mSendMsg.AppendShort((short)(mRecipientList.size()));
 
 	std::list<unsigned short>::const_iterator anItr = mRecipientList.begin();
 	for (; anItr != mRecipientList.end(); ++anItr)

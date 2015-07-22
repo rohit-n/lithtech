@@ -101,7 +101,7 @@ void ICommandLineArgsCommonImp::Init(int32 argc, char **argv) {
 	int32 i;
 	for (i = 0; i < argc; i++) {
         //add in the length of this argument
-        total_length += strlen(argv[i]) + 1;
+        total_length += (int32)strlen(argv[i]) + 1;
     }
 
     //allocate the buffer to store all arguments

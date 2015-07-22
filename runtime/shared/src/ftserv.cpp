@@ -179,7 +179,7 @@ static void fts_MaybeSendDataBlock(FTServ *pServ)
 
 inline int fts_FileDescLen(FTFile *pFile)
 {
-	return sizeof(uint16) + sizeof(uint32) + strlen(pFile->m_Filename);
+	return sizeof(uint16) + sizeof(uint32) + (int)strlen(pFile->m_Filename);
 }
 
 

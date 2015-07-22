@@ -51,7 +51,7 @@ public:
 	bool SetKey(const void *theKey, int theKeyLen);
 
 	const void* GetKey() const { return mRawKey.data(); }
-	int GetKeyLen() const { return mRawKey.length(); }
+	int GetKeyLen() const { return (int)(mRawKey.length()); }
 
 	ByteBufferPtr Encrypt(const void *in, int inLen) const;
 	ByteBufferPtr Decrypt(const void *in, int inLen) const;	

@@ -45,7 +45,7 @@ WONStatus EntitySetDataObjectsOp::GetNextRequest()
 		aMsg.AppendBuffer(mNetAddr,1);
 	}
 
-	aMsg.AppendShort(mDataObjects.size());
+	aMsg.AppendShort((short)(mDataObjects.size()));
 	DirDataObjectList::iterator anItr = mDataObjects.begin();
 	while(anItr!=mDataObjects.end())
 	{

@@ -59,10 +59,13 @@ public:
 	void Writeuint16(uint16 nValue) { WriteBits(nValue, 16); }
 	void Writeuint32(uint32 nValue) { WriteBits(nValue, 32); }
 	void Writeuint64(uint64 nValue) { WriteBits64(nValue, 64); }
+	void Writeuintptr(uintptr_t nValue) { WriteBits64(nValue, sizeof(uintptr_t) * 8); }
 	void Writeint8(int8 nValue) { WriteBits((uint32)nValue, 8); }
 	void Writeint16(int16 nValue) { WriteBits((uint32)nValue, 16); }
 	void Writeint32(int32 nValue) { WriteBits((uint32)nValue, 32); }
 	void Writeint64(int32 nValue) { WriteBits64((uint64)nValue, 32); }
+	// MW-TODO: Why is the above 32? Should this be 32? Should be actually be signed? idk.
+	void Writeintptr(intptr_t nValue) { WriteBits64((uintptr_t)nValue, sizeof(uintptr_t) * 8); }
 	void Writefloat(float fValue) { WriteBits(reinterpret_cast<const uint32&>(fValue), 32); }
 	void Writedouble(double fValue) { WriteBits64(reinterpret_cast<const uint64&>(fValue), 64); }
 	void WriteLTVector(const LTVector &vValue) { WriteType(vValue); }
@@ -127,10 +130,12 @@ public:
 	uint16 Readuint16() { return (uint16)ReadBits(16); }
 	uint32 Readuint32() { return (uint32)ReadBits(32); }
 	uint64 Readuint64() { return (uint64)ReadBits64(64); }
+	uintptr_t Readuintptr() { return (uintptr_t)ReadBits64(sizeof(uintptr_t) * 8); }
 	int8 Readint8() { return (int8)ReadBits(8); }
 	int16 Readint16() { return (int16)ReadBits(16); }
 	int32 Readint32() { return (int32)ReadBits(32); }
 	int64 Readint64() { return (int64)ReadBits64(64); }
+	intptr_t Readintptr() { return (intptr_t)ReadBits64(sizeof(intptr_t) * 8); }
 	float Readfloat() { uint32 nTemp = Readuint32(); return reinterpret_cast<const float&>(nTemp); }
 	double Readdouble() { uint64 nTemp = Readuint64(); return reinterpret_cast<const double&>(nTemp); }
 	LTVector ReadLTVector() { LTVector vResult; ReadType(&vResult); return vResult; }

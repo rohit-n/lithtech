@@ -37,7 +37,7 @@ void CCryptMgr::Encrypt(std::istream& is, std::ostream& os)
 void CCryptMgr::Encrypt(istream& is, ostream& os)
 #endif // VC7
 {
-	int n = 0;
+	std::streamsize n = 0;
 	char buf[8];
 
 	while (!is.eof())
@@ -59,7 +59,7 @@ void CCryptMgr::Decrypt(std::istream& is, std::ostream& os)
 void CCryptMgr::Decrypt(istream& is, ostream& os)
 #endif // VC7
 {
-	int n = 0;
+	std::streamsize n = 0;
 	char buf[8];
 	char tbuf[8];
 	bool bFirstTime = true;

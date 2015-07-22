@@ -222,7 +222,7 @@ CUI_RESULTTYPE	CUIFormattedPolyString_Impl::SetText(const char* pBuf)
 		return CUIR_INVALID_POLYSTRING;
 	}
 
-	m_Length = strlen(pBuf);
+	m_Length = (uint16)strlen(pBuf);
 	
 	// allocate the characters if they don't exist or the buffer
 	// ain't big enough

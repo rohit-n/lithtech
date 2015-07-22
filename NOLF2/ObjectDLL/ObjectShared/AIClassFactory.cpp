@@ -48,7 +48,7 @@ CAIClassDesc::CAIClassDesc(unsigned long& uType, void* (*fctnCreate)( void* pPla
 	static CAIClassCreationDestructionTable s_AIClassCreationDestructionTable;
 	s_pAIClassCreationDestructionTable = &s_AIClassCreationDestructionTable;
 
-	uType = s_pAIClassCreationDestructionTable->m_mapAIClassCreationFctns.size() + 1;
+	uType = (unsigned long)(s_pAIClassCreationDestructionTable->m_mapAIClassCreationFctns.size() + 1);
 
 	// Add creation function.
 	s_pAIClassCreationDestructionTable->m_mapAIClassCreationFctns.insert( AICLASS_CREATION_MAP::value_type(uType, fctnCreate) );

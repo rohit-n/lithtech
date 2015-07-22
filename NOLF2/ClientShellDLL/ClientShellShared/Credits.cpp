@@ -95,7 +95,7 @@ LTBOOL CCredit::Init(char* sBuf)
 		}
 		else
 		{
-			int nCount = _mbsnbcnt((const unsigned char*)sBuf,1);
+			int nCount = (int)_mbsnbcnt((const unsigned char*)sBuf,1);
 			memcpy(&sString[i], sBuf, nCount);
 			i += nCount;
 			sBuf = (char*)_mbsinc((const unsigned char*)sBuf);

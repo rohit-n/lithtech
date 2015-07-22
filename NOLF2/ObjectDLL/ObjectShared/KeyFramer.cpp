@@ -1133,7 +1133,7 @@ void KeyFramer::DeferCommand(const CParsedMsg &cMsg)
 		strcat(m_pCommands,";");
 	}
 
-	uint32 nCurLen = strlen(m_pCommands);
+	uint32 nCurLen = (uint32)strlen(m_pCommands);
 	cMsg.ReCreateMsg(&m_pCommands[nCurLen], k_nCommandBufferLen - nCurLen, 0);
 }
 
@@ -1370,6 +1370,7 @@ void KeyFramer::Update()
 		{
 			CAutoMessage cTempMsg;
 			cTempMsg.Writeuint32(MID_TRIGGER);
+			// MW-TODO Writeuintptr?
 			cTempMsg.Writeuint32((uint32)m_pCommands);
 			ObjectMessageFn(m_hObject, cTempMsg.Read());
 			debug_deletea(m_pCommands);
@@ -2016,14 +2017,14 @@ KEYNODE* KeyFramer::FindKey(const char* pKeyName, KEYNODE* pTest, LTBOOL* pbAtOr
 	if( !baseKeyName )
 		return LTNULL;
 
-	uint32 baseKeyNameLen = strlen( baseKeyName );
+	uint32 baseKeyNameLen = (uint32)strlen( baseKeyName );
 
 	// don't bother comparing if the bases don't even match
 	if( strnicmp( baseKeyName, pKeyName, baseKeyNameLen ) != 0 )
 		return LTNULL;
 
 	// make sure there's more to the test name
-	uint32 keyNameLen = strlen( pKeyName );
+	uint32 keyNameLen = (uint32)strlen( pKeyName );
 	if( keyNameLen <= baseKeyNameLen )
 		return LTNULL;
 

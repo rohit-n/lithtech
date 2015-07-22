@@ -1766,7 +1766,7 @@ LTRESULT sm_CreateServerData(ObjectCreateStruct *pStruct,
 	else
 	{
 		pRet->m_hName = LTNULL;
-		pRet->m_hName = hs_AddElement(g_pServerMgr->m_hNameTable, pStruct->m_Name, strlen(pStruct->m_Name)+1);
+		pRet->m_hName = hs_AddElement(g_pServerMgr->m_hNameTable, pStruct->m_Name, (uint32)strlen(pStruct->m_Name)+1);
 		hs_SetElementUserData(pRet->m_hName, pObject);
 	}
 

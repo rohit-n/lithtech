@@ -72,7 +72,7 @@ LTBOOL CIntelItemList::Remove(uint32 id)
 void CIntelItemList::Save(ILTMessage_Write *pMsg)
 {
 	if (!pMsg) return;
-	pMsg->Writeuint16(m_IntelArray.size());
+	pMsg->Writeuint16((uint16)(m_IntelArray.size()));
 
 	IntelArray::iterator iter = m_IntelArray.begin();
 	while (iter != m_IntelArray.end())

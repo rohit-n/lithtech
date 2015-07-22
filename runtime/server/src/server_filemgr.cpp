@@ -109,7 +109,7 @@ ILTStream* IServerFileMgr::OpenFile(const char *pFilename) {
 
 ILTStream* IServerFileMgr::OpenFile2(const char *pFilename, int bAddUsedFile, short flags) {
     // First, see if it's in the used file list, in which case we'll use that one.
-    HHashElement *hElement = hs_FindElement(m_hFileTable, pFilename, strlen(pFilename)+1);
+    HHashElement *hElement = hs_FindElement(m_hFileTable, pFilename, (uint32)strlen(pFilename)+1);
     if (hElement) {
         UsedFile *pUsedFile = (UsedFile*)hs_GetElementUserData(hElement);
         if (pUsedFile) {
@@ -255,12 +255,12 @@ bool IServerFileMgr::GetAddedUsedFile( const char *pFilename, UsedFile **ppFile 
 
     HHashElement *hElement;
 	UsedFile *pFile;    
-	uint32 strLen ;
+	uint32 strLen;
 
     if(ppFile)
         *ppFile = NULL;
 
-    strLen = strlen(pFilename);
+    strLen = (uint32)strlen(pFilename);
 
     hElement = hs_FindElement(m_hFileTable, pFilename, strLen+1);
     if(hElement)
@@ -323,7 +323,7 @@ int IServerFileMgr::AddUsedFile(const char *pFilename, short flags, UsedFile **p
     if(ppFile)
         *ppFile = NULL;
 
-    strLen = strlen(pFilename);
+    strLen = (uint32)strlen(pFilename);
 
     hElement = hs_FindElement(m_hFileTable, pFilename, strLen+1);
     if(hElement)
@@ -343,7 +343,7 @@ int IServerFileMgr::AddUsedFile(const char *pFilename, short flags, UsedFile **p
         // Ok, setup a new file.
         pFile = m_UsedFileBank.Allocate();
 
-        hElement = hs_AddElement(m_hFileTable, pFilename, strlen(pFilename)+1);
+        hElement = hs_AddElement(m_hFileTable, pFilename, (uint32)strlen(pFilename)+1);
         pFile->m_Flags = flags;
         pFile->m_hFileTree = hTree;
         pFile->m_FileSize = file_size;

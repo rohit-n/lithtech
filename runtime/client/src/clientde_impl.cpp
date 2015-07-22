@@ -1162,7 +1162,7 @@ void CLTClient::CPrint(const char *pMsg, ...)
 	LTVSNPrintF(str, knBufferSize, pMsg, marker);
 	va_end(marker);
 
-	uint32 len = strlen(str);
+	uint32 len = (uint32)strlen(str);
 	if (str[len-1] != '\n')
 	{
 		str[len] = '\n';

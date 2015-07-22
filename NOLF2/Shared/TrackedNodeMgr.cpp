@@ -25,7 +25,7 @@ CTrackedNodeMgr::~CTrackedNodeMgr()
 
 uint32 CTrackedNodeMgr::GetNumNodes() const
 {
-	return m_cNodes.size();
+	return (uint32)(m_cNodes.size());
 }
 
 
@@ -163,7 +163,7 @@ uint32 CTrackedNodeMgr::DestroyNodesOnModel( HOBJECT hModel)
 	uint32 nNumRemoved = 0;
 
 	//go backwards removing all the items
-	for(int32 nCurrNode = m_cNodes.size() - 1; nCurrNode >= 0; nCurrNode--)
+	for(int32 nCurrNode = (int32)(m_cNodes.size()) - 1; nCurrNode >= 0; nCurrNode--)
 	{
 		if(m_cNodes[nCurrNode]->m_hModel == hModel)
 		{
@@ -182,7 +182,7 @@ uint32 CTrackedNodeMgr::DestroyNodesOnModel( HOBJECT hModel)
 
 uint32 CTrackedNodeMgr::DestroyAllNodes()
 {
-	uint32 nNumRemoved = m_cNodes.size();
+	uint32 nNumRemoved = (uint32)(m_cNodes.size());
 
 	for(NodeList::iterator it = m_cNodes.begin(); it != m_cNodes.end(); it++)
 	{

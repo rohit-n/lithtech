@@ -216,7 +216,7 @@ void FindPatchOp::DoFinish(GetDirOp *theOp)
 			anInfo.mPatchLocation = anEntity->mNetAddr;
 
 			const std::string &aPatchId = WStringToString(anEntity->mName);
-			int aPos = aPatchId.find(L'~');
+			int aPos = (int)(aPatchId.find(L'~'));
 			if(aPos==wstring::npos)
 				anInfo.mToVersion = aPatchId;
 			else

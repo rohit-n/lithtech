@@ -30,14 +30,14 @@ FTPGetOp::FTPGetOp(const std::string &theURL, bool doExtractUserAndPassword)
 	Init();
 
 	string aStr = theURL;
-	int aPos = aStr.find("://");
+	int aPos = (int)(aStr.find("://"));
 	if(aPos!=string::npos)
 		aStr = aStr.substr(aPos+3);
 
 	if(doExtractUserAndPassword)
 		ExtractUserNameAndPasswordFromURL(aStr);
 
-	aPos = aStr.find('/');
+	aPos = (int)(aStr.find('/'));
 	mHost = aStr.substr(0,aPos);
 	if(aPos!=string::npos)
 		SetRemotePath(aStr.substr(aPos+1));
@@ -53,7 +53,7 @@ FTPGetOp::FTPGetOp(const std::string &theURL, bool doExtractUserAndPassword)
 void FTPGetOp::ExtractUserNameAndPasswordFromURL(std::string &theURL)
 {
 	// Do we have UserName?
-	int aColenPos = theURL.find(':'); // Follows the user name.
+	int aColenPos = (int)(theURL.find(':')); // Follows the user name.
 	if(aColenPos!=string::npos)
 	{
 		SetUserName(theURL.substr(0,aColenPos));
@@ -61,8 +61,8 @@ void FTPGetOp::ExtractUserNameAndPasswordFromURL(std::string &theURL)
 	}
 
 	// Do we have Password?
-	int aSlashPos = theURL.find('/');         // Follows the password.
-	int aAtPos = theURL.rfind('@', aSlashPos); // Preceeds the slash.
+	int aSlashPos = (int)(theURL.find('/'));         // Follows the password.
+	int aAtPos = (int)(theURL.rfind('@', aSlashPos)); // Preceeds the slash.
 	if(aAtPos!=string::npos)
 	{
 		SetPassword(theURL.substr(0,aAtPos));
@@ -75,7 +75,7 @@ void FTPGetOp::ExtractUserNameAndPasswordFromURL(std::string &theURL)
 void FTPGetOp::SetRemotePath(const std::string &thePath)
 {
 	mRemotePath = thePath;
-	int aSlashPos = thePath.find_last_of('/');
+	int aSlashPos = (int)(thePath.find_last_of('/'));
 	if(aSlashPos==string::npos)
 	{
 		mActualPath = "";

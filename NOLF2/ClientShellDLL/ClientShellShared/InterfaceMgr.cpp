@@ -5464,7 +5464,7 @@ void CInterfaceMgr::UpdateInterfaceSFX()
 	}
 	s_oldPos = m_CursorPos;
 
-    uint32 numSfx = m_InterfaceSFX.size();
+    uint32 numSfx = (uint32)(m_InterfaceSFX.size());
 	HLOCALOBJ objs[kMaxFX];
 
 	int next = 0;

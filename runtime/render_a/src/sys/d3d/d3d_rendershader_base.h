@@ -64,10 +64,10 @@ public:
 	virtual uint32 PreviewRenderBlock(const CD3D_RenderBlock &cRenderBlock)
 	{
 		// Remember where this renderblock starts
-		m_aPreviewRenderBlocks.push_back(m_aSections.size());
+		m_aPreviewRenderBlocks.push_back((unsigned int)(m_aSections.size()));
 
 		// Tell them what their index is
-		return m_aPreviewRenderBlocks.size() - 1;
+		return (uint32)(m_aPreviewRenderBlocks.size() - 1);
 	}
 
 	// Preview a section (for growing internal buffers and etc)
@@ -327,7 +327,7 @@ public:
 		FinalizeUnlock();
 
 		// Clear the VB index
-		m_nCurVB = m_aVBs.size();
+		m_nCurVB = (uint32)(m_aVBs.size());
 
 		// Glow instead if that's what's needed
 		if (cState.m_pParams->m_eRenderMode == ViewParams::eRenderMode_Glow)
@@ -365,7 +365,7 @@ public:
 		}
 
 		// Clear the VB index
-		m_nCurVB = m_aVBs.size();
+		m_nCurVB = (uint32)(m_aVBs.size());
 
 		CRenderBlockData &cRenderBlock = m_aRenderBlocks[nRenderBlock];
 		for (uint32 nFindSection = 0; nFindSection < cRenderBlock.m_aSections.size(); ++nFindSection)
@@ -408,7 +408,7 @@ public:
 		PD3DDEVICE->SetFVF(nFVF);
 		PD3DDEVICE->SetIndices(m_pIB);
 
-		m_nCurVB = m_aVBs.size();
+		m_nCurVB = (uint32)(m_aVBs.size());
 
 		bool bChangeSection = true;
 

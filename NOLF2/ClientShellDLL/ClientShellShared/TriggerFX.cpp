@@ -404,7 +404,7 @@ void CTriggerFX::CheckPlayersWithinTrigger()
 		{
 			// Display a general transmission and messages for each player you are waiting for...
 
-			int nPlayersNotInTrig = m_lstPlayersNotInTrigger.size();
+			int nPlayersNotInTrig = (int)(m_lstPlayersNotInTrigger.size());
 
 			if( m_cs.nPlayerInsideID != (uint32)-1 )
 			{
@@ -433,7 +433,7 @@ void CTriggerFX::CheckPlayersWithinTrigger()
 		{
 			// Display a general transmission and messages for each player waiting for you...
 
-			int nPlayersInTrig = m_lstCurPlayersInTrigger.size();
+			int nPlayersInTrig = (int)(m_lstCurPlayersInTrigger.size());
 			
 			if( m_cs.nPlayerOutsideID != (uint32)-1 )
 			{

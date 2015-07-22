@@ -65,10 +65,10 @@ public:
 	{ 
 		// Parse for any comma seperated strings
 		int lastPos = 0;
-		int aCommaPos = theVersionType.find(',');
+		int aCommaPos = (int)(theVersionType.find(','));
 		std::string versionString;
 
-		for (; aCommaPos != -1; aCommaPos = theVersionType.find(',',lastPos))
+		for (; aCommaPos != -1; aCommaPos = (int)(theVersionType.find(',',lastPos)))
 		{
 			versionString = theVersionType.substr(lastPos, aCommaPos-lastPos);
 			lastPos = aCommaPos+1;
@@ -100,7 +100,7 @@ public:
 	{
 		theWriteBuffer.AppendString(mConfigName);
 		theWriteBuffer.AppendString(mVersion);
-		theWriteBuffer.AppendByte(mVersionTypeList.size());
+		theWriteBuffer.AppendByte((char)(mVersionTypeList.size()));
 
 		if (mVersionTypeList.size() != 0)
 		{

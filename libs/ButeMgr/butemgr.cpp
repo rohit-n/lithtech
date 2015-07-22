@@ -2002,7 +2002,7 @@ void CButeMgr::GetString(const char* szTagName, const char* szAttName, const cha
 
 	if( m_bSuccess )
 	{
-		uint32 nLength = strlen( pRet );
+		uint32 nLength = (uint32)strlen( pRet );
 		if ( nLength < ( int )maxLen )
 			maxLen = nLength + 1;
 		strncpy(szResult, pRet, maxLen);

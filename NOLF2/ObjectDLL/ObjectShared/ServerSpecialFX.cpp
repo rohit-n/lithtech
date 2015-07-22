@@ -457,7 +457,7 @@ LTRESULT SpecialFXPlugin::PopulateStringList( const char *szRezPath,
 	// Build the search spec path
 	sprintf( szFile, "%s\\ClientFX\\*.fcf", szRezPath );
 
-	long handle = _findfirst( szFile, &fcfFile );
+	intptr_t handle = _findfirst( szFile, &fcfFile );
 	if( handle == -1 )
 	{
 		strcpy( aszStrings[(*pcStrings)++], "<error> - Couldn't locate a .fcf!" );
@@ -531,7 +531,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 		fscanf( pFxFile, "%s", szTag );
 		fseek( pFxFile, 1, SEEK_CUR );
 		fgets(sTmp, ARRAY_LEN(sTmp), pFxFile );
-		int iStrSize = strlen( sTmp );
+		int iStrSize = (int)strlen( sTmp );
 		if( (iStrSize > 0) && (sTmp[iStrSize - 1] == '\n') )
 			sTmp[iStrSize - 1] = NULL;
 
@@ -574,7 +574,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 				fscanf( pFxFile, "%s", szTag );
 				fseek( pFxFile, 1, SEEK_CUR );
 				fgets(szName, ARRAY_LEN(szName), pFxFile );
-				int iStrSize = strlen( szName );
+				int iStrSize = (int)strlen( szName );
 				if( (iStrSize > 0) && (szName[iStrSize - 1] == '\n') )
 					szName[iStrSize - 1] = NULL;
 				

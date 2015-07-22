@@ -669,7 +669,7 @@ LTRESULT CVolumePlugin::PreHook_EditStringList(const char* szRezPath,
 			{
 				_ASSERT(cMaxStrings > (*pcStrings) + 1);
 
-				uint32 dwNameLen = strlen(DTInfoArray[i].pName);
+				uint32 dwNameLen = (uint32)strlen(DTInfoArray[i].pName);
 
 				if (dwNameLen < cMaxStringLength &&
 					((*pcStrings) + 1) < cMaxStrings)

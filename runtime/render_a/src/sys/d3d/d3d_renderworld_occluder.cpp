@@ -413,7 +413,7 @@ PolySide COccludee::SplitPlane(const LTPlane &cPlane, bool bSplitOccluded)
 	COutline sVisible;
 	COutline sOccluded;
 
-	uint32 nOccludedSize = m_aOccluded.size();
+	uint32 nOccludedSize = (uint32)(m_aOccluded.size());
 
 	TOutlineList::iterator iCurOutline;
 	if (!bSplitOccluded)

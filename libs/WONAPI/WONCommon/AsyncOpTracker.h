@@ -28,7 +28,7 @@ public:
 	void Kill(DWORD theId);
 	void KillAll();
 
-	int GetNumTrack() { return mOpMap.size(); }
+	int GetNumTrack() { return (int)(mOpMap.size()); }
 };
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -259,7 +259,7 @@ void CLTGUIEditCtrl::SetText(const char *pString)
 		m_pText->SetCharScreenHeight(m_nFontSize);
 		CalculateSize();
 	}
-	m_nCaretPos = strlen(pString);
+	m_nCaretPos = (uint16)strlen(pString);
 }
 const char* CLTGUIEditCtrl::GetText()
 {
@@ -304,7 +304,7 @@ void CLTGUIEditCtrl::AddCharacter(char c)
 
 	
 	SAFE_STRCPY(szString,m_pText->GetText());
-	int nIndex = strlen(szString);
+	int nIndex = (int)strlen(szString);
 
 	while (nIndex > m_nCaretPos)
 	{
@@ -342,7 +342,7 @@ void CLTGUIEditCtrl::RemoveCharacter()
 
 	SAFE_STRCPY(szString,m_pText->GetText());
 
-	int nEnd=strlen(szString);
+	int nEnd = (int)strlen(szString);
 	if (nEnd > m_nCaretPos)
 	{
 		int nIndex = m_nCaretPos;
