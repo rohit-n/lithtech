@@ -337,6 +337,9 @@ set_target_properties(${PROJECT_NAME}
 	SUFFIX .lto)
 
 add_definitions(-DNOPS2 -D_SERVERBUILD -DMEMTRACK_SERVER -D_NO_AI_ASSERT)
+if(MSVC)
+	add_definitions(-D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS)	# VC14 deprecated stdext::hash_*
+endif(MSVC)
 
 include_directories(../ObjectShared
 	../../../sdk/inc

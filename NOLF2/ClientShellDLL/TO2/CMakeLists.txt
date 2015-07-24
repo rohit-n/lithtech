@@ -284,6 +284,9 @@ set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME CShell)
 
 add_definitions(-D_CLIENTBUILD -DNOPS2 -DMEMTRACK_CLIENT)
+if(MSVC)
+	add_definitions(-D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS)	# VC14 deprecated stdext::hash_*
+endif(MSVC)
 
 include_directories(../ClientShellShared
 	../../Shared 

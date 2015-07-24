@@ -7,6 +7,9 @@ add_library(${PROJECT_NAME} STATIC
 	stdafx.cpp)
 
 add_definitions(-D_NOMFC)
+if(MSVC)
+	add_definitions(-D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS)	# VC14 deprecated stdext::hash_*
+endif(MSVC)
 
 include_directories(../cryptmgr
 	../stdlith
