@@ -14,7 +14,7 @@
 
 
 // a few platform-specificities
-#ifdef WIN32
+#if defined(WIN32) || defined(__linux__)
 
 /*!	
 On the PC, this is an alpha of 1.0 (opaque).

@@ -41,7 +41,9 @@
 static ILTTexInterface *pTexInterface = NULL;
 define_holder(ILTTexInterface, pTexInterface);
 
+#ifdef WIN32
 extern HDC g_hTextDC;
+#endif
 
 //ILTClient game interface
 static ILTClient *ilt_client;

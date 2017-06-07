@@ -77,7 +77,7 @@ CUIFont_Impl::CUIFont_Impl()
 	m_DefaultColors[0]			= CUI_DEFAULT_FONT_COLOR | CUI_SYSTEM_OPAQUE;
 	m_DefaultColors[1]			= CUI_DEFAULT_FONT_COLOR | CUI_SYSTEM_OPAQUE;
 	m_DefaultColors[2]			= CUI_DEFAULT_FONT_COLOR | CUI_SYSTEM_OPAQUE;
-	m_DefaultColors[3]			= CUI_DEFAULT_FONT_COLOR | CUI_SYSTEM_OPAQUE;	
+	m_DefaultColors[3]			= CUI_DEFAULT_FONT_COLOR | CUI_SYSTEM_OPAQUE;
 
 	m_bAllocatedTable			= false;
 	m_bAllocatedMap				= false;

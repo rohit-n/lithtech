@@ -41,7 +41,7 @@ Games I want to support and the order to work on them
 5. F.E.A.R.
 6. Blood II: The Chosen (if I can find a copy)
 
-These are all the Lithtech I am aware of that had a public source release. If there are more out there, I want to eventually support them too.
+These are all the Lithtech I am aware of that had a public source release. If there are more out there, I want to eventually support them too.[ ] Target rules for targets named Lib_ZLib
 
 Recent Developments
 ===================
@@ -54,3 +54,29 @@ There's a few options to maybe get the entirety of NOLF2 working with this code:
 1. Figure out the difference between formats and rework the engine to support both. (very unlikely)
 2. Locate an old version of Maya or 3ds Max (version 3 or 4 of either) to use the retail game's import plugin for, and then this release's export plugin, to "convert" them to the new format. (haven't been able to find an old Maya or 3ds Max so far)
 3. Recreate the levels from scratch. Really give the entire game a proper remake. (beyond *my* capabilities)
+
+Builds on linux
+---------------
+[x] Target rules for targets named Lib_Lith
+[x] Target rules for targets named Lib_StdLith
+[x] Target rules for targets named ltmem
+[x] Target rules for targets named Lib_RezMgr
+[ ] Target rules for targets named Lib_UI
+[x] Target rules for targets named Lib_Info
+[ ] Target rules for targets named Lib_ILTSound
+[ ] Target rules for targets named DLL_Server
+[ ] Target rules for targets named EXE_Lithtech
+[ ] Target rules for targets named LIB_D3DRender
+[ ] Target rules for targets named Lib_DShow
+[ ] Target rules for targets named MFCStub
+[ ] Target rules for targets named ButeMgr
+[x] Target rules for targets named CryptMgr
+[ ] Target rules for targets named RegMgr
+[ ] Target rules for targets named LTGUIMgr
+[ ] Target rules for targets named ServerDir
+[ ] Target rules for targets named WONAPI
+[ ] Target rules for targets named NOLF2_ClientFXDLL
+[ ] Target rules for targets named NOLF2_ClientRes
+[ ] Target rules for targets named NOLF2_ClientShellDLL
+[ ] Target rules for targets named NOLF2_ObjectDLL
+[ ] Target rules for targets named NOLF2_ServerRes

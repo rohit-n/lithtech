@@ -52,10 +52,17 @@ include_directories(src
 	../../sdk/inc
 	../../libs/stdlith
 	../shared/src
-	../shared/src/sys/win
 	../kernel/src
-	../kernel/mem/src
+	../kernel/mem/src)
+if(WIN32)
+include_directories (../shared/src/sys/win
 	../kernel/src/sys/win)
+endif(WIN32)
+if(UNIX)
+include_directories (../shared/src/sys/linux
+	../kernel/src/sys/linux)
+endif(UNIX)
+
 
 add_library(${PROJECT_NAME} STATIC ${libsources})
 

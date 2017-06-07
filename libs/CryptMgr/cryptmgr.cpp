@@ -31,7 +31,7 @@ void CCryptMgr::SetKey(const char* key)
 
 
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 void CCryptMgr::Encrypt(std::istream& is, std::ostream& os)
 #else
 void CCryptMgr::Encrypt(istream& is, ostream& os)
@@ -53,7 +53,7 @@ void CCryptMgr::Encrypt(istream& is, ostream& os)
 
 
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 void CCryptMgr::Decrypt(std::istream& is, std::ostream& os)
 #else
 void CCryptMgr::Decrypt(istream& is, ostream& os)
