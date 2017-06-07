@@ -35,9 +35,9 @@
 // screen near z -- use this value if you want your polygons to draw
 // in front of everything
 
-#ifdef _WIN32
+//#ifdef _WIN32
 #define SCREEN_NEAR_Z       0.0
-#endif
+//#endif
 
 
 //-----------------------------
