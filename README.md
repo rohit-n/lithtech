@@ -57,26 +57,26 @@ There's a few options to maybe get the entirety of NOLF2 working with this code:
 
 Builds on linux
 ---------------
-[x] Target rules for targets named Lib_Lith
-[x] Target rules for targets named Lib_StdLith
-[x] Target rules for targets named ltmem
-[x] Target rules for targets named Lib_RezMgr
-[ ] Target rules for targets named Lib_UI
-[x] Target rules for targets named Lib_Info
-[ ] Target rules for targets named Lib_ILTSound
-[ ] Target rules for targets named DLL_Server
-[ ] Target rules for targets named EXE_Lithtech
-[ ] Target rules for targets named LIB_D3DRender
-[ ] Target rules for targets named Lib_DShow
-[ ] Target rules for targets named MFCStub
-[ ] Target rules for targets named ButeMgr
-[x] Target rules for targets named CryptMgr
-[ ] Target rules for targets named RegMgr
-[ ] Target rules for targets named LTGUIMgr
-[ ] Target rules for targets named ServerDir
-[ ] Target rules for targets named WONAPI
-[ ] Target rules for targets named NOLF2_ClientFXDLL
-[ ] Target rules for targets named NOLF2_ClientRes
-[ ] Target rules for targets named NOLF2_ClientShellDLL
-[ ] Target rules for targets named NOLF2_ObjectDLL
-[ ] Target rules for targets named NOLF2_ServerRes
+- [x] Target rules for targets named Lib_Lith
+- [x] Target rules for targets named Lib_StdLith
+- [x] Target rules for targets named ltmem
+- [x] Target rules for targets named Lib_RezMgr
+- [ ] Target rules for targets named Lib_UI
+- [x] Target rules for targets named Lib_Info
+- [ ] Target rules for targets named Lib_ILTSound
+- [ ] Target rules for targets named DLL_Server
+- [ ] Target rules for targets named EXE_Lithtech
+- [ ] Target rules for targets named LIB_D3DRender
+- [ ] Target rules for targets named Lib_DShow
+- [ ] Target rules for targets named MFCStub
+- [ ] Target rules for targets named ButeMgr
+- [x] Target rules for targets named CryptMgr
+- [ ] Target rules for targets named RegMgr
+- [ ] Target rules for targets named LTGUIMgr
+- [ ] Target rules for targets named ServerDir
+- [ ] Target rules for targets named WONAPI
+- [ ] Target rules for targets named NOLF2_ClientFXDLL
+- [ ] Target rules for targets named NOLF2_ClientRes
+- [ ] Target rules for targets named NOLF2_ClientShellDLL
+- [ ] Target rules for targets named NOLF2_ObjectDLL
+- [ ] Target rules for targets named NOLF2_ServerRes
