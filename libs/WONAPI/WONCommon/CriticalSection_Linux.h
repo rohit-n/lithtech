@@ -22,7 +22,11 @@ private:
 
 public:
 	// Constructor / Destructor
-	CriticalSection() { pthread_mutex_t tmpMutex = {0, 0, 0, PTHREAD_MUTEX_RECURSIVE_NP, {0, 0}}; mCrit = tmpMutex; }
+	CriticalSection() {
+            /* {0, 0, 0, PTHREAD_MUTEX_RECURSIVE_NP, {0, 0}}; */
+            pthread_mutex_t tmpMutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP;
+            mCrit = tmpMutex;
+        }
 	~CriticalSection() { pthread_mutex_destroy(&mCrit); }
 
 	void Enter() { pthread_mutex_lock(&mCrit); }

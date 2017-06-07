@@ -15,7 +15,8 @@ namespace WONAPI
 bool Browse(const std::string& sURL)
 {
 	string              sBrowser;
-	BOOL                bOK;
+	BOOL                bOK = TRUE;
+#ifdef WIN32
 	STARTUPINFO         aStartupInfo;
 	PROCESS_INFORMATION aProcessInfo;
 	string              sCommandLine = TEXT(" ");
@@ -36,7 +37,9 @@ bool Browse(const std::string& sURL)
 		CloseHandle(aProcessInfo.hThread);
 		CloseHandle(aProcessInfo.hProcess);
 	}
-
+#elif __linux__
+       // stub need to implement execute browser in a correct GNU/Linux way. (check Katana-Steel/unity_crm.git Qt client
+#endif // WIN32
 	return bOK == TRUE;
 }
 
@@ -46,6 +49,7 @@ bool Browse(const std::string& sURL)
 //----------------------------------------------------------------------------
 bool GetBrowserCommandLineFromRegistry(std::string& sBrowser)
 {
+#ifdef WIN32
 	LONG  nLong;
 	HKEY  hKey;
 	TCHAR sValue[MAX_PATH];
@@ -103,6 +107,7 @@ bool GetBrowserCommandLineFromRegistry(std::string& sBrowser)
 			nLen = sBrowser.length();
 		}
 	}
+#endif
 
 	return sBrowser.length() > 0;
 }

@@ -3,7 +3,7 @@
 #include "WONCommon/WriteBuffer.h"
 #include "WONCommon/MD5.h"
 #include "GetCertOp.h"
-
+#include <cstring>
 using namespace std;
 using namespace WONAPI;
 

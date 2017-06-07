@@ -42,11 +42,11 @@ typedef char* LPSTR;
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
-#include <ostream.h>
+#include <ostream>
 #include <sys/time.h>
 #include <sys/timeb.h>
 #include <sys/time.h>
-#include <strstream.h>
+#include <sstream>
 #include <endian.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -61,7 +61,7 @@ typedef char* LPSTR;
 #include <stdlib.h>
 #include <stdio.h>
 #include <utime.h>
-#include <termios.h> 
+#include <termios.h>
 #include <signal.h>
 
 #define _timezone timezone
@@ -86,7 +86,7 @@ typedef sockaddr SOCKADDR;
 typedef sockaddr_in SOCKADDR_IN;
 
 #include <string>
-namespace std 
+namespace std
 {
 	typedef basic_string<wchar_t> wstring;
 };

@@ -60,11 +60,11 @@ protected:
 	T *mObject;
 
 public:
-	ConstSmartPtr() : mObject(NULL) {}
+	ConstSmartPtr() : mObject(nullptr) {}
 
 	// Copy constructor.  Assign and add reference to underlying object.
-	ConstSmartPtr(const T* theObject) : mObject((T*)(theObject?theObject->CreateRef():NULL)) {} 
-	ConstSmartPtr(const ConstSmartPtr& theCopy) : mObject((T*)(theCopy?theCopy.mObject->CreateRef():NULL)){}
+	ConstSmartPtr(const T* theObject) : mObject((T*)(theObject?theObject->CreateRef():nullptr)) {} 
+	ConstSmartPtr(const ConstSmartPtr& theCopy) : mObject((T*)(theCopy?theCopy.mObject->CreateRef():nullptr)){}
 
 	// Destructor.  Remove reference to underlying object.
 	~ConstSmartPtr() { if(mObject!=NULL) mObject->Release(); }
@@ -107,7 +107,8 @@ public:
 
 // Smart pointer.  Automatically performs reference counting on objects which
 // implement the CreateRef and Release interface.  Allows non-const access to underlying object.
-template <class T> class SmartPtr : public ConstSmartPtr<T>
+template <class T>
+class SmartPtr : public ConstSmartPtr<T>
 {
 public:
 	SmartPtr() {}
@@ -127,10 +128,10 @@ public:
 	}
 
 
-	T* operator->() const { return mObject; }
-	operator T*() const { return mObject; }
+	T* operator->() const { return this->mObject; }
+	operator T*() const { return this->mObject; }
 
-	T* get() const { return mObject; }
+	T* get() const { return this->mObject; }
 };
 
 ///////////////////////////////////////////////////////////////////////////////

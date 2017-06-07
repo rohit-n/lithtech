@@ -13,6 +13,13 @@
 
 #endif // _MSV_VER
 
+#ifdef __linux__
+
+#include <string>
+#include <cstring>
+
+#endif
+
 #ifdef __WON_MASTER_CPP_BUILD__
 #ifndef __WON_MASTER_CPP__
 #error You only need to compile the master cpp files (i.e. Ad.cpp, Auth.cpp, Common.cpp, Crypt.cpp, etc...)  You may need to reload the project now in order to get the error to go away.

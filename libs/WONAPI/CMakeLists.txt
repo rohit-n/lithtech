@@ -29,3 +29,7 @@ include_directories(.
 	WONServer
 	WONSocket
 	WONUpdate)
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "--std=c++11")
+endif(CMAKE_COMPILER_IS_GNUCXX)
