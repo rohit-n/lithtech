@@ -16,6 +16,9 @@ add_library(${PROJECT_NAME} STATIC
 	zfstream.cpp)
 
 include_directories(../zlib)
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "--std=c++11")
+endif(CMAKE_COMPILER_IS_GNUCXX)
 
 target_link_libraries(${PROJECT_NAME}
 	LIB_ZLib)

@@ -6,7 +6,7 @@ add_library(${PROJECT_NAME} STATIC
 	ltmemheap.cpp
 	ltmemstats.cpp
 	ltmemtrack.cpp
-	StdAfx.cpp)
+	stdafx.cpp)
 
 include_directories(../../sdk/inc
 	../../runtime/shared/src

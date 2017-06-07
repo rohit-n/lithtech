@@ -1,11 +1,13 @@
 project(EXE_Lithtech)
 
 add_definitions(-DDE_LOCAL_SERVERBIND -DDE_CLIENT_COMPILE -DDSNDMGR_NO_MFC -DDIRECTENGINE_COMPILE -DMODEL_SUPPORT_ABC)
+if(WIN32)
 if(CMAKE_CL_64)
 	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x64")
 else(CMAKE_CL_64)
 	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x86")
 endif(CMAKE_CL_64)
+endif(WIN32)
 
 add_executable(${PROJECT_NAME} WIN32
 	../controlfilemgr/controlfilemgr.cpp
@@ -142,7 +144,7 @@ add_executable(${PROJECT_NAME} WIN32
 	../kernel/src/sys/win/render.cpp
 	../server/src/s_client.cpp
 	../server/src/s_concommand.cpp
-	../server/src/S_Intersect.cpp
+	../server/src/s_intersect.cpp
 	../server/src/s_net.cpp
 	../server/src/s_object.cpp
 	../server/src/server_consolestate.cpp

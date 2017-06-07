@@ -2,7 +2,7 @@
 project(NOLF2_ClientFXDLL)
 
 add_library(${PROJECT_NAME} SHARED
-	BaseFX.cpp
+	BaseFx.cpp
 	bouncychunkfx.cpp
 	camjitterfx.cpp
 	camwobblefx.cpp

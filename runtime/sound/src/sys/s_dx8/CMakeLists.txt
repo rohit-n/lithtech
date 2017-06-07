@@ -1,5 +1,6 @@
 project(DLL_SndDrvDX8)
 
+if(WIN32)
 if(CMAKE_CL_64)
 	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x64")
 else(CMAKE_CL_64)
@@ -29,3 +30,4 @@ target_link_libraries(${PROJECT_NAME}
 if(NOT CMAKE_CL_64)
 	target_link_libraries(${PROJECT_NAME} eaxguid)
 endif(NOT CMAKE_CL_64)
+endif(WIN32)

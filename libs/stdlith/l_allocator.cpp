@@ -1,6 +1,8 @@
 
 #include "l_allocator.h"
+#include <cstdint>
 
+using std::uintptr_t;
 
 LAlloc g_DefAlloc;
 
@@ -122,7 +124,7 @@ void* LAllocSimpleBlock::Alloc(uint32 size, bool bQuadWordAlign)
 
 	if (bQuadWordAlign) {	// QuadWord Align (We've over alloced a bit to account for this - if we're not QWAligned, force it to be)...
 		pRet = &m_pBlock[m_CurBlockPos];
-		m_CurBlockPos += (((uint32)pRet + 0xf) & ~0xf) - (uint32)pRet; }
+		m_CurBlockPos += (((uintptr_t)pRet + 0xf) & ~0xf) - (uintptr_t)pRet; }
 	else {					// DWord Align by default...
 		size = ((size + 3) & ~3); }
 
@@ -131,7 +133,7 @@ void* LAllocSimpleBlock::Alloc(uint32 size, bool bQuadWordAlign)
 
 	pRet = &m_pBlock[m_CurBlockPos];
 	m_CurBlockPos += size;
-	assert(!bQuadWordAlign || ((uint32)pRet & 0xf) == 0);
+	assert(!bQuadWordAlign || ((uintptr_t)pRet & 0xf) == 0);
 	return pRet;
 }
 
