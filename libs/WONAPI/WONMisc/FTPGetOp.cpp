@@ -181,7 +181,7 @@ bool FTPGetOp::SendRequest()
 		case RequestState_Restart: 
 		{
 			char aBuf[50];
-			sprintf(aBuf,"REST %d",mLocalFileSize);
+			sprintf(aBuf,"REST %d",(int)mLocalFileSize);
 			aReq = aBuf;
 		}	
 		break;

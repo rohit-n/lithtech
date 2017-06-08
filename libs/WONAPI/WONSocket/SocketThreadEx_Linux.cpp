@@ -244,7 +244,7 @@ SocketWaitThread::SocketData::SocketData()
 ///////////////////////////////////////////////////////////////////////////////
 void SocketWaitThread::SocketData::CalcEvents(SocketOp *eraseThisOp)
 {
-	SocketData::OpList::iterator anItr = mOps.begin();
+	auto anItr = mOps.begin();
 	while(anItr!=mOps.end())
 	{
 		SocketOp *anOp = *anItr;

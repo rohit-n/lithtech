@@ -21,8 +21,8 @@ public:
 	};
 
 private:
-	static const int Pinit[];
-	static const int Sinit[];
+	static const unsigned int Pinit[];
+	static const unsigned int Sinit[];
 
 	int S0[256];
     int S1[256];

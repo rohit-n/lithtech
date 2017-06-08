@@ -74,7 +74,7 @@ Builds on linux
 - [ ] Target rules for targets named RegMgr
 - [ ] Target rules for targets named LTGUIMgr
 - [ ] Target rules for targets named ServerDir
-- [ ] Target rules for targets named WONAPI
+- [x] Target rules for targets named WONAPI
 - [ ] Target rules for targets named NOLF2_ClientFXDLL
 - [ ] Target rules for targets named NOLF2_ClientRes
 - [ ] Target rules for targets named NOLF2_ClientShellDLL

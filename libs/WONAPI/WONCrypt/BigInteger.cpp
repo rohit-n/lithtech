@@ -937,22 +937,23 @@ void BigInteger::st_div(BigInteger *dvOrig, BigInteger *remOrig, const BigIntege
         return;
     }
 
-	BigInteger *dvPtr = dvOrig, *remPtr = remOrig;
+    BigInteger *dvPtr = dvOrig, *remPtr = remOrig;
 
     if (dvPtr == NULL)
         dvPtr = new BigInteger();
     if (remPtr == NULL)
         remPtr = new BigInteger();
 
-	auto_ptr<BigInteger> aDelDv(dvPtr), aDelRem(remPtr);
-	if(dvOrig!=NULL)
-		aDelDv.release();
-	if(remOrig!=NULL)
-		aDelRem.release();
+    auto aDelDv = unique_ptr<BigInteger>(dvPtr);
+    auto aDelRem = unique_ptr<BigInteger>(remPtr);
+    if(dvOrig!=NULL)
+        aDelDv.release();
+    if(remOrig!=NULL)
+        aDelRem.release();
 
 
-	BigInteger &dv = *dvPtr;
-	BigInteger &rem = *remPtr;
+    BigInteger &dv = *dvPtr;
+    BigInteger &rem = *remPtr;
 
     BigInteger ds;
     st_copy(rem, m);
@@ -1580,7 +1581,7 @@ std::string BigInteger::toString() const
 	while(!tmp.equals(BigInteger::ZERO))
 	{
 		tmp = tmp.divrem(N,r);
-		sprintf(aBuf,"%03d",r.n[0]);
+		sprintf(aBuf,"%03d",(int)r.n[0]);
 		s=aBuf+s;
 	}
 

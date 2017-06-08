@@ -67,10 +67,10 @@ public:
 		if(!mValMultiMap && aValItr!=mValMap.end())
 			return false;
 
-		aValItr = mValMap.insert(ValMap::value_type(theVal,mKeyMap.end()));
+		aValItr = mValMap.insert(typename ValMap::value_type(theVal,mKeyMap.end()));
 
 		KeyMapValue *aKeyMapVal = new KeyMapValue(theVal, aValItr);
-		aKeyItr = mKeyMap.insert(aKeyItr,KeyMap::value_type(theKey,aKeyMapVal));
+		aKeyItr = mKeyMap.insert(aKeyItr,typename KeyMap::value_type(theKey,aKeyMapVal));
 		aValItr->second = aKeyItr;
 		return true;
 	}

@@ -343,7 +343,7 @@ bool Blowfish::Create(int theLen)
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-const int Blowfish::Pinit[] = 
+const unsigned int Blowfish::Pinit[] =
 {
         0x243F6A88, 0x85A308D3, 0x13198A2E, 0x03707344,
         0xA4093822, 0x299F31D0, 0x082EFA98, 0xEC4E6C89,
@@ -352,7 +352,7 @@ const int Blowfish::Pinit[] =
         0x9216D5D9, 0x8979FB1B
 };
 
-const int Blowfish::Sinit[] = 
+const unsigned int Blowfish::Sinit[] =
 {
         0xD1310BA6, 0x98DFB5AC, 0x2FFD72DB, 0xD01ADFB7,    // S0
         0xB8E1AFED, 0x6A267E96, 0xBA7C9045, 0xF12C7F99,
@@ -611,6 +611,6 @@ const int Blowfish::Sinit[] =
         0x90D4F869, 0xA65CDEA0, 0x3F09252D, 0xC208E69F,
         0xB74E6132, 0xCE77E25B, 0x578FDFE3, 0x3AC372E6
 };
-	
+
 
 

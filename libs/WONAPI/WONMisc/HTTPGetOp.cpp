@@ -657,7 +657,7 @@ bool HTTPGetOp::SendRequest()
 			aReq.AppendRawString("If-Range: " + MakeInternetDateTime(mLocalFileModifyTime) + "\r\n");
 			aReq.AppendRawString("Range: bytes=");
 
-			snprintf(aBuf, 10, "%d", mLocalFileSize);
+			snprintf(aBuf, 10, "%d", (int)mLocalFileSize);
 			aReq.AppendRawString(aBuf);
 			aReq.AppendRawString("-\r\n");
 	   }
