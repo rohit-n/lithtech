@@ -41,7 +41,7 @@ Games I want to support and the order to work on them
 5. F.E.A.R.
 6. Blood II: The Chosen (if I can find a copy)
 
-These are all the Lithtech I am aware of that had a public source release. If there are more out there, I want to eventually support them too.[ ] Target rules for targets named Lib_ZLib
+These are all the Lithtech I am aware of that had a public source release. If there are more out there, I want to eventually support them too.
 
 Recent Developments
 ===================
@@ -57,6 +57,7 @@ There's a few options to maybe get the entirety of NOLF2 working with this code:
 
 Builds on linux
 ---------------
+- [x] Target rules for targets named Lib_ZLib
 - [x] Target rules for targets named Lib_Lith
 - [x] Target rules for targets named Lib_StdLith
 - [x] Target rules for targets named ltmem
