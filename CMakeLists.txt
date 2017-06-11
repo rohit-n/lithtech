@@ -86,9 +86,9 @@ endif(BUILD_ENGINE)
 
 if(BUILD_NOLF2)
 	add_subdirectory(libs/MFCStub)						# LIB_MFCStub
-	add_subdirectory(libs/butemgr)						# LIB_ButeMgr
-	add_subdirectory(libs/cryptmgr)						# LIB_CryptMgr
-	add_subdirectory(libs/regmgr)						# LIB_RegMgr
+	add_subdirectory(libs/ButeMgr)						# LIB_ButeMgr
+	add_subdirectory(libs/CryptMgr)						# LIB_CryptMgr
+	add_subdirectory(libs/RegMgr)						# LIB_RegMgr
 	add_subdirectory(libs/LTGUIMgr)						# LIB_LTGUIMgr
 	add_subdirectory(libs/ServerDir)					# ServerDir
 	add_subdirectory(libs/WONAPI)						# LIB_WONAPI
@@ -102,9 +102,9 @@ endif(BUILD_NOLF2)
 if(BUILD_TRON)
 	if(NOT BUILD_NOLF2)
 		add_subdirectory(libs/MFCStub)
-		add_subdirectory(libs/butemgr)
-		add_subdirectory(libs/cryptmgr)
-		add_subdirectory(libs/regmgr)
+		add_subdirectory(libs/ButeMgr)
+		add_subdirectory(libs/CryptMgr)
+		add_subdirectory(libs/RegMgr)
 		add_subdirectory(libs/LTGUIMgr)
 		add_subdirectory(libs/ServerDir)
 		add_subdirectory(libs/WONAPI)
