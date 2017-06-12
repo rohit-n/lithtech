@@ -69,7 +69,6 @@ void* dsi_GetResourceModule()
 return NULL;      // DAN - temporary
 }
 
-
 LTRESULT _GetOrCopyFile(char *pTempPath, char *pFilename, char *pOutName, int outNameLen)
 {
     return LTTRUE;      // DAN - temporary
@@ -85,7 +84,7 @@ LTRESULT dsi_LoadServerObjects(CClassMgr *pInfo)
     int status = cb_LoadModule(pGameServerObjectName, false, pInfo->m_ClassModule, &version);
 
     //check for errors.
-    if (status == CB_CANTFINDMODULE) 
+    if (status == CB_CANTFINDMODULE)
 	{
         return LT_INVALIDOBJECTDLL;
     }
@@ -93,12 +92,12 @@ LTRESULT dsi_LoadServerObjects(CClassMgr *pInfo)
 	{
         return LT_INVALIDOBJECTDLL;
     }
-    else if (status == CB_VERSIONMISMATCH) 
+    else if (status == CB_VERSIONMISMATCH)
 	{
 		return LT_INVALIDOBJECTDLLVERSION;
 	}
-	
-/*	
+
+/*
 	    // Get sres.dll.
 	bFileCopied = false;
     if ((GetOrCopyFile("sres.dll", fileName, sizeof(fileName),bFileCopied) != LT_OK)
@@ -111,12 +110,12 @@ LTRESULT dsi_LoadServerObjects(CClassMgr *pInfo)
     }
 
     //let the dll know it's instance handle.
-    if (instance_handle_server != NULL) 
+    if (instance_handle_server != NULL)
 	{
         instance_handle_server->SetInstanceHandle( pClassMgr->m_ClassModule.m_hModule );
     }
 */
-	
+
 	//cb_LoadModule(fileName, false, pInfo->m_ClassModule, &version);
 
 	/*
@@ -186,6 +185,13 @@ return LTTRUE;      // DAN - temporary
 LTRESULT _GetOrCopyClientFile(char *pTempPath, char *pFilename, char *pOutName, int outNameLen)
 {
 return LTTRUE;      // DAN - temporary
+}
+
+LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied)
+{
+    bFileCopied = true;
+    char pTempPath[_MAX_PATH*2] = {'/','t', 'm', 'p', '/', 0};
+    return _GetOrCopyClientFile(pTempPath, pFilename, pOutName, outNameLen);
 }
 
 LTRESULT dsi_InitClientShellDE()

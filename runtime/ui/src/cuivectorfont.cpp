@@ -44,6 +44,26 @@ define_holder(ILTTexInterface, pTexInterface);
 #ifdef WIN32
 extern HDC g_hTextDC;
 #endif
+#ifndef WIN32
+struct BITMAPINFOHEADER
+{
+	int biSize;
+	int biWidth;
+	int biHeight;
+	int biBitCount;
+	int biPlanes;
+    int biCompression;
+	int biSizeImage;
+};
+
+struct BITMAPINFO
+{
+    BITMAPINFOHEADER bmiHeader;
+};
+
+struct FONT {};
+typedef FONT* HFONT;
+#endif
 
 //ILTClient game interface
 static ILTClient *ilt_client;
@@ -80,10 +100,10 @@ define_holder(ILTClient, ilt_client);
 //	pDibBites -		Bitmap bits.
 //
 // ----------------------------------------------------------------------- //
-
 bool WriteBmp( char const* pszFileName, BITMAPINFO const& bmi, uint8 const* pDibBits )
 {
-	// Save the bitmap.
+#ifdef WIN32
+    // Save the bitmap.
 	FILE* fp = fopen( pszFileName, "wb");
 	if (!fp)
 	{
@@ -112,7 +132,7 @@ bool WriteBmp( char const* pszFileName, BITMAPINFO const& bmi, uint8 const* pDib
 	fwrite( pDibBits, nImageByteSize, 1, fp );
 
 	fclose(fp);
-
+#endif
 	return true;
 }
 
@@ -215,7 +235,7 @@ bool InstalledFontFace::Init( char const* pszFontFile, char const* pszFontFace, 
 	LOGFONT logFont;
 	memset( &logFont, 0, sizeof( logFont ));
 	logFont.lfHeight = nHeight;
-	
+
 	if(fontParams)
 	{
 		DEBUG_PRINT( 1, ("InstalledFontFace::Init Using User Defined Font Params!" ));
@@ -666,7 +686,7 @@ static void WritePixelDataBitmap( uint8* pPixelData, SIZE& sizeTexture, char con
 //
 //  PURPOSE:	Writes pixel data texture to a TGA file.  For texture bitmaps
 //
-//	pPixelData -	pixel data bits sixteen bit ARGB pixels. 
+//	pPixelData -	pixel data bits sixteen bit ARGB pixels.
 //
 //	sizeTexture -	size of pixel data.
 //
@@ -720,7 +740,7 @@ static void WritePixelDataTGA( uint8* pPixelData, SIZE& sizeTexture, char const*
 	hdr.m_PixelDepth = 32;
 	hdr.m_ImageType = 2;
 	hdr.m_ImageDescriptor = (1<<5);  // says image is flipped origin 0,1
- 
+
 	fwrite(&hdr, sizeof(hdr), 1, fp);
 
 	for( int y = 0; y < sizeTexture.cy; y++ )
@@ -730,7 +750,7 @@ static void WritePixelDataTGA( uint8* pPixelData, SIZE& sizeTexture, char const*
 
 		for( int x = 0; x < sizeTexture.cx; x++ )
 		{
-			// Special for green dot 
+			// Special for green dot
 			if ( pSrcPos[0] == 0x00F0 )
 			{
 				Dest = 0x0000FF00;
@@ -742,14 +762,14 @@ static void WritePixelDataTGA( uint8* pPixelData, SIZE& sizeTexture, char const*
 				uint32 nVal = (( pSrcPos[0] & 0xF000 ) >> 12 );
 
 				nVal = MulDiv( nVal, 0xFF, 0x0F );
-				
+
 				if ( nVal )
 				{
 					Dest = (nVal << 24 ) | 0x00FFFFFF;
 				}
 				else
 				{
-					Dest = 0;  // no pixel here 
+					Dest = 0;  // no pixel here
 				}
 
 			}
@@ -1169,10 +1189,10 @@ bool CUIVectorFont::CreateFontTextureAndTable( InstalledFontFace& installedFontF
 
 				if ( pData < pPixelDataEnd )
 				{
-						*pData = 0x00F0;    // Set green pixel ( pixel format is ARGB ) 
+						*pData = 0x00F0;    // Set green pixel ( pixel format is ARGB )
 				}
 
-			}	
+			}
 		}
 
 
@@ -1201,17 +1221,17 @@ bool CUIVectorFont::CreateFontTextureAndTable( InstalledFontFace& installedFontF
 			WritePixelDataTGA( pPixelData, sizeTexture, szFileName );
 		}
 
-		
+
 	}  // end if bOk
 
 	if( bOk )
 	{
 		// turn pixeldata into a texture
 		pTexInterface->CreateTextureFromData(
-				m_Texture, 
+				m_Texture,
 				TEXTURETYPE_ARGB4444,
 				TEXTUREFLAG_PREFER16BIT | TEXTUREFLAG_PREFER4444,
-				pPixelData, 
+				pPixelData,
 				sizeTexture.cx,
 				sizeTexture.cy );
 		if( !m_Texture )

@@ -153,6 +153,9 @@ endif(NOT MSVC)
 if(WIN32)
 	include_directories(../kernel/src/sys/win
 		../shared/src/sys/win)
+else(WIN32)
+	include_directories(../kernel/src/sys/linux
+		../shared/src/sys/linux)
 endif(WIN32)
 
 if(ENABLE_D3D)

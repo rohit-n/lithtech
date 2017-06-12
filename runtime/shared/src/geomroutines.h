@@ -38,7 +38,7 @@
 #endif
 
 #ifndef NF_OUT
-#define NF_OUT 2  
+#define NF_OUT 2
 #endif
 
 // Functions....
@@ -93,7 +93,7 @@ void gr_FindClosestPointOnVector( LTVector *pvA, LTVector *pvB, LTVector *pvPt, 
 void gr_SetupRotationAroundVector(LTMatrix *pMat, LTVector v, float angle);
 
 // Setup a world model transform.  Since WorldModel transforms need to take the
-// world's translation into account, this routine simplifies building its 
+// world's translation into account, this routine simplifies building its
 // transformation matrix.
 void gr_SetupWMTransform(
 	LTVector *pWorldTranslation,
@@ -163,22 +163,22 @@ void g_GenerateNormal( P *pPoly )
 {
 	uint32		prev, cur;
 
-	
+
 	ASSERT( pPoly->NumVerts() >= 3 );
 
 	pPoly->Normal().Init();
 	prev = pPoly->NumVerts()-1;
 	for( cur=0; cur < pPoly->NumVerts(); cur++ )
 	{
-		pPoly->Normal().x +=	(pPoly->Pt(prev).y - pPoly->Pt(cur).y) * 
+		pPoly->Normal().x +=	(pPoly->Pt(prev).y - pPoly->Pt(cur).y) *
 								(pPoly->Pt(prev).z + pPoly->Pt(cur).z);
-		
-		pPoly->Normal().y +=	(pPoly->Pt(prev).z - pPoly->Pt(cur).z) * 
+
+		pPoly->Normal().y +=	(pPoly->Pt(prev).z - pPoly->Pt(cur).z) *
 								(pPoly->Pt(prev).x + pPoly->Pt(cur).x);
-		
-		pPoly->Normal().z +=	(pPoly->Pt(prev).x - pPoly->Pt(cur).x) * 
+
+		pPoly->Normal().z +=	(pPoly->Pt(prev).x - pPoly->Pt(cur).x) *
 								(pPoly->Pt(prev).y + pPoly->Pt(cur).y);
-	
+
 		prev = cur;
 	}
 
@@ -208,7 +208,7 @@ inline LTBOOL g_IsInsideTheTree( T *pRoot, TVector3<F> &pt )
 			pRoot = pRoot->m_Sides[BackSide];
 			if( !pRoot )
 				return LTFALSE;
-		}				
+		}
 	}
 }
 
@@ -231,9 +231,9 @@ LTBOOL g_InsideConvex( T *pRoot, TVector3<F> &pt )
 		VEC_CROSS(edgePlane.m_Normal, pRoot->m_pPlane->m_Normal, vTemp);
 		edgePlane.m_Normal /= edgePlane.m_Normal.Mag();
 		edgePlane.m_Dist = edgePlane.m_Normal.Dot(pPoly->m_Vertices[i]->m_Vec);
-		
+
 		edgeDot = edgePlane.m_Normal.Dot(pt) - edgePlane.m_Dist;
-		
+
 		if( edgeDot < 0.0f )
 			return LTFALSE;
 	}
@@ -254,7 +254,7 @@ T* g_IntersectRay( T *pRoot, TVector3<F> &pt, TVector3<F> &dir, F &t, TVector3<F
 
 	dot = DIST_TO_PLANE(pt, *pRoot->m_pPlane);
 	dirDot = pRoot->m_pPlane->m_Normal.Dot(dir);
-	
+
 	if( dot > POINT_SIDE_EPSILON )
 	{
 		// Front side.
@@ -263,7 +263,7 @@ T* g_IntersectRay( T *pRoot, TVector3<F> &pt, TVector3<F> &dir, F &t, TVector3<F
 			if( (pRet = g_IntersectRay(pRoot->m_Sides[FrontSide], pt, dir, t, intersection, flags)) )
 				return pRet;
 		}
-										  
+
 		// Test the node's polygon.
 		if( dirDot < ZERO )
 		{
@@ -279,10 +279,10 @@ T* g_IntersectRay( T *pRoot, TVector3<F> &pt, TVector3<F> &dir, F &t, TVector3<F
 			if( !pRoot->m_Sides[BackSide] )
 				return pRoot;
 			else if( !g_IsInsideTheTree(pRoot->m_Sides[BackSide], intersection) )
-				return pRoot;	
+				return pRoot;
 */
 		}
-		
+
 		// Back side.
 		if( !(pRoot->m_Sides[BackSide]->m_Flags & (NF_IN|NF_OUT)) )
 			if( dirDot <= ZERO )
@@ -309,7 +309,7 @@ T* g_IntersectRay( T *pRoot, TVector3<F> &pt, TVector3<F> &dir, F &t, TVector3<F
 #ifndef _MSC_VER
 #define PVector LTVector
 #define PReal float
-#include "node.h"
+#include "Node.h"
 #endif
 
 // ----------------------------------------------------------------------- //
@@ -324,14 +324,14 @@ int g_LocatePointInTree( M *pWorld, TVector3<F> &point, int iRoot )
 	F			dot;
 	CNode		*pRoot;
 	int			side;
-	
+
 	while(1)
 	{
 		pRoot = pWorld->GetNode( iRoot );
 		dot = pRoot->Normal().Dot(point) - pRoot->Dist();
 
 		side = (dot > 0.0f) ? FrontSide : BackSide;
-		
+
 		if( pRoot->m_Sides[side] >= 0 )
 			iRoot = pRoot->m_Sides[side];
 		else
@@ -370,7 +370,7 @@ inline F g_DistToClosestEdge( M *pModel, P *pRoot, TVector3<F> &pos )
 			minDist = dot;
 	}
 
-	
+
 	return minDist;
 }
 

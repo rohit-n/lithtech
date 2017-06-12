@@ -6,6 +6,11 @@
 #define __STDLIB_H__
 #endif
 
+#ifndef __STDINT_H__
+#include <stdint.h>
+#define __STDINT_H__
+#endif
+
 #ifndef __STRING_H__
 #include <string.h>
 #define __STRING_H__
@@ -98,7 +103,7 @@ inline uint32 LTStrLen(const wchar_t* pszStr1)
 #endif
 
 /*!
-Called to determine if the provided string is empty. This will assume that NULL strings are 
+Called to determine if the provided string is empty. This will assume that NULL strings are
 empty, and that the provided string, if not null, points to at least one character
 */
 inline bool LTStrEmpty(const char* pszStr)
@@ -134,7 +139,7 @@ Safe string copy (strncpy doesn't always null terminate, but this does).
 */
 
 
-inline void LTStrCpy(char *pDest, const char *pSrc, uint32 nBufferChars) 
+inline void LTStrCpy(char *pDest, const char *pSrc, uint32 nBufferChars)
 {
 	if (!pDest || (nBufferChars == 0))
 	{
@@ -158,10 +163,10 @@ inline void LTStrCpy(char *pDest, const char *pSrc, uint32 nBufferChars)
 
 
 #ifndef __LINUX
-inline void LTStrCpy(wchar_t *pDest, const wchar_t *pSrc, uint32 nBufferChars) 
+inline void LTStrCpy(wchar_t *pDest, const wchar_t *pSrc, uint32 nBufferChars)
 {
 
-#ifndef _FINAL 
+#ifndef _FINAL
 
 	if (!pDest || (nBufferChars == 0))
 	{
@@ -271,7 +276,7 @@ inline void LTStrCat(char *pDest, const char *pSrc, size_t destBytes)
 	size_t destLen = strlen(pDest);
 	size_t catLen = destBytes - destLen - 1;
 
-#ifndef _FINAL 
+#ifndef _FINAL
 	// do a sanity check to make sure we don't truncate source's data.
 	if( pSrc && catLen < strlen(pSrc) )
 	{
@@ -284,7 +289,7 @@ inline void LTStrCat(char *pDest, const char *pSrc, size_t destBytes)
 }
 
 #ifndef __LINUX
-inline void LTStrCat(wchar_t *pDest, const wchar_t *pSrc, uint32 nBufferChars) 
+inline void LTStrCat(wchar_t *pDest, const wchar_t *pSrc, uint32 nBufferChars)
 {
 
 	if (!pDest || (nBufferChars == 0))
@@ -1746,7 +1751,7 @@ only set if it hit the world or a WorldModel).
 /*!
 Model node hit by the intersection of ray to OBB.
 Value is INVALID_MODEL_NODE if it didn't hit one.
-*/	
+*/
 	HMODELNODE m_hNode;
 
 };
@@ -2399,45 +2404,45 @@ public:
 	//! next in list
 	LTEffectShader*				GetNext()					{ return m_pNext; }
 
-	virtual LTRESULT SetBool(const char* szParam, LTBOOL bBool) const = 0; 
-	virtual LTRESULT SetBoolArray(const char* szParam, LTBOOL *bBool, int nCount) const = 0; 
-	virtual LTRESULT SetFloat(const char* szParam, float fFloat) const = 0; 
-	virtual LTRESULT SetFloatArray(const char* szParam, float *fFloat, int nCount) const = 0; 
-	virtual LTRESULT SetInt(const char* szParam, int nInt) const = 0; 
-	virtual LTRESULT SetIntArray(const char* szParam, int *nInt, int nCount) const = 0; 
+	virtual LTRESULT SetBool(const char* szParam, LTBOOL bBool) const = 0;
+	virtual LTRESULT SetBoolArray(const char* szParam, LTBOOL *bBool, int nCount) const = 0;
+	virtual LTRESULT SetFloat(const char* szParam, float fFloat) const = 0;
+	virtual LTRESULT SetFloatArray(const char* szParam, float *fFloat, int nCount) const = 0;
+	virtual LTRESULT SetInt(const char* szParam, int nInt) const = 0;
+	virtual LTRESULT SetIntArray(const char* szParam, int *nInt, int nCount) const = 0;
 
-	virtual LTRESULT SetMatrix(const char* szParam, LTMatrix &mMatrix) const = 0; 
-	virtual LTRESULT SetMatrixArray(const char* szParam, LTMatrix *mMatrix, int nCount) const = 0; 
-
-	//TODO
-	//SetMatrixPointerArray Sets an array of pointers to nontransposed matrices. 
-		
-	virtual LTRESULT SetMatrixTranspose(const char* szParam, LTMatrix &mMatrix) const = 0; 
-	virtual LTRESULT SetMatrixTransposeArray(const char* szParam, LTMatrix *mMatrix, int nCount) const = 0; 
+	virtual LTRESULT SetMatrix(const char* szParam, LTMatrix &mMatrix) const = 0;
+	virtual LTRESULT SetMatrixArray(const char* szParam, LTMatrix *mMatrix, int nCount) const = 0;
 
 	//TODO
-	//SetMatrixTransposePointerArray Sets an array of pointers to transposed matrices. 
+	//SetMatrixPointerArray Sets an array of pointers to nontransposed matrices.
 
-	//SetString Sets a string. 
-	virtual LTRESULT SetString(const char* szParam, const char* szString) const = 0; 
+	virtual LTRESULT SetMatrixTranspose(const char* szParam, LTMatrix &mMatrix) const = 0;
+	virtual LTRESULT SetMatrixTransposeArray(const char* szParam, LTMatrix *mMatrix, int nCount) const = 0;
 
-	//SetTechnique Sets the active technique. 
-	virtual LTRESULT SetTechnique(const char* szTechnique) const = 0; 
+	//TODO
+	//SetMatrixTransposePointerArray Sets an array of pointers to transposed matrices.
+
+	//SetString Sets a string.
+	virtual LTRESULT SetString(const char* szParam, const char* szString) const = 0;
+
+	//SetTechnique Sets the active technique.
+	virtual LTRESULT SetTechnique(const char* szTechnique) const = 0;
 
 	//
 	virtual LTRESULT ValidateTechnique(const char* szTechnique) const = 0;
 
 	virtual LTRESULT FindFirstValidTechnique(LTTechniqueInfo* pInfo) const = 0;
 
-	//SetTexture Sets a texture. 
-	virtual LTRESULT SetTexture(const char* szParam, HTEXTURE hTexture) const = 0; 
+	//SetTexture Sets a texture.
+	virtual LTRESULT SetTexture(const char* szParam, HTEXTURE hTexture) const = 0;
 
 	//SetTextureRT sends a user made render target to the effect as a texture.
-	virtual LTRESULT SetTextureRT(const char* szParam, HRENDERTARGET hRenderTarget) const = 0; 
-	//SetValue Set the value of an arbitrary parameter or annotation, including simple types, structs, arrays, strings, shaders and textures.  
-		
-	//SetVector Sets a vector. 
-	//SetVectorArray Sets an array of vectors. 
+	virtual LTRESULT SetTextureRT(const char* szParam, HRENDERTARGET hRenderTarget) const = 0;
+	//SetValue Set the value of an arbitrary parameter or annotation, including simple types, structs, arrays, strings, shaders and textures.
+
+	//SetVector Sets a vector.
+	//SetVectorArray Sets an array of vectors.
 	virtual LTRESULT SetVector(const char* szParam, float *fFloat) const = 0;  //4 floats
 	virtual LTRESULT SetVectorArray(const char* szParam, float *fFloat, int nCount) const = 0; // 4 floats * nCount
 

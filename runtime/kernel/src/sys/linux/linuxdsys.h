@@ -4,7 +4,7 @@
 //
 // CREATED   : 11/12/99
 //
-// AUTHOR    : 
+// AUTHOR    :
 //
 // COPYRIGHT : Monolith Productions Inc.
 //
@@ -59,7 +59,7 @@ LTRESULT dsi_GetRenderMode(RMode *pMode);
 LTRESULT dsi_SetRenderMode(RMode *pMode);
 LTRESULT dsi_ShutdownRender(uint32 flags);
 
-// Initializes the cshell and cres DLLs (copies them into a temp directory).	
+// Initializes the cshell and cres DLLs (copies them into a temp directory).
 LTRESULT dsi_InitClientShellDE();
 LTRESULT dsi_LoadServerObjects(CClassMgr *pInfo);
 
@@ -94,7 +94,7 @@ char* dsi_GetDefaultWorld();
 
 // Sets up a message for a DRESULT.
 LTRESULT dsi_SetupMessage(char *pMsg, int maxMsgLen, uint32 dResult, va_list marker);
-		  
+
 // Puts an error message in the console if the renderer is initialized or
 // a message box otherwise.
 LTRESULT dsi_DoErrorMessage(char *pMessage);
@@ -106,6 +106,8 @@ void dsi_PrintToConsole(const char *pMsg, ...);	// Print to console.
 void* dsi_GetInstanceHandle();	// Returns an HINSTANCE.
 void* dsi_GetResourceModule();	// Returns an HINSTANCE.
 void* dsi_GetMainWindow();		// Returns an HWND.
+
+LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied);
 
 // Message box.
 void dsi_MessageBox(char *pMsg, char *pTitle);

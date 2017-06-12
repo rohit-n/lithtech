@@ -5,6 +5,11 @@
 #include "ltinteger.h"
 #endif
 
+#ifndef __UNISTD_D__
+#include <unistd.h>
+#define __UNISTD_D__
+#endif // __UNISTD_D__
+
 // Note: we're assuming the timer doesn't need to be initialized .. if it does,
 // it should be initialized in system-dependent code.
 float	time_GetTime(); // returns time in seconds as a floating point number

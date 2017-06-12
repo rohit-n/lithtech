@@ -65,7 +65,7 @@ Builds on linux
 - [ ] Target rules for targets named Lib_UI
 - [x] Target rules for targets named Lib_Info
 - [ ] Target rules for targets named Lib_ILTSound
-- [ ] Target rules for targets named DLL_Server
+- [x] Target rules for targets named DLL_Server
 - [ ] Target rules for targets named EXE_Lithtech
 - [ ] Target rules for targets named LIB_D3DRender
 - [ ] Target rules for targets named Lib_DShow

@@ -17,7 +17,7 @@ add_library(${PROJECT_NAME} STATIC
 
 include_directories(../zlib)
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "--std=c++11")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "--std=c++11 -fPIC")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 target_link_libraries(${PROJECT_NAME}

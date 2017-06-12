@@ -2,8 +2,9 @@
 #ifndef __NODE_H__
 #define __NODE_H__
 
+typedef bool BOOL;
 
-	#include "preplane.h"
+	#include "PrePlane.h"
 	class CPrePoly;
 
 	// Special node indices.
