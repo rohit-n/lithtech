@@ -9,7 +9,7 @@
 #endif
 
 #ifndef _DXERR9_H_
-#include <dxerr9.h>
+#include <DxErr.h>
 #endif
 
 #ifndef __COMMON_STUFF_H__
@@ -154,9 +154,9 @@ inline void GetVertexFlags_and_Size(VERTEX_BLEND_TYPE VertBlendType, uint32 iVer
 #define OUTPUT_D3D_ERROR(iLevel,hResult)					\
 	{														\
 	const TCHAR *dx9ErrString;								\
-	dx9ErrString = DXGetErrorString9(hResult);				\
+	dx9ErrString = DXGetErrorStringA(hResult);				\
 	AddDebugMessage(iLevel,dx9ErrString);					\
-	dx9ErrString = DXGetErrorDescription9(hResult);			\
+	dx9ErrString = DXGetErrorDescriptionA(hResult);			\
 	AddDebugMessage(iLevel,dx9ErrString);					\
 	}
 #else
