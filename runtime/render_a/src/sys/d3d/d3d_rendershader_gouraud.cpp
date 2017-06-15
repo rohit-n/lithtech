@@ -2954,8 +2954,6 @@ void CRenderShader_Gouraud_Effect::TranslateVertices(SVertex_Gouraud_Effect *pOu
 		pCurOut->m_vPos = pCurIn->m_vPos;
 		pCurOut->m_nColor = pCurIn->m_nColor;
 		pCurOut->m_vNormal = pCurIn->m_vNormal;
-		pCurOut->m_vTangent = pCurIn->m_vTangent;
-		pCurOut->m_vBinormal = pCurIn->m_vBinormal;
 		pCurOut->m_fU = pCurIn->m_fU0;
 		pCurOut->m_fV = pCurIn->m_fV0;
 		pCurOut->m_fW = 1.0f;
