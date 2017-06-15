@@ -41,29 +41,7 @@
 static ILTTexInterface *pTexInterface = NULL;
 define_holder(ILTTexInterface, pTexInterface);
 
-#ifdef WIN32
 extern HDC g_hTextDC;
-#endif
-#ifndef WIN32
-struct BITMAPINFOHEADER
-{
-	int biSize;
-	int biWidth;
-	int biHeight;
-	int biBitCount;
-	int biPlanes;
-    int biCompression;
-	int biSizeImage;
-};
-
-struct BITMAPINFO
-{
-    BITMAPINFOHEADER bmiHeader;
-};
-
-struct FONT {};
-typedef FONT* HFONT;
-#endif
 
 //ILTClient game interface
 static ILTClient *ilt_client;
@@ -102,7 +80,6 @@ define_holder(ILTClient, ilt_client);
 // ----------------------------------------------------------------------- //
 bool WriteBmp( char const* pszFileName, BITMAPINFO const& bmi, uint8 const* pDibBits )
 {
-#ifdef WIN32
     // Save the bitmap.
 	FILE* fp = fopen( pszFileName, "wb");
 	if (!fp)
@@ -132,10 +109,9 @@ bool WriteBmp( char const* pszFileName, BITMAPINFO const& bmi, uint8 const* pDib
 	fwrite( pDibBits, nImageByteSize, 1, fp );
 
 	fclose(fp);
-#endif
+
 	return true;
 }
-
 
 // ----------------------------------------------------------------------- //
 //
@@ -151,7 +127,7 @@ class InstalledFontFace
 
 		InstalledFontFace( )
 		{
-			m_hFont = NULL;
+			m_hFont = nullptr;
 			m_bDeleteFile = false;
 			m_nHeight = 0;
 		}
@@ -312,8 +288,6 @@ void InstalledFontFace::Term( )
 }
 
 
-
-
 //	--------------------------------------------------------------------------
 // create a proportional bitmap font from a TrueType resource
 
@@ -325,7 +299,6 @@ CUIVectorFont::~CUIVectorFont()
 {
 	Term( );
 }
-
 
 bool CUIVectorFont::Init(
 		char const* pszFontFile,
@@ -458,7 +431,6 @@ inline int GetPowerOfTwo( int nValue )
 //	sizeTexture -	Function fills in with texture size.
 //
 // ----------------------------------------------------------------------- //
-
 static void GetTextureSizeFromCharSizes( GLYPHMETRICS const* pGlyphMetrics, SIZE const& sizeMaxGlyphSize,
 										int nLen, SIZE& sizeTexture )
 {

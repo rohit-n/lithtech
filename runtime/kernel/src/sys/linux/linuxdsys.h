@@ -100,17 +100,17 @@ LTRESULT dsi_SetupMessage(char *pMsg, int maxMsgLen, uint32 dResult, va_list mar
 LTRESULT dsi_DoErrorMessage(char *pMessage);
 
 
-
 void dsi_PrintToConsole(const char *pMsg, ...);	// Print to console.
 
 void* dsi_GetInstanceHandle();	// Returns an HINSTANCE.
 void* dsi_GetResourceModule();	// Returns an HINSTANCE.
 void* dsi_GetMainWindow();		// Returns an HWND.
 
-LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied);
-
 // Message box.
 void dsi_MessageBox(char *pMsg, char *pTitle);
+
+// System functions
+LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied);
 
 // ------------------------------------------------------------------------- //
 // Class Definitions

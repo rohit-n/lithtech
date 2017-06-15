@@ -62,7 +62,7 @@ Builds on linux
 - [x] Target rules for targets named Lib_StdLith
 - [x] Target rules for targets named ltmem
 - [x] Target rules for targets named Lib_RezMgr
-- [ ] Target rules for targets named Lib_UI
+- [x] Target rules for targets named Lib_UI
 - [x] Target rules for targets named Lib_Info
 - [ ] Target rules for targets named Lib_ILTSound
 - [x] Target rules for targets named DLL_Server

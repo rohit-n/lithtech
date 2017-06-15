@@ -35,7 +35,6 @@ set(libsources
 	src/cuistaticimage_impl.cpp
 	src/cuistatictext.cpp
 	src/cuistatictext_impl.cpp
-	src/cuivectorfont.cpp
 	src/cuiwidget.cpp
 	src/cuiwidget_impl.cpp
 	src/cuiwidgetmanager.cpp
@@ -55,17 +54,22 @@ include_directories(src
 	../kernel/src
 	../kernel/mem/src)
 if(WIN32)
-include_directories (../shared/src/sys/win
-	../kernel/src/sys/win)
+	set(libsources ${libsources}
+		src/sys/win/cuivectorfont.cpp)
+    include_directories (../shared/src/sys/win
+	    ../kernel/src/sys/win)
 endif(WIN32)
+
 if(UNIX)
-include_directories (../shared/src/sys/linux
-	../kernel/src/sys/linux)
+	set(libsources ${libsources}
+		src/sys/linux/cuivectorfont.cpp)
+    include_directories (../shared/src/sys/linux
+        ../kernel/src/sys/linux)
 endif(UNIX)
 
 
 add_library(${PROJECT_NAME} STATIC ${libsources})
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive --std=c++11")
 endif(CMAKE_COMPILER_IS_GNUCXX)
