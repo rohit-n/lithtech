@@ -303,7 +303,8 @@ LTRESULT dsi_LoadServerObjects(CClassMgr *pClassMgr)
 
     //Copy the object.lto file out of the res so we can run it.
 	bool bFileCopied = false;
-    if (GetOrCopyFile( pDLLName, fileName, sizeof(fileName), bFileCopied) != LT_OK) 
+
+    if (GetOrCopyClientFile( pDLLName, fileName, sizeof(fileName), bFileCopied ) != LT_OK)
 	{
         sm_SetupError(LT_ERRORCOPYINGFILE, pDLLName);
         RETURN_ERROR_PARAM(1, LoadServerObjects, LT_ERRORCOPYINGFILE, pDLLName);
@@ -329,7 +330,7 @@ LTRESULT dsi_LoadServerObjects(CClassMgr *pClassMgr)
 
     // Get sres.dll.
 	bFileCopied = false;
-    if ((GetOrCopyFile("sres.dll", fileName, sizeof(fileName),bFileCopied) != LT_OK)
+    if ((GetOrCopyClientFile("sres.dll", fileName, sizeof(fileName),bFileCopied) != LT_OK)
         || (bm_BindModule(fileName, bFileCopied, pClassMgr->m_hServerResourceModule) != BIND_NOERROR))
     {
 		cb_UnloadModule( pClassMgr->m_ClassModule );
@@ -490,7 +491,11 @@ LTRESULT GetOrCopyClientFile( char const* pszFilename,
     dResult = client_file_mgr->CopyFile( pszFilename, szTempFilename );
     if( dResult != LT_OK )
 				{
-                    return dResult;
+					dResult = CopyFileA(pszFilename, szTempFilename, 0);
+					if (dResult == 0)
+					{
+						return dResult;
+					}
                 }
 
 	bFileCopied = true;
