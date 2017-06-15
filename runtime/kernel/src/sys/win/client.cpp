@@ -91,7 +91,7 @@ static bool StartClient(ClientGlob *pGlob)
 
     // Find all the res trees.
     nResTrees = 0;
-
+#if 0
     for (uint32 i = 0; i < command_line_args->Argc() - 1; i++) {
         //check if this argument is -rez
         if (stricmp(command_line_args->Argv(i), "-rez") == 0) {
@@ -102,12 +102,16 @@ static bool StartClient(ClientGlob *pGlob)
             }
         }
     }
-
+#endif
     // Add the default engine resource...
     if (!g_CV_NoDefaultEngineRez) 
 	{
         resTrees[nResTrees++] = "engine.rez"; 
     }
+
+	resTrees[nResTrees++] = "game.rez";
+	resTrees[nResTrees++] = "game2.rez";
+	resTrees[nResTrees++] = "sound.rez";
 
     if (command_line_args->FindArgDash("noinput")) 
 	{
