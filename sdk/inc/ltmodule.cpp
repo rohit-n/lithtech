@@ -287,7 +287,7 @@ RELATION SortedArrayCompareIBase(IBase *other, IBase *api);
 RELATION SortedArrayFindNameMgr(const char *name, CInterfaceNameMgr *mgr);
 RELATION SortedArrayCompareNameMgr(CInterfaceNameMgr *other, CInterfaceNameMgr *mgr);
 
-void CInterfaceDatabase::AddAPI(IBase *api, const char *implemented_class_name, int32 interface_version) {
+void CInterfaceDatabase::AddAPI(IBase *api, const char *implemented_class_name, uint32 interface_version) {
     //check parameters.
     IFBREAKRETURN(api == NULL);
 
@@ -420,7 +420,7 @@ EChooserRun CInterfaceDatabase::RunChooser(CInterfaceChooser *chooser) {
     return ptrs->use_database->Run(chooser);
 }
 
-void CInterfaceDatabase::Add(IBase *api, const char *implemented_class_name, int32 interface_version) {
+void CInterfaceDatabase::Add(IBase *api, const char *implemented_class_name, uint32 interface_version) {
     //check params
     IFBREAKRETURN(api == NULL);
 
@@ -734,7 +734,7 @@ RELATION SortedArrayCompareNameMgr(CInterfaceNameMgr *other, CInterfaceNameMgr *
 //
 //
 
-CInterfaceNameMgr::CInterfaceNameMgr(const char *name, int32 version) {
+CInterfaceNameMgr::CInterfaceNameMgr(const char *name, uint32 version) {
     //copy the name.
     this->name = LTStrCpyCreate(name);
 
@@ -1006,7 +1006,7 @@ void CInterfaceNameMgr::TransferFrom(CInterfaceNameMgr *other) {
 //****************************************************************************************
 
 
-void CInterfaceChooser::Init(const char *name, int32 version) {
+void CInterfaceChooser::Init(const char *name, uint32 version) {
     //save the name.
     this->name = name;
 
@@ -1014,7 +1014,7 @@ void CInterfaceChooser::Init(const char *name, int32 version) {
     this->version = version;
 }
 
-void CInterfaceChooserList::Init(const char *name, int32 version,
+void CInterfaceChooserList::Init(const char *name, uint32 version,
     uint32 num_choices, const char **choices, const char *def_name)
 {
     //call base class.
@@ -1092,7 +1092,7 @@ EChooserRun CInterfaceChooserList::SetImplementation(const char *name) {
 //****************************************************************************************
 
 
-CAPIHolderBase::CAPIHolderBase(const char *api_string_name, int32 version) {
+CAPIHolderBase::CAPIHolderBase(const char *api_string_name, uint32 version) {
     //increment the global interface/holder count.
     CInterfaceDatabase::DatabaseItemCountInc();
 

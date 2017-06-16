@@ -1,6 +1,7 @@
 //	===========================================================================
-
+#ifdef WIN32
 #include <windows.h>
+#endif
 #include "iltsound.h"
 // ---
 #include "string.h"

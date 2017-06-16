@@ -1029,14 +1029,14 @@ ChildInfo* Model::AddChildModel(Model *pChild,
 	if(FindChildModel(pChild,index))
 	{
 		LTStrCpy(pErrStr, "Model already exists.", nErrStrLen);
-		return NULL;
+		return nullptr;
 	}
 
 	// Can't have too many.
 	if(m_nChildModels >= MAX_CHILD_MODELS)
 	{
 		LTStrCpy(pErrStr, "Child model limit reached.", nErrStrLen);
-		return NULL;
+		return nullptr;
 	}
 
 	// Make sure it's valid.
@@ -1045,14 +1045,14 @@ ChildInfo* Model::AddChildModel(Model *pChild,
 		if(!VerifyChildModelTree(pChild, pErrNode))
 		{
 			LTSNPrintF(pErrStr, nErrStrLen, "Node trees differ at node %s.", pErrNode->GetName());
-			return false;
+			return nullptr;
 		}
 	}
 
 	// Add it..
 	LT_MEM_TRACK_ALLOC(pChildModel = new ChildInfo,LT_MEM_TYPE_MODEL);
 	if(!pChildModel)
-		return NULL;
+		return nullptr;
 
 	// Add it to the list.
 	m_ChildModels[m_nChildModels] = pChildModel;
@@ -1072,7 +1072,7 @@ ChildInfo* Model::AddChildModel(Model *pChild,
 		if(!bSetSizeResult)
 		{
 			LTStrCpy(pErrStr, "Out of memory.", nErrStrLen);
-			return NULL;
+			return nullptr;
 		}
 
 		for(i=0; i < pChild->m_Anims; i++)
