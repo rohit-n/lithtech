@@ -70,7 +70,7 @@ Builds on linux
 - [ ] Target rules for targets named LIB_D3DRender
 - [ ] Target rules for targets named Lib_DShow
 - [ ] Target rules for targets named MFCStub
-- [ ] Target rules for targets named ButeMgr
+- [x] Target rules for targets named ButeMgr
 - [x] Target rules for targets named CryptMgr
 - [ ] Target rules for targets named RegMgr
 - [ ] Target rules for targets named LTGUIMgr

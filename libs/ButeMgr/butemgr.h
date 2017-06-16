@@ -21,13 +21,17 @@
 #include <map>
 #include <set>
 #include <functional>
+#ifndef __GNUC__
 #include <hash_set>
 #include <hash_map>
+#endif
 #if _MSC_VER >= 1300
 #	include <iosfwd>
 #	include <strstream>
 #	include <iostream>
 #elif defined(__GNUC__)
+#   include <unordered_set>
+#   include <unordered_map>
 #   include <string>
 #   include <iostream>
 #   include <fstream>
@@ -399,6 +403,16 @@ private:
 
 	// Used to define map of strings to TableOfItems.
 	typedef stdext::hash_map< char const*, TableOfItems*, ButeMgrHashCompare > TableOfTags;
+#elif defined(__GNUC__)
+	// Used to define dictionary of strings.
+	// This must be case sensitive!
+	typedef std::unordered_set< CString, std::hash< char const* >, equal_str > StringHolder;
+
+	// Used to define map of strings to CSymTabItems.
+	typedef std::unordered_map< char const*, CSymTabItem*, hash_str_nocase, equal_str_nocase > TableOfItems;
+
+	// Used to define map of strings to TableOfItems.
+	typedef std::unordered_map< char const*, TableOfItems*, hash_str_nocase, equal_str_nocase > TableOfTags;
 #else
 	// Used to define dictionary of strings.
 	// This must be case sensitive!
@@ -470,7 +484,7 @@ private:
 	};
 	static bool GetTagsTraverseFunc( char const* pszTagName, TableOfItems& theTableOfItems, void* pContext );
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::istream* m_pData;
 	std::iostream *m_pSaveData;
 #else
@@ -532,7 +546,7 @@ private:
 };
 
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 inline bool CButeMgr::Parse( std::istream& iStream, int decryptCode)
 #else
 inline bool CButeMgr::Parse( istream& iStream, int decryptCode)
@@ -554,7 +568,7 @@ inline bool CButeMgr::Parse( istream& iStream, int decryptCode)
 	return retVal;
 }
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 inline bool CButeMgr::Parse( std::istream& iCrypt, std::streamsize nLen, const char* cryptKey)
 #else
 inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* cryptKey)
@@ -563,14 +577,14 @@ inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* crypt
 	m_bCrypt = true;
 	m_cryptMgr.SetKey(cryptKey);
 	char* buf2 = new char[(unsigned int)nLen];
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::ostrstream* pOss = new std::ostrstream(buf2, nLen);
 #else
 	ostrstream* pOss = new ostrstream(buf2, nLen);
 #endif // VC7
 	m_cryptMgr.Decrypt(iCrypt, *pOss);
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::istrstream* pIStream = new std::istrstream(const_cast<const char *>(buf2), pOss->pcount());
 #else
 	istrstream* pIStream = new istrstream(buf2, pOss->pcount());
@@ -594,7 +608,7 @@ inline bool CButeMgr::Parse(CRezItm* pItem, int decryptCode)
 {
 	if (!pItem)
 		return false;
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::istrstream* pIStream = new std::istrstream((char*)pItem->Load(), pItem->GetSize());
 #else
 	istrstream* pIStream = new istrstream((char*)pItem->Load(), pItem->GetSize());
@@ -617,7 +631,7 @@ inline bool CButeMgr::Parse(CRezItm* pItem, const char* cryptKey)
 		return false;
 	char* buf1 = (char*)pItem->Load();
 	int len = pItem->GetSize();
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::istrstream* pIss = new std::istrstream(buf1, len);
 #else
 	istrstream* pIss = new istrstream(buf1, len);
@@ -642,7 +656,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, int decryptCode,
 {
 	if (!pData)
 		return false;
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::istrstream* pIStream = new std::istrstream((char*)pData, size);
 #else
 	istrstream* pIStream = new istrstream((char*)pData, size);
@@ -668,7 +682,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 		return false;
 	char* buf1 = (char*)pData;
 	int len = size;
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::istrstream* pIss = new std::istrstream(buf1, len);
 #else
 	istrstream* pIss = new istrstream(buf1, len);
@@ -691,7 +705,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 
 inline bool CButeMgr::Parse(CString sAttributeFilename, int decryptCode)
 {
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::ifstream* pIStream = new std::ifstream(sAttributeFilename, std::ios_base::in);
 #else
 	ifstream* pIStream = new ifstream(sAttributeFilename, ios::in | ios::nocreate);
@@ -718,7 +732,7 @@ inline bool CButeMgr::Parse(CString sAttributeFilename, int decryptCode)
 
 inline bool CButeMgr::Parse(CString sAttributeFilename, const char* cryptKey)
 {
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	std::ifstream* pIs = new std::ifstream(sAttributeFilename, std::ios_base::binary);
 #else
 	ifstream* pIs = new ifstream(sAttributeFilename, ios::nocreate | ios::binary);
@@ -731,7 +745,7 @@ inline bool CButeMgr::Parse(CString sAttributeFilename, const char* cryptKey)
 		return false;
 	}
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	pIs->seekg(0, std::ios_base::end);
 #else
 	pIs->seekg(0, ios::end);
