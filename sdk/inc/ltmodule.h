@@ -102,7 +102,7 @@ of an interface.  If the version number doesnt match, a debug assertion is trigg
 and the holder value will be \b NULL.
 */
 #define interface_version(interface_name, version_num)                              \
-    enum { _##interface_name##_VERSION_ = version_num}                              \
+    enum { _##interface_name##_VERSION_ = version_num }                             \
 
 
 /*!
@@ -253,11 +253,11 @@ class/instance name combination.
 typedef struct {
     //marks the beginning of the structure.
     char marker[32];
-    int32 marker_int;
+    uint32 marker_int;
     char interface_name[64];
     char instance_name[64];
     char implementation[64];
-    int32 version;
+    uint32 version;
 } SStaticSearchInterface;
 
 //
@@ -281,7 +281,7 @@ typedef struct {
 template <class I>
 class CAPIInstanceDefines {
   public:
-    CAPIInstanceDefines(I *implementation, const char *implemented_class_name, int32 interface_version);
+    CAPIInstanceDefines(I *implementation, const char *implemented_class_name, uint32 interface_version);
     ~CAPIInstanceDefines();
 
     //pointer to the implementation, so we can reference it in our destructor
@@ -356,10 +356,10 @@ typedef struct {
     //marks the beginning of the structure.
     char marker[32];
     //non-string marker
-    int32 marker_int;
+    uint32 marker_int;
     char interface_name[64];
     char instance_name[64];
-    int32 version;
+    uint32 version;
 } SStaticSearchHolder;
 
 //
@@ -375,7 +375,7 @@ typedef struct {
 
 class CAPIHolderBase {
 public:
-    CAPIHolderBase(const char *api_string_name, int32 version);
+    CAPIHolderBase(const char *api_string_name, uint32 version);
     virtual ~CAPIHolderBase();
 
     //
@@ -396,7 +396,7 @@ public:
     __inline const char *InterfaceName();
 
     //returns the version of the api we want.
-    __inline int32 Version();
+    __inline uint32 Version();
 
 protected:
     //string name of the api.  Taken from the constructor, the string
@@ -405,7 +405,7 @@ protected:
     const char *api_name;
 
     //version of the api header file that was used when this var was compiled.
-    int32 version;
+    uint32 version;
 };
 
 
@@ -419,7 +419,7 @@ protected:
 template <class I>
 class CAPIHolder : public CAPIHolderBase {
 public:
-    CAPIHolder(const char *api_string_name, I *&holder_var, int32 version);
+    CAPIHolder(const char *api_string_name, I *&holder_var, uint32 version);
     ~CAPIHolder();
 
     //
@@ -453,7 +453,7 @@ const char *CAPIHolderBase::InterfaceName() {
     return api_name;    
 }
 
-int32 CAPIHolderBase::Version() {
+uint32 CAPIHolderBase::Version() {
     return version;
 }
 
@@ -629,7 +629,7 @@ int32 CAPIHolderBase::Version() {
         //
 
         //adds an api to the database.
-        static void AddAPI(IBase *api, const char *implemented_class_name, int32 interface_version);
+        static void AddAPI(IBase *api, const char *implemented_class_name, uint32 interface_version);
 
         //removes an interface from the database.
         //Anyone using the interface will be disconnected.
@@ -688,7 +688,7 @@ int32 CAPIHolderBase::Version() {
         //
 
         //adds an interface implementation to the database.
-        virtual void Add(IBase *api, const char *implementation_class_name, int32 interface_version);
+        virtual void Add(IBase *api, const char *implementation_class_name, uint32 interface_version);
 
         //removes an interface implementation from the database
         virtual void Remove(IBase *api, const char *implementation_class_name);
@@ -726,7 +726,7 @@ int32 CAPIHolderBase::Version() {
 
     class CInterfaceNameMgr {
     public:
-        CInterfaceNameMgr(const char *name, int32 version);
+        CInterfaceNameMgr(const char *name, uint32 version);
         virtual ~CInterfaceNameMgr();
 
         //adds an interface implementation
@@ -754,7 +754,7 @@ int32 CAPIHolderBase::Version() {
         inline const char *InterfaceName();
 
         //returns version number of the interface that is mgr'd.
-        inline int32 InterfaceVersion();
+        inline uint32 InterfaceVersion();
 
         //returns true if there are no objects contained in this mgr.
         bool IsEmpty();
@@ -782,7 +782,7 @@ int32 CAPIHolderBase::Version() {
         char *name;
 
         //the version of the interface.
-        int32 version;
+        uint32 version;
 
         //the array of interface implementations.
         database_array<IBase, const char *> *interfaces;
@@ -818,7 +818,7 @@ int32 CAPIHolderBase::Version() {
         return name;    
     }
 
-    int32 CInterfaceNameMgr::InterfaceVersion() {
+    uint32 CInterfaceNameMgr::InterfaceVersion() {
         return version;
     }
 
@@ -838,7 +838,7 @@ int32 CAPIHolderBase::Version() {
     public:
         //Init function takes the name and version number of the 
         //interface we are set up to control.
-        void Init(const char *name, int32 version);
+        void Init(const char *name, uint32 version);
 
         //called when an implementation is added to the name mgr.
         virtual void Add(IBase *api, CInterfaceNameMgr *mgr) = 0;
@@ -852,14 +852,14 @@ int32 CAPIHolderBase::Version() {
 
         //returns the name and version number of the interface we control
         inline const char *InterfaceName();
-        inline int32 InterfaceVersion();
+        inline uint32 InterfaceVersion();
 
     protected:
         //name of the interface we control.
         const char *name;
 
         //version of the interface we control.
-        int32 version;
+        uint32 version;
     };
 
     //
@@ -870,7 +870,7 @@ int32 CAPIHolderBase::Version() {
         return name;    
     }
 
-    int32 CInterfaceChooser::InterfaceVersion() {
+    uint32 CInterfaceChooser::InterfaceVersion() {
         return version;
     }
 
@@ -886,7 +886,7 @@ int32 CAPIHolderBase::Version() {
     class CInterfaceChooserList : private CInterfaceChooser {
     public:
         //Init takes the full list of implementation names, and the default name.
-        void Init(const char *name, int32 version, uint32 num_choices, const char **choices, const char *def_name);
+        void Init(const char *name, uint32 version, uint32 num_choices, const char **choices, const char *def_name);
 
         //changes the current implementation.
         EChooserRun SetImplementation(uint32 index);
@@ -1065,7 +1065,7 @@ int32 CAPIHolderBase::Version() {
 	
 
     template <class I>
-    CAPIInstanceDefines<I>::CAPIInstanceDefines(I *implementation, const char *implemented_class_name, int32 interface_version) {
+    CAPIInstanceDefines<I>::CAPIInstanceDefines(I *implementation, const char *implemented_class_name, uint32 interface_version) {
         //save a pointer to this implementaiton that we can use in our destructor
         this->implementation = implementation;
 
@@ -1095,7 +1095,7 @@ int32 CAPIHolderBase::Version() {
     //
 
     template <class I>
-    CAPIHolder<I>::CAPIHolder(const char *api_string_name, I *&var, int32 version) 
+    CAPIHolder<I>::CAPIHolder(const char *api_string_name, I *&var, uint32 version) 
       : CAPIHolderBase(api_string_name, version), p(var)
     {
         //initialize our interface pointer.

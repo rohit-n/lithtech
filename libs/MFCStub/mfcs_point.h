@@ -3,7 +3,7 @@
 #ifndef __MFCS_POINT_H__
 #define __MFCS_POINT_H__
 
-#include "..\mfcstub\mfcs_types.h"
+#include "mfcs_types.h"
 
 #ifndef _WINDOWS_
 	// Make sure POINT is defined...

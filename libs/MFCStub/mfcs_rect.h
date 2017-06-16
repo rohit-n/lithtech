@@ -3,8 +3,8 @@
 #ifndef __MFCS_RECT_H__
 #define __MFCS_RECT_H__
 
-#include "..\mfcstub\mfcs_types.h"
-#include "..\mfcstub\mfcs_point.h"
+#include "mfcs_types.h"
+#include "mfcs_point.h"
 
 #ifndef _WINDOWS_
 	// Make sure RECT is defined...

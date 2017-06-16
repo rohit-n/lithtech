@@ -3,7 +3,7 @@
 #ifndef __MFCS_STRING_H__
 #define __MFCS_STRING_H__
 
-#include "..\mfcstub\mfcs_types.h"
+#include "mfcs_types.h"
 
 #include <stdarg.h> // for va_list
 

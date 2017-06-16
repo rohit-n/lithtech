@@ -27,6 +27,42 @@
 #	include <iosfwd>
 #	include <strstream>
 #	include <iostream>
+#elif defined(__GNUC__)
+#   include <string>
+#   include <iostream>
+#   include <fstream>
+#   include <strstream>
+struct ci_char_traits : public std::char_traits<char> {
+    static char to_upper(char ch) {
+        return std::toupper((unsigned char) ch);
+    }
+    static bool eq(char c1, char c2) {
+         return to_upper(c1) == to_upper(c2);
+     }
+    static bool lt(char c1, char c2) {
+         return to_upper(c1) <  to_upper(c2);
+    }
+    static int compare(const char* s1, const char* s2, size_t n) {
+        while ( n-- != 0 ) {
+            if ( to_upper(*s1) < to_upper(*s2) ) return -1;
+            if ( to_upper(*s1) > to_upper(*s2) ) return 1;
+            ++s1; ++s2;
+        }
+        return 0;
+    }
+    static const char* find(const char* s, int n, char a) {
+        auto const ua (to_upper(a));
+        while ( n-- != 0 ) 
+        {
+            if (to_upper(*s) == ua)
+                return s;
+            s++;
+        }
+        return nullptr;
+    }
+};
+ 
+using ci_string = std::basic_string<char, ci_char_traits>;
 #else
 #	include <istream>
 #	include "fstream.h"
@@ -97,7 +133,12 @@ struct equal_str_nocase
 {
 	bool operator()(const char* s1, const char* s2) const
 	{
+#ifndef WIN32
+        ci_string sc1{s1}, sc2{s2};
+		return (sc1 == sc2);
+#else
 		return stricmp(s1, s2) == 0;
+#endif
 	}
 };
 
@@ -227,7 +268,7 @@ public:
 	void SetDisplayFunc(void (*pF)(const char* szMsg)) { m_pDisplayFunc = pF; }
 	CString GetErrorString() { return m_sErrorString; }
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__GNUC__)
 	bool Parse( std::istream& iStream, int decryptCode = 0);
 	bool Parse( std::istream& iCrypt, std::streamsize nLen, const char* cryptKey);
 #else

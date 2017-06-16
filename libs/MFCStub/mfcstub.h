@@ -12,7 +12,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
+#ifdef WIN32
 #include <crtdbg.h>
+#endif
 
 #include "mfcs_types.h"
 #include "mfcs_point.h"
