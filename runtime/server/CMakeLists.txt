@@ -185,5 +185,5 @@ if(WIN32)
 endif(WIN32)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -std=c++11")
 endif(CMAKE_COMPILER_IS_GNUCXX)
