@@ -64,12 +64,12 @@ Builds on linux
 - [x] Target rules for targets named Lib_RezMgr
 - [x] Target rules for targets named Lib_UI
 - [x] Target rules for targets named Lib_Info
-- [ ] Target rules for targets named Lib_ILTSound
+- [x] Target rules for targets named Lib_ILTSound
 - [x] Target rules for targets named DLL_Server
 - [ ] Target rules for targets named EXE_Lithtech
 - [ ] Target rules for targets named LIB_D3DRender
 - [ ] Target rules for targets named Lib_DShow
-- [ ] Target rules for targets named MFCStub
+- [x] Target rules for targets named MFCStub
 - [x] Target rules for targets named ButeMgr
 - [x] Target rules for targets named CryptMgr
 - [ ] Target rules for targets named RegMgr

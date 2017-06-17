@@ -8,6 +8,43 @@
 #include <ctype.h>
 #include <stdio.h>
 
+#ifdef __GNUC__
+#include <string>
+#include <algorithm>
+
+struct ci_char_traits : public std::char_traits<char> {
+    static char to_upper(char ch) {
+        return std::toupper((unsigned char) ch);
+    }
+    static bool eq(char c1, char c2) {
+         return to_upper(c1) == to_upper(c2);
+     }
+    static bool lt(char c1, char c2) {
+         return to_upper(c1) <  to_upper(c2);
+    }
+    static int compare(const char* s1, const char* s2, size_t n) {
+        while ( n-- != 0 ) {
+            if ( to_upper(*s1) < to_upper(*s2) ) return -1;
+            if ( to_upper(*s1) > to_upper(*s2) ) return 1;
+            ++s1; ++s2;
+        }
+        return 0;
+    }
+    static const char* find(const char* s, int n, char a) {
+        auto const ua (to_upper(a));
+        while ( n-- != 0 ) 
+        {
+            if (to_upper(*s) == ua)
+                return s;
+            s++;
+        }
+        return nullptr;
+    }
+};
+ 
+using ci_string = std::basic_string<char, ci_char_traits>;
+#endif
+
 #ifndef min
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #endif
@@ -46,9 +83,11 @@ void CString::FormatV(LPCTSTR pFormat, va_list args)
 	// Don't step on the momeraths
 	if (!pFormat)
 		return;
-
+#ifdef WIN32
 	va_list argListSave = args;
-
+#else
+	auto argListSave = args;
+#endif
 	// make a guess at the maximum length of the resulting string
 	int nMaxLen = 0;
 	for (LPCTSTR lpsz = pFormat; *lpsz != '\0'; lpsz++)
@@ -135,7 +174,7 @@ void CString::FormatV(LPCTSTR pFormat, va_list args)
 			case 'c':
 			case 'C':
 				nItemLen = 2;
-				va_arg(args, char);
+				va_arg(args, int);
 				break;
 
 			case 's':
@@ -520,22 +559,43 @@ int CString::Compare(LPCTSTR lpsz) const
 }
 
 int CString::CompareNoCase(LPCTSTR lpsz) const 
-{ 
+{
+#ifdef __GNUC__
+	return ( ci_string(GetBuffer()) == ci_string(lpsz) );
+#else
 	return stricmp(GetBuffer(), lpsz); 
+#endif
 }
 
 void CString::MakeUpper()
 {
+#ifndef WIN32
+	auto buff = GetBuffer();
+	for(uint32 i=0;i< GetLength(); i++)
+		buff[i] = std::toupper(buff[i]);
+#else		
 	_strupr( GetBuffer( ));
+#endif
 }
 
 void CString::MakeLower()
 {
+#ifndef WIN32
+	auto buff = GetBuffer();
+	for(uint32 i=0;i< GetLength(); i++)
+		buff[i] = std::tolower(buff[i]);
+#else		
 	_strlwr( GetBuffer( ));
+#endif
 }
 
 void CString::MakeReverse()
 {
+#ifndef WIN32
+	auto buff = GetBuffer();
+	std::reverse(buff,&(buff[GetLength()-1]));
+#else		
 	_strrev( GetBuffer( ));
+#endif
 }
 
