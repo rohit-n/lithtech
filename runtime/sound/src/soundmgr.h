@@ -54,10 +54,12 @@ extern ILTSoundSys* SoundSys( bool bTerminate = false );
 #include "soundbuffer.h"
 #endif
 
+#ifdef WIN32
 #ifndef __DMUSICI_H__
 #include <dmusici.h>
 #define __DMUSICI_H__
 #endif
+#endif // WIN32
 
 #ifndef __SOUNDINSTANCE_H__
 #include "soundinstance.h"
@@ -173,10 +175,15 @@ public:
 //	===========================================================================
 #ifdef USE_ABSTRACT_SOUND_INTERFACES
 //	===========================================================================
-
+#ifdef WIN32
 	LPDIRECTSOUND8 GetDirectSound( );
 	IDirectMusicPerformance8* GetDirectMusicPerformance( );
 	IDirectMusic* GetDirectMusic();
+#else
+	LPPADirect GetDirectSound( );
+	PADirectMusicPerf* GetDirectMusicPerformance( );
+	PADirectMusic* GetDirectMusic();
+#endif
 	LHDIGDRIVER	GetDigDriver( ) const { return m_hDigDriver; }
 
 //	===========================================================================

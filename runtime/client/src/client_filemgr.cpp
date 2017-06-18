@@ -5,6 +5,7 @@
 #include "console.h"
 #include "clientmgr.h"
 #include "impl_common.h"
+#include "client_filemgr.h"
 
 
 typedef void* HLTFileTree; //class HLTFileTree;

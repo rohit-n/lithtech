@@ -16,7 +16,6 @@ add_executable(${PROJECT_NAME} WIN32
 	src/client_iltcommon.cpp
 	../server/src/server_iltcommon.cpp
 	../shared/src/shared_iltcommon.cpp
-	../kernel/src/sys/win/lt_cursor_impl.cpp
 	src/client_iltmodel.cpp
 	../shared/src/modellt_impl.cpp
 	../server/src/server_iltmodel.cpp
@@ -37,11 +36,8 @@ add_executable(${PROJECT_NAME} WIN32
 	../world/src/world_shared_bsp.cpp
 	../model/src/animtracker.cpp
 	../shared/src/bdefs.cpp
-	../kernel/src/sys/win/bindmgr.cpp
-	../kernel/src/sys/win/binkvideomgrimpl.cpp
 	../shared/src/classbind.cpp
 	../server/src/classmgr.cpp
-	../kernel/src/sys/win/client.cpp
 	src/client_formatmgr.cpp
 	src/client_graphmgr.cpp
 	src/client_ticks.cpp
@@ -57,26 +53,19 @@ add_executable(${PROJECT_NAME} WIN32
 	../shared/src/conparse.cpp
 	src/console.cpp
 	src/consolecommands.cpp
-	../kernel/src/sys/win/counter.cpp
-	src/sys/win/customfontfilemgr.cpp
 	src/cutil.cpp
 	../model/src/sys/d3d/d3d_model_load.cpp
 	../render_b/src/sys/d3d/d3ddrawprim.cpp
 	../render_b/src/sys/d3d/d3dtexinterface.cpp
 	../kernel/io/src/sys/win/de_file.cpp
 	../world/src/de_mainworld.cpp
-	../kernel/mem/src/sys/win/de_memory.cpp
 	../world/src/de_nodes.cpp
 	../world/src/de_objects.cpp
 	../shared/src/debuggeometry.cpp
 	../kernel/src/debugging.cpp
 	src/debuggraphmgr.cpp
 	../shared/src/dhashtable.cpp
-	../kernel/src/sys/win/dshowvideomgrimpl.cpp
-	../shared/src/sys/win/dstreamopenqueuemgr.cpp
-	../kernel/src/sys/win/dsys_interface.cpp
 	../shared/src/dtxmgr.cpp
-	../kernel/src/sys/win/dutil.cpp
 	../shared/src/engine_vars.cpp
 	src/errorlog.cpp
 	../shared/src/findobj.cpp
@@ -90,9 +79,6 @@ add_executable(${PROJECT_NAME} WIN32
 	../shared/src/geometry.cpp
 	../shared/src/geomroutines.cpp
 	../shared/src/impl_common.cpp
-	../kernel/src/sys/win/input.cpp
-	../kernel/src/sys/win/InputSim.cpp
-	../kernel/src/sys/win/interface_helpers.cpp
 	../server/src/interlink.cpp
 	../world/src/intersect_line.cpp
 	../world/src/intersectsweptsphere.cpp
@@ -101,16 +87,10 @@ add_executable(${PROJECT_NAME} WIN32
 	../shared/src/lightmap_compress.cpp
 	../shared/src/lightmap_planes.cpp
 	src/linesystem.cpp
-	../kernel/src/sys/win/load_pcx.cpp
 	../kernel/net/src/localdriver.cpp
 	src/ltbenchmark_impl.cpp
-	../kernel/src/sys/win/ltdirectmusic_impl.cpp
-	../kernel/src/sys/win/ltdirectmusiccontrolfile.cpp
-	../kernel/src/sys/win/ltdirectmusicloader.cpp
 	../../sdk/inc/lterror.cpp
-	../kernel/src/sys/win/lthread.cpp
 	src/ltinfo_impl.cpp
-	../kernel/src/sys/win/ltlibraryloader.cpp
 	../kernel/mem/src/ltmemory.cpp
 	../shared/src/ltmessage.cpp
 	src/ltmessage_client.cpp
@@ -118,9 +98,7 @@ add_executable(${PROJECT_NAME} WIN32
 	../../sdk/inc/ltmodule.cpp
 	../../sdk/inc/ltobjref.cpp
 	../../sdk/inc/ltquatbase.cpp
-	../kernel/src/sys/win/ltrendermgr_impl.cpp
 	src/lttexturestring.cpp
-	../kernel/src/sys/win/ltthread.cpp
 	../shared/src/lttimer.cpp
 	src/memorywatch.cpp
 	../model/src/model.cpp
@@ -129,7 +107,6 @@ add_executable(${PROJECT_NAME} WIN32
 	../shared/src/motion.cpp
 	../shared/src/moveobject.cpp
 	../shared/src/moveplayer.cpp
-	../kernel/src/sys/win/musicdriver.cpp
 	../kernel/net/src/netmgr.cpp
 	../shared/src/nexus.cpp
 	#../model/src/sys/null/nullmodel_load.cpp
@@ -141,7 +118,6 @@ add_executable(${PROJECT_NAME} WIN32
 	src/polygrid.cpp
 	src/predict.cpp
 	../shared/src/ratetracker.cpp
-	../kernel/src/sys/win/render.cpp
 	../server/src/s_client.cpp
 	../server/src/s_concommand.cpp
 	../server/src/s_intersect.cpp
@@ -166,24 +142,13 @@ add_executable(${PROJECT_NAME} WIN32
 	../shared/src/spritecontrolimpl.cpp
 	../shared/src/stacktrace.cpp
 	../shared/src/stdlterror.cpp
-	../kernel/src/sys/win/streamsim.cpp
-	../kernel/src/sys/win/stringmgr.cpp
 	../shared/src/strtools.cpp
-	../kernel/src/sys/win/systeminfo.cpp
-	../kernel/src/sys/win/text_mgr.cpp
 	src/texturestring.cpp
-	src/sys/win/texturestringimage.cpp
-	../kernel/src/sys/win/timemgr.cpp
 	../model/src/transformmaker.cpp
-	../kernel/net/src/sys/win/udpdriver.cpp
 	../shared/src/version_info.cpp
-	../kernel/src/sys/win/version_resource.cpp
-	../kernel/src/sys/win/videomgr.cpp
 	src/volumeeffect.cpp
 	src/watermark.cpp
 	../sound/src/wave.cpp
-	src/sys/win/winclientde_impl.cpp
-	src/sys/win/winconsole_impl.cpp
 	../world/src/world_tree.cpp)
 
 set_target_properties(${PROJECT_NAME}
@@ -195,6 +160,7 @@ include_directories(src
 	../../libs/stdlith
 	../../libs/rezmgr
 	../../libs/lith
+	../../tools/PreProcessor
 	../shared/src
 	../kernel/src
 	../kernel/mem/src
@@ -214,8 +180,52 @@ include_directories(src
 	../server/src)
 
 if(WIN32)
+    add_executable(${PROJECT_NAME} WIN32
+		../kernel/src/sys/win/lt_cursor_impl.cpp
+		../kernel/src/sys/win/bindmgr.cpp
+		../kernel/src/sys/win/binkvideomgrimpl.cpp
+		../kernel/src/sys/win/client.cpp
+		../kernel/src/sys/win/counter.cpp
+		src/sys/win/customfontfilemgr.cpp
+		../kernel/mem/src/sys/win/de_memory.cpp
+		../kernel/src/sys/win/dshowvideomgrimpl.cpp
+		../shared/src/sys/win/dstreamopenqueuemgr.cpp
+		../kernel/src/sys/win/dsys_interface.cpp
+		../kernel/src/sys/win/dutil.cpp
+		../kernel/src/sys/win/input.cpp
+		../kernel/src/sys/win/InputSim.cpp
+		../kernel/src/sys/win/interface_helpers.cpp
+		../kernel/src/sys/win/load_pcx.cpp
+		../kernel/src/sys/win/ltdirectmusic_impl.cpp
+		../kernel/src/sys/win/ltdirectmusiccontrolfile.cpp
+		../kernel/src/sys/win/ltdirectmusicloader.cpp
+		../kernel/src/sys/win/lthread.cpp
+		../kernel/src/sys/win/ltlibraryloader.cpp
+		../kernel/src/sys/win/ltrendermgr_impl.cpp
+		../kernel/src/sys/win/ltthread.cpp
+		../kernel/src/sys/win/musicdriver.cpp
+		../kernel/src/sys/win/render.cpp
+		../kernel/src/sys/win/streamsim.cpp
+		../kernel/src/sys/win/stringmgr.cpp
+		../kernel/src/sys/win/systeminfo.cpp
+		../kernel/src/sys/win/text_mgr.cpp
+		src/sys/win/texturestringimage.cpp
+		../kernel/src/sys/win/timemgr.cpp
+		../kernel/net/src/sys/win/udpdriver.cpp
+		../kernel/src/sys/win/version_resource.cpp
+		../kernel/src/sys/win/videomgr.cpp
+		src/sys/win/winclientde_impl.cpp
+		src/sys/win/winconsole_impl.cpp
+		)
 	include_directories(../kernel/src/sys/win
 		../shared/src/sys/win)
+	target_link_libraries(${PROJECT_NAME}
+		LIB_DShow
+		LIB_D3DRender
+		winmm)
+else(WIN32)
+	include_directories(../kernel/src/sys/linux
+		../shared/src/sys/linux)
 endif(WIN32)
 
 if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
@@ -244,20 +254,16 @@ target_link_libraries(${PROJECT_NAME}
 	LIB_Lith
 	LIB_StdLith
 	LIB_ZLib
-	LIB_DShow
 	LIB_LTMem
 	LIB_RezMgr
 	LIB_Info
-	LIB_D3DRender
 	LIB_ILTSound
 	LIB_UI)
 
-if(WIN32)
-	include_directories(../kernel/src/sys/win
-		../shared/src/sys/win)
-	target_link_libraries(${PROJECT_NAME}
-		winmm)
-endif(WIN32)
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -std=c++11")
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
 
 if(ENABLE_D3D)
 	include_directories(../render_a/src/sys/d3d)

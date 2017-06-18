@@ -9,9 +9,15 @@ option(BUILD_FEAR "Build F.E.A.R. game code" OFF)
 option(BUILD_NOLF "Build No One Lives Forever game code" OFF)
 option(BUILD_SHOGO "Build Shogo game code" OFF)
 option(BUILD_TOOLS "Build tools" OFF)
+if(WIN32)
 option(ENABLE_D3D "Enable Direct3D" ON)
 option(ENABLE_DIRECTX "Enable DirectX" ON)
 option(ENABLE_DIRECTSHOW "Enable DirectShow" ON)
+else(WIN32)
+option(ENABLE_D3D "Enable Direct3D" OFF)
+option(ENABLE_DIRECTX "Enable DirectX" OFF)
+option(ENABLE_DIRECTSHOW "Enable DirectShow" OFF)
+endif(WIN32)
 option(USE_INTERNAL_ZLIB "Use bundled zlib" ON)			# eventually want default to be OFF
 option(USE_INTERNAL_FREETYPE "Use bundled freetype" ON)	# eventually want default to be OFF
 

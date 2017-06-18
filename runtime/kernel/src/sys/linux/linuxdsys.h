@@ -33,6 +33,8 @@
 // ------------------------------------------------------------------------- //
 // Typedefs
 // ------------------------------------------------------------------------- //
+#define MAX_KEYBUFFER          100
+#define SOUND_DRIVER_NAME_LEN   32
 
 // ------------------------------------------------------------------------- //
 // Prototypes (Public C methods)
@@ -115,7 +117,60 @@ LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bo
 // ------------------------------------------------------------------------- //
 // Class Definitions
 // ------------------------------------------------------------------------- //
+class ClientGlob {
+    public:
+        ClientGlob () {
+            m_bIsConsoleUp		= false;
+            m_bConsoleEnabled	= true;
+            m_bInputEnabled		= true;
 
+            m_pGameResources	= nullptr;
+            m_pWorldName		= nullptr; }
+
+    bool            m_bProcessWindowMessages;
+/*
+    jmp_buf         m_MemoryJmp;
+    HWND            m_hMainWnd;
+    
+    HINSTANCE       m_hInstance;
+*/       
+    char            *m_WndClassName;
+    const char      *m_WndCaption;
+
+    bool            m_bInitializingRenderer;
+    bool            m_bBreakOnError; // Break in dsi_OnReturnError?
+    bool            m_bClientActive;
+    bool            m_bLostFocus;
+    bool            m_bAppClosing;
+    bool            m_bDialogUp;
+    bool            m_bRendererShutdown;    // They called ShutdownRender so we shouldn't
+                                            // reinitialize the renderer.
+
+    bool            m_bHost;
+    char            *m_pGameResources;
+
+    const char      *m_pWorldName;
+    char            m_CachePath[500];
+
+    uint32          m_KeyDowns[MAX_KEYBUFFER];
+    uint32          m_KeyUps[MAX_KEYBUFFER];
+    bool            m_KeyDownReps[MAX_KEYBUFFER];
+
+    uint16          m_nKeyDowns;
+    uint16          m_nKeyUps;
+
+    bool            m_bIsConsoleUp;
+
+    bool            m_bInputEnabled;
+
+    char            m_ExitMessage[500];
+
+    char            m_acSoundDriverName[ SOUND_DRIVER_NAME_LEN ];
+
+    bool			m_bConsoleEnabled;
+};
+
+extern ClientGlob g_ClientGlob;
 #endif  // __DSYS_INTERFACE_H__
 
 
