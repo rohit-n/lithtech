@@ -1,5 +1,4 @@
 #include "bdefs.h"
-
 #include "stringmgr.h"
 #include "render.h"
 #include "version_resource.h"
@@ -10,7 +9,7 @@
 #include "classbind.h"
 #include "bindmgr.h"
 #include "console.h"
-
+#include <SDL_syswm.h>
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -410,7 +409,7 @@ LTRESULT dsi_GetRenderMode(RMode *pMode) {
 }
 
 
-LTRESULT dsi_SetRenderMode(RMode *pMode) {
+LTRESULT dsi_SetRenderMode(RMode *pMode, const char* window_name) {
     RMode currentMode;
     char message[256];
     
@@ -423,9 +422,9 @@ LTRESULT dsi_SetRenderMode(RMode *pMode) {
     memcpy(&currentMode, &g_RMode, sizeof(RMode));
 
     // Try to set the new mode.
-    if (r_InitRender(pMode) != LT_OK) {
+    if (r_InitRender(pMode, window_name) != LT_OK) {
         // Ok, try to restore the old mode.
-        if (r_InitRender(&currentMode) != LT_OK) {
+        if (r_InitRender(&currentMode, window_name) != LT_OK) {
             //dsi_SetupMessage(message, sizeof(message)-1, LT_UNABLETORESTOREVIDEO, LTNULL);
             //dsi_OnClientShutdown(message);
             RETURN_ERROR(0, SetRenderMode, LT_UNABLETORESTOREVIDEO);
@@ -724,7 +723,18 @@ void* dsi_GetInstanceHandle() {
 }
 
 void* dsi_GetMainWindow() {
-    return (void*)g_ClientGlob.m_hMainWnd;
+	SDL_SysWMinfo info;
+	SDL_VERSION(&info.version);
+	SDL_GetWindowWMInfo(g_ClientGlob.m_window, &info);
+	return (void*)info.info.win.window;
+}
+void* dsi_GetSDL2Window() {
+    return (void*)g_ClientGlob.m_window;
+}
+
+void dsi_SetSDL2Window(SDL_Window* window)
+{
+	g_ClientGlob.m_window = window;
 }
 
 LTRESULT dsi_DoErrorMessage(const char *pMessage) {

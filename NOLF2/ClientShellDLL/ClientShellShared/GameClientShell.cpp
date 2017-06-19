@@ -980,7 +980,7 @@ uint32 CGameClientShell::OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid)
 	sprintf(rMode.m_Description, "%s", pMode->m_Description);
 
 	// Initialize the renderer
-    LTRESULT hResult = g_pLTClient->SetRenderMode(&rMode);
+    LTRESULT hResult = g_pLTClient->SetRenderMode(&rMode, GAME_NAME);
 	if (hResult != LT_OK)
 	{
 		// If an error occurred, try 640x480x32...
@@ -990,7 +990,7 @@ uint32 CGameClientShell::OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid)
 		g_pLTClient->DebugOut("%s Error: Couldn't set render mode!\n", GAME_NAME);
         g_pLTClient->DebugOut("Setting render mode to 640x480x32...\n");
 
-        if (g_pLTClient->SetRenderMode(&rMode) != LT_OK)
+        if (g_pLTClient->SetRenderMode(&rMode, GAME_NAME) != LT_OK)
 		{
 			//alright, both of the above failed, so now we need to inform the user that we are unable
 			//to create a HWTnL device. This can be caused by them not having a TnL device, or by
@@ -1014,14 +1014,14 @@ uint32 CGameClientShell::OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid)
 			rMode.m_Height	= pMode->m_Height;
 			rMode.m_bHWTnL	= false;
 
-			if (g_pLTClient->SetRenderMode(&rMode) != LT_OK)
+			if (g_pLTClient->SetRenderMode(&rMode, GAME_NAME) != LT_OK)
 			{
 				g_pLTClient->DebugOut("Failed to create default resoltution software TnL, falling back to 640x480");
 
 				rMode.m_Width	= 640;
 				rMode.m_Height	= 480;
 
-				if (g_pLTClient->SetRenderMode(&rMode) != LT_OK)
+				if (g_pLTClient->SetRenderMode(&rMode, GAME_NAME) != LT_OK)
 				{
 					char pszErrorBuffer[256];
 					FormatString(IDS_APP_SHUTDOWN_1, pszErrorBuffer, sizeof(pszErrorBuffer), GAME_NAME);
@@ -4478,6 +4478,36 @@ LRESULT CALLBACK HookedWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
 	return(CallWindowProc(g_pfnMainWndProc,hWnd,uMsg,wParam,lParam));
 }
 
+void CGameClientShell::HandleEvent(SDL_Event e)
+{
+	if (e.type == SDL_MOUSEBUTTONDOWN)
+	{
+		if (e.button.button == SDL_BUTTON_LEFT)
+		{
+			OnLButtonDown(g_hMainWnd, 0, e.button.x, e.button.y, 0);
+		}
+		if (e.button.button == SDL_BUTTON_RIGHT)
+		{
+			OnRButtonDown(g_hMainWnd, 0, e.button.x, e.button.y, 0);
+		}
+	}
+	else if (e.type == SDL_MOUSEBUTTONUP)
+	{
+		if (e.button.button == SDL_BUTTON_LEFT)
+		{
+			OnLButtonUp(g_hMainWnd, e.button.x, e.button.y, 0);
+		}
+		if (e.button.button == SDL_BUTTON_RIGHT)
+		{
+			OnRButtonUp(g_hMainWnd, e.button.x, e.button.y, 0);
+		}
+	}
+	else if (e.type == SDL_MOUSEMOTION)
+	{
+		OnMouseMove(g_hMainWnd, e.button.x, e.button.y, 0);
+	}
+}
+
 void CGameClientShell::OnChar(HWND hWnd, char c, int rep)
 {
 	g_pInterfaceMgr->OnChar((unsigned char)c);
@@ -4549,6 +4579,7 @@ BOOL OnSetCursor(HWND hwnd, HWND hwndCursor, UINT codeHitTest, UINT msg)
 
 BOOL SetWindowSize(uint32 nWidth, uint32 nHeight)
 {
+#if 0
 	// Clip the cursor if we're NOT in a window
     HCONSOLEVAR hVar = g_pLTClient->GetConsoleVar("Windowed");
 	BOOL bClip = TRUE;
@@ -4580,7 +4611,7 @@ BOOL SetWindowSize(uint32 nWidth, uint32 nHeight)
 					nWidth, nHeight,SWP_FRAMECHANGED);
 		ShowWindow(g_hMainWnd, SW_NORMAL);
 	}
-
+#endif
 	return TRUE;
 }
 
@@ -4990,7 +5021,7 @@ bool CGameClientShell::LauncherServerApp( char const* pszProfileFile )
 		&startInfo, &procInfo ))
 	{
 		// Serverapp failed.  Restore the render mode.
-		g_pLTClient->SetRenderMode( &rMode );
+		g_pLTClient->SetRenderMode(&rMode, GAME_NAME);
 		return false;
 	}
 

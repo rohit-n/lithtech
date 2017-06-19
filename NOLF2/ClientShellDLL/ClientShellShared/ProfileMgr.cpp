@@ -1068,7 +1068,7 @@ void CUserProfile::ApplyDisplay()
 		{
 			//switch renderers
 			g_pInterfaceResMgr->DrawMessage(IDS_REINITIALIZING_RENDERER);
-			g_pLTClient->SetRenderMode(pMode);
+			g_pLTClient->SetRenderMode(pMode, GAME_NAME);
 			g_pInterfaceMgr->ScreenDimsChanged();
 
 			//update the game camera to have the new dimensions

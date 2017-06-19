@@ -18,7 +18,7 @@
 #include "physics/collision_object.h"
 #endif
 
-
+#include <SDL.h>
 
 // forwards:
 class ILTMessage_Read;
@@ -66,6 +66,11 @@ Used for: ClientShell Callbacks.
 */
     virtual void PostUpdate() = 0;
 
+/*!
+Handle SDL Events for game client specific input
+Called inside CClientMgr::Update()
+*/
+	virtual void HandleEvent(SDL_Event e) = 0;
 /*!
 Called during every update cycle. This is the function that usually
 updates all client-side systems, objects, etc.
@@ -410,6 +415,7 @@ public:
     virtual void PreUpdate() {}
     virtual void Update() {}
     virtual void PostUpdate() {}
+	virtual void HandleEvent(SDL_Event e) {}
     virtual LTRESULT OnObjectMove(HLOCALOBJ hObj, bool bTeleport, LTVector *pNewPos) {return LT_OK;}
     virtual LTRESULT OnObjectRotate(HLOCALOBJ hObj, bool bTeleport, LTRotation *pNewRot) {return LT_OK;}
     virtual LTRESULT OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid) {return LT_ERROR;}
