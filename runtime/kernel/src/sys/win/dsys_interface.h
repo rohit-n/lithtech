@@ -73,6 +73,7 @@
         DWORD           m_KeyDowns[MAX_KEYBUFFER];
         DWORD           m_KeyUps[MAX_KEYBUFFER];
 		SDL_Keycode		m_SDLDowns[SDL_NUM_SCANCODES];
+		int				m_mousedown[2];
 		int				m_mouserel[2];
         BOOL            m_KeyDownReps[MAX_KEYBUFFER];
 

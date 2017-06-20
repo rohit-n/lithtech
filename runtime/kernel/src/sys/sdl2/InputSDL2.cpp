@@ -7,6 +7,8 @@
 
 #define SPECIAL_MOUSEX	-50000
 #define SPECIAL_MOUSEY	-50001
+#define SPECIAL_MOUSECLICK_LEFT	 -50002
+#define SPECIAL_MOUSECLICK_RIGHT -50003
 
 struct SDL2Key
 {
@@ -40,8 +42,8 @@ SDL2Key g_Keys[] =
 	"X-axis", SPECIAL_MOUSEX, 1.0f,
 	"Y-axis", SPECIAL_MOUSEY, 1.0f,
 
-	"Button 0", VK_LBUTTON, 1.0f,
-	"Button 1", VK_RBUTTON, 1.0f,
+	"Button 0", SPECIAL_MOUSECLICK_LEFT, 1.0f,
+	"Button 1", SPECIAL_MOUSECLICK_RIGHT, 1.0f,
 
 	"Left Alt", SDLK_LALT,  1.0f,
 	"Right Alt", SDLK_RALT, 1.0f,
@@ -139,7 +141,7 @@ static int SDLScanCodeToKeyNum(SDL_Scancode sc)
 	return scanCodeToKeyNum[idx];
 }
 
-SDL2Key* input_sdl2_FindKey(const char *pName)
+SDL2Key* input_sdl2_FindKey(const char *pName, const char* deviceName)
 {
 	uint32 i;
 	int testCode;
@@ -157,6 +159,14 @@ SDL2Key* input_sdl2_FindKey(const char *pName)
 		if(stricmp(pName, "y-axis") == 0)
 		{
 			return &g_Keys[1];
+		}
+		if(!strcmp(pName, "3") && !strcmp(deviceName, "##mouse"))
+		{
+			return &g_Keys[2];
+		}
+		if(!strcmp(pName, "4") && !strcmp(deviceName, "##mouse"))
+		{
+			return &g_Keys[3];
 		}
 
 		testCode = atoi(pName);
@@ -244,7 +254,7 @@ long input_sdl2_PlayJoystickEffect(InputMgr *pMgr, const char* strEffectName, fl
 	return 0;
 }
 
-void input_sdl2_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouserel)
+void input_sdl2_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel)
 {
 	ISBinding *pBinding;
 	float value;
@@ -266,6 +276,14 @@ void input_sdl2_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3
 		else if(pBinding->m_pKey->key == SPECIAL_MOUSEY)
 		{
 			value = (float)(mouserel[1]) * pBinding->m_pKey->m_Scale;
+		}
+		else if(pBinding->m_pKey->key == SPECIAL_MOUSECLICK_LEFT && mouseclick[0])
+		{
+			value = 1.0f;
+		}
+		else if(pBinding->m_pKey->key == SPECIAL_MOUSECLICK_RIGHT && mouseclick[1])
+		{
+			value = 1.0f;
 		}
 		else
 		{
@@ -353,7 +371,7 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 	if(!pAction)
 		return false;
 
-	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName);
+	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName, pDeviceName);
 	if(!pKey)
 		return false;
 
@@ -371,7 +389,7 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 
 bool input_sdl2_ScaleTrigger(InputMgr *pMgr, const char *pDeviceName, const char *pTriggerName, float scale, float fRangeScaleMin, float fRangeScaleMax, float fRangeScalePreCenterOffset )
 {
-	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName);
+	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName, pDeviceName);
 
 	if(pKey)
 	{
@@ -464,9 +482,21 @@ void input_sdl2_SaveBindings(FILE *fp)
 		{
 			axis = "x-axis";
 		}
-		if (!strcmp(bind_cur->m_pAction->m_Name, "Axis2"))
+		else if (!strcmp(bind_cur->m_pAction->m_Name, "Axis2"))
 		{
 			axis = "y-axis";
+		}
+		else
+		{
+			/* other action */
+			if (bind_cur->m_pKey->key == SPECIAL_MOUSECLICK_LEFT)
+			{
+				axis = "3";
+			}
+			if (bind_cur->m_pKey->key == SPECIAL_MOUSECLICK_RIGHT)
+			{
+				axis = "4";
+			}
 		}
 
 		if (axis == NULL)

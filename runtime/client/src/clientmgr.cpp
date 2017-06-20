@@ -791,6 +791,10 @@ DWORD sdl2_keycode_to_vkey(SDL_Keycode key)
 		return VK_RETURN;
 	case SDLK_ESCAPE:
 		return VK_ESCAPE;
+	case SDLK_F6:
+		return VK_F6;
+	case SDLK_F9:
+		return VK_F9;
 	}
 
 	return 0;
@@ -829,6 +833,28 @@ void client_input(SDL_Event e)
 	{
 		g_ClientGlob.m_mouserel[0] = e.motion.xrel;
 		g_ClientGlob.m_mouserel[1] = e.motion.yrel;
+	}
+	else if( e.type == SDL_MOUSEBUTTONDOWN)
+	{
+		if (e.button.button == SDL_BUTTON_LEFT)
+		{
+			g_ClientGlob.m_mousedown[0] = 1;
+		}
+		if (e.button.button == SDL_BUTTON_RIGHT)
+		{
+			g_ClientGlob.m_mousedown[1] = 1;
+		}
+	}
+	else if( e.type == SDL_MOUSEBUTTONUP)
+	{
+		if (e.button.button == SDL_BUTTON_LEFT)
+		{
+			g_ClientGlob.m_mousedown[0] = 0;
+		}
+		if (e.button.button == SDL_BUTTON_RIGHT)
+		{
+			g_ClientGlob.m_mousedown[1] = 0;
+		}
 	}
 }
 
@@ -1056,7 +1082,7 @@ void CClientMgr::ProcessAllInput(bool bForceClear) {
     memset(pCurSlot, 0, MAX_CLIENT_COMMANDS);
     if (!m_bTrackingInputDevices)
     {
-		m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets, (void*)g_ClientGlob.m_SDLDowns, g_ClientGlob.m_mouserel);
+		m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets, (void*)g_ClientGlob.m_SDLDowns, g_ClientGlob.m_mousedown, g_ClientGlob.m_mouserel);
     }
 
     if (!m_bInputState || (bForceClear || dsi_IsConsoleUp()))
