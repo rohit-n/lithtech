@@ -822,7 +822,7 @@ static void SaveModelAdd(FILE *fp)
 
 static LTSaveFn g_SaveFns[] =
 {
-	input_SaveBindings,
+	input_sdl2_SaveBindings,
 	SaveModelAdd
 };
 

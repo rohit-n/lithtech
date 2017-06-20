@@ -24,6 +24,8 @@ struct ISAction
 
 struct ISBinding
 {
+	char m_deviceName[32];
+	float m_ranges[2];
 	SDL2Key *m_pKey;
 	ISAction *m_pAction;
 	ISBinding *m_pNext;
@@ -342,6 +344,10 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 	float rangeLow, float rangeHigh)
 {
 	ISBinding *pBinding;
+	if (strlen(pDeviceName) == 0)
+	{
+		return false;
+	}
 
 	ISAction *pAction = input_sdl2_FindAction(pActionName);
 	if(!pAction)
@@ -355,6 +361,10 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 	pBinding->m_pKey = pKey;
 	pBinding->m_pAction = pAction;
 	pBinding->m_pNext = g_Bindings_sdl2;
+	strcpy(pBinding->m_deviceName, pDeviceName);
+	pBinding->m_ranges[0] = rangeLow;
+	pBinding->m_ranges[1] = rangeHigh;
+
 	g_Bindings_sdl2 = pBinding;
 	return true;
 }
@@ -411,6 +421,73 @@ DeviceBinding* input_sdl2_GetDeviceBindings ( uint32 nDevice )
 	}
 
 	return pBindingsHead;
+}
+
+void input_sdl2_SaveBindings(FILE *fp)
+{
+	ISAction* action_cur;
+	ISBinding* bind_cur;
+	SDL_Scancode scancode;
+	int dik;
+	int i;
+	char* axis;
+
+	for(action_cur=g_Actions_sdl2; action_cur; action_cur=action_cur->m_pNext)
+	{
+		fprintf(fp, "AddAction %s %d\n", action_cur->m_Name, action_cur->m_Code);
+	}
+
+	fprintf(fp, "\nenabledevice \"##keyboard\"\n");
+	for(bind_cur=g_Bindings_sdl2; bind_cur; bind_cur=bind_cur->m_pNext)
+	{
+		scancode = SDL_GetScancodeFromKey(bind_cur->m_pKey->key);
+		dik = SDLScanCodeToKeyNum(scancode);
+		if (!strcmp(bind_cur->m_deviceName, "##keyboard"))
+		{
+			fprintf(fp, "rangebind \"##keyboard\" \"##%d\" %f %f \"%s\"\n",
+				dik, bind_cur->m_ranges[0], bind_cur->m_ranges[1], bind_cur->m_pAction->m_Name);
+		}
+	}
+
+	fprintf(fp, "\nenabledevice \"##mouse\"\n");
+	for(bind_cur=g_Bindings_sdl2; bind_cur; bind_cur=bind_cur->m_pNext)
+	{
+		scancode = SDL_GetScancodeFromKey(bind_cur->m_pKey->key);
+		dik = SDLScanCodeToKeyNum(scancode);
+		axis = NULL;
+		if (strcmp(bind_cur->m_deviceName, "##mouse"))
+		{
+			continue;
+		}
+
+		if (!strcmp(bind_cur->m_pAction->m_Name, "Axis1"))
+		{
+			axis = "x-axis";
+		}
+		if (!strcmp(bind_cur->m_pAction->m_Name, "Axis2"))
+		{
+			axis = "y-axis";
+		}
+
+		if (axis == NULL)
+		{
+			continue;
+		}
+		fprintf(fp, "rangebind \"##mouse\" \"##%s\" %f %f \"%s\"\n",
+			axis, bind_cur->m_ranges[0], bind_cur->m_ranges[1], bind_cur->m_pAction->m_Name);
+	}
+
+	for(i = 0; i < NUM_KEYS; i++)
+	{
+		if(!stricmp(g_Keys[i].m_pName, "x-axis"))
+		{
+			fprintf(fp, "scale \"##mouse\" \"##x-axis\" %f\n", g_Keys[i].m_Scale);
+		}
+		if(!stricmp(g_Keys[i].m_pName, "y-axis"))
+		{
+			fprintf(fp, "scale \"##mouse\" \"##y-axis\" %f\n", g_Keys[i].m_Scale);
+		}
+	}
 }
 
 void input_sdl2_FreeDeviceBindings ( DeviceBinding* pBindings )

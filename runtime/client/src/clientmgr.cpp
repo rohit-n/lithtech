@@ -840,6 +840,8 @@ LTRESULT CClientMgr::Update()
 	static LTRect rFPS (480,10,630,80);
 
 	SDL_Event e;
+	g_ClientGlob.m_mouserel[0] = 0;
+	g_ClientGlob.m_mouserel[1] = 0;
 	while( SDL_PollEvent( &e ) != 0 )
 	{
 		if( e.type == SDL_QUIT )

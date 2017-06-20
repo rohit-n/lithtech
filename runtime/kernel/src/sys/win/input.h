@@ -116,6 +116,7 @@ LTRESULT input_GetManager(InputMgr **pMgr);
 
 // Saves the state of all the input bindings.
 void input_SaveBindings(FILE *fp);
+void input_sdl2_SaveBindings(FILE *fp);
 
 #endif  // __INPUT_H__
 
