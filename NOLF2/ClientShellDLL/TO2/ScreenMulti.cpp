@@ -746,7 +746,7 @@ LTBOOL CScreenMulti::LaunchSierraUp()
 	if(!CreateProcess("SierraUp.exe", ( char* )( char const* )sCmdLine, NULL, NULL, FALSE, 0, NULL, NULL, &startInfo, &procInfo))
 	{
 		// Serverapp failed.  Restore the render mode.
-		g_pLTClient->SetRenderMode( &rMode );
+		g_pLTClient->SetRenderMode(&rMode, GAME_NAME);
 		return LTFALSE;
 	}
 

@@ -10,6 +10,7 @@
 #include "videomgr.h"
 #include "sysconsole_impl.h"
 #include "dtxmgr.h"
+#include <SDL.h>
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -598,11 +599,12 @@ void r_InitRenderStruct(bool bFullClear)
 }
 
 bool g_bFirstTimeInit = true;
-LTRESULT r_InitRender(RMode *pMode)
+LTRESULT r_InitRender(RMode *pMode, const char* window_name)
 {
 	RenderStructInit init;
 	int initStatus;
 	HWND hWnd;
+	SDL_Window* window;
 
 	// Don't get in here recursively.
 	if(g_ClientGlob.m_bInitializingRenderer)
@@ -613,9 +615,13 @@ LTRESULT r_InitRender(RMode *pMode)
 
 	r_TermRender(0, false);
 
-
+	window = (SDL_Window*)dsi_GetSDL2Window();
+	SDL_DestroyWindow(window);
+	window = SDL_CreateWindow(window_name, SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED, pMode->m_Width, pMode->m_Height, 0);
+	dsi_SetSDL2Window(window);
 	hWnd = (HWND)dsi_GetMainWindow();
-	ShowWindow(hWnd, SW_RESTORE);
+	//ShowWindow(hWnd, SW_RESTORE);
 
 	if (g_bFirstTimeInit) 
 		r_InitSysCache(&g_SysCache);
@@ -668,7 +674,7 @@ LTRESULT r_InitRender(RMode *pMode)
 	}
 
 	// Set focus and capture the mouse.  We leave things like resizing the window to the render DLL.
-	SetFocus(hWnd);
+	//SetFocus(hWnd);
 
 	// Bind any open textures.
 	g_pClientMgr->BindSharedTextures();

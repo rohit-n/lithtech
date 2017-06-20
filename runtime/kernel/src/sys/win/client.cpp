@@ -12,6 +12,7 @@
 #include <crtdbg.h>
 #include "iltclient.h"
 #include "common_draw.h"
+#include <SDL_syswm.h>
 
 
 //------------------------------------------------------------------
@@ -91,7 +92,7 @@ static bool StartClient(ClientGlob *pGlob)
 
     // Find all the res trees.
     nResTrees = 0;
-
+#if 0
     for (uint32 i = 0; i < command_line_args->Argc() - 1; i++) {
         //check if this argument is -rez
         if (stricmp(command_line_args->Argv(i), "-rez") == 0) {
@@ -102,12 +103,16 @@ static bool StartClient(ClientGlob *pGlob)
             }
         }
     }
-
+#endif
     // Add the default engine resource...
     if (!g_CV_NoDefaultEngineRez) 
 	{
         resTrees[nResTrees++] = "engine.rez"; 
     }
+
+	resTrees[nResTrees++] = "game.rez";
+	resTrees[nResTrees++] = "game2.rez";
+	resTrees[nResTrees++] = "sound.rez";
 
     if (command_line_args->FindArgDash("noinput")) 
 	{
@@ -338,7 +343,7 @@ static LRESULT WINAPI MainWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
                                     // Restore the video mode.
                                     OutputDebugString("Regained focus.. initializing renderer.\n");
 
-                                    if (r_InitRender(&g_RMode) != LT_OK) 
+                                    if (r_InitRender(&g_RMode, "lostfocus") != LT_OK)
 									{
                                         dsi_SetupMessage(messageString, sizeof(messageString)-1, LT_UNABLETORESTOREVIDEO, LTNULL);
                                         dsi_OnClientShutdown(messageString);
@@ -467,7 +472,6 @@ static LRESULT WINAPI MainWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
-
 int LTAllocHook(int allocType, void *userData, size_t size, int blockType, 
    long requestNumber, const unsigned char *filename, int lineNumber)
 {
@@ -487,7 +491,6 @@ int LTAllocHook(int allocType, void *userData, size_t size, int blockType,
 
 int RunClientApp(HINSTANCE hInstance) {
     MSG         msg;
-    WNDCLASS    wndclass;
     ClientGlob  *pGlob;
     const char      *pArg;
     RECT screenRect, wndRect;
@@ -552,34 +555,16 @@ int RunClientApp(HINSTANCE hInstance) {
 
     pGlob->m_bBreakOnError = command_line_args->FindArgDash("breakonerror") != NULL;
 
-    // Create the main window.
-    wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
-    wndclass.lpfnWndProc   = MainWndProc;
-    wndclass.cbClsExtra    = 0;
-    wndclass.cbWndExtra    = 0;
-    wndclass.hInstance     = pGlob->m_hInstance;
-    wndclass.hIcon         = LoadIcon (LTNULL, IDI_APPLICATION);
-    wndclass.hCursor       = LoadCursor (LTNULL, IDC_ARROW);
-    wndclass.hbrBackground = (HBRUSH)GetStockObject (BLACK_BRUSH);
-    wndclass.lpszMenuName  = LTNULL;
-    wndclass.lpszClassName = pGlob->m_WndClassName;
-
-    RegisterClass (&wndclass);
-
     GetWindowRect(GetDesktopWindow(), &screenRect);
 
-    pGlob->m_hMainWnd = CreateWindow (pGlob->m_WndClassName,			// window class name
-                pGlob->m_WndCaption,											// window caption
-                WS_CAPTION,														// window style
-                ((screenRect.right - screenRect.left) - 320) / 2,		// initial x position
-                ((screenRect.bottom - screenRect.top) - 200) / 2,		// initial y position
-                320,													// initial x size
-                200,													// initial y size
-                LTNULL,													// parent window handle
-                LTNULL,													// window menu handle
-                pGlob->m_hInstance,										// program instance handle
-                LTNULL);												// creation parameters
+	SDL_Init(SDL_INIT_EVERYTHING);
+	pGlob->m_window = SDL_CreateWindow(pGlob->m_WndCaption, SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
+	SDL_SysWMinfo info;
+	SDL_VERSION(&info.version);
+	SDL_GetWindowWMInfo(pGlob->m_window, &info);
 
+	pGlob->m_hMainWnd = info.info.win.window;
 
     bPrevHighPriority = LTFALSE;
     if (StartClient(pGlob)) 
@@ -614,8 +599,14 @@ int RunClientApp(HINSTANCE hInstance) {
                 // [BL 2/2/2000] - center the cursor in the SCREEN, not the window -- otherwise it breaks
                 // when you play in a small window on a big screen
                 SetCursorPos((screenRect.right - screenRect.left) / 2, (screenRect.bottom - screenRect.top) / 2);
+				SDL_SetRelativeMouseMode(SDL_TRUE);
             }
-            
+			else
+			{
+				SDL_SetRelativeMouseMode(SDL_FALSE);
+			}
+
+#if 0
             while (PeekMessage(&msg, LTNULL, 0, 0, PM_REMOVE)) {
                 if (msg.message == WM_QUIT) {
                     nExitValue = msg.wParam;
@@ -625,6 +616,7 @@ int RunClientApp(HINSTANCE hInstance) {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
+#endif
         }
     }
 
@@ -643,7 +635,8 @@ END_MAINLOOP:;
     delete g_pClientMgr;
     g_pClientMgr = LTNULL;
 
-    DestroyWindow(pGlob->m_hMainWnd);
+	SDL_DestroyWindow(pGlob->m_window);
+	SDL_Quit();
 
     dsi_Term();
 

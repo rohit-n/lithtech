@@ -1023,7 +1023,7 @@ check with GetRenderMode() to see what the new mode is.
 
 Used for: Rendering.
 */
-    LTRESULT (*SetRenderMode)(RMode *pMode);
+    LTRESULT (*SetRenderMode)(RMode *pMode, const char* window_name);
 
 /*!
 \param flags The flags to while performing the shutdown (a combination

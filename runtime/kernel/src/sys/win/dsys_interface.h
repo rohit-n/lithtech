@@ -24,6 +24,8 @@
 #define __SETJMP_H__
 #endif
 
+#include <SDL.h>
+
 // Client globals.
 #ifdef DE_CLIENT_COMPILE
     #define MAX_KEYBUFFER       100
@@ -41,11 +43,13 @@
 				m_bInputEnabled		= TRUE;
 
 				m_pGameResources	= NULL;
-				m_pWorldName		= NULL; }
+				m_pWorldName		= NULL;
+				m_mousewheel = 0;	}
 
         BOOL            m_bProcessWindowMessages;
         jmp_buf         m_MemoryJmp;
         HWND            m_hMainWnd;
+		SDL_Window*     m_window;
         
         HINSTANCE       m_hInstance;
         
@@ -69,6 +73,10 @@
 
         DWORD           m_KeyDowns[MAX_KEYBUFFER];
         DWORD           m_KeyUps[MAX_KEYBUFFER];
+		SDL_Keycode		m_SDLDowns[SDL_NUM_SCANCODES];
+		int				m_mousedown[2];
+		int				m_mouserel[2];
+		int				m_mousewheel;
         BOOL            m_KeyDownReps[MAX_KEYBUFFER];
 
         WORD            m_nKeyDowns;
@@ -115,7 +123,7 @@ void dsi_OnReturnError(int err);
 RMode* dsi_GetRenderModes();
 void dsi_RelinquishRenderModes(RMode *pMode);
 LTRESULT dsi_GetRenderMode(RMode *pMode);
-LTRESULT dsi_SetRenderMode(RMode *pMode);
+LTRESULT dsi_SetRenderMode(RMode *pMode, const char* window_name);
 LTRESULT dsi_ShutdownRender(uint32 flags);
 
 // Initializes the cshell and cres DLLs (copies them into a temp directory).    
@@ -173,6 +181,8 @@ void dsi_PrintToConsole(const char *pMsg, ...);   // Print to console.
 void* dsi_GetInstanceHandle();  // Returns an HINSTANCE.
 void* dsi_GetResourceModule();  // Returns an HINSTANCE.
 void* dsi_GetMainWindow();      // Returns an HWND.
+void* dsi_GetSDL2Window();
+void dsi_SetSDL2Window(SDL_Window* window);
 
 // Message box.
 void dsi_MessageBox(const char *pMsg, const char *pTitle);

@@ -894,7 +894,11 @@ LTBOOL CInterfaceMgr::Update()
 
 		case GS_SPLASHSCREEN:
 		{
+#if 0
 			UpdateSplashScreenState();
+#else
+			EndSplashScreen();
+#endif
             bHandled = LTTRUE;
 		}
 		break;

@@ -1389,7 +1389,7 @@ bool input_EnableDevice( InputMgr *pMgr, const char *pDeviceName )
 // This is the main routine that reads input from all devices and sets
 // any actions that are on.
 // --------------------------------------------------------------------- //
-void input_ReadInput( InputMgr *pMgr, BYTE *pActionsOn, float axisOffsets[3] )
+void input_ReadInput( InputMgr *pMgr, BYTE *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel, int mousewheel)
 {
 	DeviceDef *pDevice;
 	TriggerObject *pTrigger;
@@ -2850,6 +2850,7 @@ InputMgr g_MainInputMgr =
 };
 #ifdef _DEBUG
     extern InputMgr g_InputSimMgr; // From InputSim.cpp.
+	extern InputMgr g_InputSDL2Mgr; // From InputSDL2.cpp.
 
     //command line argument mgr
     #include "icommandlineargs.h"
@@ -2868,7 +2869,7 @@ LTRESULT input_GetManager(InputMgr **pMgr)
 		if(command_line_args->FindArgDash("InputSim"))
 			*pMgr = &g_InputSimMgr;
 	#endif
-	
+	*pMgr = &g_InputSDL2Mgr;
 	return LT_OK;
 }
 

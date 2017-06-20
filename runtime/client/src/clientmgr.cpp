@@ -773,20 +773,121 @@ void cm_HandleMaxFPS(uint32 frameTicks)
     }
 }
 
+DWORD sdl2_keycode_to_vkey(SDL_Keycode key)
+{
+	switch (key)
+	{
+	case SDLK_UP:
+		return VK_UP;
+	case SDLK_DOWN:
+		return VK_DOWN;
+	case SDLK_LEFT:
+		return VK_LEFT;
+	case SDLK_RIGHT:
+		return VK_RIGHT;
+	case SDLK_SPACE:
+		return VK_SPACE;
+	case SDLK_RETURN:
+		return VK_RETURN;
+	case SDLK_ESCAPE:
+		return VK_ESCAPE;
+	case SDLK_F6:
+		return VK_F6;
+	case SDLK_F9:
+		return VK_F9;
+	}
 
+	return 0;
+}
+
+void client_input(SDL_Event e)
+{
+	DWORD vkey;
+	SDL_Scancode scancode;
+
+	if( e.type == SDL_KEYDOWN )
+	{
+		vkey = sdl2_keycode_to_vkey(e.key.keysym.sym);
+		scancode = SDL_GetScancodeFromKey(e.key.keysym.sym);
+		g_ClientGlob.m_SDLDowns[scancode] = 1;
+
+		if (g_ClientGlob.m_nKeyDowns < MAX_KEYBUFFER)
+		{
+			g_ClientGlob.m_KeyDowns[g_ClientGlob.m_nKeyDowns] = vkey;
+			g_ClientGlob.m_KeyDownReps[g_ClientGlob.m_nKeyDowns] = 1;
+			++g_ClientGlob.m_nKeyDowns;
+		}
+	}
+	else if( e.type == SDL_KEYUP )
+	{
+		scancode = SDL_GetScancodeFromKey(e.key.keysym.sym);
+		g_ClientGlob.m_SDLDowns[scancode] = 0;
+		if (g_ClientGlob.m_nKeyUps < MAX_KEYBUFFER)
+		{
+			vkey = sdl2_keycode_to_vkey(e.key.keysym.sym);
+			g_ClientGlob.m_KeyUps[g_ClientGlob.m_nKeyUps] = vkey;
+			g_ClientGlob.m_nKeyUps++;
+		}
+	}
+	else if( e.type == SDL_MOUSEMOTION )
+	{
+		g_ClientGlob.m_mouserel[0] = e.motion.xrel;
+		g_ClientGlob.m_mouserel[1] = e.motion.yrel;
+	}
+	else if( e.type == SDL_MOUSEBUTTONDOWN)
+	{
+		if (e.button.button == SDL_BUTTON_LEFT)
+		{
+			g_ClientGlob.m_mousedown[0] = 1;
+		}
+		if (e.button.button == SDL_BUTTON_RIGHT)
+		{
+			g_ClientGlob.m_mousedown[1] = 1;
+		}
+	}
+	else if( e.type == SDL_MOUSEBUTTONUP)
+	{
+		if (e.button.button == SDL_BUTTON_LEFT)
+		{
+			g_ClientGlob.m_mousedown[0] = 0;
+		}
+		if (e.button.button == SDL_BUTTON_RIGHT)
+		{
+			g_ClientGlob.m_mousedown[1] = 0;
+		}
+	}
+	else if (e.type == SDL_MOUSEWHEEL)
+	{
+		g_ClientGlob.m_mousewheel = e.wheel.y;
+	}
+}
 
 LTRESULT CClientMgr::Update()
 {
-    uint16 i;
-    Counter totalCounter;
-    LTRESULT dResult;
-    static LTRect rFPS (480,10,630,80);
+	uint16 i;
+	Counter totalCounter;
+	LTRESULT dResult;
+	static LTRect rFPS (480,10,630,80);
+
+	SDL_Event e;
+	g_ClientGlob.m_mouserel[0] = 0;
+	g_ClientGlob.m_mouserel[1] = 0;
+	g_ClientGlob.m_mousewheel = 0;
+	while( SDL_PollEvent( &e ) != 0 )
+	{
+		if( e.type == SDL_QUIT )
+		{
+			return LT_FINISHED;
+		}
+		client_input(e);
+		i_client_shell->HandleEvent(e);
+	}
 
 #ifndef _FINAL
-    uint32 frameTicks;
+	uint32 frameTicks;
 
 	ctik_ResetCounters();
-    cnt_StartCounter(totalCounter);
+	cnt_StartCounter(totalCounter);
 
 #endif
 
@@ -979,8 +1080,6 @@ void CClientMgr::ProcessAllInput(bool bForceClear) {
 
     int32 changes[MAX_CLIENT_COMMANDS], nChanges = 0;
     int32 commandsOn[MAX_CLIENT_COMMANDS], nCommandsOn = 0;
-
-
     uint8 *pPrevSlot, *pCurSlot;
     pPrevSlot = m_Commands[m_iCurInputSlot];
     pCurSlot = m_Commands[!m_iCurInputSlot];
@@ -988,7 +1087,7 @@ void CClientMgr::ProcessAllInput(bool bForceClear) {
     memset(pCurSlot, 0, MAX_CLIENT_COMMANDS);
     if (!m_bTrackingInputDevices)
     {
-        m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets);
+		m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets, (void*)g_ClientGlob.m_SDLDowns, g_ClientGlob.m_mousedown, g_ClientGlob.m_mouserel, g_ClientGlob.m_mousewheel);
     }
 
     if (!m_bInputState || (bForceClear || dsi_IsConsoleUp()))
@@ -1703,7 +1802,7 @@ LTRESULT CClientMgr::StartRenderFromGlobals() {
     RMode mode;
 
     _GetRModeFromConsoleVariables(&mode);
-    return r_InitRender(&mode);
+    return r_InitRender(&mode, "StartRenderFromGlobals");
 }
 
 void CClientMgr::RebindTextures()

@@ -13,6 +13,7 @@
 #ifndef __GAME_CLIENT_SHELL_H__
 #define __GAME_CLIENT_SHELL_H__
 
+#include <SDL.h>
 #include "iclientshell.h"
 #include "iltfontmanager.h"
 #include "ClientServerShared.h"
@@ -105,6 +106,7 @@ public:
 	void		UnpackClientSaveMsg(ILTMessage_Read *pMsg);
 
 	void		PreLoadWorld(const char *pWorldName);
+	void		HandleEvent(SDL_Event e);
 
 	// Mouse Messages
     static void OnChar(HWND hWnd, char c, int rep);

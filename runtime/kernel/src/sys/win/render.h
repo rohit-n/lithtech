@@ -48,7 +48,7 @@ inline LTBOOL r_IsRenderInitted() {return g_Render.m_bInitted;}
 void r_InitRenderStruct(bool bFullClear);
 
 // Only implemented for client.exe.. initializes the renderer.
-LTRESULT r_InitRender(RMode *pMode);
+LTRESULT r_InitRender(RMode *pMode, const char* window_name);
 
 // surfaceHandling
 //    0 = leave surfaces alone

@@ -46,7 +46,7 @@ public:
 
     // This is the main routine that reads input from all devices and sets
     // any actions that are on.
-    void (*ReadInput)(InputMgr *pMgr, BYTE *pActionsOn, float axisOffsets[3]);
+    void (*ReadInput)(InputMgr *pMgr, BYTE *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel, int mousewheel);
 
     // Flushes the DirectInput buffers.
     bool (*FlushInputBuffers)(InputMgr *pMgr);
@@ -116,6 +116,7 @@ LTRESULT input_GetManager(InputMgr **pMgr);
 
 // Saves the state of all the input bindings.
 void input_SaveBindings(FILE *fp);
+void input_sdl2_SaveBindings(FILE *fp);
 
 #endif  // __INPUT_H__
 

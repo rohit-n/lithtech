@@ -72,8 +72,6 @@ struct SRBVertex
 	float m_fU1, m_fV1;
 	uint32 m_nColor;
 	LTVector m_vNormal;
-	LTVector m_vTangent;
-	LTVector m_vBinormal;
 };
 
 // Geometry-only n-gon w/ a pre-stored plane and bounds
