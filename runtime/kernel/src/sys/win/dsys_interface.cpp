@@ -689,8 +689,10 @@ void dsi_OnClientShutdown(char *pMsg) {
         g_ClientGlob.m_ExitMessage[0] = '\0';
     }
 	
-    if (g_ClientGlob.m_bProcessWindowMessages) {
-        PostQuitMessage(0);
+	if (g_ClientGlob.m_bProcessWindowMessages) {
+		SDL_Event sdlevent;
+		sdlevent.type = SDL_QUIT;
+		SDL_PushEvent(&sdlevent);
     }
 }
 
