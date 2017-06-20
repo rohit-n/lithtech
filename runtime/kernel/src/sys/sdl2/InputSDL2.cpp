@@ -9,6 +9,8 @@
 #define SPECIAL_MOUSEY	-50001
 #define SPECIAL_MOUSECLICK_LEFT	 -50002
 #define SPECIAL_MOUSECLICK_RIGHT -50003
+#define SPECIAL_MOUSEWHEEL_UP	 -50004
+#define SPECIAL_MOUSEWHEEL_DOWN -50005
 
 struct SDL2Key
 {
@@ -44,6 +46,9 @@ SDL2Key g_Keys[] =
 
 	"Button 0", SPECIAL_MOUSECLICK_LEFT, 1.0f,
 	"Button 1", SPECIAL_MOUSECLICK_RIGHT, 1.0f,
+
+	"Mousewheel Up", SPECIAL_MOUSEWHEEL_UP, 1.0f,
+	"Mousewheel Down", SPECIAL_MOUSEWHEEL_DOWN, 1.0f,
 
 	"Left Alt", SDLK_LALT,  1.0f,
 	"Right Alt", SDLK_RALT, 1.0f,
@@ -141,7 +146,7 @@ static int SDLScanCodeToKeyNum(SDL_Scancode sc)
 	return scanCodeToKeyNum[idx];
 }
 
-SDL2Key* input_sdl2_FindKey(const char *pName, const char* deviceName)
+SDL2Key* input_sdl2_FindKey(const char *pName, const char* deviceName, float rangelow, float rangehigh)
 {
 	uint32 i;
 	int testCode;
@@ -167,6 +172,18 @@ SDL2Key* input_sdl2_FindKey(const char *pName, const char* deviceName)
 		if(!strcmp(pName, "4") && !strcmp(deviceName, "##mouse"))
 		{
 			return &g_Keys[3];
+		}
+		if(!strcmp(pName, "z-axis"))
+		{
+			if (rangelow < 0.0f && rangehigh < 0.0f)
+			{
+				return &g_Keys[4];
+			}
+			if (rangelow > 0.0f && rangehigh > 0.0f)
+			{
+				return &g_Keys[5];
+			}
+			ASSERT(0);
 		}
 
 		testCode = atoi(pName);
@@ -254,7 +271,7 @@ long input_sdl2_PlayJoystickEffect(InputMgr *pMgr, const char* strEffectName, fl
 	return 0;
 }
 
-void input_sdl2_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel)
+void input_sdl2_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel, int mousewheel)
 {
 	ISBinding *pBinding;
 	float value;
@@ -282,6 +299,14 @@ void input_sdl2_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3
 			value = 1.0f;
 		}
 		else if(pBinding->m_pKey->key == SPECIAL_MOUSECLICK_RIGHT && mouseclick[1])
+		{
+			value = 1.0f;
+		}
+		else if(pBinding->m_pKey->key == SPECIAL_MOUSEWHEEL_UP && mousewheel > 0)
+		{
+			value = 1.0f;
+		}
+		else if(pBinding->m_pKey->key == SPECIAL_MOUSEWHEEL_DOWN && mousewheel < 0)
 		{
 			value = 1.0f;
 		}
@@ -371,7 +396,7 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 	if(!pAction)
 		return false;
 
-	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName, pDeviceName);
+	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName, pDeviceName, rangeLow, rangeHigh);
 	if(!pKey)
 		return false;
 
@@ -389,7 +414,7 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 
 bool input_sdl2_ScaleTrigger(InputMgr *pMgr, const char *pDeviceName, const char *pTriggerName, float scale, float fRangeScaleMin, float fRangeScaleMax, float fRangeScalePreCenterOffset )
 {
-	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName, pDeviceName);
+	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName, pDeviceName, fRangeScaleMin, fRangeScaleMax);
 
 	if(pKey)
 	{
@@ -496,6 +521,11 @@ void input_sdl2_SaveBindings(FILE *fp)
 			if (bind_cur->m_pKey->key == SPECIAL_MOUSECLICK_RIGHT)
 			{
 				axis = "4";
+			}
+			if (bind_cur->m_pKey->key == SPECIAL_MOUSEWHEEL_UP
+				|| bind_cur->m_pKey->key == SPECIAL_MOUSEWHEEL_DOWN)
+			{
+				axis = "z-axis";
 			}
 		}
 

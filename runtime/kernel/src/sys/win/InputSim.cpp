@@ -234,7 +234,7 @@ long isim_PlayJoystickEffect(InputMgr *pMgr, const char* strEffectName, float x,
 	return 0;
 }
 
-void isim_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel)
+void isim_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel, int mousewheel)
 {
 	ISBinding *pBinding;
 	float value;

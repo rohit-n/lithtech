@@ -43,7 +43,8 @@
 				m_bInputEnabled		= TRUE;
 
 				m_pGameResources	= NULL;
-				m_pWorldName		= NULL; }
+				m_pWorldName		= NULL;
+				m_mousewheel = 0;	}
 
         BOOL            m_bProcessWindowMessages;
         jmp_buf         m_MemoryJmp;
@@ -75,6 +76,7 @@
 		SDL_Keycode		m_SDLDowns[SDL_NUM_SCANCODES];
 		int				m_mousedown[2];
 		int				m_mouserel[2];
+		int				m_mousewheel;
         BOOL            m_KeyDownReps[MAX_KEYBUFFER];
 
         WORD            m_nKeyDowns;

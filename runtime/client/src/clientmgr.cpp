@@ -856,6 +856,10 @@ void client_input(SDL_Event e)
 			g_ClientGlob.m_mousedown[1] = 0;
 		}
 	}
+	else if (e.type == SDL_MOUSEWHEEL)
+	{
+		g_ClientGlob.m_mousewheel = e.wheel.y;
+	}
 }
 
 LTRESULT CClientMgr::Update()
@@ -868,6 +872,7 @@ LTRESULT CClientMgr::Update()
 	SDL_Event e;
 	g_ClientGlob.m_mouserel[0] = 0;
 	g_ClientGlob.m_mouserel[1] = 0;
+	g_ClientGlob.m_mousewheel = 0;
 	while( SDL_PollEvent( &e ) != 0 )
 	{
 		if( e.type == SDL_QUIT )
@@ -1082,7 +1087,7 @@ void CClientMgr::ProcessAllInput(bool bForceClear) {
     memset(pCurSlot, 0, MAX_CLIENT_COMMANDS);
     if (!m_bTrackingInputDevices)
     {
-		m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets, (void*)g_ClientGlob.m_SDLDowns, g_ClientGlob.m_mousedown, g_ClientGlob.m_mouserel);
+		m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets, (void*)g_ClientGlob.m_SDLDowns, g_ClientGlob.m_mousedown, g_ClientGlob.m_mouserel, g_ClientGlob.m_mousewheel);
     }
 
     if (!m_bInputState || (bForceClear || dsi_IsConsoleUp()))

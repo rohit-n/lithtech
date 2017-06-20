@@ -1389,7 +1389,7 @@ bool input_EnableDevice( InputMgr *pMgr, const char *pDeviceName )
 // This is the main routine that reads input from all devices and sets
 // any actions that are on.
 // --------------------------------------------------------------------- //
-void input_ReadInput( InputMgr *pMgr, BYTE *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel)
+void input_ReadInput( InputMgr *pMgr, BYTE *pActionsOn, float axisOffsets[3], void* keyDowns, int* mouseclick, int* mouserel, int mousewheel)
 {
 	DeviceDef *pDevice;
 	TriggerObject *pTrigger;
