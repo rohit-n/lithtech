@@ -1349,6 +1349,10 @@ void CUserProfile::SetBindings()
 				if (pData)
 				{
 					uint32 contType = g_pProfileMgr->GetControlType(devType, ptr->m_nObjectId );
+					if (devType == DEVICETYPE_KEYBOARD)
+					{
+						contType = CONTROLTYPE_KEY;
+					}
 
 					pData->nDeviceObjectId[dev] = ptr->m_nObjectId;
 

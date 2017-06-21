@@ -1084,11 +1084,8 @@ void CClientMgr::ProcessAllInput(bool bForceClear) {
     pPrevSlot = m_Commands[m_iCurInputSlot];
     pCurSlot = m_Commands[!m_iCurInputSlot];
 
-    memset(pCurSlot, 0, MAX_CLIENT_COMMANDS);
-    if (!m_bTrackingInputDevices)
-    {
-		m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets, (void*)g_ClientGlob.m_SDLDowns, g_ClientGlob.m_mousedown, g_ClientGlob.m_mouserel, g_ClientGlob.m_mousewheel);
-    }
+	memset(pCurSlot, 0, MAX_CLIENT_COMMANDS);
+	m_InputMgr->ReadInput(m_InputMgr, pCurSlot, m_AxisOffsets, (void*)g_ClientGlob.m_SDLDowns, g_ClientGlob.m_mousedown, g_ClientGlob.m_mouserel, g_ClientGlob.m_mousewheel);
 
     if (!m_bInputState || (bForceClear || dsi_IsConsoleUp()))
     {

@@ -38,6 +38,7 @@ struct ISBinding
 
 ISBinding *g_Bindings_sdl2;
 ISAction *g_Actions_sdl2;
+int g_key_state[SDL_NUM_SCANCODES];
 
 SDL2Key g_Keys[] =
 {
@@ -230,6 +231,11 @@ bool input_sdl2_init(InputMgr *pMgr, ConsoleState *pState)
 {
 	g_Bindings_sdl2 = LTNULL;
 	g_Actions_sdl2 = LTNULL;
+	size_t i;
+	for (i = 0; i < SDL_NUM_SCANCODES; i++)
+	{
+		g_key_state[i] = 0;
+	}
 	return true;
 }
 
@@ -279,6 +285,7 @@ void input_sdl2_ReadInput(InputMgr *pMgr, uint8 *pActionsOn, float axisOffsets[3
 	int mx, my, i;
 	SDL_Keycode* downs = (SDL_Keycode*)keyDowns;
 	SDL_Scancode scancode;
+	memcpy(g_key_state, keyDowns, sizeof(int) * SDL_NUM_SCANCODES);
 
 	axisOffsets[0] = axisOffsets[1] = axisOffsets[2] = 0.0f;
 
@@ -458,8 +465,21 @@ DeviceBinding* input_sdl2_GetDeviceBindings ( uint32 nDevice )
 		if( !pBinding ) break;
 		memset( pBinding, 0, sizeof(DeviceBinding) );
 
-		LTStrCpy( pBinding->strDeviceName, "Keyboard", sizeof(pBinding->strDeviceName) );
+		if (nDevice == DEVICETYPE_MOUSE)
+		{
+			LTStrCpy( pBinding->strDeviceName, "Mouse", sizeof(pBinding->strDeviceName) );
+		}
+		else if (nDevice == DEVICETYPE_KEYBOARD)
+		{
+			LTStrCpy( pBinding->strDeviceName, "Keyboard", sizeof(pBinding->strDeviceName) );
+		}
+		else
+		{
+			LTStrCpy( pBinding->strDeviceName, "Unknown", sizeof(pBinding->strDeviceName) );
+		}
+
 		LTStrCpy( pBinding->strTriggerName, pISBinding->m_pKey->m_pName, sizeof(pBinding->strTriggerName) );
+		pBinding->m_nObjectId = (uint32)pISBinding->m_pKey->key;
 
 		// go through the actions, adding them to the trigger
 		GameAction* pActionHead = LTNULL;
@@ -594,7 +614,32 @@ bool input_sdl2_StartDeviceTrack(InputMgr *pMgr, uint32 nDeviceFlags, uint32 nBu
 
 bool input_sdl2_TrackDevice(DeviceInput *pInputArray, uint32 *pnInOut)
 {
-	*pnInOut = 0;
+	size_t i, j;
+	uint32 cnt = 0;
+	SDL_Keycode keycode;
+
+	for (i = 0; i < SDL_NUM_SCANCODES; i++)
+	{
+		if (g_key_state[i] == 1)
+		{
+			pInputArray[cnt].m_DeviceType = DEVICETYPE_KEYBOARD;
+			LTStrCpy(pInputArray[cnt].m_DeviceName, "##keyboard", sizeof(pInputArray[cnt].m_DeviceName) );
+			pInputArray[cnt].m_ControlType = CONTROLTYPE_KEY;
+			pInputArray[cnt].m_ControlCode = 0;
+			pInputArray[cnt].m_nObjectId = i;
+			pInputArray[cnt].m_InputValue = 1;
+			for (j = 0; j < NUM_KEYS; j++)
+			{
+				keycode = SDL_GetKeyFromScancode((SDL_Scancode)i);
+				if (g_Keys[j].key == keycode)
+				{
+					LTStrCpy(pInputArray[cnt].m_ControlName, g_Keys[j].m_pName, sizeof(pInputArray[cnt].m_ControlName) );
+				}
+			}
+			cnt++;
+		}
+	}
+	*pnInOut = cnt;
 	return true;
 }
 

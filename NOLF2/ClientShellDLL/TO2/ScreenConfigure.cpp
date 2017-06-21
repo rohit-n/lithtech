@@ -312,6 +312,7 @@ void CScreenConfigure::SetControlText(CLTGUICtrl *pCtrl)
 	{
 		if (strlen(pData->strTriggerName[0]) != 0 )
 		{
+#if 0
 			char szTemp[256] = "";
 
 			// Get the name twice and take the shorter version.  WinXP has a problem
@@ -330,7 +331,9 @@ void CScreenConfigure::SetControlText(CLTGUICtrl *pCtrl)
 			{
 				SAFE_STRCPY(strControls, szDeviceObjectName );
 			}
-
+#else
+			SAFE_STRCPY(strControls, pData->strTriggerName[0]);
+#endif
 			++numControls;
 		}
 
@@ -407,12 +410,6 @@ int CScreenConfigure::GetCommand(int nType, int nIndex)
 // Unbinds an action
 void CScreenConfigure::UnBind( uint32 nObjectId, char const* pszControlName, uint32 deviceType)
 {
-	if( !nObjectId && !pszControlName )
-	{
-		ASSERT( !"CScreenConfigure::UnBind: Invalid inputs." );
-		return;
-	}
-
 	int dev = 0;
 	while (dev < 3 && devices[dev] != deviceType)
 		++dev;
