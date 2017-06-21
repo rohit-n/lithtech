@@ -68,6 +68,9 @@ class BlitRequest {}; // stub
 */
 struct RenderStruct {
     LTBOOL   m_bInitted;
+    uint32   m_Time_Vis;
+    // Load rendering data from the specified stream
+    bool     LoadWorldData(ILTStream *pStream);
 }; //stub
 /*
     // Functions LithTech implements.

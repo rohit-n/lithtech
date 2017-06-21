@@ -180,9 +180,9 @@ public:
 	IDirectMusicPerformance8* GetDirectMusicPerformance( );
 	IDirectMusic* GetDirectMusic();
 #else
-	LPPADirect GetDirectSound( );
-	PADirectMusicPerf* GetDirectMusicPerformance( );
-	PADirectMusic* GetDirectMusic();
+	void* GetDirectSound( );
+//	PADirectMusicPerf* GetDirectMusicPerformance( );
+//	PADirectMusic* GetDirectMusic();
 #endif
 	LHDIGDRIVER	GetDigDriver( ) const { return m_hDigDriver; }
 

@@ -10,10 +10,14 @@
 // that uses this DLL. This way any other project whose source files include this file see 
 // SERVERDIR_API functions as being imported from a DLL, wheras this DLL sees symbols
 // defined with this macro as being exported.
+#ifdef WIN32
 #ifdef SERVERDIR_EXPORTS
 #define SERVERDIR_API __declspec(dllexport)
 #else
 #define SERVERDIR_API __declspec(dllimport)
+#endif
+#else
+#define SERVERDIR_API
 #endif
 
 #include "iltmessage.h"
@@ -214,7 +218,7 @@ public:
 	virtual bool IsRequestPending(ERequest ePendingRequest) const = 0;
 
 	// A list of servers
-	typedef std::vector<std::string> TPeerList;
+//	typedef std::vector<std::string> TPeerList;
 	// Returns the most recently successful request
 	virtual ERequest GetLastSuccessfulRequest() const = 0;
 	// Returns the most recently failed request

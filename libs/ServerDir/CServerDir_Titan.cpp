@@ -3,17 +3,17 @@
 
 #include "stdafx.h"
 
-#include "cserverdir_titan.h"
+#include "CServerDir_Titan.h"
 
 #include <algorithm>
 
-#include "titantest.h"
+#include "TitanTest.h"
 
 #include "iltcsbase.h"
 #include "iltclient.h"
 #include "iltcommon.h"
 
-#include "iserverdir_titan.h"
+#include "IServerDir_Titan.h"
 
 #include <malloc.h>
 

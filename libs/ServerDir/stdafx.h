@@ -13,9 +13,12 @@
 //
 #pragma warning( disable : 4068 )
 
+#include <stdio.h>
+
+#ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
 
-#include <stdio.h>
 #include <windows.h>
 
+#endif // WIN32
 #endif //__STDAFX_H__

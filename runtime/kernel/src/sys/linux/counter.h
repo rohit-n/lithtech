@@ -92,6 +92,54 @@
 		Counter	m_Counter;
 	};
 
+	class CountPercent
+	{
+	public:
+		CountPercent() : m_iDelayCount(0) { Clear(); };
+
+		unsigned long m_Finger[2];
+		unsigned long m_TotalIn[2];
+		unsigned long m_TotalOut[2];
+
+		int m_iIn, m_iDelayCount;
+
+		// Calculates the amount of time the process was "in", from 0 to 1.  (returns In/(In+Out))
+		float CalcPercent(); 
+		// Clears the totals
+		void Clear(); 
+
+		// Call to enter the profiled section (returns how long it was "out", unless m_iIn > 0)
+		// Note : return may wrap if you leave it out too long
+		uint In();
+		// Call to exit the profiled section (returns how long it was "in", unless m_iIn > 1)
+		// Note : return may wrap if you leave it in too long
+		uint Out();
+
+		// Call to actually display the results
+		inline void Report(char *pMsg)
+		{
+			dsi_PrintToConsole(pMsg, CalcPercent() * 100.0f);
+			Clear();
+		};
+
+		inline void ReportDelayed(char *pMsg, int iDelay)
+		{
+			if (++m_iDelayCount < iDelay)
+				return;
+			Report(pMsg);
+			m_iDelayCount = 0;
+		}
+	};
+
+	class CountAutoPercent
+	{
+	public:
+		CountAutoPercent(CountPercent *pCounter) : m_pCounter(pCounter) { m_pCounter->In(); };
+		CountAutoPercent(CountPercent *pCounter, char *pMsg, int iDelay = 0) : m_pCounter(pCounter) { m_pCounter->ReportDelayed(pMsg, iDelay); m_pCounter->In(); };
+		~CountAutoPercent() { m_pCounter->Out(); };
+		CountPercent *m_pCounter;
+	};
+
 	
 	
 #endif  // __COUNTER_H__

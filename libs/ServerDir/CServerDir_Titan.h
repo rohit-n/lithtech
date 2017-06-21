@@ -5,28 +5,28 @@
 #define __CSERVERDIR_TITAN_H__
 
 #define SERVERDIR_EXPORTS
-#include "iserverdir.h"
-#include "iserverdir_titan.h"
+#include "IServerDir.h"
+#include "IServerDir_Titan.h"
 
 #include <deque>
 #include <vector>
 #include <string>
 
-#include "winsync.h"
+#include "WinSync.h"
 
 #pragma warning (disable:4503)
-#include "wonapi.h"
-#include "wonauth/authcontext.h"
-#include "wondir/getdirop.h"
-#include "wondir/addentityop.h"
-#include "wondir/renewentityop.h"
-#include "wondir/removeentityop.h"
-#include "wonauth/getcertop.h"
-#include "wonmisc/getmotdop.h"
-#include "wonmisc/checkvalidversionop.h"
-#include "wonauth/peerauthclient.h"
-#include "wonauth/peerauthserver.h"
-#include "wonmisc/gamespysupport.h"
+#include "WONAPI.h"
+#include "WONAuth/AuthContext.h"
+#include "WONDir/GetDirOp.h"
+#include "WONDir/AddEntityOp.h"
+#include "WONDir/RenewEntityOp.h"
+#include "WONDir/RemoveEntityOp.h"
+#include "WONAuth/GetCertOp.h"
+#include "WONMisc/GetMOTDOp.h"
+#include "WONMisc/CheckValidVersionOp.h"
+#include "WONAuth/PeerAuthClient.h"
+#include "WONAuth/PeerAuthServer.h"
+#include "WONMisc/GameSpySupport.h"
 
 
 #include "ClientResShared.h"

@@ -9,6 +9,7 @@ else(CMAKE_CL_64)
 endif(CMAKE_CL_64)
 endif(WIN32)
 
+if(WIN32)
 add_executable(${PROJECT_NAME} WIN32
 	../controlfilemgr/controlfilemgr.cpp
 	src/client_filemgr.cpp
@@ -149,38 +150,7 @@ add_executable(${PROJECT_NAME} WIN32
 	src/volumeeffect.cpp
 	src/watermark.cpp
 	../sound/src/wave.cpp
-	../world/src/world_tree.cpp)
-
-set_target_properties(${PROJECT_NAME}
-	PROPERTIES OUTPUT_NAME Lithtech)
-
-include_directories(src
-	../../sdk/inc
-	../../sdk/inc/physics
-	../../libs/stdlith
-	../../libs/rezmgr
-	../../libs/lith
-	../../tools/PreProcessor
-	../shared/src
-	../kernel/src
-	../kernel/mem/src
-	../world/src
-	../kernel/io/src
-	../kernel/net/src
-	../model/src
-	../client/src
-	../sound/src
-	../shared/src/sys/win
-	../lithtemplate
-	../physics/src
-	../info/src
-	../render_b/src
-	../ui/src
-	../controlfilemgr
-	../server/src)
-
-if(WIN32)
-    add_executable(${PROJECT_NAME} WIN32
+	../world/src/world_tree.cpp
 		../kernel/src/sys/win/lt_cursor_impl.cpp
 		../kernel/src/sys/win/bindmgr.cpp
 		../kernel/src/sys/win/binkvideomgrimpl.cpp
@@ -216,7 +186,176 @@ if(WIN32)
 		../kernel/src/sys/win/videomgr.cpp
 		src/sys/win/winclientde_impl.cpp
 		src/sys/win/winconsole_impl.cpp
-		)
+	)
+else(WIN32)
+add_executable(${PROJECT_NAME}
+	../controlfilemgr/controlfilemgr.cpp
+	src/client_filemgr.cpp
+	../kernel/src/icommandlineargs.cpp
+	src/client_iltcommon.cpp
+	../server/src/server_iltcommon.cpp
+	../shared/src/shared_iltcommon.cpp
+	src/client_iltmodel.cpp
+	../shared/src/modellt_impl.cpp
+	../server/src/server_iltmodel.cpp
+	src/client_iltphysics.cpp
+	../server/src/server_iltphysics.cpp
+	../shared/src/shared_iltphysics.cpp
+	../server/src/server_iltsoundmgr.cpp
+	../sound/src/soundmgr.cpp
+	../shared/src/transformlt_impl.cpp
+        ../kernel/src/sys/linux/videomgr.cpp
+	src/client_iltvideomgr.cpp
+	../shared/src/interface_linkage.cpp
+	../world/src/world_blind_object_data.cpp
+	../world/src/world_blocker_data.cpp
+	../world/src/world_blocker_math.cpp
+	src/world_client_bsp.cpp
+	../world/src/world_particle_blocker_data.cpp
+	../server/src/world_server_bsp.cpp
+	../world/src/world_shared_bsp.cpp
+	../model/src/animtracker.cpp
+	../shared/src/bdefs.cpp
+	../shared/src/classbind.cpp
+	../server/src/classmgr.cpp
+	src/client_formatmgr.cpp
+	src/client_graphmgr.cpp
+	src/client_ticks.cpp
+	src/clientde_impl.cpp
+	src/clientmgr.cpp
+	src/clientshell.cpp
+	src/cmoveabstract.cpp
+	src/cnet.cpp
+	src/cobject.cpp
+	../shared/src/collision.cpp
+	../shared/src/compress.cpp
+	../shared/src/concommand.cpp
+	../shared/src/conparse.cpp
+	src/console.cpp
+	src/consolecommands.cpp
+	src/cutil.cpp
+	../world/src/de_mainworld.cpp
+	../world/src/de_nodes.cpp
+	../world/src/de_objects.cpp
+	../shared/src/debuggeometry.cpp
+	../kernel/src/debugging.cpp
+	src/debuggraphmgr.cpp
+	../shared/src/dhashtable.cpp
+	../shared/src/dtxmgr.cpp
+	../shared/src/engine_vars.cpp
+	src/errorlog.cpp
+	../shared/src/findobj.cpp
+	../shared/src/ftclient.cpp
+	../shared/src/ftserv.cpp
+	../world/src/fullintersectline.cpp
+	../server/src/game_serialize.cpp
+	../shared/src/gamemath.cpp
+	../shared/src/genericprop_setup.cpp
+	../shared/src/genltstream.cpp
+	../shared/src/geometry.cpp
+	../shared/src/geomroutines.cpp
+	../shared/src/impl_common.cpp
+	../server/src/interlink.cpp
+	../world/src/intersect_line.cpp
+	../world/src/intersectsweptsphere.cpp
+	../shared/src/leech.cpp
+	../world/src/light_table.cpp
+	../shared/src/lightmap_compress.cpp
+	../shared/src/lightmap_planes.cpp
+	src/linesystem.cpp
+	../kernel/net/src/localdriver.cpp
+	src/ltbenchmark_impl.cpp
+	../../sdk/inc/lterror.cpp
+	src/ltinfo_impl.cpp
+	../kernel/mem/src/ltmemory.cpp
+	../shared/src/ltmessage.cpp
+	src/ltmessage_client.cpp
+	../server/src/ltmessage_server.cpp
+	../../sdk/inc/ltmodule.cpp
+	../../sdk/inc/ltobjref.cpp
+	../../sdk/inc/ltquatbase.cpp
+	src/lttexturestring.cpp
+	../shared/src/lttimer.cpp
+	src/memorywatch.cpp
+	../model/src/model.cpp
+	../model/src/model_load.cpp
+	../model/src/modelallocations.cpp
+	../shared/src/motion.cpp
+	../shared/src/moveobject.cpp
+	../shared/src/moveplayer.cpp
+	../kernel/net/src/netmgr.cpp
+	../shared/src/nexus.cpp
+	#../model/src/sys/null/nullmodel_load.cpp
+	../shared/src/objectmgr.cpp
+	../kernel/net/src/packet.cpp
+	../shared/src/parse_world_info.cpp
+	src/particlesystem.cpp
+	../shared/src/pixelformat.cpp
+	src/polygrid.cpp
+	src/predict.cpp
+	../shared/src/ratetracker.cpp
+	../server/src/s_client.cpp
+	../server/src/s_concommand.cpp
+	../server/src/s_intersect.cpp
+	../server/src/s_net.cpp
+	../server/src/s_object.cpp
+	../server/src/server_consolestate.cpp
+	../server/src/server_extradata.cpp
+	../server/src/server_filemgr.cpp
+	../server/src/serverde_impl.cpp
+	../server/src/serverevent.cpp
+	../server/src/servermgr.cpp
+	src/setupobject.cpp
+	src/shellnet.cpp
+	src/shelltransfer.cpp
+	src/shellutil.cpp
+	../server/src/smoveabstract.cpp
+	../sound/src/soundbuffer.cpp
+	../sound/src/sounddata.cpp
+	../sound/src/soundinstance.cpp
+	../server/src/soundtrack.cpp
+	src/sprite.cpp
+	../shared/src/spritecontrolimpl.cpp
+	../shared/src/stacktrace.cpp
+	../shared/src/stdlterror.cpp
+	../shared/src/strtools.cpp
+	src/texturestring.cpp
+	../model/src/transformmaker.cpp
+	../shared/src/version_info.cpp
+	src/volumeeffect.cpp
+	src/watermark.cpp
+	../sound/src/wave.cpp
+	../world/src/world_tree.cpp
+        )
+endif(WIN32)
+set_target_properties(${PROJECT_NAME}
+	PROPERTIES OUTPUT_NAME Lithtech)
+
+include_directories(src
+	../../sdk/inc
+	../../sdk/inc/physics
+	../../libs/stdlith
+	../../libs/rezmgr
+	../../libs/lith
+	../../tools/PreProcessor
+	../shared/src
+	../kernel/src
+	../kernel/mem/src
+	../world/src
+	../kernel/io/src
+	../kernel/net/src
+	../model/src
+	../client/src
+	../sound/src
+	../lithtemplate
+	../physics/src
+	../info/src
+	../render_b/src
+	../ui/src
+	../controlfilemgr
+	../server/src)
+
+if(WIN32)
 	include_directories(../kernel/src/sys/win
 		../shared/src/sys/win)
 	target_link_libraries(${PROJECT_NAME}
@@ -225,7 +364,11 @@ if(WIN32)
 		winmm)
 else(WIN32)
 	include_directories(../kernel/src/sys/linux
-		../shared/src/sys/linux)
+		../shared/src/sys/linux
+		/usr/include/SDL2)
+	target_link_libraries(${PROJECT_NAME}
+		libSDL2)
+
 endif(WIN32)
 
 if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
