@@ -386,7 +386,7 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 	const char *pDeviceName, const char *pTriggerName, const char *pActionName,
 	float rangeLow, float rangeHigh)
 {
-	ISBinding *pBinding;
+	ISBinding *pBinding, *bind_cur;
 	if (strlen(pDeviceName) == 0)
 	{
 		return false;
@@ -399,6 +399,24 @@ bool input_sdl2_AddBinding(InputMgr *pMgr,
 	SDL2Key *pKey = input_sdl2_FindKey(pTriggerName, pDeviceName, rangeLow, rangeHigh);
 	if(!pKey)
 		return false;
+
+	for(bind_cur=g_Bindings_sdl2; bind_cur; bind_cur=bind_cur->m_pNext)
+	{
+		if (bind_cur->m_pAction == pAction
+			&& !strcmp(bind_cur->m_deviceName, pDeviceName))
+		{
+			if (bind_cur->m_pKey != pKey)
+			{
+				bind_cur->m_pKey = pKey;
+				return true;
+			}
+			else
+			{
+				// no duplicates
+				return false;
+			}
+		}
+	}
 
 	LT_MEM_TRACK_ALLOC(pBinding = (ISBinding*)dalloc(sizeof(ISBinding)),LT_MEM_TYPE_INPUT);
 	pBinding->m_pKey = pKey;
@@ -596,6 +614,19 @@ void input_sdl2_FreeDeviceObjects ( DeviceObject* pList )
 
 bool input_sdl2_GetDeviceName ( uint32 nDeviceType, char* pStrBuffer, uint32 nBufferSize )
 {
+	switch (nDeviceType)
+	{
+	case DEVICETYPE_KEYBOARD:
+		LTStrCpy( pStrBuffer, "##keyboard", nBufferSize );
+		break;
+	case DEVICETYPE_MOUSE:
+		LTStrCpy( pStrBuffer, "##mouse", nBufferSize );
+		break;
+	default:
+		return false;
+		break;
+	}
+
 	return true;
 }
 
