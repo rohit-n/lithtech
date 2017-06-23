@@ -37,14 +37,14 @@
 	#define DFOPEN_READ		0
 
 
-	typedef struct LTFindInfo
+	typedef struct
 	{
 		int				m_Type;			// Is this a directory or file?
 		char			m_Name[256];
 		unsigned long	m_Date;			// File date/time identifier.
 		unsigned long	m_Size;			// File size.
 		void			*m_pInternal;
-	};
+	} LTFindInfo;
 
 
 
@@ -62,7 +62,7 @@
 	int df_OpenTree(const char *pName, HLTFileTree *&pTreePointer);
 	void df_CloseTree(HLTFileTree* hTree);
 
-	
+
 	// Find out what kind of tree a tree is.
 	TreeType df_GetTreeType(HLTFileTree* hTree);
 
@@ -88,7 +88,7 @@
 
 
 	// Sets up a DStream for you to read from the file.  The DStream that it
-	// sets up will do a em_ThrowError() with ERR_FILEREAD if you try to 
+	// sets up will do a em_ThrowError() with ERR_FILEREAD if you try to
 	// read or seek past the end of the file.
 	// The only supported openMode is DFOPEN_READ.
 	// Throws ERR_MEMORY, and the stream routines throw ERR_FILEREAD.
@@ -98,12 +98,12 @@
 	// Iterate over the files in a directory.
 	// Initialize pInfo->m_pInternal to NULL before calling.
 	// Returns 0 when there are no more files.
-	
+
 	// info.m_pInternal = NULL;
 	// while(df_FindNext(hTree, "textures/8bit", &info)) { ... }
 	int df_FindNext(HLTFileTree* hTree, const char *pDirName, LTFindInfo *pInfo);
-	
-	// Terminate finding early. 
+
+	// Terminate finding early.
 	// Don't call this if df_FindNext() returns 0.
 	void df_FindClose(LTFindInfo *pInfo);
 

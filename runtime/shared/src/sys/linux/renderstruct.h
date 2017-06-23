@@ -67,37 +67,41 @@ class BlitRequest {}; // stub
 	float          m_Alpha;            // Alpha value (0-1).
 */
 struct RenderStruct {
-    LTBOOL   m_bInitted;
-    uint32   m_Time_Vis;
     // Load rendering data from the specified stream
     bool     LoadWorldData(ILTStream *pStream);
-}; //stub
-/*
+
     // Functions LithTech implements.
         // Processes the attachment.  Returns the child object if it exists.
         // Get a shared texture from a file name  (returns NULL on failure)
-        // Gets the texture in memory (guaranteed to be in memory until the next 
-        // call to GetTexture).  
+        // Gets the texture in memory (guaranteed to be in memory until the next
+        // call to GetTexture).
 		// Gets the texture's file name
         // Force it to free this texture.
         // Runs a string in the console.  The render drivers usually use this
         // so they can get HLTPARAMs right away and not have to check for
         // them all the time.
-        // Print a string in the console.           
+        // Print a string in the console.
         // Gets a parameter from the game (something that can be set from the console).
         // Returns NULL if the parameter doesn't exist.
         // Gets the value of a parameter .. returns 0/NULL if you pass in NULL.
         // Increments the object frame code.  This is needed for portals.
-        // Returns a texture frame code that is guaranteed to not be set in 
+        // Returns a texture frame code that is guaranteed to not be set in
         // any SharedTextures.  The renderer is expected to set this frame code on
         // any SharedTextures that it uses while rendering so the engine can know
         // if a texture was viewed or not.
     // The engine maintains these variables.
+        uint32          m_Width;
+        uint32          m_Height;
+        int             m_bInitted;
+        int             m_bLoaded;
+		uint32			m_nIn3D;
+		uint32			m_nInOptimized2D;
     // The renderer maintains these.
         uint32  m_SystemTextureMemory;      // How much memory the renderer is using for textures.
     // Functions implemented by the render driver.
-        int             (*Init)(RenderStructInit *pInit);   // Returns RENDER_OK for success, or an error code.
-        IDirect3DDevice9* (*GetD3DDevice)(); // Note: In spring the renderer will link directly with the engine.
+
+        int             Init(RenderStructInit *pInit);   // Returns RENDER_OK for success, or an error code.
+//      IDirect3DDevice9* (*GetD3DDevice)(); // Note: In spring the renderer will link directly with the engine.
                             //  RenderStruct will go away - the renderer will be the only thing that
                             //  needs d3d. The DrawPrim interface lives in the engine for now (and it needs the Device).
         // Any textures you expect the renderer to use must be bound and unbound.
@@ -134,8 +138,14 @@ struct RenderStruct {
 		// Access to the different object groups
 		// Access to the render style map used when rendering the glow effect
         // This stuff MUST come last so it doesn't get zeroed out when switching res.
+        int             m_DontClearMarker;
+
+        LTVector		m_GlobalLightDir;
+        LTVector		m_GlobalLightColor;
+		float			m_GlobalLightConvertToAmbient;
 		// Timing variables
-*/
+		uint32			m_Time_Vis;
+}; //stub
 
 // This is what you use to select how you want to initialize the renderer..  Get a list of
 // the modes it supports, then copy the desired mode and pass it into RenderStruct::Init().
@@ -143,7 +153,7 @@ struct RenderStruct {
 typedef RMode* (*GetSupportedModesFn)();
 typedef void (*FreeModeListFn)(RMode *pHead);
 
-// To make a DirectEngine rendering DLL, make a DLL with the function 
+// To make a DirectEngine rendering DLL, make a DLL with the function
 // "RenderDLLSetup" that looks like this.  This function should init all the
 // function pointers in the structure.
 typedef void (*RenderDLLSetupFn)(RenderStruct *pStruct);

@@ -221,6 +221,7 @@ add_executable(${PROJECT_NAME}
 	src/client_formatmgr.cpp
 	src/client_graphmgr.cpp
 	src/client_ticks.cpp
+    ../kernel/src/sys/linux/load_pcx.cpp
 	src/clientde_impl.cpp
 	src/clientmgr.cpp
 	src/clientshell.cpp
@@ -377,10 +378,10 @@ if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 		#if(CMAKE_CL_64)
 		#	link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (August 2007)\\Lib\\x64")
 		#else(CMAKE_CL_64)
-			
+
 			# FIXME: Why is this not working??
-			
-		
+
+
 		#endif(CMAKE_CL_64)
 		target_link_libraries(${PROJECT_NAME}
 			ddraw
@@ -407,6 +408,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -std=c++11")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
+
+if(ENABLE_OPENGL)
+	include_directories(../render_a/src/sys/ogl)
+endif(ENABLE_OPENGL)
+
+if(ENABLE_VULKAN)
+	include_directories(../render_a/src/sys/vk)
+endif(ENABLE_VULKAN)
 
 if(ENABLE_D3D)
 	include_directories(../render_a/src/sys/d3d)

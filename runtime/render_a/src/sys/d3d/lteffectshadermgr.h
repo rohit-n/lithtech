@@ -38,7 +38,7 @@ public:
 	static LTEffectShaderMgr&	GetSingleton();
 
 	// add an effect shader from file
-	bool						AddEffectShader(ILTStream *pStream, 
+	bool						AddEffectShader(ILTStream *pStream,
 												const char *ShaderName,
 												int ShaderID,
 												const uint32 *pVertexElements,

@@ -14,9 +14,8 @@ option(ENABLE_D3D "Enable Direct3D" ON)
 option(ENABLE_DIRECTX "Enable DirectX" ON)
 option(ENABLE_DIRECTSHOW "Enable DirectShow" ON)
 else(WIN32)
-option(ENABLE_D3D "Enable Direct3D" OFF)
-option(ENABLE_DIRECTX "Enable DirectX" OFF)
-option(ENABLE_DIRECTSHOW "Enable DirectShow" OFF)
+option(ENABLE_OPENGL "Enable OpenGL 3.3" ON)
+option(ENABLE_VULKAN "Enable Vulkan" ON)
 endif(WIN32)
 option(USE_INTERNAL_ZLIB "Use bundled zlib" ON)			# eventually want default to be OFF
 option(USE_INTERNAL_FREETYPE "Use bundled freetype" ON)	# eventually want default to be OFF
@@ -70,22 +69,22 @@ if(BUILD_ENGINE)
 	add_subdirectory(runtime/ui)						# LIB_UI
 	add_subdirectory(runtime/info)						# LIB_Info
 	add_subdirectory(runtime/sound)						# LIB_ILTSound
-	add_subdirectory(runtime/server)					# DLL_Server 
+	add_subdirectory(runtime/server)					# DLL_Server
 	add_subdirectory(runtime/client)					# EXE_Lithtech
 
-	if(ENABLE_D3D)
-		add_subdirectory(runtime/render_a/src/sys/d3d)	# LIB_D3DRender
-	endif(ENABLE_D3D)
-
-	if(ENABLE_DIRECTX)
-		add_subdirectory(runtime/sound/src/sys/s_dx8)	# DLL_SndDrvDX8
-	endif(ENABLE_DIRECTX)
-
-	if(ENABLE_DIRECTSHOW)
-		add_subdirectory(libs/dshow)					# LIB_DShow
-	endif(ENABLE_DIRECTSHOW)
-
 	if(WIN32)
+        if(ENABLE_D3D)
+            add_subdirectory(runtime/render_a/src/sys/d3d)	# LIB_D3DRender
+        endif(ENABLE_D3D)
+
+        if(ENABLE_DIRECTX)
+            add_subdirectory(runtime/sound/src/sys/s_dx8)	# DLL_SndDrvDX8
+        endif(ENABLE_DIRECTX)
+
+        if(ENABLE_DIRECTSHOW)
+            add_subdirectory(libs/dshow)					# LIB_DShow
+        endif(ENABLE_DIRECTSHOW)
+
 		add_subdirectory(runtime/winbuild/ltmsg)		# DLL_LTMsg
 	endif(WIN32)
 endif(BUILD_ENGINE)
