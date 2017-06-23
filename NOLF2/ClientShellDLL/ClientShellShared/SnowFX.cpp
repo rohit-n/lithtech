@@ -313,6 +313,11 @@ bool CSnowFX::UpdateAirspaces( void )
 			(*it)->Deactivate();
 		}
 
+		while (!activeAirspaces.empty())
+		{
+			activeAirspaces.erase(activeAirspaces.begin());
+		}
+
 		return true;
 	}
 
@@ -332,6 +337,11 @@ bool CSnowFX::UpdateAirspaces( void )
 		for( ; it != activeAirspaces.end(); it++ )
 		{
 			(*it)->Deactivate();
+		}
+
+		while (!activeAirspaces.empty())
+		{
+			activeAirspaces.erase(activeAirspaces.begin());
 		}
 
 		// don't test any of the airspaces directly
@@ -463,7 +473,7 @@ CSnowFXAirspace::CSnowFXAirspace() :
 CSnowFXAirspace::~CSnowFXAirspace()
 {
 	Deactivate();
-
+	m_Parent->activeAirspaces.erase( this );
 	if( m_Effect )
 		m_Parent->m_pClientDE->RemoveObject( m_Effect );
 }
@@ -503,6 +513,8 @@ bool CSnowFXAirspace::UpdateDensity( void )
 	{
 		if( !Deactivate() )
 			return false;
+		else
+			m_Parent->activeAirspaces.erase( this );
 
 		if( !Activate( m_LOD ) )
 			return false;
@@ -699,7 +711,6 @@ bool CSnowFXAirspace::Deactivate( void )
 
 	m_Active = false;
 
-	m_Parent->activeAirspaces.erase( this );
 
 	return true;
 }
