@@ -1,5 +1,5 @@
 language: cpp
-sudo: false
+sudo: true
 branch:
   only:
     - linux-x86_64
@@ -8,6 +8,7 @@ compiler:
 
 install: true
 before_script:
+  - sudo apt-get install -y libsdl2-dev
   - mkdir Build
 
 script:
@@ -27,7 +28,6 @@ matrix:
             - g++-5
             - cmake-data
             - cmake
-            - libsdl2-dev
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5""
     - os: linux
@@ -40,7 +40,6 @@ matrix:
             - g++-6
             - cmake-data
             - cmake
-            - libsdl2-dev
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
