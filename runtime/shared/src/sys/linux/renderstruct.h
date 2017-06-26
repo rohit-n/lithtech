@@ -117,6 +117,7 @@ struct RenderStruct {
         // Used around render calls.
         // Render a scene.
         // Handle a command from the console.
+        void RenderCommand(uint32 argc, char** argv);
         // Show the backbuffer.
         // Get the screen pixel format.
         // Set transparentColor to OPTIMIZE_NO_TRANSPARENCY to not use transparency.

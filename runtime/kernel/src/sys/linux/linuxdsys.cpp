@@ -288,6 +288,11 @@ return NULL;     // DAN - temporary
 
 extern CServerMgr *g_pServerMgr;
 
+bool dsi_IsConsoleEnabled()
+{
+    return LTFALSE; // RKJ STUB temporary
+}
+
 void dsi_PrintToConsole(const char *pMsg, ...) {
     va_list marker;
     char msg[1000];

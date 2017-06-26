@@ -36,11 +36,11 @@ class CLTRealVideoMgr;
 #include "motion.h"
 #endif
 
-#ifndef __LINUX
+//#ifndef __LINUX
 #ifndef __SOUNDMGR_H__
 #include "soundmgr.h"
 #endif
-#endif // !__LINUX
+//#endif // !__LINUX
 
 #ifndef __MUSICMGR_H__
 #include "musicmgr.h"
@@ -273,7 +273,7 @@ class CClientMgr {
     // Screen stuff.
     public:
 
-        void                    ShowDrawSurface(uint flags = NULL);
+        void                    ShowDrawSurface(uint flags = 0);
 
         // Global lighting (values 0-1).
         LTVector                m_GlobalLightScale;

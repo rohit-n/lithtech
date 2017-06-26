@@ -221,7 +221,7 @@ add_executable(${PROJECT_NAME}
 	src/client_formatmgr.cpp
 	src/client_graphmgr.cpp
 	src/client_ticks.cpp
-    ../kernel/src/sys/linux/load_pcx.cpp
+        ../kernel/src/sys/linux/load_pcx.cpp
 	src/clientshell.cpp
 	src/cmoveabstract.cpp
 	src/cnet.cpp
@@ -230,6 +230,7 @@ add_executable(${PROJECT_NAME}
 	../shared/src/compress.cpp
 	../shared/src/concommand.cpp
 	../shared/src/conparse.cpp
+        src/sys/linux/linuxconsole_impl.cpp
 	src/console.cpp
 	src/consolecommands.cpp
 	src/cutil.cpp

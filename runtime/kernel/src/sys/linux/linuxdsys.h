@@ -102,6 +102,7 @@ LTRESULT dsi_SetupMessage(char *pMsg, int maxMsgLen, uint32 dResult, va_list mar
 LTRESULT dsi_DoErrorMessage(char *pMessage);
 
 
+bool dsi_IsConsoleEnabled();
 void dsi_PrintToConsole(const char *pMsg, ...);	// Print to console.
 
 void* dsi_GetInstanceHandle();	// Returns an HINSTANCE.

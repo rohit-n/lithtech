@@ -32,6 +32,7 @@ inline LTBOOL r_IsRenderInitted() {return g_Render.m_bInitted;}
 //    0 = leave surfaces alone
 //    1 = backup surfaces
 //    2 = delete surfaces
+LTRESULT r_TermRender(int surfaceHandling, bool bUnLoadDLL);
 //this should be called to access texture data of a texture. If it has no image and the shared texture
 //is properly setup, it will load the image data and bind it to the shared texture
 //this should be called to access information on a texture. It will ensure that it is filled out.
