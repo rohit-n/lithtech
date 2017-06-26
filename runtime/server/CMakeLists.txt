@@ -155,7 +155,8 @@ if(WIN32)
 		../shared/src/sys/win)
 else(WIN32)
 	include_directories(../kernel/src/sys/linux
-		../shared/src/sys/linux)
+		../shared/src/sys/linux
+		/usr/include/SDL2)
 endif(WIN32)
 
 if(ENABLE_D3D)

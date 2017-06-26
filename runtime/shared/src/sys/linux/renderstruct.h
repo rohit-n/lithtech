@@ -25,6 +25,7 @@ struct RenderInfoStruct;
 // Blit flags.
 #define BLIT_TRANSPARENT    1   // Transparent blit.
 struct RenderContext;
+typedef RenderContext* HRENDERCONTEXT;
 // Draw modes.
 #define DRAWMODE_NORMAL     1   // Render normally.
 #define DRAWMODE_OBJECTLIST 2   // Only render the objects in m_pObjectList.
@@ -71,7 +72,9 @@ struct RenderStruct {
     bool     LoadWorldData(ILTStream *pStream);
 
     // Functions LithTech implements.
-        // Processes the attachment.  Returns the child object if it exists.
+    HRENDERCONTEXT  CreateContext();
+    void            DeleteContext(HRENDERCONTEXT hContext);
+      // Processes the attachment.  Returns the child object if it exists.
         // Get a shared texture from a file name  (returns NULL on failure)
         // Gets the texture in memory (guaranteed to be in memory until the next
         // call to GetTexture).

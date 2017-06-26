@@ -222,8 +222,6 @@ add_executable(${PROJECT_NAME}
 	src/client_graphmgr.cpp
 	src/client_ticks.cpp
     ../kernel/src/sys/linux/load_pcx.cpp
-	src/clientde_impl.cpp
-	src/clientmgr.cpp
 	src/clientshell.cpp
 	src/cmoveabstract.cpp
 	src/cnet.cpp
@@ -240,6 +238,8 @@ add_executable(${PROJECT_NAME}
 	../world/src/de_objects.cpp
 	../shared/src/debuggeometry.cpp
 	../kernel/src/debugging.cpp
+	src/clientde_impl.cpp # needs rendererframestats and all other d3d converted to ogl/vk
+	src/clientmgr.cpp  # needs audio/musicdriver
 	src/debuggraphmgr.cpp
 	../shared/src/dhashtable.cpp
 	../shared/src/dtxmgr.cpp

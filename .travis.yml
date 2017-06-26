@@ -1,0 +1,45 @@
+language: cpp
+
+compiler:
+  - gcc
+
+install: echo "no install"
+before_script:
+  - mkdir Build
+
+script:
+  - cd Build
+  - cmake ../
+  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part >/dev/null 2>&1 && echo Pass $part || echo Fail $part; don
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - george-edison55-precise-backports
+          packages:
+            - g++-5
+            - cmake-data
+            - cmake
+            - libsdl2-dev
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5""
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - george-edison55-precise-backports
+          packages:
+            - g++-6
+            - cmake-data
+            - cmake
+            - libsdl2-dev
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
