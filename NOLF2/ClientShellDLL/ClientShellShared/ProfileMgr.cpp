@@ -28,7 +28,6 @@
 
 extern CGameClientShell* g_pGameClientShell;
 
-#include <Direct.h>			// For _rmdir
 #include "dinput.h"
 #include <set>
 #include <IO.H>
@@ -1353,7 +1352,21 @@ void CUserProfile::SetBindings()
 					{
 						contType = CONTROLTYPE_KEY;
 					}
-
+					if (devType == DEVICETYPE_MOUSE)
+					{
+						if (ptr->m_nObjectId == 1 || ptr->m_nObjectId == 2)
+						{
+							contType = CONTROLTYPE_BUTTON;
+						}
+						else if (ptr->m_nObjectId == 3 || ptr->m_nObjectId == 4)
+						{
+							contType = CONTROLTYPE_ZAXIS;
+						}
+						else
+						{
+							ASSERT(0);
+						}
+					}
 					pData->nDeviceObjectId[dev] = ptr->m_nObjectId;
 
 					if (contType == CONTROLTYPE_BUTTON || contType == CONTROLTYPE_KEY)							 
@@ -1372,6 +1385,10 @@ void CUserProfile::SetBindings()
 						{
 							strcpy(pData->strRealName[dev],"#D");
 							strcpy(pData->strTriggerName[dev],szWheelDown);
+						}
+						else
+						{
+							ASSERT(0);
 						}
 					}
 				}

@@ -341,7 +341,7 @@ void CScreenConfigure::SetControlText(CLTGUICtrl *pCtrl)
 		{
 			if (numControls)
 				strcat(strControls,", ");
-
+#if 0
 			if (stricmp("#U",pData->strRealName[1]) == 0)
 				strcat(strControls,szWheelUp);
 			else if (stricmp("#D",pData->strRealName[1]) == 0)
@@ -362,6 +362,10 @@ void CScreenConfigure::SetControlText(CLTGUICtrl *pCtrl)
 
 				strcat(strControls, szDeviceObjectName );
 			}
+#else
+
+			strcat(strControls, pData->strTriggerName[1]);
+#endif
 		}
 
 		if (strlen(pData->strTriggerName[2]) != 0 )
