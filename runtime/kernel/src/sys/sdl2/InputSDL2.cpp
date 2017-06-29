@@ -1,8 +1,12 @@
 #include "bdefs.h"
 #include "input.h"
+#include <SDL.h>
+#ifdef WIN32
 #include "dsys_interface.h"
 #include "dinput.h"
-#include <SDL.h>
+#else
+#include "linuxdsys.h"
+#endif
 #include "sdl2_scancode_to_dinput.h"
 
 #define SPECIAL_MOUSEX	-50000

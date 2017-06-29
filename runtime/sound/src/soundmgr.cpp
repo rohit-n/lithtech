@@ -380,13 +380,14 @@ LTRESULT CSoundMgr::Init(InitSoundInfo &soundInit)
 		// we asked for a mode card doesn't support, can happen if user 
 		// has changed cards since last startup
 		LTStrCpy(soundInit.m_sz3DProvider, "DirectSound Default", sizeof(soundInit.m_sz3DProvider));
-		m_3DProvider.m_hProvider = NULL;
+		m_3DProvider.m_hProvider = LTNULL;
     }
 
     // Set the maximum number of samples for 3d
     if (m_3DProvider.m_hProvider)
     {
-        g_pSoundSys->Get3DProviderAttribute(m_3DProvider.m_hProvider, "Max samples", &nSamples);
+        char str[] = "Max samples";
+        g_pSoundSys->Get3DProviderAttribute(m_3DProvider.m_hProvider, str, &nSamples);
 
         nSamples = LTMIN(nSamples, 255);
         m_nMax3DSamples = LTMIN((uint8)nSamples, SOUNDMGR_MAXSOUNDINSTANCES);
@@ -737,7 +738,8 @@ LTRESULT CSoundMgr::Get3DProviderLists(CProvider *&p3DProviderList, bool bVerify
 			        }
 
 					// Check for eax support
-					g_pSoundSys->Get3DProviderAttribute(hProvider, "EAX environment selection", &dwResult);
+                    char eax_env[] = "EAX environment selection";
+					g_pSoundSys->Get3DProviderAttribute(hProvider, eax_env, &dwResult);
 	                if (dwResult != -1)
 		                dwCaps |= SOUND3DPROVIDER_CAPS_REVERB;
 

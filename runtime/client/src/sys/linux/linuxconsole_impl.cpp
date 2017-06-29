@@ -1200,7 +1200,7 @@ void CConsole::DrawTextLine(const char *pText, const LTRect *pRect, COLORREF tex
 			iW += iCharWidth; 
 		} 
 
-		*pB = nullptr;
+		*pB = '\0';
 
  		m_Font->DrawString((float)pRect->left,(float)pRect->top,szBuff); 
 

@@ -430,4 +430,4 @@ public:
 
 };
 
-#endif //__CONSOLE_IMPL_H__
+#endif //__WINCONSOLE_IMPL_H__

@@ -976,7 +976,7 @@ public:
 	const LTVector3f TransformPointToLocal(  const LTVector3f& p ) const
 	{
 		//Translate to this frame's origin, then project onto this LTBasis
-		return TransformVectorToLocal( p - m_O );
+		return T::TransformVectorToLocal( p - m_O );
 	}
 
 	/*!
@@ -989,7 +989,7 @@ public:
 	const LTVector3f TransformPointToParent( const LTVector3f& p ) const
 	{
 		//transform the coordinate vector and Translate by this origin
-		return TransformVectorToParent( p ) + m_O;
+		return T::TransformVectorToParent( p ) + m_O;
 	}
 
 	/*!

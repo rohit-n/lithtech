@@ -230,7 +230,8 @@ add_executable(${PROJECT_NAME}
 	../shared/src/compress.cpp
 	../shared/src/concommand.cpp
 	../shared/src/conparse.cpp
-        src/sys/linux/linuxconsole_impl.cpp
+	../kernel/src/sys/sdl2/InputSDL2.cpp
+	src/sys/linux/linuxconsole_impl.cpp
 	src/console.cpp
 	src/consolecommands.cpp
 	src/cutil.cpp
