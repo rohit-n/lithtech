@@ -22,6 +22,14 @@
 #include "debuggeometry.h"
 #include "sysdrawprim.h"
 
+#ifndef __SDL2_H__
+#include <SDL.h>
+#endif
+
+#ifdef _DEBUG
+#include <iostream>
+#endif
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 // Holders and their headers.
@@ -62,10 +70,19 @@ CConsole g_Console;
 // Default empty iterator
 CConIterator g_ConEmptyIterator;
 
+inline void OutputDebugString(const char *msg)
+{
+#ifdef _DEBUG	
+	std::err << msg << '\n';
+#endif
+}
+
 // Convenience functions...
 inline bool IsKeyDown( uint16 vkKey ) 
 {
-	return ((GetAsyncKeyState( VK_CONTROL ) & 0x8000) != 0);
+	const uint8* currentKeyState = SDL_GetKeyboardState(nullptr);
+	return (bool)currentKeyState[vkKey];
+//	return ((GetAsyncKeyState( VK_CONTROL ) & 0x8000) != 0);
 }
 
 inline ConsoleState *GetConsoleState()
@@ -223,7 +240,7 @@ void CConCommandBox::Draw()
 	// Draw the caret.
 	rect.left += GetConsole()->CalcStringOffset( GetCommand(), m_iCursorPos );
 
-	flashTime = timeGetTime() % (GetFlashTime() * 2);
+	flashTime = SDL_GetTicks() % (GetFlashTime() * 2);
 	if ( flashTime > GetFlashTime() )
 	{
 		flashTime = GetFlashTime() - (flashTime - GetFlashTime());
@@ -334,11 +351,31 @@ void CConCommandBox::MoveWord( int iOffset )
 		m_iCursorPos += iOffset;
 }
 
+inline uint8 ToAscii(uint32 key, int scancode, int* keyState,  uint16* out, int)
+{
+	char *pb = (char*)out;
+	if( ! isascii(key))
+		return 0;
+	if(IsKeyDown(VK_CONTROL)) {
+		*pb = '^';
+		pb++;
+       *pb = toupper(toascii(key));
+	   return 2;
+	}
+	if(IsKeyDown(VK_SHIFT)) {
+		*pb = toupper(toascii(key));
+	} else {
+		*pb = tolower(toascii(key));
+	}
+
+	return 1;
+}
+
 char CConCommandBox::TranslateKey(uint32 key) const
 {
 	char aResult[2];
-	uint8 aKeyState[256];
-	if ( !GetKeyboardState( aKeyState ) )
+	int aKeyState[256];
+	if ( !SDL_GetKeyboardState( aKeyState ) )
 		return 0;
 
 	switch ( ToAscii( key, 0, aKeyState, (LPWORD)aResult, 0 ) )

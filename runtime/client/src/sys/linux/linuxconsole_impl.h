@@ -32,7 +32,11 @@ extern CConsole g_Console;
 #define CONSOLE_TOP_BORDER	5
 
 #define HWND void*
+#define LPWORD uint16*
 #define COLORREF CONCOLOR
+
+#include "vkdefs.h"
+
 
 // One line of text
 class CConTextLine : public CGLLNode

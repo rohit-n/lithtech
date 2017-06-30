@@ -221,7 +221,7 @@ add_executable(${PROJECT_NAME}
 	src/client_formatmgr.cpp
 	src/client_graphmgr.cpp
 	src/client_ticks.cpp
-        ../kernel/src/sys/linux/load_pcx.cpp
+	../kernel/src/sys/linux/load_pcx.cpp
 	src/clientshell.cpp
 	src/cmoveabstract.cpp
 	src/cnet.cpp
@@ -231,26 +231,26 @@ add_executable(${PROJECT_NAME}
 	../shared/src/concommand.cpp
 	../shared/src/conparse.cpp
 	../kernel/src/sys/sdl2/InputSDL2.cpp
-	src/sys/linux/linuxconsole_impl.cpp
 	src/console.cpp
 	src/consolecommands.cpp
-	src/cutil.cpp
 	../world/src/de_mainworld.cpp
 	../world/src/de_nodes.cpp
 	../world/src/de_objects.cpp
 	../shared/src/debuggeometry.cpp
 	../kernel/src/debugging.cpp
-	src/clientde_impl.cpp # needs rendererframestats and all other d3d converted to ogl/vk
-	src/clientmgr.cpp  # needs audio/musicdriver
 	src/debuggraphmgr.cpp
 	../shared/src/dhashtable.cpp
-	../shared/src/dtxmgr.cpp
 	../shared/src/engine_vars.cpp
 	src/errorlog.cpp
 	../shared/src/findobj.cpp
 	../shared/src/ftclient.cpp
 	../shared/src/ftserv.cpp
 	../world/src/fullintersectline.cpp
+	src/sys/linux/linuxconsole_impl.cpp # Key definitions
+	src/cutil.cpp # bind textures errors
+	src/clientde_impl.cpp # needs rendererframestats and all other d3d converted to ogl/vk
+	src/clientmgr.cpp  # needs audio/musicdriver
+	../shared/src/dtxmgr.cpp
 	../server/src/game_serialize.cpp
 	../shared/src/gamemath.cpp
 	../shared/src/genericprop_setup.cpp
@@ -340,6 +340,7 @@ include_directories(src
 	../../libs/stdlith
 	../../libs/rezmgr
 	../../libs/lith
+	../../libs/LTGUIMgr
 	../../tools/PreProcessor
 	../shared/src
 	../kernel/src

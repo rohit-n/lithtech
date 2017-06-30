@@ -18,7 +18,7 @@
 
 struct SDL2Key
 {
-	char *m_pName;
+	const char *m_pName;
 	SDL_Keycode key;
 	float m_Scale;
 };

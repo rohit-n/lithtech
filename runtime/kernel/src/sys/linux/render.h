@@ -43,9 +43,12 @@ LTRESULT r_TermRender(int surfaceHandling, bool bUnLoadDLL);
 //will be valid until it is bound to the device, at which point it is possible that it will
 //be freed
 //frees the associated texture data and cleans up references to it
+
 //this will bind the texture to the device. Note that the texture data is not guaranteed to be valid
 //after this call since the renderer can free it to save memory
+void r_BindTexture(SharedTexture *pTexture, bool bTextureChanged);
 //unbinds the texture from the device
+void r_UnbindTexture(SharedTexture *pTexture, bool bUnloadEngineData);
 // Called by the renderer and ILTClient::ProcessAttachments.
 struct SysCache 
 {

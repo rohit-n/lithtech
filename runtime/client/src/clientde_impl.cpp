@@ -1089,7 +1089,13 @@ bool CLTClient::AddVertexShader(const char *pFileName, int VertexShaderID,
 	if (OpenFile(pFileName, &pStream) == LT_OK)
 	{
 		bSuccess = LTVertexShaderMgr::GetSingleton().AddVertexShader(pStream, pFileName, VertexShaderID,
+#if defined(__OPENGL)
+																	 (OGLVertexElement*)pVertexElements,
+#elif defined(__VULKAN)
+																	 (VKVertexElement*)pVertexElements,
+#else
 																	 (D3DVERTEXELEMENT9*)pVertexElements,
+#endif
 																	 VertexElementsSize, bCompileShader);
 	}
 
