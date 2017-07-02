@@ -1532,7 +1532,7 @@ LTRESULT CLTClient::SetLightGroupColor(uint32 nID, const LTVector &vColor)
 	if (!world_bsp_client)
 		return LT_NOTINWORLD;
 
-	if (!r_GetRenderStruct() || !r_GetRenderStruct()->SetLightGroupColor)
+	if (!r_GetRenderStruct() || !r_GetRenderStruct()->SetLightGroupColor(nID,vColor))
 		return LT_NOTINWORLD;
 
 	// Get the old color

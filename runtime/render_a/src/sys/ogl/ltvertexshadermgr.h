@@ -7,12 +7,16 @@
 #include "ltidtoobjecttable.h"
 
 struct OGLVertexElement {
-    float x,y,z;
+    float x,y,z,w;
 };
+
+struct OGLVertexDeclaration
+{};
 
 class VertexShader : public LTVertexShader
 {
-	LTVertexShaderImp()
+public:
+	VertexShader()
 		: m_bCompileShader(false),
 	      m_pByteCode(nullptr),
 		  m_ByteCodeSize(0),
@@ -22,14 +26,14 @@ class VertexShader : public LTVertexShader
 	{
 	}
 
-	~LTVertexShaderImp()
+	~VertexShader()
 	{
 		Term();
 	}
 
 	// initialize
-//	bool							Init(ILTStream *pStream, const D3DVERTEXELEMENT9 *pVertexElements,
-//										 uint32 VertexElementsSize, bool bCompileShader);
+	bool							Init(ILTStream *pStream, const OGLVertexElement *pVertexElements,
+										 uint32 VertexElementsSize, bool bCompileShader);
 
 	// terminate
 	void							Term();
@@ -67,6 +71,19 @@ class VertexShader : public LTVertexShader
 	// constants
 	virtual float*					GetConstants()							{ return m_Constants; }
     
+private:
+
+	bool							m_bCompileShader;		// this flag specifies whether the shader is already compiled
+
+	uint8*							m_pByteCode;			// byte code loaded in from the file
+	unsigned						m_ByteCodeSize;			// size of byte code array
+
+	VertexShader*			        m_pShader;				// d3d shader interface
+
+	OGLVertexElement*				m_pVertexElements;		// An array of vertex elements used to create the vertex shader declaration
+	OGLVertexDeclaration*           m_pDeclaration;			// d3d vertex shader input declaration interface
+
+	float							m_Constants[LTVertexShader::MAX_CONSTANT_REGISTERS*4];			// user-defined constants
 };
 
 class LTVertexShaderMgr {

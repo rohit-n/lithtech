@@ -34,22 +34,40 @@ typedef RenderContext* HRENDERCONTEXT;
 struct SceneDesc
 {
     // How to draw.  One of the DRAWMODE_ defines above.
-	// Rendering statistics counters
+    int             m_DrawMode;
+    // Rendering statistics counters
+    uint32          *m_pTicks_Render_Objects;
+    uint32          *m_pTicks_Render_Models;
+    uint32          *m_pTicks_Render_Sprites;
+    uint32          *m_pTicks_Render_WorldModels;
+    uint32          *m_pTicks_Render_ParticleSystems;
     LTVector        m_GlobalModelLightAdd;      // Global model light addition.
     // The context gotten from CreateContext.
+    HRENDERCONTEXT  m_hRenderContext;
     LTVector        m_GlobalLightScale;     // RGB 0-1, scale / darken the light.
     LTVector        m_GlobalLightAdd;       // RGB 0-1, add / brighten the light.  This
                                             // draws a poly over the screen if one of these
                                             // is nonzero (so it's slower than scale).
     float           m_FrameTime;            // Used for updating things like sprites and texture scripts
-};
-	float			m_fActualFrameTime;		// The actual elapsed time. Used for performance measurement.
+    float           m_fActualFrameTime;             // The actual elapsed time. Used for performance measurement.
     // Sky definition and objects.
+    SkyDef          m_SkyDef;
+    LTObject        **m_SkyObjects;
+    int             m_nSkyObjects;
     // Viewport rectangle.
+    LTRect          m_Rect;
     // Field of view.
+    float           m_xFov, m_yFov;
     // Position info.
+    LTVector        m_Pos;
+    LTRotation      m_Rotation;
     // Objects to draw, if mode is DRAWMODE_OBJECTSONLY.
+    LTObject        **m_pObjectList;
+    int             m_ObjectListSize;
     // If ModelHookFn is set, then the renderer will call it before drawing each model.
+    void            m_ModelHookFn(ModelHookData *pData, void *pUser);
+    void            *m_ModelHookUser;
+};
 struct RenderStructInit
 {
     int     m_RendererVersion;  // The renderer MUST set this to LTRENDER_VERSION.
@@ -116,9 +134,11 @@ struct RenderStruct {
         // Clear a section of the screen.  Flags are from CLEARSCREEN_ flags in de_codes.h.
         // Used around render calls.
         // Render a scene.
+        int             RenderScene(SceneDesc *pScene);
         // Handle a command from the console.
         void RenderCommand(uint32 argc, char** argv);
         // Show the backbuffer.
+        void            SwapBuffers(uint flags );
         // Get the screen pixel format.
         // Set transparentColor to OPTIMIZE_NO_TRANSPARENCY to not use transparency.
         // Note: whenever you do this, you stall all async performance!
@@ -136,11 +156,22 @@ struct RenderStruct {
 		// Load rendering data from the specified stream
 		// Change the color of a lightgroup in the currently loaded world
 		// Returns false if a world isn't loaded
+        bool SetLightGroupColor(uint32 nID, const LTVector &vColor);
 		// Change/query the state of an occluder in the currently loaded world
 		// Returns LT_NOTFOUND if the ID isn't found or LT_NOTINWORLD if a world isn't loaded
+		LTRESULT SetOccluderEnabled(uint32 nID, bool bEnabled);
+		LTRESULT GetOccluderEnabled(uint32 nID, bool *pEnabled);
 		// Accessing texture effect variables
+		uint32	        GetTextureEffectVarID(const char* pszEffectGroup, uint32 nStage);
+		bool			SetTextureEffectVar(uint32 nVarID, uint32 nVar, float fValue);
 		// Access to the different object groups
+		bool	        IsObjectGroupEnabled(uint32 nGroup);
+		void			SetObjectGroupEnabled(uint32 nGroup, bool bEnable);
+		void			SetAllObjectGroupEnabled();
 		// Access to the render style map used when rendering the glow effect
+		bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo);
+		bool			SetGlowDefaultRenderStyle(const char* pszFile);
+		bool			SetNoGlowRenderStyle(const char* pszFile);
         // This stuff MUST come last so it doesn't get zeroed out when switching res.
         int             m_DontClearMarker;
 

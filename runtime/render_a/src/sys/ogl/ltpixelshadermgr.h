@@ -4,7 +4,7 @@
 #include "ltbasedefs.h"
 #include "ltidtoobjecttable.h"
 
-class PixelShaderImp: public LTPixelShader
+class PixelShader: public LTPixelShader
 {};
 
 class LTPixelShaderMgr {

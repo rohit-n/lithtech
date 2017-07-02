@@ -25,6 +25,7 @@
 #include "ltbasedefs.h"
 #include <stdarg.h>
 
+#include <SDL.h>
 
 // ------------------------------------------------------------------------- //
 // Externs (Public C data)
@@ -159,9 +160,16 @@ class ClientGlob {
     const char      *m_pWorldName;
     char            m_CachePath[500];
 
-    uint32          m_KeyDowns[MAX_KEYBUFFER];
-    uint32          m_KeyUps[MAX_KEYBUFFER];
-    bool            m_KeyDownReps[MAX_KEYBUFFER];
+        uint32           m_KeyDowns[MAX_KEYBUFFER];
+        uint32           m_KeyUps[MAX_KEYBUFFER];
+		SDL_Keycode		m_SDLDowns[SDL_NUM_SCANCODES];
+		int				m_mousedown[2];
+		int				m_mouserel[2];
+		int				m_mousewheel;
+        bool            m_KeyDownReps[MAX_KEYBUFFER];
+
+        WORD            m_nKeyDowns;
+        WORD            m_nKeyUps;
 
     uint16          m_nKeyDowns;
     uint16          m_nKeyUps;

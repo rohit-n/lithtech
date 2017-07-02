@@ -50,6 +50,8 @@ void r_BindTexture(SharedTexture *pTexture, bool bTextureChanged);
 //unbinds the texture from the device
 void r_UnbindTexture(SharedTexture *pTexture, bool bUnloadEngineData);
 // Called by the renderer and ILTClient::ProcessAttachments.
+LTObject* r_ProcessAttachment(LTObject *pParent, Attachment *pAttachment);
+
 struct SysCache 
 {
     uint32  m_CurMem;   // How much memory currently used?
