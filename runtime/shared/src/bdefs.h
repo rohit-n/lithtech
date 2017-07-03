@@ -157,7 +157,7 @@ extern void dsi_OnReturnError(int err);
 
 extern int32 g_DebugLevel;
 extern int32 g_CV_DebugModelRez;
-extern char *g_ReturnErrString;
+extern const char *g_ReturnErrString;
 
 #define DEBUG_MODEL_REZ( toPrint ) {\
 	if( g_CV_DebugModelRez )\

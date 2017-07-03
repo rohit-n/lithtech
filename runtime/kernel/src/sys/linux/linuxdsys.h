@@ -23,7 +23,13 @@
 // ------------------------------------------------------------------------- //
 #include "ltbasetypes.h"
 #include "ltbasedefs.h"
+
+#ifndef __VERSION_INFO_H__
+#include "version_info.h"
+#endif
+
 #include <stdarg.h>
+
 
 #include <SDL.h>
 
@@ -65,7 +71,7 @@ void dsi_OnReturnError(int err);
 RMode* dsi_GetRenderModes();
 void dsi_RelinquishRenderModes(RMode *pMode);
 LTRESULT dsi_GetRenderMode(RMode *pMode);
-LTRESULT dsi_SetRenderMode(RMode *pMode);
+LTRESULT dsi_SetRenderMode(RMode *pMode, const char* pName);
 LTRESULT dsi_ShutdownRender(uint32 flags);
 
 // Initializes the cshell and cres DLLs (copies them into a temp directory).
@@ -121,6 +127,10 @@ void dsi_MessageBox(char *pMsg, char *pTitle);
 
 // System functions
 LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied);
+
+// Get the version info of the executable.
+// Returns LT_OK or an error.
+LTRESULT dsi_GetVersionInfo(LTVersionInfo &info);
 
 // ------------------------------------------------------------------------- //
 // Class Definitions

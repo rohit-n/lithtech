@@ -27,6 +27,7 @@ inline RenderStruct* r_GetRenderStruct() {return &g_Render;}
 inline LTBOOL r_IsRenderInitted() {return g_Render.m_bInitted;}
 // Called right at the beginning by the client.. initializes the RenderStruct
 // data members.
+void r_InitRenderStruct(bool bFullClear);
 // Only implemented for client.exe.. initializes the renderer.
 // surfaceHandling
 //    0 = leave surfaces alone

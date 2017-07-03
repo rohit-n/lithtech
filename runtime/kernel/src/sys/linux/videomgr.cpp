@@ -6,3 +6,7 @@ int VideoInst::GetVideoStatus() {}
 void VideoInst::Release() {}
 
 bool VideoMgr::CreateScreenVideo(const char *,uint32, VideoInst*) {}
+
+VideoMgr* CreateVideoMgr(const char *pName) {
+    return new VideoMgr();
+}

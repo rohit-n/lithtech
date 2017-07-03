@@ -17,4 +17,6 @@ public:
     CMoArray<VideoInst*> m_Videos;
 };
 
+
+extern VideoMgr* CreateVideoMgr(const char *pName);
 #endif

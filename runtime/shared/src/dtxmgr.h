@@ -214,7 +214,7 @@ LTRESULT dtx_Create(ILTStream *pStream, TextureData **ppOut, uint32& nBaseWidth,
 
 // Allocates the texture and initializes the mipmap data pointers.
 TextureData* dtx_Alloc(BPPIdent bpp, uint32 baseWidth, uint32 baseHeight, uint32 nMipmaps,
-    uint32 *pAllocSize, uint32 *pTextureDataSize, uint32 iFlags = NULL);
+    uint32 *pAllocSize, uint32 *pTextureDataSize, uint32 iFlags = 0);
 
 void dtx_Destroy(TextureData *pTextureData);
 

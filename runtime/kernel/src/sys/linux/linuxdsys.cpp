@@ -172,7 +172,7 @@ LTRESULT dsi_GetRenderMode(RMode *pMode)
 return LTTRUE;      // DAN - temporary
 }
 
-LTRESULT dsi_SetRenderMode(RMode *pMode)
+LTRESULT dsi_SetRenderMode(RMode *pMode, const char *pName)
 {
 return LTTRUE;      // DAN - temporary
 }
@@ -323,4 +323,12 @@ return LT_OK;      // DAN - temporary
 
 void dsi_MessageBox(char *pMessage, char *pTitle)
 {
+}
+
+LTRESULT dsi_GetVersionInfo(LTVersionInfo &info)
+{
+	// the current linux version
+	info.m_MajorVersion = 0;
+	info.m_MinorVersion = 1;
+	return LT_OK;
 }
