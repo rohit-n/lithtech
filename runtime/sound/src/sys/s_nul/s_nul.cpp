@@ -61,7 +61,7 @@ public:
 	virtual void		Set3DPosition( LH3DPOBJECT hObj, float fX, float fY, float fZ);
 	virtual void		Set3DVelocityVector( LH3DPOBJECT hObj, float fDX_per_ms, float fDY_per_ms, float fDZ_per_ms );
 	virtual void		Set3DOrientation( LH3DPOBJECT hObj, float fX_face, float fY_face, float fZ_face, float fX_up, float fY_up, float fZ_up );
-	virtual void		Set3DUserData( LH3DPOBJECT hObj, U32 uiIndex, S32 siValue );
+	virtual void		Set3DUserData( LH3DPOBJECT hObj, U32 uiIndex, uintptr_t siValue );
 	virtual void		Get3DPosition( LH3DPOBJECT hObj, float* pfX, float* pfY, float* pfZ);
 	virtual void		Get3DVelocity( LH3DPOBJECT hObj, float* pfDX_per_ms, float* pfDY_per_ms, float* pfDZ_per_ms );
 	virtual void		Get3DOrientation( LH3DPOBJECT hObj, float* pfX_face, float* pfY_face, float* pfZ_face, float* pfX_up, float* pfY_up, float* pfZ_up );
@@ -100,7 +100,7 @@ public:
 	virtual void		SetSamplePan( LHSAMPLE hS, S32 siPan );
 	virtual S32			GetSampleVolume( LHSAMPLE hS );
 	virtual S32			GetSamplePan( LHSAMPLE hS );
-	virtual void		SetSampleUserData( LHSAMPLE hS, U32 uiIndex, S32 siValue );
+	virtual void		SetSampleUserData( LHSAMPLE hS, U32 uiIndex, uintptr_t siValue );
 	virtual void		GetDirectSoundInfo( LHSAMPLE hS, PTDIRECTSOUND* ppDS, PTDIRECTSOUNDBUFFER* ppDSB );
 	virtual void		SetSampleType( LHSAMPLE hS, S32 siFormat, U32 uiFlags );
 	virtual void		SetSampleReverb( LHSAMPLE hS, float fReverb_level, float fReverb_reflect_time, float fReverb_decay_time );
@@ -297,7 +297,7 @@ void CNulSoundSys::Set3DOrientation( LH3DPOBJECT hObj, float fX_face, float fY_f
 { 
 }
 
-void CNulSoundSys::Set3DUserData( LH3DPOBJECT hObj, U32 uiIndex, S32 siValue ) 
+void CNulSoundSys::Set3DUserData( LH3DPOBJECT hObj, U32 uiIndex, uintptr_t siValue ) 
 { 
 }
 
@@ -448,7 +448,7 @@ S32	CNulSoundSys::GetSamplePan( LHSAMPLE hS )
 	return 0; 
 }
 
-void CNulSoundSys::SetSampleUserData( LHSAMPLE hS, U32 uiIndex, S32 siValue ) 
+void CNulSoundSys::SetSampleUserData( LHSAMPLE hS, U32 uiIndex, uintptr_t siValue ) 
 { 
 }
 

@@ -8,7 +8,6 @@
 // this whole class in undefined if LT_OUTPUT_REDIRECTION is undefined
 #ifdef LIBLTINFO_OUTPUT_REDIRECTION
 
-
 #ifndef __LTMODULE_H__
 #include "ltmodule.h"
 #endif

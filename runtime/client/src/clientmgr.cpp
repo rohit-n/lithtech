@@ -112,6 +112,8 @@ define_holder(IServerFileMgr, server_filemgr);
 static ILTDrawPrim* g_pLTDrawPrimInternal;
 define_holder_to_instance(ILTDrawPrim, g_pLTDrawPrimInternal, Internal);
 
+#include "vkdefs.h"
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 // Console stuff

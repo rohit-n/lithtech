@@ -3548,7 +3548,7 @@ void CDx8SoundSys::Set3DOrientation( LH3DPOBJECT hObj, float fX_face, float fY_f
 	p3DObject->SetOrientation( LTVector( fX_up, fY_up, fZ_up ), LTVector( fX_face, fY_face, fZ_face ) );
 }
 
-void CDx8SoundSys::Set3DUserData( LH3DPOBJECT hObj, U32 uiIndex, S32 siValue )
+void CDx8SoundSys::Set3DUserData( LH3DPOBJECT hObj, U32 uiIndex, uintptr_t siValue )
 {
 	if( hObj == NULL || uiIndex > MAX_USER_DATA_INDEX )
 		return;
@@ -4415,7 +4415,7 @@ S32	CDx8SoundSys::GetSamplePan( LHSAMPLE hS )
 	return siPan;
 }
 
-void CDx8SoundSys::SetSampleUserData( LHSAMPLE hS, U32 uiIndex, S32 siValue )
+void CDx8SoundSys::SetSampleUserData( LHSAMPLE hS, U32 uiIndex, uintptr_t siValue )
 {
 //	LOG_WRITE( g_pLogFile, "SetSampleUserData( %x, %d, %d )\n", hS, uiIndex, siValue );
 

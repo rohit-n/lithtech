@@ -52,7 +52,9 @@ include_directories(src
 	../../libs/stdlith
 	../shared/src
 	../kernel/src
-	../kernel/mem/src)
+	../kernel/mem/src
+	/usr/include/SDL2)
+
 if(WIN32)
 	set(libsources ${libsources}
 		src/sys/win/cuivectorfont.cpp)

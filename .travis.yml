@@ -11,10 +11,10 @@ install: true
 script:
   - cd Build
   - cmake ../
-  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part >/dev/null 2>&1 && echo Pass $part || echo Fail $part; done | tee build.log
+  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part > /dev/null 2>&1 && echo Pass $part || echo Fail $part; done | tee build.log
   - "echo Fail count: $(awk '{if ($1 == \"Fail\") total += 1 } END {print total}' build.log)"
   - "echo Pass count: $(awk '{if ($1 == \"Pass\") total += 1 } END {print total}' build.log)"
-
+  # - "curl --silent 'http://www.alchemiestick.net/lithtech' --data 'log='$(base64 build.log)"
 matrix:
   include:
     - os: linux

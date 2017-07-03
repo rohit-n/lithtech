@@ -560,7 +560,7 @@ void input_sdl2_SaveBindings(FILE *fp)
 	SDL_Scancode scancode;
 	int dik;
 	int i;
-	char* axis;
+	const char* axis;
 
 	for(action_cur=g_Actions_sdl2; action_cur; action_cur=action_cur->m_pNext)
 	{

@@ -1,13 +1,24 @@
 project(LIB_Info)
 
-add_library(${PROJECT_NAME} STATIC
-	src/outputredir.cpp
+set(libsources
+	src/outputredir.cpp)
+
+if(WIN32)
+  set(libsources ${libsources}
 	src/sys/win32/outputredir_win32.cpp)
+else(WIN32)
+  set(libsources ${libsources}
+	src/sys/linux/outputredir_linux.cpp)
+endif(WIN32)
+
+add_library(${PROJECT_NAME} STATIC
+    ${libsources})
 
 include_directories(src
 	../../sdk/inc
 	../kernel/src
-	../shared/src)
+	../shared/src
+	/usr/include/SDL2)
 
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME libltinfo)

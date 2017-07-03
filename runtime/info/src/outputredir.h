@@ -136,7 +136,7 @@ class COutputRedir : public ILTOutputRedir
 		uint32		m_PrintColor;
 
 		// log file handles
-		uint32		m_pLogFiles[MAX_LOG_FILES];
+		uintptr_t   m_pLogFiles[MAX_LOG_FILES];
 
 		// nesting levels
 		uint8		m_NestLevels[OUTPUT_REDIR_ALL];

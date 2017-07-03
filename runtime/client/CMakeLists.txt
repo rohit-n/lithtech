@@ -340,7 +340,7 @@ include_directories(src
 	../../libs/stdlith
 	../../libs/rezmgr
 	../../libs/lith
-	../../libs/LTGUIxMgr
+	../../libs/LTGUIMgr
 	../../tools/PreProcessor
 	../shared/src
 	../kernel/src

@@ -164,7 +164,7 @@ extern char *g_ReturnErrString;
 		dsi_PrintToConsole toPrint; }\
 
 #define FN_NAME(name) \
-    static char *___bdefs__pFnName = #name;
+    static const char *___bdefs__pFnName = #name;
 
 #define ERR(code, error) \
     RETURN_ERROR_NO_TOKEN_PASTE(code, ___bdefs__pFnName, error)
