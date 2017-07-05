@@ -175,12 +175,17 @@ public:
 //	===========================================================================
 #ifdef USE_ABSTRACT_SOUND_INTERFACES
 //	===========================================================================
-#ifdef WIN32
+
+#ifdef _LINUX
+#define LPDIRECTSOUND8 void*
+#define LPDIRECTSOUNDBUFFER void*
+#endif
+
 	LPDIRECTSOUND8 GetDirectSound( );
+#ifdef WIN32
 	IDirectMusicPerformance8* GetDirectMusicPerformance( );
 	IDirectMusic* GetDirectMusic();
 #else
-	void* GetDirectSound( );
 //	PADirectMusicPerf* GetDirectMusicPerformance( );
 //	PADirectMusic* GetDirectMusic();
 #endif

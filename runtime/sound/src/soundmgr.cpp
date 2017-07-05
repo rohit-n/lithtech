@@ -1006,10 +1006,10 @@ LTRESULT CSoundMgr::RemoveSWSamples()
 //  Gets the directsound object.
 // 
 //----------------------------------------------------------------------------------------------
-void* CSoundMgr::GetDirectSound()
+LPDIRECTSOUND8 CSoundMgr::GetDirectSound()
 {
-    void* lpDirectSound;
-	void* lpDirectSoundBuffer;
+    LPDIRECTSOUND8 lpDirectSound;
+    LPDIRECTSOUNDBUFFER lpDirectSoundBuffer;
 
     if (!m_bValid)
         return LTNULL;
