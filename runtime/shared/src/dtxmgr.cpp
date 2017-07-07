@@ -387,10 +387,11 @@ LTRESULT dtx_Create(ILTStream *pStream, TextureData **ppOut, uint32& nBaseWidth,
 	// Read in mipmap data (and convert it to our DDFormat).
 	for (uint32 iMipmap=0; iMipmap < hdr.m_nMipmaps; iMipmap++) 
 	{
-		pMip = &pRet->m_Mips[iMipmap];
+		bool bSkipImageData = false;
+		TextureMipData *pMip = &pRet->m_Mips[iMipmap];
 		if (hdr.GetBPPIdent() == BPP_32) 
 		{
-			for (y=0; y < pMip->m_Height; y++) 
+			for (uint32 y=0; y < pMip->m_Height; y++) 
 			{
 				// Read the line.
 				dtx_ReadOrSkip(bSkipImageData, pStream,
@@ -400,7 +401,7 @@ LTRESULT dtx_Create(ILTStream *pStream, TextureData **ppOut, uint32& nBaseWidth,
 		}
 		else 
 		{
-			size = CalcImageSize(hdr.GetBPPIdent(), pMip->m_Width, pMip->m_Height);
+			uint32 size = CalcImageSize(hdr.GetBPPIdent(), pMip->m_Width, pMip->m_Height);
 			dtx_ReadOrSkip(bSkipImageData, pStream, pMip->m_Data, size); 
 		} 
 	}

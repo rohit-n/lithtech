@@ -13,6 +13,8 @@ public:
 
 class VideoMgr {
 public:
+    void OnRenderInit();
+    void UpdateVideos();
     bool CreateScreenVideo(const char *,uint32, VideoInst*);
     CMoArray<VideoInst*> m_Videos;
 };

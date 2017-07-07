@@ -18,12 +18,13 @@
 #include "clientde_impl.h"
 #include "ltinfo_impl.h"
 #include "systimer.h"
+#include "sysconsole_impl.h"
 
 
 // Macros...
-
+#ifdef WIN32
 #define IsKeyDown(key)  (GetAsyncKeyState(key) & 0x80000000)
-
+#endif
 
 
 class CLTBenchmarkMgr : public ILTBenchmarkMgr

@@ -78,7 +78,7 @@ inline void OutputDebugString(const char *msg)
 }
 
 // Convenience functions...
-inline bool IsKeyDown( uint16 vkKey ) 
+bool IsKeyDown( uint16 vkKey ) 
 {
 	const uint8* currentKeyState = SDL_GetKeyboardState(nullptr);
 	return (bool)currentKeyState[vkKey];

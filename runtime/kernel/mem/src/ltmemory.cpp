@@ -120,7 +120,11 @@ private:
 Exported function so that game modules hooking into the engine can access the memory library
 in the global space
 */
+#ifdef WIN32
 extern "C" __declspec(dllexport) ILTMemory* LTGetILTMemory()
+#else
+extern "C" ILTMemory* LTGetILTMemory()
+#endif
 {
 	static CLTMemory s_ILTMemory;
 	return &s_ILTMemory;

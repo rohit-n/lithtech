@@ -65,7 +65,7 @@ struct SceneDesc
     LTObject        **m_pObjectList;
     int             m_ObjectListSize;
     // If ModelHookFn is set, then the renderer will call it before drawing each model.
-    void            m_ModelHookFn(ModelHookData *pData, void *pUser);
+    void            (*m_ModelHookFn)(ModelHookData *pData, void *pUser);
     void            *m_ModelHookUser;
 };
 struct RenderStructInit
@@ -149,8 +149,11 @@ struct RenderStruct {
         // Make a screenshot file.
 		//Generates a series of images that form a cubic environment map of the form Prefix[FW|BK|LF|RI|UP|DW].bmp
 		//aligned along the world's basis space from the given position
+        void			(*MakeCubicEnvMap)(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc);
         // Reads in new console variable values.
+        void            (*ReadConsoleVariables)();
         // Get the current render info
+        void            GetRenderInfo(RenderInfoStruct* pRenderInfo);
         // Blit from the screen.
         // Creating RenderObjects...
 		// Load rendering data from the specified stream

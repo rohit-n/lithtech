@@ -50,7 +50,7 @@ LTRESULT in_GetVersionInfoExt(LTVERSIONINFOEXT* pVersionInfo)
 	pVersionInfo->m_dwBuildMonth = LT_VI_BUILD_MONTH;
 	pVersionInfo->m_dwBuildDay = LT_VI_BUILD_DAY;
 	pVersionInfo->m_dwBuildYear = LT_VI_BUILD_YEAR;
-	lstrcpy(pVersionInfo->m_sBuildName, LT_VI_BUILD_NAME);
+	strcpy(pVersionInfo->m_sBuildName, LT_VI_BUILD_NAME);
 	pVersionInfo->m_dwLanguage = LT_VI_LANG;
 	pVersionInfo->m_dwPlatform = LT_VI_PLAT;
 	pVersionInfo->m_dwReserved1 = 0;

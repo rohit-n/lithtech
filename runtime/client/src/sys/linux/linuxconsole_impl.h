@@ -4,8 +4,8 @@
 //	CREATED	  : November 4 1999
 // ------------------------------------------------------------------ //
 
-#ifndef __WINCONSOLE_IMPL_H__
-#define __WINCONSOLE_IMPL_H__
+#ifndef __LINUXCONSOLE_IMPL_H__
+#define __LINUXCONSOLE_IMPL_H__
 
 #ifndef __CONSOLE_H__
 #include "console.h"
@@ -434,4 +434,5 @@ public:
 
 };
 
-#endif //__WINCONSOLE_IMPL_H__
+extern bool IsKeyDown(uint16 vkKey);
+#endif //__LINUXCONSOLE_IMPL_H__

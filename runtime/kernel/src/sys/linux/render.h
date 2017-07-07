@@ -29,6 +29,7 @@ inline LTBOOL r_IsRenderInitted() {return g_Render.m_bInitted;}
 // data members.
 void r_InitRenderStruct(bool bFullClear);
 // Only implemented for client.exe.. initializes the renderer.
+LTRESULT r_InitRender(RMode *pMode, const char* window_name);
 // surfaceHandling
 //    0 = leave surfaces alone
 //    1 = backup surfaces
@@ -40,6 +41,7 @@ LTRESULT r_TermRender(int surfaceHandling, bool bUnLoadDLL);
 //The values are invalid if it returns false
 //this will run through and release any textures that have a valid file pointer so that they can
 //be recreated later on demand
+void r_TerminateAllRecreatableTextureData();
 //this will load the texture and bind it to the device. The texture data of the shared texture
 //will be valid until it is bound to the device, at which point it is possible that it will
 //be freed
