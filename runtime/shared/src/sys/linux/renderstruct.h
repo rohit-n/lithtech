@@ -76,7 +76,7 @@ struct RenderStructInit
     void    *m_hWnd;    // The main window.
 };
 // A blit command.
-class BlitRequest {}; // stub
+class BlitRequest {
 /*
 	HLTBUFFER      m_hBuffer;          // The buffer to blit.
 	uint32         m_BlitOptions;      // Combination of the BLIT_ flags above.
@@ -85,6 +85,7 @@ class BlitRequest {}; // stub
 	LTRect         *m_pDestRect;       // Destination rectangle.
 	float          m_Alpha;            // Alpha value (0-1).
 */
+}; // stub
 struct RenderStruct {
     // Load rendering data from the specified stream
     bool     LoadWorldData(ILTStream *pStream);
