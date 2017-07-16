@@ -32,23 +32,23 @@ public:
 
 	//-----------------------------
 	// String Creation
-	virtual HTEXTURESTRING	CreateTextureString(const wchar_t* pszString, const CFontInfo& Font);
-	virtual HTEXTURESTRING	CreateTextureSubstring(const wchar_t* pszString, HTEXTURESTRING hSrcTexture);
+	virtual HTEXTURESTRING	CreateTextureString(const char* pszString, const CFontInfo& Font);
+	virtual HTEXTURESTRING	CreateTextureSubstring(const char* pszString, HTEXTURESTRING hSrcTexture);
 
 	//-----------------------------
 	// String Formatting
 	virtual LTRESULT		WordWrapString(HTEXTURESTRING hString, uint32 nWidth);
-	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const wchar_t* pszString, const CFontInfo& Font);
-	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const wchar_t* pszString, HTEXTURESTRING hSrcTexture);
+	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const char* pszString, const CFontInfo& Font);
+	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const char* pszString, HTEXTURESTRING hSrcTexture);
 
 	//-----------------------------
 	// Property Access
 	virtual LTRESULT		GetStringExtents(HTEXTURESTRING hString, LTRect2n& rExtents);
 	virtual LTRESULT		GetStringLength(HTEXTURESTRING hString, uint32* pnLength);
-	virtual LTRESULT		GetString(HTEXTURESTRING hString, wchar_t* pszBuffer, uint32 nBufferLen);
-	virtual LTRESULT		GetFont(HTEXTURESTRING hString, CFontInfo& Font);		
+	virtual LTRESULT		GetString(HTEXTURESTRING hString, char* pszBuffer, uint32 nBufferLen);
+	virtual LTRESULT		GetFont(HTEXTURESTRING hString, CFontInfo& Font);
 	virtual LTRESULT		GetTextureImage(HTEXTURESTRING hString, HTEXTURE& hTexture);
-	virtual LTRESULT		GetCharRect(HTEXTURESTRING hString, uint32 nCharIndex, 
+	virtual LTRESULT		GetCharRect(HTEXTURESTRING hString, uint32 nCharIndex,
 										LTRect2n& rPlacementRect,
 										LTRect2n& rBlackBox,
 										LTVector2f& vUVPos,
@@ -58,42 +58,42 @@ public:
 	// Reference Management
 	virtual void			ReleaseTextureString(HTEXTURESTRING hString);
 	virtual void			AddRefTextureString(HTEXTURESTRING hString);
-	
+
 	//-----------------------------
 	// Rendering
 	virtual LTRESULT		SetupTextRendering( ILTDrawPrim* pDrawPrim);
 	virtual LTRESULT		RenderString(	HTEXTURESTRING hString,
-											ILTDrawPrim* pDrawPrim, 
-											const LTVector2f& vAnchor, 
+											ILTDrawPrim* pDrawPrim,
+											const LTVector2f& vAnchor,
 											uint32 nColor					= 0xFFFFFFFF,
-											const LTVector2f& vAnchorScale	= LTVector2f(0.0f, 0.0f), 
+											const LTVector2f& vAnchorScale	= LTVector2f(0.0f, 0.0f),
 											const LTVector2f& vGround		= LTVector2f(1.0f, 0.0f),
 											const LTVector2f& vDown			= LTVector2f(0.0f, 1.0f),
 											const LTVector2f& vStretch		= LTVector2f(1.0f, 1.0f),
 											bool bSnapAnchor				= true);
 
 	virtual LTRESULT		RenderStringClipped(HTEXTURESTRING hString,
-												ILTDrawPrim* pDrawPrim, 
+												ILTDrawPrim* pDrawPrim,
 												const LTRect2n& rClipRect,
-												const LTVector2f& vAnchor, 
+												const LTVector2f& vAnchor,
 												uint32 nColor					= 0xFFFFFFFF,
 												const LTVector2f& vAnchorScale	= LTVector2f(0.0f, 0.0f),
 												bool bSnapAnchor				= true);
 
 	virtual LTRESULT		RenderSubString(HTEXTURESTRING hString,
-											const wchar_t* pszString,
-											ILTDrawPrim* pDrawPrim, 
-											const LTVector2f& vAnchor, 
+											const char* pszString,
+											ILTDrawPrim* pDrawPrim,
+											const LTVector2f& vAnchor,
 											uint32 nColor					= 0xFFFFFFFF,
 											const LTVector2f& vGround		= LTVector2f(1.0f, 0.0f),
 											const LTVector2f& vDown			= LTVector2f(0.0f, 1.0f),
 											const LTVector2f& vStretch		= LTVector2f(1.0f, 1.0f));
 
 	virtual LTRESULT		RenderSubStringClipped(	HTEXTURESTRING hString,
-													const wchar_t* pszString,
-													ILTDrawPrim* pDrawPrim, 
+													const char* pszString,
+													ILTDrawPrim* pDrawPrim,
 													const LTRect2n& rClipRect,
-													const LTVector2f& vAnchor, 
+													const LTVector2f& vAnchor,
 													uint32 nColor					= 0xFFFFFFFF);
 };
 

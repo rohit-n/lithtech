@@ -30,10 +30,10 @@ class CTextureStringGlyph
 public:
 
 	//the glyph that this rectangle holds
-	wchar_t		m_cGlyph;
+	char		m_cGlyph;
 
 	//the black box of this glyph. This is the rectangle that encompases the area
-	//that should be rendered, and is relative to 0, 0 being the upper left of the 
+	//that should be rendered, and is relative to 0, 0 being the upper left of the
 	//glyph space, so if it is 1, it has a spacing of one on the left, or if it is -1
 	//it backs up some, etc.
 	LTRect2n	m_rBlackBox;
@@ -63,14 +63,14 @@ public:
 	static void							Free(CTextureStringImage* pImage);
 
 	//called to create a texture given a font and a string
-	bool						CreateBitmapFont(const wchar_t* pszString, const CFontInfo& Font);
+	bool						CreateBitmapFont(const char* pszString, const CFontInfo& Font);
 
 	//frees all data associated with this object
 	void						FreeData();
 
 	//accesses a glyph in the list
 	const CTextureStringGlyph*	GetGlyphByIndex(uint32 nGlyph) const;
-	const CTextureStringGlyph*	GetGlyph(wchar_t cGlyph) const;
+	const CTextureStringGlyph*	GetGlyph(char cGlyph) const;
 
 	//provides access to the list of glyphs
 	uint32						GetNumGlyphs() const			{ return m_nNumGlyphs; }
@@ -92,7 +92,7 @@ private:
 
 	//called during the creation to extract all the unique glyphs from a string, allocate the
 	//glyph list, and set them up with the characters they reference
-	bool						SetupUniqueGlyphList(const wchar_t* pszString);
+	bool						SetupUniqueGlyphList(const char* pszString);
 
 	//called by the base ILTRefCount
 	virtual void			Free()		{ Free(this); }

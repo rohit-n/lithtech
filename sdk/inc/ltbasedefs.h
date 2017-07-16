@@ -38,9 +38,11 @@
 #include "ltcodes.h"
 #endif
 
+
 #ifndef __COORDINATE_FRAME_H__
 #include "coordinate_frame.h"
 #endif
+
 
 #ifndef __LTMEM_H__
 #include "ltmem.h"
@@ -2143,7 +2145,6 @@ Maximum number of sky objects.
 #define MATH_ONE_OVER_255   0.003921568627451f
 #define MATH_ONE_OVER_128	0.0078125f
 
-
 #define INLINE_FN __inline
 
 template<class T, class TB>
@@ -2469,5 +2470,6 @@ in the global space
 */
 
 extern "C" MODULE_EXPORT ILTMemory* LTGetILTMemory();
+
 
 #endif  //! __LTBASEDEFS_H__

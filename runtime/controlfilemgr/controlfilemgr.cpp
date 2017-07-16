@@ -2,8 +2,8 @@
 //#ifndef _CONSOLE
 //#include "windows.h"
 //#endif
-#include "controlfilemgr.h"
 #include "ltmem.h"
+#include "controlfilemgr.h"
 #include <stdlib.h>
 #include <stdio.h>
 // #include <string.h>
@@ -11,7 +11,7 @@
 #define CONTROLFILEMAXSTRINGSIZE 2048
 
 //**************************************************************************
-// class CControlFileWord 
+// class CControlFileWord
 
 //--------------------------------------------------------------------------
 BOOL CControlFileWord::GetVal(char* sVal, int nMaxStrLen)
@@ -50,7 +50,7 @@ BOOL CControlFileWord::GetVal(float& nVal)
 	nVal = atof(m_sVal);
 	return TRUE;
 }
-#pragma warning( pop ) 
+#pragma warning( pop )
 
 
 //--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ BOOL CControlFileWord::GetVal(double& nVal)
 
 
 //**************************************************************************
-// class CControlFileWordList 
+// class CControlFileWordList
 
 
 //**************************************************************************
@@ -85,12 +85,12 @@ CControlFileKey* CControlFileKey::NextWithSameName()
 		pKey = pKey->Next();
 	}
 	return pKey;
-	
+
 }
 
 
 //**************************************************************************
-//class CControlFileKeyList 
+//class CControlFileKeyList
 
 //--------------------------------------------------------------------------
 CControlFileKey* CControlFileKeyList::Find(const char* sKeyName)
@@ -106,7 +106,7 @@ CControlFileKey* CControlFileKeyList::Find(const char* sKeyName)
 
 
 //**************************************************************************
-//class CControlFileSection 
+//class CControlFileSection
 
 //--------------------------------------------------------------------------
 CControlFileKey* CControlFileSection::GetKey(const char* sKeyName)
@@ -117,7 +117,7 @@ CControlFileKey* CControlFileSection::GetKey(const char* sKeyName)
 
 
 //**************************************************************************
-//class CControlFileSectionList : public CLithBaseList<CControlFileSection> 
+//class CControlFileSectionList : public CLithBaseList<CControlFileSection>
 
 //--------------------------------------------------------------------------
 CControlFileSection* CControlFileSectionList::Find(const char* sSectionName)
@@ -391,7 +391,7 @@ void CControlFileMgr::ClearDefines()
 	// pointer to use to iterate the define list
 	CControlFileDefine* pDefine;
 
-	// loop through all defines 
+	// loop through all defines
 	while ((pDefine = m_lstDefines.GetFirst()) != NULL)
 	{
 		// remove define from define list
@@ -472,7 +472,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 	while (!FileEOF())
 	{
 		// get char from file
-		cVal = FileGetChar();	
+		cVal = FileGetChar();
 
 		// check for end of file
 		if (FileEOF()) break;
@@ -550,7 +550,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 					nIfDefStackPos++;
 
 					// check if this define has been defined
-					if (IsDefined(sSpecialParameter)) 
+					if (IsDefined(sSpecialParameter))
 					{
 						// set stack item to a used ifdef
 						aryIfDefStack[nIfDefStackPos] = STACKCMD_IFDEF_USED;
@@ -576,7 +576,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 					nIfDefStackPos++;
 
 					// check if this define has not been defined
-					if (!IsDefined(sSpecialParameter)) 
+					if (!IsDefined(sSpecialParameter))
 					{
 						// set stack item to a used ifndef
 						aryIfDefStack[nIfDefStackPos] = STACKCMD_IFNDEF_USED;
@@ -635,7 +635,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 					// decrement stack pointer
 					nIfDefStackPos--;
 				}
-				
+
 			}
 
 			// skip to end of line we don't care what comes after a # command is finished
@@ -691,7 +691,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 				pCurSection->m_sSectionName.Copy(sSectionName,nCount+1);
 				m_lstSections.InsertLast(pCurSection);
 			}
-			
+
 			continue;
 		}
 
@@ -726,7 +726,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 			while (!FileEOF())
 			{
 				// get char from file
-				cVal = FileGetChar();	
+				cVal = FileGetChar();
 
 				// check for end of file
 				if (FileEOF()) break;
@@ -782,7 +782,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 
 	// close file
 	FileClose();
-	
+
 	return TRUE;
 }
 
@@ -791,7 +791,7 @@ BOOL CControlFileMgr::ProcessFile(const char* sFileName)
 BOOL CControlFileMgr::FileOpen(const char* sName)
 {
 	// open the file
-	m_pFile = fopen(sName,"rt"); 
+	m_pFile = fopen(sName,"rt");
 
 	// return true if it opened OK
 	if (m_pFile != NULL) return TRUE;
@@ -801,21 +801,21 @@ BOOL CControlFileMgr::FileOpen(const char* sName)
 }
 
 
-// close file 
+// close file
 void CControlFileMgr::FileClose()
 {
 	// close the file
 	fclose(m_pFile);
 }
 
-	
+
 // get next character in file
 int CControlFileMgr::FileGetChar()
 {
 	// get a character from the file
 	return fgetc(m_pFile);
 }
-	
+
 
 // return TRUE if we are at the end of the file
 BOOL CControlFileMgr::FileEOF()

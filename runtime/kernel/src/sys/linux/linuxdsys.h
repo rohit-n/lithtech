@@ -21,8 +21,9 @@
 // ------------------------------------------------------------------------- //
 // Includes this module depends on
 // ------------------------------------------------------------------------- //
-#include "ltbasetypes.h"
 #include "ltbasedefs.h"
+
+#include "ltbasetypes.h"
 
 #ifndef __VERSION_INFO_H__
 #include "version_info.h"
@@ -149,9 +150,9 @@ class ClientGlob {
 /*
     jmp_buf         m_MemoryJmp;
     HWND            m_hMainWnd;
-    
+
     HINSTANCE       m_hInstance;
-*/       
+*/
     char            *m_WndClassName;
     const char      *m_WndCaption;
 

@@ -7,7 +7,7 @@
 // Defines
 //----------------------------------------------------------------------------------------
 
-//the memory category all of our allocations should go into 
+//the memory category all of our allocations should go into
 #define MEMORY_CATEGORY			LT_MEM_TYPE_TEXTURE
 
 
@@ -18,24 +18,24 @@
 //given a string and an index into that string that the current character is on, this
 //will determine if that current character is a word break (this takes the full string
 //so that it can perform multiple character checks in certain languages)
-static bool CanBreakLineAt(const wchar_t* pszString, uint32 nIndex)
+static bool CanBreakLineAt(const char* pszString, uint32 nIndex)
 {
 	//assume english for now
-	return (iswspace(pszString[nIndex]) != 0);
+	return (isspace(pszString[nIndex]) != 0);
 }
 
 //given a string and an index, this will determine if it is a hard line break, or a forced line break.
 // (such as '\n')
-static bool IsHardLineBreak(const wchar_t* pszString, uint32 nIndex)
+static bool IsHardLineBreak(const char* pszString, uint32 nIndex)
 {
 	//only handle the '\n' character for now
-	return (pszString[nIndex] == (wchar_t)'\n');
+	return (pszString[nIndex] == (char)'\n');
 }
 
 //given a string, a row ending position, and a row starting position, this will scan backwards from
 //the row ending and return the first character that can be used as a line break. If no break can
 //be found, it will break at the last character
-static uint32 FindLineBreak(const wchar_t* pszString, uint32 nRowStart, uint32 nRowEnd)
+static uint32 FindLineBreak(const char* pszString, uint32 nRowStart, uint32 nRowEnd)
 {
 	//run backwards starting at the end and find the first split, but don't bother to check
 	//the first character as a split as that would cause a completely empty row
@@ -45,7 +45,7 @@ static uint32 FindLineBreak(const wchar_t* pszString, uint32 nRowStart, uint32 n
 		if(CanBreakLineAt(pszString, nCurrChar))
 			return nCurrChar;
 	}
-	
+
 	//unable to find an adequate break, just break at the last character
 	return nRowEnd;
 }
@@ -68,7 +68,7 @@ CTextureString::~CTextureString()
 }
 
 //called to create a string given a string and an associated font
-LTRESULT CTextureString::Create(const wchar_t* pszString, const CFontInfo& Font)
+LTRESULT CTextureString::Create(const char* pszString, const CFontInfo& Font)
 {
 	//free any existing string data
 	FreeData();
@@ -108,7 +108,7 @@ LTRESULT CTextureString::Create(const wchar_t* pszString, const CFontInfo& Font)
 }
 
 //called to create a string given a string and an existing texture string to create it from
-LTRESULT CTextureString::CreateSubstring(const wchar_t* pszString, const CTextureString& CreateFrom)
+LTRESULT CTextureString::CreateSubstring(const char* pszString, const CTextureString& CreateFrom)
 {
 	//free any existing string data
 	FreeData();
@@ -119,7 +119,7 @@ LTRESULT CTextureString::CreateSubstring(const wchar_t* pszString, const CTextur
 
 //internal creation called once a string and a bitmap font image have been properly
 //setup
-LTRESULT CTextureString::InternalCreate(const wchar_t* pszString, CTextureStringImage* pTextureImage)
+LTRESULT CTextureString::InternalCreate(const char* pszString, CTextureStringImage* pTextureImage)
 {
 	//first off setup any string data
 	if(!AllocateString(pszString))
@@ -147,7 +147,7 @@ LTRESULT CTextureString::InternalCreate(const wchar_t* pszString, CTextureString
 	for(uint32 nCurrChar = 0; nCurrChar < m_nNumCharacters; nCurrChar++)
 	{
 		//cache some information
-		wchar_t cChar					= pszString[nCurrChar];
+		char cChar					= pszString[nCurrChar];
 		CTextureStringChar& TexChar		= m_pCharacters[nCurrChar];
 
 		//and now setup the texture character to an initial position and associate it with a glyph
@@ -186,7 +186,7 @@ void CTextureString::FreeData()
 	m_rExtents.Init(0, 0, 0, 0);
 }
 
-//applies word wrapping to the string so that all characters should be in the range of 0..nWidth in 
+//applies word wrapping to the string so that all characters should be in the range of 0..nWidth in
 //the X axis and in the range [0...+inf] in the Y axis. This undoes any previous word wrapping or
 //formatting
 bool CTextureString::WordWrap(uint32 nWidth)
@@ -211,7 +211,7 @@ bool CTextureString::WordWrap(uint32 nWidth)
 	//is encountered so that the next character can begin on a new line
 	bool bResetRow = false;
 
-	//all characters should default to being visible. Then as they break rows or 
+	//all characters should default to being visible. Then as they break rows or
 	//other rules are applied, they can be made invisible
 	uint32 nCurrChar;
 	for(nCurrChar = 0; nCurrChar < m_nNumCharacters; nCurrChar++)
@@ -228,7 +228,7 @@ bool CTextureString::WordWrap(uint32 nWidth)
 			nCurrX = 0;
 			nCurrY += nRowHeight;
 
-			//our next row will start on the 
+			//our next row will start on the
 			nRowStart = nCurrChar;
 
 			//clear the flag so it won't do it again
@@ -255,7 +255,7 @@ bool CTextureString::WordWrap(uint32 nWidth)
 			//we are too wide, lets move down. We need to determine where we can do a break by scanning
 			//backwards on this row and determining where to split, but only if it isn't a hard line break
 			uint32 nSplitChar = FindLineBreak(m_pszString, nRowStart + 1, nCurrChar);
-			
+
 			//update our cursor position to begin on the next row
 			nCurrX = 0;
 			nCurrY += nRowHeight;
@@ -273,7 +273,7 @@ bool CTextureString::WordWrap(uint32 nWidth)
 				//move the cursor past this character
 				nCurrX += pMoveChar->m_pGlyph->m_nTotalWidth;
 			}
-			
+
 			//also make the split character invisible
 			m_pCharacters[nSplitChar].m_bVisible = false;
 
@@ -321,7 +321,7 @@ LTRect2n CTextureString::GetCharRect(uint32 nIndex)
 {
 	if ( !(nIndex < GetStringLength()) )
 		ASSERT(!"Error: Invalid index into the character info.");
-	
+
 	LTRect2n rRect;
 	rRect.Left()	= m_pCharacters[nIndex].m_nXPos;
 	rRect.Top()		= m_pCharacters[nIndex].m_nYPos;
@@ -343,7 +343,7 @@ void CTextureString::UpdateExtents()
 
 	//we have at least one character, so default to that character's box
 	m_rExtents = GetCharRect(0);
-	
+
 	//now extend it to include all characters
 	for(uint32 nCurrChar = 1; nCurrChar < m_nNumCharacters; nCurrChar++)
 	{
@@ -363,7 +363,7 @@ void CTextureString::Free()
 
 //called to allocate a string. This will allocate the characters, the string, and handle copying
 //them over
-bool CTextureString::AllocateString(const wchar_t* pszString)
+bool CTextureString::AllocateString(const char* pszString)
 {
 	//make sure we don't already have a string allocated
 	FreeString();
@@ -378,8 +378,8 @@ bool CTextureString::AllocateString(const wchar_t* pszString)
 	//allocate our main memory block
 	uint32 nMemBlockSize = 0;
 	nMemBlockSize += AlignAllocSize(sizeof(CTextureStringChar) * m_nNumCharacters);
-	nMemBlockSize += AlignAllocSize(sizeof(wchar_t) * m_nNumCharacters + 1);
-	
+	nMemBlockSize += AlignAllocSize(sizeof(char) * m_nNumCharacters + 1);
+
 	uint8* pMemBlock;
 	LT_MEM_TRACK_ALLOC(pMemBlock = new uint8[nMemBlockSize], MEMORY_CATEGORY);
 	if(!pMemBlock)
@@ -392,7 +392,7 @@ bool CTextureString::AllocateString(const wchar_t* pszString)
 
 	//allocate the new buffer of characters
 	m_pCharacters = Allocator.AllocateObjects<CTextureStringChar>(m_nNumCharacters);
-	m_pszString = Allocator.AllocateObjects<wchar_t>(m_nNumCharacters + 1);
+	m_pszString = Allocator.AllocateObjects<char>(m_nNumCharacters + 1);
 
 	LTStrCpy(m_pszString, pszString, m_nNumCharacters + 1);
 

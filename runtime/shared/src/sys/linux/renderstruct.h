@@ -157,6 +157,8 @@ struct RenderStruct {
         void            GetRenderInfo(RenderInfoStruct* pRenderInfo);
         // Blit from the screen.
         // Creating RenderObjects...
+        CRenderObject*  CreateRenderObject(CRenderObject::RENDER_OBJECT_TYPES ObjectType);
+        bool            DestroyRenderObject(CRenderObject* pObject);
 		// Load rendering data from the specified stream
 		// Change the color of a lightgroup in the currently loaded world
 		// Returns false if a world isn't loaded

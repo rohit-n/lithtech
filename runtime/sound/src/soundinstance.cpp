@@ -18,7 +18,7 @@ typedef LHSTREAM				HSTREAM;
 
 typedef	LTSOUNDINFO				AILSOUNDINFO;
 
- 
+
 #define GetSoundSys SoundSys
 
 #endif
@@ -78,7 +78,7 @@ CSoundInstance::CSoundInstance( )
 	m_hSample = LTNULL;
 	m_h3DSample = LTNULL;
 	m_hStream = LTNULL;
- 
+
 	m_nNumCollisions = 0;
 	m_fModifiedPriority = 0;
 	m_dwListIndex = 0;
@@ -136,7 +136,7 @@ LTRESULT	CSoundInstance::Init( CSoundBuffer &soundBuffer, PlaySoundInfo &playSou
 	}
 	// If server side sound, then the hsound comes from the playsoundinfo
 	else
-	{ 
+	{
  		m_hSound = ( HLTSOUND )playSoundInfo.m_hSound;
 		g_pClientMgr->AddToObjectMap((uint16)playSoundInfo.m_hSound );
 		g_pClientMgr->m_ObjectMap[( uint16 )playSoundInfo.m_hSound].m_nRecordType = RECORDTYPE_SOUND;
@@ -198,7 +198,7 @@ void CSoundInstance::Term( )
 		m_hStream = LTNULL;
 	}
 
- 
+
 	m_dwSoundInstanceFlags = SOUNDINSTANCEFLAG_READY;
 	if( m_pSoundBuffer )
 	{
@@ -286,7 +286,7 @@ LTRESULT CSoundInstance::Silence( LTBOOL bForce )
 		m_hStream = LTNULL;
 	}
 
- 
+
 	return LT_OK;
 }
 
@@ -332,7 +332,7 @@ LTBOOL CSoundInstance::UpdateTimer( uint32 dwFrameTime )
 		return LTTRUE;
 	}
 
-	// The first update doesn't update the timer because the full frametime wasn't 
+	// The first update doesn't update the timer because the full frametime wasn't
 	// spent playing the sound
 	if( m_dwSoundInstanceFlags & SOUNDINSTANCEFLAG_FIRSTUPDATE )
 	{
@@ -430,7 +430,7 @@ LTBOOL CSoundInstance::UpdateTimer( uint32 dwFrameTime )
 				{
 					return LTFALSE;
 				}
-				
+
 			}
 			else
 			{
@@ -461,7 +461,7 @@ LTRESULT CSoundInstance::SetVolume(uint16 nOrigVolume)
 	GetClientILTSoundMgrImpl()->GetSoundClassMultiplier( m_nSoundClass, &fVolumeClassMultiplier );
 	GetClientILTSoundMgrImpl()->GetVolumeMultiplier( fVolumeGlobalMultiplier );
 	GetClientILTSoundMgrImpl()->GetSoundClassUseGlobalVolume( m_nSoundClass, &bUseGlobalMultiplier );
-	
+
 	nVolume = (uint16)((float) nOrigVolume * fVolumeClassMultiplier * (bUseGlobalMultiplier ? fVolumeGlobalMultiplier : 1.0));
 	nVolume *= 127;
 	nVolume /= 100;
@@ -562,11 +562,11 @@ LTRESULT CSoundInstance::AcquireSample( )
 		if( m_pSoundBuffer->GetWaveHeader( LTFALSE ).m_CuePoint.m_bValid )
 		{
 			fModPoint = ( float )m_pSoundBuffer->GetLoopPoint( 0 ) / m_fPitchShift;
-			nPos1 = ( S32 )(( fModPoint / ( float )m_dwDuration ) * 
+			nPos1 = ( S32 )(( fModPoint / ( float )m_dwDuration ) *
 				( float )m_pSoundBuffer->GetSoundDataLen( ));
 			nPos1 = LTCLAMP( nPos1, ( S32 )0, ( S32 )m_pSoundBuffer->GetSoundDataLen( ));
 			fModPoint = ( float )m_pSoundBuffer->GetLoopPoint( 1 ) / m_fPitchShift;
-			nPos2 = ( S32 )(( fModPoint / ( float )m_dwDuration ) * 
+			nPos2 = ( S32 )(( fModPoint / ( float )m_dwDuration ) *
 				( float )m_pSoundBuffer->GetSoundDataLen( ));
 			nPos2 = LTCLAMP( nPos2, nPos1, ( S32 )m_pSoundBuffer->GetSoundDataLen( ));
 			bEnableLoopBlock = true;
@@ -626,7 +626,7 @@ LTRESULT CSoundInstance::Acquire3DSample( )
 	nPlayBackRate = ( S32 )(( float )nPlayBackRate * m_fPitchShift + 0.5f );
 
 	// If this sample isn't already setup with this buffer or the hardware doesn't use onboard memory
-	// then we'll just re-initialize the sample.  Re-initializing the sample avoids a driver bug with 
+	// then we'll just re-initialize the sample.  Re-initializing the sample avoids a driver bug with
 	// creative sblive cards on win2k.
 	if( !GetSoundSys()->HasOnBoardMemory( ) ||
 		( CSoundBuffer* )GetSoundSys()->Get3DUserData( m_h3DSample, SAMPLE_BUFFER ) != m_pSoundBuffer )
@@ -688,11 +688,11 @@ LTRESULT CSoundInstance::Acquire3DSample( )
 		if( m_pSoundBuffer->GetWaveHeader( LTFALSE ).m_CuePoint.m_bValid )
 		{
 			fModPoint = ( float )m_pSoundBuffer->GetLoopPoint( 0 ) / m_fPitchShift;
-			nPos1 = ( S32 )(( fModPoint / ( float )m_dwDuration ) * 
+			nPos1 = ( S32 )(( fModPoint / ( float )m_dwDuration ) *
 				( float )m_pSoundBuffer->GetSoundDataLen( ));
 			nPos1 = LTCLAMP( nPos1, ( S32 )0, ( S32 )m_pSoundBuffer->GetSoundDataLen( ));
 			fModPoint = ( float )m_pSoundBuffer->GetLoopPoint( 1 ) / m_fPitchShift;
-			nPos2 = ( S32 )(( fModPoint / ( float )m_dwDuration ) * 
+			nPos2 = ( S32 )(( fModPoint / ( float )m_dwDuration ) *
 				( float )m_pSoundBuffer->GetSoundDataLen( ));
 			nPos2 = LTCLAMP( nPos2, nPos1, ( S32 )m_pSoundBuffer->GetSoundDataLen( ));
 			bEnableLoopBlock = true;
@@ -731,9 +731,11 @@ LTRESULT CSoundInstance::AcquireStream( )
 	if( !m_hStream )
 	{
 		// Open the file directly.
-		if( !df_GetRawInfo( m_pSoundBuffer->GetFileIdent( )->m_hFileTree, 
+#ifndef __LINUX
+		if( !df_GetRawInfo( m_pSoundBuffer->GetFileIdent( )->m_hFileTree,
 			m_pSoundBuffer->GetFileIdent( )->m_Filename, szFileName, _MAX_PATH, &nFilePos, &nFileSize ))
 			return LT_ERROR;
+#endif // __LINUX
 
 		m_hStream = GetSoundSys()->OpenStream( szFileName, nFilePos, GetClientILTSoundMgrImpl()->GetDigDriver( ), 0, 0 );
 
@@ -742,7 +744,7 @@ LTRESULT CSoundInstance::AcquireStream( )
 			return LT_ERROR;
 		}
 	}
-	
+
 	// Check if we're to loop the sound.
 	if( m_dwPlaySoundFlags & PLAYSOUND_LOOP )
 	{
@@ -750,11 +752,11 @@ LTRESULT CSoundInstance::AcquireStream( )
 		if( m_pSoundBuffer->GetWaveHeader( LTFALSE ).m_CuePoint.m_bValid )
 		{
 			fModPoint = ( float )m_pSoundBuffer->GetLoopPoint( 0 ) / m_fPitchShift;
-			nPos1 = ( S32 )(( fModPoint / ( float )m_dwDuration ) * 
+			nPos1 = ( S32 )(( fModPoint / ( float )m_dwDuration ) *
 				( float )m_pSoundBuffer->GetSoundDataLen( ));
 			nPos1 = LTCLAMP( nPos1, ( S32 )0, ( S32 )m_pSoundBuffer->GetSoundDataLen( ));
 			fModPoint = ( float )m_pSoundBuffer->GetLoopPoint( 1 ) / m_fPitchShift;
-			nPos2 = ( S32 )(( fModPoint / ( float )m_dwDuration ) * 
+			nPos2 = ( S32 )(( fModPoint / ( float )m_dwDuration ) *
 				( float )m_pSoundBuffer->GetSoundDataLen( ));
 			nPos2 = LTCLAMP( nPos2, nPos1, ( S32 )m_pSoundBuffer->GetSoundDataLen( ));
 		}
@@ -802,7 +804,7 @@ LTRESULT CSoundInstance::StartRendering( )
 		return LT_ERROR;
 	}
 
-  
+
 	m_nNumCollisions = 0;
 
 	// Handle streaming sounds.
@@ -811,7 +813,7 @@ LTRESULT CSoundInstance::StartRendering( )
 		// If the timer is at the beginning, then we have the data for the first read in the streamingsoundbuffer
 		if( m_dwTimer == m_dwDuration )
 		{
-			GetSoundSys()->StartStream( m_hStream );				
+			GetSoundSys()->StartStream( m_hStream );
 		}
 		else
 		{
@@ -1011,7 +1013,7 @@ LTRESULT CLocalSoundInstance::UpdateOutput( uint32 dwFrameTime )
 			{
 				reverbProperties.m_dwParams = REVERBPARAM_VOLUME | REVERBPARAM_REFLECTTIME | REVERBPARAM_DECAYTIME;
 				GetClientILTSoundMgrImpl()->GetReverbProperties( &reverbProperties );
-				GetSoundSys()->SetSampleReverb( m_hSample, reverbProperties.m_fVolume, reverbProperties.m_fReflectTime, 
+				GetSoundSys()->SetSampleReverb( m_hSample, reverbProperties.m_fVolume, reverbProperties.m_fReflectTime,
 					reverbProperties.m_fDecayTime );
 			}
 		}
@@ -1047,7 +1049,7 @@ LTRESULT CLocalSoundInstance::UpdateOutput( uint32 dwFrameTime )
 
 LTRESULT CSoundInstance::SetFilter( const char* pszFilter )
 {
-	// query the sound engine and get the ID of the 
+	// query the sound engine and get the ID of the
 	// filter that matches the requested one
 	if ( pszFilter == NULL || !GetSoundFilterType( &m_FilterData, pszFilter ) )
 	{
@@ -1129,7 +1131,7 @@ bool CSoundInstance::GetSoundFilterType( LTSOUNDFILTERDATA* pFilterData, const c
 	return false;
 }
 
-#endif 
+#endif
 
 CAmbientSoundInstance::CAmbientSoundInstance( )
 {
@@ -1195,7 +1197,7 @@ LTRESULT CAmbientSoundInstance::UpdateOutput( uint32 dwFrameTime )
 			fDistSqrd = m_vPosition.DistSqr(GetClientILTSoundMgrImpl()->GetListenerPosition( ));
 			fMinDistSqrd = m_fInnerRadius * m_fInnerRadius;
 			fMaxDistSqrd = m_fOuterRadius * m_fOuterRadius;
-			
+
 			// Find volume scale based on distance...
 			if( fDistSqrd <= fMinDistSqrd )
 				fScale = 1.0;
@@ -1230,19 +1232,19 @@ LTRESULT CAmbientSoundInstance::UpdateOutput( uint32 dwFrameTime )
 		{
 			float fScale;
 			LTVector vTemp;
-			
+
 			fDist = m_vPosition.Dist(GetClientILTSoundMgrImpl()->GetListenerPosition( ));
-			
+
 			// Put the sound in front of the listener at a distance
 			// Position is relative to listener not absolute
 			vPosition = GetClientILTSoundMgrImpl()->GetListenerFront( );
 			vUp = vPosition.Cross(GetClientILTSoundMgrImpl()->GetListenerRight( ));
 			vPosition *= fDist;
-			
+
 			fDistSqrd = fDist * fDist;
 			fMinDistSqrd = m_fInnerRadius * m_fInnerRadius;
 			fMaxDistSqrd = m_fOuterRadius * m_fOuterRadius;
-			
+
 			// Find volume scale based on distance...
 			if( fDistSqrd <= fMinDistSqrd )
 				fScale = 1.0;
@@ -1361,7 +1363,7 @@ LTRESULT C3DSoundInstance::UpdateOutput( uint32 dwFrameTime )
 			fDistSqrd = vRelPos.MagSqr();
 			fMinDistSqrd = m_fInnerRadius * m_fInnerRadius;
 			fMaxDistSqrd = m_fOuterRadius * m_fOuterRadius;
-			
+
 			// Find volume scale based on distance...
 			if( fDistSqrd <= fMinDistSqrd )
 				fScale = 1.0;
@@ -1392,7 +1394,7 @@ LTRESULT C3DSoundInstance::UpdateOutput( uint32 dwFrameTime )
 
 			nVolume = ( uint32 )( m_nVolume * fScale * fFrontScale );
 			nVolume = LTMIN( nVolume, 100 );
-			
+
 			if( m_hSample )
 			{
 //				if( nVolume != ( uint32 )GetSoundSys()->GetSampleVolume( m_hSample ))
@@ -1445,7 +1447,7 @@ LTRESULT C3DSoundInstance::UpdateOutput( uint32 dwFrameTime )
 			fDistSqrd = vRelPos.MagSqr();
 			fMinDistSqrd = m_fInnerRadius * m_fInnerRadius;
 			fMaxDistSqrd = m_fOuterRadius * m_fOuterRadius;
-			
+
 			// Find volume scale based on distance...
 			if( fDistSqrd <= fMinDistSqrd )
 				fScale = 1.0;
@@ -1466,7 +1468,7 @@ LTRESULT C3DSoundInstance::UpdateOutput( uint32 dwFrameTime )
 			GetSoundSys()->Get3DVelocity( m_h3DSample, &vTemp.x, &vTemp.y, &vTemp.z );
 			if( vTemp.DistSqr( vVelocity ) > 0.5f )
 			{
-				GetSoundSys()->Set3DVelocityVector( m_h3DSample, vVelocity.x, 
+				GetSoundSys()->Set3DVelocityVector( m_h3DSample, vVelocity.x,
 					vVelocity.y, vVelocity.z);
 			}
 

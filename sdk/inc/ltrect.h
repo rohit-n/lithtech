@@ -45,17 +45,16 @@ Used for:   2D Rendering.
 
 
 
-#ifndef __LINUX
+// #ifndef __LINUX
 // Provides the definition for the utility class LTRect that represents a
 // templatized 2d AABB. Each extent is stored in a 2d vector to allow easier
 // operation on individual components. Most utility function assume that
 // the components in the min vertex are less than that of the max vertex,
-// which can be detected using IsSorted, and fixed with Sort. 
-
+// which can be detected using IsSorted, and fixed with Sort.
 
 
 template <class T>
-class TRect2 
+class TRect2
 {
 public:
 
@@ -66,7 +65,7 @@ public:
 	}
 
 	//constructs a rect object with a default set of values
-    TRect2(T l, T t, T r, T b) : 
+    TRect2(T l, T t, T r, T b) :
 		m_vMin(l, t),
 		m_vMax(r, b)
 	{}
@@ -251,7 +250,7 @@ public:
 };
 
 template <class T>
-class TRect3 
+class TRect3
 {
 public:
 
@@ -262,7 +261,7 @@ public:
 	}
 
 	//constructs a rect object with a default set of values
-    TRect3(T l, T t, T n, T r, T b, T f) : 
+    TRect3(T l, T t, T n, T r, T b, T f) :
 		m_vMin(l, t, n),
 		m_vMax(r, b, f)
 	{}
@@ -457,7 +456,7 @@ public:
 			(m_vMin.z >= rOther.m_vMax.z) ||
 			(m_vMax.x <= rOther.m_vMin.x) ||
 			(m_vMax.y <= rOther.m_vMin.y) ||
-			(m_vMax.z <= rOther.m_vMin.z)) 
+			(m_vMax.z <= rOther.m_vMin.z))
 		{
 			return false;
 		}
@@ -485,7 +484,7 @@ typedef TRect2<float>	LTRect2f;
 typedef TRect3<int32>	LTRect3n;
 typedef TRect3<float>	LTRect3f;
 
-#endif //!LINUX
+// #endif //!LINUX
 
 #endif  //! __LTRECT_H__
 

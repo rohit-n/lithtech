@@ -205,6 +205,7 @@ add_executable(${PROJECT_NAME}
 	../sound/src/soundmgr.cpp
 	../shared/src/transformlt_impl.cpp
         ../kernel/src/sys/linux/videomgr.cpp
+        ../kernel/src/sys/linux/linuxdsys.cpp
 	src/client_iltvideomgr.cpp
 	../shared/src/interface_linkage.cpp
 	../world/src/world_blind_object_data.cpp
@@ -371,7 +372,8 @@ else(WIN32)
 		../shared/src/sys/linux
 		/usr/include/SDL2)
 	target_link_libraries(${PROJECT_NAME}
-		libSDL2)
+		SDL2
+		pthread)
 
 endif(WIN32)
 

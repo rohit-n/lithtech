@@ -5,7 +5,20 @@
 	#include "iltstream.h"
 #endif
 
- 
+template<class T, class TB>
+__inline T LTDIFF(T a, TB b);
+template<class T, class TB>
+__inline T LTMIN(T a, TB b);
+template<class T, class TB>
+__inline T LTMAX(T a, TB b);
+template<class T>
+__inline T LTABS(T a);
+template<class T, class TB, class TC>
+__inline T LTCLAMP(T a, TB min, TC max);
+template<class T, class TMAX, class TINTERP>
+__inline T LTLERP(T min, TMAX max, TINTERP t);
+
+
 #ifndef _VECTOR_H_
 	#include "physics/vector.h"//vectors for math and physics
 #endif
@@ -16,6 +29,7 @@
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 /*!
 Used for:  Obsolete.
 */
@@ -24,7 +38,7 @@ template<class T>
 struct TVector3 {
     T x, y, z;
 
- 
+
 	TVector3()
 	{}
 	TVector3( const T x, const T y, const T z )
@@ -86,7 +100,7 @@ struct TVector3 {
         //within a tolerance
         const TVector3 t = *this - b;//difference
         return t.Dot(t) <= r*r;//radius
- 
+
 	}
  	const TVector3 Cross( const TVector3& b ) const
 	{
@@ -120,22 +134,22 @@ struct TVector3 {
 
         return *this;
     }
-    const TVector3& operator += (const TVector3& b) 
+    const TVector3& operator += (const TVector3& b)
     {
         x += b.x;
         y += b.y;
         z += b.z;
 
         return *this;
-    } 
-    const TVector3& operator -= (const TVector3& b) 
+    }
+    const TVector3& operator -= (const TVector3& b)
     {
         x -= b.x;
         y -= b.y;
         z -= b.z;
 
         return *this;
-    } 
+    }
     const TVector3& operator *= (const T s)
     {
         x *= s;
@@ -243,7 +257,7 @@ inline T TVector3<T>::MagApprox () const
         max = med;
         med = temp;
     }
-    
+
     if (max < min)
     {
         temp = max;
@@ -260,7 +274,7 @@ inline void TVector3<T>::Norm(T nVal)
     T inv;
     T mag = Mag();
 
-    if (mag == 0) 
+    if (mag == 0)
         return;
 
     inv = nVal / mag;
@@ -275,7 +289,7 @@ inline void TVector3<T>::NormApprox(T nVal)
     T inv;
     T mag = MagApprox();
 
-    if (mag == 0) 
+    if (mag == 0)
         return;
 
     inv = nVal / mag;

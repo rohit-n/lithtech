@@ -32,7 +32,7 @@ public:
 	/*!
 	The x and y components of the vector.
 	*/
-	T x,y;	
+	T x,y;
 
 public:
 
@@ -151,7 +151,7 @@ public:
 
 	Used for: Math.
 	*/
-	const LTVector2& operator -= ( const LTVector2& b ) 
+	const LTVector2& operator -= ( const LTVector2& b )
 	{
 		x -= b.x;
 		y -= b.y;
@@ -386,7 +386,7 @@ public:
 	/*!
 	The x, y and z components of the vector.
 	*/
-	T x,y,z;	
+	T x,y,z;
 
 public:
 
@@ -508,28 +508,28 @@ public:
 
 	Used for: Math.
 	*/
-	const LTVector3& operator += ( const LTVector3& b ) 
+	const LTVector3& operator += ( const LTVector3& b )
 	{
 		x += b.x;
 		y += b.y;
 		z += b.z;
 
 		return *this;
-	} 
+	}
 
 	/*!
 	\return	\f$ {\bf a}-={\bf b} \f$
 
 	Used for: Math.
 	*/
-	const LTVector3& operator -= ( const LTVector3& b ) 
+	const LTVector3& operator -= ( const LTVector3& b )
 	{
 		x -= b.x;
 		y -= b.y;
 		z -= b.z;
 
 		return *this;
-	} 
+	}
 
 	/*!
 	\return	\f$ {\bf a}*=s \f$
@@ -745,7 +745,7 @@ public:
 	/*!
 	The x, y, z, and w components of the vector.
 	*/
-	T x,y,z,w;	
+	T x,y,z,w;
 
 public:
 
@@ -870,7 +870,7 @@ public:
 
 	Used for: Math.
 	*/
-	const LTVector4& operator += ( const LTVector4& b ) 
+	const LTVector4& operator += ( const LTVector4& b )
 	{
 		x += b.x;
 		y += b.y;
@@ -878,14 +878,14 @@ public:
 		w += b.w;
 
 		return *this;
-	} 
+	}
 
 	/*!
 	\return	\f$ {\bf a}-={\bf b} \f$
 
 	Used for: Math.
 	*/
-	const LTVector4& operator -= ( const LTVector4& b ) 
+	const LTVector4& operator -= ( const LTVector4& b )
 	{
 		x -= b.x;
 		y -= b.y;
@@ -893,7 +893,7 @@ public:
 		w -= b.w;
 
 		return *this;
-	} 
+	}
 
 	/*!
 	\return	\f$ {\bf a}*=s \f$
@@ -908,7 +908,7 @@ public:
 		w *= s;
 
 		return *this;
-	} 
+	}
 
 	/*!
 	\return	\f$ {\bf a}/=s \f$

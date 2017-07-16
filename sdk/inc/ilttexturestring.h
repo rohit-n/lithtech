@@ -57,7 +57,7 @@ class ILTDrawPrim;
 
 
 //CFontInfo
-// Provides the definition for a font that can be used for creation of texture strings. 
+// Provides the definition for a font that can be used for creation of texture strings.
 class CFontInfo
 {
 public:
@@ -73,11 +73,11 @@ public:
 		m_nStyle(0),
 		m_lfCharSet(LTDEFAULT_CHARSET)
 	{
-		LTStrCpy(m_szTypeface, L"", LTARRAYSIZE(m_szTypeface));
+		LTStrCpy(m_szTypeface, "", LTARRAYSIZE(m_szTypeface));
 	}
 
 	//a constructor that allows the specification of the parameters
-	CFontInfo(const wchar_t * pszTypeface, uint32 nHeight, uint8 lfCharSet = LTDEFAULT_CHARSET, uint32 nStyle = 0) :
+	CFontInfo(const char * pszTypeface, uint32 nHeight, uint8 lfCharSet = LTDEFAULT_CHARSET, uint32 nStyle = 0) :
 		m_nHeight(nHeight),
 		m_nStyle(nStyle),
 		m_lfCharSet(lfCharSet)
@@ -98,7 +98,7 @@ public:
 	//comes from windows limits that state that a font face can only be 32 characters including
 	//the null terminator.
 	enum	{ knMaxTypefaceLen	= 32	};
-	wchar_t	m_szTypeface[knMaxTypefaceLen];
+	char	m_szTypeface[knMaxTypefaceLen];
 
 	//the height of this font in pixels. The font is guaranteed not to go higher than this
 	uint32	m_nHeight;
@@ -106,7 +106,7 @@ public:
 	//the style bits of this font
 	uint32	m_nStyle;
 
-	// Character set defined in wingdi.h - default is the machines character set 
+	// Character set defined in wingdi.h - default is the machines character set
 	uint8		m_lfCharSet;
 };
 
@@ -154,12 +154,12 @@ public:
 	//given a unicode string, this will create a texture string that contains all the letters
 	//within the string and can be used for rendering. On failure it will return an invalid texture
 	//string handle. This will use all the font parameters specified to determine the size
-	virtual HTEXTURESTRING	CreateTextureString(const wchar_t* pszString, const CFontInfo& Font) = 0;
-	
+	virtual HTEXTURESTRING	CreateTextureString(const char* pszString, const CFontInfo& Font) = 0;
+
 	//given an existing texture string this will create a new string using the original source string.
 	//This will fail if the source string does not contain all the glyphs necessary to render the desired
 	//string
-	virtual HTEXTURESTRING	CreateTextureSubstring(const wchar_t* pszString, HTEXTURESTRING hSrcString) = 0;
+	virtual HTEXTURESTRING	CreateTextureSubstring(const char* pszString, HTEXTURESTRING hSrcString) = 0;
 
 	//-----------------------------
 	// String Formatting
@@ -171,11 +171,11 @@ public:
 
 	//given a string, this will change the text and font associated with the string. This will discard
 	//any formatting data such as word wrap.
-	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const wchar_t* pszString, const CFontInfo& Font) = 0;
+	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const char* pszString, const CFontInfo& Font) = 0;
 
 	//given a string, this will recreate it as a substring. This will lose any other formatting data such
 	//as word wrap.
-	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const wchar_t* pszString, HTEXTURESTRING hSrcTexture) = 0;
+	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const char* pszString, HTEXTURESTRING hSrcTexture) = 0;
 
 	//-----------------------------
 	// Property Access
@@ -189,10 +189,10 @@ public:
 	virtual LTRESULT		GetStringLength(HTEXTURESTRING hString, uint32* pnLength) = 0;
 
 	//called to access the string associated with a texture string
-	virtual LTRESULT		GetString(HTEXTURESTRING hString, wchar_t* pszBuffer, uint32 nBufferLen) = 0;
-	
+	virtual LTRESULT		GetString(HTEXTURESTRING hString, char* pszBuffer, uint32 nBufferLen) = 0;
+
 	//called to access the font associated with a texture string
-	virtual LTRESULT		GetFont(HTEXTURESTRING hString, CFontInfo& Font) = 0;		
+	virtual LTRESULT		GetFont(HTEXTURESTRING hString, CFontInfo& Font) = 0;
 
 	//called to get the actual texture associated with the font. This is useful for custom rendering of
 	//strings on the world. This texture must be released through the texture management interface
@@ -203,7 +203,7 @@ public:
 	//is the area that actually defines where the glyphs should be rendered and is relevant to the placement
 	//rectangle. Finally the upperleft UV position is given in texture space along with the width
 	//and height. This data can be used for performing custom rendering of characters
-	virtual LTRESULT		GetCharRect(HTEXTURESTRING hString, uint32 nCharIndex, 
+	virtual LTRESULT		GetCharRect(HTEXTURESTRING hString, uint32 nCharIndex,
 										LTRect2n& rPlacementRect,
 										LTRect2n& rBlackBox,
 										LTVector2f& vUVPos,
@@ -215,11 +215,11 @@ public:
     //this will release a reference to a texture string. The passed in handle should not be used after this
 	//call has been made
 	virtual void			ReleaseTextureString(HTEXTURESTRING hString) = 0;
-	
+
 	//this will add a reference to a texture string. This should be done if an additional texture string
 	//handle will be held onto for a long period of time or by a different object.
 	virtual void			AddRefTextureString(HTEXTURESTRING hString) = 0;
-	
+
 	//-----------------------------
 	// Rendering
 
@@ -238,10 +238,10 @@ public:
 	//and can therefore control scaling and shearing. The stretch vector scales each individual character
 	//without changing relative positions or orientations.
 	virtual LTRESULT		RenderString(	HTEXTURESTRING hString,
-											ILTDrawPrim* pDrawPrim, 
-											const LTVector2f& vAnchor, 
+											ILTDrawPrim* pDrawPrim,
+											const LTVector2f& vAnchor,
 											uint32 nColor					= 0xFFFFFFFF,
-											const LTVector2f& vAnchorScale	= LTVector2f(0.0f, 0.0f), 
+											const LTVector2f& vAnchorScale	= LTVector2f(0.0f, 0.0f),
 											const LTVector2f& vGround		= LTVector2f(1.0f, 0.0f),
 											const LTVector2f& vDown			= LTVector2f(0.0f, 1.0f),
 											const LTVector2f& vStretch		= LTVector2f(1.0f, 1.0f),
@@ -251,9 +251,9 @@ public:
 	//allow for tilting, shearing, or scaling of the string and allows for the specifying of a clipping
 	//rectangle that will be used to clip where the string is rendered to.
 	virtual LTRESULT		RenderStringClipped(	HTEXTURESTRING hString,
-													ILTDrawPrim* pDrawPrim, 
+													ILTDrawPrim* pDrawPrim,
 													const LTRect2n& rClipRect,
-													const LTVector2f& vAnchor, 
+													const LTVector2f& vAnchor,
 													uint32 nColor					= 0xFFFFFFFF,
 													const LTVector2f& vAnchorScale	= LTVector2f(0.0f, 0.0f),
 													bool bSnapAnchor				= true) = 0;
@@ -264,9 +264,9 @@ public:
 	//substring objects should be used instead. The formatting parameters are the same as the RenderString
 	//function, but the anchor scale is not provided since the dimensions of this substring are not known.
 	virtual LTRESULT		RenderSubString(HTEXTURESTRING hString,
-											const wchar_t* pszString,
-											ILTDrawPrim* pDrawPrim, 
-											const LTVector2f& vAnchor, 
+											const char* pszString,
+											ILTDrawPrim* pDrawPrim,
+											const LTVector2f& vAnchor,
 											uint32 nColor					= 0xFFFFFFFF,
 											const LTVector2f& vGround		= LTVector2f(1.0f, 0.0f),
 											const LTVector2f& vDown			= LTVector2f(0.0f, 1.0f),
@@ -278,10 +278,10 @@ public:
 	//substring objects should be used instead. The formatting parameters are the same as the RenderStringClipped
 	//function, but the anchor scale is not provided since the dimensions of this substring are not known.
 	virtual LTRESULT		RenderSubStringClipped(	HTEXTURESTRING hString,
-													const wchar_t* pszString,
-													ILTDrawPrim* pDrawPrim, 
+													const char* pszString,
+													ILTDrawPrim* pDrawPrim,
 													const LTRect2n& rClipRect,
-													const LTVector2f& vAnchor, 
+													const LTVector2f& vAnchor,
 													uint32 nColor				= 0xFFFFFFFF) = 0;
 
 };

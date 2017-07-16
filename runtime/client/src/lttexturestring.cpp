@@ -44,7 +44,7 @@ LTRESULT CLTTextureString::UnregisterCustomFontFile(HCUSTOMFONTFILE hCustomFontF
 
 //-----------------------------
 // String Creation
-HTEXTURESTRING CLTTextureString::CreateTextureString(const wchar_t* pszString, const CFontInfo& Font)
+HTEXTURESTRING CLTTextureString::CreateTextureString(const char* pszString, const CFontInfo& Font)
 {
 	//parameter check
 	if(!pszString)
@@ -70,7 +70,7 @@ HTEXTURESTRING CLTTextureString::CreateTextureString(const wchar_t* pszString, c
 	return pNewString;
 }
 
-HTEXTURESTRING CLTTextureString::CreateTextureSubstring(const wchar_t* pszString, HTEXTURESTRING hSrcString)
+HTEXTURESTRING CLTTextureString::CreateTextureSubstring(const char* pszString, HTEXTURESTRING hSrcString)
 {
 	//parameter check
 	if(!pszString || !hSrcString)
@@ -109,7 +109,7 @@ LTRESULT CLTTextureString::WordWrapString(HTEXTURESTRING hString, uint32 nWidth)
 	return LT_OK;
 }
 
-LTRESULT CLTTextureString::RecreateTextureString(HTEXTURESTRING hString, const wchar_t* pszString, const CFontInfo& Font)
+LTRESULT CLTTextureString::RecreateTextureString(HTEXTURESTRING hString, const char* pszString, const CFontInfo& Font)
 {
 	if(!hString || !pszString)
 		return LT_INVALIDPARAMS;
@@ -117,7 +117,7 @@ LTRESULT CLTTextureString::RecreateTextureString(HTEXTURESTRING hString, const w
 	return hString->Create(pszString, Font);
 }
 
-LTRESULT CLTTextureString::RecreateTextureSubstring(HTEXTURESTRING hString, const wchar_t* pszString, HTEXTURESTRING hSrcTexture)
+LTRESULT CLTTextureString::RecreateTextureSubstring(HTEXTURESTRING hString, const char* pszString, HTEXTURESTRING hSrcTexture)
 {
 	if(!hString || !pszString || !hSrcTexture)
 		return LT_INVALIDPARAMS;
@@ -147,13 +147,13 @@ LTRESULT CLTTextureString::GetStringLength(HTEXTURESTRING hString, uint32* pnLen
 	return LT_OK;
 }
 
-LTRESULT CLTTextureString::GetString(HTEXTURESTRING hString, wchar_t* pszBuffer, uint32 nBufferLen)
+LTRESULT CLTTextureString::GetString(HTEXTURESTRING hString, char* pszBuffer, uint32 nBufferLen)
 {
 	if(!hString || !pszBuffer || (nBufferLen == 0))
 		return LT_INVALIDPARAMS;
 
-	wcsncpy(pszBuffer, hString->GetString(), nBufferLen);
-	pszBuffer[nBufferLen - 1] = (wchar_t)'\0';
+	strncpy(pszBuffer, hString->GetString(), nBufferLen);
+	pszBuffer[nBufferLen - 1] = (char)'\0';
 	return LT_OK;
 }
 
@@ -182,7 +182,7 @@ LTRESULT CLTTextureString::GetTextureImage(HTEXTURESTRING hString, HTEXTURE& hTe
 	return LT_OK;
 }
 
-LTRESULT CLTTextureString::GetCharRect(HTEXTURESTRING hString, uint32 nCharIndex, 
+LTRESULT CLTTextureString::GetCharRect(HTEXTURESTRING hString, uint32 nCharIndex,
 										LTRect2n& rPlacementRect,
 										LTRect2n& rBlackBox,
 										LTVector2f& vUVPos,
@@ -231,10 +231,10 @@ void CLTTextureString::AddRefTextureString(HTEXTURESTRING hString)
 // Rendering
 
 //given a character, this will determine if this is a hard break character
-static bool IsHardLineBreak(wchar_t cChar)
+static bool IsHardLineBreak(char cChar)
 {
 	//only handle the '\n' character for now
-	return (cChar == (wchar_t)'\n');
+	return (cChar == (char)'\n');
 }
 
 //utility function that will calculate the anchor scale offset given a string and the anchor scale
@@ -257,8 +257,8 @@ static LTVector2f GetAnchorScaleOffset(HTEXTURESTRING hString, const LTVector2f&
 //utility rendering function for the rendering of non-clipped strings that will fill in the provided draw
 //prim polygon, given the character position, the glyph, and the appropriate alignment vectors
 static void SetupStringQuad(int32 nX, int32 nY, const CTextureStringGlyph* pGlyph,
-							uint32 nColor, const LTVector2f& vAnchor, 
-							const LTVector2f& vAnchorScaleOffset, 
+							uint32 nColor, const LTVector2f& vAnchor,
+							const LTVector2f& vAnchorScaleOffset,
 							const LTVector2f& vGround, const LTVector2f& vDown,
 							const LTVector2f& vStretch,
 							LT_POLYGT4& Quad)
@@ -296,10 +296,10 @@ static void SetupStringQuad(int32 nX, int32 nY, const CTextureStringGlyph* pGlyp
 										vCenter.x + vCharDiag.x, vCenter.y - vCharDiag.y,
 										vCenter.x + vCharDiag.x, vCenter.y + vCharDiag.y,
 										vCenter.x - vCharDiag.x, vCenter.y + vCharDiag.y );
-	// Put in front 
-	Quad.verts[0].z = 
-		Quad.verts[1].z = 
-			Quad.verts[2].z = 
+	// Put in front
+	Quad.verts[0].z =
+		Quad.verts[1].z =
+			Quad.verts[2].z =
 				Quad.verts[3].z = SCREEN_NEAR_Z;
 
 
@@ -307,8 +307,8 @@ static void SetupStringQuad(int32 nX, int32 nY, const CTextureStringGlyph* pGlyp
 	pDrawPrimInternal->SetUVWH(&Quad, pGlyph->m_fU, pGlyph->m_fV, pGlyph->m_fTexWidth, pGlyph->m_fTexHeight);
 
 	//and setup the color for this character
-	pDrawPrimInternal->SetRGBA( &Quad, nColor );	
-	
+	pDrawPrimInternal->SetRGBA( &Quad, nColor );
+
 }
 
 
@@ -316,8 +316,8 @@ static void SetupStringQuad(int32 nX, int32 nY, const CTextureStringGlyph* pGlyp
 //utility rendering function for the rendering of non-clipped strings that will fill in the provided draw
 //prim polygon, given the character position, the glyph, and the appropriate alignment vectors
 static bool SetupClippedStringQuad(	int32 nX, int32 nY, const CTextureStringGlyph* pGlyph,
-									uint32 nColor, const LTVector2f& vAnchor, 
-									const LTVector2f& vAnchorScaleOffset, 
+									uint32 nColor, const LTVector2f& vAnchor,
+									const LTVector2f& vAnchorScaleOffset,
 									const LTRect2f& rFloatClip,
 									LT_POLYGT4& Quad)
 {
@@ -330,7 +330,7 @@ static bool SetupClippedStringQuad(	int32 nX, int32 nY, const CTextureStringGlyp
 	LTVector2f vScreenSpace = vStringSpace - vAnchorScaleOffset + vAnchor;
 
 	//form a rectangle where this is placed
-	LTRect2f rChar(	vScreenSpace.x, vScreenSpace.y, 
+	LTRect2f rChar(	vScreenSpace.x, vScreenSpace.y,
 					vScreenSpace.x + (float)pGlyph->m_rBlackBox.GetWidth(),
 					vScreenSpace.y + (float)pGlyph->m_rBlackBox.GetHeight());
 
@@ -347,10 +347,10 @@ static bool SetupClippedStringQuad(	int32 nX, int32 nY, const CTextureStringGlyp
 										rIntersect.Right(), rIntersect.Top(),
 										rIntersect.Right(), rIntersect.Bottom(),
 										rIntersect.Left(), rIntersect.Bottom() );
-	// Put in front 
-	Quad.verts[0].z = 
-		Quad.verts[1].z = 
-			Quad.verts[2].z = 
+	// Put in front
+	Quad.verts[0].z =
+		Quad.verts[1].z =
+			Quad.verts[2].z =
 				Quad.verts[3].z = SCREEN_NEAR_Z;
 
 	//determine the U and V values for the clipped vertices
@@ -378,13 +378,13 @@ LTRESULT CLTTextureString::SetupTextRendering( ILTDrawPrim* pDrawPrim )
 		return LT_INVALIDPARAMS;
 
 	pDrawPrim->SetTransformType(DRAWPRIM_TRANSFORM_SCREEN);
-	pDrawPrim->SetZBufferMode(DRAWPRIM_NOZ); 
+	pDrawPrim->SetZBufferMode(DRAWPRIM_NOZ);
 	pDrawPrim->SetClipMode(DRAWPRIM_NOCLIP);
 	pDrawPrim->SetFillMode(DRAWPRIM_FILL);
 
-	// use color from texture and polygon	
+	// use color from texture and polygon
 	pDrawPrim->SetColorOp(DRAWPRIM_MODULATE);
-	
+
 	pDrawPrim->SetAlphaTestMode(DRAWPRIM_NOALPHATEST);
 	pDrawPrim->SetAlphaBlendMode(DRAWPRIM_BLEND_MOD_SRCALPHA);
 
@@ -396,10 +396,10 @@ LTRESULT CLTTextureString::SetupTextRendering( ILTDrawPrim* pDrawPrim )
 
 
 LTRESULT CLTTextureString::RenderString(HTEXTURESTRING hString,
-										ILTDrawPrim* pDrawPrim, 
-										const LTVector2f& vAnchor, 
+										ILTDrawPrim* pDrawPrim,
+										const LTVector2f& vAnchor,
 										uint32 nColor,
-										const LTVector2f& vAnchorScale, 
+										const LTVector2f& vAnchorScale,
 										const LTVector2f& vGround,
 										const LTVector2f& vDown,
 										const LTVector2f& vStretch,
@@ -445,8 +445,8 @@ LTRESULT CLTTextureString::RenderString(HTEXTURESTRING hString,
 				continue;
 
 			//actually setup our quad
-			SetupStringQuad(nCharX, nCharY, pGlyph, nColor, vAnchor, vAnchorScaleOffset, 
-							vGround, vDown, vStretch, QuadBuffer[nUsedQuads]);			
+			SetupStringQuad(nCharX, nCharY, pGlyph, nColor, vAnchor, vAnchorScaleOffset,
+							vGround, vDown, vStretch, QuadBuffer[nUsedQuads]);
 
 			//move onto the next quad
 			nUsedQuads++;
@@ -474,9 +474,9 @@ LTRESULT CLTTextureString::RenderString(HTEXTURESTRING hString,
 
 
 LTRESULT CLTTextureString::RenderStringClipped(	HTEXTURESTRING hString,
-												ILTDrawPrim* pDrawPrim, 
+												ILTDrawPrim* pDrawPrim,
 												const LTRect2n& rClipRect,
-												const LTVector2f& vAnchor, 
+												const LTVector2f& vAnchor,
 												uint32 nColor,
 												const LTVector2f& vAnchorScale,
 												bool bSnapAnchor)
@@ -500,7 +500,7 @@ LTRESULT CLTTextureString::RenderStringClipped(	HTEXTURESTRING hString,
 	HTEXTURE hTexture = hString->GetTextureImage()->GetTexture();
 
 	//convert our integer clipping rectangle to a floating point one
-	LTRect2f rFloatClip((float)rClipRect.Left(), (float)rClipRect.Top(), 
+	LTRect2f rFloatClip((float)rClipRect.Left(), (float)rClipRect.Top(),
 						(float)rClipRect.Right(), (float)rClipRect.Bottom());
 
 	//run through all characters in the string
@@ -523,7 +523,7 @@ LTRESULT CLTTextureString::RenderStringClipped(	HTEXTURESTRING hString,
 				continue;
 
 			//actually setup our quad
-			if(SetupClippedStringQuad(	nCharX, nCharY, pGlyph, nColor, vAnchor, vAnchorScaleOffset, 
+			if(SetupClippedStringQuad(	nCharX, nCharY, pGlyph, nColor, vAnchor, vAnchorScaleOffset,
 										rFloatClip, QuadBuffer[nUsedQuads]))
 			{
 				//move onto the next quad
@@ -550,9 +550,9 @@ LTRESULT CLTTextureString::RenderStringClipped(	HTEXTURESTRING hString,
 }
 
 LTRESULT CLTTextureString::RenderSubString(	HTEXTURESTRING hString,
-											const wchar_t* pszSubString,
-											ILTDrawPrim* pDrawPrim, 
-											const LTVector2f& vAnchor, 
+											const char* pszSubString,
+											ILTDrawPrim* pDrawPrim,
+											const LTVector2f& vAnchor,
 											uint32 nColor,
 											const LTVector2f& vGround,
 											const LTVector2f& vDown,
@@ -604,8 +604,8 @@ LTRESULT CLTTextureString::RenderSubString(	HTEXTURESTRING hString,
 				continue;
 
 			//actually setup our quad
-			SetupStringQuad(nCurrX, nCurrY, pGlyph, nColor, vAnchor, LTVector2f(0.0f, 0.0f), 
-							vGround, vDown, vStretch, QuadBuffer[nUsedQuads]);			
+			SetupStringQuad(nCurrX, nCurrY, pGlyph, nColor, vAnchor, LTVector2f(0.0f, 0.0f),
+							vGround, vDown, vStretch, QuadBuffer[nUsedQuads]);
 
 			//move onto our next character
 			nCurrX += pGlyph->m_nTotalWidth;
@@ -633,10 +633,10 @@ LTRESULT CLTTextureString::RenderSubString(	HTEXTURESTRING hString,
 }
 
 LTRESULT CLTTextureString::RenderSubStringClipped(	HTEXTURESTRING hString,
-													const wchar_t* pszSubString,
-													ILTDrawPrim* pDrawPrim, 
+													const char* pszSubString,
+													ILTDrawPrim* pDrawPrim,
 													const LTRect2n& rClipRect,
-													const LTVector2f& vAnchor, 
+													const LTVector2f& vAnchor,
 													uint32 nColor)
 {
 	//check the parameters
@@ -655,7 +655,7 @@ LTRESULT CLTTextureString::RenderSubStringClipped(	HTEXTURESTRING hString,
 	HTEXTURE hTexture = hString->GetTextureImage()->GetTexture();
 
 	//convert our integer clipping rectangle to a floating point one
-	LTRect2f rFloatClip((float)rClipRect.Left(), (float)rClipRect.Top(), 
+	LTRect2f rFloatClip((float)rClipRect.Left(), (float)rClipRect.Top(),
 						(float)rClipRect.Right(), (float)rClipRect.Bottom());
 
 	//the current position
@@ -687,7 +687,7 @@ LTRESULT CLTTextureString::RenderSubStringClipped(	HTEXTURESTRING hString,
 				continue;
 
 			//actually setup our quad
-			bool bVisible = SetupClippedStringQuad(	nCurrX, nCurrY, pGlyph, nColor, vAnchor, LTVector2f(0.0f, 0.0f), 
+			bool bVisible = SetupClippedStringQuad(	nCurrX, nCurrY, pGlyph, nColor, vAnchor, LTVector2f(0.0f, 0.0f),
 													rFloatClip, QuadBuffer[nUsedQuads]);
 
 			//advance our current position
