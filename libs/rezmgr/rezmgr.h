@@ -51,7 +51,7 @@ class CRezMgr;
 // -----------------------------------------------------------------------------------------
 // CRezItm
 
-class CRezItm 
+class CRezItm
 {
 public:
 	// functions for the general user
@@ -66,7 +66,7 @@ public:
 	BOOL		Get(BYTE* pBytes);                                                      // Copies the data from this resource to the specified location
 	BOOL		Get(void* pBytes) { return Get((BYTE*)pBytes); };						// void version of get
 	BOOL		Get(BYTE* pBytes, DWORD startOffset, DWORD length);                     // Copies a portion of the data from this resource to the specified location
-	BOOL	    Get(void* pBytes, DWORD startOffset, DWORD length) 
+	BOOL	    Get(void* pBytes, DWORD startOffset, DWORD length)
 	            { return Get((BYTE*)pBytes,startOffset,length); };						// void version of get
 
 	BYTE*		Load();                                                                 // Returns a pointer to the data for this item (loads from disk if not already in memory)
@@ -76,7 +76,7 @@ public:
 	DWORD		GetSeekPos() { return m_nCurPos; };                                     // Get the current position inside this resource
 	BOOL		Seek(DWORD offset);                                                     // Set the current position inside this resource
 	DWORD		Read(BYTE* pBytes, DWORD length, DWORD seekPos = 0xffffffff);           // Read data in from this resource at the current position (SeekPos sets a new position) and advances the position
-	DWORD		Read(void* pBytes, DWORD length, DWORD seekPos = 0xffffffff) 
+	DWORD		Read(void* pBytes, DWORD length, DWORD seekPos = 0xffffffff)
 				{ return Read((BYTE*)pBytes,length,seekPos); };							// void version of read
 	BOOL		EndOfRes();                                                             // Returns TRUE if the current position is at or beyond the end off the resource data
 	char		GetChar();                                                              // Returns the BYTE in the resource at the current position and advances the position
@@ -91,13 +91,13 @@ public:
 	BOOL		Save();																    // Saves the data for the internally kept memory to disk
 
 	// NOT IMPLEMENTED!!!!
-//	BOOL		DirectRead_IsPossible();			
+//	BOOL		DirectRead_IsPossible();
 //	FILE*		DirectRead_GetFileHandle();
 //	FILE*		DirectRead_ReleaseFileHandle();
 
 private:
     // constructors and destructors
-	CRezItm::CRezItm();
+	CRezItm();
 
 	// init and term
     void InitRezItm(CRezDir* pParentDir, REZNAME sName, REZID nID, CRezTyp* pType, REZDESC sDesc,
@@ -130,7 +130,7 @@ private:
 // -----------------------------------------------------------------------------------------
 // CRezType
 
-class CRezTyp 
+class CRezTyp
 {
 public:
     REZTYPE GetType() { return m_nType; };
@@ -146,7 +146,7 @@ private:
     friend class CRezMgr;
 
 	// internal data members
-    REZTYPE                 m_nType;        // The type 
+    REZTYPE                 m_nType;        // The type
     CRezTypeHash            m_heType;       // The hash element for the typ hash table
 	CRezItmHashTableByID    m_haID; 		// Hash table item info for by ID hash table
 	CRezItmHashTableByName  m_haName;	    // Hash table item info for by Name hash table
@@ -157,7 +157,7 @@ private:
 // -----------------------------------------------------------------------------------------
 // CRezDir
 
-class CRezDir 
+class CRezDir
 {
 public:
 	// functions for the general user
@@ -191,7 +191,7 @@ public:
 	REZTIME     GetTime() { return m_nLastTimeModified; };		    // Last time resource was modified in this dir
 
 private:
-    CRezDir(CRezMgr* pRezMgr, CRezDir* pParentDir, REZDIRNAME szDirName, DWORD nFilePos, 
+    CRezDir(CRezMgr* pRezMgr, CRezDir* pParentDir, REZDIRNAME szDirName, DWORD nFilePos,
 			DWORD nSize, REZTIME nTime, unsigned int nDirNumHashBins, unsigned int nTypNumHashBins);
     ~CRezDir();
 
@@ -229,7 +229,7 @@ private:
 // -----------------------------------------------------------------------------------------
 // CRezMgr
 
-class CRezMgr 
+class CRezMgr
 {
 public:
 	CRezMgr();                                                                          // Creates an empty unopened rez mgr class
@@ -278,12 +278,12 @@ public:
 	void SetItemByIDUsed(BOOL bItemByIDUsed) { m_bItemByIDUsed = bItemByIDUsed; };
 
 	// set the number of bin values for creating hash tables (should call right after constructor but before open)
-	void SetHashTableBins(unsigned int nByNameNumHashBins, unsigned int nByIDNumHashBins, 
+	void SetHashTableBins(unsigned int nByNameNumHashBins, unsigned int nByIDNumHashBins,
 						  unsigned int nDirNumHashBins, unsigned int nTypNumHashBins);
 
 	// functions that the user should not typically use
     void ForceIsSortedFlag(BOOL bFlag) { m_bIsSorted = bFlag; };   // For use in zmgr program to force the sorted flag
-	void SetMaxOpenFilesInEmulatedDir(int nNumFiles) { m_nMaxOpenFilesInEmulatedDir = nNumFiles; };  
+	void SetMaxOpenFilesInEmulatedDir(int nNumFiles) { m_nMaxOpenFilesInEmulatedDir = nNumFiles; };
 
 	// accessors for usertitle header information
 	void SetUserTitle(const char* sUserTitle);
@@ -296,9 +296,9 @@ private:
 	friend class CRezDir;
     friend class CRezTyp;
 	friend class CRezItm;
-	
+
 	// internal functions to access the resource file
-// THESE HAVE BEEN REPLACED WITH THE NEW CREZFILE CLASSES IN REZFILE.H 
+// THESE HAVE BEEN REPLACED WITH THE NEW CREZFILE CLASSES IN REZFILE.H
 //	DWORD		FileRead(DWORD Pos, DWORD Size, void* DataPtr);
 //	DWORD		FileWrite(DWORD Pos, DWORD Size, void* DataPtr);
 //	BOOL		FileOpen(const char* FileName, BOOL ReadOnly, BOOL CreateNew);
@@ -360,7 +360,7 @@ private:
 	BOOL		m_bLowerCaseUsed;		// If TRUE then lower case may be present in file and directory names (DEFAULT IS FALSE)
 	BOOL		m_bItemByIDUsed;		// If TRUE then Rez items can be accessed by their ID, if false then they can not be (DEFAULT IS FALSE)
 	unsigned int m_nByNameNumHashBins ;	// number of hash bins in the ItmByName hash table
-	unsigned int m_nByIDNumHashBins;	// number of hash bins in the ItmByID hash table 
+	unsigned int m_nByIDNumHashBins;	// number of hash bins in the ItmByID hash table
 	unsigned int m_nDirNumHashBins;		// number of hash bins in the Directory hash table
 	unsigned int m_nTypNumHashBins;		// number of hash bins in the Type hash table
 	CRezItmHashTableByName m_hashRezItmFreeList; // free list of RezItm's using the hash table element inside the RezItem

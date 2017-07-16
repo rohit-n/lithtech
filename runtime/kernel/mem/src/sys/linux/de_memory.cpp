@@ -89,7 +89,7 @@ void dm_Term()
 {
 
 	g_MemRefCount--;
-	
+
 	if(g_MemRefCount == 0)
 	{
 		// Restore the old new handler.
@@ -114,7 +114,7 @@ uint32 dm_GetNumAllocations()
 
 
 
-void* dalloc(uint32 size)
+void* dalloc(size_t size)
 {
 
 	if(size == 0)
@@ -130,7 +130,7 @@ void* dalloc(uint32 size)
 		fullAllocSize = size;
 	#endif
 
-	
+
 	char *ptr;
 	// Try to allocate the memory.
 	{
@@ -156,11 +156,11 @@ void* dalloc(uint32 size)
 	++g_nTotalAllocations;
 
 	return ptr;
-	
+
 }
 
 
-void* dalloc_z(uint32 size)
+void* dalloc_z(size_t size)
 {
 	void *ret;
 
@@ -197,7 +197,7 @@ void dfree(void *ptr)
 
 	--g_nAllocations;
 	++g_nTotalFrees;
-	
+
 	{
 		CountAdder cntAdd(&g_PD_Free);
 		LTMemFree(pCharPtr);

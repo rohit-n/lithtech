@@ -57,7 +57,7 @@ public:
 	{
 		if (g_CV_ShowFileAccess >= 2)
 		{
-			dsi_ConsolePrint("close stream %p num reads = %u bytes read = %u", 
+			dsi_ConsolePrint("close stream %p num reads = %u bytes read = %u",
 				this, m_nNumReadCalls, m_nTotalBytesRead);
 		}
 
@@ -105,7 +105,7 @@ public:
 		*pos = (uint32)(ftell(m_pFile) - m_SeekOffset);
 		return LT_OK;
 	}
-	
+
 	LTRESULT SeekTo(uint32 offset)
 	{
 		long ret;
@@ -147,7 +147,7 @@ public:
 				return LT_OK;
 			}
 			else
-			{			
+			{
 				memset(pData, 0, size);
 				m_ErrorStatus = 1;
 				return LT_ERROR;
@@ -167,11 +167,11 @@ void UnixFileStream::Release()
 }
 
 // LTFindInfo::m_pInternal..
-typedef struct LTFindData
+typedef struct
 {
 	FileTree		*m_pTree;
 	long			m_Handle;
-};
+} LTFindData;
 
 
 
@@ -192,7 +192,7 @@ int df_OpenTree(const char *pName, HLTFileTree *&pTreePointer)
 	long handle, allocSize;
 	FileTree *pTree;
 	struct stat info;
-	
+
 	pTreePointer = NULL;
 
 	// See if it exists..
@@ -261,14 +261,14 @@ int df_GetFileInfo(HLTFileTree* hTree, const char *pName, LTFindInfo *pInfo)
 		sprintf(fullName, "%s/%s", pTree->m_BaseName, pName);
 		char* pLastSlash = strrchr(fullName, '/');
 		*(pLastSlash++) = '\0';
-		
+
 		int numMatches;
 		dirent** namelist;
 		if ((numMatches = scandir(fullName, &namelist, 0, alphasort)) > 0)
 		{
 		        for (int iMatch = 0; iMatch < numMatches; ++iMatch)
 			{
-				if (namelist[iMatch]->d_type != DT_DIR) 
+				if (namelist[iMatch]->d_type != DT_DIR)
 				{
 					strncpy(pInfo->m_Name, namelist[iMatch]->d_name, 255);
 					pInfo->m_Type = FILE_TYPE;
@@ -326,7 +326,7 @@ int df_GetFullFilename(HLTFileTree hTree, char *pName, char *pOutName, int maxLe
 
 	if(pTree->m_TreeType != UnixTree)
 		return 0;
-	
+
 	sprintf(pOutName, "%s/%s", pTree->m_BaseName, pName);
 	return 1;
 }

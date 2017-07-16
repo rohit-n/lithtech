@@ -189,6 +189,8 @@ add_executable(${PROJECT_NAME} WIN32
 	)
 else(WIN32)
 add_executable(${PROJECT_NAME}
+	../kernel/mem/src/sys/linux/de_memory.cpp
+	../kernel/io/src/sys/linux/linuxfile.cpp
 	../controlfilemgr/controlfilemgr.cpp
 	src/client_filemgr.cpp
 	../kernel/src/icommandlineargs.cpp
@@ -204,8 +206,9 @@ add_executable(${PROJECT_NAME}
 	../server/src/server_iltsoundmgr.cpp
 	../sound/src/soundmgr.cpp
 	../shared/src/transformlt_impl.cpp
-        ../kernel/src/sys/linux/videomgr.cpp
-        ../kernel/src/sys/linux/linuxdsys.cpp
+	../kernel/src/sys/linux/videomgr.cpp
+	../kernel/src/sys/linux/linuxdsys.cpp
+	../kernel/src/sys/linux/counter.cpp
 	src/client_iltvideomgr.cpp
 	../shared/src/interface_linkage.cpp
 	../world/src/world_blind_object_data.cpp
