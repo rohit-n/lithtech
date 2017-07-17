@@ -201,6 +201,7 @@ add_executable(${PROJECT_NAME}
 	src/sys/linux/linuxconsole_impl.cpp
 	../kernel/src/sys/linux/stringhelper.cpp
 	../kernel/src/sys/linux/stringmgr.cpp
+	../kernel/src/sys/linux/streamsim.cpp
     ${exec_src})
 endif(WIN32)
 set_target_properties(${PROJECT_NAME}
