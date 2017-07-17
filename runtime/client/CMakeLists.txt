@@ -198,7 +198,9 @@ add_executable(${PROJECT_NAME}
 	../kernel/src/sys/linux/linuxdsys.cpp
 	../kernel/src/sys/linux/counter.cpp
 	../kernel/src/sys/linux/load_pcx.cpp
-	src/sys/linux/linuxconsole_impl.cpp 
+	src/sys/linux/linuxconsole_impl.cpp
+	../kernel/src/sys/linux/stringhelper.cpp
+	../kernel/src/sys/linux/stringmgr.cpp
     ${exec_src})
 endif(WIN32)
 set_target_properties(${PROJECT_NAME}
