@@ -9,8 +9,7 @@ else(CMAKE_CL_64)
 endif(CMAKE_CL_64)
 endif(WIN32)
 
-if(WIN32)
-add_executable(${PROJECT_NAME} WIN32
+set(exec_src
 	../controlfilemgr/controlfilemgr.cpp
 	src/client_filemgr.cpp
 	../kernel/src/icommandlineargs.cpp
@@ -52,288 +51,155 @@ add_executable(${PROJECT_NAME} WIN32
 	../shared/src/compress.cpp
 	../shared/src/concommand.cpp
 	../shared/src/conparse.cpp
+	../kernel/src/sys/sdl2/InputSDL2.cpp
 	src/console.cpp
 	src/consolecommands.cpp
 	src/cutil.cpp
+	../world/src/de_mainworld.cpp
+	../world/src/de_nodes.cpp
+	../world/src/de_objects.cpp
+	../shared/src/debuggeometry.cpp
+	../kernel/src/debugging.cpp
+	src/debuggraphmgr.cpp
+	../shared/src/dhashtable.cpp
+	../shared/src/dtxmgr.cpp
+	../shared/src/engine_vars.cpp
+	src/errorlog.cpp
+	../shared/src/findobj.cpp
+	../shared/src/ftclient.cpp
+	../shared/src/ftserv.cpp
+	../world/src/fullintersectline.cpp
+	../server/src/game_serialize.cpp
+	../shared/src/gamemath.cpp
+	../shared/src/genericprop_setup.cpp
+	../shared/src/genltstream.cpp
+	../shared/src/geometry.cpp
+	../shared/src/geomroutines.cpp
+	../shared/src/impl_common.cpp
+	../server/src/interlink.cpp
+	../world/src/intersect_line.cpp
+	../world/src/intersectsweptsphere.cpp
+	../shared/src/leech.cpp
+	../world/src/light_table.cpp
+	../shared/src/lightmap_compress.cpp
+	../shared/src/lightmap_planes.cpp
+	src/linesystem.cpp
+	../kernel/net/src/localdriver.cpp
+	src/ltbenchmark_impl.cpp
+	../../sdk/inc/lterror.cpp
+	src/ltinfo_impl.cpp
+	../kernel/mem/src/ltmemory.cpp
+	../shared/src/ltmessage.cpp
+	src/ltmessage_client.cpp
+	../server/src/ltmessage_server.cpp
+	../../sdk/inc/ltmodule.cpp
+	../../sdk/inc/ltobjref.cpp
+	../../sdk/inc/ltquatbase.cpp
+	src/lttexturestring.cpp
+	../shared/src/lttimer.cpp
+	src/memorywatch.cpp
+	../model/src/model.cpp
+	../model/src/model_load.cpp
+	../model/src/modelallocations.cpp
+	../shared/src/motion.cpp
+	../shared/src/moveobject.cpp
+	../shared/src/moveplayer.cpp
+	../kernel/net/src/netmgr.cpp
+	../shared/src/nexus.cpp
+	../shared/src/objectmgr.cpp
+	../kernel/net/src/packet.cpp
+	../shared/src/parse_world_info.cpp
+	src/particlesystem.cpp
+	../shared/src/pixelformat.cpp
+	src/polygrid.cpp
+	src/predict.cpp
+	../shared/src/ratetracker.cpp
+	../server/src/s_client.cpp
+	../server/src/s_concommand.cpp
+	../server/src/s_intersect.cpp
+	../server/src/s_net.cpp
+	../server/src/s_object.cpp
+	../server/src/server_consolestate.cpp
+	../server/src/server_extradata.cpp
+	../server/src/server_filemgr.cpp
+	../server/src/serverde_impl.cpp
+	../server/src/serverevent.cpp
+	../server/src/servermgr.cpp
+	src/setupobject.cpp
+	src/shellnet.cpp
+	src/shelltransfer.cpp
+	src/shellutil.cpp
+	../server/src/smoveabstract.cpp
+	../sound/src/soundbuffer.cpp
+	../sound/src/sounddata.cpp
+	../sound/src/soundinstance.cpp
+	../server/src/soundtrack.cpp
+	src/sprite.cpp
+	../shared/src/spritecontrolimpl.cpp
+	../shared/src/stacktrace.cpp
+	../shared/src/stdlterror.cpp
+	../shared/src/strtools.cpp
+	src/texturestring.cpp
+	../model/src/transformmaker.cpp
+	../shared/src/version_info.cpp
+	src/volumeeffect.cpp
+	src/watermark.cpp
+	../sound/src/wave.cpp
+	../world/src/world_tree.cpp)
+
+if(WIN32)
+add_executable(${PROJECT_NAME} WIN32
 	../model/src/sys/d3d/d3d_model_load.cpp
 	../render_b/src/sys/d3d/d3ddrawprim.cpp
 	../render_b/src/sys/d3d/d3dtexinterface.cpp
 	../kernel/io/src/sys/win/de_file.cpp
-	../world/src/de_mainworld.cpp
-	../world/src/de_nodes.cpp
-	../world/src/de_objects.cpp
-	../shared/src/debuggeometry.cpp
-	../kernel/src/debugging.cpp
-	src/debuggraphmgr.cpp
-	../shared/src/dhashtable.cpp
-	../shared/src/dtxmgr.cpp
-	../shared/src/engine_vars.cpp
-	src/errorlog.cpp
-	../shared/src/findobj.cpp
-	../shared/src/ftclient.cpp
-	../shared/src/ftserv.cpp
-	../world/src/fullintersectline.cpp
-	../server/src/game_serialize.cpp
-	../shared/src/gamemath.cpp
-	../shared/src/genericprop_setup.cpp
-	../shared/src/genltstream.cpp
-	../shared/src/geometry.cpp
-	../shared/src/geomroutines.cpp
-	../shared/src/impl_common.cpp
-	../server/src/interlink.cpp
-	../world/src/intersect_line.cpp
-	../world/src/intersectsweptsphere.cpp
-	../shared/src/leech.cpp
-	../world/src/light_table.cpp
-	../shared/src/lightmap_compress.cpp
-	../shared/src/lightmap_planes.cpp
-	src/linesystem.cpp
-	../kernel/net/src/localdriver.cpp
-	src/ltbenchmark_impl.cpp
-	../../sdk/inc/lterror.cpp
-	src/ltinfo_impl.cpp
-	../kernel/mem/src/ltmemory.cpp
-	../shared/src/ltmessage.cpp
-	src/ltmessage_client.cpp
-	../server/src/ltmessage_server.cpp
-	../../sdk/inc/ltmodule.cpp
-	../../sdk/inc/ltobjref.cpp
-	../../sdk/inc/ltquatbase.cpp
-	src/lttexturestring.cpp
-	../shared/src/lttimer.cpp
-	src/memorywatch.cpp
-	../model/src/model.cpp
-	../model/src/model_load.cpp
-	../model/src/modelallocations.cpp
-	../shared/src/motion.cpp
-	../shared/src/moveobject.cpp
-	../shared/src/moveplayer.cpp
-	../kernel/net/src/netmgr.cpp
-	../shared/src/nexus.cpp
 	#../model/src/sys/null/nullmodel_load.cpp
-	../shared/src/objectmgr.cpp
-	../kernel/net/src/packet.cpp
-	../shared/src/parse_world_info.cpp
-	src/particlesystem.cpp
-	../shared/src/pixelformat.cpp
-	src/polygrid.cpp
-	src/predict.cpp
-	../shared/src/ratetracker.cpp
-	../server/src/s_client.cpp
-	../server/src/s_concommand.cpp
-	../server/src/s_intersect.cpp
-	../server/src/s_net.cpp
-	../server/src/s_object.cpp
-	../server/src/server_consolestate.cpp
-	../server/src/server_extradata.cpp
-	../server/src/server_filemgr.cpp
-	../server/src/serverde_impl.cpp
-	../server/src/serverevent.cpp
-	../server/src/servermgr.cpp
-	src/setupobject.cpp
-	src/shellnet.cpp
-	src/shelltransfer.cpp
-	src/shellutil.cpp
-	../server/src/smoveabstract.cpp
-	../sound/src/soundbuffer.cpp
-	../sound/src/sounddata.cpp
-	../sound/src/soundinstance.cpp
-	../server/src/soundtrack.cpp
-	src/sprite.cpp
-	../shared/src/spritecontrolimpl.cpp
-	../shared/src/stacktrace.cpp
-	../shared/src/stdlterror.cpp
-	../shared/src/strtools.cpp
-	src/texturestring.cpp
-	../model/src/transformmaker.cpp
-	../shared/src/version_info.cpp
-	src/volumeeffect.cpp
-	src/watermark.cpp
-	../sound/src/wave.cpp
-	../world/src/world_tree.cpp
-		../kernel/src/sys/win/lt_cursor_impl.cpp
-		../kernel/src/sys/win/bindmgr.cpp
-		../kernel/src/sys/win/binkvideomgrimpl.cpp
-		../kernel/src/sys/win/client.cpp
-		../kernel/src/sys/win/counter.cpp
-		src/sys/win/customfontfilemgr.cpp
-		../kernel/mem/src/sys/win/de_memory.cpp
-		../kernel/src/sys/win/dshowvideomgrimpl.cpp
-		../shared/src/sys/win/dstreamopenqueuemgr.cpp
-		../kernel/src/sys/win/dsys_interface.cpp
-		../kernel/src/sys/win/dutil.cpp
-		../kernel/src/sys/win/input.cpp
-		../kernel/src/sys/win/InputSim.cpp
-		../kernel/src/sys/win/interface_helpers.cpp
-		../kernel/src/sys/win/load_pcx.cpp
-		../kernel/src/sys/win/ltdirectmusic_impl.cpp
-		../kernel/src/sys/win/ltdirectmusiccontrolfile.cpp
-		../kernel/src/sys/win/ltdirectmusicloader.cpp
-		../kernel/src/sys/win/lthread.cpp
-		../kernel/src/sys/win/ltlibraryloader.cpp
-		../kernel/src/sys/win/ltrendermgr_impl.cpp
-		../kernel/src/sys/win/ltthread.cpp
-		../kernel/src/sys/win/musicdriver.cpp
-		../kernel/src/sys/win/render.cpp
-		../kernel/src/sys/win/streamsim.cpp
-		../kernel/src/sys/win/stringmgr.cpp
-		../kernel/src/sys/win/systeminfo.cpp
-		../kernel/src/sys/win/text_mgr.cpp
-		src/sys/win/texturestringimage.cpp
-		../kernel/src/sys/win/timemgr.cpp
-		../kernel/net/src/sys/win/udpdriver.cpp
-		../kernel/src/sys/win/version_resource.cpp
-		../kernel/src/sys/win/videomgr.cpp
-		src/sys/win/winclientde_impl.cpp
-		src/sys/win/winconsole_impl.cpp
-	)
+	../kernel/src/sys/win/lt_cursor_impl.cpp
+	../kernel/src/sys/win/bindmgr.cpp
+	../kernel/src/sys/win/binkvideomgrimpl.cpp
+	../kernel/src/sys/win/client.cpp
+	../kernel/src/sys/win/counter.cpp
+	src/sys/win/customfontfilemgr.cpp
+	../kernel/mem/src/sys/win/de_memory.cpp
+	../kernel/src/sys/win/dshowvideomgrimpl.cpp
+	../shared/src/sys/win/dstreamopenqueuemgr.cpp
+	../kernel/src/sys/win/dsys_interface.cpp
+	../kernel/src/sys/win/dutil.cpp
+	../kernel/src/sys/win/input.cpp
+	../kernel/src/sys/win/InputSim.cpp
+	../kernel/src/sys/win/interface_helpers.cpp
+	../kernel/src/sys/win/load_pcx.cpp
+	../kernel/src/sys/win/ltdirectmusic_impl.cpp
+	../kernel/src/sys/win/ltdirectmusiccontrolfile.cpp
+	../kernel/src/sys/win/ltdirectmusicloader.cpp
+	../kernel/src/sys/win/lthread.cpp
+	../kernel/src/sys/win/ltlibraryloader.cpp
+	../kernel/src/sys/win/ltrendermgr_impl.cpp
+	../kernel/src/sys/win/ltthread.cpp
+	../kernel/src/sys/win/musicdriver.cpp
+	../kernel/src/sys/win/render.cpp
+	../kernel/src/sys/win/streamsim.cpp
+	../kernel/src/sys/win/stringmgr.cpp
+	../kernel/src/sys/win/systeminfo.cpp
+	../kernel/src/sys/win/text_mgr.cpp
+	src/sys/win/texturestringimage.cpp
+	../kernel/src/sys/win/timemgr.cpp
+	../kernel/net/src/sys/win/udpdriver.cpp
+	../kernel/src/sys/win/version_resource.cpp
+	../kernel/src/sys/win/videomgr.cpp
+	src/sys/win/winclientde_impl.cpp
+	src/sys/win/winconsole_impl.cpp
+	${exec_src})
 else(WIN32)
 add_executable(${PROJECT_NAME}
 	../kernel/mem/src/sys/linux/de_memory.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
-	../controlfilemgr/controlfilemgr.cpp
-	src/client_filemgr.cpp
-	../kernel/src/icommandlineargs.cpp
-	src/client_iltcommon.cpp
-	../server/src/server_iltcommon.cpp
-	../shared/src/shared_iltcommon.cpp
-	src/client_iltmodel.cpp
-	../shared/src/modellt_impl.cpp
-	../server/src/server_iltmodel.cpp
-	src/client_iltphysics.cpp
-	../server/src/server_iltphysics.cpp
-	../shared/src/shared_iltphysics.cpp
-	../server/src/server_iltsoundmgr.cpp
-	../sound/src/soundmgr.cpp
-	../shared/src/transformlt_impl.cpp
 	../kernel/src/sys/linux/videomgr.cpp
 	../kernel/src/sys/linux/linuxdsys.cpp
 	../kernel/src/sys/linux/counter.cpp
-	src/client_iltvideomgr.cpp
-	../shared/src/interface_linkage.cpp
-	../world/src/world_blind_object_data.cpp
-	../world/src/world_blocker_data.cpp
-	../world/src/world_blocker_math.cpp
-	src/world_client_bsp.cpp
-	../world/src/world_particle_blocker_data.cpp
-	../server/src/world_server_bsp.cpp
-	../world/src/world_shared_bsp.cpp
-	../model/src/animtracker.cpp
-	../shared/src/bdefs.cpp
-	../shared/src/classbind.cpp
-	../server/src/classmgr.cpp
-	src/client_formatmgr.cpp
-	src/client_graphmgr.cpp
-	src/client_ticks.cpp
 	../kernel/src/sys/linux/load_pcx.cpp
-	src/clientshell.cpp
-	src/cmoveabstract.cpp
-	src/cnet.cpp
-	src/cobject.cpp
-	../shared/src/collision.cpp
-	../shared/src/compress.cpp
-	../shared/src/concommand.cpp
-	../shared/src/conparse.cpp
-	../kernel/src/sys/sdl2/InputSDL2.cpp
-	src/console.cpp
-	src/consolecommands.cpp
-	../world/src/de_mainworld.cpp
-	../world/src/de_nodes.cpp
-	../world/src/de_objects.cpp
-	../shared/src/debuggeometry.cpp
-	../kernel/src/debugging.cpp
-	src/debuggraphmgr.cpp
-	../shared/src/dhashtable.cpp
-	../shared/src/engine_vars.cpp
-	src/errorlog.cpp
-	../shared/src/findobj.cpp
-	../shared/src/ftclient.cpp
-	../shared/src/ftserv.cpp
-	../world/src/fullintersectline.cpp
-	src/sys/linux/linuxconsole_impl.cpp # Key definitions
-	src/cutil.cpp # bind textures errors
-	src/clientde_impl.cpp # needs rendererframestats and all other d3d converted to ogl/vk
-	src/clientmgr.cpp  # needs audio/musicdriver
-	../shared/src/dtxmgr.cpp
-	../server/src/game_serialize.cpp
-	../shared/src/gamemath.cpp
-	../shared/src/genericprop_setup.cpp
-	../shared/src/genltstream.cpp
-	../shared/src/geometry.cpp
-	../shared/src/geomroutines.cpp
-	../shared/src/impl_common.cpp
-	../server/src/interlink.cpp
-	../world/src/intersect_line.cpp
-	../world/src/intersectsweptsphere.cpp
-	../shared/src/leech.cpp
-	../world/src/light_table.cpp
-	../shared/src/lightmap_compress.cpp
-	../shared/src/lightmap_planes.cpp
-	src/linesystem.cpp
-	../kernel/net/src/localdriver.cpp
-	src/ltbenchmark_impl.cpp
-	../../sdk/inc/lterror.cpp
-	src/ltinfo_impl.cpp
-	../kernel/mem/src/ltmemory.cpp
-	../shared/src/ltmessage.cpp
-	src/ltmessage_client.cpp
-	../server/src/ltmessage_server.cpp
-	../../sdk/inc/ltmodule.cpp
-	../../sdk/inc/ltobjref.cpp
-	../../sdk/inc/ltquatbase.cpp
-	src/lttexturestring.cpp
-	../shared/src/lttimer.cpp
-	src/memorywatch.cpp
-	../model/src/model.cpp
-	../model/src/model_load.cpp
-	../model/src/modelallocations.cpp
-	../shared/src/motion.cpp
-	../shared/src/moveobject.cpp
-	../shared/src/moveplayer.cpp
-	../kernel/net/src/netmgr.cpp
-	../shared/src/nexus.cpp
-	#../model/src/sys/null/nullmodel_load.cpp
-	../shared/src/objectmgr.cpp
-	../kernel/net/src/packet.cpp
-	../shared/src/parse_world_info.cpp
-	src/particlesystem.cpp
-	../shared/src/pixelformat.cpp
-	src/polygrid.cpp
-	src/predict.cpp
-	../shared/src/ratetracker.cpp
-	../server/src/s_client.cpp
-	../server/src/s_concommand.cpp
-	../server/src/s_intersect.cpp
-	../server/src/s_net.cpp
-	../server/src/s_object.cpp
-	../server/src/server_consolestate.cpp
-	../server/src/server_extradata.cpp
-	../server/src/server_filemgr.cpp
-	../server/src/serverde_impl.cpp
-	../server/src/serverevent.cpp
-	../server/src/servermgr.cpp
-	src/setupobject.cpp
-	src/shellnet.cpp
-	src/shelltransfer.cpp
-	src/shellutil.cpp
-	../server/src/smoveabstract.cpp
-	../sound/src/soundbuffer.cpp
-	../sound/src/sounddata.cpp
-	../sound/src/soundinstance.cpp
-	../server/src/soundtrack.cpp
-	src/sprite.cpp
-	../shared/src/spritecontrolimpl.cpp
-	../shared/src/stacktrace.cpp
-	../shared/src/stdlterror.cpp
-	../shared/src/strtools.cpp
-	src/texturestring.cpp
-	../model/src/transformmaker.cpp
-	../shared/src/version_info.cpp
-	src/volumeeffect.cpp
-	src/watermark.cpp
-	../sound/src/wave.cpp
-	../world/src/world_tree.cpp
-        )
+	src/sys/linux/linuxconsole_impl.cpp 
+    ${exec_src})
 endif(WIN32)
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME Lithtech)
@@ -375,7 +241,6 @@ else(WIN32)
 		../shared/src/sys/linux
 		/usr/include/SDL2)
 	target_link_libraries(${PROJECT_NAME}
-		SDL2
 		pthread)
 
 endif(WIN32)
@@ -410,7 +275,8 @@ target_link_libraries(${PROJECT_NAME}
 	LIB_RezMgr
 	LIB_Info
 	LIB_ILTSound
-	LIB_UI)
+	LIB_UI
+    SDL2)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
 	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -std=c++11")
