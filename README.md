@@ -81,3 +81,4 @@ Builds on linux
 - [ ] Target rules for targets named NOLF2_ClientShellDLL
 - [ ] Target rules for targets named NOLF2_ObjectDLL
 - [ ] Target rules for targets named NOLF2_ServerRes
+- [ ] Target rules for targets named FEAR_ClientFXDLL
