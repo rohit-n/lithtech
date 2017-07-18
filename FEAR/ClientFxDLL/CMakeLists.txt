@@ -19,7 +19,7 @@ set(SOURCES
   lightningfx.cpp
   LightningProps.cpp
   ltbmodelfx.cpp
-  ../../sdk/inc/ltmemhook.cpp
+#  ../../sdk/inc/ltmemhook.cpp # currently not found in the source tree
   ../../sdk/inc/ltmodule.cpp
   ../../sdk/inc/ltobjref.cpp
   MemoryPageMgr.cpp
@@ -28,7 +28,7 @@ set(SOURCES
   ParticleSystemFX.cpp
   ParticleSystemGroup.cpp
   ParticleSystemProps.cpp
-  ../../sdk/inc/performancemonitorhook.cpp
+#  ../../sdk/inc/performancemonitorhook.cpp # currently not found in the source tree
   PolyTrailFX.cpp
   PolyTrailProps.cpp
   RumbleFX.cpp
