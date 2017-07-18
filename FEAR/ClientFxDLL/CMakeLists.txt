@@ -19,16 +19,16 @@ set(SOURCES
   lightningfx.cpp
   LightningProps.cpp
   ltbmodelfx.cpp
-  ../../Engine/sdk/inc/ltmemhook.cpp
-  ../../Engine/sdk/inc/ltmodule.cpp
-  ../../Engine/sdk/inc/ltobjref.cpp
+  ../../sdk/inc/ltmemhook.cpp
+  ../../sdk/inc/ltmodule.cpp
+  ../../sdk/inc/ltobjref.cpp
   MemoryPageMgr.cpp
   OverlayFX.cpp
   ParticleSimulation.cpp
   ParticleSystemFX.cpp
   ParticleSystemGroup.cpp
   ParticleSystemProps.cpp
-  ../../Engine/sdk/inc/performancemonitorhook.cpp
+  ../../sdk/inc/performancemonitorhook.cpp
   PolyTrailFX.cpp
   PolyTrailProps.cpp
   RumbleFX.cpp
@@ -40,7 +40,7 @@ set(SOURCES
 )
 
 include_directories(
-  ../../Engine/sdk/inc
+  ../../sdk/inc
   ../../libs/platform
   ../../libs/stdlith
   ../shared
