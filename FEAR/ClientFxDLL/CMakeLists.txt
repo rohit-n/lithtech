@@ -1,4 +1,4 @@
-project( Game_ClientFX )
+project( FEAR_ClientFX )
 
 set(SOURCES
   BaseCreateFX.cpp
@@ -19,16 +19,16 @@ set(SOURCES
   lightningfx.cpp
   LightningProps.cpp
   ltbmodelfx.cpp
-  ../../Engine/sdk/inc/ltmemhook.cpp
-  ../../Engine/sdk/inc/ltmodule.cpp
-  ../../Engine/sdk/inc/ltobjref.cpp
+#  ../../sdk/inc/ltmemhook.cpp # currently not found in the source tree
+  ../../sdk/inc/ltmodule.cpp
+  ../../sdk/inc/ltobjref.cpp
   MemoryPageMgr.cpp
   OverlayFX.cpp
   ParticleSimulation.cpp
   ParticleSystemFX.cpp
   ParticleSystemGroup.cpp
   ParticleSystemProps.cpp
-  ../../Engine/sdk/inc/performancemonitorhook.cpp
+#  ../../sdk/inc/performancemonitorhook.cpp # currently not found in the source tree
   PolyTrailFX.cpp
   PolyTrailProps.cpp
   RumbleFX.cpp
@@ -40,10 +40,10 @@ set(SOURCES
 )
 
 include_directories(
-  ../../Engine/sdk/inc
+  ../../sdk/inc
   ../../libs/platform
   ../../libs/stdlith
-  ../shared
+  ../Shared
 )
 
 add_definitions(
@@ -58,9 +58,14 @@ add_definitions(
 else(WIN32)
 add_definitions(
   -D_LINUX
+  -D__LINUX
 )
 endif(WIN32)
 
-add_library( ${project} SHARED ${SOURCES} )
+add_library( ${PROJECT_NAME} SHARED ${SOURCES} )
 
-target_link_libraries( ${project} shared_assert )
+target_link_libraries( ${PROJECT_NAME} shared_assert )
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive --std=c++11")
+endif(CMAKE_COMPILER_IS_GNUCXX)
