@@ -105,13 +105,15 @@ if(BUILD_NOLF2)
 endif(BUILD_NOLF2)
 
 if(BUILD_FEAR)
-	add_subdirectory(libs/MFCStub)						# LIB_MFCStub
-	add_subdirectory(libs/ButeMgr)						# LIB_ButeMgr
-	add_subdirectory(libs/CryptMgr)						# LIB_CryptMgr
-	add_subdirectory(libs/RegMgr)						# LIB_RegMgr
-	add_subdirectory(libs/LTGUIMgr)						# LIB_LTGUIMgr
-	add_subdirectory(libs/ServerDir)					# ServerDir
-	add_subdirectory(libs/WONAPI)						# LIB_WONAPI
+    if(NOT BUILD_NOLF2)
+        add_subdirectory(libs/MFCStub)						# LIB_MFCStub
+        add_subdirectory(libs/ButeMgr)						# LIB_ButeMgr
+        add_subdirectory(libs/CryptMgr)						# LIB_CryptMgr
+        add_subdirectory(libs/RegMgr)						# LIB_RegMgr
+        add_subdirectory(libs/LTGUIMgr)						# LIB_LTGUIMgr
+        add_subdirectory(libs/ServerDir)					# ServerDir
+        add_subdirectory(libs/WONAPI)						# LIB_WONAPI
+    endif(NOT BUILD_NOLF2)
 	add_subdirectory(FEAR/ClientFxDLL)					# ClientFXDLL
 #	add_subdirectory(NOLF2/ClientRes/TO2)				# ClientRes
 #	add_subdirectory(NOLF2/ClientShellDLL/TO2)			# ClientShellDLL
