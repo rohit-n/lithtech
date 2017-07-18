@@ -5,7 +5,7 @@ option(BUILD_ENGINE "Build engine" ON)
 option(BUILD_NOLF2 "Build No One Lives Forever 2 game code" ON)
 option(BUILD_TRON "Build Tron 2.0 game code" OFF)
 option(BUILD_BLOOD2 "Build Blood II game code" OFF)
-option(BUILD_FEAR "Build F.E.A.R. game code" OFF)
+option(BUILD_FEAR "Build F.E.A.R. game code" ON)
 option(BUILD_NOLF "Build No One Lives Forever game code" OFF)
 option(BUILD_SHOGO "Build Shogo game code" OFF)
 option(BUILD_TOOLS "Build tools" OFF)
@@ -103,6 +103,21 @@ if(BUILD_NOLF2)
 	add_subdirectory(NOLF2/ObjectDLL/TO2)				# ObjectDLL
 	add_subdirectory(NOLF2/ServerRes/TO2)				# ServerRes
 endif(BUILD_NOLF2)
+
+if(BUILD_FEAR)
+	add_subdirectory(libs/MFCStub)						# LIB_MFCStub
+	add_subdirectory(libs/ButeMgr)						# LIB_ButeMgr
+	add_subdirectory(libs/CryptMgr)						# LIB_CryptMgr
+	add_subdirectory(libs/RegMgr)						# LIB_RegMgr
+	add_subdirectory(libs/LTGUIMgr)						# LIB_LTGUIMgr
+	add_subdirectory(libs/ServerDir)					# ServerDir
+	add_subdirectory(libs/WONAPI)						# LIB_WONAPI
+	add_subdirectory(FEAR/ClientFxDLL)					# ClientFXDLL
+#	add_subdirectory(NOLF2/ClientRes/TO2)				# ClientRes
+#	add_subdirectory(NOLF2/ClientShellDLL/TO2)			# ClientShellDLL
+#	add_subdirectory(NOLF2/ObjectDLL/TO2)				# ObjectDLL
+#	add_subdirectory(NOLF2/ServerRes/TO2)				# ServerRes
+endif(BUILD_FEAR)
 
 if(BUILD_TRON)
 	if(NOT BUILD_NOLF2)
