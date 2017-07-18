@@ -43,7 +43,7 @@ include_directories(
   ../../sdk/inc
   ../../libs/platform
   ../../libs/stdlith
-  ../shared
+  ../Shared
 )
 
 add_definitions(
