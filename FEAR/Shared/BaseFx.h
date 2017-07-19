@@ -13,9 +13,9 @@
 
 // Includes....
 #include "ltbasedefs.h"
-#include "fxedinterface.h"
+// #include "fxedinterface.h"
 #include "ClientFxProp.h"
-#include "iltphysicssim.h"
+#include "iltphysics.h"
 #include "FastList.h"
 #include "IClientFXMgr.h"
 

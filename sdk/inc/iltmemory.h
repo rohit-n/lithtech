@@ -1,6 +1,8 @@
 #ifndef __ILTMEMORY_H__
 #define __ILTMEMORY_H__
 
+class ILTMemory;
+
 //standard symbols
 #ifndef __LTBASEDEFS_H__
 #	include "ltbasedefs.h"

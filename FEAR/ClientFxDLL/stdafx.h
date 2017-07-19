@@ -12,7 +12,7 @@
 #	define STRCONV_BUFFER_LENGTH 256
 #endif
 
-#include "engine.h"
+#include "lith.h"
 
 #include <stdio.h>
 
@@ -29,7 +29,7 @@
 #include "iltclient.h"
 #include "iltserver.h"
 #include "iltmessage.h"
-#include "globals.h"
+#include "Globals.h"
 
 #include "iltmodel.h"
 #include "iltphysics.h"

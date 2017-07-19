@@ -194,11 +194,15 @@ else(WIN32)
 add_executable(${PROJECT_NAME}
 	../kernel/mem/src/sys/linux/de_memory.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
+	../kernel/src/sys/linux/client.cpp
 	../kernel/src/sys/linux/videomgr.cpp
 	../kernel/src/sys/linux/linuxdsys.cpp
 	../kernel/src/sys/linux/counter.cpp
 	../kernel/src/sys/linux/load_pcx.cpp
+	../kernel/src/sys/linux/ltthread.cpp
+	../kernel/src/sys/linux/lthread.cpp
 	src/sys/linux/linuxconsole_impl.cpp
+	src/sys/linux/linuxclientde_impl.cpp
 	../kernel/src/sys/linux/stringhelper.cpp
 	../kernel/src/sys/linux/stringmgr.cpp
 	../kernel/src/sys/linux/streamsim.cpp

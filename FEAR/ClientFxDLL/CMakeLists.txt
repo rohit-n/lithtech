@@ -1,4 +1,4 @@
-project( FEAR_ClientFX )
+project( FEAR_ClientFXDLL )
 
 set(SOURCES
   BaseCreateFX.cpp
@@ -19,7 +19,7 @@ set(SOURCES
   lightningfx.cpp
   LightningProps.cpp
   ltbmodelfx.cpp
-#  ../../sdk/inc/ltmemhook.cpp # currently not found in the source tree
+  ../../runtime/kernel/mem/src/ltmemory.cpp # currently not found in the source tree
   ../../sdk/inc/ltmodule.cpp
   ../../sdk/inc/ltobjref.cpp
   MemoryPageMgr.cpp
@@ -41,7 +41,7 @@ set(SOURCES
 
 include_directories(
   ../../sdk/inc
-  ../../libs/platform
+  ../../libs/lith
   ../../libs/stdlith
   ../Shared
 )

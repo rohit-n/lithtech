@@ -37,14 +37,14 @@ inline BOOL PtInRect(RECT* pRect, int x, int y)
 // Helper classes
 
 template<class TYPE>
-class CRange : public TVector2<TYPE>
+class CRange : public LTVector2<TYPE>
 {
 	public:
 
 		CRange() { }
 		CRange(TYPE tMin, TYPE tMax) { x = tMin; y = tMax; }
 		
-		const CRange& operator = ( const TVector2<TYPE> &vec2 )
+		const CRange& operator = ( const LTVector2<TYPE> &vec2 )
 		{ 
 			x = vec2.x;
 			y = vec2.y; 
