@@ -122,3 +122,29 @@ unsigned long cnt_EndCounterFinal(CounterFinal &pCounter)
 {
 	return pCounter.EndMicro();
 }
+
+// Clears the totals
+void CountPercent::Clear()
+{
+	m_Finger[0] = 0;
+	m_Finger[1] = 0;
+	m_TotalIn[0] = 0;
+	m_TotalIn[1] = 0;
+	m_TotalOut[0] = 0;
+	m_TotalOut[1] = 0;
+
+	m_iIn = 0;
+}
+
+uint CountPercent::In()
+{
+	if (m_iIn++)
+		return 0;
+    return 0;
+}
+uint CountPercent::Out()
+{
+	if (--m_iIn)
+		return 0;
+    return 0;
+}
