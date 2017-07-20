@@ -194,6 +194,7 @@ else(WIN32)
 add_executable(${PROJECT_NAME}
 	../kernel/mem/src/sys/linux/de_memory.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
+	../kernel/src/sys/linux/timemgr.cpp
 	../kernel/src/sys/linux/client.cpp
 	../kernel/src/sys/linux/videomgr.cpp
 	../kernel/src/sys/linux/linuxdsys.cpp

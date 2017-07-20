@@ -153,6 +153,8 @@ class ClientGlob {
 
     HINSTANCE       m_hInstance;
 */
+    SDL_Window      *m_window;
+
     char            *m_WndClassName;
     const char      *m_WndCaption;
 
