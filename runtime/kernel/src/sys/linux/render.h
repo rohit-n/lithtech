@@ -8,7 +8,16 @@ struct RMode;
 //  but are now staticly linked.
 extern RMode* rdll_GetSupportedModes();
 extern void rdll_FreeModeList(RMode *pModes);
-extern void rdll_RenderDLLSetup(RenderStruct *pStruct);
+void rdll_RenderDLLSetup(RenderStruct *pStruct);
+/*
+#ifdef __ENABLE_VK
+#include "vk_render.h"
+#endif
+*/
+#ifdef __ENABLE_OGL
+#include "ogl_render.h"
+#endif
+
 //  End.
 #ifndef __RENDERSTRUCT_H__
 #include "renderstruct.h"

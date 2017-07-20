@@ -147,8 +147,10 @@ set(exec_src
 	../sound/src/wave.cpp
 	../world/src/world_tree.cpp)
 
+set(render_src )
+set(libs )
 if(WIN32)
-add_executable(${PROJECT_NAME} WIN32
+	set(exec_src WIN32
 	../model/src/sys/d3d/d3d_model_load.cpp
 	../render_b/src/sys/d3d/d3ddrawprim.cpp
 	../render_b/src/sys/d3d/d3dtexinterface.cpp
@@ -191,7 +193,7 @@ add_executable(${PROJECT_NAME} WIN32
 	src/sys/win/winconsole_impl.cpp
 	${exec_src})
 else(WIN32)
-add_executable(${PROJECT_NAME}
+	set(exec_src
 	../kernel/mem/src/sys/linux/de_memory.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
 	../kernel/src/sys/linux/timemgr.cpp
@@ -210,8 +212,6 @@ add_executable(${PROJECT_NAME}
 	../kernel/src/sys/linux/streamsim.cpp
     ${exec_src})
 endif(WIN32)
-set_target_properties(${PROJECT_NAME}
-	PROPERTIES OUTPUT_NAME Lithtech)
 
 include_directories(src
 	../../sdk/inc
@@ -241,7 +241,7 @@ include_directories(src
 if(WIN32)
 	include_directories(../kernel/src/sys/win
 		../shared/src/sys/win)
-	target_link_libraries(${PROJECT_NAME}
+	set(libs ${libs}
 		LIB_DShow
 		LIB_D3DRender
 		winmm)
@@ -249,7 +249,7 @@ else(WIN32)
 	include_directories(../kernel/src/sys/linux
 		../shared/src/sys/linux
 		/usr/include/SDL2)
-	target_link_libraries(${PROJECT_NAME}
+	set(libs ${libs}
 		pthread)
 
 endif(WIN32)
@@ -265,7 +265,7 @@ if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 
 
 		#endif(CMAKE_CL_64)
-		target_link_libraries(${PROJECT_NAME}
+	set(libs ${libs}
 			ddraw
 			d3dx9
 			d3d9
@@ -276,7 +276,7 @@ if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 			strmiids)
 endif(ENABLE_DIRECTX)
 
-target_link_libraries(${PROJECT_NAME}
+set(libs ${libs}
 	LIB_Lith
 	LIB_StdLith
 	LIB_ZLib
@@ -287,19 +287,32 @@ target_link_libraries(${PROJECT_NAME}
 	LIB_UI
     SDL2)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -std=c++11")
-endif(CMAKE_COMPILER_IS_GNUCXX)
-
 
 if(ENABLE_OPENGL)
 	include_directories(../render_a/src/sys/ogl)
+    add_definitions(-D__ENABLE_OGL)
+	set(exec_src 
+	../render_a/src/sys/ogl/common_init.cpp
+	${exec_src})
+	set(libs ${libs}
+		GL
+		)
 endif(ENABLE_OPENGL)
 
 if(ENABLE_VULKAN)
 	include_directories(../render_a/src/sys/vk)
+    add_definitions(-D__ENABLE_VK)
 endif(ENABLE_VULKAN)
 
 if(ENABLE_D3D)
 	include_directories(../render_a/src/sys/d3d)
 endif(ENABLE_D3D)
+
+add_executable(${PROJECT_NAME} ${exec_src})
+set_target_properties(${PROJECT_NAME}
+	PROPERTIES OUTPUT_NAME Lithtech)
+target_link_libraries(${PROJECT_NAME} ${libs})
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -std=c++11")
+endif(CMAKE_COMPILER_IS_GNUCXX)

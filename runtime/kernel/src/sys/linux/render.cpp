@@ -41,6 +41,18 @@ extern int32	g_CV_CursorCenter;
 RMode g_RMode;
 
 RenderStruct g_Render;
+void rdll_RenderDLLSetup(RenderStruct *pStruct)
+{
+#ifdef LT_VK_AVAILABLE	
+	ci_string render(command_line_args->FindArgDash("render"));
+	if(render == ci_string("vulkan"))
+		rdll_VKRenderSetup(pStruct);
+	else
+#endif
+		rdll_OGlRenderSetup(pStruct);
+	
+}
+
 
 LTRESULT r_InitRender(RMode *pMode, const char *window_name)
 {
@@ -72,4 +84,11 @@ LTRESULT r_InitRender(RMode *pMode, const char *window_name)
 LTRESULT r_TermRender(int surfaceHandle, bool unload)
 {
     return LT_OK;
+}
+
+
+int RenderStruct::Init(RenderStructInit * pInit)
+{
+	pInit->m_RendererVersion = LTRENDER_VERSION;
+	return 0;
 }
