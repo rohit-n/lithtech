@@ -128,7 +128,7 @@ class CClientMgr {
 
         // Initialize the client.. the client will hang onto pResources, so
         // allocate it if necessary..
-        LTRESULT                    Init(const char *resTrees[MAX_RESTREES], uint32 nResTrees, uint32 nNumConfigs, const char **ppConfigFileName);
+        LTRESULT                    Init(const char **resTrees, uint32 nResTrees, uint32 nNumConfigs, const char **ppConfigFileName);
 
         //shuts down everything
         void Term();
@@ -347,12 +347,12 @@ class CClientMgr {
 		// Required because shells can be deleted and new shells set up while m_pCurShell
 		// is still on the call stack.
 		CClientShell            *m_pOldShell;
-		
+
 		// Turn if the clientshell is being updated, otherwise false.  Used for determining
 		// strategy when handling EndShell.
 		bool					m_bInCurShellUpdate;
 
-        
+
         int                     m_LastErrorCode;
         uint32                  m_ExceptionFlags;   // Flags from the last exception thrown.
 

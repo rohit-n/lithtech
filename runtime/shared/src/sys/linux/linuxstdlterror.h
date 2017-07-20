@@ -8,7 +8,7 @@
 //
 // COPYRIGHT : Monolith Productions Inc.
 //
-// ORIGN     : 
+// ORIGN     :
 //
 // ------------------------------------------------------------------------- //
 
@@ -21,9 +21,8 @@
 // NONE, don't include things here, because many things include this file
 // and we don't want to pull everything into each file
 
-#include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
-
 // ------------------------------------------------------------------------- //
 // Typedefs & Defines
 // ------------------------------------------------------------------------- //
@@ -34,15 +33,15 @@
 
 class CLINUXError : public IBaseError {
 	public:
-		void  CriticalError (char *module, char *eStr) {
+		void  CriticalError (const char *module, const char *eStr) {
 			#ifdef __DEBUG
-			printf("%s: %s\n",module, eStr);
+			std::cerr << module << ": " << eStr << '\n';
 			exit(-1);
 			#endif
 		}
-		void  RecoverableError (char *module, char *eStr) {
+		void  RecoverableError (const char *module, const char *eStr) {
 			#ifdef __DEBUG
-			printf("%s: %s\n",module, eStr);
+			std::cerr << module << ": " << eStr << '\n';
 			#endif
 		}
 };

@@ -5,6 +5,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <iostream>
 
 #include "bdefs.h"
 #include "stdlterror.h"
@@ -40,7 +41,22 @@ static void dsi_UnloadResourceModule()
 
 LTRESULT dsi_SetupMessage(char *pMsg, int maxMsgLen, LTRESULT dResult, va_list marker)
 {
-return LT_OK;      // DAN - temporary
+    char msg[1000];
+    vsnprintf(msg, 999, pMsg, marker);
+    auto &&o = (dResult == LT_OK) ? std::cout : std::cerr;;
+    switch(dResult){
+    LT_OK:
+        o << "Info  : ";
+        break;
+    LT_ERRORLOADINGRENDERDLL:
+        o << "Render: ";
+        break;
+    default:
+        o << "Error : ";
+        break;
+    }
+    o << msg << '\n';
+    return LT_OK;      // DAN - temporary
 }
 
 
@@ -77,7 +93,7 @@ LTRESULT _GetOrCopyFile(char *pTempPath, char *pFilename, char *pOutName, int ou
 
 LTRESULT dsi_LoadServerObjects(CClassMgr *pInfo)
 {
-	char* pGameServerObjectName = "libobject.so";
+	const char* pGameServerObjectName = "libobject.so";
 
     //load the GameServer shared object
     int version;

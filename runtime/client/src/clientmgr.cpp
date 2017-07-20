@@ -148,7 +148,7 @@ extern uint32 g_Ticks_Render;
 
 ObjectBank<LTLink> g_DLinkBank(64, 1024);
 
-CClientMgr *g_pClientMgr = NULL;
+CClientMgr *g_pClientMgr = nullptr;
 
 SMusicMgr *GetMusicMgr() { return g_pClientMgr->GetMusicMgr(); }
 
@@ -206,11 +206,11 @@ void MaybeDrawConsole()
 CClientMgr::CClientMgr()
 {
 	//initialize member variables
-	m_pVideoMgr = NULL;
+	m_pVideoMgr = nullptr;
 
 }
 
-LTRESULT CClientMgr::Init(const char *resTrees[MAX_RESTREES], uint32 nResTrees, uint32 nNumConfigs, const char **ppConfigFileName)
+LTRESULT CClientMgr::Init(const char **resTrees, uint32 nResTrees, uint32 nNumConfigs, const char **ppConfigFileName)
 {
     const char *pDLLPath;
     char cmd[64];
@@ -358,10 +358,10 @@ LTRESULT CClientMgr::Init(const char *resTrees[MAX_RESTREES], uint32 nResTrees, 
 //
 //		IHAVEPURCHASEDBINK Define that allows bink video player to function. ( Separate license/SDK available from rad game tools http://www.radgametools.com/)
 //
-//		You must recompile Exe_Lithtech with IHAVEPURCHASEDBINK defined in the project settings: 
+//		You must recompile Exe_Lithtech with IHAVEPURCHASEDBINK defined in the project settings:
 //
 //    From the SDK you purchased from bink place bink.h rad.h radbase.h and smack.h into the Engine/runtime/kernel/src/sys/win directory.
-// 	Also requires bink32.dll in your path when running 
+// 	Also requires bink32.dll in your path when running
 //
 
 #if defined( IHAVEPURCHASEDBINK )
@@ -371,17 +371,17 @@ LTRESULT CClientMgr::Init(const char *resTrees[MAX_RESTREES], uint32 nResTrees, 
 #else
 
 //
-//---- NOTE: Directshow video not available in version 68 or lower 
-// 
+//---- NOTE: Directshow video not available in version 68 or lower
+//
 
 	 m_pVideoMgr = CreateVideoMgr("DIRECTSHOW");
 
 #endif
 
     // Tell the video stuff.
-    if (m_pVideoMgr) 
+    if (m_pVideoMgr)
 	 {
-        m_pVideoMgr->OnRenderInit(); 
+        m_pVideoMgr->OnRenderInit();
 	 }
 
     // Initialize the debug graph manager
@@ -983,7 +983,7 @@ LTRESULT CClientMgr::Update()
         dResult = m_pCurShell->Update();
 		m_bInCurShellUpdate = false;
 
-		// A shell was deleted this update.  Delete it now that we know it 
+		// A shell was deleted this update.  Delete it now that we know it
 		// is off the call stack
 		if (m_pOldShell != NULL)
 		{
@@ -1354,7 +1354,7 @@ void cm_Init()
 }
 
 CClientMgr::~CClientMgr() {
-	ASSERT(m_pOldShell == NULL);    
+	ASSERT(m_pOldShell == NULL);
 }
 
 void CClientMgr::Term()

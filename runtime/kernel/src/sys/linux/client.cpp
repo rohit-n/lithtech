@@ -1,9 +1,15 @@
 #include "bdefs.h"
+
 #include "timemgr.h"
 #include "clientmgr.h"
+#include "sysdebugging.h"
+#include "render.h"
 
 #include <unistd.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 #include <iostream>
+#include <deque>
 #include <SDL_syswm.h>
 
 //holder for command line argument mgr interface.
@@ -26,11 +32,85 @@ int32 g_CurRunIteration=0;
 ClientGlob g_ClientGlob;
 uint32 g_EngineStartMS;
 
+static bool StartClient(ClientGlob *pGlob)
+{
+    pGlob->m_bHost = command_line_args->FindArgDash("host") != NULL;
+    pGlob->m_pWorldName = command_line_args->FindArgDash("world");
+
+    std::deque<std::string> resTrees;
+        // Add the default engine resource...
+    if (!g_CV_NoDefaultEngineRez)
+	{
+        resTrees.emplace_back("engine.rez");
+    }
+	resTrees.emplace_back("game.rez");
+	resTrees.emplace_back("game2.rez");
+	resTrees.emplace_back("sound.rez");
+
+	std::vector<const char*> oldResTree;
+	for (auto&& str : resTrees)
+        oldResTree.push_back(str.c_str());
+
+    if (command_line_args->FindArgDash("noinput"))
+	{
+        pGlob->m_bInputEnabled = false;
+    }
+
+	//the configuration files that we need to load (they are loaded in order, so the later in
+	//the lists override the earlier in the lists)
+	static const uint32 knMaxConfigFiles = 16;
+	const char* pszConfigFiles[knMaxConfigFiles];
+	uint32 nNumConfigFiles = 0;
+
+	//see what the name of the autoexec configuration file is
+    const char* pszAutoExecFileName = command_line_args->FindArgDash("config");
+    pszConfigFiles[nNumConfigFiles] = (pszAutoExecFileName) ? pszAutoExecFileName : "autoexec.cfg";
+	nNumConfigFiles++;
+
+	//see what the name of the display configuration file is
+	const char* pszDisplayFileName = command_line_args->FindArgDash("display");
+    pszConfigFiles[nNumConfigFiles] = (pszDisplayFileName) ? pszDisplayFileName : "display.cfg";
+	nNumConfigFiles++;
+
+#ifdef USE_ABSTRACT_SOUND_INTERFACES
+
+    //  =======================================================================
+
+    const char* pcSoundDriverName = command_line_args->FindArg(SOUND_DRIVER_NAME_ARG);
+    if (pcSoundDriverName != LTNULL) {
+        for (int i = 0; i < SOUND_DRIVER_NAME_LEN && pcSoundDriverName[ i ] != 0; i++) {
+            pGlob->m_acSoundDriverName[ i ] = pcSoundDriverName[ i ];
+        }
+    }
+    else {
+        pGlob->m_acSoundDriverName[0] = 0;
+    }
+
+    //  =======================================================================
+
+#endif  // USE_ABSTRACT_SOUND_INTERFACES
+
+    uint32 initStartTime = timeGetTime();
+    if (g_pClientMgr->Init(&oldResTree[0], oldResTree.size(), nNumConfigFiles, pszConfigFiles) != LT_OK) {
+        return false;
+    }
+
+    char strVersion[50];
+    memset(strVersion,0,sizeof(strVersion));
+
+    g_pClientMgr->m_VersionInfo.GetString(strVersion, sizeof(strVersion));
+    DebugOut("LithTech build %s initialized in %.2f seconds.\n",
+        strVersion, (float)(timeGetTime() - initStartTime) / 1000.0f);
+
+
+    return true;
+}
+
 int RunClientApp()
 {
     //should set AllocHook here, maybe?
 
-    ClientGlob  *pGlob = &g_ClientGlob;
+    ClientGlob *pGlob = &g_ClientGlob;
     memset(pGlob, 0, sizeof(*pGlob));
 	pGlob->m_bConsoleEnabled = true;
     pGlob->m_bInputEnabled = true;
@@ -38,6 +118,8 @@ int RunClientApp()
     if (command_line_args->FindArgDash("DebugStructBanks")) {
         g_bDebugStructBanks = LTTRUE;
     }
+
+    // todo check/set outOfMemory breakpoint
 
     const char *pArg = command_line_args->FindArgDash("workingdir");
     // if chdir fails it returns non-zero making the expression true
@@ -66,13 +148,74 @@ int RunClientApp()
     }
 
     pGlob->m_bBreakOnError = command_line_args->FindArgDash("breakonerror") != NULL;
+
 	SDL_Init(SDL_INIT_EVERYTHING);
 	pGlob->m_window = SDL_CreateWindow(pGlob->m_WndCaption, SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
+    if(!pGlob->m_window){
+        std::cout << "Can't setup minimal SDL2 window\n";
+        SDL_Quit();
+
+        g_pClientMgr->Term();
+        delete g_pClientMgr;
+        g_pClientMgr = nullptr;
+
+        dsi_Term();
+        return -1;
+    }
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
 	SDL_GetWindowWMInfo(pGlob->m_window, &info);
 
+	bool bOutOfMemory = false;
+    bool bPrevHighPriority = false;
+    if(StartClient(pGlob)) {
+        pGlob->m_bProcessWindowMessages = true;
+        // MainLoop
+        LTRESULT dResult = LT_OK;
+        for(;;)
+        {
+            dResult = g_pClientMgr->Update();
+            if(dResult != LT_OK)
+                break;
+
+            // Give our process high priority?
+            if (g_CV_HighPriority != bPrevHighPriority) {
+                if (g_CV_HighPriority) {
+                    dsi_PrintToConsole("Setting process to high priority");
+                    setpriority(PRIO_PROCESS, 0, -10);
+                }
+                else {
+                    dsi_PrintToConsole("Setting process to normal priority");
+                    setpriority(PRIO_PROCESS, 0, 0);
+                }
+            }
+
+            if (g_bShowRunningTime) {
+                dsi_PrintToConsole("Running for %.1f seconds", (float)(timeGetTime() - g_EngineStartMS) / 1000.0f);
+            }
+
+        }
+    }
+
+    if (pGlob->m_ExitMessage[0]) {
+        r_TermRender(2, true);
+        std::cout << pGlob->m_ExitMessage[0] << '\n';
+    }
+    pGlob->m_bProcessWindowMessages = LTFALSE;
+
+    g_pClientMgr->Term();
+    delete g_pClientMgr;
+    g_pClientMgr = nullptr;
+
+    if(pGlob->m_window) {
+        SDL_DestroyWindow(pGlob->m_window);
+    }
+	SDL_Quit();
+
+    if (bOutOfMemory) {
+        std::cout << "Error: Out Of Memory\n";
+    }
 
     return 0;
 }
@@ -100,7 +243,7 @@ int main(int p1, char *p2[])
         while(g_CV_PlayDemoReps > g_CurRunIteration)
         {
             g_CurRunIteration++;
-            ret = RunClientApp();      
+            ret = RunClientApp();
         }
 
     }
