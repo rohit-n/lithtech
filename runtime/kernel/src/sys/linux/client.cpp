@@ -149,12 +149,10 @@ int RunClientApp()
 
     pGlob->m_bBreakOnError = command_line_args->FindArgDash("breakonerror") != NULL;
 
-	SDL_Init(SDL_INIT_EVERYTHING);
 	pGlob->m_window = SDL_CreateWindow(pGlob->m_WndCaption, SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
     if(!pGlob->m_window){
         std::cout << "Can't setup minimal SDL2 window\n";
-        SDL_Quit();
 
         g_pClientMgr->Term();
         delete g_pClientMgr;
@@ -192,7 +190,7 @@ int RunClientApp()
             }
 
             if (g_bShowRunningTime) {
-                dsi_PrintToConsole("Running for %.1f seconds", (float)(timeGetTime() - g_EngineStartMS) / 1000.0f);
+                dsi_PrintToConsole("Running for %.1f seconds", (float)(SDL_GetTicks() - g_EngineStartMS) / 1000.0f);
             }
 
         }
@@ -211,7 +209,6 @@ int RunClientApp()
     if(pGlob->m_window) {
         SDL_DestroyWindow(pGlob->m_window);
     }
-	SDL_Quit();
 
     if (bOutOfMemory) {
         std::cout << "Error: Out Of Memory\n";
@@ -229,6 +226,7 @@ bool SetupArgs(int argc, char *argv[])
 
 int main(int p1, char *p2[])
 {
+	SDL_Init(SDL_INIT_EVERYTHING);
     LTMemInit();
 
     g_EngineStartMS = timeGetTime();
@@ -248,5 +246,6 @@ int main(int p1, char *p2[])
 
     }
 
+    SDL_Quit();
     return ret;
 }

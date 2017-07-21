@@ -196,7 +196,9 @@ else(WIN32)
 	set(exec_src
 	../kernel/mem/src/sys/linux/de_memory.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
+	../kernel/src/sys/linux/bindmgr.cpp
 	../kernel/src/sys/linux/timemgr.cpp
+	../kernel/src/sys/linux/renderstruct.cpp
 	../kernel/src/sys/linux/render.cpp
 	../kernel/src/sys/linux/client.cpp
 	../kernel/src/sys/linux/videomgr.cpp
@@ -293,6 +295,7 @@ if(ENABLE_OPENGL)
     add_definitions(-D__ENABLE_OGL)
 	set(exec_src 
 	../render_a/src/sys/ogl/common_init.cpp
+	../render_a/src/sys/ogl/ogl_render.cpp
 	${exec_src})
 	set(libs ${libs}
 		GL

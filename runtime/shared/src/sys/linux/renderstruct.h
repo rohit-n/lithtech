@@ -86,6 +86,9 @@ class BlitRequest {
 	float          m_Alpha;            // Alpha value (0-1).
 */
 }; // stub
+
+class SysRender;
+
 struct RenderStruct {
     // Load rendering data from the specified stream
     bool     LoadWorldData(ILTStream *pStream);
@@ -114,8 +117,8 @@ struct RenderStruct {
     // The engine maintains these variables.
         uint32          m_Width;
         uint32          m_Height;
-        int             m_bInitted;
-        int             m_bLoaded;
+        bool            m_bInitted;
+        bool            m_bLoaded;
 		uint32			m_nIn3D;
 		uint32			m_nInOptimized2D;
     // The renderer maintains these.
@@ -150,7 +153,7 @@ struct RenderStruct {
         // Make a screenshot file.
 		//Generates a series of images that form a cubic environment map of the form Prefix[FW|BK|LF|RI|UP|DW].bmp
 		//aligned along the world's basis space from the given position
-        void			(*MakeCubicEnvMap)(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc);
+        void			MakeCubicEnvMap(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc);
         // Reads in new console variable values.
         void            (*ReadConsoleVariables)();
         // Get the current render info
@@ -186,7 +189,50 @@ struct RenderStruct {
 		float			m_GlobalLightConvertToAmbient;
 		// Timing variables
 		uint32			m_Time_Vis;
+private:
+        SysRender *m_pRender;
 }; //stub
+
+class SysRender 
+{
+public:
+    virtual bool     LoadWorldData(ILTStream *pStream)=0;
+
+    virtual HRENDERCONTEXT  CreateContext()=0;
+    void            DeleteContext(HRENDERCONTEXT hContext);
+    uint32          m_Width;
+    uint32          m_Height;
+    int             m_bInitted;
+    int             m_bLoaded;
+    uint32			m_nIn3D;
+    uint32			m_nInOptimized2D;
+    uint32  m_SystemTextureMemory;      // How much memory the renderer is using for textures.
+
+    int             RenderScene(SceneDesc *pScene);
+    void RenderCommand(uint32 argc, char** argv);
+    void            SwapBuffers(uint flags );
+    void			MakeCubicEnvMap(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc);
+    void            ReadConsoleVariables();
+    void            GetRenderInfo(RenderInfoStruct* pRenderInfo);
+    CRenderObject*  CreateRenderObject(CRenderObject::RENDER_OBJECT_TYPES ObjectType);
+    bool            DestroyRenderObject(CRenderObject* pObject);
+    bool SetLightGroupColor(uint32 nID, const LTVector &vColor);
+    LTRESULT SetOccluderEnabled(uint32 nID, bool bEnabled);
+    LTRESULT GetOccluderEnabled(uint32 nID, bool *pEnabled);
+    uint32	        GetTextureEffectVarID(const char* pszEffectGroup, uint32 nStage);
+    bool			SetTextureEffectVar(uint32 nVarID, uint32 nVar, float fValue);
+    bool	        IsObjectGroupEnabled(uint32 nGroup);
+    void			SetObjectGroupEnabled(uint32 nGroup, bool bEnable);
+    void			SetAllObjectGroupEnabled();
+    bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo);
+    bool			SetGlowDefaultRenderStyle(const char* pszFile);
+    bool			SetNoGlowRenderStyle(const char* pszFile);
+    int             m_DontClearMarker;
+    LTVector		m_GlobalLightDir;
+    LTVector		m_GlobalLightColor;
+    float			m_GlobalLightConvertToAmbient;
+    uint32			m_Time_Vis;
+};
 
 // This is what you use to select how you want to initialize the renderer..  Get a list of
 // the modes it supports, then copy the desired mode and pass it into RenderStruct::Init().
