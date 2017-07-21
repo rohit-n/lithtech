@@ -9,6 +9,9 @@
 #include "impl_common.h"
 #include "systimer.h"
 #include "ltmessage.h"
+#if ! defined(_WIN32) && ! defined(__XBOX)
+#include <unistd.h>
+#endif // _WIN32 || __XBOX
 
 
 //------------------------------------------------------------------
