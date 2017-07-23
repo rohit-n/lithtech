@@ -90,13 +90,13 @@ class BlitRequest {
 class SysRender;
 
 struct RenderStruct {
-    // Load rendering data from the specified stream
-    bool     LoadWorldData(ILTStream *pStream);
+        // Load rendering data from the specified stream
+        bool            LoadWorldData(ILTStream *pStream);
 
-    // Functions LithTech implements.
-    HRENDERCONTEXT  CreateContext();
-    void            DeleteContext(HRENDERCONTEXT hContext);
-      // Processes the attachment.  Returns the child object if it exists.
+        // Functions LithTech implements.
+        HRENDERCONTEXT  CreateContext();
+        void            DeleteContext(HRENDERCONTEXT hContext);
+        // Processes the attachment.  Returns the child object if it exists.
         // Get a shared texture from a file name  (returns NULL on failure)
         // Gets the texture in memory (guaranteed to be in memory until the next
         // call to GetTexture).
@@ -114,29 +114,17 @@ struct RenderStruct {
         // any SharedTextures.  The renderer is expected to set this frame code on
         // any SharedTextures that it uses while rendering so the engine can know
         // if a texture was viewed or not.
-    // The engine maintains these variables.
+        // The engine maintains these variables.
         uint32          m_Width;
         uint32          m_Height;
         bool            m_bInitted;
         bool            m_bLoaded;
 		uint32			m_nIn3D;
 		uint32			m_nInOptimized2D;
-    // The renderer maintains these.
-        uint32  m_SystemTextureMemory;      // How much memory the renderer is using for textures.
-    // Functions implemented by the render driver.
-
+        // The renderer maintains these.
+        uint32          m_SystemTextureMemory;      // How much memory the renderer is using for textures.
+        // Functions implemented by the render driver.
         int             Init(RenderStructInit *pInit);   // Returns RENDER_OK for success, or an error code.
-//      IDirect3DDevice9* (*GetD3DDevice)(); // Note: In spring the renderer will link directly with the engine.
-                            //  RenderStruct will go away - the renderer will be the only thing that
-                            //  needs d3d. The DrawPrim interface lives in the engine for now (and it needs the Device).
-        // Any textures you expect the renderer to use must be bound and unbound.
-        // If bTextureChanged is TRUE, the renderer should reinitialize its data for the texture
-        // even if it's already bound.
-		//called to set a texture for the draw primitive
-        // You render through a context.  Note: LithTech frees all of its lightmap data
-        // after calling this because it assumes you converted it all into a more suitable format.
-        // Clear a section of the screen.  Flags are from CLEARSCREEN_ flags in de_codes.h.
-        // Used around render calls.
         // Render a scene.
         int             RenderScene(SceneDesc *pScene);
         // Handle a command from the console.
@@ -195,43 +183,42 @@ private:
 
 class SysRender 
 {
-public:
-    virtual bool     LoadWorldData(ILTStream *pStream)=0;
-
-    virtual HRENDERCONTEXT  CreateContext()=0;
-    void            DeleteContext(HRENDERCONTEXT hContext);
+protected:
     uint32          m_Width;
     uint32          m_Height;
     int             m_bInitted;
     int             m_bLoaded;
     uint32			m_nIn3D;
     uint32			m_nInOptimized2D;
-    uint32  m_SystemTextureMemory;      // How much memory the renderer is using for textures.
-
-    int             RenderScene(SceneDesc *pScene);
-    void RenderCommand(uint32 argc, char** argv);
-    void            SwapBuffers(uint flags );
-    void			MakeCubicEnvMap(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc);
-    void            ReadConsoleVariables();
-    void            GetRenderInfo(RenderInfoStruct* pRenderInfo);
-    CRenderObject*  CreateRenderObject(CRenderObject::RENDER_OBJECT_TYPES ObjectType);
-    bool            DestroyRenderObject(CRenderObject* pObject);
-    bool SetLightGroupColor(uint32 nID, const LTVector &vColor);
-    LTRESULT SetOccluderEnabled(uint32 nID, bool bEnabled);
-    LTRESULT GetOccluderEnabled(uint32 nID, bool *pEnabled);
-    uint32	        GetTextureEffectVarID(const char* pszEffectGroup, uint32 nStage);
-    bool			SetTextureEffectVar(uint32 nVarID, uint32 nVar, float fValue);
-    bool	        IsObjectGroupEnabled(uint32 nGroup);
-    void			SetObjectGroupEnabled(uint32 nGroup, bool bEnable);
-    void			SetAllObjectGroupEnabled();
-    bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo);
-    bool			SetGlowDefaultRenderStyle(const char* pszFile);
-    bool			SetNoGlowRenderStyle(const char* pszFile);
+    uint32          m_SystemTextureMemory;      // How much memory the renderer is using for textures.
     int             m_DontClearMarker;
     LTVector		m_GlobalLightDir;
     LTVector		m_GlobalLightColor;
     float			m_GlobalLightConvertToAmbient;
     uint32			m_Time_Vis;
+public:
+    virtual bool            LoadWorldData(ILTStream *pStream)=0;
+    virtual HRENDERCONTEXT  CreateContext()=0;
+    virtual void            DeleteContext(HRENDERCONTEXT hContext)=0;
+    virtual int             RenderScene(SceneDesc *pScene)=0;
+    virtual void            RenderCommand(uint32 argc, char** argv)=0;
+    virtual void            SwapBuffers(uint flags )=0;
+    virtual void			MakeCubicEnvMap(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc)=0;
+    virtual void            ReadConsoleVariables()=0;
+    virtual void            GetRenderInfo(RenderInfoStruct* pRenderInfo)=0;
+    virtual CRenderObject*  CreateRenderObject(CRenderObject::RENDER_OBJECT_TYPES ObjectType)=0;
+    virtual bool            DestroyRenderObject(CRenderObject* pObject)=0;
+    virtual bool            SetLightGroupColor(uint32 nID, const LTVector &vColor)=0;
+    virtual LTRESULT        SetOccluderEnabled(uint32 nID, bool bEnabled)=0;
+    virtual LTRESULT        GetOccluderEnabled(uint32 nID, bool *pEnabled)=0;
+    virtual uint32	        GetTextureEffectVarID(const char* pszEffectGroup, uint32 nStage)=0;
+    virtual bool			SetTextureEffectVar(uint32 nVarID, uint32 nVar, float fValue)=0;
+    virtual bool	        IsObjectGroupEnabled(uint32 nGroup)=0;
+    virtual void			SetObjectGroupEnabled(uint32 nGroup, bool bEnable)=0;
+    virtual void			SetAllObjectGroupEnabled()=0;
+    virtual bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo)=0;
+    virtual bool			SetGlowDefaultRenderStyle(const char* pszFile)=0;
+    virtual bool			SetNoGlowRenderStyle(const char* pszFile)=0;
 };
 
 // This is what you use to select how you want to initialize the renderer..  Get a list of
