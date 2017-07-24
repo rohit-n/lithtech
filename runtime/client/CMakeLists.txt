@@ -296,6 +296,7 @@ if(ENABLE_OPENGL)
 	set(exec_src 
 	../render_a/src/sys/ogl/common_init.cpp
 	../render_a/src/sys/ogl/ogl_render.cpp
+	../render_a/src/sys/ogl/ltvertexshadermgr.cpp
 	${exec_src})
 	set(libs ${libs}
 		GL

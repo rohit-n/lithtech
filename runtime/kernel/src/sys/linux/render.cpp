@@ -44,15 +44,6 @@ RenderStruct g_Render;
 
 void rdll_RenderDLLSetup(RenderStruct *pStruct)
 {
-/*
-#ifdef LT_VK_AVAILABLE	
-	ci_string render(command_line_args->FindArgDash("render"));
-	if(render == ci_string("vulkan"))
-		rdll_VKRenderSetup(pStruct);
-	else
-#endif
-		rdll_OGlRenderSetup(pStruct);
-*/	
 }
 
 LTObject*
@@ -70,6 +61,8 @@ LTRESULT r_InitRender(RMode *pMode, const char *window_name)
 		SDL_WINDOWPOS_UNDEFINED, pMode->m_Width, pMode->m_Height, 0);
 	g_ClientGlob.m_window = window;
 
+	// not really needed... as we will dynamically link OpenGL and Vulkan
+	// and let SDL2 handle the setup.
     rdll_RenderDLLSetup(&g_Render);
 
 	// Store these.. the renderer may change them for pixel doubling.

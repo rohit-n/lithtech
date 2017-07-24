@@ -5,34 +5,24 @@
 
 #include "ltbasedefs.h"
 #include "ltidtoobjecttable.h"
+#include <vector>
 
-struct OGLVertexElement {
+struct VertexElement {
     float x,y,z,w;
 };
 
-struct OGLVertexDeclaration
-{};
+struct SysVertexDeclaration;
+struct SysVertexShader;
 
 class VertexShader : public LTVertexShader
 {
 public:
-	VertexShader()
-		: m_bCompileShader(false),
-	      m_pByteCode(nullptr),
-		  m_ByteCodeSize(0),
-		  m_pShader(nullptr),
-		  m_pVertexElements(nullptr),
-		  m_pDeclaration(nullptr)
-	{
-	}
+	VertexShader();
 
-	~VertexShader()
-	{
-		Term();
-	}
+	~VertexShader();
 
 	// initialize
-	bool							Init(ILTStream *pStream, const OGLVertexElement *pVertexElements,
+	bool							Init(ILTStream *pStream, const VertexElement *pVertexElements,
 										 uint32 VertexElementsSize, bool bCompileShader);
 
 	// terminate
@@ -57,7 +47,7 @@ public:
 	void							SetNext(VertexShader *pNext)		{ m_pNext = pNext; }
 
 	// byte code
-	uint8*							GetByteCode()							{ return m_pByteCode; }
+	uint8*							GetByteCode()							{ return m_pByteCode.data(); }
 
 	// get the values in a constant register
 	virtual bool					GetConstant(unsigned RegisterNum, float *pf0, float *pf1, float *pf2, float *pf3);
@@ -73,15 +63,13 @@ public:
     
 private:
 
-	bool							m_bCompileShader;		// this flag specifies whether the shader is already compiled
+	bool                            m_bCompileShader;		// this flag specifies whether the shader is already compiled
 
-	uint8*							m_pByteCode;			// byte code loaded in from the file
-	unsigned						m_ByteCodeSize;			// size of byte code array
+    std::vector<uint8>              m_pByteCode;
+	std::vector<VertexElement>      m_pVertexElements;		// An array of vertex elements used to create the vertex shader declaration
 
-	VertexShader*			        m_pShader;				// d3d shader interface
-
-	OGLVertexElement*				m_pVertexElements;		// An array of vertex elements used to create the vertex shader declaration
-	OGLVertexDeclaration*           m_pDeclaration;			// d3d vertex shader input declaration interface
+	SysVertexShader*                m_pShader;				// shader interface
+	SysVertexDeclaration*           m_pDeclaration;			// d3d vertex shader input declaration interface
 
 	float							m_Constants[LTVertexShader::MAX_CONSTANT_REGISTERS*4];			// user-defined constants
 };
@@ -89,7 +77,7 @@ private:
 class LTVertexShaderMgr {
 public:
     static LTVertexShaderMgr& GetSingleton();
-    uint32 AddVertexShader(ILTStream* file, const char* sname, int, OGLVertexElement*, uint32&, bool&);
+    bool AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &size, bool &compile);
     void RemoveVertexShader(uint32 id);
     void RemoveAllVertexShaders();
     VertexShader* GetVertexShader(uint32 id);
