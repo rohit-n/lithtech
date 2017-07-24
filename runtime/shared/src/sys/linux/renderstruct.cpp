@@ -8,18 +8,34 @@
 
 #ifdef LT_VK_AVAILABLE
 VKRenderStruct vkrdr;
+void vkReadConsoleVariables()
+{
+  vkrdr.ReadConsoleVariables();
+}
 #endif
 OGlRenderStruct oglrdr;
+void oglReadConsoleVariables()
+{
+  oglrdr.ReadConsoleVariables();
+}
+
+
 
 int RenderStruct::Init(RenderStructInit * pInit)
 {
-#ifdef LT_VK_AVAILABLE	
+#ifdef LT_VK_AVAILABLE
 	ci_string render(command_line_args->FindArgDash("render"));
 	if(render == ci_string("vulkan"))
+	{
 	    this->m_pRender = &vkrdr;
-    else
+            this->ReadConsoleVariables = &(vkReadConsoleVariables);
+
+        } else
 #endif
-         this->m_pRender = &oglrdr;
+        {
+            this->m_pRender = &oglrdr;
+            this->ReadConsoleVariables = &(oglReadConsoleVariables);
+        }
 	pInit->m_RendererVersion = LTRENDER_VERSION;
 	return 0;
 }
@@ -48,10 +64,6 @@ void           RenderStruct::MakeCubicEnvMap(const char* pszPrefix, uint32 nSize
 {
     return this->m_pRender->MakeCubicEnvMap(pszPrefix, nSize, InSceneDesc);
 }
-void           RenderStruct::ReadConsoleVariables()
-{
-    return this->m_pRender->ReadConsoleVariables();
-}
 void           RenderStruct::GetRenderInfo(RenderInfoStruct* pRenderInfo)
 {
     return this->m_pRender->GetRenderInfo(pRenderInfo);
@@ -74,7 +86,7 @@ LTRESULT       RenderStruct::SetOccluderEnabled(uint32 nID, bool bEnabled)
 }
 LTRESULT       RenderStruct::GetOccluderEnabled(uint32 nID, bool *pEnabled)
 {
-    return this->m_pRender->GetOccluderEnabled(nID, bEnabled);
+    return this->m_pRender->GetOccluderEnabled(nID, pEnabled);
 }
 uint32         RenderStruct::GetTextureEffectVarID(const char* pszEffectGroup, uint32 nStage)
 {
@@ -82,7 +94,7 @@ uint32         RenderStruct::GetTextureEffectVarID(const char* pszEffectGroup, u
 }
 bool           RenderStruct::SetTextureEffectVar(uint32 nVarID, uint32 nVar, float fValue)
 {
-    return this->m_pRender->SetTextureEffectVar(nvarID,nvar,fValue);
+    return this->m_pRender->SetTextureEffectVar(nVarID,nVar,fValue);
 }
 bool           RenderStruct::IsObjectGroupEnabled(uint32 nGroup)
 {
@@ -90,7 +102,7 @@ bool           RenderStruct::IsObjectGroupEnabled(uint32 nGroup)
 }
 void           RenderStruct::SetObjectGroupEnabled(uint32 nGroup, bool bEnable)
 {
-    return this->m_pRender->SetObjectGroupEnabled(nGroup, bEnabled);
+    return this->m_pRender->SetObjectGroupEnabled(nGroup, bEnable);
 }
 void           RenderStruct::SetAllObjectGroupEnabled()
 {
@@ -98,7 +110,7 @@ void           RenderStruct::SetAllObjectGroupEnabled()
 }
 bool           RenderStruct::AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo)
 {
-    return this->m_pRender->AddGlowRenderStyleMapping(pszSource,pszMapTo);
+    return this->m_pRender->AddGlowRenderStyleMapping(pszSource, pszMapTo);
 }
 bool           RenderStruct::SetGlowDefaultRenderStyle(const char* pszFile)
 {

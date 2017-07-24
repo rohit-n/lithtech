@@ -198,7 +198,7 @@ else(WIN32)
 	../kernel/io/src/sys/linux/linuxfile.cpp
 	../kernel/src/sys/linux/bindmgr.cpp
 	../kernel/src/sys/linux/timemgr.cpp
-	../kernel/src/sys/linux/renderstruct.cpp
+	../shared/src/sys/linux/renderstruct.cpp
 	../kernel/src/sys/linux/render.cpp
 	../kernel/src/sys/linux/client.cpp
 	../kernel/src/sys/linux/videomgr.cpp
