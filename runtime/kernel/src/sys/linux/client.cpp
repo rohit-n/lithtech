@@ -149,6 +149,9 @@ int RunClientApp()
 
     pGlob->m_bBreakOnError = command_line_args->FindArgDash("breakonerror") != NULL;
 
+    SDL_Rect screenRect;
+    SDL_GetDisplayBounds(0, &screenRect);
+
 	pGlob->m_window = SDL_CreateWindow(pGlob->m_WndCaption, SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
     if(!pGlob->m_window){
@@ -167,6 +170,7 @@ int RunClientApp()
 
 	bool bOutOfMemory = false;
     bool bPrevHighPriority = false;
+    SDL_Rect wndRect;
     if(StartClient(pGlob)) {
         pGlob->m_bProcessWindowMessages = true;
         // MainLoop
@@ -192,6 +196,19 @@ int RunClientApp()
             if (g_bShowRunningTime) {
                 dsi_PrintToConsole("Running for %.1f seconds", (float)(SDL_GetTicks() - g_EngineStartMS) / 1000.0f);
             }
+
+            if (g_CV_CursorCenter && !g_ClientGlob.m_bLostFocus) {
+                SDL_GetWindowSize(pGlob->m_window, &wndRect.w,&wndRect.h);
+                SDL_GetWindowPosition(pGlob->m_window, &wndRect.x,&wndRect.y);
+                // [BL 2/2/2000] - center the cursor in the SCREEN, not the window -- otherwise it breaks
+                // when you play in a small window on a big screen
+                SDL_WarpMouseGlobal((screenRect.x - screenRect.w) / 2, (screenRect.h - screenRect.y) / 2);
+				SDL_SetRelativeMouseMode(SDL_TRUE);
+            }
+			else
+			{
+				SDL_SetRelativeMouseMode(SDL_FALSE);
+			}
 
         }
     }

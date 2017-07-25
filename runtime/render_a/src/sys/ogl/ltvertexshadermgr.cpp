@@ -3,19 +3,20 @@
 #include "ltvertexshadermgr.h"
 #include <map>
 
-	VertexShader::VertexShader()
-		: m_bCompileShader(false),
-	      m_pByteCode{},
-		  m_pVertexElements{},
-		  m_pShader(nullptr),
-		  m_pDeclaration(nullptr)
-	{
-	}
+VertexShader::VertexShader()
+    : LTVertexShader(),
+      m_bCompileShader(false),
+      m_pByteCode{},
+      m_pVertexElements{},
+      m_pShader(nullptr),
+      m_pDeclaration(nullptr)
+{
+}
 
-	VertexShader::~VertexShader()
-	{
-		Term();
-	}
+VertexShader::~VertexShader()
+{
+    Term();
+}
 
 bool VertexShader::Init(ILTStream *pStream,const VertexElement *elements,uint32 elementSize, bool compileShader)
 {
@@ -47,10 +48,20 @@ bool VertexShader::Recreate()
 void VertexShader::Term()
 {
 }
+void VertexShader::FreeDeviceObject()
+{}
 
 void VertexShader::SetName(const char*)
 {
 }
+
+bool VertexShader::GetConstant(unsigned RegisterNum, float *pf0, float *pf1, float *pf2, float *pf3)
+{ return false; }
+bool VertexShader::SetConstant(unsigned RegisterNum, float f0, float f1, float f2, float f3)
+{ return false; }
+bool VertexShader::SetConstant(unsigned RegisterNum, const LTMatrix &Matrix)
+{ return false; }
+
 class VSMgr : public LTVertexShaderMgr
 {
     std::map<uint32,VertexShader*> shaders;
