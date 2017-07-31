@@ -6,9 +6,11 @@
 #include "ltbasedefs.h"
 #include "ltidtoobjecttable.h"
 #include <vector>
+#include <map>
 
 struct VertexElement {
-    float x,y,z,w;
+    float x, y, z, w;
+	float r, g, b;
 };
 
 struct SysVertexDeclaration;
@@ -75,6 +77,7 @@ private:
 };
 
 class LTVertexShaderMgr {
+	std::map<uint32, VertexShader*> shaders;
 public:
     static LTVertexShaderMgr& GetSingleton();
     bool AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &size, bool &compile);

@@ -252,7 +252,7 @@ HSTRING str_CreateString(uint8 *pBuffer)
 }
 
 
-HSTRING str_CreateStringAnsi(char *pStringData)
+HSTRING str_CreateStringAnsi(const char *pStringData)
 {
 	StringWrapper *pString;
 	int nBytes, nChars;
