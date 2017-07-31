@@ -19,7 +19,11 @@ void oglReadConsoleVariables()
   oglrdr.ReadConsoleVariables();
 }
 
-
+void r_InitRenderStruct(bool bFullClear)
+{
+    RenderStructInit rsi{0,bFullClear, '\0'};
+    g_Render.Init(&rsi);
+}
 
 int RenderStruct::Init(RenderStructInit * pInit)
 {
@@ -38,6 +42,11 @@ int RenderStruct::Init(RenderStructInit * pInit)
         }
 	pInit->m_RendererVersion = LTRENDER_VERSION;
 	return 0;
+}
+
+HRENDERCONTEXT RenderStruct::CreateContext()
+{
+    return this->m_pRender->CreateContext();
 }
 
 bool RenderStruct::LoadWorldData(ILTStream *pStream)

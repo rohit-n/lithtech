@@ -212,6 +212,8 @@ else(WIN32)
 	../kernel/src/sys/linux/stringhelper.cpp
 	../kernel/src/sys/linux/stringmgr.cpp
 	../kernel/src/sys/linux/streamsim.cpp
+	../kernel/src/sys/linux/musicdriver.cpp
+	../kernel/src/sys/linux/input.cpp
     ${exec_src})
 endif(WIN32)
 
@@ -297,6 +299,8 @@ if(ENABLE_OPENGL)
 	../render_a/src/sys/ogl/common_init.cpp
 	../render_a/src/sys/ogl/ogl_render.cpp
 	../render_a/src/sys/ogl/ltvertexshadermgr.cpp
+	../render_a/src/sys/ogl/ltpixelshadermgr.cpp
+	../render_a/src/sys/ogl/rendererframestats.cpp
 	${exec_src})
 	set(libs ${libs}
 		GL

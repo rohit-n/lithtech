@@ -45,7 +45,7 @@ public:
 	interface_version(IStringMgr, 0);
     declare_interface(IStringMgr);
 
-	typedef void (*StringShowFn)(char *pData, void *pUser);
+	typedef void (*StringShowFn)(const char *pData, void *pUser);
 
 	virtual void Init() = 0;
 	virtual void Term() = 0;

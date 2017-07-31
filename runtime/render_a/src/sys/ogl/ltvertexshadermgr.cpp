@@ -62,30 +62,13 @@ bool VertexShader::SetConstant(unsigned RegisterNum, float f0, float f1, float f
 bool VertexShader::SetConstant(unsigned RegisterNum, const LTMatrix &Matrix)
 { return false; }
 
-class VSMgr : public LTVertexShaderMgr
-{
-    std::map<uint32,VertexShader*> shaders;
-    VSMgr() {};
-public:
-    static LTVertexShaderMgr& GetSingleton();
-    bool AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &size, bool &compile);
-    void RemoveVertexShader(uint32 id);
-    void RemoveAllVertexShaders();
-    VertexShader* GetVertexShader(uint32 id);
-
-};
-
 LTVertexShaderMgr& LTVertexShaderMgr::GetSingleton()
 {
-    return VSMgr::GetSingleton();
+    static LTVertexShaderMgr mgr;
+    return mgr;
 }
 
-LTVertexShaderMgr& VSMgr::GetSingleton()
-{
-    static VSMgr vertexShaderMgr;
-    return vertexShaderMgr;
-}
-bool VSMgr::AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &elementSize, bool &bCompileShader)
+bool LTVertexShaderMgr::AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &elementSize, bool &bCompileShader)
 {
     if(shaders.count(id) > 0)
         return false;
@@ -98,20 +81,21 @@ bool VSMgr::AddVertexShader(ILTStream* file, const char* sname, uint32 id, Verte
 
     return true;
 }
-void VSMgr::RemoveVertexShader(uint32 id)
+void LTVertexShaderMgr::RemoveVertexShader(uint32 id)
 {
     if(shaders.count(id) > 0){
         delete shaders[id];
         shaders.erase(id);
     }
 }
-void VSMgr::RemoveAllVertexShaders()
+void LTVertexShaderMgr::RemoveAllVertexShaders()
 {
     for( auto&& p : shaders)
         delete p.second;
     shaders.clear();
 }
-VertexShader* VSMgr::GetVertexShader(uint32 id)
+
+VertexShader* LTVertexShaderMgr::GetVertexShader(uint32 id)
 {
     if(shaders.count(id) == 0)
         return nullptr;

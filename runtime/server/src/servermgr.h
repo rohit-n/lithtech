@@ -344,7 +344,7 @@ class CServerMgr : public CNetHandler
 		uint32 			m_nObjInfos;
 
 		// The number of actual allocated objects (always <= m_nUpdateInfos).
-		uint32 			m_nAllocatedIDs;
+		uintptr_t       m_nAllocatedIDs;
 
 
 		// Hash table for object names.

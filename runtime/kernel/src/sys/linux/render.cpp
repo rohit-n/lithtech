@@ -44,6 +44,7 @@ RenderStruct g_Render;
 
 void rdll_RenderDLLSetup(RenderStruct *pStruct)
 {
+	r_InitRenderStruct(true);
 }
 
 LTObject*
@@ -51,6 +52,14 @@ r_ProcessAttachment(LTObject *pParent, Attachment *pAttachment)
 {
 	return nullptr;
 }
+
+void r_TerminateAllRecreatableTextureData()
+{}
+
+void r_BindTexture(SharedTexture *pSharedTex, bool bTextureChanged )
+{}
+void r_UnbindTexture(SharedTexture *pSharedTex, bool bUnload )
+{}
 
 LTRESULT r_InitRender(RMode *pMode, const char *window_name)
 {
