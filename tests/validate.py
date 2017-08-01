@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
 import sys
-import smtplib
-from email.mime.text import MIMEText
 
 logs = []
 with open(sys.argv[1], 'r') as log:
@@ -28,18 +26,12 @@ for l in logs:
         if k in l:
             counts[k] += 1
 
+if 'Fail EXE_Lithtech\n' in logs:
+    print('\n'.join(client))
+
 fmt = 'Pass:  {Pass}\nFail:  {Fail}\n'
 fmt += 'Warn:  {warning}\nUnDef: {undefined reference}'
 print(fmt.format(**counts))
-
-mime = MIMEText('\n'.join(client))
-mime['Subject'] = 'Lithtech client build - Travis'
-mime['From'] = 'no-reply@example.com'
-mime['To'] = 'rk.katana.steel@gmail.com'
-
-s = smtplib.SMTP('localhost')
-s.send_message(mime)
-s.quit()
 
 if mins['Pass'] > counts['Pass']:
     print('component passes has gone down')
