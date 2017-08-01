@@ -4,7 +4,10 @@ import sys
 
 logs = []
 with open(sys.argv[1], 'r') as log:
-    logs = set(log.readlines())
+    for l in log.readlines():
+        if l[:-1] in logs:
+            continue
+        logs.append(l[:-1])
 
 counts = {
     'Pass': 0,
@@ -20,8 +23,8 @@ mins = {
 }
 client = []
 for l in logs:
-    if 'EXE_Lithtech' in l:
-        client.append(l[:-1])
+    if 'EXE_Lithtech' in l or ' error ' in l:
+        client.append(l)
     for k in counts.keys():
         if k in l:
             counts[k] += 1
