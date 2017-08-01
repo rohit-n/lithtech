@@ -29,7 +29,7 @@ for l in logs:
         if k in l:
             counts[k] += 1
 
-if 'Fail EXE_Lithtech\n' in logs:
+if 'Fail EXE_Lithtech' in logs:
     print('\n'.join(client))
 
 fmt = 'Pass:  {Pass}\nFail:  {Fail}\n'
