@@ -3,23 +3,23 @@ sudo: false
 branch:
   only:
     - linux-x86_64
-compiler:
-  - gcc
 
 install: true
 
 script:
   - cd Build
   - cmake ../
-  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make -j4 $part >> make.build.log 2>&1 && echo Pass $part || echo Fail $part; done | tee build.log
-  - "echo Fail  count: $(awk '{if ($1 == \"Fail\") total += 1 } END {print total}' build.log)"
-  - "echo Pass  count: $(awk '{if ($1 == \"Pass\") total += 1 } END {print total}' build.log)"
-  - "echo UnDef count: $(sort -u make.build.log | awk '{if ($0 ~ /undefined reference/) total += 1 } END {print total}')"
-  # - "curl --silent 'http://www.alchemiestick.net/lithtech' --data 'log='$(base64 build.log)"
+  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part >> make.log 2>&1 && echo Pass $part || echo Fail $part; done | tee -a build.log
+  - "cat make.log build.log > make.build.log"
+  - "python3 ../tests/validate.py make.build.log 13 10 110 95"
 matrix:
+  allow_failures:
+    - clang: 4.0
+    - clang: 5.0
   include:
     - os: linux
       dist: trusty
+      gcc: 5
       addons:
         apt:
           sources:
@@ -30,9 +30,10 @@ matrix:
             - cmake
             - libsdl2-dev
       env:
-        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5""
+        - MATRIX_EVAL="CC=gcc-5; CXX=g++-5"
     - os: linux
       dist: trusty
+      gcc: 6
       addons:
         apt:
           sources:
@@ -43,7 +44,36 @@ matrix:
             - cmake
             - libsdl2-dev
       env:
-        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+        - MATRIX_EVAL="CC=gcc-6; CXX=g++-6"
+    - os: linux
+      dist: trusty
+      clang: 4.0
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-4.0
+          packages:
+            - clang-4.0
+            - cmake-data
+            - cmake
+            - libsdl2-dev
+      env:
+        - MATRIX_EVAL="CC=clang-4.0; CXX=clang++-4.0"
+    - os: linux
+      clang: 5.0
+      dist: trusty
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+            - cmake-data
+            - cmake
+            - libsdl2-dev
+      env:
+        - MATRIX_EVAL="CC=clang-5.0; CXX=clang++-5.0"
+
 
 before_install:
     - eval "${MATRIX_EVAL}"

@@ -200,10 +200,12 @@ int RunClientApp()
             if (g_CV_CursorCenter && !g_ClientGlob.m_bLostFocus) {
                 SDL_GetWindowSize(pGlob->m_window, &wndRect.w,&wndRect.h);
                 SDL_GetWindowPosition(pGlob->m_window, &wndRect.x,&wndRect.y);
-                // [BL 2/2/2000] - center the cursor in the SCREEN, not the window -- otherwise it breaks
-                // when you play in a small window on a big screen
+#if 0
                 SDL_WarpMouseGlobal((screenRect.x - screenRect.w) / 2, (screenRect.h - screenRect.y) / 2);
-				SDL_SetRelativeMouseMode(SDL_TRUE);
+#else
+                SDL_WarpMouseInWindow(pGlob->m_window, wndRect.w/2, wndRect.h/2);
+#endif
+                SDL_SetRelativeMouseMode(SDL_TRUE);
             }
 			else
 			{
