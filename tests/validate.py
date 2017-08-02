@@ -22,9 +22,12 @@ mins = {
     'undefined reference': int(sys.argv[5])
 }
 client = []
+not_seen = True
 for l in logs:
-    if 'EXE_Lithtech' in l or 'rror' in l:
+    if not_seen and ('EXE_Lithtech' in l or 'error:' in l):
         client.append(l)
+    if l.startswith('make:') and 'EXE_Lithtech' in l:
+        not_seen = False
     for k in counts.keys():
         if k in l:
             counts[k] += 1
