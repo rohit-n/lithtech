@@ -23,7 +23,7 @@ mins = {
 }
 client = []
 for l in logs:
-    if 'EXE_Lithtech' in l or ' error ' in l:
+    if 'EXE_Lithtech' in l or 'rror' in l:
         client.append(l)
     for k in counts.keys():
         if k in l:
