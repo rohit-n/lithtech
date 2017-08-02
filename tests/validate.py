@@ -21,30 +21,31 @@ mins = {
     'warning': int(sys.argv[4]),
     'undefined reference': int(sys.argv[5])
 }
-client = []
-not_seen = True
+warns = []
 for l in logs:
-    if not_seen and ('EXE_Lithtech' in l or 'error:' in l):
-        client.append(l)
-    if l.startswith('make:') and 'EXE_Lithtech' in l:
-        not_seen = False
+    if 'warning:' in l:
+        warns.append(l)
     for k in counts.keys():
         if k in l:
             counts[k] += 1
 
 if 'Fail EXE_Lithtech' in logs:
-    print('\n'.join(client))
+    print('\n'.join(warns))
 
 fmt = 'Pass:  {Pass}\nFail:  {Fail}\n'
-fmt += 'Warn:  {warning}\nUnDef: {undefined reference}'
+fmt += "Warn:  {warning}\nUnDef: {undefined reference}"
 print(fmt.format(**counts))
-
+print('warns {0} vs counts {1}'.format(len(warns), counts['warning']))
 if mins['Pass'] > counts['Pass']:
-    print('component passes has gone down')
+    print('Pass parts have gone below known limits')
     sys.exit(1)
 
-for k in ['Fail', 'warning', 'undefined reference']:
+for k in mins.keys():
+    if 'Pass' in k:
+        continue
     if mins[k] < counts[k]:
+        if 'warn' in k and mins[k] < len(warns):
+            continue
         print('{0} parts have gone above known limits'.format(k))
         sys.exit(1)
 

@@ -13,7 +13,7 @@ script:
   - cmake ../
   - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part >> make.log 2>&1 && echo Pass $part || echo Fail $part; done | tee -a build.log
   - "cat make.log build.log > make.build.log"
-  - "python3 ../tests/validate.py make.build.log 13 10 100 95"
+  - "python3 ../tests/validate.py make.build.log 13 10 110 95"
 matrix:
   include:
     - os: linux
