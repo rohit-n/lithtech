@@ -17,7 +17,7 @@ HRENDERCONTEXT OGlRenderStruct::CreateContext()
 
 void            OGlRenderStruct::DeleteContext(HRENDERCONTEXT hContext){}
 int             OGlRenderStruct::RenderScene(SceneDesc *pScene){return 0;}
-void            OGlRenderStruct::RenderCommand(uint32 argc, char** argv){}
+void            OGlRenderStruct::RenderCommand(uint32 argc, const char** argv){}
 void            OGlRenderStruct::SwapBuffers(uint flags ){}
 void			OGlRenderStruct::MakeCubicEnvMap(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc){}
 void            OGlRenderStruct::ReadConsoleVariables(){}

@@ -94,10 +94,10 @@ public:
 
 						ModelLoadRequest()
 						{
-							m_pFilename = NULL;
-							m_pFile = NULL;
+							m_pFilename = nullptr;
+							m_pFile = nullptr;
 							m_LoadChildFn = DefaultLoadChildFn;
-							m_pLoadFnUserData = NULL;
+							m_pLoadFnUserData = nullptr;
 							m_bLoadChildModels = true;
 
 							m_bTreesValid = true;
@@ -1038,7 +1038,7 @@ private:
 
 	// Not always set.. the engine uses this to determine if it has already
 	// been loaded.  Use Get/SetFilename.
-	char			*m_pFilename;
+	const char			*m_pFilename;
 
 
 public:

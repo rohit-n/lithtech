@@ -117,7 +117,7 @@ void LTMemConsoleIgnore()
 }
 
 // console command handler for "mem" console command
-void LTMemConsole(int argc, char *argv[])
+void LTMemConsole(int argc, const char *argv[])
 {
 	// debugging information about parameters passed to this function
 //	dsi_ConsolePrint("mem console command :\n");
@@ -216,7 +216,7 @@ struct SMemRecord
 	uint32	m_nMemType;
 };
 
-void LTMemLog(uint32 nArgC, char** ppArgV)
+void LTMemLog(uint32 nArgC, const char** ppArgV)
 {
 	//make sure that the parameters are correct
 	if(nArgC < 2)
@@ -315,7 +315,7 @@ void LTMemLog(uint32 nArgC, char** ppArgV)
 	fclose(pOutFile);
 }
 
-void LTMemFullLog(uint32 nArgC, char** ppArgV)
+void LTMemFullLog(uint32 nArgC, const char** ppArgV)
 {
 	//make sure that the parameters are correct
 	if(nArgC < 2)

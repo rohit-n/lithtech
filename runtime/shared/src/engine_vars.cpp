@@ -33,10 +33,10 @@ int32	g_CV_DelimitPackets = LTTRUE;
 int32	g_CV_MeasurePackets = LTFALSE; // Used to have the server build compression tables.
 
 
-char	*g_CV_BindIP = LTNULL;
-char	*g_CV_IP = LTNULL;
+const char	*g_CV_BindIP = LTNULL;
+const char	*g_CV_IP = LTNULL;
 
-char*	g_CV_Console_FontTexFile = NULL;
+const char*	g_CV_Console_FontTexFile = NULL;
 int32	g_CV_NoDefaultEngineRez = 0;
 
 int32	g_CV_ForceConsole = 0;
@@ -152,7 +152,7 @@ float	g_DebugMaxDims = 3000.0f;
 int32	g_CV_ShowGameTime = LTFALSE;
 
 int32	g_CV_ShowClassTicks = LTFALSE;
-char	*g_CV_ShowClassTicksSpecific = LTNULL;
+const char	*g_CV_ShowClassTicksSpecific = LTNULL;
 
 int32	g_CV_ShowSphereFindTicks = LTFALSE;
 

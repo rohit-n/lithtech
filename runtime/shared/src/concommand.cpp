@@ -98,7 +98,7 @@ static LTCommandVar* cc_AddConsoleVar(ConsoleState *pState, const char *pName)
 	return pVar;
 }
 
-static LTEngineVar* cc_FindEngineVar(ConsoleState *pState, char *pName)
+static LTEngineVar* cc_FindEngineVar(ConsoleState *pState, const char *pName)
 {
 	int i;
 
@@ -137,7 +137,7 @@ static void cc_SetEngineVar(ConsoleState *pState, LTCommandVar *pVar)
 // Main functions.
 // ------------------------------------------------------------------ //
 
-void cc_PrintStringColor(uint8 r, uint8 g, uint8 b, char *pMsg, ...)
+void cc_PrintStringColor(uint8 r, uint8 g, uint8 b, const char *pMsg, ...)
 {
 	static const uint32 knBufferSize = 512;
 
@@ -173,7 +173,7 @@ void cc_HandleCommand3(ConsoleState *pState, const char *pCommand, uint32 flags,
 	LTExtraCommandStruct *pExtraCommand;
 	char tempNumString[50];
 	int tempNum;
-	char *pVarName, *pString;
+	const char *pVarName, *pString;
 	LTBOOL bForceNoSave;
 	uint32 newFlags;
 	ConParse parse;

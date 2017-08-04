@@ -87,7 +87,7 @@ A  CUIMessage can be constructed by passing in appropriate initialization values
 \see CUIBase
 
 Used for: Text and UI.   */
-		CUIMessage(CUI_MESSAGETYPE message, CUIBase* pSender, CUIBase* pRecipient, uint32 data1, uint32 data2)
+		CUIMessage(CUI_MESSAGETYPE message, CUIBase* pSender, CUIBase* pRecipient, uintptr_t data1, uintptr_t data2)
 		{
 			m_pUserObject	= NULL;
 			m_pUserData		= NULL;
@@ -150,13 +150,13 @@ Used for: Text and UI.   */
 One of two data storage members.
 
 Used for: Text and UI.   */
-		uint32			m_Data1;
+		uintptr_t		m_Data1;
 
 /*!  
 One of two data storage members.
 
 Used for: Text and UI.   */
-		uint32			m_Data2;
+		uintptr_t		m_Data2;
 		
 };
 

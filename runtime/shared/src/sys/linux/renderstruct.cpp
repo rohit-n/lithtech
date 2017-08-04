@@ -61,7 +61,7 @@ int            RenderStruct::RenderScene(SceneDesc *pScene)
 {
     return this->m_pRender->RenderScene(pScene);
 }
-void           RenderStruct::RenderCommand(uint32 argc, char** argv)
+void           RenderStruct::RenderCommand(uint32 argc, const char** argv)
 {
     return this->m_pRender->RenderCommand(argc, argv);
 }

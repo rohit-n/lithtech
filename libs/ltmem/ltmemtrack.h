@@ -147,9 +147,9 @@ uint32 LTMemTrackGetSize(void* pMem);
 
 void LTMemTrackPrintStats();
 
-void LTMemLog(uint32 nArgC, char** ppArgV);
+void LTMemLog(uint32 nArgC, const char** ppArgV);
 
-void LTMemFullLog(uint32 nArgC, char** ppArgV);
+void LTMemFullLog(uint32 nArgC, const char** ppArgV);
 
 void LTMemTrackAddTypeToString(uint32 nType, const char* sName);
 

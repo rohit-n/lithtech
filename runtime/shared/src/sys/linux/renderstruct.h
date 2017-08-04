@@ -128,7 +128,7 @@ struct RenderStruct {
         // Render a scene.
         int             RenderScene(SceneDesc *pScene);
         // Handle a command from the console.
-        void RenderCommand(uint32 argc, char** argv);
+        void RenderCommand(uint32 argc, const char** argv);
         // Show the backbuffer.
         void            SwapBuffers(uint flags );
         // Get the screen pixel format.
@@ -201,7 +201,7 @@ public:
     virtual HRENDERCONTEXT  CreateContext()=0;
     virtual void            DeleteContext(HRENDERCONTEXT hContext)=0;
     virtual int             RenderScene(SceneDesc *pScene)=0;
-    virtual void            RenderCommand(uint32 argc, char** argv)=0;
+    virtual void            RenderCommand(uint32 argc, const char** argv)=0;
     virtual void            SwapBuffers(uint flags )=0;
     virtual void			MakeCubicEnvMap(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc)=0;
     virtual void            ReadConsoleVariables()=0;

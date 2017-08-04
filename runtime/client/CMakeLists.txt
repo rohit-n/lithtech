@@ -195,6 +195,7 @@ if(WIN32)
 else(WIN32)
 	set(exec_src
 	../kernel/mem/src/sys/linux/de_memory.cpp
+	src/sys/linux/customfontfilemgr.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
 	../kernel/src/sys/linux/bindmgr.cpp
 	../kernel/src/sys/linux/timemgr.cpp
@@ -322,5 +323,6 @@ set_target_properties(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} ${libs})
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -std=c++11")
+    set(CMAKE_CXX_FLAGS -std=c++11 ${CMAKE_CXX_FLAGS})
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
 endif(CMAKE_COMPILER_IS_GNUCXX)

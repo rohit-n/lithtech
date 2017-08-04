@@ -32,7 +32,7 @@ class WorldTreeNode;
 typedef enum
 {
     WTObj_DObject=0,    // Bounding box object (DObject).
-    WTObj_Light         // Light for accurate model lighting.
+    WTObj_Light=254     // Light for accurate model lighting.
 } WTObjType;
 
 

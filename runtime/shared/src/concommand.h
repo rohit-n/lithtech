@@ -31,7 +31,7 @@ class HHashTable;
 
 
 
-typedef void (*LTCommandFn)(int argc, char *argv[]);
+typedef void (*LTCommandFn)(int argc, const char *argv[]);
 typedef void (*LTSaveFn)(FILE *fp);
 
 
@@ -39,8 +39,8 @@ typedef void (*LTSaveFn)(FILE *fp);
 struct LTCommandVar
 {
 	char			m_Buffer[VARBUF_LEN]; // This is used instead of allocating if possible.
-	char			*pVarName;
-	char			*pStringVal;
+	const char		*pVarName;
+	const char		*pStringVal;
 	float			floatVal;
 	HHashElement    *hElement;
 	uint32			m_VarFlags; // Combination of VARFLAGS_ stuff.
@@ -51,11 +51,11 @@ struct LTCommandVar
 // address of a global variable for quick & easy access to its value.
 struct LTEngineVar
 {
-	const char	*pVarName;
-	float	*pValueAddressFloat;
-	int32	*pValueAddressLong;
-	LTCommandVar **pCommandVarAddress;
-	char	**pValueAddressString;
+	const char		*pVarName;
+	float			*pValueAddressFloat;
+	int32			*pValueAddressLong;
+	LTCommandVar	**pCommandVarAddress;
+	const char		**pValueAddressString;
 };
 
 

@@ -22,7 +22,7 @@ public:
     uint32          m_SystemTextureMemory;      // How much memory the renderer is using for textures.
     int             Init(RenderStructInit *pInit);   // Returns RENDER_OK for success, or an error code.
     int             RenderScene(SceneDesc *pScene);
-    void            RenderCommand(uint32 argc, char** argv);
+    void            RenderCommand(uint32 argc, const char** argv);
     void            SwapBuffers(uint flags );
     void			MakeCubicEnvMap(const char* pszPrefix, uint32 nSize, const SceneDesc& InSceneDesc);
     void            ReadConsoleVariables();

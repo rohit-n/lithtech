@@ -35,7 +35,8 @@ bool ConParse::Parse()
 	if(!m_pCommandPos)
 		return false;
 
-	if(!cp_Parse(m_pCommandPos, (const char **)&m_pCommandPos, m_ArgBuffer, m_Args, &m_nArgs))
+//	if(!cp_Parse(m_pCommandPos, (const char **)&m_pCommandPos, m_ArgBuffer, m_Args, &m_nArgs))
+	if(!cp_Parse(m_pCommandPos, &m_pCommandPos, m_ArgBuffer, m_Args, &m_nArgs))
 	{
 		m_pCommandPos = LTNULL;
 	}
@@ -43,7 +44,7 @@ bool ConParse::Parse()
 	return true;
 }
 
-bool ConParse::ParseFind(char *pLookFor, bool bCaseSensitive, uint32 minTokens)
+bool ConParse::ParseFind(const char *pLookFor, bool bCaseSensitive, uint32 minTokens)
 {
 	bool equal;
 
@@ -221,7 +222,7 @@ static GNTResult cp_GetNextToken(const char* &pCurPos, char* &pTokenPos)
 
 
 
-int cp_Parse(const char *pCommand, const char **pNewCommandPos, char *argBuffer, char **argPointers, int *nArgs)
+int cp_Parse(const char *pCommand, const char **pNewCommandPos, char *argBuffer, const char **argPointers, int *nArgs)
 {
 	GNTResult status;
 	char *pCurArgBufferPos, *pToken;
