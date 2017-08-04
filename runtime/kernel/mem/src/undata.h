@@ -41,11 +41,11 @@ extern class CGenUnboundData *g_pUnboundData;
 
 class CGenUnboundData {
 	// The heap
-	uint32* heapStart;
-	uint32* heapEnd;
+	uintptr_t* heapStart;
+	uintptr_t* heapEnd;
 
 	// The free list
-	uint32* FreeListHead;
+	uintptr_t* FreeListHead;
 	uint32 minFreeBlocks;
 	uint32 CurBlockSize;
 	uint32 FreeBlocks;
@@ -59,20 +59,20 @@ class CGenUnboundData {
 		uint32  GetBlockSize    ();
 
 		// get and return of memory blocks
-		uint32* GetNewBlock     ();
-		void   ReturnOldBlock  (uint32* block);
+		uintptr_t* GetNewBlock     ();
+		void   ReturnOldBlock  (uintptr_t* block);
 
 		// platform specific routine for seting up initial memory segment
 		virtual ESTDLTResults
-		initUnboundHeap (uint32 blockSize, uint32** begin, uint32** end) = 0;
+		initUnboundHeap (uint32 blockSize, uintptr_t** begin, uintptr_t** end) = 0;
 
 		// print debug info
 		void PrintUndataStats ();
 };
 
-inline uint32*
+inline uintptr_t*
 CGenUnboundData::GetNewBlock () {
-	uint32 *retVal;
+	uintptr_t *retVal;
 
 	if (FreeListHead == NULL) {
 		ASSERT (false);
@@ -88,7 +88,7 @@ CGenUnboundData::GetNewBlock () {
 	GetCnt++;
 
 	retVal = FreeListHead;
-	FreeListHead = (uint32 *)(*FreeListHead);
+	FreeListHead = (uintptr_t *)(*FreeListHead);
 	return (retVal);
 }
 
@@ -98,7 +98,7 @@ CGenUnboundData::GetBlockSize () {
 }
 
 inline void
-CGenUnboundData::ReturnOldBlock (uint32* block) {
+CGenUnboundData::ReturnOldBlock (uintptr_t* block) {
 	// Error checking
 	if (block == NULL) {
 		CRITICAL_ERROR ("undata.h", "Tried to free a NULL block");
@@ -107,7 +107,7 @@ CGenUnboundData::ReturnOldBlock (uint32* block) {
 	// 1st word of block (next pointer) gets what FreeListHead was pointing at
 	// if we gave out the last block
 	//*block = (FreeListHead == NULL) ? (uint32) NULL : (uint32) *FreeListHead;
-	*block = (uint32) FreeListHead;
+	*block = (uintptr_t) FreeListHead;
 
 	FreeListHead = block;
 	FreeBlocks++;

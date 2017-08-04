@@ -45,7 +45,7 @@ class CLINUXUnboundData : public CGenUnboundData {
 		CLINUXUnboundData ();
 		// platform specific routine for seting up initial memory segment
 		ESTDLTResults 
-		initUnboundHeap (uint32 blockSize, uint32** begin, uint32** end);
+		initUnboundHeap (uint32 blockSize, uintptr_t** begin, uintptr_t** end);
 
 };
 

@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdint>
 
 #include "stdlterror.h"
 
@@ -39,8 +40,8 @@
 // platform specific routine for seting up initial memory segment
 ESTDLTResults 
 CLINUXUnboundData::initUnboundHeap (uint32 blockSize, 
-	uint32** begin, uint32** end) {
-	if ((*begin = (uint32 *) malloc (blockSize*__UNDATA_NUMBLOCKS)) == NULL) {
+	uintptr_t** begin, uintptr_t** end) {
+	if ((*begin = (uintptr_t *) malloc (blockSize*__UNDATA_NUMBLOCKS)) == NULL) {
 		return (STDLT_ERROR);
 	}
 	*end   = *begin + ((blockSize*__UNDATA_NUMBLOCKS)/4);

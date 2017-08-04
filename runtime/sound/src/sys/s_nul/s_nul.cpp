@@ -596,7 +596,7 @@ S32	CNulSoundSys::DecompressADPCM( LTSOUNDINFO* pInfo, void** ppOutData, U32* pu
 	return 0; 
 }
 
-S32	CNulSoundSys::DecompressASI( void* pInData, U32 uiInSize, char* sFilename_ext, void** ppWav, U32* puiWavSize, LTLENGTHYCB fnCallback ) 
+S32	CNulSoundSys::DecompressASI( void* pInData, U32 uiInSize, const char* sFilename_ext, void** ppWav, U32* puiWavSize, LTLENGTHYCB fnCallback ) 
 { 
 	return 0; 
 }

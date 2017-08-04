@@ -429,7 +429,7 @@ public:
 
 	// wave file decompression functons
 	virtual S32			DecompressADPCM( LTSOUNDINFO* pInfo, void** ppOutData, U32* puiOutSize );
-	virtual S32			DecompressASI( void* pInData, U32 uiInSize, char* sFilename_ext, void** ppWav, U32* puiWavSize, LTLENGTHYCB fnCallback );
+	virtual S32			DecompressASI( void* pInData, U32 uiInSize, const char* sFilename_ext, void** ppWav, U32* puiWavSize, LTLENGTHYCB fnCallback );
 	UINT				ReadStream( WaveFile* pStream, BYTE* pOutBuffer, int nSize );
 	BYTE*				GetCompressedBuffer() { return m_pCompressedBuffer; }
 	BYTE*				GetDecompressedBuffer() { return m_pDecompressedBuffer; }
