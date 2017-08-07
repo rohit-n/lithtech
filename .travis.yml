@@ -11,11 +11,12 @@ script:
   - cmake ../
   - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part >> make.log 2>&1 && echo Pass $part || echo Fail $part; done | tee -a build.log
   - "cat make.log build.log > make.build.log"
-  - "python3 ../tests/validate.py make.build.log 13 10 110 95"
+  - "python3 ../tests/validate.py make.build.log 13 10 90 60"
 matrix:
   allow_failures:
     - clang: 4.0
     - clang: 5.0
+    - gcc: "6 32bit"
   include:
     - os: linux
       dist: trusty
@@ -45,6 +46,21 @@ matrix:
             - libsdl2-dev
       env:
         - MATRIX_EVAL="CC=gcc-6; CXX=g++-6"
+    - os: linux
+      dist: trusty
+      gcc: "6 32bit"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+            - cmake-data
+            - cmake
+            - libsdl2-dev
+            - libsdl2-dev:i386
+      env:
+        - MATRIX_EVAL="CC='gcc-6 -m32'; CXX='gcc++-6 -m32'"
     - os: linux
       dist: trusty
       clang: 4.0

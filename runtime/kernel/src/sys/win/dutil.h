@@ -20,7 +20,7 @@ inline char du_Toupper(const char theChar)
 
 void du_strupr(char *pStr);
 
-int du_UpperStrcmp(const char *pStr1, const char *pStr2);
+bool du_UpperStrcmp(const char *pStr1, const char *pStr2);
 
 
 #endif  // __DUTIL_H__

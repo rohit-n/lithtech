@@ -414,7 +414,7 @@ const float QUERY_SEND_INTERVAL = 1.0f; // Time between server queries.
 
 struct SUDPError {
 	int m_ErrorCode;
-	char *m_ErrorString;
+	const char *m_ErrorString;
 };
 #define DEFINE_UDP_ERROR(x) { x, #x },
 
@@ -587,7 +587,7 @@ public:
 	virtual LTRESULT GetPingStatus(uint32 nPingID, uint32 *pStatus, uint32 *pLatency);
 	virtual LTRESULT RemovePing(uint32 nPingID);
 
-	virtual LTRESULT CUDPDriver::OpenSocket( SOCKET* phSocket );
+	virtual LTRESULT OpenSocket( SOCKET* phSocket );
 
 	virtual void UpdateGUID(LTGUID &cGUID);
 	

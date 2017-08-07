@@ -13,6 +13,8 @@
 
 #ifdef _WIN32
 #define isnan _isnan
+#else
+using std::isnan;
 #endif
 
 

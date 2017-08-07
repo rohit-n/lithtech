@@ -1503,7 +1503,7 @@ bool CUDPConn::IsFlowControlBlocked(uint32 nPacketSize) const
 // ----------------------------------------------------------------- //
 
 // Returns a string representing the last TCP/IP error.
-char* udp_GetLastError()
+const char* udp_GetLastError()
 {
 	int lastError, i;
 
@@ -2107,7 +2107,7 @@ LTRESULT CUDPDriver::StartQuery(const char *pInfo)
 			if(parse.m_Args[0][0] == '*')
 			{
 				// Broadcast.. get the port.
-				char *pTest = strchr(parse.m_Args[0], ':');
+				const char *pTest = strchr(parse.m_Args[0], ':');
 				if(pTest)
 				{
 					port = (u_short)atoi(pTest+1);
@@ -2305,7 +2305,8 @@ LTRESULT CUDPDriver::GetQueryResults(NetSession* &pListHead)
 				
 				// Fill in its unique guid.
 				memset(&pSession->m_guidInst, 0, sizeof(pSession->m_guidInst));
-				pSession->m_guidInst.guid.a = (uint32)pQuery;
+				 // this looks really unused and doesn't seem to ever be converted back to a pointer.
+				pSession->m_guidInst.guid_64.a = (uintptr_t)pQuery;
 
 				memset(&pSession->m_guidApp, 0, sizeof(pSession->m_guidApp));
 

@@ -3,6 +3,7 @@ project(DLL_Server)
 add_definitions(-DDE_SERVER_COMPILE -DDIRECTENGINE_COMPILE -DSTDLITH_ALLOC_OVERRIDE -DLT15_COMPAT -DNO_PRAGMA_LIBS)
 
 set(libsources
+	../kernel/net/src/sys/win/udpdriver.cpp
 	src/server_iltcommon.cpp
 	../shared/src/shared_iltcommon.cpp
 	../shared/src/modellt_impl.cpp
@@ -16,20 +17,17 @@ set(libsources
 	../shared/src/interface_linkage.cpp
 	../model/src/animtracker.cpp
 	../shared/src/bdefs.cpp
-	../kernel/src/sys/win/bindmgr.cpp
 	../shared/src/classbind.cpp
 	src/classmgr.cpp
 	../shared/src/collision.cpp
 	../shared/src/compress.cpp
 	../shared/src/concommand.cpp
 	../shared/src/conparse.cpp
-	../model/src/sys/d3d/d3d_model_load.cpp
 	../world/src/de_mainworld.cpp
 	../world/src/de_nodes.cpp
 	../world/src/de_objects.cpp
 	../kernel/src/debugging.cpp
 	../shared/src/dhashtable.cpp
-	../kernel/src/sys/win/dutil.cpp
 	../shared/src/engine_vars.cpp
 	../shared/src/findobj.cpp
 	../shared/src/ftserv.cpp
@@ -86,10 +84,8 @@ set(libsources
 	../shared/src/spritecontrolimpl.cpp
 	../shared/src/stacktrace.cpp
 	../shared/src/stdlterror.cpp
-	../kernel/src/sys/win/stringmgr.cpp
 	../shared/src/strtools.cpp
 	../model/src/transformmaker.cpp
-	../kernel/net/src/sys/win/udpdriver.cpp
 	../sound/src/wave.cpp
 	../world/src/world_blind_object_data.cpp
 	../world/src/world_blocker_data.cpp
@@ -99,6 +95,10 @@ set(libsources
 
 if(WIN32)
 	set(libsources ${libsources}
+		../model/src/sys/d3d/d3d_model_load.cpp
+		../kernel/src/sys/win/bindmgr.cpp
+		../kernel/src/sys/win/dutil.cpp
+		../kernel/src/sys/win/stringmgr.cpp
 		../kernel/src/sys/win/counter.cpp
 		../kernel/io/src/sys/win/de_file.cpp
 		../kernel/mem/src/sys/win/de_memory.cpp
@@ -111,6 +111,9 @@ if(WIN32)
 		../kernel/src/sys/win/timemgr.cpp)
 else(WIN32)
 	set(libsources ${libsources}
+		../kernel/src/sys/linux/bindmgr.cpp
+		../kernel/src/sys/linux/dutil.cpp
+		../kernel/src/sys/linux/stringmgr.cpp
 		../kernel/src/sys/linux/counter.cpp
 		../kernel/io/src/sys/linux/linuxfile.cpp
 		../kernel/mem/src/sys/linux/de_memory.cpp
