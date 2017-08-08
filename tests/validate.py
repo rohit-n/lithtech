@@ -21,10 +21,13 @@ mins = {
     'warning': int(sys.argv[4]),
     'undefined reference': int(sys.argv[5])
 }
+errs = []
 warns = []
 for l in logs:
     if 'warning:' in l:
         warns.append(l)
+    if 'error:' in l:
+        errs.append(l)
     for k in counts.keys():
         if k in l:
             counts[k] += 1
@@ -38,6 +41,7 @@ print(fmt.format(**counts))
 print('warns {0} vs counts {1}'.format(len(warns), counts['warning']))
 if mins['Pass'] > counts['Pass']:
     print('Pass parts have gone below known limits')
+    print('\n'.join(errs))
     sys.exit(1)
 
 for k in mins.keys():
@@ -48,5 +52,3 @@ for k in mins.keys():
             continue
         print('{0} parts have gone above known limits'.format(k))
         sys.exit(1)
-
-
