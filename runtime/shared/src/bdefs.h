@@ -34,6 +34,12 @@
 //C++ exception handler used, but unwind semantics are not enabled. Specify -GX
 #pragma warning (disable: 4530)
 
+#ifdef __GNUC__
+#define GCC_VERSION (__GNUC__ * 10000 \
+                     + __GNUC_MINOR__ * 100 \
+                     + __GNUC_PATCHLEVEL__)
+#endif
+
 #ifndef __LITHTECH_H__
 #include "lithtech.h"
 #endif

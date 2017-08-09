@@ -13,7 +13,7 @@
 
 #ifdef _WIN32
 #define isnan _isnan
-#else
+#elif GCC_VERSION < 50401
 using std::isnan;
 #endif
 
