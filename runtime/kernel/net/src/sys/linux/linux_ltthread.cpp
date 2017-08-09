@@ -50,7 +50,7 @@ void* InternalThreadFunction(void* pArgument)
 	void*      			          pUserThreadArgument = internalThreadArgument->m_pArgument;
 
 	// call the user thread function
-	uint32 returnValue = pUserThreadFunction(pUserThreadArgument);
+	uintptr_t returnValue = pUserThreadFunction(pUserThreadArgument);
 
 	return (void*) returnValue;
 }

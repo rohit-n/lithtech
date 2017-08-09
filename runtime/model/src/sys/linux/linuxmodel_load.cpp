@@ -1,5 +1,11 @@
+#include "bdefs.h"
 #include "model.h"
+#include "model_ops.h"
+#include "iltstream.h"
+#include "conparse.h"
+#include "ltb.h"
 
+/*
 // ----------------------------------------------------------------
 //  This is the current version of Linux ltb files we are on.
 // if a file is not of this version you may puke at your leisure.
@@ -22,4 +28,10 @@ LTRESULT ModelPiece::ABC_LOAD( ILTStream & file, CDIModelDrawable *pPiece, Model
     #endif
 
     return false;
+}
+*/
+
+CDIModelDrawable *ModelPiece::CreateModelRenderObject( uint32 type )
+{
+    return nullptr;
 }

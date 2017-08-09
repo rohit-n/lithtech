@@ -198,6 +198,8 @@ else(WIN32)
 	src/sys/linux/customfontfilemgr.cpp
 	src/sys/linux/texturestringimage.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
+	../kernel/net/src/sys/linux/linux_ltthread.cpp
+	../kernel/net/src/sys/linux/udpdriver.cpp
 	../kernel/src/sys/linux/dutil.cpp
 	../kernel/src/sys/linux/bindmgr.cpp
 	../kernel/src/sys/linux/timemgr.cpp
@@ -217,6 +219,7 @@ else(WIN32)
 	../kernel/src/sys/linux/streamsim.cpp
 	../kernel/src/sys/linux/musicdriver.cpp
 	../kernel/src/sys/linux/input.cpp
+	../model/src/sys/linux/linuxmodel_load.cpp
     ${exec_src})
 endif(WIN32)
 
@@ -284,11 +287,11 @@ if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 endif(ENABLE_DIRECTX)
 
 set(libs ${libs}
-	LIB_Lith
 	LIB_StdLith
 	LIB_ZLib
 	LIB_LTMem
 	LIB_RezMgr
+	LIB_Lith
 	LIB_Info
 	LIB_ILTSound
 	LIB_UI

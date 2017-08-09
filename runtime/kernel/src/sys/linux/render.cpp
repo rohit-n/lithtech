@@ -95,5 +95,12 @@ LTRESULT r_TermRender(int surfaceHandle, bool unload)
     return LT_OK;
 }
 
+uint32 GetInternalTextureMemory()
+{
+	return 0;
+}
 
-
+uint32 GetRendererTextureMemory()
+{
+	return 0;
+}

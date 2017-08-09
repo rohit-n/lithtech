@@ -1469,5 +1469,8 @@ void CConsole::OnKeyPress(uint32 key)
 	}
 }
 
-
+uint32 GetInterfaceSurfaceMemory()
+{
+	return 0;
+}
 
