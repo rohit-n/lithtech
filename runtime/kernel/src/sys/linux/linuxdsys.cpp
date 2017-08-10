@@ -16,13 +16,12 @@
 #include "classbind.h"
 #include "bindmgr.h"
 #include "console.h"
-
+#include "linuxdsys.h"
 
 //IClientShell game client shell object.
 #include "iclientshell.h"
 static IClientShell *i_client_shell;
 define_holder(IClientShell, i_client_shell);
-
 
 
 void dsi_OnReturnError(int err)
@@ -50,6 +49,11 @@ LTRESULT dsi_SetupMessage(char *pMsg, int maxMsgLen, LTRESULT dResult, va_list m
         break;
     LT_ERRORLOADINGRENDERDLL:
         o << "Render: ";
+        break;
+    LT_NOGAMERESOURCES:
+        o << "NoGameResources found";
+    LT_CANTLOADGAMERESOURCES:
+        o << "GameResourceMissing: ";
         break;
     default:
         o << "Error : ";
@@ -290,8 +294,13 @@ LTBOOL dsi_IsClientActive()
 	return TRUE;
 }
 
-void dsi_OnClientShutdown( char *pMsg )
+void dsi_OnClientShutdown(const char *pMsg )
 {
+    if(pMsg == nullptr || pMsg[0] == '\0')
+        return;
+    ClientGlob *pGlob = &g_ClientGlob;
+    strncpy(pGlob->m_ExitMessage, pMsg, sizeof(pGlob->m_ExitMessage));
+    pGlob->m_ExitMessage[sizeof(pGlob->m_ExitMessage)-1] = '\0';
 }
 
 char* dsi_GetDefaultWorld()

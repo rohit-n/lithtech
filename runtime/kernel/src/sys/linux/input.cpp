@@ -1,14 +1,9 @@
 #include "bdefs.h"
 #include "input.h"
 
-void in_Term(InputMgr*)
-{
-}
-
+extern InputMgr g_InputSDL2Mgr;
 LTRESULT input_GetManager(InputMgr **pMgr)
 {
-    static InputMgr mgr{};
-    mgr.Term = &in_Term;
-    *pMgr = &mgr;
+    *pMgr = &g_InputSDL2Mgr;
     return LT_OK;
 }

@@ -104,7 +104,7 @@ void dsi_ClearKeyMessages();
 LTBOOL dsi_IsConsoleUp();
 void dsi_SetConsoleUp(LTBOOL bUp);
 LTBOOL dsi_IsClientActive();
-void dsi_OnClientShutdown( char *pMsg );
+void dsi_OnClientShutdown(const char *pMsg );
 
 char* dsi_GetDefaultWorld();
 

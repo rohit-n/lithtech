@@ -34,7 +34,7 @@ class InputMgr
 {
 public:
     bool  (*Init)(InputMgr *pMgr, ConsoleState *pState);
-    void    (*Term)(InputMgr *pMgr);
+    void  (*Term)(InputMgr *pMgr);
     bool  (*IsInitted)(InputMgr *pMgr);
 
 
