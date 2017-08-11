@@ -14,7 +14,7 @@
 
 #include "ilttexturestring.h"
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 // This control displays a string of text which fades out upon being unselected.
 class CLTGUITextCtrl : public CLTGUICtrl

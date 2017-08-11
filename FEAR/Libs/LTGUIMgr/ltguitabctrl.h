@@ -13,7 +13,7 @@
 #ifndef __LTGUITABCTRL_H__
 #define __LTGUITABCTRL_H__
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 
 struct CLTGUITabCtrl_create : public CLTGUICtrl_create

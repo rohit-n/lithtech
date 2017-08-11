@@ -15,7 +15,7 @@
 #ifndef __LTGUIFILLFRAME_H__
 #define __LTGUIFILLFRAME_H__
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 struct CLTGUIFillFrame_create : public CLTGUICtrl_create
 {

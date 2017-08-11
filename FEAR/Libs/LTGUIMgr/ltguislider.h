@@ -12,7 +12,7 @@
 #ifndef _LTGUISLIDER_H_
 #define _LTGUISLIDER_H_
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 //slider texture layout:
 // upper left quarter  : used for the part of the bar that's "full"
 // upper right quarter : used for the part of the bar that's "empty"

@@ -14,7 +14,7 @@
 #define __LTGUICOLUMNCTRLEX_H__
 
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 
 class CLTGUIColumnCtrlEx : public CLTGUICtrl

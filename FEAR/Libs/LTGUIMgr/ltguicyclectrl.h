@@ -12,7 +12,7 @@
 #if !defined(_LTGUICYCLECTRL_H_)
 #define _LTGUICYCLECTRL_H_
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 struct CLTGUICycleCtrl_create : public CLTGUICtrl_create
 {

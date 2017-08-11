@@ -6,7 +6,7 @@
 #define _BASE_SCREEN_H_
 
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "LTPoly.h"
 
 class CScreenMgr;

@@ -1,3 +1,4 @@
+#include "bdefs.h"
 #include "ltmodule.h"
 #include "pixelformat.h"
 #include "client_formatmgr.h"

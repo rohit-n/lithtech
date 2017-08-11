@@ -14,7 +14,7 @@
 #ifndef __LTGUISCROLLBAR_H__
 #define __LTGUISCROLLBAR_H__
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 #include "EngineTimer.h"
 
 struct CLTGUIScrollBar_create : public CLTGUICtrl_create

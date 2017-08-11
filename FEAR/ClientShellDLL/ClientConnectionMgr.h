@@ -16,8 +16,8 @@
 #include "VarTrack.h"
 #include "NetDefs.h"
 #include "ProfileUtils.h"
-#include "iltclientcontenttransfer.h"
-#include "iltcontenttransfernotification.h"
+// #include "iltclientcontenttransfer.h"
+// #include "iltcontenttransfernotification.h"
 
 class IGameSpyBrowser;
 

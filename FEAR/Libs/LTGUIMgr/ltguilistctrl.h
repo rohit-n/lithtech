@@ -11,7 +11,7 @@
 #if !defined(_LTGUILISTCTRL_H_)
 #define _LTGUILISTCTRL_H_
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 class CLTGUITextureButton;
 

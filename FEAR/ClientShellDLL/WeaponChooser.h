@@ -6,7 +6,7 @@
 #define _WEAPONCHOOSER_H_
 
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 
 class CWeaponChooser
 {

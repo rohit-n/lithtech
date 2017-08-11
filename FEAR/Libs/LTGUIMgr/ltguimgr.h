@@ -14,14 +14,14 @@
 
 
 #include "BuildDefines.h"
-#include "engine.h"
+// #include "engine.h"
 #include "ilttexturestring.h"
 #include "iltdrawprim.h"
 
 //game specific 
-#include "..\..\shared\DebugNew.h"
-#include "..\..\shared\TextureReference.h"
-#include "..\..\shared\ColorUtilities.h"
+#include "../../Shared/DebugNew.h"
+#include "../../Shared/TextureReference.h"
+#include "../../Shared/ColorUtilities.h"
 
 
 #pragma warning( disable : 4786 )
@@ -29,30 +29,30 @@
 
 
 //base classes
-#include "..\ltguimgr\ltguicommandhandler.h"
-#include "..\ltguimgr\ltguictrl.h"
-#include "..\ltguimgr\ltguistring.h"
-#include "..\ltguimgr\ltguicmds.h"
+#include "../LTGUIMgr/ltguicommandhandler.h"
+#include "../LTGUIMgr/ltguictrl.h"
+#include "../LTGUIMgr/ltguistring.h"
+#include "../LTGUIMgr/ltguicmds.h"
 
 //basic control classes
-#include "..\ltguimgr\ltguitextctrl.h"
-#include "..\ltguimgr\ltguitexturebutton.h"
-#include "..\ltguimgr\ltguicyclectrl.h"
-#include "..\ltguimgr\ltguitoggle.h"
-#include "..\ltguimgr\ltguislider.h"
-#include "..\ltguimgr\ltguiframe.h"
-#include "..\ltguimgr\ltguieditctrl.h"
-#include "..\ltguimgr\ltguiscrollbar.h"
-#include "..\ltguimgr\ltguiheaderctrl.h"
-#include "..\ltguimgr\ltguifillframe.h"
-#include "..\ltguimgr\ltguitabctrl.h"
+#include "../LTGUIMgr/ltguitextctrl.h"
+#include "../LTGUIMgr/ltguitexturebutton.h"
+#include "../LTGUIMgr/ltguicyclectrl.h"
+#include "../LTGUIMgr/ltguitoggle.h"
+#include "../LTGUIMgr/ltguislider.h"
+#include "../LTGUIMgr/ltguiframe.h"
+#include "../LTGUIMgr/ltguieditctrl.h"
+#include "../LTGUIMgr/ltguiscrollbar.h"
+#include "../LTGUIMgr/ltguiheaderctrl.h"
+#include "../LTGUIMgr/ltguifillframe.h"
+#include "../LTGUIMgr/ltguitabctrl.h"
 
 //container control classes
-#include "..\ltguimgr\ltguicolumnctrl.h"
-#include "..\ltguimgr\ltguicolumnctrlex.h"
-#include "..\ltguimgr\ltguiwindow.h"
-#include "..\ltguimgr\ltguilistctrl.h"
-#include "..\ltguimgr\ltguilistctrlex.h"
+#include "../LTGUIMgr/ltguicolumnctrl.h"
+#include "../LTGUIMgr/ltguicolumnctrlex.h"
+#include "../LTGUIMgr/ltguiwindow.h"
+#include "../LTGUIMgr/ltguilistctrl.h"
+#include "../LTGUIMgr/ltguilistctrlex.h"
 
 //these are defined in the module that links
 extern ILTDrawPrim*		g_pDrawPrim;
@@ -61,6 +61,6 @@ extern ILTTextureMgr*	g_pILTTextureMgr;
 extern ILTCSBase* g_pLTBase;
 
 //utility functions for handling UV coordinates
-#include "..\ltguimgr\ltquaduvutils.h"
+#include "../LTGUIMgr/ltquaduvutils.h"
 
 #endif // _LTGUIMGR_H_

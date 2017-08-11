@@ -15,7 +15,7 @@
 
 #include "ltbasedefs.h"
 #include "iltclient.h"
-#include "soundmixerdb.h"
+#include "SoundMixerDB.h"
 
 const int32 MAX_CLIENT_MIXERS=10;
 

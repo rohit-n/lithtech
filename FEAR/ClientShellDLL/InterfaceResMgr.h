@@ -11,7 +11,7 @@
 #if !defined(_INTERFACERESMGR_H_)
 #define _INTERFACERESMGR_H_
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "TextureReference.h"
 
 class CGameClientShell;

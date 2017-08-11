@@ -12,7 +12,7 @@
 #define __HUD_MESSAGE_H__
 
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "LTPoly.h"
 
 typedef struct MsgCreate_t

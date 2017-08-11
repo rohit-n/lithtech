@@ -19,7 +19,7 @@
 //
 
 #include "GameDatabaseMgr.h"
-#include "resourceextensions.h"
+// #include "resourceextensions.h"
 #include "SurfaceDB.h"
 #include "AnimationProp.h"
 #include "ClientServerSharedEnums.h"

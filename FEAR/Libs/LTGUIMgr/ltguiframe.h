@@ -12,7 +12,7 @@
 #if !defined(_LTGUIFRAME_H_)
 #define _LTGUIFRAME_H_
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 class CLTGUIFrame : public CLTGUICtrl
 {

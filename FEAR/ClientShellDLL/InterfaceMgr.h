@@ -28,11 +28,11 @@
 #include "LoadingScreen.h"
 #include "ProfileMgr.h"
 #include "PlayerStats.h"
-#include "ClientFxMgr.h"
+#include "ClientFXMgr.h"
 #include "CursorMgr.h"
-#include "LTObjRef.h"
+#include "ltobjref.h"
 #include "ClientFXInstance.h"
-#include "iltresourcemgr.h"
+// #include "iltresourcemgr.h"
 #include "InterfaceSound.h"
 
 extern ILTModelClient*	g_pILTModelClient;

@@ -16,8 +16,8 @@
 #include "BaseScreen.h"
 #include "ScreenMgr.h"
 #include "HUDBar.h"
-#include "iltloadingprogress.h"
-#include "clientconnectionmgr.h"
+//#include "iltloadingprogress.h"
+#include "ClientConnectionMgr.h"
 
 class CLoadingScreen
 {

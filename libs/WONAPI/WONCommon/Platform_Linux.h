@@ -67,7 +67,9 @@ typedef char* LPSTR;
 #define _timezone timezone
 #define _ASSERT assert
 #define HOSTENT hostent
+#ifndef _MAX_PATH
 #define _MAX_PATH PATH_MAX
+#endif
 #define MAX_PATH PATH_MAX
 
 #define NSPROTO_IPX		0		// Need to fix to support IPX under linux

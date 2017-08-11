@@ -237,16 +237,18 @@ set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME CShell)
 add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CLIENTBUILD -DMEMTRACK_CLIENT)
 include_directories (../Shared 
-	../sdk/inc
-	../libs/MFCStub
-	../libs/stdlith
-	../libs/ButeMgr
-	../libs/CryptMgr
-	../libs/lith
+	../../sdk/inc
+	../../libs/MFCStub
+	../../libs/stdlith
+	../../libs/ButeMgr
+	../../libs/CryptMgr
+	../../libs/WONAPI
+	../../libs/lith
 	#../libs/RegMgr
-	../NOLF2/Libs/LTGUIMgr
+	../Libs/LTGUIMgr
 	#../Libs/ServerDir
-	../ClientRes)
+	../ClientRes
+	/usr/include/SDL2)
 target_link_libraries(${PROJECT_NAME}
 	MFCStub
 	Lib_StdLith
@@ -255,6 +257,7 @@ target_link_libraries(${PROJECT_NAME}
 	Lib_Lith
 	#RegMgr
 	LTGUIMgr
+	LIB_WONAPI
 	#ServerDir
 	#winmm.lib
-	)
+	SDL2)

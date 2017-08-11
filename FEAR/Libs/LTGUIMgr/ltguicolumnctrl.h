@@ -11,7 +11,7 @@
 #if !defined(_LTGUICOLUMNCTRL_H_)
 #define _LTGUICOLUMNCTRL_H_
 
-#include "LTGUITextCtrl.h"
+#include "ltguitextctrl.h"
 
 
 typedef std::vector<CLTGUITextCtrl*, LTAllocator<CLTGUITextCtrl*, LT_MEM_TYPE_CLIENTSHELL> > TextControlArray;

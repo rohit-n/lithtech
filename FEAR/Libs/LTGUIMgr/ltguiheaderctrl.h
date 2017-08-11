@@ -14,7 +14,7 @@
 #ifndef __LTGUIHEADERCTRL_H__
 #define __LTGUIHEADERCTRL_H__
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 class CLTGUIScrollBar;
 

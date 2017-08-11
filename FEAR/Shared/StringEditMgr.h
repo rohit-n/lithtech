@@ -13,10 +13,10 @@
 #ifndef __STRINGEDITMGR_H__
 #define __STRINGEDITMGR_H__
 
-#include "platform.h"
-#include "istringeditmgr.h"
-#include "resourceextensions.h"
-
+#include "WONCommon/Platform.h"
+// #include "istringeditmgr.h"
+// #include "resourceextensions.h"
+class IStringEditMgr {};
 #if defined(PLATFORM_LINUX)
 	#define SKDB_DLL_NAME		"libStringEditRuntime.so"
 #else

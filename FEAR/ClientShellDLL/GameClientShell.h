@@ -29,14 +29,14 @@
 #include "PlayerMgr.h"
 #include "VersionMgr.h"
 #include "ClientSoundMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "MissionDB.h"
 #include "UserNotificationMgr.h"
-#include "rendererframestats.h"
+// #include "rendererframestats.h"
 #include "ShatterEffectMgr.h"
-#include "ltfilewrite.h"
+#include "WONCommon/FileWriter.h"
 #include <map>
-#include "iltgameutil.h"
+//#include "iltgameutil.h"
 
 #if defined(PLATFORM_WIN32)
 #include <winsock.h>

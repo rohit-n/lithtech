@@ -11,7 +11,7 @@
 #if !defined(_LTGUIWINDOW_H_)
 #define _LTGUIWINDOW_H_
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 class CLTGUIFrame;
 

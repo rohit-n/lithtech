@@ -12,7 +12,7 @@
 #define _MESSAGEBOX_H_
 
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 
 enum eMBType
 {

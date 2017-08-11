@@ -15,7 +15,7 @@
 
 
 #include "HUDItem.h"
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 
 const int kMaxDebugLength = 96;
 

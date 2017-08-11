@@ -13,7 +13,7 @@
 
 #include "ltbasedefs.h"
 #include "ltguistring.h"
-#include "ltpoly.h"
+#include "LTPoly.h"
 #include "TextureReference.h"
 #include "HUDEnums.h"
 

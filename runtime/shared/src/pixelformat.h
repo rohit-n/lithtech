@@ -47,17 +47,17 @@ struct RPaletteColor {
 
 
 // Helper for debugging..
-template<class T, uint32 size>
+template<class T, uint32 N>
 class SafeArray {
 public:
 
 	const T&  operator[](uint32 index) const {
-        ASSERT(index < size);
+        ASSERT(index < N);
         return m_Array[index];
     }
 
     T&  operator[](uint32 index) {
-        ASSERT(index < size);
+        ASSERT(index < N);
         return m_Array[index];
     }
 
@@ -65,7 +65,7 @@ public:
 
 private:
 
-    T   m_Array[size];      
+    T   m_Array[N];      
 };
 
 

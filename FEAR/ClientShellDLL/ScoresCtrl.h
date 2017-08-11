@@ -12,7 +12,7 @@
 #define __SCORESCTRL_H__
 
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "EventCaster.h"
 #include "HUDScores.h"
 

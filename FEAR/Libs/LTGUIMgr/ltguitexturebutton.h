@@ -11,7 +11,7 @@
 #if !defined(_LTGUITEXTUREBUTTON_H_)
 #define _LTGUITEXTUREBUTTON_H_
 
-#include "LTGUICtrl.h"
+#include "ltguictrl.h"
 
 struct CLTGUITextureButton_create : public CLTGUICtrl_create
 {

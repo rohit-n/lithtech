@@ -13,7 +13,7 @@
 #ifndef __COMMON_UTILITIES_H__
 #define __COMMON_UTILITIES_H__
 
-#include "platform.h"
+#include "WONCommon/Platform.h"
 #include "ltbasetypes.h"
 #include "iltcommon.h"
 #include "iltmodel.h"

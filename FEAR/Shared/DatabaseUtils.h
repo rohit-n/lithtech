@@ -17,11 +17,12 @@
 // Includes...
 //
 
-	#include "platform.h"
-	#include "idatabasemgr.h"
-	#include "idatabasecreatormgr.h"
+	#include "WONCommon/Platform.h"
+/*	#include "idatabasemgr.h"
+	#include "idatabasecreatormgr.h" */
 
-
+struct IDatabaseMgr {};
+struct IDatabaseCreatorMgr {};
 //
 // Defines...
 //

@@ -19,7 +19,8 @@
 #	define STRCONV_BUFFER_LENGTH 256
 #endif
 
-#include "engine.h"
+#include "ltbasedefs.h"
+#include "mfcstub.h"
 
 #if defined( PLATFORM_WIN32 )
 #define WIN32_LEAN_AND_MEAN
@@ -36,7 +37,7 @@
 #include "iltserver.h"
 #include "iltmessage.h"
 #include "iltsoundmgr.h"
-#include "globals.h"
+#include "Globals.h"
 #include "iltmodel.h"
 #include "iltphysics.h"
 #include "iltsoundmgr.h"
