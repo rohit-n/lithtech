@@ -72,7 +72,7 @@ extern int32 g_bForceRemote;
 extern int32 g_CV_ConnTroubleCount;
 extern int32 g_CV_BandwidthTargetServer;
 
-ILTStream* sm_FTOpenFn(FTServ *hServ, char *pFilename) 
+ILTStream* sm_FTOpenFn(FTServ *hServ, const char *pFilename) 
 {
 	return server_filemgr->OpenFile(pFilename);
 }
@@ -82,7 +82,7 @@ void sm_FTCloseFn(FTServ *hServ, ILTStream *pStream)
 	pStream->Release();
 }
 
-int sm_FTCantOpenFileFn(FTServ *hServ, char *pFilename) 
+int sm_FTCantOpenFileFn(FTServ *hServ, const char *pFilename) 
 {
 	return TODO_REMOVEFILE;
 }

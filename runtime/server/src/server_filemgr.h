@@ -50,7 +50,7 @@ typedef CListCircularElement<HLTFileTree *> SERVERFILEMGR_ELEMENT;
 
 // An entry in the used file list.
 struct UsedFile {
-	char*			GetFilename();
+	const char*		GetFilename();
 	HHashElement    *m_hElement; // holds the file-table entry for filename
 	uint32			m_FileSize;
 	uint32			m_FileID;
@@ -136,7 +136,7 @@ public:
     void ClearUsedFiles();
 
     // Get the filename from a UsedFile.
-    char* GetUsedFilename(UsedFile *pFile);
+    const char* GetUsedFilename(UsedFile *pFile);
 
 };
 			

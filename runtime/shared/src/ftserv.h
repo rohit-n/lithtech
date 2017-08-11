@@ -50,11 +50,11 @@ struct FTServ;
 struct FTSInitStruct
 {
     // Open and close functions.
-    ILTStream* (*m_OpenFn)(FTServ *hServ, char *pFilename);
+    ILTStream* (*m_OpenFn)(FTServ *hServ, const char *pFilename);
     void (*m_CloseFn)(FTServ *hServ, ILTStream *pStream);
     
     // Called when a file can't be opened.  Return a TODO number (defined above).
-    int (*m_CantOpenFileFn)(FTServ *hServ, char *pFilename);
+    int (*m_CantOpenFileFn)(FTServ *hServ, const char *pFilename);
 
     CNetMgr         *m_pNetMgr; 
     CBaseConn       *m_ConnID; // Who we're talking to.
@@ -84,7 +84,7 @@ uint32 fts_GetNumTotalFiles(FTServ *hServ);
 // Add a file that the client needs to verify.  Every file you have must have
 // a unique ID for it.  **NOTE** it assumes pFilename is allocated so it just
 // stores the pointer instead of using up more memory.
-int fts_AddFile(FTServ *hServ, char *pFilename, uint32 fileSize, uint32 fileID, uint16 flags);
+int fts_AddFile(FTServ *hServ, const char *pFilename, uint32 fileSize, uint32 fileID, uint16 flags);
 
 // Send out all the info for files with FFLAG_SENDWAIT.
 void fts_FlushAddedFiles(FTServ *hServ);

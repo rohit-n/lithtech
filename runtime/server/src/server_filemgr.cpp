@@ -28,8 +28,8 @@ void IServerFileMgr::Clear() {
     file_tree_list.Clear();
 }
 
-char *UsedFile::GetFilename() {
-    return (char*)hs_GetElementKey(m_hElement, NULL);
+const char *UsedFile::GetFilename() {
+    return (const char*)hs_GetElementKey(m_hElement, NULL);
 }
 
 void IServerFileMgr::Init() {
@@ -145,7 +145,7 @@ ILTStream* IServerFileMgr::OpenFile2(const char *pFilename, int bAddUsedFile, sh
 
 
 ILTStream* IServerFileMgr::OpenFile3(UsedFile *pUsedFile) {
-    char *pFilename;
+    const char *pFilename;
     char formattedFilename[256];
 
     pFilename = GetUsedFilename(pUsedFile);
@@ -388,13 +388,13 @@ void IServerFileMgr::ClearUsedFiles()
 }
 
 
-char *IServerFileMgr::GetUsedFilename(UsedFile *pFile) 
+const char *IServerFileMgr::GetUsedFilename(UsedFile *pFile) 
 {
     if (pFile != NULL) {
-        return (char*)hs_GetElementKey(pFile->m_hElement, NULL);
+        return pFile->GetFilename();
     }
     else {
-        return "";
+        return nullptr;
     }
 }
 

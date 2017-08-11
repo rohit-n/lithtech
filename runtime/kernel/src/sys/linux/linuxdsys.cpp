@@ -3,11 +3,10 @@
 
 #include <stdarg.h>
 #include <sys/time.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <iostream>
 
 #include "bdefs.h"
+#include "render.h"
 #include "stdlterror.h"
 #include "stringmgr.h"
 #include "sysfile.h"
@@ -17,6 +16,17 @@
 #include "bindmgr.h"
 #include "console.h"
 #include "linuxdsys.h"
+#include "clientmgr.h"
+
+//server file mgr.
+#include "server_filemgr.h"
+static IServerFileMgr *server_filemgr;
+define_holder(IServerFileMgr, server_filemgr);
+
+//IClientFileMgr
+#include "client_filemgr.h"
+static IClientFileMgr *client_file_mgr;
+define_holder(IClientFileMgr, client_file_mgr);
 
 //IClientShell game client shell object.
 #include "iclientshell.h"
@@ -42,17 +52,24 @@ LTRESULT dsi_SetupMessage(char *pMsg, int maxMsgLen, LTRESULT dResult, va_list m
 {
     char msg[1000];
     vsnprintf(msg, 999, pMsg, marker);
+    if (strlen(msg) < 1) {
+        vsnprintf(msg, 999, "%s", marker);    
+    }
     auto &&o = (dResult == LT_OK) ? std::cout : std::cerr;;
     switch(dResult){
-    LT_OK:
+    case LT_OK:
         o << "Info  : ";
         break;
-    LT_ERRORLOADINGRENDERDLL:
+    case LT_ERRORLOADINGRENDERDLL:
         o << "Render: ";
         break;
-    LT_NOGAMERESOURCES:
-        o << "NoGameResources found";
-    LT_CANTLOADGAMERESOURCES:
+    case LT_ERRORCOPYINGFILE:
+        o << "Library not found: ";
+        break;
+    case LT_NOGAMERESOURCES:
+        o << "NoGameResources found ";
+        break;
+    case LT_CANTLOADGAMERESOURCES:
         o << "GameResourceMissing: ";
         break;
     default:
@@ -202,12 +219,12 @@ LTRESULT dsi_ShutdownRender(uint32 flags)
 return LTTRUE;      // DAN - temporary
 }
 
-LTRESULT _GetOrCopyClientFile(char *pTempPath, char *pFilename, char *pOutName, int outNameLen)
+LTRESULT _GetOrCopyClientFile(char *pTempPath, const char *pFilename, char *pOutName, int outNameLen)
 {
 return LTTRUE;      // DAN - temporary
 }
 
-LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied)
+LTRESULT GetOrCopyClientFile(const char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied)
 {
     bFileCopied = true;
     char pTempPath[_MAX_PATH*2] = {'/','t', 'm', 'p', '/', 0};
@@ -216,8 +233,18 @@ LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bo
 
 LTRESULT dsi_InitClientShellDE()
 {
-//	g_pClientMgr->m_hShellModule = NULL;
-//	g_pClientMgr->m_hClientResourceModule = NULL;
+	g_pClientMgr->m_hShellModule = nullptr;
+	g_pClientMgr->m_hClientResourceModule = nullptr;
+    char filename[MAX_PATH];
+    memset(filename, 0, MAX_PATH);
+
+    const char* clientlib = "libclient.so";
+    bool copied;
+    LTRESULT dResult = GetOrCopyClientFile(clientlib, filename,MAX_PATH, copied);
+    if (dResult != LT_OK) {
+        g_pClientMgr->SetupError(LT_ERRORCOPYINGFILE, clientlib);
+        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, clientlib);
+    }
 
 	// have the user's cshell and the clientMgr exchange info
 	if ((i_client_shell == NULL ))

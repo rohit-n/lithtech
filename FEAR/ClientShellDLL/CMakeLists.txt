@@ -1,16 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
-project (ClientShellDLL)
+project (FEAR_ClientShellDLL)
 
-add_subdirectory(../../Engine/libs/MFCStub ${CMAKE_CURRENT_BINARY_DIR}/MFCStub)
-add_subdirectory(../../Engine/libs/stdlith ${CMAKE_CURRENT_BINARY_DIR}/stdlith)
-add_subdirectory(../../Engine/libs/ButeMgr ${CMAKE_CURRENT_BINARY_DIR}/ButeMgr)
-add_subdirectory(../../Engine/libs/CryptMgr ${CMAKE_CURRENT_BINARY_DIR}/CryptMgr)
-add_subdirectory(../../Engine/libs/lith ${CMAKE_CURRENT_BINARY_DIR}/lith)
-add_subdirectory(../../Engine/libs/RegMgr ${CMAKE_CURRENT_BINARY_DIR}/RegMgr)
-add_subdirectory(../../NOLF2/Libs/LTGUIMgr ${CMAKE_CURRENT_BINARY_DIR}/LTGUIMgr)
-#add_subdirectory(../Libs/ServerDir ${CMAKE_CURRENT_BINARY_DIR}/ServerDir)
-
-add_library (ClientShellDLL SHARED
+add_library (${PROJECT_NAME} SHARED
 	AccuracyMgr.cpp
 	AccuracyVisualization.cpp
 	ActivateObjectFX.cpp
@@ -158,7 +149,7 @@ add_library (ClientShellDLL SHARED
 	PerformanceLog.cpp
 	PerformanceLogMgr.cpp
 	PerformanceMgr.cpp
-	../../Engine/sdk/inc/performancemonitorhook.cpp
+	../sdk/inc/performancemonitorhook.cpp
 	PerformanceTest.cpp
 	PhysicsCollisionSystemFX.cpp
 	PhysicsConstraintFX.cpp
@@ -242,27 +233,28 @@ add_library (ClientShellDLL SHARED
 	ScreenHostOptions.cpp
 	ScreenMulti.cpp
 	ServerBrowserCtrl.cpp)
-set_target_properties(ClientShellDLL 
+set_target_properties(${PROJECT_NAME} 
 	PROPERTIES OUTPUT_NAME CShell)
 add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CLIENTBUILD -DMEMTRACK_CLIENT)
 include_directories (../Shared 
-	../../Engine/sdk/inc
-	../../Engine/libs/MFCStub
-	../../Engine/libs/stdlith
-	../../Engine/libs/ButeMgr
-	../../Engine/libs/CryptMgr
-	../../Engine/libs/lith
-	../../Engine/libs/RegMgr
-	../../NOLF2/Libs/LTGUIMgr
+	../sdk/inc
+	../libs/MFCStub
+	../libs/stdlith
+	../libs/ButeMgr
+	../libs/CryptMgr
+	../libs/lith
+	#../libs/RegMgr
+	../NOLF2/Libs/LTGUIMgr
 	#../Libs/ServerDir
 	../ClientRes)
-target_link_libraries(ClientShellDLL
+target_link_libraries(${PROJECT_NAME}
 	MFCStub
 	Lib_StdLith
 	ButeMgr
 	CryptMgr
 	Lib_Lith
-	RegMgr
+	#RegMgr
 	LTGUIMgr
 	#ServerDir
-	winmm.lib)
+	#winmm.lib
+	)

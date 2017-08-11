@@ -116,7 +116,7 @@ if(BUILD_FEAR)
     endif(NOT BUILD_NOLF2)
 	add_subdirectory(FEAR/ClientFxDLL)					# ClientFXDLL
 #	add_subdirectory(NOLF2/ClientRes/TO2)				# ClientRes
-#	add_subdirectory(NOLF2/ClientShellDLL/TO2)			# ClientShellDLL
+	add_subdirectory(FEAR/ClientShellDLL)				# ClientShellDLL
 #	add_subdirectory(NOLF2/ObjectDLL/TO2)				# ObjectDLL
 #	add_subdirectory(NOLF2/ServerRes/TO2)				# ServerRes
 endif(BUILD_FEAR)

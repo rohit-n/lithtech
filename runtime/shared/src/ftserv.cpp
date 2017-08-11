@@ -23,11 +23,11 @@
 // File info structure.
 struct FTFile
 {
-	LTLink	m_Link;
-	uint32	m_FileID;
-	uint32	m_FileSize;
-	char	*m_Filename;
-	uint16	m_Flags;
+	LTLink		m_Link;
+	uint32		m_FileID;
+	uint32		m_FileSize;
+	const char*	m_Filename;
+	uint16		m_Flags;
 };
 
 
@@ -298,7 +298,7 @@ uint32 fts_GetNumTotalFiles(FTServ *pServ)
 }
 
 
-int fts_AddFile(FTServ *pServ, char *pFilename, uint32 fileSize, uint32 fileID, uint16 flags)
+int fts_AddFile(FTServ *pServ, const char *pFilename, uint32 fileSize, uint32 fileID, uint16 flags)
 {
 	FTFile *pFile;
 
