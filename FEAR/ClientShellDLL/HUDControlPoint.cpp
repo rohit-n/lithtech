@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDControlPoint.h"
 #include "HUDMgr.h"
 #include "ControlPointSFX.h"

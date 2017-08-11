@@ -10,7 +10,7 @@
 //
 // ****************************************************************************************** //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDHealth2.h"
 #include "PlayerStats.h"
 

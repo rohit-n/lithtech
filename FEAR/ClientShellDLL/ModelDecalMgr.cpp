@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ModelDecalMgr.h"
 #include "iltrenderer.h"
 #include "VarTrack.h"

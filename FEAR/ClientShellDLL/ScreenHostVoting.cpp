@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenHostVoting.h"
 #include "GameModeMgr.h"
 

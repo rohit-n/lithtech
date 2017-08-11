@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScmdConsoleDriver_CShell.h"
 #include "HUDMessageQueue.h"
 

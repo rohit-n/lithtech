@@ -7,7 +7,7 @@
 // (c) 2001-2002 Monolith Productions, Inc.  All Rights Reserved
 //
 // ----------------------------------------------------------------------- //
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDMgr.h"
 #include "HUDMessageQueue.h"
 #include "InterfaceMgr.h"

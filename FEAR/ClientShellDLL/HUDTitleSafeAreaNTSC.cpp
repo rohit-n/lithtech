@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDTitleSafeAreaNTSC.h"
 #include "HUDMgr.h"
 #include "InterfaceMgr.h"

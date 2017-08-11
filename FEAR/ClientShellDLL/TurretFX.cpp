@@ -14,7 +14,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "TurretFX.h"
 #include "CharacterFX.h"
 #include "CMoveMgr.h"

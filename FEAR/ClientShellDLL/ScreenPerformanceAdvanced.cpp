@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenPerformanceAdvanced.h"
 #include "PerformanceMgr.h"
 #include "ScreenCommands.h"

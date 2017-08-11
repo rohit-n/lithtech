@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "CameraOffsetMgr.h"
 #include "VarTrack.h"
 #include "GameClientShell.h"

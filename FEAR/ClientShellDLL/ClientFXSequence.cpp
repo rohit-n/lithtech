@@ -14,7 +14,7 @@
 // Includes...
 //
 	
-	#include "stdafx.h"
+	#include "Stdafx.h"
 	#include "ClientFXSequence.h"
 	#include "ClientDB.h"
 

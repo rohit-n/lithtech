@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDWeaponList.h"
 #include "ClientWeaponMgr.h"
 #include "CommandIDs.h"

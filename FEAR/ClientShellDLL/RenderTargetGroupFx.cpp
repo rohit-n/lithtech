@@ -11,7 +11,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "RenderTargetGroupFX.h"
 #include "iltrenderer.h"
 #include "PlayerCamera.h"

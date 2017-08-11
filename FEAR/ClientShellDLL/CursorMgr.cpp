@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "VarTrack.h"
 #include "InterfaceMgr.h"
 #include "CursorMgr.h"

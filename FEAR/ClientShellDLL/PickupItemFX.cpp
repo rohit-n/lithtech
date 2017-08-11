@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "PickupItemFX.h"
 #include "NavMarkerFX.h"
 #include "iltclient.h"

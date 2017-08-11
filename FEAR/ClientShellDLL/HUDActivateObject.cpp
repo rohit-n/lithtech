@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDActivateObject.h"
 #include "HUDMgr.h"
 #include "TargetMgr.h"

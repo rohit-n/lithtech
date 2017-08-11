@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ClientWeaponUtils.h"
 #include "ClientUtilities.h"
 #include "GameClientShell.h"

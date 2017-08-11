@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenWeapons.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"

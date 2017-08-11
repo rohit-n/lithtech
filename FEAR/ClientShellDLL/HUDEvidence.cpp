@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDEvidence.h"
 
 HRECORD	CHUDEvidence::GetLayout()

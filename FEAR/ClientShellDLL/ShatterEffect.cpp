@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ShatterEffect.h"
 #include "iltcustomrender.h"
 #include "ShatterTypeDB.h"

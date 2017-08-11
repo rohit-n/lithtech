@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "PlayerCamera.h"
 #include "CMoveMgr.h"
 #include "resourceextensions.h"

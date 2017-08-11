@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "PolyGridFX.h"
 #include "Plasma.h"
 #include "iltclient.h"

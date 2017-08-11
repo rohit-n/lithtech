@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ForensicObjectFX.h"
 #include "ClientWeaponMgr.h"
 #include "PlayerCamera.h"

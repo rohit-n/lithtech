@@ -10,7 +10,7 @@
 //
 // ****************************************************************************************** //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __HUDSPRINTBOOST_H__
 #include "HUDSprintBoost.h"

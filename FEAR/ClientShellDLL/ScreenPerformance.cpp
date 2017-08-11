@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenPerformance.h"
 #include "ScreenPerformanceAdvanced.h"
 #include "ScreenPerformanceGPU.h"

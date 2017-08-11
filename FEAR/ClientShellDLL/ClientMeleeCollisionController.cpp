@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ClientMeleeCollisionController.h"
 #include "ClientServerShared.h"
 #include "PlayerMgr.h"

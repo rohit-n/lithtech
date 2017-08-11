@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GameStreamingMgr.h"
 #include "iltresourcelistener.h"
 #include "iltrefcount.h"

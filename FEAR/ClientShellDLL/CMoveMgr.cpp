@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "iltclient.h"
 #include "iltphysics.h"
 #include "CMoveMgr.h"

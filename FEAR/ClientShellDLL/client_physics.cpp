@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "clientheaders.h"
 #include "client_physics.h"
 #include "ClientServerShared.h"

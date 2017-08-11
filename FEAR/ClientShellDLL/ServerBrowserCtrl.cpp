@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "serverbrowserctrl.h"
 #include <algorithm>
 #include "sys/win/mpstrconv.h"

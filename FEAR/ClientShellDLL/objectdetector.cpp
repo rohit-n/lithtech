@@ -9,7 +9,7 @@
 //
 // **************************************************************************** //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __OBJECTDETECTOR_H__
 #include "objectdetector.h"

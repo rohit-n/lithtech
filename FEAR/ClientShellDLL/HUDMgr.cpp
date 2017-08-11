@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDMgr.h"
 #include "GameClientShell.h"
 #include "HUDMessageQueue.h"

@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDDebug.h"
 #include "HUDMgr.h"
 #include "sys/win/mpstrconv.h"

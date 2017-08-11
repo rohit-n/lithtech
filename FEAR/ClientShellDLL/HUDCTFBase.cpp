@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDCTFBase.h"
 #include "HUDMgr.h"
 #include "InterfaceMgr.h"

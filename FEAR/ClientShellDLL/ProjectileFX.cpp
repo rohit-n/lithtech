@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ProjectileFX.h"
 #include "GameClientShell.h"
 #include "SFXMsgIds.h"

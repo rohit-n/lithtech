@@ -12,7 +12,7 @@
 // Includes...
 //
 	
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "FxFlags.h"
 #include "FxDefs.h"
 #include "iltmessage.h"

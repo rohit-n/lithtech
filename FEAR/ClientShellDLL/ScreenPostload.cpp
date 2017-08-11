@@ -10,7 +10,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenPostload.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"

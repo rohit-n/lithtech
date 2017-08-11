@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "FinishingMoveFX.h"
 #include "SpecialMoveMgr.h"
 

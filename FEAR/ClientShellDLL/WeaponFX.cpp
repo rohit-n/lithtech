@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "WeaponFX.h"
 #include "iltclient.h"
 #include "ClientUtilities.h"

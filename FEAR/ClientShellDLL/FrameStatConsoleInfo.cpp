@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "FrameStatConsoleInfo.h"
 #include "VarTrack.h"
 #include "rendererframestats.h"

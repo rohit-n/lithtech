@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDArmor.h"
 #include "HUDMgr.h"
 #include "PlayerStats.h"

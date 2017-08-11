@@ -12,7 +12,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDTimer.h"
 #include "MissionMgr.h"
 

@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "LoadingScreen.h"
 #include "InterfaceMgr.h"
 #include "GameClientShell.h"

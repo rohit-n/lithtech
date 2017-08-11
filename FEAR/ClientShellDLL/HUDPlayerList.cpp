@@ -7,7 +7,7 @@
 // (c) 2003 Monolith Productions, Inc.  All Rights Reserved
 //
 // ----------------------------------------------------------------------- //
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDPlayerList.h"
 #include "ClientInfoMgr.h"
 #include "SFXMgr.h"

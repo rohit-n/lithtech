@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenMutePlayer.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"

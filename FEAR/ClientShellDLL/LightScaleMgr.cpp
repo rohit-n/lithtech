@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "iltclient.h"
 #include "LightScaleMgr.h"
 #include "iltrenderer.h"

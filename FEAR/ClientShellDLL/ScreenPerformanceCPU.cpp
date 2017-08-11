@@ -11,7 +11,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenPerformanceCPU.h"
 #include "PerformanceMgr.h"
 #include "ScreenCommands.h"

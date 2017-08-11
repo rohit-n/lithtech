@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDChatInput.h"
 #include "HUDMessageQueue.h"
 #include "sys/win/mpstrconv.h"

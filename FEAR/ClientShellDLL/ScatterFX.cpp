@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScatterFX.h"
 #include "iltclient.h"
 #include "GameClientShell.h"

@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GameRuleCtrls.h"
 #include "GameModeMgr.h"
 #include "BaseScreen.h"

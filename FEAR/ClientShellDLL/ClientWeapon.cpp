@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ClientWeapon.h"
 #include "VarTrack.h"
 #include "PlayerStats.h"

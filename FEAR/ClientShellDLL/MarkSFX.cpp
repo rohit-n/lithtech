@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "MarkSFX.h"
 #include "iltclient.h"
 #include "ltlink.h"

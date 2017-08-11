@@ -14,7 +14,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ControlPointSFX.h"
 #include "GameModeMgr.h"
 #include "StateMachine.h"

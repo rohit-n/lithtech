@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 // The key binding configuration screen is not necessary in the Xenon build
 #if !defined(PLATFORM_XENON)

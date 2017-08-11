@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "WeaponDisplay.h"
 #include "LayoutDB.h"
 #include "ClientWeapon.h"

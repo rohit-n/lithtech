@@ -9,7 +9,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "LoadingScreenLayout.h"
 
 CLoadingScreenLayout g_DefaultLayout;

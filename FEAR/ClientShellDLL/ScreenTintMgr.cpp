@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "screentintmgr.h"
 #include "GameClientShell.h"
 #include "PlayerCamera.h"

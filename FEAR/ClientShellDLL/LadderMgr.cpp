@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "LadderMgr.h"
 #include "LadderFX.h"
 #include "PlayerBodyMgr.h"

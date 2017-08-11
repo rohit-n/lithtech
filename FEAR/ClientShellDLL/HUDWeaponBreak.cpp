@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDWeaponBreak.h"
 #include "HUDMgr.h"
 #include "ClientWeaponMgr.h"

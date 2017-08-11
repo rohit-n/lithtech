@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDVote.h"
 #include "ClientVoteMgr.h"
 #include "HUDDialogue.h"

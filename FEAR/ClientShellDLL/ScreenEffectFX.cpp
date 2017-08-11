@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenEffectFX.h"
 #include "FXDefs.h"
 #include "ScreenEffectDB.h"

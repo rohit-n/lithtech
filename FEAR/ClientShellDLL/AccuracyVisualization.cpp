@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "AccuracyVisualization.h"
 #include "AccuracyMgr.h"
 #include "ClientDB.h"

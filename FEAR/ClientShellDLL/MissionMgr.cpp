@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "MissionMgr.h"
 #include "GameClientShell.h"
 #include "VarTrack.h"

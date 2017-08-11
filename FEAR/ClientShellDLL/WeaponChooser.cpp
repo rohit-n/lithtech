@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "WeaponChooser.h"
 #include "InterfaceMgr.h"
 #include "GameClientShell.h"

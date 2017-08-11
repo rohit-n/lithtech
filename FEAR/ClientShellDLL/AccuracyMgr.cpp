@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "AccuracyMgr.h"
 #include "CMoveMgr.h"
 #include "WeaponDB.h"

@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ClientSoundMgr.h"
 #include "CommonUtilities.h"
 #include "VarTrack.h"

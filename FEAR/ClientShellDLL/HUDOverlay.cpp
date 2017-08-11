@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDOverlay.h"
 #include "HUDMgr.h"
 #include "ResourceExtensions.h"

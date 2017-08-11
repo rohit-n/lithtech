@@ -9,7 +9,7 @@
 //-------------------------------------------------------------------------
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GameClientShell.h"
 #include "ScoresCtrl.h"
 

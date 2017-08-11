@@ -22,7 +22,7 @@
 // (todo: better wrapping of conditions to automate reading, comparing and filtering)
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ConditionalAnimationController.h"
 #include "AnimationPropStrings.h"
 #include "TargetMgr.h"

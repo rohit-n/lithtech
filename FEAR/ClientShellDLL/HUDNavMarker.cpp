@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDNavMarker.h"
 #include "HUDMgr.h"
 #include "NavMarkerTypeDB.h"

@@ -11,7 +11,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "VolumetricLightFX.h"
 #include "iltrenderer.h"
 #include "PlayerCamera.h"

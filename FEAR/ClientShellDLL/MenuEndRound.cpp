@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "MenuEndRound.h"
 #include "ScoresCtrl.h"
 #include "HUDEndRoundMessage.h"

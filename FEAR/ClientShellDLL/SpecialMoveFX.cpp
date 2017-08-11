@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "SpecialMoveFX.h"
 #include "SpecialMoveMgr.h"
 #include "CMoveMgr.h"

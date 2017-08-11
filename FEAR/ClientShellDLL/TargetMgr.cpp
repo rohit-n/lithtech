@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "TargetMgr.h"
 #include "PlayerMgr.h"
 #include "CMoveMgr.h"

@@ -12,7 +12,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDSpectator.h"
 #include "CharacterFX.h"
 #include "CommandIDs.h"

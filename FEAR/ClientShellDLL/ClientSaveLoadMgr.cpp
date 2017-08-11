@@ -14,7 +14,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ClientSaveLoadMgr.h"
 #include "GameClientShell.h"
 #include "MissionMgr.h"

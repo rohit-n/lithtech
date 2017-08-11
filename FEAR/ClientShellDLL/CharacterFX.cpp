@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "CharacterFX.h"
 #include "GameClientShell.h"
 #include "SFXMsgIds.h"

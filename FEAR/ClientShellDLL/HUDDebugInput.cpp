@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDDebugInput.h"
 #include "HUDMessageQueue.h"
 #include "HUDMgr.h"

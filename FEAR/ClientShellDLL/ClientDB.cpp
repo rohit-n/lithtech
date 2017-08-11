@@ -10,7 +10,7 @@
 // (c) 2004 Monolith Productions, Inc.  All Rights Reserved
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ClientDB.h"
 
 

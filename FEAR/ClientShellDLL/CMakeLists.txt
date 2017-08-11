@@ -149,7 +149,7 @@ add_library (${PROJECT_NAME} SHARED
 	PerformanceLog.cpp
 	PerformanceLogMgr.cpp
 	PerformanceMgr.cpp
-	../sdk/inc/performancemonitorhook.cpp
+	# ../sdk/inc/performancemonitorhook.cpp
 	PerformanceTest.cpp
 	PhysicsCollisionSystemFX.cpp
 	PhysicsConstraintFX.cpp
@@ -165,7 +165,7 @@ add_library (${PROJECT_NAME} SHARED
 	ProfileMgr.cpp
 	ProjectileFX.cpp
 	RenderTargetFX.cpp
-	RenderTargetGroupFX.cpp
+	RenderTargetGroupFx.cpp
 	ScatterFX.cpp
 	ScmdConsoleDriver_CShell.cpp
 	ScoresCtrl.cpp

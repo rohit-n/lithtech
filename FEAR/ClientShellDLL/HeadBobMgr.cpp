@@ -10,7 +10,7 @@
 //
 // ****************************************************************************************** //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __HEADBOBMGR_H__
 #include "HeadBobMgr.h"

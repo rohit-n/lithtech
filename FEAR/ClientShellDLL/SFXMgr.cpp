@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "SFXMgr.h"
 #include "SpecialFX.h"
 #include "PolyGridFX.h"

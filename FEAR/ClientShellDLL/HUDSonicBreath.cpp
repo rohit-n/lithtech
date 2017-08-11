@@ -10,7 +10,7 @@
 //
 // ****************************************************************************************** //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __HUDSONICBREATH_H__
 #include "HUDSonicBreath.h"

@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "HUDGearList.h"
 
 CHUDGearList* CHUDGearList::g_pGearList = NULL;

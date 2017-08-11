@@ -14,7 +14,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "PlayerBodyMgr.h"
 #include "CMoveMgr.h"
 #include "CharacterFX.h"

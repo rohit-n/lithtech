@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "CharacterDisplay.h"
 #include "CharacterFX.h"
 #include "LayoutDB.h"

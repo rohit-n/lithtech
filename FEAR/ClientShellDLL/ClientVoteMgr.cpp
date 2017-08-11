@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ClientVoteMgr.h"
 #include "HUDMessageQueue.h"
 #include "HUDTransmission.h"

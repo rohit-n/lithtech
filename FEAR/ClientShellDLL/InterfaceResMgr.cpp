@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "gameclientshell.h"
 #include "InterfaceResMgr.h"
 #include "iltrenderer.h"

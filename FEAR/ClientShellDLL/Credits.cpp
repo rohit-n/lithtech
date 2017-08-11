@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "Credits.h"
 #include "CreditsDB.h"
 #include "LayoutDB.h"

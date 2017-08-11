@@ -10,7 +10,7 @@
 //
 // ****************************************************************************************** //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __FLASHLIGHT_H__
 #include "FlashLight.h"

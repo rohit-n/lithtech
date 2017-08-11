@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "OrbitalScreenshotMgr.h"
 #include "VarTrack.h"
 #include "PlayerCamera.h"

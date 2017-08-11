@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "MenuMission.h"
 #include "MenuMgr.h"
 #include "InterfaceMgr.h"

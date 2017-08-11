@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "Stdafx.h"
 	#include "PlayerMgr.h"
 	#include "CMoveMgr.h"
 	#include "CommandIDs.h"

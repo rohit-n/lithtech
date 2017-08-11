@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "Stdafx.h"
 	#include "CharacterFX.h"
 	#include "TriggerTypeDB.h"
 	#include "TriggerFX.h"

@@ -1,7 +1,7 @@
 // ScreenHostOptionFile.cpp: implementation of the CScreenHostOptionFile class.
 //
 //////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenHostOptionFile.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"

@@ -10,7 +10,7 @@
 //
 // ------------------------------------------------------------------------------------------ //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __HUDFOCUS_H__
 #include "HUDFocus.h"

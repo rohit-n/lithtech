@@ -14,7 +14,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "CTFFlagSFX.h"
 #include "CTFFlagBaseSFX.h"
 #include "GameModeMgr.h"
