@@ -141,7 +141,6 @@ include_directories(src
 	../model/src
 	../client/src
 	../sound/src
-	../shared/src/sys/win
 	../lithtemplate
 	../physics/src
 	../info/src
