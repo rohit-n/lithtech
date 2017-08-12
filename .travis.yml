@@ -64,7 +64,7 @@ matrix:
             - libpulse-dev:i386
             - libglib2.0-dev:i386
       env:
-        - MATRIX_EVAL="CC=gcc-6; CXX=gcc++-6; CFLAGS=-m32; CXXFLAGS=-m32"
+        - MATRIX_EVAL="CC=gcc-6; CXX=g++-6; CFLAGS=-m32; CXXFLAGS=-m32"
     - os: linux
       dist: trusty
       clang: 4.0
