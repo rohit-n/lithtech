@@ -210,6 +210,7 @@ else(WIN32)
 	../kernel/src/sys/linux/linuxdsys.cpp
 	../kernel/src/sys/linux/counter.cpp
 	../kernel/src/sys/linux/load_pcx.cpp
+	../kernel/src/sys/linux/ltlibraryloader.cpp
 	../kernel/src/sys/linux/ltthread.cpp
 	../kernel/src/sys/linux/lthread.cpp
 	src/sys/linux/linuxconsole_impl.cpp
@@ -260,6 +261,7 @@ else(WIN32)
 		../shared/src/sys/linux
 		/usr/include/SDL2)
 	set(libs ${libs}
+	    dl
 		pthread)
 
 endif(WIN32)

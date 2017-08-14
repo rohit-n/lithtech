@@ -10,18 +10,18 @@
 //
 // *********************************************************************** //
 
+#include <iostream>
 #include <dlfcn.h>
 #include <linux/stddef.h>
-#include <stdio.h>
 #include "syslibraryloader.h"
 
-HLTMODULE LTLibraryLoader::OpenLibrary(const char* pFileName)
+HLTMODULE LTLibraryLoader::OpenLibrary(const char* pSoName)
 {
-	HLTMODULE handle = ::dlopen(pFileName, RTLD_NOW);
+	HLTMODULE handle = ::dlopen(pSoName, RTLD_NOW);
 	
-	if (handle == (HLTMODULE)NULL)
+	if (handle == nullptr)
 	{
-		 printf("Failed loading module '%s': %s\n", pFileName, ::dlerror());
+		 std::cout << "Failed loading module '" << pSoName << "': " << ::dlerror() << '\n';
 	}
 	
 	return handle;
