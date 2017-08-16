@@ -67,18 +67,38 @@ CBindModuleType *bm_CreateHandleBinding(const char *pModuleName, void *pHandle)
     mod->sys_handle = pHandle;
     return mod;
 }
+typedef void (*SetHandleFn)(void *handle);
 
 LTRESULT bm_SetInstanceHandle(CBindModuleType *hModule)
 {
+	module* mod = dynamic_cast<module*>(hModule);
+	if(mod != nullptr) {
+		auto fn = (SetHandleFn)LTLibraryLoader::GetProcAddress(mod->sys_handle, "SetInstanceHandle");
+		if(fn != nullptr)
+			fn(mod->sys_handle);
+	} else {
+		RETURN_ERROR(1, bm_SetInstanceHandle, LT_INVALIDPARAMS);
+	}
     return LT_OK;
 }
 LTRESULT bm_GetInstanceHandle(CBindModuleType *hModule, void **pHandle)
 {
-    *pHandle = nullptr;
+	module *mod = dynamic_cast<module*>(hModule);
+	if(mod != nullptr)
+	{
+	    *pHandle = mod->sys_handle;
+	} else {
+		RETURN_ERROR(1, bm_GetInstanceHandle, LT_INVALIDPARAMS);
+	}
     return LT_OK;    
 }
 
 void* bm_GetFunctionPointer(CBindModuleType *hModule, const char *pFunctionName)
 {
+	module *mod = dynamic_cast<module*>(hModule);
+	if(mod != nullptr)
+	{
+		return LTLibraryLoader::GetProcAddress(mod->sys_handle, pFunctionName);
+	}	
     return nullptr;
 }
