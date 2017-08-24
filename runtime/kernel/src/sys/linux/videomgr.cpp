@@ -15,7 +15,7 @@ LTRESULT VideoInst::Update()
 }
 void VideoInst::Release(){}
 
-bool VideoMgr::CreateScreenVideo(const char *,uint32, VideoInst*) 
+bool VideoMgr::CreateScreenVideo(const char *,uint32, VideoInst*&) 
 {
     return true;
 }

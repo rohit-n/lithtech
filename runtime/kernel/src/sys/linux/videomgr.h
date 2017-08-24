@@ -21,7 +21,7 @@ protected:
 public:
     virtual void OnRenderInit();
     virtual void UpdateVideos();
-    virtual bool CreateScreenVideo(const char *,uint32, VideoInst*);
+    virtual bool CreateScreenVideo(const char *,uint32, VideoInst*&);
     CMultiLinkList<VideoInst*> m_Videos;
 };
 
