@@ -21,8 +21,8 @@ public:
   bool Set(const char* sKey, const char* sValue);
   bool Set(const char* sKey, void* pValue, int nLen);
   bool Set(const char* sKey, DWORD nValue);
-  char* Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef = NULL);
-  uint32 Get(const char* sKey, DWORD nDef = 0);
+  const char* Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef = NULL);
+  UINT32 Get(const char* sKey, DWORD nDef);
   void* Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef = NULL, UINT32 nDefSize = 0);
   bool Delete(const char* sKey);
   bool DeleteApp();
@@ -32,6 +32,7 @@ public:
 
 private:
   bool m_bInitialized;
+  char iobuffer[65536];
   rapidjson::Document m_Doc;
 };            
 
