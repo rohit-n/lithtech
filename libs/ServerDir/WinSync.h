@@ -3,6 +3,7 @@
 
 #ifndef __WINSYNC_H__
 #define __WINSYNC_H__
+#include <windows.h>
 
 // Critical section
 class CWinSync_CS

@@ -120,7 +120,7 @@ void CSDTitan_RequestEntry_TitanOp::Start()
 
 void CSDTitan_RequestEntry_TitanOp::Cancel()
 {
-	CWinSync_CSAuto cNotDuringCompletion(m_cCompletionCS);
+	Sync_CSAuto cNotDuringCompletion(m_cCompletionCS);
 	// Die!  (Note : The false parameter is to avoid deadlock situations)
 	GetAsyncOp()->Kill(false);
 	// Clear out the completion function
@@ -352,7 +352,7 @@ CSDTitan_RequestEntry_Publish_Server::CSDTitan_RequestEntry_Publish_Server(CServ
 {
 	m_pActiveOp = m_pAddServiceOp;
 
-	CWinSync_CSAuto cProtection(pDir->GetPeerInfoCS());
+	Sync_CSAuto cProtection(pDir->GetPeerInfoCS());
 
 	const CServerDirectory_Titan::SPeerData sCurInfo = pDir->GetLocalPeerInfo();
 	m_pAddServiceOp->SetFlags(DIR_UF_SERVGENNETADDR | DIR_UF_DIRNOTUNIQUE);
@@ -372,7 +372,7 @@ void CSDTitan_RequestEntry_Publish_Server::Reset()
 	m_pRemoveServiceOp = 0;
 	m_pAddServiceOp = new AddServiceOp(GetDir()->GetDirServerList());
 
-	CWinSync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
+	Sync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
 
 	const CServerDirectory_Titan::SPeerData sCurInfo = GetDir()->GetLocalPeerInfo();
 	m_pAddServiceOp->SetFlags(DIR_UF_SERVGENNETADDR | DIR_UF_DIRNOTUNIQUE);
@@ -434,7 +434,7 @@ CSDTitan_RequestEntry_Remove_Server::CSDTitan_RequestEntry_Remove_Server(CServer
 	CSDTitan_RequestEntry_TitanOp(pDir),
 	m_pRemoveServiceOp(new RemoveServiceOp(pDir->GetDirServerList()))
 {
-	CWinSync_CSAuto cProtection(pDir->GetPeerInfoCS());
+	Sync_CSAuto cProtection(pDir->GetPeerInfoCS());
 
 	const CServerDirectory_Titan::SPeerData sCurInfo = pDir->GetLocalPeerInfo();
 	m_pRemoveServiceOp->SetNetAddr(sCurInfo.m_cAddr);
@@ -489,7 +489,7 @@ void CSDTitan_RequestEntry_UpdateList::OnCompletion()
 {
 	if (m_pGetDirOp->GetStatus() == WS_Success)
 	{
-		CWinSync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
+		Sync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
 
 		// Get the source and destination
 		const DirEntityList &cDir = m_pGetDirOp->GetDirEntityList();
@@ -550,7 +550,7 @@ void CSDTitan_RequestEntry_UpdatePings::Start()
 
 	{
 		// Queue up the address list
-		CWinSync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
+		Sync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
 
 		// Get the peer list
 		CServerDirectory_Titan::TPeerDataList &cPeerInfo = GetDir()->GetPeerInfo();
@@ -674,7 +674,7 @@ void CSDTitan_RequestEntry_UpdatePings::FlushPingQueue()
 
 void CSDTitan_RequestEntry_UpdatePings::SavePingResult(const IPAddr &cAddr, uint32 nPingTime)
 {
-	CWinSync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
+	Sync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
 
 	// Get the peer list
 	CServerDirectory_Titan::TPeerDataList &cPeerInfo = GetDir()->GetPeerInfo();
@@ -880,7 +880,7 @@ bool CSDTitan_RequestEntry_Validate_Client::HandleMessage(ILTMessage_Read &cMsg)
 	// Handle a successful result
 	if (nResult == WS_Success)
 	{
-		CWinSync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
+		Sync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
 
 		uint32 nOldActivePeer = GetDir()->GetActivePeerIndex();
 
@@ -927,7 +927,7 @@ CSDTitan_RequestEntry_Validate_Server::CSDTitan_RequestEntry_Validate_Server(CSe
 void CSDTitan_RequestEntry_Validate_Server::Start()
 {
 	{
-		CWinSync_CSAuto cProtection(GetDir()->GetPeerAuthCS());
+		Sync_CSAuto cProtection(GetDir()->GetPeerAuthCS());
 
 		// All we need to do for this request is start the PeerAuthServer object
 		PeerAuthServer &cPeerAuth = GetDir()->GetPeerAuthServer();
@@ -1051,7 +1051,7 @@ IServerDirectory::TRequestList CServerDirectory_Titan::GetWaitingRequestList() c
 {
 	TRequestList cResult;
 
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	// Give me some room
 	cResult.reserve(m_cRequestEntryList.size());
@@ -1127,7 +1127,7 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::ProcessRequest(ERequest
 
 bool CServerDirectory_Titan::PauseRequestList()
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	switch (m_eCurStatus)
 	{
@@ -1182,7 +1182,7 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::BlockOnActiveRequest(ui
 {
 	// Set up the completion blocking state
 	{
-		CWinSync_CSAuto cProtection(m_cStateCS);
+		Sync_CSAuto cProtection(m_cStateCS);
 
 		if (m_cRequestEntryList.empty())
 			return eRequestResult_Aborted;
@@ -1205,7 +1205,7 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::BlockOnRequestList(cons
 {
 	// Set up the completion blocking state
 	{
-		CWinSync_CSAuto cProtection(m_cStateCS);
+		Sync_CSAuto cProtection(m_cStateCS);
 
 		if (m_cRequestEntryList.empty())
 			return eRequestResult_Aborted;
@@ -1221,7 +1221,7 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::BlockOnProcessing(uint3
 {
 	// Set up the completion blocking state
 	{
-		CWinSync_CSAuto cProtection(m_cStateCS);
+		Sync_CSAuto cProtection(m_cStateCS);
 
 		if (m_cRequestEntryList.empty())
 			return eRequestResult_Success;
@@ -1234,7 +1234,7 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::BlockOnProcessing(uint3
 
 bool CServerDirectory_Titan::IsRequestPending(ERequest ePendingRequest) const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	// Search the active request list for this request
 	TRequestEntryList::const_iterator iCurRequest = m_cRequestEntryList.begin();
@@ -1249,19 +1249,19 @@ bool CServerDirectory_Titan::IsRequestPending(ERequest ePendingRequest) const
 
 IServerDirectory::ERequest CServerDirectory_Titan::GetLastSuccessfulRequest() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	return m_eLastSuccessfulRequest;
 }
 
 IServerDirectory::ERequest CServerDirectory_Titan::GetLastErrorRequest() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	return m_eLastErrorRequest;
 }
 
 IServerDirectory::ERequest CServerDirectory_Titan::GetActiveRequest() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	if (m_cRequestEntryList.empty())
 		return eRequest_Nothing;
 	else
@@ -1271,19 +1271,19 @@ IServerDirectory::ERequest CServerDirectory_Titan::GetActiveRequest() const
 
 IServerDirectory::ERequest CServerDirectory_Titan::GetLastRequest() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	return m_eLastRequest;
 }
 
 IServerDirectory::ERequestResult CServerDirectory_Titan::GetLastRequestResult() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	return m_eLastRequestResult;
 }
 
 char const* CServerDirectory_Titan::GetLastRequestResultString() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	return m_sLastRequestResultString.c_str( );
 }
 
@@ -1291,19 +1291,19 @@ char const* CServerDirectory_Titan::GetLastRequestResultString() const
 
 IServerDirectory::EStatus CServerDirectory_Titan::GetCurStatus() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	return m_eCurStatus;
 }
 
 char const* CServerDirectory_Titan::GetCurStatusString() const
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	return m_sCurStatusString.c_str( );
 }
 
 void CServerDirectory_Titan::SetGameName(const char *pName)
 {
-	CWinSync_CSAuto cProtection(m_cGameNameCS);
+	Sync_CSAuto cProtection(m_cGameNameCS);
 	m_sGameName = pName;
 
 	// Set all the other stuff that's going to use the name
@@ -1315,7 +1315,7 @@ void CServerDirectory_Titan::SetGameName(const char *pName)
 
 char const* CServerDirectory_Titan::GetGameName() const
 {
-	CWinSync_CSAuto cProtection(m_cGameNameCS);
+	Sync_CSAuto cProtection(m_cGameNameCS);
 	return m_sGameName.c_str( );
 }
 
@@ -1372,45 +1372,45 @@ bool CServerDirectory_Titan::IsCDKeyValid() const
 
 void CServerDirectory_Titan::SetVersion(const char *pVersion)
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 	m_sCurVersion = pVersion;
 	m_eVersionState = eVersion_Unknown;
 }
 
 void CServerDirectory_Titan::SetRegion(const char *pRegion)
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 	m_sCurRegion = pRegion;
 }
 
 bool CServerDirectory_Titan::IsVersionValid() const
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 	return m_eVersionState != eVersion_Unknown;
 }
 
 bool CServerDirectory_Titan::IsVersionNewest() const
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 	return m_eVersionState == eVersion_Latest;
 }
 
 bool CServerDirectory_Titan::IsPatchAvailable() const
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 	return m_eVersionState == eVersion_Patchable;
 }
 
 
 bool CServerDirectory_Titan::IsMOTDNew(EMOTD eMOTD) const
 {
-	CWinSync_CSAuto cProtection(m_cMOTDCS);
+	Sync_CSAuto cProtection(m_cMOTDCS);
 	return m_aMOTD[eMOTD].m_bNew;
 }
 
 char const* CServerDirectory_Titan::GetMOTD(EMOTD eMOTD) const
 {
-	CWinSync_CSAuto cProtection(m_cMOTDCS);
+	Sync_CSAuto cProtection(m_cMOTDCS);
 	return m_aMOTD[eMOTD].m_sMessage.c_str( );
 }
 
@@ -1418,7 +1418,7 @@ char const* CServerDirectory_Titan::GetMOTD(EMOTD eMOTD) const
 
 bool CServerDirectory_Titan::SetActivePeer(const char *pAddr)
 {
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	// Handle setting to the local peer
 	if (!pAddr)
@@ -1458,7 +1458,7 @@ bool CServerDirectory_Titan::GetActivePeer(std::string *pAddr, bool *pLocal) con
 	if (!pAddr || !pLocal)
 		return false;
 
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	// Handle the local peer..
 	if (m_nActivePeerIndex == 0)
@@ -1478,7 +1478,7 @@ bool CServerDirectory_Titan::GetActivePeer(std::string *pAddr, bool *pLocal) con
 
 bool CServerDirectory_Titan::RemoveActivePeer()
 {
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	// Can't remove the local peer
 	if (m_nActivePeerIndex == 0)
@@ -1500,7 +1500,7 @@ bool CServerDirectory_Titan::SetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_R
 
 	cMsg.SeekTo(0);
 
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	SPeerData &cActivePeer = m_aPeerInfo[m_nActivePeerIndex];
 
@@ -1581,7 +1581,7 @@ bool CServerDirectory_Titan::SetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_R
 
 bool CServerDirectory_Titan::HasActivePeerInfo(EPeerInfo eInfoType) const
 {
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	const SPeerData &cActivePeer = m_aPeerInfo[m_nActivePeerIndex];
 
@@ -1611,7 +1611,7 @@ bool CServerDirectory_Titan::GetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_W
 
 	pMsg->Reset();
 
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	const SPeerData &cActivePeer = m_aPeerInfo[m_nActivePeerIndex];
 
@@ -1670,7 +1670,7 @@ bool CServerDirectory_Titan::GetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_W
 
 IServerDirectory::TPeerList CServerDirectory_Titan::GetPeerList() const
 {
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	TPeerList cResult;
 	cResult.reserve(m_aPeerInfo.size() - 1);
@@ -1686,7 +1686,7 @@ IServerDirectory::TPeerList CServerDirectory_Titan::GetPeerList() const
 
 void CServerDirectory_Titan::ClearPeerList()
 {
-	CWinSync_CSAuto cProtection(m_cPeerCS);
+	Sync_CSAuto cProtection(m_cPeerCS);
 
 	// Don't do anything if it's empty
 	if (m_aPeerInfo.size() == 1)
@@ -1731,7 +1731,7 @@ bool CServerDirectory_Titan::SetNetHeader(ILTMessage_Read &cStr)
 	CLTMsgRef_Read cMsgRef(&cStr);
 
 	// Copy the header
-	CWinSync_CSAuto cProtection(m_cMsgHeaderCS);
+	Sync_CSAuto cProtection(m_cMsgHeaderCS);
 	m_pMsgHeader = cStr.Clone();
 
 	return true;
@@ -1742,7 +1742,7 @@ bool CServerDirectory_Titan::SetNetHeader(ILTMessage_Read &cStr)
 
 void CServerDirectory_Titan::FinishRequest(CSDTitan_RequestEntry *pRequest, ERequestResult eResult, const std::string &sResultStr)
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	// Make sure nothing wonky is afoot
 	if (m_cRequestEntryList.empty())
@@ -1853,7 +1853,7 @@ void CServerDirectory_Titan::FinishRequest(CSDTitan_RequestEntry *pRequest, EReq
 
 void CServerDirectory_Titan::SetMOTD(EMOTD eMOTD, const char *pMessage, bool bIsNew)
 {
-	CWinSync_CSAuto cProtection(m_cMOTDCS);
+	Sync_CSAuto cProtection(m_cMOTDCS);
 
 	m_aMOTD[eMOTD].m_bNew = bIsNew;
 	m_aMOTD[eMOTD].m_sMessage = pMessage;
@@ -1861,35 +1861,35 @@ void CServerDirectory_Titan::SetMOTD(EMOTD eMOTD, const char *pMessage, bool bIs
 
 void CServerDirectory_Titan::SetVersionState(EVersionState eState)
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 
 	m_eVersionState = eState;
 }
 
 char const* CServerDirectory_Titan::GetVersion() const
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 
 	return m_sCurVersion.c_str( );
 }
 
 char const* CServerDirectory_Titan::GetRegion() const
 {
-	CWinSync_CSAuto cProtection(m_cVersionCS);
+	Sync_CSAuto cProtection(m_cVersionCS);
 
 	return m_sCurRegion.c_str( );
 }
 
 void CServerDirectory_Titan::SetAuthContextValid(bool bValue)
 {
-	CWinSync_CSAuto cProtection(m_cAuthContextCS);
+	Sync_CSAuto cProtection(m_cAuthContextCS);
 	m_bIsAuthContextValid = bValue;
 	m_pAuthContext->SetDoAutoRefresh(bValue);
 }
 
 void CServerDirectory_Titan::SetCurStatusString(const char *pMessage)
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 	m_sCurStatusString = pMessage;
 }
 
@@ -2004,7 +2004,7 @@ void CServerDirectory_Titan::LoadDirServerList()
 
 bool CServerDirectory_Titan::IsAuthContextValid() const
 {
-	CWinSync_CSAuto cProtection(m_cAuthContextCS);
+	Sync_CSAuto cProtection(m_cAuthContextCS);
 	return m_bIsAuthContextValid;
 }
 
@@ -2035,7 +2035,7 @@ CSDTitan_RequestEntry *CServerDirectory_Titan::MakeRequestEntry(ERequest eNewReq
 
 void CServerDirectory_Titan::StartRequest(CSDTitan_RequestEntry *pRequest)
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	// Add to the queue of entries
 	m_cRequestEntryList.push_back(pRequest);
@@ -2049,7 +2049,7 @@ void CServerDirectory_Titan::StartRequest(CSDTitan_RequestEntry *pRequest)
 
 void CServerDirectory_Titan::TemporaryPause(const char *pNewStatusStr, EStatus *pOldStatus, std::string *pOldStatusStr)
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	*pOldStatus = m_eCurStatus;
 	*pOldStatusStr = m_sCurStatusString;
@@ -2061,7 +2061,7 @@ void CServerDirectory_Titan::TemporaryPause(const char *pNewStatusStr, EStatus *
 
 void CServerDirectory_Titan::TemporaryResume(EStatus eOldStatus, const char *pOldStatusStr)
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	if (eOldStatus == eStatus_Processing)
 		ProcessRequestList();
@@ -2072,7 +2072,7 @@ void CServerDirectory_Titan::TemporaryResume(EStatus eOldStatus, const char *pOl
 
 void CServerDirectory_Titan::StartActiveRequest()
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	if (m_cRequestEntryList.empty())
 		return;
@@ -2083,7 +2083,7 @@ void CServerDirectory_Titan::StartActiveRequest()
 
 void CServerDirectory_Titan::CancelActiveRequest()
 {
-	CWinSync_CSAuto cProtection(m_cStateCS);
+	Sync_CSAuto cProtection(m_cStateCS);
 
 	if (m_cRequestEntryList.empty())
 		return;
@@ -2134,7 +2134,7 @@ uint32 CServerDirectory_Titan::StartRenderThread_Run()
 		CSDTitan_RequestEntry *pRequest;
 
 		{
-			CWinSync_CSAuto cProtection(m_cStateCS);
+			Sync_CSAuto cProtection(m_cStateCS);
 
 			if (m_cRequestEntryList.empty())
 				continue;
@@ -2181,7 +2181,7 @@ bool CServerDirectory_Titan::HandleNetMsg_PeerAuth_Client(ILTMessage_Read &cMsg,
 	// Handle a successful result
 	if (nResult == WS_Success)
 	{
-		CWinSync_CSAuto cProtection(m_cPeerCS);
+		Sync_CSAuto cProtection(m_cPeerCS);
 
 		uint32 nOldActivePeer = GetActivePeerIndex();
 
@@ -2241,12 +2241,12 @@ CServerDirectory_Titan::SPeerData::SPeerData() :
 // ----------------------------------------------------------------------- //
 bool CServerDirectory_Titan::SetPeerInfoService( SPeerData& activePeer, PeerInfo_Service_Titan const& info )
 {
-	CWinSync_CSAuto cGSSProtection(m_cGameSpySupportCS);
+	Sync_CSAuto cGSSProtection(m_cGameSpySupportCS);
 
 	if( m_pGameSpySupport == NULL )
 		return false;
 
-	CWinSync_CSAuto cPeerProtection(m_cPeerCS);
+	Sync_CSAuto cPeerProtection(m_cPeerCS);
 
 	// Copy it in for reference.
 	activePeer.m_PeerInfoService = info;
@@ -2307,7 +2307,7 @@ bool CServerDirectory_Titan::SetPeerInfoService( SPeerData& activePeer, PeerInfo
 // ----------------------------------------------------------------------- //
 bool CServerDirectory_Titan::CreateGameSpySupport( )
 {
-	CWinSync_CSAuto cProtection(m_cGameSpySupportCS);
+	Sync_CSAuto cProtection(m_cGameSpySupportCS);
 
 	// Start clean.
 	if( m_pGameSpySupport != NULL )
@@ -2347,7 +2347,7 @@ bool CServerDirectory_Titan::CreateGameSpySupport( )
 // ----------------------------------------------------------------------- //
 void CServerDirectory_Titan::DestroyGameSpySupport( )
 {
-	CWinSync_CSAuto cProtection(m_cGameSpySupportCS);
+	Sync_CSAuto cProtection(m_cGameSpySupportCS);
 
 	if( m_pGameSpySupport != NULL )
 	{

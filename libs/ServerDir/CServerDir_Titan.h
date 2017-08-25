@@ -12,7 +12,7 @@
 #include <vector>
 #include <string>
 
-#include "WinSync.h"
+#include "Sync.h"
 
 #pragma warning (disable:4503)
 #include "WONAPI.h"
@@ -236,14 +236,14 @@ protected:
 	AuthContextPtr GetAuthContext() { return m_pAuthContext; }
 	ServerContextPtr GetDirServerList() { return m_pDirServerList; }
 	CDKey &GetTitanCDKey() { return m_cCDKey; }
-	CWinSync_CS &GetPeerInfoCS() { return m_cPeerCS; }
+	Sync_CS &GetPeerInfoCS() { return m_cPeerCS; }
 	SPeerData &GetLocalPeerInfo() { return m_aPeerInfo.front(); }
 	SPeerData &GetActivePeerInfo() { return m_aPeerInfo[m_nActivePeerIndex]; }
 	TPeerDataList &GetPeerInfo() { return m_aPeerInfo; }
 	uint32 GetActivePeerIndex() const { return m_nActivePeerIndex; }
 	void SetActivePeerIndex(uint32 nNewIndex) { m_nActivePeerIndex = nNewIndex; }
 
-	CWinSync_CS &GetPeerAuthCS() { return m_cValidationCS; }
+	Sync_CS &GetPeerAuthCS() { return m_cValidationCS; }
 	PeerAuthServer &GetPeerAuthServer() { return m_cPeerAuthServer; }
 	PeerAuthClient &GetPeerAuthClient() { return m_cPeerAuthClient; }
 
@@ -300,47 +300,47 @@ private:
 	bool IsGameSupportCreated( ) const { return ( m_pGameSpySupport != NULL ); }
 
 private:
-	CWinSync_Event m_cShutdownEvent;
+	Sync_Event m_cShutdownEvent;
 
 	WONAPICore m_cWONAPICore;
 
 	ServerContextPtr m_pDirServerList;
 	AuthContextPtr m_pAuthContext;
 
-	CWinSync_CS m_cAuthContextCS;
+	Sync_CS m_cAuthContextCS;
 	bool m_bIsAuthContextValid;
 
-	CWinSync_CS m_cGameNameCS;
+	Sync_CS m_cGameNameCS;
 	std::string m_sGameName;
 
 	CDKey m_cCDKey;
 
 	// Message of the day
-	CWinSync_CS m_cMOTDCS;
+	Sync_CS m_cMOTDCS;
 	SMOTDData m_aMOTD[eMOTD_TotalNum];
 
 	// Version
-	CWinSync_CS m_cVersionCS;
+	Sync_CS m_cVersionCS;
 	EVersionState m_eVersionState;
 	std::string m_sCurVersion;
 	std::string m_sCurRegion;
 
 	// Peer info
-	CWinSync_CS m_cPeerCS;
+	Sync_CS m_cPeerCS;
 	TPeerDataList m_aPeerInfo;
 	uint32 m_nActivePeerIndex;
 
 	// Validation info
-	CWinSync_CS m_cValidationCS;
+	Sync_CS m_cValidationCS;
 	PeerAuthServer m_cPeerAuthServer;
 	PeerAuthClient m_cPeerAuthClient;
 
 	// Message headers
-	CWinSync_CS m_cMsgHeaderCS;
+	Sync_CS m_cMsgHeaderCS;
 	CLTMsgRef_Read m_pMsgHeader;
 
 	// Critical section for managing the processing state
-	CWinSync_CS m_cStateCS;
+	Sync_CS m_cStateCS;
 
 	// Status
 	EStatus m_eCurStatus;
@@ -358,8 +358,8 @@ private:
 	};
 	ECompletionBlock m_eCompletionAction;
 	TRequestList m_cCompletionList;
-	CWinSync_PulseEvent m_cCompletionEvent;
-	CWinSync_Event m_cCompletionEvent_Continue;
+	Sync_PulseEvent m_cCompletionEvent;
+	Sync_Event m_cCompletionEvent_Continue;
 
 	// Most recent request results
 	ERequest m_eLastSuccessfulRequest;
@@ -370,14 +370,14 @@ private:
 
 	// Thread for starting request entries
 	HANDLE m_hStartRequestThread;
-	CWinSync_Event m_cSRTReadyEvent;
-	CWinSync_PulseEvent m_cSRTStartEvent;
+	Sync_Event m_cSRTReadyEvent;
+	Sync_PulseEvent m_cSRTStartEvent;
 
 	// Startup info.
 	StartupInfo_Titan m_StartupInfo;
 
 	// Gamespysupport.
-	CWinSync_CS m_cGameSpySupportCS;
+	Sync_CS m_cGameSpySupportCS;
 	GameSpySupportPtr m_pGameSpySupport;
 };
 
@@ -460,7 +460,7 @@ private:
 
 	static void Completion_Bootstrap(AsyncOpPtr pAsyncOp, CSDTitan_RequestEntry_TitanOp *pRequestEntry);
 
-	CWinSync_CS m_cCompletionCS;
+	Sync_CS m_cCompletionCS;
 };
 
 
@@ -617,8 +617,8 @@ protected:
 	typedef std::vector<SPingReq> TPingList;
 	TPingList m_aPingQueue;
 
-	CWinSync_Event m_cCancelEvent;
-	CWinSync_Event m_cBusyEvent, m_cNotBusyEvent;
+	Sync_Event m_cCancelEvent;
+	Sync_Event m_cBusyEvent, m_cNotBusyEvent;
 };
 
 // Base class for a message-based request entry
@@ -641,9 +641,9 @@ private:
 	virtual bool HandleMessage(ILTMessage_Read &cMsg) { return true; }
 
 protected:
-	CWinSync_Event m_cCancelEvent, m_cCancelReadyEvent;
-	CWinSync_Event m_cContinueEvent;
-	CWinSync_Event m_cIsWaiting;
+	Sync_Event m_cCancelEvent, m_cCancelReadyEvent;
+	Sync_Event m_cContinueEvent;
+	Sync_Event m_cIsWaiting;
 	IPAddr m_cDestination;
 };
 
