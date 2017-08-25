@@ -17,6 +17,8 @@ using std::fopen;
 using std::fclose;
 using rapidjson::Document;
 using rapidjson::Writer;
+using rapidjson::Type;
+using rapidjson::Value;
 using rapidjson::FileReadStream;
 using rapidjson::FileWriteStream;
 /*
@@ -32,6 +34,14 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
         m_Doc.ParseStream(isw);
         fclose(jfp);
     }
+    Value company(Type::kObjectType);
+    Value a("app");
+    Value app(sApp, m_Doc.GetAllocator());
+    company.AddMember(a, app, m_Doc.GetAllocator());
+    Value v("version");
+    Value ver(sApp, m_Doc.GetAllocator());
+    company.AddMember(v, ver, m_Doc.GetAllocator());
+    m_Doc[sCompany] = company;
     m_bInitialized = true;
     return m_bInitialized;
 }
