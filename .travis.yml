@@ -29,6 +29,7 @@ matrix:
             - g++-5
             - cmake-data
             - cmake
+            - rapidjson-dev
             - libsdl2-dev
       env:
         - MATRIX_EVAL="CC=gcc-5; CXX=g++-5"
@@ -43,6 +44,7 @@ matrix:
             - g++-6
             - cmake-data
             - cmake
+            - rapidjson-dev
             - libsdl2-dev
       env:
         - MATRIX_EVAL="CC=gcc-6; CXX=g++-6"
@@ -58,6 +60,7 @@ matrix:
             - libstdc++-6-dev:i386
             - cmake-data
             - cmake
+            - rapidjson-dev
             - libsdl2-dev:i386
             - libgl1-mesa-dev:i386
             - libglu1-mesa-dev:i386
@@ -75,6 +78,7 @@ matrix:
           packages:
             - clang-4.0
             - cmake-data
+            - rapidjson-dev
             - cmake
             - libsdl2-dev
       env:
@@ -89,6 +93,7 @@ matrix:
           packages:
             - clang-5.0
             - cmake-data
+            - rapidjson-dev
             - cmake
             - libsdl2-dev
       env:
