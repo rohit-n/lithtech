@@ -1,5 +1,4 @@
 
-#include "windows.h"
 #include "regmgr.h"
 
 BOOL CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey, HANDLE hRootKey, char* sRoot2)

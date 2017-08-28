@@ -25,6 +25,18 @@ using rapidjson::FileWriteStream;
 using rapidjson::IStreamWrapper;
 using rapidjson::OStreamWrapper;
 */
+/*
+the json registry:
+[
+    {'HKEY_CURRENT_USER': [
+        {'software':[]}
+    ]},
+    {'HKEY_LOCAL_MACHINE': [
+        {'software':[]}
+    ]}
+]
+*/
+
 bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey, void* hRootKey, char* sRoot2)
 {
     FILE *jfp = fopen("LithTech.reg.json", "r");
@@ -33,6 +45,9 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
         FileReadStream isw(jfp, iobuffer, sizeof(iobuffer));
         m_Doc.ParseStream(isw);
         fclose(jfp);
+    } else {
+        const char *base = "[{\"HKEY_LOCAL_MACHINE\":[{\"software\":[]}]}]";
+        m_Doc.Parse(base);
     }
     Value company(Type::kObjectType);
     Value a("app");
