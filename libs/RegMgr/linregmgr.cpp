@@ -46,9 +46,10 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
         m_Doc.ParseStream(isw);
         fclose(jfp);
     } else {
-        const char *base = "{\"HKEY_LOCAL_MACHINE\":{\"software\":[]},\"\HKEY_CURRENT_USER":{\"software\":[]}}";
+        const char *base = "{\"HKEY_LOCAL_MACHINE\":{\"software\":[]},\"\HKEY_CURRENT_USER\":{\"software\":[]}}";
         m_Doc.Parse(base);
     }
+/*
     Value company(Type::kObjectType);
     Value a("app");
     Value app(sApp, m_Doc.GetAllocator());
@@ -57,6 +58,7 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
     Value ver(sApp, m_Doc.GetAllocator());
     company.AddMember(v, ver, m_Doc.GetAllocator());
     m_Doc[sCompany] = company;
+*/
     m_bInitialized = true;
     return m_bInitialized;
 }
