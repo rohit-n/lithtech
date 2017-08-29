@@ -72,8 +72,8 @@ Builds on linux
 - [x] Target rules for targets named MFCStub
 - [x] Target rules for targets named ButeMgr
 - [x] Target rules for targets named CryptMgr
-- [ ] Target rules for targets named RegMgr
-- [ ] Target rules for targets named LTGUIMgr
+- [x] Target rules for targets named RegMgr
+- [x] Target rules for targets named LTGUIMgr
 - [ ] Target rules for targets named ServerDir
 - [x] Target rules for targets named WONAPI
 - [ ] Target rules for targets named NOLF2_ClientFXDLL
