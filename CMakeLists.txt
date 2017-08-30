@@ -142,3 +142,5 @@ if(BUILD_TOOLS)
 	add_subdirectory(tools/DtxView)			# TOOLS_DtxView
 	add_subdirectory(tools/LithRez)			# TOOLS_LithRez
 endif(BUILD_TOOLS)
+
+add_subdirectory(tests/RegMgr)

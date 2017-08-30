@@ -36,8 +36,22 @@ the json registry:
     ]}
 ]
 */
+struct rootKeys
+{
+    const char* key;
+};
 
-bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey, HKEY* hRootKey, char* sRoot2)
+rootKeys hklm{"HKEY_LOCAL_MACHINE"};
+rootKeys hkcu{"HKEY_CURRENT_USER"};
+rootKeys hkcr{"HKEY_CLASSES_ROOT"};
+rootKeys hkus{"HKEY_USERS"};
+
+HKEY HKEY_LOCAL_MACHINE{&hklm};
+HKEY HKEY_CURRENT_USER{&hkcu};
+HKEY HKEY_CLASSES_ROOT{&hkcr};
+HKEY HKEY_USERS{&hkus};
+
+bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey, HKEY hRootKey, char* sRoot2)
 {
     FILE *jfp = fopen("LithTech.reg.json", "r");
     if(jfp)
@@ -56,7 +70,7 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
     Value app(sApp, m_Doc.GetAllocator());
     company.AddMember(a, app, m_Doc.GetAllocator());
     Value v("version");
-    Value ver(sApp, m_Doc.GetAllocator());
+    Value ver(sVersion, m_Doc.GetAllocator());
     company.AddMember(v, ver, m_Doc.GetAllocator());
     softKey.AddMember(Value(sCompany, m_Doc.GetAllocator()), company,  m_Doc.GetAllocator());
     

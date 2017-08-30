@@ -7,17 +7,14 @@
 #include "lith.h"
 #include "rapidjson/document.h"
 
-struct rootKeys
-{
-  const char *key;
-};
+struct rootKeys;
 
-typedef rootKeys HKEY;
+typedef rootKeys* HKEY;
 
-HKEY HKEY_LOCAL_MACHINE{"HKEY_LOCAL_MACHINE"};
-HKEY HKEY_CURRENT_USER{"HKEY_LOCAL_MACHINE"};
-HKEY REGKEY_CLASSES_ROOT{"REGKEY_CLASSES_ROOT"};
-HKEY HKEY_USERS{"HKEY_USERS"};
+extern HKEY HKEY_LOCAL_MACHINE;
+extern HKEY HKEY_CURRENT_USER;
+extern HKEY HKEY_CLASSES_ROOT;
+extern HKEY HKEY_USERS;
 // Classes...
 
 class CRegMgr {
@@ -26,7 +23,7 @@ public:
   // public functions
   CRegMgr() : m_Doc() { m_bInitialized = false; };
   ~CRegMgr() { Term(); };
-  bool Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey = nullptr, HKEY* hRootKey = &HKEY_LOCAL_MACHINE, char* sRoot2 = nullptr);
+  bool Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey = nullptr, HKEY hRootKey = HKEY_LOCAL_MACHINE, char* sRoot2 = nullptr);
   void Term();
   bool SetSubKey(const char* sSubKey);
   bool Set(const char* sKey, const char* sValue);
@@ -39,7 +36,7 @@ public:
   bool DeleteApp();
   bool DeleteSubKey();
   bool DeleteUnderSubKey(const char* sKey);
-  bool IsValid() { return (this != NULL); };
+  bool IsValid() { return (this != nullptr); };
 
 private:
   bool m_bInitialized;
