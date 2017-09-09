@@ -6,6 +6,7 @@
 
 #include "lith.h"
 #include "rapidjson/document.h"
+#include <string>
 
 struct rootKeys;
 
@@ -23,7 +24,7 @@ public:
   // public functions
   CRegMgr() : m_Doc() { m_bInitialized = false; };
   ~CRegMgr() { Term(); };
-  bool Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey = nullptr, HKEY hRootKey = HKEY_LOCAL_MACHINE, char* sRoot2 = nullptr);
+  bool Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey = nullptr, HKEY hRootKey = HKEY_LOCAL_MACHINE, const char* sRoot2 = nullptr);
   void Term();
   bool SetSubKey(const char* sSubKey);
   bool Set(const char* sKey, const char* sValue);
@@ -41,7 +42,9 @@ public:
 private:
   bool m_bInitialized;
   char iobuffer[65536];
+  std::string rootPath;
   rapidjson::Document m_Doc;
+  rapidjson::Value m_hRootKey;
 };            
 
 #endif

@@ -27,14 +27,43 @@ using rapidjson::OStreamWrapper;
 */
 /*
 the json registry:
-[
-    {'HKEY_CURRENT_USER': [
-        {'software':[]}
-    ]},
-    {'HKEY_LOCAL_MACHINE': [
-        {'software':[]}
-    ]}
-]
+{
+    'HKEY_CURRENT_USER':{
+        'software':{
+            'LithTech': {
+                'F.E.A.R': {
+                    'version': '1.0'
+                }
+            }
+        }
+    },
+    'HKEY_LOCAL_MACHINE': {
+        'software':{
+            'LithTech': {
+                'Game1': {
+                    'version':'1.0',
+                    'gamma': 5,
+                    'brightness': 4,
+                    'vulkan':{
+                        'sheight': 1080,
+                        'swidth': 1980,
+                        'anti-alias':'x2'
+                    }
+                },
+                'Game2': {
+                    'version':'1.1',
+                    'gamma': 2,
+                    'brightness': 8,
+                    'vulkan':{
+                        'sheight': 1080,
+                        'swidth': 1980,
+                        'anti-alias':'off'
+                    }
+                }
+            }
+        }
+    }
+}
 */
 struct rootKeys
 {
@@ -51,7 +80,7 @@ HKEY HKEY_CURRENT_USER{&hkcu};
 HKEY HKEY_CLASSES_ROOT{&hkcr};
 HKEY HKEY_USERS{&hkus};
 
-bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey, HKEY hRootKey, char* sRoot2)
+bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey, HKEY hRootKey, const char* sRoot2)
 {
     FILE *jfp = fopen("LithTech.reg.json", "r");
     if(jfp)
@@ -63,17 +92,21 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
         const char *base = "{\"HKEY_LOCAL_MACHINE\":{\"software\":{}},\"HKEY_CURRENT_USER\":{\"software\":{}}}";
         m_Doc.Parse(base);
     }
-    Value &softKey = m_Doc[hRootKey->key]["software"];
+    auto && alloc = m_Doc.GetAllocator();
+    const char *pSubKey = (sRoot2 != nullptr) ? sRoot2 : "software";
+    rootPath = std::string{hRootKey->key} + "/" + pSubKey + "/" + sCompany + "/" + sApp;
 
-    Value company(Type::kObjectType);
-    Value a("app");
-    Value app(sApp, m_Doc.GetAllocator());
-    company.AddMember(a, app, m_Doc.GetAllocator());
-    Value v("version");
-    Value ver(sVersion, m_Doc.GetAllocator());
-    company.AddMember(v, ver, m_Doc.GetAllocator());
-    softKey.AddMember(Value(sCompany, m_Doc.GetAllocator()), company,  m_Doc.GetAllocator());
+    m_hRootKey.SetObject();
+    if (!m_hRootKey.HasMember("version"))
+        m_hRootKey.AddMember(Value("version"), Value(sVersion, alloc), alloc);
+
+    if(!m_Doc[hRootKey->key][pSubKey].HasMember(sCompany))
+        m_Doc[hRootKey->key][pSubKey].AddMember(Value{sCompany, alloc}, Value{Type::kObjectType}, alloc);
     
+    if(!m_Doc[hRootKey->key][pSubKey][sCompany].HasMember(sApp))
+        m_Doc[hRootKey->key][pSubKey][sCompany].AddMember(Value{sApp, alloc}, m_hRootKey, alloc);
+    
+
     m_bInitialized = true;
     return m_bInitialized;
 }
