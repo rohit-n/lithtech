@@ -7,7 +7,7 @@ bool testInit()
     return mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
 }
 
-bool testGetVersion()
+bool testGetVersionInt()
 {
     CRegMgr mgr;
     mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
@@ -17,6 +17,20 @@ bool testGetVersion()
     if ( y != x )
         return false;
     return true;
+}
+
+bool testGetVersionStr()
+{
+    CRegMgr mgr;
+    mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
+    char ver[5];
+    uint32_t len = sizeof(ver);
+    ver[0] = '\0';
+    mgr.Get("version", ver, len,"0.0");
+    std::cout << ver << '\n';
+    if ( std::string{ver} == std::string{"1.0"} )
+        return true;
+    return false;
 }
 
 int main()
@@ -29,7 +43,9 @@ int main()
             return 1;
         }
     std::cout << "init Pass\n";
-    if(! testGetVersion() )
+    if(! testGetVersionInt() )
+        return 1;
+    if(! testGetVersionStr() )
         return 1;
     std::cout << "version Pass\n";
     return 0;
