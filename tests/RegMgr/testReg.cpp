@@ -11,7 +11,10 @@ bool testGetVersion()
 {
     CRegMgr mgr;
     mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
-    if( mgr.Get("version", 0L) == 1L)
+    DWORD x = 4;
+    DWORD y = mgr.Get("version", x);
+    std::cout << y << '\n';
+    if ( y != x )
         return false;
     return true;
 }

@@ -127,8 +127,37 @@ bool CRegMgr::SetSubKey(const char* sSubKey){return true;}
 bool CRegMgr::Set(const char* sKey, const char* sValue){return true;}
 bool CRegMgr::Set(const char* sKey, void* pValue, int nLen){return true;}
 bool CRegMgr::Set(const char* sKey, DWORD nValue){return true;}
-const char* CRegMgr::Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef){return sDef;}
-UINT32 CRegMgr::Get(const char* sKey, DWORD nDef){return nDef;}
+
+/*
+ * returns the string through sBuf, and creates the key with sDef if it doesn't exist.
+ * based on usage in NOLF2 VersionMgr.cpp VersionMgr constructor
+ */
+const char* CRegMgr::Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef){
+    if(m_hRootKey.HasMember(sKey) ){ 
+        if(m_hRootKey[sKey].IsString())
+            std::strncpy(sBuf, m_hRootKey[sKey].GetString(), nBufSize);
+            return sBuf;
+    } else {
+        if(sDef != nullptr) {
+            auto && a = m_Doc.GetAllocator();
+            m_hRootKey.AddMember(Value{sKey,a}, Value{sDef, a}, a);
+            std::strncpy(sBuf, sDef, nBufSize);
+        }
+    }
+    return sDef;
+}
+
+DWORD CRegMgr::Get(const char* sKey, DWORD nDef){
+    if(m_hRootKey.HasMember(sKey) ){ 
+        if(m_hRootKey[sKey].IsNumber())
+            return m_hRootKey[sKey].GetUint();
+    } else {
+        auto && a = m_Doc.GetAllocator();
+        m_hRootKey.AddMember(Value{sKey,a}, Value{nDef}, a);
+    }
+    return nDef;
+}
+
 void* CRegMgr::Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef, UINT32 nDefSize){return pDef;}
 bool CRegMgr::Delete(const char* sKey){return true;}
 bool CRegMgr::DeleteApp(){return true;}

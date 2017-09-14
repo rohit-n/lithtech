@@ -31,7 +31,7 @@ public:
   bool Set(const char* sKey, void* pValue, int nLen);
   bool Set(const char* sKey, DWORD nValue);
   const char* Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef = NULL);
-  UINT32 Get(const char* sKey, DWORD nDef);
+  DWORD Get(const char* sKey, DWORD nDef);
   void* Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef = NULL, UINT32 nDefSize = 0);
   bool Delete(const char* sKey);
   bool DeleteApp();
