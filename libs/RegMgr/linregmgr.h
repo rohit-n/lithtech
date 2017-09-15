@@ -30,9 +30,9 @@ public:
   bool Set(const char* sKey, const char* sValue);
   bool Set(const char* sKey, void* pValue, int nLen);
   bool Set(const char* sKey, DWORD nValue);
-  const char* Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef = NULL);
+  const char* Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef = nullptr);
   DWORD Get(const char* sKey, DWORD nDef);
-  void* Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef = NULL, UINT32 nDefSize = 0);
+  void* Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef = nullptr, UINT32 nDefSize = 0);
   bool Delete(const char* sKey);
   bool DeleteApp();
   bool DeleteSubKey();

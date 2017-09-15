@@ -119,12 +119,22 @@ void CRegMgr::Term()
         FileWriteStream osw(jfp, iobuffer, sizeof(iobuffer));
         Writer<FileWriteStream> writer(osw);
         m_Doc.Accept(writer);
+        fwrite("\n",2,1,jfp);
         fclose(jfp);
     }
 }
 
 bool CRegMgr::SetSubKey(const char* sSubKey){return true;}
-bool CRegMgr::Set(const char* sKey, const char* sValue){return true;}
+bool CRegMgr::Set(const char* sKey, const char* sValue){
+    if(m_hRootKey.HasMember(sKey) ){ 
+        if(m_hRootKey[sKey].IsString()) {
+            auto &&a = m_Doc.GetAllocator();
+            m_hRootKey[sKey].SetString(sValue,a);
+            return true;
+        }
+    }
+    return false;
+}
 bool CRegMgr::Set(const char* sKey, void* pValue, int nLen){return true;}
 bool CRegMgr::Set(const char* sKey, DWORD nValue){return true;}
 
