@@ -48,6 +48,14 @@ bool testSetVersionStr()
     return validateVersion(mgr, ver);
 }
 
+bool testSetKeyNumber()
+{
+    CRegMgr mgr;
+    mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
+    mgr.Set("dpi", 96);
+    return (mgr.Get("dpi",0) == 96);
+}
+
 int main()
 {
     // I can init the "registry" as many times as I want
@@ -66,5 +74,8 @@ int main()
     if(! testSetVersionStr() )
         return 1;
     std::cout << "Set version Pass\n";
-return 0;
+    if(! testSetKeyNumber() )
+       return 1;
+    std::cout << "Set numeric key Pass\n";
+    return 0;
 }

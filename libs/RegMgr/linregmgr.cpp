@@ -136,7 +136,18 @@ bool CRegMgr::Set(const char* sKey, const char* sValue){
     return false;
 }
 bool CRegMgr::Set(const char* sKey, void* pValue, int nLen){return true;}
-bool CRegMgr::Set(const char* sKey, DWORD nValue){return true;}
+bool CRegMgr::Set(const char* sKey, DWORD nValue){
+    if(m_hRootKey.HasMember(sKey) ){ 
+        if(m_hRootKey[sKey].IsNumber()) {
+            m_hRootKey[sKey].SetUint(nValue);
+            return true;
+        }
+    } else {
+        auto &&a = m_Doc.GetAllocator();
+        m_hRootKey.AddMember(Value{sKey,a}, Value{nValue},a);
+    }
+    return false;
+}
 
 /*
  * returns the string through sBuf, and creates the key with sDef if it doesn't exist.
