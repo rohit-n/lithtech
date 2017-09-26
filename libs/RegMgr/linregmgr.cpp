@@ -11,6 +11,7 @@
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/filewritestream.h"
 #include <cstdio>
+#include <vector>
 
 using std::FILE;
 using std::fopen;
@@ -103,16 +104,42 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
     if(!m_Doc[hRootKey->key][pSubKey].HasMember(sCompany))
         m_Doc[hRootKey->key][pSubKey].AddMember(Value{sCompany, alloc}, Value{Type::kObjectType}, alloc);
     
-    if(!m_Doc[hRootKey->key][pSubKey][sCompany].HasMember(sApp))
+    if(!m_Doc[hRootKey->key][pSubKey][sCompany].HasMember(sApp)) {
+        m_hRootKey.SetObject();
+        if (!m_hRootKey.HasMember("version"))
+            m_hRootKey.AddMember(Value("version"), Value(sVersion, alloc), alloc);
         m_Doc[hRootKey->key][pSubKey][sCompany].AddMember(Value{sApp, alloc}, m_hRootKey, alloc);
-    
+    } else {
+        m_hRootKey = m_Doc[hRootKey->key][pSubKey][sCompany][sApp];
+    }
 
     m_bInitialized = true;
     return m_bInitialized;
 }
 
+template<typename B>
+std::vector<std::basic_string<B>> split(const std::basic_string<B> &src, B sep)
+{
+    if(src.empty())
+        return std::vector<std::basic_string<B>>();
+
+    using sizeT = typename std::basic_string<B>::size_type;
+    std::vector<std::basic_string<B>> vec{};
+    sizeT start = 0, pos = 0;
+    sizeT e = std::basic_string<B>::npos;
+    while((pos = src.find(sep, start)) != e) {      
+        vec.emplace_back(src.substr(start,(pos - start)));
+        start = ++pos;
+    }
+    vec.emplace_back(src.substr(start,(pos - start)));
+    
+    return vec;        
+}
+
 void CRegMgr::Term()
 {
+    auto path = split(rootPath, '/');
+    m_Doc[path.at(0).c_str()][path.at(1).c_str()][path.at(2).c_str()][path.at(3).c_str()] = m_hRootKey;
     FILE *jfp = fopen("LithTech.reg.json", "w");
     if(jfp)
     {
