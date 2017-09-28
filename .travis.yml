@@ -13,6 +13,7 @@ script:
   - "cat make.log build.log > make.build.log"
   - "python3 ../tests/validate.py make.build.log 14 10 90 60"
   - OUT/testRegMgr
+  - "python3 -m json.tool LithTecj.reg.json"
 matrix:
   allow_failures:
     - clang: 4.0

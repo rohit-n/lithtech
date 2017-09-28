@@ -89,6 +89,7 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
         FileReadStream isw(jfp, iobuffer, sizeof(iobuffer));
         m_Doc.ParseStream(isw);
         fclose(jfp);
+        memset(iobuffer,0,sizeof(iobuffer));
     } else {
         const char *base = "{\"HKEY_LOCAL_MACHINE\":{\"software\":{}},\"HKEY_CURRENT_USER\":{\"software\":{}}}";
         m_Doc.Parse(base);
@@ -97,21 +98,22 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
     const char *pSubKey = (sRoot2 != nullptr) ? sRoot2 : "software";
     rootPath = std::string{hRootKey->key} + "/" + pSubKey + "/" + sCompany + "/" + sApp;
 
-    m_hRootKey.SetObject();
-    if (!m_hRootKey.HasMember("version"))
-        m_hRootKey.AddMember(Value("version"), Value(sVersion, alloc), alloc);
+    if(!m_Doc[hRootKey->key][pSubKey].IsObject())
+        m_Doc[hRootKey->key][pSubKey].SetObject();
 
     if(!m_Doc[hRootKey->key][pSubKey].HasMember(sCompany))
         m_Doc[hRootKey->key][pSubKey].AddMember(Value{sCompany, alloc}, Value{Type::kObjectType}, alloc);
     
     if(!m_Doc[hRootKey->key][pSubKey][sCompany].HasMember(sApp)) {
-        m_hRootKey.SetObject();
-        if (!m_hRootKey.HasMember("version"))
-            m_hRootKey.AddMember(Value("version"), Value(sVersion, alloc), alloc);
-        m_Doc[hRootKey->key][pSubKey][sCompany].AddMember(Value{sApp, alloc}, m_hRootKey, alloc);
+        m_Doc[hRootKey->key][pSubKey][sCompany].AddMember(Value{sApp, alloc}, Value{Type::kObjectType}, alloc);
     } else {
-        m_hRootKey = m_Doc[hRootKey->key][pSubKey][sCompany][sApp];
+        m_hRootKey.CopyFrom(m_Doc[hRootKey->key][pSubKey][sCompany][sApp], alloc);
     }
+
+    if(!m_hRootKey.IsObject())
+        m_hRootKey.SetObject();
+    if (!m_hRootKey.HasMember("version"))
+        m_hRootKey.AddMember(Value{"version"}, Value{sVersion, alloc}, alloc);
 
     m_bInitialized = true;
     return m_bInitialized;
@@ -146,12 +148,25 @@ void CRegMgr::Term()
         FileWriteStream osw(jfp, iobuffer, sizeof(iobuffer));
         Writer<FileWriteStream> writer(osw);
         m_Doc.Accept(writer);
-        fwrite("\n",2,1,jfp);
+        fwrite("\n",1,1,jfp);
         fclose(jfp);
     }
+    m_bInitialized = false;
 }
 
-bool CRegMgr::SetSubKey(const char* sSubKey){return true;}
+bool CRegMgr::SetSubKey(const char* sSubKey){
+    auto && a = m_Doc.GetAllocator();
+    if(m_hRootKey.HasMember(sSubKey)){
+        if(! m_hRootKey[sSubKey].IsObject())
+            m_hRootKey[sSubKey].SetObject();
+    } else {
+        m_hRootKey.AddMember(Value{sSubKey, a}, Value{Type::kObjectType}, a);
+    }
+
+    m_hRootKey.CopyFrom(m_hRootKey[sSubKey], a);
+    rootPath += std::string{"/"} + sSubKey;
+    return true;
+}
 bool CRegMgr::Set(const char* sKey, const char* sValue){
     if(m_hRootKey.HasMember(sKey) ){ 
         if(m_hRootKey[sKey].IsString()) {
@@ -199,6 +214,7 @@ DWORD CRegMgr::Get(const char* sKey, DWORD nDef){
     if(m_hRootKey.HasMember(sKey) ){ 
         if(m_hRootKey[sKey].IsNumber())
             return m_hRootKey[sKey].GetUint();
+        return -1;
     } else {
         auto && a = m_Doc.GetAllocator();
         m_hRootKey.AddMember(Value{sKey,a}, Value{nDef}, a);

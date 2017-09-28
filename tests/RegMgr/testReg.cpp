@@ -7,12 +7,13 @@ bool testInit()
     return mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
 }
 
-bool testGetVersionInt()
+bool testGetMissingInt()
 {
     CRegMgr mgr;
     mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
     DWORD x = 4;
-    DWORD y = mgr.Get("version", x);
+    // Will implisitely create the missing key as a Number with the default.
+    DWORD y = mgr.Get("missing", x);
     std::cout << y << '\n';
     if ( y != x )
         return false;
@@ -109,9 +110,9 @@ bool testSplitString()
         printList(a);
     }    
     { // string w/ 4 character and with two separator
-        std::string three{"1 3 "};
-        auto a{split(three, ' ')};
-        std::cout << "vector size of three /w sep: " << a.size() << '\n';
+        std::string four{"1 3 "};
+        auto a{split(four, ' ')};
+        std::cout << "vector size of four /w sep: " << a.size() << '\n';
         if(a.size() != 3)
             return false;
         printList(a);
@@ -140,8 +141,9 @@ int main()
     if(! testSplitString())
         return 1;
     std::cout << "splitString template pass\n";
-    if(! testGetVersionInt() )
+    if(! testGetMissingInt() )
         return 1;
+    std::cout << "Missing key Pass\n"; 
     if(! testGetVersionStr() )
         return 1;
     std::cout << "Get version Pass\n";
