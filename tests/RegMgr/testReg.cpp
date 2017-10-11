@@ -128,6 +128,45 @@ bool testSplitString()
     return true;
 }
 
+struct PointDataStuff {
+    long x;
+    long y;
+    long z;
+    long r;
+    long g;
+    long b;
+    long a;
+    bool operator!= (const PointDataStuff &c)
+    {
+        return ! (x == c.x 
+            && y == c.y 
+            && z == c.z 
+            && r == c.r 
+            && g == c.g 
+            && b == c.b 
+            && a == c.a );
+    };
+};
+
+bool testSetData() {
+    std::cout << "testing Set Data key\n";
+    size_t len = sizeof(PointDataStuff);
+    PointDataStuff x{1,2,3,4,5,6,7};
+    {
+        CRegMgr mgr;
+        mgr.Init("Alchemiestick","MyTestApplication","1.2");
+        mgr.Set("LicenseKey",(void*)&x, len);
+    }
+    CRegMgr mgr;
+    mgr.Init("Alchemiestick","MyTestApplication","1.2");
+    PointDataStuff b;
+    UINT32 bz = len;
+    mgr.Get("LicenseKey",(void*)&b, bz ,&x, len);
+    if (x != b)
+       return false;
+    return true;
+}
+
 int main()
 {
     // I can init the "registry" as many times as I want
@@ -153,5 +192,8 @@ int main()
     if(! testSetKeyNumber() )
        return 1;
     std::cout << "Set numeric key Pass\n";
-    return 0;
+    if(! testSetData() )
+       return 1;
+    std::cout << "Set Data key Pass\n";
+ return 0;
 }

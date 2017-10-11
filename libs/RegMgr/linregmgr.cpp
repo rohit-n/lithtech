@@ -114,6 +114,8 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
         m_hRootKey.SetObject();
     if (!m_hRootKey.HasMember("version"))
         m_hRootKey.AddMember(Value{"version"}, Value{sVersion, alloc}, alloc);
+    else
+        m_hRootKey["version"].SetString(sVersion,alloc);
 
     m_bInitialized = true;
     return m_bInitialized;
