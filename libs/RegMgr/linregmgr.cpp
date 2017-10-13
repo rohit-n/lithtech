@@ -12,6 +12,7 @@
 #include "rapidjson/filewritestream.h"
 #include <cstdio>
 #include <vector>
+#include "base_string_manip.h"
 
 using std::FILE;
 using std::fopen;
@@ -121,25 +122,6 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
     return m_bInitialized;
 }
 
-template<typename B>
-std::vector<std::basic_string<B>> split(const std::basic_string<B> &src, B sep)
-{
-    if(src.empty())
-        return std::vector<std::basic_string<B>>();
-
-    using sizeT = typename std::basic_string<B>::size_type;
-    std::vector<std::basic_string<B>> vec{};
-    sizeT start = 0, pos = 0;
-    sizeT e = std::basic_string<B>::npos;
-    while((pos = src.find(sep, start)) != e) {      
-        vec.emplace_back(src.substr(start,(pos - start)));
-        start = ++pos;
-    }
-    vec.emplace_back(src.substr(start,(pos - start)));
-    
-    return vec;        
-}
-
 void CRegMgr::Term()
 {
     auto path = split(rootPath, '/');
@@ -173,13 +155,34 @@ bool CRegMgr::Set(const char* sKey, const char* sValue){
     if(m_hRootKey.HasMember(sKey) ){ 
         if(m_hRootKey[sKey].IsString()) {
             auto &&a = m_Doc.GetAllocator();
-            m_hRootKey[sKey].SetString(sValue,a);
+            m_hRootKey[sKey].SetString(sValue, a);
             return true;
         }
+    } else {
+        auto &&a = m_Doc.GetAllocator();
+        m_hRootKey.AddMember(Value{sKey,a}, Value{sValue, a}, a);
+        return true;
     }
     return false;
 }
-bool CRegMgr::Set(const char* sKey, void* pValue, int nLen){return true;}
+bool CRegMgr::Set(const char* sKey, void* pValue, int nLen){
+    if(m_hRootKey.HasMember(sKey) ){ 
+        if(m_hRootKey[sKey].IsObject() && m_hRootKey[sKey].HasMember("base64")) {
+            auto &&a = m_Doc.GetAllocator();
+            m_hRootKey[sKey]["base64"].SetString(b64enc(pValue,nLen).c_str(),a);
+            return true;
+        }
+    } else {
+        auto &&a = m_Doc.GetAllocator();
+        Value b64data;
+        b64data.SetObject();
+        b64data.AddMember(Value{"base64",a}, Value{b64enc(pValue, nLen).c_str(),a}, a);
+        m_hRootKey.AddMember(Value{sKey,a}, b64data, a);
+        return true;
+    }
+
+    return false;
+}
 bool CRegMgr::Set(const char* sKey, DWORD nValue){
     if(m_hRootKey.HasMember(sKey) ){ 
         if(m_hRootKey[sKey].IsNumber()) {
@@ -224,9 +227,64 @@ DWORD CRegMgr::Get(const char* sKey, DWORD nDef){
     return nDef;
 }
 
-void* CRegMgr::Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef, UINT32 nDefSize){return pDef;}
+void* CRegMgr::Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef, UINT32 nDefSize){
+    if(m_hRootKey.HasMember(sKey) ){ 
+        if(m_hRootKey[sKey].IsObject() && m_hRootKey[sKey].HasMember("base64")) {
+            if(!b64dec(std::string{m_hRootKey[sKey]["base64"].GetString()},pBuf,nBufSize))
+                return nullptr;
+            return pBuf;
+        }
+    } else {
+        Set(sKey, pDef, nDefSize);
+        return Get(sKey, pBuf, nBufSize);
+    }
+}
 bool CRegMgr::Delete(const char* sKey){return true;}
 bool CRegMgr::DeleteApp(){return true;}
 bool CRegMgr::DeleteSubKey(){return true;}
 bool CRegMgr::DeleteUnderSubKey(const char* sKey){return true;}
   
+template<typename B>
+std::vector<std::basic_string<B>> split(const std::basic_string<B> &src, B sep)
+{
+    if(src.empty())
+        return std::vector<std::basic_string<B>>();
+
+    using sizeT = typename std::basic_string<B>::size_type;
+    std::vector<std::basic_string<B>> vec{};
+    sizeT start = 0, pos = 0;
+    sizeT e = std::basic_string<B>::npos;
+    while((pos = src.find(sep, start)) != e) {      
+        vec.emplace_back(src.substr(start,(pos - start)));
+        start = ++pos;
+    }
+    vec.emplace_back(src.substr(start,(pos - start)));
+    
+    return vec;        
+}
+
+#include "cppcodec/base64_rfc4648.hpp"
+
+std::string b64enc(const void *ptr, size_t len)
+{
+    using base64 = cppcodec::base64_rfc4648;
+    std::vector<uint8_t> data(len);
+    memcpy(data.data(), ptr, len);
+    return base64::encode(data);
+}
+
+bool b64dec(const std::string &b64str, void *ptr, size_t len)
+{
+    using base64 = cppcodec::base64_rfc4648;
+    try {
+        auto decoded = base64::decode(b64str);
+        if(len < decoded.size())
+            return false;
+        memcpy(ptr,decoded.data(), len);
+    }
+    catch (cppcodec::parse_error)
+    {
+        return false;
+    }
+    return true;    
+}

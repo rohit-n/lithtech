@@ -1,5 +1,6 @@
 #include <iostream>
 #include "regmgr.h"
+#include "base_string_manip.h"
 
 bool testInit()
 {
@@ -61,12 +62,6 @@ bool testSetKeyNumber()
     mgr.Init("Alchemiestick", "MyTestApplication", "1.0");
     return (mgr.Get("dpi",0) == 96);
 }
-
-#include <vector>
-#include <string>
-
-template<typename B>
-std::vector<std::basic_string<B>> split(const std::basic_string<B> &src, B sep);
 
 void printList(const std::vector<std::string> &a)
 {
@@ -148,6 +143,16 @@ struct PointDataStuff {
     };
 };
 
+void printdata(const PointDataStuff &data) {
+    std::cout << data.x;
+    std::cout << data.y;
+    std::cout << data.z;
+    std::cout << data.r;
+    std::cout << data.g;
+    std::cout << data.b;
+    std::cout << data.a;
+}
+
 bool testSetData() {
     std::cout << "testing Set Data key\n";
     size_t len = sizeof(PointDataStuff);
@@ -160,8 +165,12 @@ bool testSetData() {
     CRegMgr mgr;
     mgr.Init("Alchemiestick","MyTestApplication","1.2");
     PointDataStuff b;
-    UINT32 bz = len;
-    mgr.Get("LicenseKey",(void*)&b, bz ,&x, len);
+    UINT32 bz = sizeof(PointDataStuff);
+    mgr.Get("LicenseKey",(void*)&b, bz);
+    printdata(b);
+    std::cout << " vs. ";
+    printdata(x);
+    std::cout << '\n';
     if (x != b)
        return false;
     return true;

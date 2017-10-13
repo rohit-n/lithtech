@@ -8,7 +8,8 @@ add_library(${PROJECT_NAME} STATIC
 	linregmgr.cpp)
 endif(WIN32)
 
-include_directories(../lith)
+include_directories(../lith
+    ../../cppcodec)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS -std=c++11 ${CMAKE_CXX_FLAGS})
