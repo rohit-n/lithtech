@@ -13,14 +13,14 @@
 #include "splash.h"
 #include "SelectConfigDlg.h"
 #include "NetDefs.h"
-#include "versionmgr.h"
+#include "VersionMgr.h"
 #include "ButeMgr.h"
 #include "AutoMessage.h"
 #include "CommonUtilities.h"
 #include "ScmdConsole.h"
 #include "ScmdConsoleDriver_ServerApp.h"
 #include "ResShared.h"
-#include "RegMgr32.h"
+#include "regmgr.h"
 
 #define MIN_SERVER_UPDATE 33 // At least 33 ms between server updates = cap at 30fps
 
@@ -506,10 +506,9 @@ DWORD CServerDlg::DoHost( )
 	// Set the selected mod so players know what we are playing...
 
 	// Open the registry.
-	CRegMgr32 regMgr;
-	regMgr.Init();
-	if( !regMgr.OpenKey( HKEY_LOCAL_MACHINE, "SOFTWARE", "Monolith Productions", (char*)REGPRODUCTNAME,
-		(char *)REGPRODUCTVER ))
+	CRegMgr regMgr;
+	
+	if( !regMgr.Init("Monolith Productions", REGPRODUCTNAME, REGPRODUCTVER))
 	{
 		return false;
 	}
@@ -517,7 +516,7 @@ DWORD CServerDlg::DoHost( )
 	char szSelectedMod[256] = {0};
 	DWORD bufSize = sizeof(szSelectedMod);
 	
-	if( regMgr.GetField( FIELD_SELECTEDMOD, szSelectedMod, bufSize ))
+	if( regMgr.Get(FIELD_SELECTEDMOD, szSelectedMod, bufSize ))
 	{
 		if( szSelectedMod[0] )
 		{
@@ -1404,12 +1403,12 @@ void CServerDlg::OnCancel()
 }
 
 
-static void ReadRezFromRegCommandLine( CStringList& lstRez, CRegMgr32& regMgr, 
+static void ReadRezFromRegCommandLine( CStringList& lstRez, CRegMgr& regMgr, 
 									  char const* pszCommandLineNum, char const* pszCommandLineKeyStub )
 {
 	// Get the number of updates installed.
-	DWORD nNum = 0;
-	if( !regMgr.GetField(( char* )pszCommandLineNum, &nNum ))
+	DWORD nNum = regMgr.Get(pszCommandLineNum, 0);
+	if( nNum == 0 )
 		return;
 
 	char szCommandLineKey[256] = "";
@@ -1423,7 +1422,7 @@ static void ReadRezFromRegCommandLine( CStringList& lstRez, CRegMgr32& regMgr,
 		// Add any command line stuff added by an Update
 		sprintf( szCommandLineKey, "%s%d", pszCommandLineKeyStub, i );
 		DWORD nBufSize = sizeof( szCommandLine );
-		if( regMgr.GetField( szCommandLineKey, szCommandLine, nBufSize ) && 
+		if( regMgr.Get( szCommandLineKey, szCommandLine, nBufSize ) && 
 			szCommandLine[0] )
 		{
 			parse.Init( szCommandLine );
@@ -1512,10 +1511,8 @@ bool CServerDlg::AddResources( )
 	lstRez.AddTail( "gamep2.rez" );
 
 	// Open the registry.
-	CRegMgr32 regMgr;
-	regMgr.Init();
-	if( !regMgr.OpenKey( HKEY_LOCAL_MACHINE, "SOFTWARE", "Monolith Productions", (char*)REGPRODUCTNAME,
-		(char *)REGPRODUCTVER ))
+	CRegMgr regMgr;
+	if( !regMgr.Init("Monolith Productions", REGPRODUCTNAME, REGPRODUCTVER))
 	{
 		return false;
 	}
@@ -1552,7 +1549,7 @@ bool CServerDlg::AddResources( )
 	char szSelectedMod[256] = {0};
 	DWORD bufSize = sizeof(szSelectedMod);
 	
-	if( regMgr.GetField( FIELD_SELECTEDMOD, szSelectedMod, bufSize ))
+	if( regMgr.Get( FIELD_SELECTEDMOD, szSelectedMod, bufSize ))
 	{
 		if( szSelectedMod[0] )
 		{

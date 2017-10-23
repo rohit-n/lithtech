@@ -16,7 +16,7 @@
 #include "ServerUtilities.h"
 #include "iltserver.h"
 #include "SoundMgr.h"
-#include "..\shared\VersionMgr.h"
+#include "../Shared/VersionMgr.h"
 #include "ServerSoundMgr.h"
 
 // Return buffer

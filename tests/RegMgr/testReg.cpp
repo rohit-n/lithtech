@@ -176,6 +176,15 @@ bool testSetData() {
     return true;
 }
 
+/*
+    this test is currently not needed, as deletes are never called
+    that I can detect.
+bool testDeleteKey()
+{
+    return false;
+}
+*/
+
 int main()
 {
     // I can init the "registry" as many times as I want
