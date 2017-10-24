@@ -4,15 +4,16 @@
 #ifndef __CSERVERDIR_TITAN_H__
 #define __CSERVERDIR_TITAN_H__
 
-#define SERVERDIR_EXPORTS
-#include "IServerDir.h"
-#include "IServerDir_Titan.h"
-
 #include <deque>
 #include <vector>
 #include <string>
 
 #include "Sync.h"
+
+#define SERVERDIR_EXPORTS
+#include "IServerDir.h"
+#include "IServerDir_Titan.h"
+
 
 #pragma warning (disable:4503)
 #include "WONAPI.h"

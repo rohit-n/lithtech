@@ -12,6 +12,9 @@ struct evt_mutex {
 };
 typedef pthread_mutex_t CRITICAL_SECTION;
 typedef evt_mutex* HANDLE;
+typedef void* HMODULE;
+
+#define _stdcall
 
 // Critical section
 class LinSync_CS
@@ -89,7 +92,7 @@ public:
         return true;
     }
 	bool IsSet() const { return m_hEvent.trigger; }
-	bool Block(uint32 nTimeout = 0xffffffffL) { 
+	bool Block(uint32_t nTimeout = 0xffffffffL) { 
         HANDLE ev = GetEvent();
         if(nTimeout != 0xffffffffL){
                 // should use timedwait here
