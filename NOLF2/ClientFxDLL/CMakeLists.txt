@@ -38,6 +38,9 @@ include_directories(../Shared
 	../../sdk/inc
 	../../libs/MFCStub
 	../../libs/stdlith)
+if(UNIX)
+  include_directories(/usr/include/SDL2)
+endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS -std=c++11 ${CMAKE_CXX_FLAGS})

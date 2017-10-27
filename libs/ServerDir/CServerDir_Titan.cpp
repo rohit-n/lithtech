@@ -17,10 +17,9 @@
 
 #include <malloc.h>
 
-ILTCSBase* g_pLTCSBase = NULL;
-ILTClient* g_pLTClient = NULL;
+ILTCSBase *g_pLTCSBase = NULL;
+ILTClient *g_pLTClient = NULL;
 HMODULE g_hResourceModule = NULL;
-
 
 // Defines...
 
@@ -30,13 +29,13 @@ HMODULE g_hResourceModule = NULL;
 #define TITAN_GAMESERVER_DEFAULTPORT 27888
 #define TITAN_SUMMARY_DATATYPE ("s")
 #define TITAN_TIMEOUT (30000)
-#define GAMESPYSUPPORT_AUTOPUMPTIME		30 // ms
+#define GAMESPYSUPPORT_AUTOPUMPTIME 30 // ms
 
 // Functions which are handy for dealing with Titan...
 static std::wstring Make_wstring(const std::string &cString)
 {
 	uint32 nStrLen = (uint32)(cString.length());
-	wchar_t *pTempBuffer = (wchar_t*)alloca(sizeof(wchar_t) * (nStrLen + 1));
+	wchar_t *pTempBuffer = (wchar_t *)alloca(sizeof(wchar_t) * (nStrLen + 1));
 
 	// Convert it into our temporary buffer
 	const char *pInFinger = cString.c_str();
@@ -56,11 +55,11 @@ static std::wstring Make_wstring(const std::string &cString)
 	return sResult;
 }
 
-static void Make_string(const std::wstring &cString, std::string& cOutString )
+static void Make_string(const std::wstring &cString, std::string &cOutString)
 {
-	cOutString.erase( );
+	cOutString.erase();
 	uint32 nStrLen = (uint32)(cString.length());
-	char *pTempBuffer = (char*)alloca(sizeof(char) * (nStrLen + 1));
+	char *pTempBuffer = (char *)alloca(sizeof(char) * (nStrLen + 1));
 
 	// Convert it into our temporary buffer
 	const wchar_t *pInFinger = cString.c_str();
@@ -82,8 +81,7 @@ static void Make_string(const std::wstring &cString, std::string& cOutString )
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry implementation
 
-CSDTitan_RequestEntry::CSDTitan_RequestEntry(CServerDirectory_Titan *pDir) :
-	m_pDir(pDir)
+CSDTitan_RequestEntry::CSDTitan_RequestEntry(CServerDirectory_Titan *pDir) : m_pDir(pDir)
 {
 }
 
@@ -95,17 +93,15 @@ void CSDTitan_RequestEntry::Finish(IServerDirectory::ERequestResult eResult, con
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Noop
 
-CSDTitan_RequestEntry_Noop::CSDTitan_RequestEntry_Noop(CServerDirectory_Titan *pDir, IServerDirectory::ERequest eRequest) :
-	CSDTitan_RequestEntry(pDir),
-	m_eRequest(eRequest)
+CSDTitan_RequestEntry_Noop::CSDTitan_RequestEntry_Noop(CServerDirectory_Titan *pDir, IServerDirectory::ERequest eRequest) : CSDTitan_RequestEntry(pDir),
+																															m_eRequest(eRequest)
 {
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_TitanOp implementation
 
-CSDTitan_RequestEntry_TitanOp::CSDTitan_RequestEntry_TitanOp(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry(pDir)
+CSDTitan_RequestEntry_TitanOp::CSDTitan_RequestEntry_TitanOp(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry(pDir)
 {
 }
 
@@ -172,17 +168,16 @@ void CSDTitan_RequestEntry_TitanOp::Completion_Bootstrap(AsyncOpPtr pAsyncOp, CS
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_MOTD
 
-CSDTitan_RequestEntry_MOTD::CSDTitan_RequestEntry_MOTD(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_TitanOp(pDir)
+CSDTitan_RequestEntry_MOTD::CSDTitan_RequestEntry_MOTD(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_TitanOp(pDir)
 {
 	std::string sGameName = pDir->GetGameName();
-	m_pMOTDOp = new GetMOTDOp( sGameName );
+	m_pMOTDOp = new GetMOTDOp(sGameName);
 }
 
 void CSDTitan_RequestEntry_MOTD::Reset()
 {
 	std::string sGameName = GetDir()->GetGameName();
-	m_pMOTDOp = new GetMOTDOp( sGameName );
+	m_pMOTDOp = new GetMOTDOp(sGameName);
 }
 
 void CSDTitan_RequestEntry_MOTD::OnCompletion()
@@ -198,10 +193,9 @@ void CSDTitan_RequestEntry_MOTD::OnCompletion()
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Validate_Version
 
-CSDTitan_RequestEntry_Validate_Version::CSDTitan_RequestEntry_Validate_Version(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_TitanOp(pDir),
-	m_pGetDirOp(new GetDirOp(pDir->GetDirServerList())),
-	m_pVersionOp(0)
+CSDTitan_RequestEntry_Validate_Version::CSDTitan_RequestEntry_Validate_Version(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_TitanOp(pDir),
+																											   m_pGetDirOp(new GetDirOp(pDir->GetDirServerList().get())),
+																											   m_pVersionOp(0)
 {
 	m_pGetDirOp->SetFlags(DIR_GF_DECOMPSERVICES | DIR_GF_SERVADDNETADDR | DIR_GF_SERVADDPATH);
 	m_pGetDirOp->SetPath(L"/" + Make_wstring(GetDir()->GetGameName()) + L"/Patch");
@@ -224,7 +218,7 @@ void CSDTitan_RequestEntry_Validate_Version::OnCompletion()
 			AuthContextPtr pAuthContext = GetDir()->GetAuthContext();
 			ServerContextPtr pServerContext = new ServerContext;
 			pServerContext->AddAddressesFromDir(m_pGetDirOp->GetDirEntityList());
-			m_pVersionOp = new CheckValidVersionOp(GetDir()->GetGameName(), pServerContext);
+			m_pVersionOp = new CheckValidVersionOp(GetDir()->GetGameName(), pServerContext.get());
 			m_pVersionOp->SetVersion(GetDir()->GetVersion());
 			m_pVersionOp->SetConfigName(GetDir()->GetRegion());
 			m_pVersionOp->SetGetPatchList(false);
@@ -244,28 +238,28 @@ void CSDTitan_RequestEntry_Validate_Version::OnCompletion()
 		// Oo, what did we get?
 		switch (m_pActiveOp->GetStatus())
 		{
-			// You're A-OK
-			case WS_Success :
-			case WS_DBProxyServ_ValidNotLatest :
-				GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Latest);
-				m_pActiveOp = m_pGetDirOp;
-				break;
-			// You could be better..
-			case WS_DBProxyServ_OutOfDate :
-				GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Patchable);
-				// Go back to the dir op, since that's got a status of WS_Success, and this was a successful result
-				m_pActiveOp = m_pGetDirOp;
-				break;
-			// You stink.
-			case WS_DBProxyServ_OutOfDateNoUpdate :
-				GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Old);
-				// Go back to the dir op, since that's got a status of WS_Success, and this was a successful result
-				m_pActiveOp = m_pGetDirOp;
-				break;
-			// Aw, nothin'.. Shucks
-			default :
-				GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Unknown);
-				break;
+		// You're A-OK
+		case WS_Success:
+		case WS_DBProxyServ_ValidNotLatest:
+			GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Latest);
+			m_pActiveOp = m_pGetDirOp;
+			break;
+		// You could be better..
+		case WS_DBProxyServ_OutOfDate:
+			GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Patchable);
+			// Go back to the dir op, since that's got a status of WS_Success, and this was a successful result
+			m_pActiveOp = m_pGetDirOp;
+			break;
+		// You stink.
+		case WS_DBProxyServ_OutOfDateNoUpdate:
+			GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Old);
+			// Go back to the dir op, since that's got a status of WS_Success, and this was a successful result
+			m_pActiveOp = m_pGetDirOp;
+			break;
+		// Aw, nothin'.. Shucks
+		default:
+			GetDir()->SetVersionState(CServerDirectory_Titan::eVersion_Unknown);
+			break;
 		}
 		CSDTitan_RequestEntry_TitanOp::OnCompletion();
 	}
@@ -274,9 +268,8 @@ void CSDTitan_RequestEntry_Validate_Version::OnCompletion()
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Validate_CDKey
 
-CSDTitan_RequestEntry_Validate_CDKey::CSDTitan_RequestEntry_Validate_CDKey(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_TitanOp(pDir),
-	m_pGetDirOp(new GetDirOp(pDir->GetDirServerList()))
+CSDTitan_RequestEntry_Validate_CDKey::CSDTitan_RequestEntry_Validate_CDKey(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_TitanOp(pDir),
+																										   m_pGetDirOp(new GetDirOp(pDir->GetDirServerList().get()))
 {
 	m_pGetDirOp->SetFlags(DIR_GF_DECOMPSERVICES | DIR_GF_SERVADDNETADDR | DIR_GF_SERVADDPATH);
 	m_pGetDirOp->SetPath(TITAN_AUTHSERVER_PATH);
@@ -299,7 +292,7 @@ void CSDTitan_RequestEntry_Validate_CDKey::Reset()
 	AuthContextPtr pAuthContext = GetDir()->GetAuthContext();
 	if (pAuthContext->GetServerContext()->GetNumAddresses() == 0)
 	{
-		GetDirOpPtr pNewOp = new GetDirOp(GetDir()->GetDirServerList());
+		GetDirOpPtr pNewOp = new GetDirOp(GetDir()->GetDirServerList().get());
 		pNewOp->SetFlags(m_pGetDirOp->GetFlags());
 		pNewOp->SetPath(m_pGetDirOp->GetPath());
 		m_pGetDirOp = pNewOp;
@@ -346,9 +339,8 @@ void CSDTitan_RequestEntry_Validate_CDKey::OnCompletion()
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Publish_Server
 
-CSDTitan_RequestEntry_Publish_Server::CSDTitan_RequestEntry_Publish_Server(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_TitanOp(pDir),
-	m_pAddServiceOp(new AddServiceOp(pDir->GetDirServerList()))
+CSDTitan_RequestEntry_Publish_Server::CSDTitan_RequestEntry_Publish_Server(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_TitanOp(pDir),
+																										   m_pAddServiceOp(new AddServiceOp(pDir->GetDirServerList().get()))
 {
 	m_pActiveOp = m_pAddServiceOp;
 
@@ -363,14 +355,14 @@ CSDTitan_RequestEntry_Publish_Server::CSDTitan_RequestEntry_Publish_Server(CServ
 	m_pAddServiceOp->AddDataObject(TITAN_SUMMARY_DATATYPE, new ByteBuffer(&(*(sCurInfo.m_cSummary.begin())), sCurInfo.m_cSummary.size()));
 	std::string sPath = "/";
 	sPath += pDir->GetGameName();
-	m_pAddServiceOp->SetPath(Make_wstring( sPath ));
+	m_pAddServiceOp->SetPath(Make_wstring(sPath));
 	m_pAddServiceOp->SetLifespan(TITAN_GAMESERVER_TIMEOUT);
 }
 
 void CSDTitan_RequestEntry_Publish_Server::Reset()
 {
 	m_pRemoveServiceOp = 0;
-	m_pAddServiceOp = new AddServiceOp(GetDir()->GetDirServerList());
+	m_pAddServiceOp = new AddServiceOp(GetDir()->GetDirServerList().get());
 
 	Sync_CSAuto cProtection(GetDir()->GetPeerInfoCS());
 
@@ -383,7 +375,7 @@ void CSDTitan_RequestEntry_Publish_Server::Reset()
 	m_pAddServiceOp->AddDataObject(TITAN_SUMMARY_DATATYPE, new ByteBuffer(&(*(sCurInfo.m_cSummary.begin())), sCurInfo.m_cSummary.size()));
 	std::string sPath = "/";
 	sPath += GetDir()->GetGameName();
-	m_pAddServiceOp->SetPath(Make_wstring( sPath ));
+	m_pAddServiceOp->SetPath(Make_wstring(sPath));
 	m_pAddServiceOp->SetLifespan(TITAN_GAMESERVER_TIMEOUT);
 
 	m_pActiveOp = m_pAddServiceOp;
@@ -394,12 +386,12 @@ void CSDTitan_RequestEntry_Publish_Server::OnCompletion()
 	if ((m_pActiveOp->GetStatus() != WS_Success) && (m_pActiveOp.get() == m_pAddServiceOp.get()))
 	{
 		// Remove the entry if it's already in there
-		m_pRemoveServiceOp = new RemoveServiceOp(GetDir()->GetDirServerList());
+		m_pRemoveServiceOp = new RemoveServiceOp(GetDir()->GetDirServerList().get());
 		m_pRemoveServiceOp->SetNetAddr(GetDir()->GetLocalPeerInfo().m_cAddr);
 		m_pRemoveServiceOp->SetName(Make_wstring(GetDir()->GetGameName()));
 		std::string sPath = "/";
 		sPath += GetDir()->GetGameName();
-		m_pRemoveServiceOp->SetPath(Make_wstring( sPath ));
+		m_pRemoveServiceOp->SetPath(Make_wstring(sPath));
 		m_pActiveOp = m_pRemoveServiceOp;
 		Start();
 		// We're not complete yet
@@ -420,8 +412,8 @@ void CSDTitan_RequestEntry_Publish_Server::OnCompletion()
 	else
 	{
 		// Make the gamespysupport if we haven't already.
-		if( !GetDir( )->IsGameSupportCreated( ))
-			GetDir( )->CreateGameSpySupport( );
+		if (!GetDir()->IsGameSupportCreated())
+			GetDir()->CreateGameSpySupport();
 
 		CSDTitan_RequestEntry_TitanOp::OnCompletion();
 	}
@@ -430,9 +422,8 @@ void CSDTitan_RequestEntry_Publish_Server::OnCompletion()
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Remove_Server
 
-CSDTitan_RequestEntry_Remove_Server::CSDTitan_RequestEntry_Remove_Server(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_TitanOp(pDir),
-	m_pRemoveServiceOp(new RemoveServiceOp(pDir->GetDirServerList()))
+CSDTitan_RequestEntry_Remove_Server::CSDTitan_RequestEntry_Remove_Server(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_TitanOp(pDir),
+																										 m_pRemoveServiceOp(new RemoveServiceOp(pDir->GetDirServerList().get()))
 {
 	Sync_CSAuto cProtection(pDir->GetPeerInfoCS());
 
@@ -441,14 +432,14 @@ CSDTitan_RequestEntry_Remove_Server::CSDTitan_RequestEntry_Remove_Server(CServer
 	m_pRemoveServiceOp->SetName(Make_wstring(GetDir()->GetGameName()));
 	std::string sPath = "/";
 	sPath += pDir->GetGameName();
-	m_pRemoveServiceOp->SetPath(Make_wstring( sPath ));
+	m_pRemoveServiceOp->SetPath(Make_wstring(sPath));
 }
 
 void CSDTitan_RequestEntry_Remove_Server::Reset()
 {
-	RemoveServiceOpPtr pNewRemoveOp = new RemoveServiceOp(GetDir()->GetDirServerList());
+	RemoveServiceOpPtr pNewRemoveOp = new RemoveServiceOp(GetDir()->GetDirServerList().get());
 
-	pNewRemoveOp->SetNetAddr(m_pRemoveServiceOp->GetNetAddr());
+	pNewRemoveOp->SetNetAddr(ByteBufferPtr{m_pRemoveServiceOp->GetNetAddr()});
 	pNewRemoveOp->SetName(m_pRemoveServiceOp->GetName());
 	pNewRemoveOp->SetPath(m_pRemoveServiceOp->GetPath());
 
@@ -458,9 +449,8 @@ void CSDTitan_RequestEntry_Remove_Server::Reset()
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_UpdateList
 
-CSDTitan_RequestEntry_UpdateList::CSDTitan_RequestEntry_UpdateList(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_TitanOp(pDir),
-	m_pGetDirOp(new GetDirOp(pDir->GetDirServerList()))
+CSDTitan_RequestEntry_UpdateList::CSDTitan_RequestEntry_UpdateList(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_TitanOp(pDir),
+																								   m_pGetDirOp(new GetDirOp(pDir->GetDirServerList().get()))
 {
 	m_pGetDirOp->SetFlags(
 		DIR_GF_DECOMPSERVICES |
@@ -470,13 +460,13 @@ CSDTitan_RequestEntry_UpdateList::CSDTitan_RequestEntry_UpdateList(CServerDirect
 		DIR_GF_SERVADDNETADDR);
 	std::string sPath = "/";
 	sPath += pDir->GetGameName();
-	m_pGetDirOp->SetPath(Make_wstring( sPath ));
+	m_pGetDirOp->SetPath(Make_wstring(sPath));
 	m_pGetDirOp->AddDataType(TITAN_SUMMARY_DATATYPE);
 }
 
 void CSDTitan_RequestEntry_UpdateList::Reset()
 {
-	GetDirOpPtr pNewDirOp = new GetDirOp(GetDir()->GetDirServerList());
+	GetDirOpPtr pNewDirOp = new GetDirOp(GetDir()->GetDirServerList().get());
 
 	pNewDirOp->SetFlags(m_pGetDirOp->GetFlags());
 	pNewDirOp->SetPath(m_pGetDirOp->GetPath());
@@ -508,7 +498,7 @@ void CSDTitan_RequestEntry_UpdateList::OnCompletion()
 			CServerDirectory_Titan::SPeerData &sCurDest = GetDir()->GetActivePeerInfo();
 
 			// Read the name
-			Make_string((*iCurSrc)->mDisplayName, sCurDest.m_sName );
+			Make_string((*iCurSrc)->mDisplayName, sCurDest.m_sName);
 			sCurDest.m_bHasName = true;
 			// Read the summary
 			sCurDest.m_bHasSummary = (!(*iCurSrc)->mDataObjects.empty());
@@ -530,8 +520,7 @@ void CSDTitan_RequestEntry_UpdateList::OnCompletion()
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_UpdatePings
 
-CSDTitan_RequestEntry_UpdatePings::CSDTitan_RequestEntry_UpdatePings(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry(pDir)
+CSDTitan_RequestEntry_UpdatePings::CSDTitan_RequestEntry_UpdatePings(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry(pDir)
 {
 	m_aPingQueue.reserve(k_nPingCount);
 
@@ -696,9 +685,8 @@ void CSDTitan_RequestEntry_UpdatePings::SavePingResult(const IPAddr &cAddr, uint
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_MsgOp
 
-CSDTitan_RequestEntry_MsgOp::CSDTitan_RequestEntry_MsgOp(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry(pDir),
-	m_cDestination(pDir->GetActivePeerInfo().m_cAddr)
+CSDTitan_RequestEntry_MsgOp::CSDTitan_RequestEntry_MsgOp(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry(pDir),
+																						 m_cDestination(pDir->GetActivePeerInfo().m_cAddr)
 {
 }
 
@@ -771,8 +759,7 @@ CSDTitan_RequestEntry_MsgOp::EWaitResult CSDTitan_RequestEntry_MsgOp::WaitForMes
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Peer_Details
 
-CSDTitan_RequestEntry_Peer_Details::CSDTitan_RequestEntry_Peer_Details(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_MsgOp(pDir)
+CSDTitan_RequestEntry_Peer_Details::CSDTitan_RequestEntry_Peer_Details(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_MsgOp(pDir)
 {
 }
 
@@ -812,20 +799,20 @@ bool CSDTitan_RequestEntry_Peer_Details::HandleMessage(ILTMessage_Read &cMsg)
 
 	GetDir()->m_cPeerCS.Enter();
 
-		uint32 nOldActivePeerIndex = GetDir()->GetActivePeerIndex();
+	uint32 nOldActivePeerIndex = GetDir()->GetActivePeerIndex();
 
-		// Switch to the right peer
-		GetDir()->SetActivePeer(m_cDestination.GetHostString().c_str());
+	// Switch to the right peer
+	GetDir()->SetActivePeer(m_cDestination.GetHostString().c_str());
 
-		// Stuff the information in there
-		CServerDirectory_Titan::SPeerData &sActivePeer = GetDir()->GetActivePeerInfo();
-		sActivePeer.m_bHasDetails = true;
-		uint32 nLength = cMsg.Readuint32();
-		sActivePeer.m_cDetails.resize(nLength);
-		cMsg.ReadData(&(*(sActivePeer.m_cDetails.begin())), nLength * 8);
+	// Stuff the information in there
+	CServerDirectory_Titan::SPeerData &sActivePeer = GetDir()->GetActivePeerInfo();
+	sActivePeer.m_bHasDetails = true;
+	uint32 nLength = cMsg.Readuint32();
+	sActivePeer.m_cDetails.resize(nLength);
+	cMsg.ReadData(&(*(sActivePeer.m_cDetails.begin())), nLength * 8);
 
-		// Restore the active peer
-		GetDir()->SetActivePeerIndex(nOldActivePeerIndex);
+	// Restore the active peer
+	GetDir()->SetActivePeerIndex(nOldActivePeerIndex);
 
 	GetDir()->m_cPeerCS.Leave();
 
@@ -835,8 +822,7 @@ bool CSDTitan_RequestEntry_Peer_Details::HandleMessage(ILTMessage_Read &cMsg)
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Validate_Client
 
-CSDTitan_RequestEntry_Validate_Client::CSDTitan_RequestEntry_Validate_Client(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry_MsgOp(pDir)
+CSDTitan_RequestEntry_Validate_Client::CSDTitan_RequestEntry_Validate_Client(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry_MsgOp(pDir)
 {
 }
 
@@ -919,8 +905,7 @@ bool CSDTitan_RequestEntry_Validate_Client::HandleMessage(ILTMessage_Read &cMsg)
 //////////////////////////////////////////////////////////////////////////////
 // CSDTitan_RequestEntry_Validate_Server
 
-CSDTitan_RequestEntry_Validate_Server::CSDTitan_RequestEntry_Validate_Server(CServerDirectory_Titan *pDir) :
-	CSDTitan_RequestEntry(pDir)
+CSDTitan_RequestEntry_Validate_Server::CSDTitan_RequestEntry_Validate_Server(CServerDirectory_Titan *pDir) : CSDTitan_RequestEntry(pDir)
 {
 }
 
@@ -940,7 +925,7 @@ void CSDTitan_RequestEntry_Validate_Server::Start()
 
 	// Remember that the server's been validated
 	GetDir()->GetPeerInfoCS().Enter();
-		GetDir()->GetLocalPeerInfo().m_eValidation = CServerDirectory_Titan::SPeerData::eValidationState_Complete;
+	GetDir()->GetLocalPeerInfo().m_eValidation = CServerDirectory_Titan::SPeerData::eValidationState_Complete;
 	GetDir()->GetPeerInfoCS().Leave();
 
 	// We're done here.
@@ -950,23 +935,21 @@ void CSDTitan_RequestEntry_Validate_Server::Start()
 //////////////////////////////////////////////////////////////////////////////
 // CServerDirectory_Titan IServerDirectory implementation
 
-
-CServerDirectory_Titan::CServerDirectory_Titan() :
-	m_pDirServerList(new ServerContext),
-	m_pAuthContext(new AuthContext),
-	m_bIsAuthContextValid(false),
-	m_sGameName(DEFAULT_TITAN_PRODUCT_STRING),
-	m_cWONAPICore(true),
-	m_cCDKey(DEFAULT_TITAN_PRODUCT_STRING),
-	m_nActivePeerIndex(0),
-	m_eCurStatus(eStatus_Waiting),
-	m_sCurStatusString(GetTempString(IDS_WAITING)),
-	m_eCompletionAction(eCompletionBlock_None),
-	m_eLastSuccessfulRequest(eRequest_Nothing),
-	m_eLastErrorRequest(eRequest_Nothing),
-	m_eLastRequest(eRequest_Nothing),
-	m_eLastRequestResult(eRequestResult_Success),
-	m_eVersionState(eVersion_Unknown)
+CServerDirectory_Titan::CServerDirectory_Titan() : m_pDirServerList(new ServerContext),
+												   m_pAuthContext(new AuthContext),
+												   m_bIsAuthContextValid(false),
+												   m_sGameName(DEFAULT_TITAN_PRODUCT_STRING),
+												   m_cWONAPICore(true),
+												   m_cCDKey(DEFAULT_TITAN_PRODUCT_STRING),
+												   m_nActivePeerIndex(0),
+												   m_eCurStatus(eStatus_Waiting),
+												   m_sCurStatusString(GetTempString(IDS_WAITING)),
+												   m_eCompletionAction(eCompletionBlock_None),
+												   m_eLastSuccessfulRequest(eRequest_Nothing),
+												   m_eLastErrorRequest(eRequest_Nothing),
+												   m_eLastRequest(eRequest_Nothing),
+												   m_eLastRequestResult(eRequestResult_Success),
+												   m_eVersionState(eVersion_Unknown)
 {
 	TitanTest_Init();
 
@@ -991,7 +974,7 @@ CServerDirectory_Titan::CServerDirectory_Titan() :
 
 CServerDirectory_Titan::~CServerDirectory_Titan()
 {
-	DestroyGameSpySupport( );
+	DestroyGameSpySupport();
 
 	// Make sure we're not doing anything
 	PauseRequestList();
@@ -1011,14 +994,13 @@ CServerDirectory_Titan::~CServerDirectory_Titan()
 	TitanTest_Term();
 }
 
-
 bool CServerDirectory_Titan::QueueRequest(ERequest eNewRequest)
 {
 	if (!ValidateRequest(eNewRequest))
 		return false;
 
 	CSDTitan_RequestEntry *pRequestEntry = MakeRequestEntry(eNewRequest);
-	if( !pRequestEntry )
+	if (!pRequestEntry)
 		return false;
 
 	StartRequest(pRequestEntry);
@@ -1038,7 +1020,7 @@ bool CServerDirectory_Titan::QueueRequestList(const TRequestList &cNewRequests)
 	for (; iCurRequest != cNewRequests.end(); ++iCurRequest)
 	{
 		CSDTitan_RequestEntry *pRequestEntry = MakeRequestEntry(*iCurRequest);
-		if( !pRequestEntry )
+		if (!pRequestEntry)
 			return false;
 
 		StartRequest(pRequestEntry);
@@ -1073,13 +1055,13 @@ bool CServerDirectory_Titan::ClearRequestList()
 
 	m_cStateCS.Enter();
 
-		// Delete all the requests
-		TRequestEntryList::const_iterator iCurRequestEntry = m_cRequestEntryList.begin();
-		for (; iCurRequestEntry != m_cRequestEntryList.end(); ++iCurRequestEntry)
-			delete *iCurRequestEntry;
+	// Delete all the requests
+	TRequestEntryList::const_iterator iCurRequestEntry = m_cRequestEntryList.begin();
+	for (; iCurRequestEntry != m_cRequestEntryList.end(); ++iCurRequestEntry)
+		delete *iCurRequestEntry;
 
-		// Clear the list
-		m_cRequestEntryList.clear();
+	// Clear the list
+	m_cRequestEntryList.clear();
 
 	m_cStateCS.Leave();
 
@@ -1101,10 +1083,10 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::ProcessRequest(ERequest
 
 	// Push the request on the front of the list
 	m_cStateCS.Enter();
-		TRequestEntryList cOldEntryList;
-		cOldEntryList.swap(m_cRequestEntryList);
-		m_cRequestEntryList.push_front(MakeRequestEntry(eRequest_Pause));
-		m_cRequestEntryList.push_front(MakeRequestEntry(eNewRequest));
+	TRequestEntryList cOldEntryList;
+	cOldEntryList.swap(m_cRequestEntryList);
+	m_cRequestEntryList.push_front(MakeRequestEntry(eRequest_Pause));
+	m_cRequestEntryList.push_front(MakeRequestEntry(eNewRequest));
 	m_cStateCS.Leave();
 
 	// Wait for it to finish
@@ -1115,7 +1097,7 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::ProcessRequest(ERequest
 		CancelActiveRequest();
 	}
 	m_cStateCS.Enter();
-		cOldEntryList.swap(m_cRequestEntryList);
+	cOldEntryList.swap(m_cRequestEntryList);
 	m_cStateCS.Leave();
 
 	// As you were
@@ -1124,28 +1106,27 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::ProcessRequest(ERequest
 	return eResult;
 }
 
-
 bool CServerDirectory_Titan::PauseRequestList()
 {
 	Sync_CSAuto cProtection(m_cStateCS);
 
 	switch (m_eCurStatus)
 	{
-		case eStatus_Error :
-		{
-			// If we're in an error state, we're already paused..
-			return false;
-		}
-		case eStatus_Processing :
-		{
-			// Cancel the active request
-			CancelActiveRequest();
-			break;
-		}
-		default :
-		{
-			break;
-		}
+	case eStatus_Error:
+	{
+		// If we're in an error state, we're already paused..
+		return false;
+	}
+	case eStatus_Processing:
+	{
+		// Cancel the active request
+		CancelActiveRequest();
+		break;
+	}
+	default:
+	{
+		break;
+	}
 	}
 
 	m_eCurStatus = eStatus_Paused;
@@ -1176,7 +1157,6 @@ bool CServerDirectory_Titan::ProcessRequestList()
 
 	return true;
 }
-
 
 IServerDirectory::ERequestResult CServerDirectory_Titan::BlockOnActiveRequest(uint32 nTimeout)
 {
@@ -1268,7 +1248,6 @@ IServerDirectory::ERequest CServerDirectory_Titan::GetActiveRequest() const
 		return m_cRequestEntryList.front()->GetRequest();
 }
 
-
 IServerDirectory::ERequest CServerDirectory_Titan::GetLastRequest() const
 {
 	Sync_CSAuto cProtection(m_cStateCS);
@@ -1281,13 +1260,11 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::GetLastRequestResult() 
 	return m_eLastRequestResult;
 }
 
-char const* CServerDirectory_Titan::GetLastRequestResultString() const
+char const *CServerDirectory_Titan::GetLastRequestResultString() const
 {
 	Sync_CSAuto cProtection(m_cStateCS);
-	return m_sLastRequestResultString.c_str( );
+	return m_sLastRequestResultString.c_str();
 }
-
-
 
 IServerDirectory::EStatus CServerDirectory_Titan::GetCurStatus() const
 {
@@ -1295,10 +1272,10 @@ IServerDirectory::EStatus CServerDirectory_Titan::GetCurStatus() const
 	return m_eCurStatus;
 }
 
-char const* CServerDirectory_Titan::GetCurStatusString() const
+char const *CServerDirectory_Titan::GetCurStatusString() const
 {
 	Sync_CSAuto cProtection(m_cStateCS);
-	return m_sCurStatusString.c_str( );
+	return m_sCurStatusString.c_str();
 }
 
 void CServerDirectory_Titan::SetGameName(const char *pName)
@@ -1309,33 +1286,31 @@ void CServerDirectory_Titan::SetGameName(const char *pName)
 	// Set all the other stuff that's going to use the name
 	m_cCDKey.SetProductString(pName);
 	m_cAuthContextCS.Enter();
-		m_pAuthContext->SetCommunity(Make_wstring(pName));
+	m_pAuthContext->SetCommunity(Make_wstring(pName));
 	m_cAuthContextCS.Leave();
 }
 
-char const* CServerDirectory_Titan::GetGameName() const
+char const *CServerDirectory_Titan::GetGameName() const
 {
 	Sync_CSAuto cProtection(m_cGameNameCS);
-	return m_sGameName.c_str( );
+	return m_sGameName.c_str();
 }
 
-
-void CServerDirectory_Titan::SetStartupInfo( ILTMessage_Read& cMsg )
+void CServerDirectory_Titan::SetStartupInfo(ILTMessage_Read &cMsg)
 {
 	m_StartupInfo.m_sGameSpyName = "";
 	m_StartupInfo.m_sGameSpySecretKey = "";
 
-	StartupInfo_Titan const* pStartupInfo = ( StartupInfo_Titan* )cMsg.Readuint32( );
-	if( !pStartupInfo )
+	StartupInfo_Titan const *pStartupInfo = (StartupInfo_Titan *)cMsg.Readuint32();
+	if (!pStartupInfo)
 		return;
 
 	m_StartupInfo = *pStartupInfo;
 }
 
-
-void CServerDirectory_Titan::GetStartupInfo( ILTMessage_Write& cMsg )
+void CServerDirectory_Titan::GetStartupInfo(ILTMessage_Write &cMsg)
 {
-	cMsg.Writeuint32(( uint32 )&m_StartupInfo );
+	cMsg.Writeuint32((uint32)&m_StartupInfo);
 }
 
 bool CServerDirectory_Titan::SetCDKey(const char *pKey)
@@ -1368,8 +1343,6 @@ bool CServerDirectory_Titan::IsCDKeyValid() const
 	return IsAuthContextValid();
 }
 
-
-
 void CServerDirectory_Titan::SetVersion(const char *pVersion)
 {
 	Sync_CSAuto cProtection(m_cVersionCS);
@@ -1401,20 +1374,17 @@ bool CServerDirectory_Titan::IsPatchAvailable() const
 	return m_eVersionState == eVersion_Patchable;
 }
 
-
 bool CServerDirectory_Titan::IsMOTDNew(EMOTD eMOTD) const
 {
 	Sync_CSAuto cProtection(m_cMOTDCS);
 	return m_aMOTD[eMOTD].m_bNew;
 }
 
-char const* CServerDirectory_Titan::GetMOTD(EMOTD eMOTD) const
+char const *CServerDirectory_Titan::GetMOTD(EMOTD eMOTD) const
 {
 	Sync_CSAuto cProtection(m_cMOTDCS);
-	return m_aMOTD[eMOTD].m_sMessage.c_str( );
+	return m_aMOTD[eMOTD].m_sMessage.c_str();
 }
-
-
 
 bool CServerDirectory_Titan::SetActivePeer(const char *pAddr)
 {
@@ -1493,7 +1463,6 @@ bool CServerDirectory_Titan::RemoveActivePeer()
 	return true;
 }
 
-
 bool CServerDirectory_Titan::SetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_Read &cMsg)
 {
 	CLTMsgRef_Read cMsgRef(&cMsg);
@@ -1506,72 +1475,72 @@ bool CServerDirectory_Titan::SetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_R
 
 	switch (eInfoType)
 	{
-		case ePeerInfo_Port :
-		{
-			uint16 nNewPort = cMsg.Readuint16();
-			cActivePeer.m_cAddr.SetThePort((unsigned short)nNewPort);
-			break;
-		}
-		case ePeerInfo_Name :
-		{
-			char aNameBuff[MAX_PACKET_LEN];
-			if (cMsg.ReadString(aNameBuff, MAX_PACKET_LEN) > MAX_PACKET_LEN)
-				return false;
-			cActivePeer.m_sName = aNameBuff;
-			cActivePeer.m_bHasName = true;
-			break;
-		}
-		case ePeerInfo_Summary :
-		{
-			uint32 nLength = cMsg.Size();
-			cActivePeer.m_cSummary.resize((nLength + 7) / 8);
-			cMsg.ReadData(&(*(cActivePeer.m_cSummary.begin())), nLength);
-			cActivePeer.m_bHasSummary = true;
-			break;
-		}
-		case ePeerInfo_Service :
-		{
-			PeerInfo_Service_Titan* pInfo = ( PeerInfo_Service_Titan* )cMsg.Readuint32( );
-			if( !pInfo )
-				return false;
-			if( !SetPeerInfoService( cActivePeer, *pInfo ))
-				return false;
-
-			break;
-		}
-		case ePeerInfo_Details :
-		{
-			uint32 nLength = cMsg.Size();
-			cActivePeer.m_cDetails.resize((nLength + 7) / 8);
-			cMsg.ReadData(&(*(cActivePeer.m_cDetails.begin())), nLength);
-			cActivePeer.m_bHasDetails = true;
-			break;
-		}
-		case ePeerInfo_Validated :
-		{
-			uint8 nIsValidated = cMsg.Readuint8();
-			if (nIsValidated)
-				cActivePeer.m_eValidation = SPeerData::eValidationState_Complete;
-			else
-				cActivePeer.m_eValidation = SPeerData::eValidationState_None;
-			break;
-		}
-		case ePeerInfo_Age :
-		{
-			float fNewAge = cMsg.Readfloat();
-				return false;
-			cActivePeer.m_fCreationTime = g_pLTCSBase->GetTime() - fNewAge;
-			break;
-		}
-		case ePeerInfo_Ping :
-		{
-			cActivePeer.m_nPing = cMsg.Readuint16();
-			cActivePeer.m_bHasPing = true;
-			break;
-		}
-		default :
-			ASSERT(!"Unknown peer info request encountered");
+	case ePeerInfo_Port:
+	{
+		uint16 nNewPort = cMsg.Readuint16();
+		cActivePeer.m_cAddr.SetThePort((unsigned short)nNewPort);
+		break;
+	}
+	case ePeerInfo_Name:
+	{
+		char aNameBuff[MAX_PACKET_LEN];
+		if (cMsg.ReadString(aNameBuff, MAX_PACKET_LEN) > MAX_PACKET_LEN)
 			return false;
+		cActivePeer.m_sName = aNameBuff;
+		cActivePeer.m_bHasName = true;
+		break;
+	}
+	case ePeerInfo_Summary:
+	{
+		uint32 nLength = cMsg.Size();
+		cActivePeer.m_cSummary.resize((nLength + 7) / 8);
+		cMsg.ReadData(&(*(cActivePeer.m_cSummary.begin())), nLength);
+		cActivePeer.m_bHasSummary = true;
+		break;
+	}
+	case ePeerInfo_Service:
+	{
+		PeerInfo_Service_Titan *pInfo = (PeerInfo_Service_Titan *)cMsg.Readuint32();
+		if (!pInfo)
+			return false;
+		if (!SetPeerInfoService(cActivePeer, *pInfo))
+			return false;
+
+		break;
+	}
+	case ePeerInfo_Details:
+	{
+		uint32 nLength = cMsg.Size();
+		cActivePeer.m_cDetails.resize((nLength + 7) / 8);
+		cMsg.ReadData(&(*(cActivePeer.m_cDetails.begin())), nLength);
+		cActivePeer.m_bHasDetails = true;
+		break;
+	}
+	case ePeerInfo_Validated:
+	{
+		uint8 nIsValidated = cMsg.Readuint8();
+		if (nIsValidated)
+			cActivePeer.m_eValidation = SPeerData::eValidationState_Complete;
+		else
+			cActivePeer.m_eValidation = SPeerData::eValidationState_None;
+		break;
+	}
+	case ePeerInfo_Age:
+	{
+		float fNewAge = cMsg.Readfloat();
+		return false;
+		cActivePeer.m_fCreationTime = g_pLTCSBase->GetTime() - fNewAge;
+		break;
+	}
+	case ePeerInfo_Ping:
+	{
+		cActivePeer.m_nPing = cMsg.Readuint16();
+		cActivePeer.m_bHasPing = true;
+		break;
+	}
+	default:
+		ASSERT(!"Unknown peer info request encountered");
+		return false;
 	}
 
 	cMsg.SeekTo(0);
@@ -1587,18 +1556,18 @@ bool CServerDirectory_Titan::HasActivePeerInfo(EPeerInfo eInfoType) const
 
 	switch (eInfoType)
 	{
-		case ePeerInfo_Port :
-		case ePeerInfo_Validated :
-		case ePeerInfo_Age :
-			return true;
-		case ePeerInfo_Name :
-			return cActivePeer.m_bHasName;
-		case ePeerInfo_Summary :
-			return cActivePeer.m_bHasSummary;
-		case ePeerInfo_Details :
-			return cActivePeer.m_bHasDetails;
-		case ePeerInfo_Ping :
-			return cActivePeer.m_bHasPing;
+	case ePeerInfo_Port:
+	case ePeerInfo_Validated:
+	case ePeerInfo_Age:
+		return true;
+	case ePeerInfo_Name:
+		return cActivePeer.m_bHasName;
+	case ePeerInfo_Summary:
+		return cActivePeer.m_bHasSummary;
+	case ePeerInfo_Details:
+		return cActivePeer.m_bHasDetails;
+	case ePeerInfo_Ping:
+		return cActivePeer.m_bHasPing;
 	}
 
 	return false;
@@ -1617,56 +1586,54 @@ bool CServerDirectory_Titan::GetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_W
 
 	switch (eInfoType)
 	{
-		case ePeerInfo_Port :
-		{
-			pMsg->Writeuint16((uint16)cActivePeer.m_cAddr.GetPort());
-			break;
-		}
-		case ePeerInfo_Name :
-		{
-			pMsg->WriteString(cActivePeer.m_sName.c_str());
-			break;
-		}
-		case ePeerInfo_Summary :
-		{
-			pMsg->WriteData(&(*(cActivePeer.m_cSummary.begin())), cActivePeer.m_cSummary.size() * 8);
-			break;
-		}
-		case ePeerInfo_Details :
-		{
-			pMsg->WriteData(&(*(cActivePeer.m_cDetails.begin())), cActivePeer.m_cDetails.size() * 8);
-			break;
-		}
-		case ePeerInfo_Service :
-		{
-			pMsg->Writeuint32(( uint32 )&cActivePeer.m_PeerInfoService );
-			break;
-		}
-		case ePeerInfo_Validated :
-		{
-			pMsg->Writeuint8((cActivePeer.m_eValidation == SPeerData::eValidationState_Complete) ? 1 : 0);
-			break;
-		}
-		case ePeerInfo_Age :
-		{
-			pMsg->Writefloat(g_pLTCSBase->GetTime() - cActivePeer.m_fCreationTime);
-			break;
-		}
-		case ePeerInfo_Ping :
-		{
-			if (!cActivePeer.m_bHasPing)
-				return false;
-			pMsg->Writeuint16(cActivePeer.m_nPing);
-			break;
-		}
-		default :
+	case ePeerInfo_Port:
+	{
+		pMsg->Writeuint16((uint16)cActivePeer.m_cAddr.GetPort());
+		break;
+	}
+	case ePeerInfo_Name:
+	{
+		pMsg->WriteString(cActivePeer.m_sName.c_str());
+		break;
+	}
+	case ePeerInfo_Summary:
+	{
+		pMsg->WriteData(&(*(cActivePeer.m_cSummary.begin())), cActivePeer.m_cSummary.size() * 8);
+		break;
+	}
+	case ePeerInfo_Details:
+	{
+		pMsg->WriteData(&(*(cActivePeer.m_cDetails.begin())), cActivePeer.m_cDetails.size() * 8);
+		break;
+	}
+	case ePeerInfo_Service:
+	{
+		pMsg->Writeuint32((uint32)&cActivePeer.m_PeerInfoService);
+		break;
+	}
+	case ePeerInfo_Validated:
+	{
+		pMsg->Writeuint8((cActivePeer.m_eValidation == SPeerData::eValidationState_Complete) ? 1 : 0);
+		break;
+	}
+	case ePeerInfo_Age:
+	{
+		pMsg->Writefloat(g_pLTCSBase->GetTime() - cActivePeer.m_fCreationTime);
+		break;
+	}
+	case ePeerInfo_Ping:
+	{
+		if (!cActivePeer.m_bHasPing)
 			return false;
+		pMsg->Writeuint16(cActivePeer.m_nPing);
+		break;
+	}
+	default:
+		return false;
 	}
 
 	return true;
 }
-
-
 
 IServerDirectory::TPeerList CServerDirectory_Titan::GetPeerList() const
 {
@@ -1696,7 +1663,6 @@ void CServerDirectory_Titan::ClearPeerList()
 	m_aPeerInfo.erase(m_aPeerInfo.begin() + 1, m_aPeerInfo.end());
 }
 
-
 bool CServerDirectory_Titan::HandleNetMessage(ILTMessage_Read &cStr, const char *pSender, uint16 nPort)
 {
 	// Who sent you?
@@ -1708,10 +1674,10 @@ bool CServerDirectory_Titan::HandleNetMessage(ILTMessage_Read &cStr, const char 
 	// Handle messages we're going to handle by ourselves
 	switch (nMsgID)
 	{
-		case eSDTitan_Msg_DetailInfo_Query :
-			return HandleNetMsg_DetailInfo_Query(cStr, cSenderAddr);
-		case eSDTitan_Msg_PeerAuth_Client :
-			return HandleNetMsg_PeerAuth_Client(cStr, cSenderAddr);
+	case eSDTitan_Msg_DetailInfo_Query:
+		return HandleNetMsg_DetailInfo_Query(cStr, cSenderAddr);
+	case eSDTitan_Msg_PeerAuth_Client:
+		return HandleNetMsg_PeerAuth_Client(cStr, cSenderAddr);
 	}
 
 	// We have to be actively processing to handle any other messages...
@@ -1720,7 +1686,7 @@ bool CServerDirectory_Titan::HandleNetMessage(ILTMessage_Read &cStr, const char 
 
 	// Hand it off to the active request
 	m_cStateCS.Enter();
-		CSDTitan_RequestEntry *pActiveRequest = m_cRequestEntryList.front();
+	CSDTitan_RequestEntry *pActiveRequest = m_cRequestEntryList.front();
 	m_cStateCS.Leave();
 
 	return pActiveRequest->OnMessage(cStr, cSenderAddr);
@@ -1800,29 +1766,29 @@ void CServerDirectory_Titan::FinishRequest(CSDTitan_RequestEntry *pRequest, EReq
 	bool bUnblockCompletion;
 	switch (m_eCompletionAction)
 	{
-		case eCompletionBlock_None :
-		{
-			bUnblockCompletion = false;
-			break;
-		}
-		case eCompletionBlock_Active :
-		{
-			bUnblockCompletion = true;
-			break;
-		}
-		case eCompletionBlock_List :
-		{
-			bUnblockCompletion = eResult != eRequestResult_Success;
-			TRequestList::const_iterator iCurRequest = m_cCompletionList.begin();
-			for (; (iCurRequest != m_cCompletionList.end()) && (!bUnblockCompletion); ++iCurRequest)
-				bUnblockCompletion = (*iCurRequest == eCurRequest);
-			break;
-		}
-		case eCompletionBlock_Processing :
-		{
-			bUnblockCompletion = m_cRequestEntryList.empty();
-			break;
-		}
+	case eCompletionBlock_None:
+	{
+		bUnblockCompletion = false;
+		break;
+	}
+	case eCompletionBlock_Active:
+	{
+		bUnblockCompletion = true;
+		break;
+	}
+	case eCompletionBlock_List:
+	{
+		bUnblockCompletion = eResult != eRequestResult_Success;
+		TRequestList::const_iterator iCurRequest = m_cCompletionList.begin();
+		for (; (iCurRequest != m_cCompletionList.end()) && (!bUnblockCompletion); ++iCurRequest)
+			bUnblockCompletion = (*iCurRequest == eCurRequest);
+		break;
+	}
+	case eCompletionBlock_Processing:
+	{
+		bUnblockCompletion = m_cRequestEntryList.empty();
+		break;
+	}
 	}
 
 	// Unblock..
@@ -1831,7 +1797,7 @@ void CServerDirectory_Titan::FinishRequest(CSDTitan_RequestEntry *pRequest, EReq
 		m_cCompletionEvent_Continue.Clear();
 		m_cCompletionEvent.Set();
 		m_cStateCS.Leave();
-			m_cCompletionEvent_Continue.Block();
+		m_cCompletionEvent_Continue.Block();
 		m_cStateCS.Enter();
 	}
 
@@ -1866,18 +1832,18 @@ void CServerDirectory_Titan::SetVersionState(EVersionState eState)
 	m_eVersionState = eState;
 }
 
-char const* CServerDirectory_Titan::GetVersion() const
+char const *CServerDirectory_Titan::GetVersion() const
 {
 	Sync_CSAuto cProtection(m_cVersionCS);
 
-	return m_sCurVersion.c_str( );
+	return m_sCurVersion.c_str();
 }
 
-char const* CServerDirectory_Titan::GetRegion() const
+char const *CServerDirectory_Titan::GetRegion() const
 {
 	Sync_CSAuto cProtection(m_cVersionCS);
 
-	return m_sCurRegion.c_str( );
+	return m_sCurRegion.c_str();
 }
 
 void CServerDirectory_Titan::SetAuthContextValid(bool bValue)
@@ -1896,10 +1862,10 @@ void CServerDirectory_Titan::SetCurStatusString(const char *pMessage)
 ILTMessage_Write *CServerDirectory_Titan::CreateMessage()
 {
 	ILTMessage_Write *pResult;
-	g_pLTCSBase->Common( )->CreateMessage(pResult);
+	g_pLTCSBase->Common()->CreateMessage(pResult);
 
 	m_cMsgHeaderCS.Enter();
-		pResult->WriteMessageRaw(m_pMsgHeader);
+	pResult->WriteMessageRaw(m_pMsgHeader);
 	m_cMsgHeaderCS.Leave();
 
 	return pResult;
@@ -1909,68 +1875,69 @@ bool CServerDirectory_Titan::ValidateRequest(ERequest eNewRequest) const
 {
 	switch (eNewRequest)
 	{
-		case eRequest_Validate_CDKey :
-		{
-			// Don't validate unless we think it's valid locally
-			return m_cCDKey.IsValid();
-		}
-		case eRequest_MOTD :
-		case eRequest_Update_List :
-		case eRequest_Update_Pings :
-		{
-			return IsCDKeyValid( );
-		}
-		case eRequest_Validate_Client :
-		case eRequest_Validate_Server :
-		{
-			// Make sure we're not trying to do this request with the local peer
-			std::string sTempAddr;
-			bool bLocal;
-			GetActivePeer(&sTempAddr, &bLocal);
-			return !bLocal;
-		}
-		case eRequest_Peer_Name :
-		case eRequest_Peer_Summary :
-		case eRequest_Peer_Details :
-		{
-			// Make sure we're not trying to do this request with the local peer
-			std::string sTempAddr;
-			bool bLocal;
-			GetActivePeer(&sTempAddr, &bLocal);
-			if( bLocal )
-				return false;
+	case eRequest_Validate_CDKey:
+	{
+		// Don't validate unless we think it's valid locally
+		return m_cCDKey.IsValid();
+	}
+	case eRequest_MOTD:
+	case eRequest_Update_List:
+	case eRequest_Update_Pings:
+	{
+		return IsCDKeyValid();
+	}
+	case eRequest_Validate_Client:
+	case eRequest_Validate_Server:
+	{
+		// Make sure we're not trying to do this request with the local peer
+		std::string sTempAddr;
+		bool bLocal;
+		GetActivePeer(&sTempAddr, &bLocal);
+		return !bLocal;
+	}
+	case eRequest_Peer_Name:
+	case eRequest_Peer_Summary:
+	case eRequest_Peer_Details:
+	{
+		// Make sure we're not trying to do this request with the local peer
+		std::string sTempAddr;
+		bool bLocal;
+		GetActivePeer(&sTempAddr, &bLocal);
+		if (bLocal)
+			return false;
 
-			return IsCDKeyValid( );
-		}
-		case eRequest_Remove_Server :
-		{
-			// Make sure we are trying to do this request with the local peer
-			std::string sTempAddr;
-			bool bLocal;
-			GetActivePeer(&sTempAddr, &bLocal);
-			return bLocal;
-		}
-		case eRequest_Publish_Server :
-		{
-			// Make sure we're trying to publish the local peer
-			std::string sTempAddr;
-			bool bLocal;
-			GetActivePeer(&sTempAddr, &bLocal);
-			if (!bLocal)
-				return false;
+		return IsCDKeyValid();
+	}
+	case eRequest_Remove_Server:
+	{
+		// Make sure we are trying to do this request with the local peer
+		std::string sTempAddr;
+		bool bLocal;
+		GetActivePeer(&sTempAddr, &bLocal);
+		return bLocal;
+	}
+	case eRequest_Publish_Server:
+	{
+		// Make sure we're trying to publish the local peer
+		std::string sTempAddr;
+		bool bLocal;
+		GetActivePeer(&sTempAddr, &bLocal);
+		if (!bLocal)
+			return false;
 
-			// Make sure we've got all of the information we'll need to publish
-			if (!HasActivePeerInfo(ePeerInfo_Name))
-				return false;
-			if (!HasActivePeerInfo(ePeerInfo_Summary))
-				return false;
-			if (!HasActivePeerInfo(ePeerInfo_Details))
-				return false;
+		// Make sure we've got all of the information we'll need to publish
+		if (!HasActivePeerInfo(ePeerInfo_Name))
+			return false;
+		if (!HasActivePeerInfo(ePeerInfo_Summary))
+			return false;
+		if (!HasActivePeerInfo(ePeerInfo_Details))
+			return false;
 
-			return true;
-		}
+		return true;
+	}
 
-		default : return true;
+	default:
+		return true;
 	}
 }
 
@@ -1985,9 +1952,9 @@ void CServerDirectory_Titan::LoadDirServerList()
 	if (!pFile)
 		return;
 
-	while(fgets(szBuffer, sizeof(szBuffer), pFile))
+	while (fgets(szBuffer, sizeof(szBuffer), pFile))
 	{
-		if(!strnicmp(szBuffer, "DirectoryServer", 15))
+		if (!strnicmp(szBuffer, "DirectoryServer", 15))
 		{
 			char *pStart = strstr(szBuffer, "\"");
 			pStart++;
@@ -2012,22 +1979,36 @@ CSDTitan_RequestEntry *CServerDirectory_Titan::MakeRequestEntry(ERequest eNewReq
 {
 	switch (eNewRequest)
 	{
-		case eRequest_Nothing : return new CSDTitan_RequestEntry(this);
-		case eRequest_Pause : return new CSDTitan_RequestEntry_Pause(this);
-		case eRequest_MOTD : return new CSDTitan_RequestEntry_MOTD(this);
-		case eRequest_Validate_Version : return new CSDTitan_RequestEntry_Validate_Version(this);
-		case eRequest_Validate_CDKey : return new CSDTitan_RequestEntry_Validate_CDKey(this);
-		case eRequest_Publish_Server : return new CSDTitan_RequestEntry_Publish_Server(this);
-		case eRequest_Remove_Server : return new CSDTitan_RequestEntry_Remove_Server(this);
-		case eRequest_Update_List : return new CSDTitan_RequestEntry_UpdateList(this);
-		case eRequest_Update_Pings : return new CSDTitan_RequestEntry_UpdatePings(this);
-		case eRequest_Peer_Details : return new CSDTitan_RequestEntry_Peer_Details(this);
-		case eRequest_Validate_Client : return new CSDTitan_RequestEntry_Validate_Client(this);
-		case eRequest_Validate_Server : return new CSDTitan_RequestEntry_Validate_Server(this);
-		// Non-detail peer requests are a noop in this system
-		case eRequest_Peer_Name :
-		case eRequest_Peer_Summary : return new CSDTitan_RequestEntry_Noop(this, eNewRequest);
-		default : ASSERT(!"Unimplemented request entry encountered");
+	case eRequest_Nothing:
+		return new CSDTitan_RequestEntry(this);
+	case eRequest_Pause:
+		return new CSDTitan_RequestEntry_Pause(this);
+	case eRequest_MOTD:
+		return new CSDTitan_RequestEntry_MOTD(this);
+	case eRequest_Validate_Version:
+		return new CSDTitan_RequestEntry_Validate_Version(this);
+	case eRequest_Validate_CDKey:
+		return new CSDTitan_RequestEntry_Validate_CDKey(this);
+	case eRequest_Publish_Server:
+		return new CSDTitan_RequestEntry_Publish_Server(this);
+	case eRequest_Remove_Server:
+		return new CSDTitan_RequestEntry_Remove_Server(this);
+	case eRequest_Update_List:
+		return new CSDTitan_RequestEntry_UpdateList(this);
+	case eRequest_Update_Pings:
+		return new CSDTitan_RequestEntry_UpdatePings(this);
+	case eRequest_Peer_Details:
+		return new CSDTitan_RequestEntry_Peer_Details(this);
+	case eRequest_Validate_Client:
+		return new CSDTitan_RequestEntry_Validate_Client(this);
+	case eRequest_Validate_Server:
+		return new CSDTitan_RequestEntry_Validate_Server(this);
+	// Non-detail peer requests are a noop in this system
+	case eRequest_Peer_Name:
+	case eRequest_Peer_Summary:
+		return new CSDTitan_RequestEntry_Noop(this, eNewRequest);
+	default:
+		ASSERT(!"Unimplemented request entry encountered");
 	}
 
 	return 0;
@@ -2107,7 +2088,7 @@ IServerDirectory::ERequestResult CServerDirectory_Titan::BlockOnCompletion(uint3
 
 	// Turn off the completion blocking
 	m_cStateCS.Enter();
-		m_eCompletionAction = eCompletionBlock_None;
+	m_eCompletionAction = eCompletionBlock_None;
 	m_cStateCS.Leave();
 
 	// Set the continue event since we don't want to block any more
@@ -2192,14 +2173,14 @@ bool CServerDirectory_Titan::HandleNetMsg_PeerAuth_Client(ILTMessage_Read &cMsg,
 		SPeerData &cClient = GetActivePeerInfo();
 		switch (cClient.m_eValidation)
 		{
-			case SPeerData::eValidationState_None :
-				cClient.m_eValidation = SPeerData::eValidationState_Partial;
-				break;
-			case SPeerData::eValidationState_Partial :
-				cClient.m_eValidation = SPeerData::eValidationState_Complete;
-				break;
-			case SPeerData::eValidationState_Complete :
-				break;
+		case SPeerData::eValidationState_None:
+			cClient.m_eValidation = SPeerData::eValidationState_Partial;
+			break;
+		case SPeerData::eValidationState_Partial:
+			cClient.m_eValidation = SPeerData::eValidationState_Complete;
+			break;
+		case SPeerData::eValidationState_Complete:
+			break;
 		}
 
 		// Go back to the previous active peer
@@ -2221,16 +2202,14 @@ bool CServerDirectory_Titan::HandleNetMsg_PeerAuth_Client(ILTMessage_Read &cMsg,
 //////////////////////////////////////////////////////////////////////////////
 // CServerDirectory_Titan::SPeerData implementation
 
-CServerDirectory_Titan::SPeerData::SPeerData() :
-	m_eValidation(eValidationState_None),
-	m_bHasName(false),
-	m_bHasSummary(false),
-	m_bHasDetails(false),
-	m_bHasPing(false),
-	m_fCreationTime(g_pLTCSBase->GetTime())
+CServerDirectory_Titan::SPeerData::SPeerData() : m_eValidation(eValidationState_None),
+												 m_bHasName(false),
+												 m_bHasSummary(false),
+												 m_bHasDetails(false),
+												 m_bHasPing(false),
+												 m_fCreationTime(g_pLTCSBase->GetTime())
 {
 }
-
 
 // ----------------------------------------------------------------------- //
 //
@@ -2239,11 +2218,11 @@ CServerDirectory_Titan::SPeerData::SPeerData() :
 //	PURPOSE:	Sets the service peer info.
 //
 // ----------------------------------------------------------------------- //
-bool CServerDirectory_Titan::SetPeerInfoService( SPeerData& activePeer, PeerInfo_Service_Titan const& info )
+bool CServerDirectory_Titan::SetPeerInfoService(SPeerData &activePeer, PeerInfo_Service_Titan const &info)
 {
 	Sync_CSAuto cGSSProtection(m_cGameSpySupportCS);
 
-	if( m_pGameSpySupport == NULL )
+	if (m_pGameSpySupport == NULL)
 		return false;
 
 	Sync_CSAuto cPeerProtection(m_cPeerCS);
@@ -2251,49 +2230,49 @@ bool CServerDirectory_Titan::SetPeerInfoService( SPeerData& activePeer, PeerInfo
 	// Copy it in for reference.
 	activePeer.m_PeerInfoService = info;
 
-	m_pGameSpySupport->LockKeyValues( );
+	m_pGameSpySupport->LockKeyValues();
 	{
 		char szValue[256] = "";
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "hostname", info.m_sHostName.c_str( ));
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "hostip", activePeer.m_cAddr.GetHostString( ).c_str( ));
-		sprintf( szValue, "%d", activePeer.m_cAddr.GetPort( ));
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "hostport", szValue );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "mapname", info.m_sCurWorld.c_str( ));
-		sprintf( szValue, "%d", info.m_nCurNumPlayers );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "numplayers", szValue );
-		sprintf( szValue, "%d", info.m_nMaxNumPlayers );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "maxplayers", szValue );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "gametype", info.m_sGameType.c_str( ));
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Info, "gamemode", "openplaying" );
-		sprintf( szValue, "%d", info.m_bUsePassword ? 1 : 0 );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Rules, "password", szValue );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Rules, "options", info.m_sServerOptions.c_str( ));
-		sprintf( szValue, "%d", info.m_nScoreLimit );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Rules, "fraglimit", szValue );
-		sprintf( szValue, "%d", info.m_nTimeLimit );
-		m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Rules, "timelimit", szValue );
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "hostname", info.m_sHostName.c_str());
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "hostip", activePeer.m_cAddr.GetHostString().c_str());
+		sprintf(szValue, "%d", activePeer.m_cAddr.GetPort());
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "hostport", szValue);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "mapname", info.m_sCurWorld.c_str());
+		sprintf(szValue, "%d", info.m_nCurNumPlayers);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "numplayers", szValue);
+		sprintf(szValue, "%d", info.m_nMaxNumPlayers);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "maxplayers", szValue);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "gametype", info.m_sGameType.c_str());
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Info, "gamemode", "openplaying");
+		sprintf(szValue, "%d", info.m_bUsePassword ? 1 : 0);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Rules, "password", szValue);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Rules, "options", info.m_sServerOptions.c_str());
+		sprintf(szValue, "%d", info.m_nScoreLimit);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Rules, "fraglimit", szValue);
+		sprintf(szValue, "%d", info.m_nTimeLimit);
+		m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Rules, "timelimit", szValue);
 
 		int nPlayer = 0;
 		char szTag[256] = "";
-		PeerInfo_Service_Titan::PlayerList::const_iterator iter = info.m_PlayerList.begin( );
-		while( iter != info.m_PlayerList.end( ))
+		PeerInfo_Service_Titan::PlayerList::const_iterator iter = info.m_PlayerList.begin();
+		while (iter != info.m_PlayerList.end())
 		{
-			PeerInfo_Service_Titan::Player const& player = *iter;
+			PeerInfo_Service_Titan::Player const &player = *iter;
 
-			sprintf( szTag, "player_%d", nPlayer );
-			m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Players, szTag, player.m_sName.c_str( ));
-			sprintf( szTag, "frags_%d", nPlayer );
-			sprintf( szValue, "%i", player.m_nScore );
-			m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Players, szTag, szValue );
-			sprintf( szTag, "ping_%d", nPlayer );
-			sprintf( szValue, "%d", player.m_nPing  );
-			m_pGameSpySupport->SetKeyValue( GameSpyQueryType_Players, szTag, szValue );
+			sprintf(szTag, "player_%d", nPlayer);
+			m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Players, szTag, player.m_sName.c_str());
+			sprintf(szTag, "frags_%d", nPlayer);
+			sprintf(szValue, "%i", player.m_nScore);
+			m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Players, szTag, szValue);
+			sprintf(szTag, "ping_%d", nPlayer);
+			sprintf(szValue, "%d", player.m_nPing);
+			m_pGameSpySupport->SetKeyValue(GameSpyQueryType_Players, szTag, szValue);
 
 			nPlayer++;
 			iter++;
 		}
 	}
-	m_pGameSpySupport->UnlockKeyValues( );
+	m_pGameSpySupport->UnlockKeyValues();
 
 	return true;
 }
@@ -2305,35 +2284,35 @@ bool CServerDirectory_Titan::SetPeerInfoService( SPeerData& activePeer, PeerInfo
 //	PURPOSE:	Creates the gamespysupport object
 //
 // ----------------------------------------------------------------------- //
-bool CServerDirectory_Titan::CreateGameSpySupport( )
+bool CServerDirectory_Titan::CreateGameSpySupport()
 {
 	Sync_CSAuto cProtection(m_cGameSpySupportCS);
 
 	// Start clean.
-	if( m_pGameSpySupport != NULL )
+	if (m_pGameSpySupport != NULL)
 	{
-		DestroyGameSpySupport( );
+		DestroyGameSpySupport();
 	}
 
 	// Create a new gamespysupport.
-	m_pGameSpySupport = new GameSpySupport( m_StartupInfo.m_sGameSpyName.c_str( ),
-		GetVersion( ), m_StartupInfo.m_sGameSpySecretKey.c_str( ), GetDirServerList( ));
-	if( m_pGameSpySupport == NULL )
+	m_pGameSpySupport = new GameSpySupport(m_StartupInfo.m_sGameSpyName.c_str(),
+										   GetVersion(), m_StartupInfo.m_sGameSpySecretKey.c_str(), GetDirServerList());
+	if (m_pGameSpySupport == NULL)
 		return false;
 
 	// Start it up with our local IP.
 	IPAddr gamespyaddress = IPAddr::GetLocalAddr();
 	SPeerData &cActivePeer = m_aPeerInfo[m_nActivePeerIndex];
-	gamespyaddress.SetThePort( cActivePeer.m_cAddr.GetPort( ) + 1 );
-	WONStatus nStatus = m_pGameSpySupport->Startup( gamespyaddress );
-	if( nStatus != WS_Success)
+	gamespyaddress.SetThePort(cActivePeer.m_cAddr.GetPort() + 1);
+	WONStatus nStatus = m_pGameSpySupport->Startup(gamespyaddress);
+	if (nStatus != WS_Success)
 	{
-		DestroyGameSpySupport( );
+		DestroyGameSpySupport();
 		return false;
 	}
 
 	// Have Titan handle the updating.
-	m_pGameSpySupport->SetAutoPumpTime( GAMESPYSUPPORT_AUTOPUMPTIME );
+	m_pGameSpySupport->SetAutoPumpTime(GAMESPYSUPPORT_AUTOPUMPTIME);
 
 	return true;
 }
@@ -2345,42 +2324,39 @@ bool CServerDirectory_Titan::CreateGameSpySupport( )
 //	PURPOSE:	Destroys the gamespysupport object
 //
 // ----------------------------------------------------------------------- //
-void CServerDirectory_Titan::DestroyGameSpySupport( )
+void CServerDirectory_Titan::DestroyGameSpySupport()
 {
 	Sync_CSAuto cProtection(m_cGameSpySupportCS);
 
-	if( m_pGameSpySupport != NULL )
+	if (m_pGameSpySupport != NULL)
 	{
-		m_pGameSpySupport->Shutdown( );
+		m_pGameSpySupport->Shutdown();
 		m_pGameSpySupport = NULL;
 	}
 }
 
-
-
 // Factory for CServerDirectory_Titan objects
 
-SERVERDIR_API IServerDirectory *Factory_Create_IServerDirectory_Titan( bool bClientSide, ILTCSBase& ltCSBase, HMODULE hResourceModule )
+SERVERDIR_API IServerDirectory *Factory_Create_IServerDirectory_Titan(bool bClientSide, ILTCSBase &ltCSBase, HMODULE hResourceModule)
 {
 	g_pLTCSBase = &ltCSBase;
-	if( bClientSide )
+	if (bClientSide)
 	{
-		g_pLTClient = ( ILTClient* )g_pLTCSBase;
+		g_pLTClient = (ILTClient *)g_pLTCSBase;
 	}
 
 	g_hResourceModule = hResourceModule;
 	return new CServerDirectory_Titan;
 }
 
-const char* GetTempString(int messageCode)
+const char *GetTempString(int messageCode)
 {
 	static char s_szStringBuffer[256];
 
 	s_szStringBuffer[0] = '\0';
 
-	if( !g_hResourceModule )
+	if (!g_hResourceModule)
 		return s_szStringBuffer;
-
 
 	uint32 nBytes = LoadString(g_hResourceModule, messageCode, s_szStringBuffer, sizeof(s_szStringBuffer));
 
