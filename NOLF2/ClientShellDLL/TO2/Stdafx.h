@@ -11,14 +11,16 @@
 #pragma warning( disable : 4786 )  
 #pragma warning( disable : 4503 )  
 
+#ifndef __LINUX
 // This removes warnings in Vis C about the CodeWarrior pragma 'force_active'
 //
 #pragma warning( disable : 4068 )
 
 #define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 #include <stdio.h>
-#include <windows.h>
 #include <limits.h>
 
 #include "mfcstub.h"
@@ -29,7 +31,7 @@
 #include "iltmessage.h"
 #include "iltsoundmgr.h"
 
-#include "globals.h"
+#include "Globals.h"
 
 #include "iltmodel.h"
 #include "ilttransform.h"

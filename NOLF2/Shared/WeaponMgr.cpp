@@ -10,11 +10,13 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "WeaponMgr.h"
 #include "CommonUtilities.h"
 #include "WeaponFXTypes.h"
+#ifndef __LINUX
 #include "winbase.h"
+#endif
 #include "FXButeMgr.h"
 #include "CRC32.h"
 

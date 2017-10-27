@@ -10,13 +10,13 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "FXButeMgr.h"
 #include "WeaponFXTypes.h"
 #include "CommonUtilities.h"
 #include "SurfaceFunctions.h"
 #include "WeaponMgr.h"
-#include "FXFlags.h"
+#include "FxFlags.h"
 
 #ifdef _CLIENTBUILD
 #include "ParticleShowerFX.h"
