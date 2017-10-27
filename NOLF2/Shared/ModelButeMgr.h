@@ -16,7 +16,7 @@
 #include "GameButeMgr.h"
 #include "ClientServerShared.h"
 #include "SurfaceDefs.h"
-#include "..\shared\ButeListReader.h"
+#include "../Shared/ButeListReader.h"
 #include "DebugNew.h"
 
 // Defines
@@ -228,7 +228,7 @@ class CModelButeMgr : public CGameButeMgr
 		void			GetDefaultAttachment(ModelId eModelId, uint8 iAttachment, const char*& pszAttachmentPosition, const char*& pszAttachment);
 
 		// PlayerView Attachment
-		
+
 		uint8			GetNumPlayerViewAttachments( ModelId eModelId );
 		void			GetPlayerViewAttachment( ModelId eModelId, uint8 iPVAttachment, const char*& pszPVAttachmentPosition, const char*& pszPVAttachment );
 
@@ -474,7 +474,7 @@ struct DefaultAttachmentStruct
 {
 	DefaultAttachmentStruct()
 	:	szAttachmentPosition	( LTNULL ),
-		szAttachment			( LTNULL )	
+		szAttachment			( LTNULL )
 	{
 	}
 
@@ -486,7 +486,7 @@ struct PlayerViewAttachmentStruct
 {
 	PlayerViewAttachmentStruct()
 	:	szPVAttachmentPosition	( LTNULL ),
-		szPVAttachment			( LTNULL )	
+		szPVAttachment			( LTNULL )
 	{
 	}
 
@@ -583,7 +583,7 @@ class CModelButeMgr::CModel
 		char			m_szPlayerPainSoundDir[MAX_MODELBMGR_NAME_LEN];
 		SurfaceType		m_eFleshSurfaceType;
 		SurfaceType		m_eArmorSurfaceType;
-		
+
 		DEFAULT_ATTACHMENT_LIST	m_lstDefaultAttachments;
 		PLAYERVIEW_ATTACHMENT_LIST m_lstPVAttachments;
 };

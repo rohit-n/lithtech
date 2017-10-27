@@ -39,9 +39,9 @@
 #include "ProfileMgr.h"
 #include "PopupText.h"
 #include "PlayerStats.h"
-#include "ClientFxMgr.h"
+#include "ClientFXMgr.h"
 #include "CursorMgr.h"
-#include "LTObjRef.h"
+#include "ltobjref.h"
 
 
 extern ILTModelClient*	g_pILTModelClient;
@@ -142,13 +142,13 @@ class CInterfaceMgr
 
 		void	SetLetterBox(LTBOOL b) { m_bLetterBox = b; }
 
-		void	ShowPopup(uint32 nTextId, uint8 nPopupId, bool bHideHUD=false) 
+		void	ShowPopup(uint32 nTextId, uint8 nPopupId, bool bHideHUD=false)
 		{
 			m_bHideHUDInPopup = bHideHUD;
 			m_PopupText.Show(nTextId,nPopupId);
 		}
-		void	ShowPopup(char *pText, uint8 nPopupId, bool bHideHUD=false) 
-		{ 
+		void	ShowPopup(char *pText, uint8 nPopupId, bool bHideHUD=false)
+		{
 			m_bHideHUDInPopup = bHideHUD;
 			m_PopupText.Show(pText, nPopupId);
 		}
@@ -200,7 +200,7 @@ class CInterfaceMgr
 			return LTTRUE;
 /*
 			int iAlpha = m_FadePoly.rgba.a;
-			return (m_bFadeIn ? (iAlpha <= 0) : (iAlpha >= 255));			
+			return (m_bFadeIn ? (iAlpha <= 0) : (iAlpha >= 255));
 */
 		}
 
@@ -349,7 +349,7 @@ class CInterfaceMgr
 		void	UpdateLoadScreenInfo() { m_LoadingScreen.UpdateMissionInfo(); }
 		// Set the screen to render on the loading screen
 		void	SetLoadingRenderScreen( CBaseScreen *pScreen ) { m_LoadingScreen.SetRenderScreen( pScreen ); }
-		
+
 
 		//called to indicate an intentional disconnection from the server
 		void	SetIntentionalDisconnect( bool bIntentionalDisconnect ) { m_bIntentionalDisconnect = bIntentionalDisconnect; }
@@ -506,7 +506,7 @@ class CInterfaceMgr
 
 		bool		m_bSkipPreLoadScreen;
 		eScreenID	m_ePostLoadScreenID;
-		
+
 protected:
         LTBOOL	PrePlayingState(GameState eCurState);
 		virtual void UpdatePlayingState();

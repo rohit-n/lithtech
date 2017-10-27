@@ -6,7 +6,7 @@
 #define _BASE_SCREEN_H_
 
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "BaseScaleFX.h"
 #include "ChainedFX.h"
 #include "LTPoly.h"
@@ -145,9 +145,9 @@ public:
     CLTGUIToggle*     AddToggle(int stringID, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
     CLTGUIToggle*     AddToggle(char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
-    CLTGUISlider*     AddSlider(int stringID,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1, 
+    CLTGUISlider*     AddSlider(int stringID,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUISlider*     AddSlider(char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1, 
+    CLTGUISlider*     AddSlider(char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
 	CLTGUIColumnCtrl* AddColumnCtrl(uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
@@ -165,9 +165,9 @@ public:
     CLTGUIToggle*     CreateToggle(int stringID, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
     CLTGUIToggle*     CreateToggle(char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
-    CLTGUISlider*     CreateSlider(int stringID,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1, 
+    CLTGUISlider*     CreateSlider(int stringID,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUISlider*     CreateSlider(char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1, 
+    CLTGUISlider*     CreateSlider(char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
 	CLTGUIColumnCtrl* CreateColumnCtrl(uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
@@ -214,7 +214,7 @@ protected:
     LTBOOL			m_bBuilt;
 	LTBOOL			m_bVisited;
 
-	
+
 	CScreenMgr*		m_pScreenMgr;
 
 	int				m_nScreenID;		// The ID of this screen
@@ -255,7 +255,7 @@ protected:
 	CLTGUITextCtrl	*m_pNext;
 
 	LTBOOL	m_bBack;
-	
+
 	static	CLTGUIButton	s_BackArrow;
 
     static  LTBOOL      s_bReadLayout;
@@ -282,9 +282,9 @@ protected:
 
 	ChainFXList		m_Chains;
 
-    static LTVector		s_vPos; 
-	static LTVector		s_vU; 
-	static LTVector		s_vR; 
+    static LTVector		s_vPos;
+	static LTVector		s_vU;
+	static LTVector		s_vR;
 	static LTVector		s_vF;
     static LTRotation	s_rRot;
 
@@ -308,10 +308,10 @@ inline  CLTGUITextCtrl* CBaseScreen::AddTextItem(char *pString, uint32 commandID
 
 inline CLTGUIListCtrl* CBaseScreen::AddList(LTIntPt pos, uint16 nHeight, LTBOOL bUseArrows, uint16 nArrowOffset)
 {
-	
+
 	CLTGUIListCtrl* pList = CreateList(pos,nHeight,bUseArrows,nArrowOffset);
     if (pList)
-		AddControl(pList);	
+		AddControl(pList);
 	return pList;
 }
 
@@ -348,7 +348,7 @@ inline  CLTGUIToggle* CBaseScreen::AddToggle(char *pString, int helpID, int nHea
 }
 
 
-inline  CLTGUISlider* CBaseScreen::AddSlider(int stringID, int helpID, int nHeaderWidth,  int nBarWidth, int nBarHeight, 
+inline  CLTGUISlider* CBaseScreen::AddSlider(int stringID, int helpID, int nHeaderWidth,  int nBarWidth, int nBarHeight,
 												int *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUISlider* pCtrl = CreateSlider(stringID, helpID, nHeaderWidth, nBarWidth, nBarHeight, pnValue, pos, bFixed, nFont);
@@ -356,7 +356,7 @@ inline  CLTGUISlider* CBaseScreen::AddSlider(int stringID, int helpID, int nHead
 		AddControl(pCtrl);
 	return pCtrl;
 }
-inline  CLTGUISlider* CBaseScreen::AddSlider(char *pString, int helpID, int nHeaderWidth,  int nBarWidth, int nBarHeight, 
+inline  CLTGUISlider* CBaseScreen::AddSlider(char *pString, int helpID, int nHeaderWidth,  int nBarWidth, int nBarHeight,
 												int *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUISlider* pCtrl = CreateSlider(pString, helpID, nHeaderWidth, nBarWidth, nBarHeight, pnValue, pos, bFixed, nFont);
@@ -367,7 +367,7 @@ inline  CLTGUISlider* CBaseScreen::AddSlider(char *pString, int helpID, int nHea
 
 inline  CLTGUIColumnCtrl* CBaseScreen::AddColumnCtrl(uint32 commandID, int helpID, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
-	
+
 	CLTGUIColumnCtrl* pCtrl = CreateColumnCtrl(commandID, helpID, pos, bFixed, nFont);
 	if (pCtrl)
 		AddControl(pCtrl);

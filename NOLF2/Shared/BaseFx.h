@@ -21,16 +21,16 @@
 	#include "iltmodel.h"
 	#include "ltobjref.h"
 	#include "FastList.h"
-	#include "LinkList.h"
+	#include "linklist.h"
 	#include "FXProp.h"
 
 	#include <stdio.h>
-	
+
 
 	// Defines....
 
 	// FX state defines
-	
+
 	#define FS_INITIALFRAME					0x00000001		//first frame after being activated, can be set with active
 	#define FS_ACTIVE						0x00000002		//we are active
 	#define FS_SHUTTINGDOWN					0x00000004		//user wants to shut down?
@@ -62,11 +62,11 @@
 	#define FXPROP_ISGORE					"IsGore"
 
 	// FX key requirements
-	
+
 	#define FX_NEEDCOLOURKEY				0x00000001
 	#define FX_NEEDSCALEKEY					0x00000002
 	#define FX_NEEDMOTIONKEY				0x00000004
-	#define FX_NEEDVOLUMEKEY				0x00000008	
+	#define FX_NEEDVOLUMEKEY				0x00000008
 	#define FX_NEEDOBJECT					0x00000010
 	#define FX_NEEDCAMERA					0x00000020
 
@@ -74,12 +74,12 @@
 	#define	FX_NUM_DETAIL_SETTINGS			7
 
 	// FX LOD
-	
+
 	enum EFXLOD
 	{
 		FXLOD_LOW,
 		FXLOD_MED,
-		FXLOD_HIGH	
+		FXLOD_HIGH
 	};
 
 	// Forwards....
@@ -111,18 +111,18 @@
 	// Structures....
 
 	// FX function interface structure
-	
+
 	struct FX_REF
 	{
 		// Member Variables
-		
+
 		char								m_sName[128];
 		uint32								m_dwType;
 		FX_CREATEFUNC						m_pfnCreate;
 		FX_DELETEFUNC						m_pfnDelete;
 		FX_PROPFUNC							m_pfnGetProps;
 	};
-	
+
 	struct FX_SCALEKEY
 	{
 		float								m_tmKey;
@@ -132,12 +132,12 @@
 	struct FX_COLOURKEY
 	{
 		bool operator == (FX_COLOURKEY k)		{
-												return (m_red == k.m_red) && 
-													   (m_green == k.m_green) && 
+												return (m_red == k.m_red) &&
+													   (m_green == k.m_green) &&
 													   (m_blue == k.m_blue) &&
 													   (m_alpha == k.m_alpha);
 											}
-		
+
 		float								m_tmKey;
 		float								m_red;
 		float								m_green;
@@ -156,7 +156,7 @@
 											{
 												memset(this, 0, sizeof(FX_BASEDATA));
 											}
-		
+
 		uint32			 					m_dwID;
 		uint32								m_dwFlags;
 		uint32								m_dwObjectFlags;
@@ -167,7 +167,7 @@
 		bool								m_bUseTargetData;
 		LTVector							m_vTargetPos;
 		LTVector							m_vTargetNorm;
-		
+
 		HOBJECT								m_hParent;
 		HOBJECT								m_hTarget;
 		HOBJECT								m_hCamera;
@@ -215,7 +215,7 @@
 		uint32								m_dwFlags;
 		LTVector							m_vPos;
 		LTRotation							m_rRot;
-	
+
 		HOBJECT								m_hParent;
 		char							    m_sParentNode[32];
 		HOBJECT								m_hTarget;
@@ -291,7 +291,7 @@
 				eFlareSpriteFX,
 				eLightningFX,
 			};
-			
+
 											CBaseFX( FXType nType = eBaseFX );
 			virtual 						~CBaseFX()	{}
 
@@ -329,7 +329,7 @@
 
 			//calculates the scale based upon the scale keys and passed in timings
 			void							CalcScale(float tmCur, float tmLifespan, float *pScale, uint32* pHint = NULL);
-			
+
 			//handles setting and clearing state flags (bit mask operations)
 			void							SetState(uint32 nState)			{ m_dwState |= nState; }
 			void							ClearState(uint32 nState)		{ m_dwState &= ~nState; }
@@ -398,7 +398,7 @@
 			bool							m_bUpdateColour;
 			bool							m_bUpdateScale;
 
-			uint32							m_nCurrColorKey;			
+			uint32							m_nCurrColorKey;
 			uint32							m_nCurrScaleKey;
 
 			const CBaseFXProps				*m_pProps;

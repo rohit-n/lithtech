@@ -15,7 +15,7 @@
 
 #include "ltbasetypes.h"
 #include "DamageTypes.h"
-#include "CommandIds.h"
+#include "CommandIDs.h"
 #include "TemplateList.h"
 #include "GameButeMgr.h"
 #include "ButeListReader.h"
@@ -82,7 +82,7 @@ extern CWeaponMgr* g_pWeaponMgr;
 inline char* GetString( CButeMgr & buteMgr, const char* szTagName, const char* szAttName, uint32 dwMaxLen, char* defVal = "" )
 {
 	static char	szTemp[WMGR_MAX_FILE_PATH] = { '\0' };
-	char		*szResult = LTNULL;	
+	char		*szResult = LTNULL;
 
 	// clear old string
 	szTemp[ 0 ] = '\0';
@@ -115,7 +115,7 @@ inline char** GetStringArray( CButeMgr & buteMgr, const char* szTagName, const c
 		nArrayLen++;
 		sprintf( szTemp, "%s%d", szAttName, nArrayLen );
 	}
-	
+
 	if( nArrayLen )
 	{
 		szResult = debug_newa( char*, nArrayLen );
@@ -185,7 +185,7 @@ struct MOD
 
 	char	*szSocket;
 	char	*szName;
-	char	*szIcon; 
+	char	*szIcon;
 	char	*szZoomInSound;
 	char	*szZoomOutSound;
 	char	*szAttachModel;
@@ -194,13 +194,13 @@ struct MOD
 	char	*szRespawnSound;
 	char	*szPowerupFX;
 	char	*szRespawnWaitFX;
-	
+
 	CButeListReader blrAttachSkins;
 	CButeListReader blrPowerupSkins;
 
 	CButeListReader blrAttachRenderStyles;
 	CButeListReader blrPowerupRenderStyles;
-	
+
 	CButeListReader	blrRespawnWaitSkins;
 	CButeListReader	blrRespawnWaitRenderStyles;
 
@@ -502,7 +502,7 @@ struct WEAPON
 	uint32	m_nFireDelay;		// Minimum time (ms) between firing
 
 	char	*szHolsterAttachment;
-	
+
 	float	fFireAnimRateScale;
 	float	fReloadAnimRateScale;
 
@@ -523,7 +523,7 @@ private:
 
 	int		nNameId;
 	void	InitMembers( CButeMgr &ButeMgr, char *aTagName );
-	char	*szIcon; 
+	char	*szIcon;
 
 };
 
@@ -645,7 +645,7 @@ class CWeaponMgr : public CGameButeMgr
 
 		WEAPON**			m_pWeaponList;		// All weapon data
 		int32				m_nNumWeapons;
-	
+
 		AMMO**				m_pAmmoList;		// All ammo data
 		int32				m_nNumAmmos;
 
@@ -654,7 +654,7 @@ class CWeaponMgr : public CGameButeMgr
 
 		GEAR**				m_pGearList;		// All gear data
 		int32				m_nNumGear;
-	
+
 		WEAPONANIS**		m_pWeaponAnisList;	// Weapon Ani overrides
 		int32				m_nNumWeaponAnis;
 
@@ -747,7 +747,7 @@ inline uint8 CWeaponMgr::GetWeaponClass(int nWeaponId) const
 
 	if (nOrder < 0)
 		return 0;
-	
+
 	uint8 nClass = 0;
 	while (nClass < m_nNumClasses)
 	{

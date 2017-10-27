@@ -23,7 +23,7 @@
 #include "ButeTools.h"		
 #endif
 
-#include "ButeMgr.h"
+#include "butemgr.h"
 #include "AIUtils.h"
 
 // Forward declarations

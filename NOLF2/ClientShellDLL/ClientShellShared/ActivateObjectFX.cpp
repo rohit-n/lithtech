@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "StdAfx.h"
 	#include "ActivateObjectFX.h"
 
 
@@ -49,7 +49,7 @@ CActivateObjectHandler::CActivateObjectHandler()
 CActivateObjectHandler::~CActivateObjectHandler()
 {
 	// Remove this handler from the global list...
-	
+
 	ActivateObjList::iterator iter = m_lstActivateObjs.begin();
 	while( iter != m_lstActivateObjs.end() )
 	{
@@ -79,7 +79,7 @@ bool CActivateObjectHandler::Init( HOBJECT hObject )
 	m_hObject = hObject;
 
 	// Add this handler to the global list...
-	
+
 	m_lstActivateObjs.push_back( this );
 
 	return true;
@@ -96,7 +96,7 @@ bool CActivateObjectHandler::Init( HOBJECT hObject )
 CActivateObjectFX::CActivateObjectFX()
 :	CSpecialFX		()
 {
-	
+
 }
 
 // ----------------------------------------------------------------------- //
@@ -126,7 +126,7 @@ LTBOOL CActivateObjectFX::Init( HLOCALOBJ hServObj, ILTMessage_Read *pMsg )
 	if( !CSpecialFX::Init( hServObj, pMsg )) return LTFALSE;
 
 	// Init our handler...
-	
+
 	if( !m_ActivateObjectHandler.Init( hServObj ))
 		return LTFALSE;
 
@@ -150,7 +150,7 @@ LTBOOL CActivateObjectFX::Init( HLOCALOBJ hServObj, ILTMessage_Read *pMsg )
 LTBOOL CActivateObjectFX::OnServerMessage( ILTMessage_Read *pMsg )
 {
 	if( !CSpecialFX::OnServerMessage( pMsg )) return LTFALSE;
-	
+
 	uint8 nMsgId = pMsg->Readuint8();
 
 	switch( nMsgId )
@@ -170,6 +170,6 @@ LTBOOL CActivateObjectFX::OnServerMessage( ILTMessage_Read *pMsg )
 		default:
 			return LTFALSE;
 	}
-	 
+
 	return LTTRUE;
 }

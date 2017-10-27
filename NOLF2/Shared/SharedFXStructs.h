@@ -16,7 +16,7 @@
 #include "Globals.h"
 #include "SharedBaseFXStructs.h"
 #include "ModelButeMgr.h"
-#include "SFXMsgIDs.h"
+#include "SFXMsgIds.h"
 #include "SharedMovement.h"
 #include "CharacterAlignment.h"
 #include "DamageTypes.h"
@@ -95,7 +95,7 @@ inline void CHARCREATESTRUCT::Clear()
 	bRadarVisible				= false;
 	bIsCinematicAI				= false;
 	nCarrying					= CFX_CARRY_NONE;
-	
+
 	vHitBoxDims.Init();
 	vHitBoxOffset.Init();
 }
@@ -432,7 +432,7 @@ struct TRIGGERCREATESTRUCT : public SFXCREATESTRUCT
 	bool		bLocked;
 	LTVector	vDims;
 	uint8		nTriggerTypeId;
-	
+
 	// PlayerTrigger specific
 	uint32		nPlayerInsideID;
 	uint32		nPlayerOutsideID;

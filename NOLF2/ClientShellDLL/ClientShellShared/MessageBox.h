@@ -15,7 +15,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 
 enum eMBType
 {
@@ -32,14 +32,14 @@ typedef void (*MBCallBackFn)(LTBOOL bReturn, void *pData);
 
 typedef struct MBCreate_t
 {
-	MBCreate_t() 
+	MBCreate_t()
 	{
 		eType = LTMB_OK;
 		pFn  = LTNULL;
 		pData = LTNULL;
 
 		pString = LTNULL;
-		nMaxChars = CLTGUIEditCtrl::kMaxLength; 
+		nMaxChars = CLTGUIEditCtrl::kMaxLength;
 		eInput = CLTGUIEditCtrl::kInputAll;
 	};
 

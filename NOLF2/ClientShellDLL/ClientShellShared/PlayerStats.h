@@ -14,11 +14,11 @@
 #define __PLAYERSTATS_H
 
 #include "ltbasedefs.h"
-#include "overlays.h"
+#include "Overlays.h"
 #include "IDList.h"
 #include "IntelItemList.h"
 #include "SkillsButeMgr.h"
-#include "weaponmgr.h"
+#include "WeaponMgr.h"
 
 class CGameClientShell;
 struct MissionStats;
@@ -32,7 +32,7 @@ public:
 	virtual IDList*		GetCompletedObjectives() = 0;
 	virtual IDList*		GetParameters() = 0;
 	virtual IDList*		GetKeys() = 0;
-	
+
 	virtual CIntelItemList* GetIntelList() = 0;
 
     virtual LTBOOL      Init() = 0;
@@ -54,7 +54,7 @@ public:
 	virtual void        UpdateMaxEnergy(uint32 nEnergy) = 0;
 	virtual void		UpdateProgress(uint32 nProgress) = 0;
 	virtual	void		UpdateMaxProgress(uint32 nMaxProgress) = 0;
-	
+
     virtual void        UpdateAmmo(uint8 nWeaponId, uint8 nAmmoId, uint32 nAmmo, LTBOOL bPickedup=LTFALSE, LTBOOL bDisplayMsg=LTTRUE) = 0;
     virtual void        UpdateGear(uint8 nGearId) = 0;
     virtual void        UpdateMod(uint8 nModId) = 0;
@@ -80,14 +80,14 @@ public:
 	virtual int			GetMissionDamage() = 0;
 
 	virtual void		SetObjectivesSeen() {};
-	
+
 	virtual const MissionStats* GetMissionStats() const = 0;
 
 	virtual void		Save(ILTMessage_Write *pMsg) = 0;
 	virtual void		Load(ILTMessage_Read *pMsg) = 0;
 
     virtual uint8       GetCurWeapon() const = 0;
- 
+
 	// [KLS - 02/13/02] Updated to support checking for mods on weapons other than
 	// the current weapon...
      virtual uint8           GetMod(ModType eType, const WEAPON* pW=LTNULL) = 0;
@@ -110,9 +110,9 @@ public:
 
 
 	virtual void		Setup( ) = 0;
- 
+
     virtual LTBOOL      HaveAirSupply() = 0;
- 
+
 
 
     virtual uint32      GetHealth() = 0;
@@ -124,12 +124,12 @@ public:
     virtual LTFLOAT		GetAirPercent() = 0;
 	virtual uint32		GetProgress() = 0;
 	virtual uint32		GetMaxProgress() = 0;
- 
+
     virtual uint8       GetCurrentWeapon() = 0;
     virtual uint8       GetCurrentAmmo() = 0;
 
 	virtual uint32		GetCurrentAmmoCount() = 0;
- 
+
 	virtual LTBOOL		IsHiding() = 0;
 	virtual LTBOOL		IsHidden() = 0;
 	virtual LTBOOL		CanHide() = 0;
@@ -138,11 +138,11 @@ public:
 	virtual uint32		GetTotalSkillPoints() = 0;
 	virtual uint32		GetAvailSkillPoints() = 0;
 	virtual uint8		GetSkillLevel(eSkill skill) = 0;
- 
+
 	virtual const RANK*	GetRank() = 0;
 	virtual uint32		GetCostToUpgrade(eSkill skill) = 0;
 
-	virtual float		GetSkillModifier(eSkill skl, uint8 nMod) = 0; 
+	virtual float		GetSkillModifier(eSkill skl, uint8 nMod) = 0;
 };
 
 extern CPlayerStats* g_pPlayerStats;

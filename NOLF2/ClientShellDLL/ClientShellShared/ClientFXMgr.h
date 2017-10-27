@@ -14,7 +14,7 @@
 	// Includes....
 
 	#include "iltclient.h"
-	#include "basefx.h"
+	#include "BaseFx.h"
 	#include "FxFlags.h"
 	#include "FxDefs.h"
 
@@ -41,7 +41,7 @@
 											CClientFXMgr();
 
 			// Destructor
-							
+
 											~CClientFXMgr();
 
 			// Member Functions
@@ -60,7 +60,7 @@
 
 			void							ShutdownAllFX();
 			void							ShutdownClientFX(CLIENTFX_LINK* pLink);
-		
+
 			static uint32					GetUniqueID();
 
 			//specifies whether or not gore is enabled
@@ -97,7 +97,7 @@
 			//all effects looking the same
 			void							ApplyEffectStartingOffset(CBaseFX* pFX, const FX_KEY* pKey);
 
-			//Given an instance and an effect that has just finished shutting down, it will take 
+			//Given an instance and an effect that has just finished shutting down, it will take
 			//the appropriate course of action. Note that this will invalidate the node that is passed into it
 			void							HandleShutdownEffect(CLIENTFX_INSTANCE* pInst, CLinkListNode<FX_LINK>* pKeyNode);
 
@@ -128,7 +128,7 @@
 
 			//Called to setup the create effect callback so that any effects created during the updating of an
 			//object will be associated with this client effect manager
-			void							SetupCreateEffectCallback();			
+			void							SetupCreateEffectCallback();
 
 
 			// Member Variables
@@ -138,7 +138,7 @@
 
 			ILTClient					   *m_pClientDE;
 			static ILTClient			   *s_pClientDE;
-			
+
 
 			CLinkList<CLIENTFX_INSTANCE *>	m_collActiveGroupFX;
 
@@ -160,7 +160,7 @@
 			//the camera that effects can use
 			HOBJECT							m_hCamera;
 	};
-	
+
 	struct CLIENTFX_LINK
 	{
 	public:
@@ -181,7 +181,7 @@
 		//only clientfxmgr should handle setting up the links, and then we can break
 		//the link from our end with clearlink
 		friend class CClientFXMgr;
-		
+
 		CLIENTFX_INSTANCE* m_pInstance;
 
 		//we cannot allow copying since that will lead to the possibility that items
@@ -259,7 +259,7 @@
 
 		void	RemoveAllEffects();
 
-		
+
 
 		// Member Variables
 

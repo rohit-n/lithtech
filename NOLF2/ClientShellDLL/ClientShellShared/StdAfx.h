@@ -6,18 +6,21 @@
 #ifndef __STDAFX_H__
 #define __STDAFX_H__
 
+#ifndef __LINUX
 // This removes warnings about truncating symbol names when using stl maps.
 //
-#pragma warning( disable : 4786 )  
+#pragma warning( disable : 4786 )
 
 // This removes warnings in Vis C about the CodeWarrior pragma 'force_active'
 //
 #pragma warning( disable : 4068 )
 
 #define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+#endif // __LINUX
 
 #include <stdio.h>
-#include <windows.h>
 #include <limits.h>
 
 #include "mfcstub.h"
@@ -27,7 +30,7 @@
 #include "iltclient.h"
 #include "iltserver.h"
 #include "iltmessage.h"
-#include "globals.h"
+#include "Globals.h"
 
 #include "iltmodel.h"
 #include "ilttransform.h"

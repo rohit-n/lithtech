@@ -55,7 +55,7 @@ class CVersionMgr
 		typedef uint32 TSaveVersion;
 
 		// The SaveVersions should be set to the build number of the released version.  The CurrentBuild
-		// should always be set to the curent development build number.  The latest save version should also 
+		// should always be set to the curent development build number.  The latest save version should also
 		// equal the CurrentBuild.
 
 		static const TSaveVersion	kSaveVersion__1_1;
@@ -85,4 +85,4 @@ class CVersionMgr
 
 extern CVersionMgr* g_pVersionMgr;
 
-#endif __VERSION_MGR_H__
+#endif // __VERSION_MGR_H__

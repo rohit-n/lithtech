@@ -287,21 +287,29 @@ add_definitions(-D_CLIENTBUILD -DNOPS2 -DMEMTRACK_CLIENT)
 if(MSVC)
 	add_definitions(-D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS)	# VC14 deprecated stdext::hash_*
 endif(MSVC)
+if(CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS -std=c++11 ${CMAKE_CXX_FLAGS})
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fPIC -fpermissive")
+endif(CMAKE_COMPILER_IS_GNUCXX)
 
 include_directories(../ClientShellShared
-	../../Shared 
+	../../Shared
 	../../Shared/TO2
 	../../../sdk/inc
 	../../../libs/MFCStub
 	../../../libs/stdlith
-	../../../libs/butemgr
-	../../../libs/cryptmgr
+	../../../libs/ButeMgr
+	../../../libs/CryptMgr
 	../../../libs/lith
-	../../../libs/regmgr
+	../../../libs/RegMgr
 	../../../libs/LTGUIMgr
 	../../../libs/ServerDir
 	../../ClientRes/Shared
 	../../ClientRes/TO2)
+
+if(UNIX)
+  include_directories(/usr/include/SDL2)
+endif()
 
 target_link_libraries(${PROJECT_NAME}
 	LIB_MFCStub

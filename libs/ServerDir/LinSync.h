@@ -30,7 +30,7 @@ public:
 		pthread_mutex_destroy(&GetCS());
 	}
 
-	void Enter() { 
+	void Enter() {
 		pthread_mutex_lock(&GetCS());
 	}
 
@@ -81,7 +81,7 @@ public:
 	HANDLE GetEvent() const { return &m_hEvent; }
 	void Set() {
         pthread_mutex_lock(&m_hEvent.mutex);
-        m_hEvent.trigger = true; 
+        m_hEvent.trigger = true;
         pthread_cond_signal(&m_hEvent.cond);
         pthread_mutex_unlock(&m_hEvent.mutex);
     }
@@ -92,7 +92,7 @@ public:
         return true;
     }
 	bool IsSet() const { return m_hEvent.trigger; }
-	bool Block(uint32_t nTimeout = 0xffffffffL) { 
+	bool Block(uint32_t nTimeout = 0xffffffffL) {
         HANDLE ev = GetEvent();
         if(nTimeout != 0xffffffffL){
                 // should use timedwait here
@@ -106,7 +106,7 @@ public:
 protected:
 	void SetEvent(HANDLE hEvent) { m_hEvent = *hEvent; }
 private:
-    evt_mutex m_hEvent;    
+    evt_mutex m_hEvent;
 };
 
 // Event which resets after releasing a block
@@ -117,4 +117,25 @@ public:
         Set();
 	}
 };
+
+// stubs for bloody Windows API
+
+uint32_t WaitForMultipleObjects(uint32_t count, const HANDLE* objs, bool flag, uint32_t timeout){return 0;}
+void WaitForSingleObject(const HANDLE obj,uint32_t timeout){}
+HANDLE CreateThread(void* t, int, uint32_t (*func)(void*), void *cl, int, uintptr_t*id)
+{
+    id=0;
+    return nullptr;
+}
+
+void CloseHandle(HANDLE hdl){}
+
+uint32_t LoadString(HMODULE mod, uint32_t msgCode,char* buff, size_t len)
+{
+    return 0;
+}
+
+#define WAIT_OBJECT_0 0
+#define WAIT_TIMEOUT 0xffffffffL
+
 #endif

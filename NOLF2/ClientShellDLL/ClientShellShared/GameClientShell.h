@@ -32,7 +32,7 @@
 #include "PlayerMgr.h"
 #include "VersionMgr.h"
 #include "ClientSoundMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 
 class CSpecialFX;
 class CCameraFX;
@@ -129,12 +129,12 @@ public:
 
     LTBOOL      IsWorldLoaded()	const			{ return m_bInWorld; }
     void        SetWorldNotLoaded()				{ m_bInWorld = LTFALSE; }
-	
+
 	// Are we able to use the radar functionality
 	virtual bool	ShouldUseRadar( ) { return false; }
 
 	// Do whatever we need to do after the level loads, but before the first update.
-	// This happens while the loading screen is still visible so we're not stuck at 
+	// This happens while the loading screen is still visible so we're not stuck at
 	// a black screen.
 	virtual void	PostLevelLoadFirstUpdate();
 
@@ -355,7 +355,7 @@ private :
 	// Debug string screen locations...
 
 	enum DSSL { eDSBottomLeft, eDSBottomRight };
-	
+
 	void	SetDebugString(char* strMessage, DSSL eLoc=eDSBottomRight, uint8 nLine=0);
 	void	ClearDebugStrings();
 	void	RenderDebugStrings();

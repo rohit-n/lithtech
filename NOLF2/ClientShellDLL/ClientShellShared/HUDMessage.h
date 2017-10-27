@@ -12,7 +12,7 @@
 #define __HUD_MESSAGE_H__
 
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "LTPoly.h"
 
 enum MsgJustification
@@ -24,7 +24,7 @@ enum MsgJustification
 
 typedef struct MsgCreate_t
 {
-	MsgCreate_t() 
+	MsgCreate_t()
 	{
 		pFont = LTNULL;
 		nFontSize = 0;

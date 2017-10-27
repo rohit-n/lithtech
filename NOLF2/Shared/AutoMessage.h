@@ -4,8 +4,8 @@
 #ifndef __AUTOMESSAGE_H__
 #define __AUTOMESSAGE_H__
 
-#include "ILTCommon.h"  // For g_pCommonLT
-#include "ILTMessage.h"
+#include "iltcommon.h"  // For g_pCommonLT
+#include "iltmessage.h"
 
 class ILTMessage_Write;
 class ILTMessage_Read;
@@ -51,7 +51,7 @@ public:
 		WriteType(tValue);
 	}
 
-	
+
 	// Call this function to let go of the current message and make a new one
 	// (e.g. when using the same CAutoMessage variable for multiple message calls.)
 	void Reset() { Init(); }

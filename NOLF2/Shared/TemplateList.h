@@ -19,7 +19,7 @@
 #define __TEMPLATE_LIST_H__
 
 #include "ltlink.h"
-#include "globals.h"
+#include "Globals.h"
 #include "BankedList.h"
 
 enum TListItemType { TLIT_FIRST=0, TLIT_NEXT, TLIT_CURRENT, TLIT_LAST };
@@ -74,7 +74,7 @@ CTList<T>::CTList()
 	{
 		s_pLTLinkBank = debug_new(CBankedList<LTLink>);
 	}
-	
+
 	s_cLTLinkBankRefCount++;
 
     m_bManageData = LTFALSE;

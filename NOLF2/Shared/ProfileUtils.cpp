@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ProfileUtils.h"
-#include "ButeMgr.h"
+#include "butemgr.h"
 #include "ltbasedefs.h"
 #include "ModelButeMgr.h"
 #include "CommonUtilities.h"

@@ -11,7 +11,7 @@
 #ifndef __PLAYER_MGR_H__
 #define __PLAYER_MGR_H__
 
-#include "DamageFxMgr.h"
+#include "DamageFXMgr.h"
 #include "ContainerCodes.h"
 #include "WeaponMgr.h"
 #include "ilttexinterface.h"
@@ -34,7 +34,7 @@ class CTargetMgr;
 class CPlayerViewAttachmentMgr;
 class CVolumeBrushFX;
 
-class CPlayerMgr 
+class CPlayerMgr
 {
 public:
 	CPlayerMgr();
@@ -84,7 +84,7 @@ public:
 	CTargetMgr*			GetTargetMgr()				{ return m_pTargetMgr; }
 	CSearcher*			GetSearcher()				{ return m_pSearcher; }
 	CGadgetDisabler*	GetGadgetDisabler()			{ return m_pGadgetDisabler;	}
-	
+
 	bool		InSafetyNet()	const				{ return m_bInSafetyNet; }
 
 	CPlayerViewAttachmentMgr*	GetPlayerViewAttachmentMgr() { return m_pPVAttachmentMgr; }
@@ -149,7 +149,7 @@ public:
 
     LTBOOL		IsSpectatorMode()               { return m_bSpectatorMode; }
     void        SetSpectatorMode(LTBOOL bOn=LTTRUE);
- 
+
 	LTBOOL		IsInvisibleMode()               { return m_bInvisibleMode; }
     void        SetInvisibleMode(LTBOOL bOn)	{ m_bInvisibleMode = bOn; }
 
@@ -199,7 +199,7 @@ public:
 
 	LTBOOL		CanChangeFOV() const { return (!m_bUsingExternalCamera && !m_bZooming && !m_nZoomView && !IsLiquid(m_eCurContainerCode)); }
 
-	
+
 	// Carrying methods...
 
 	uint8		GetCarryingObject() const { return m_nCarryingObject; }
@@ -208,7 +208,7 @@ public:
 	uint8		CanCarryObject();
 	bool		CanDropCarriedObject() { return m_bCanDropCarriedObject; }
 	void		SetCanDropCarriedObject( bool bCanDrop ) { m_bCanDropCarriedObject = bCanDrop; }
-	
+
 	CFlashLightPlayer * GetFlashLight() const { return m_pFlashLight; }
 
 	enum eConstants
@@ -216,10 +216,10 @@ public:
 		kNumDamageSectors = 12,
 	};
 
-	float GetDamageFromSector(uint8 nSector) 
+	float GetDamageFromSector(uint8 nSector)
 	{
-		if (nSector >= kNumDamageSectors) 
-			return 0.0f; 
+		if (nSector >= kNumDamageSectors)
+			return 0.0f;
 		else
 			return m_fDamage[nSector];
 	};
@@ -228,7 +228,7 @@ public:
 	float		GetDistanceIndicatorPercent() const { return m_fDistanceIndicatorPercent; }
 	HTEXTURE	GetDistanceIndicatorIcon() const { return m_hDistanceIndicatorIcon; }
 
-	 
+
 	// This should only be called from CClientWeaponMgr::ChangeWeapon()...
 	// jrg 9/2/02 - this will get called twice most of the time when switching weapons:
 	//			once when the weapon switch is started
@@ -246,10 +246,10 @@ public:
 	bool	FireOnActivate();
 
 	// returns if the camera duck movement has stopped or not...
-	bool	IsFinishedDucking(bool bUp=true) const 
-	{ 
-		return ( bUp ? (m_fCamDuck == 0.0f) : (m_fCamDuck == m_fMaxDuckDistance) ); 
-	} 
+	bool	IsFinishedDucking(bool bUp=true) const
+	{
+		return ( bUp ? (m_fCamDuck == 0.0f) : (m_fCamDuck == m_fMaxDuckDistance) );
+	}
 
 	// Is the camera using an animation to update it's position...
 	LTBOOL	IsCameraAttachedToHead() const { return m_bCameraAttachedToHead; }
@@ -288,7 +288,7 @@ protected:
     LTBOOL	UpdateCameraRotation();
 	void	UpdatePlayerInfo(bool bPlaying);
     LTBOOL	UpdateAlternativeCamera();
-	
+
 	void	BeginZoom();
     void    HandleZoomChange(LTBOOL bReset=LTFALSE);
 	void	EndZoom();
@@ -297,7 +297,7 @@ protected:
 	void	HideShowAttachments(HOBJECT hObj);
 
 	void	GetPlayerHeadPosRot(LTVector & vPos, LTRotation & rRot);
-	
+
 	void	ChangeWeapon(ILTMessage_Read *pMsg);
 	void	UpdateContainers();
     void    UpdateUnderWaterFX(LTBOOL bUpdate=LTTRUE);
@@ -311,7 +311,7 @@ protected:
 	void	UpdateDistanceIndicator();
 	void	UpdateSoundFilters(uint8 nSoundFilterId);
 	CVolumeBrushFX* UpdateVolumeBrushFX(CVolumeBrushFX* pFX, ContainerCode & eCode);
-	
+
 
 	void	HandleRespawn();
 
@@ -432,7 +432,7 @@ protected:
 	CPlayerCamera  *m_pPlayerCamera;	// Handle 3rd person view
 
 	bool			m_bCameraAttachedToHead;
-	
+
     LTBOOL          m_bFirstUpdate;     // Is this the first update
 
     LTBOOL          m_bPlayerUpdated;   // Has the server sent us a player update?

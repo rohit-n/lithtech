@@ -14,16 +14,16 @@
 //
 // Includes...
 //
-	
+
 	#include "HUDItem.h"
-	#include "LTGuiMgr.h"
+	#include "ltguimgr.h"
 
 
 class CHUDPopup : public CHUDItem
 {
 public:
 	CHUDPopup();
-	
+
 
     virtual LTBOOL      Init();
 	virtual void		Term();
@@ -31,7 +31,7 @@ public:
     virtual void        Render();
     virtual void        Update();
 
-	//hide or show 
+	//hide or show
 	void	Show( uint8 nPopupID, const char *pText );
 
 	//close window and tell server
@@ -48,11 +48,11 @@ public:
 
 protected:
 
-    
+
 	float		m_fScale;
 	LTBOOL		m_bVisible;
 	LTBOOL		m_bColorOverride;
-	
+
 
 	CLTGUIFrame			m_Frame;
 	CLTGUITextCtrl		m_Text;

@@ -13,7 +13,7 @@
 
 #include "stdafx.h"
 #include "ButeListReader.h"
-#include "ButeMgr.h"
+#include "butemgr.h"
 
 char CButeListReader::ms_aAttName[100];
 

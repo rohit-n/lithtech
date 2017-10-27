@@ -13,7 +13,7 @@
 #ifndef __CLIENT_SERVER_SHARED_H__
 #define __CLIENT_SERVER_SHARED_H__
 
-#include "LTObjRef.h"
+#include "ltobjref.h"
 #include <list>
 #include "ltobjectcreate.h"
 #include "CommonUtilities.h"
@@ -241,7 +241,7 @@ enum DDPieceType
 #define USRFLG_GADGET_CAN_DISABLE	(USRFLG_GADGET_BOMBABLE | USRFLG_GADGET_INVISIBLE_INK |  \
 									USRFLG_GADGET_CODE_DECIPHERER | USRFLG_GADGET_LOCK_PICK | USRFLG_GADGET_WELDER | \
 									USRFLG_GADGET_INTELLIGENCE | USRFLG_GADGET_CAMERA | USRFLG_GADGET_EAVESDROPBUG )
-		
+
 // Used with AI objects.
 
 #define USRFLG_AI_CLIENT_SOLID			(1<<3)

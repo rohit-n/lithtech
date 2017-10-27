@@ -11,7 +11,7 @@
 #if !defined(_BASE_MENU_H_)
 #define _BASE_MENU_H_
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "LTPoly.h"
 
 
@@ -27,7 +27,7 @@ class CSubMenu : public CLTGUIWindow
 public:
 	CSubMenu();
 	virtual LTBOOL Init(HTEXTURE hFrame,HTEXTURE hFrameTip, LTIntPt size);
-	
+
     virtual LTBOOL   HandleKeyUp(int key);
 	// Render the control
 	virtual void Render ();
