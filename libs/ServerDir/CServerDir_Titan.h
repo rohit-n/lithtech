@@ -7,6 +7,7 @@
 #include <deque>
 #include <vector>
 #include <string>
+#include <thread>
 
 #include "Sync.h"
 
@@ -370,7 +371,7 @@ private:
 	std::string m_sLastRequestResultString;
 
 	// Thread for starting request entries
-	HANDLE m_hStartRequestThread;
+	std::thread m_hStartRequestThread;
 	Sync_Event m_cSRTReadyEvent;
 	Sync_PulseEvent m_cSRTStartEvent;
 

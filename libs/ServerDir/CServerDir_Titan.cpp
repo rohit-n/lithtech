@@ -966,7 +966,8 @@ CServerDirectory_Titan::CServerDirectory_Titan() : m_pDirServerList(new ServerCo
 
 	// Create the start request thread
 	uint32 nThreadID;
-	m_hStartRequestThread = CreateThread(NULL, 0, StartRenderThread_Bootstrap, this, 0, (unsigned long *)&nThreadID);
+	m_hStartRequestThread = std::thread(StartRenderThread_Bootstrap, this);
+	// m_hStartRequestThread = CreateThread(NULL, 0, StartRenderThread_Bootstrap, this, 0, (unsigned long *)&nThreadID);
 	m_cSRTReadyEvent.Block();
 
 	m_pGameSpySupport = NULL;
@@ -986,10 +987,9 @@ CServerDirectory_Titan::~CServerDirectory_Titan()
 	m_cShutdownEvent.Set();
 
 	// Wait for the threads
-	WaitForSingleObject(m_hStartRequestThread, INFINITE);
-
 	// Delete the threads
-	CloseHandle(m_hStartRequestThread);
+	if(m_hStartRequestThread.joinable())
+		m_hStartRequestThread.join();
 
 	TitanTest_Term();
 }
@@ -1301,7 +1301,7 @@ void CServerDirectory_Titan::SetStartupInfo(ILTMessage_Read &cMsg)
 	m_StartupInfo.m_sGameSpyName = "";
 	m_StartupInfo.m_sGameSpySecretKey = "";
 
-	StartupInfo_Titan const *pStartupInfo = (StartupInfo_Titan *)cMsg.Readuint32();
+	StartupInfo_Titan const *pStartupInfo = (StartupInfo_Titan *)cMsg.Readuintptr();
 	if (!pStartupInfo)
 		return;
 
@@ -1310,7 +1310,7 @@ void CServerDirectory_Titan::SetStartupInfo(ILTMessage_Read &cMsg)
 
 void CServerDirectory_Titan::GetStartupInfo(ILTMessage_Write &cMsg)
 {
-	cMsg.Writeuint32((uint32)&m_StartupInfo);
+	cMsg.Writeuintptr((uintptr_t)&m_StartupInfo);
 }
 
 bool CServerDirectory_Titan::SetCDKey(const char *pKey)
@@ -1500,7 +1500,7 @@ bool CServerDirectory_Titan::SetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_R
 	}
 	case ePeerInfo_Service:
 	{
-		PeerInfo_Service_Titan *pInfo = (PeerInfo_Service_Titan *)cMsg.Readuint32();
+		PeerInfo_Service_Titan *pInfo = (PeerInfo_Service_Titan *)cMsg.Readuintptr();
 		if (!pInfo)
 			return false;
 		if (!SetPeerInfoService(cActivePeer, *pInfo))
@@ -1608,7 +1608,7 @@ bool CServerDirectory_Titan::GetActivePeerInfo(EPeerInfo eInfoType, ILTMessage_W
 	}
 	case ePeerInfo_Service:
 	{
-		pMsg->Writeuint32((uint32)&cActivePeer.m_PeerInfoService);
+		pMsg->Writeuintptr((uintptr_t)&cActivePeer.m_PeerInfoService);
 		break;
 	}
 	case ePeerInfo_Validated:
