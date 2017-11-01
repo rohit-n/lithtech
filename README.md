@@ -67,14 +67,12 @@ Builds on linux
 - [x] Target rules for targets named Lib_ILTSound
 - [x] Target rules for targets named DLL_Server
 - [x] Target rules for targets named EXE_Lithtech
-- [ ] Target rules for targets named LIB_D3DRender
-- [ ] Target rules for targets named Lib_DShow
 - [x] Target rules for targets named MFCStub
 - [x] Target rules for targets named ButeMgr
 - [x] Target rules for targets named CryptMgr
 - [x] Target rules for targets named RegMgr
 - [x] Target rules for targets named LTGUIMgr
-- [ ] Target rules for targets named ServerDir
+- [x] Target rules for targets named ServerDir
 - [x] Target rules for targets named WONAPI
 - [ ] Target rules for targets named NOLF2_ClientFXDLL
 - [ ] Target rules for targets named NOLF2_ClientRes
@@ -82,3 +80,6 @@ Builds on linux
 - [ ] Target rules for targets named NOLF2_ObjectDLL
 - [ ] Target rules for targets named NOLF2_ServerRes
 - [ ] Target rules for targets named FEAR_ClientFXDLL
+- [ ] Target rules for targets named FEAR_ClientShellDLL
+- [x] Target rules for targets named Test_RegMgr
+
