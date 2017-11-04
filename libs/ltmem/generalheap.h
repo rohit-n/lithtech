@@ -2,11 +2,11 @@
 //
 // MODULE  : generalheap.h
 //
-// PURPOSE : 
+// PURPOSE :
 //			Create a fast heap to work on the PS2 with NOLF.
 //			It doesn't need to deal with very small allocations.
 //			We need to minimize fragementation as much as possible.
-//			
+//
 // CHANGES FOR PC  :
 //			Min allocation size is 32 bytes
 //			We don't have to do best fit search because fragementation is not our
@@ -21,7 +21,7 @@
 //			Test in separate test app.
 //			Add lots of debugging functionality.
 //			Add efficient realloc function that checks for free memory already being there
-//			
+//
 // ----------------------------------------------------------------------- //
 
 #ifndef __GENERALHEAP_H__
@@ -38,7 +38,7 @@
 //#define GENERALHEAPHEADERSIZE 8
 #define GENERALHEAPHEADERSIZE 16
 
-// minimum allocation size 
+// minimum allocation size
 // this can not be smaller than 12 bytes because it must contain the
 // free list information
 #define GENERALHEAPMINALLOCATIONSIZE 32
@@ -80,43 +80,43 @@ struct CGeneralHeapHeader
 	CGeneralHeapHeader* m_pNextFreeBlock;
 	CGeneralHeapHeader* m_pPrevFreeBlock;
 	uint32 m_nFreeListIndex;
-	
+
 	// accessor functions
-	CGeneralHeapHeader* GetPrevMemBlock() 
-	{ 
-		return (CGeneralHeapHeader*)((uint32)m_pPrevMemBlock & GENERALHEAPFLAGMASK); 
+	CGeneralHeapHeader* GetPrevMemBlock()
+	{
+		return (CGeneralHeapHeader*)((uintptr_t)m_pPrevMemBlock & GENERALHEAPFLAGMASK);
 	};
-	
-	void SetPrevMemBlock(CGeneralHeapHeader* pPrevMemBlock) 
-	{ 
-		m_pPrevMemBlock = (CGeneralHeapHeader*)(((uint32)pPrevMemBlock & GENERALHEAPFLAGMASK) | 
-						  ((uint32)m_pPrevMemBlock & ~GENERALHEAPFLAGMASK));
+
+	void SetPrevMemBlock(CGeneralHeapHeader* pPrevMemBlock)
+	{
+		m_pPrevMemBlock = (CGeneralHeapHeader*)(((uintptr_t)pPrevMemBlock & GENERALHEAPFLAGMASK) |
+						  ((uintptr_t)m_pPrevMemBlock & ~GENERALHEAPFLAGMASK));
 	}
 
 	bool GetFreeFlag()
 	{
-		if (((uint32)m_pPrevMemBlock & GENERALHEAPBLOCKFREEFLAG) == 0) return false;
+		if (((uintptr_t)m_pPrevMemBlock & GENERALHEAPBLOCKFREEFLAG) == 0) return false;
 		else return true;
 	}
 
 	void SetFreeFlag(bool bFree)
 	{
-		if (bFree) 
+		if (bFree)
 		{
-			m_pPrevMemBlock = (CGeneralHeapHeader*)(((uint32)m_pPrevMemBlock & GENERALHEAPFLAGMASK) | GENERALHEAPBLOCKFREEFLAG);
+			m_pPrevMemBlock = (CGeneralHeapHeader*)(((uintptr_t)m_pPrevMemBlock & GENERALHEAPFLAGMASK) | GENERALHEAPBLOCKFREEFLAG);
 		}
 		else
 		{
-			m_pPrevMemBlock = (CGeneralHeapHeader*)(((uint32)m_pPrevMemBlock & GENERALHEAPFLAGMASK) & (~GENERALHEAPBLOCKFREEFLAG));
+			m_pPrevMemBlock = (CGeneralHeapHeader*)(((uintptr_t)m_pPrevMemBlock & GENERALHEAPFLAGMASK) & (~GENERALHEAPBLOCKFREEFLAG));
 		}
 	}
 
-	
+
 	CGeneralHeapHeader* GetNextMemBlock()
 	{
 		return m_pNextMemBlock;
 	}
-	
+
 	void SetNextMemBlock(CGeneralHeapHeader* pNextMemBlock)
 	{
 		m_pNextMemBlock = pNextMemBlock;
@@ -125,53 +125,53 @@ struct CGeneralHeapHeader
 
 
 // the general heap class
-class CGeneralHeap 
+class CGeneralHeap
 {
 public:
 	// constructors
 	CGeneralHeap() { m_bInitialized = false; };
-	CGeneralHeap(uint32 nBaseAddress, uint32 nSize, uint32 nAlign) { m_bInitialized = false; Init(nBaseAddress,nSize,nAlign); };
-	
+	CGeneralHeap(uintptr_t nBaseAddress, uint32 nSize, uint32 nAlign) { m_bInitialized = false; Init(nBaseAddress,nSize,nAlign); };
+
 	// destructor
 	~CGeneralHeap() { Term(); };
 
 	// must be called to initialize the class before it can be used
-	GENERALHEAPINLINE void Init(uint32 nBaseAddress, uint32 nSize, uint32 nAlign);
-	
+	GENERALHEAPINLINE void Init(uintptr_t nBaseAddress, uint32 nSize, uint32 nAlign);
+
 	// must be called to terminate the class
 	GENERALHEAPINLINE void Term();
 
 	// call to allocate the specified amount of memory from the heap
 	GENERALHEAPINLINE void* Alloc(uint32 nSize);
-	
+
 	// call to free the specified pointer from the heap
 	// the pointer must have been allocated from a previous call to alloc
 	GENERALHEAPINLINE void Free(void* free);
 
 	// returns true if the specified pointer is inside the heap or false if it is not
 	GENERALHEAPINLINE bool InHeap(void* mem);
-	
+
 	// return true if this is valid allocated memory
 	GENERALHEAPINLINE bool ValidMemory(void* mem);
 
 	// dump the contents of the heap
 	GENERALHEAPINLINE void DumpHeap();
-	
+
 	// dump info about a specific piece of memory
 	GENERALHEAPINLINE void DumpMemInfo(void* mem);
-	
+
 	// get the size of a piece of allocated memory
 	GENERALHEAPINLINE uint32 GetSize(void* mem);
-	
+
 	// get the first heap element
 	GENERALHEAPINLINE CGeneralHeapHeader* GetHeapStart() { return m_pHeapStart; };
 
 	// returns the size of the data portion of the specified block of memory
 	GENERALHEAPINLINE uint32 GetMemBlockSize(CGeneralHeapHeader* pMemBlock);
-	
+
 	// get the pointer to user data in this memory piece
 	GENERALHEAPINLINE void* GetMemBlockData(CGeneralHeapHeader* pMemBlock);
-	
+
 #ifdef GENERALHEAPFILLMEMORY
 	// check fill memory values for one piece of memory
 	GENERALHEAPINLINE bool CheckFillMemoryValue(CGeneralHeapHeader* pHeader);
@@ -195,19 +195,19 @@ private:
 
 	// true if class is initialized
 	bool m_bInitialized;
-	
+
 	// the size of the heap
 	uint32 m_nSize;
-	
+
 	// alignment to keep all allocations to in the heap
 	uint32 m_nAlign;
-	
+
 	// the starting location of heap memory
 	CGeneralHeapHeader* m_pHeapStart;
-	
+
 	// ending location + 1 of heap memory
 	CGeneralHeapHeader* m_pHeapEnd;
-	
+
 	// array of free lists for heap memory
 	CGeneralHeapHeader* m_pFreeList[GENERALHEAPFREELISTARRAYSIZE];
 };
@@ -218,22 +218,22 @@ GENERALHEAPINLINE uint32 CGeneralHeap::GetMemBlockSize(CGeneralHeapHeader* pMemB
 {
 	if (pMemBlock->GetNextMemBlock() != NULL)
 	{
-		return (uint32)pMemBlock->GetNextMemBlock() - (uint32)pMemBlock - GENERALHEAPHEADERSIZE;
+		return (uintptr_t)pMemBlock->GetNextMemBlock() - (uintptr_t)pMemBlock - GENERALHEAPHEADERSIZE;
 	}
 	else
 	{
-		return (uint32)m_pHeapEnd - (uint32)pMemBlock - GENERALHEAPHEADERSIZE;
+		return (uintptr_t)m_pHeapEnd - (uintptr_t)pMemBlock - GENERALHEAPHEADERSIZE;
 	}
 }
 
 
 // get the pointer to user data in this memory piece
-GENERALHEAPINLINE void* CGeneralHeap::GetMemBlockData(CGeneralHeapHeader* pMemBlock) 
-{ 
-	return (void*)((uint32)pMemBlock + GENERALHEAPHEADERSIZE); 
+GENERALHEAPINLINE void* CGeneralHeap::GetMemBlockData(CGeneralHeapHeader* pMemBlock)
+{
+	return (void*)((uintptr_t)pMemBlock + GENERALHEAPHEADERSIZE);
 };
 
-	
+
 // finds the correct free list and inserts the specified memory block into the list
 GENERALHEAPINLINE void CGeneralHeap::InsertInFreeList(CGeneralHeapHeader* pMemBlock)
 {
@@ -254,11 +254,11 @@ GENERALHEAPINLINE void CGeneralHeap::InsertInFreeList(CGeneralHeapHeader* pMemBl
 			if (m_pFreeList[i] != NULL) m_pFreeList[i]->m_pPrevFreeBlock = pMemBlock;
 			m_pFreeList[i] = pMemBlock;
 			pMemBlock->m_nFreeListIndex = i;
-			
+
 			// exit loop we have found our free list
 			break;
 		}
-	
+
 		// go to next size memory free list
 		nMinSize = nMaxSize;
 		if (i == GENERALHEAPFREELISTARRAYSIZE-2) nMaxSize = 0xffffffff;
@@ -267,7 +267,7 @@ GENERALHEAPINLINE void CGeneralHeap::InsertInFreeList(CGeneralHeapHeader* pMemBl
 }
 
 
-// removes the specified memory block from the approiate free list	
+// removes the specified memory block from the approiate free list
 GENERALHEAPINLINE void CGeneralHeap::DeleteFromFreeList(CGeneralHeapHeader* pMemBlock)
 {
 	// if the next item exists fix its prev pointer
@@ -275,7 +275,7 @@ GENERALHEAPINLINE void CGeneralHeap::DeleteFromFreeList(CGeneralHeapHeader* pMem
 	{
 		pMemBlock->m_pNextFreeBlock->m_pPrevFreeBlock = pMemBlock->m_pPrevFreeBlock;
 	}
-	
+
 	// is this the first item in the list
 	if (pMemBlock->m_pPrevFreeBlock == NULL)
 	{
@@ -285,12 +285,12 @@ GENERALHEAPINLINE void CGeneralHeap::DeleteFromFreeList(CGeneralHeapHeader* pMem
 	// not the first item
 	else
 	{
-		pMemBlock->m_pPrevFreeBlock->m_pNextFreeBlock = pMemBlock->m_pNextFreeBlock; 
+		pMemBlock->m_pPrevFreeBlock->m_pNextFreeBlock = pMemBlock->m_pNextFreeBlock;
 	}
 }
 
 
-GENERALHEAPINLINE void CGeneralHeap::Init(uint32 nBaseAddress, uint32 nSize, uint32 nAlign)
+GENERALHEAPINLINE void CGeneralHeap::Init(uintptr_t nBaseAddress, uint32 nSize, uint32 nAlign)
 {
 	// base address and size must be of proper alignment
 	if ((nBaseAddress % nAlign) != 0) return;
@@ -311,7 +311,7 @@ GENERALHEAPINLINE void CGeneralHeap::Init(uint32 nBaseAddress, uint32 nSize, uin
 		{
 			// set up the pointer to the base memory
 			m_pFreeList[i] = m_pHeapStart;
-			
+
 			// set up the values for the header for the base memory
 			CGeneralHeapHeader* pHeader = m_pFreeList[i];
 			pHeader->SetPrevMemBlock(NULL);
@@ -320,10 +320,10 @@ GENERALHEAPINLINE void CGeneralHeap::Init(uint32 nBaseAddress, uint32 nSize, uin
 			pHeader->m_pPrevFreeBlock = NULL;
 			pHeader->m_nFreeListIndex = i;
 			pHeader->SetFreeFlag(true);
-			
+
 #ifdef GENERALHEAPFILLMEMORY
 			// fill the memory with the fill value
-			void *memStart = ( void * ) ( ( ( uint32 ) pHeader ) + ( ( uint32 ) sizeof( CGeneralHeapHeader ) ) );
+			void *memStart = ( void * ) ( ( ( uintptr_t ) pHeader ) + ( ( uintptr_t ) sizeof( CGeneralHeapHeader ) ) );
 			void *memEnd = ( void * ) ( pHeader->GetNextMemBlock() );
 			if (pHeader->GetNextMemBlock() != NULL)
 			{
@@ -341,9 +341,9 @@ GENERALHEAPINLINE void CGeneralHeap::Init(uint32 nBaseAddress, uint32 nSize, uin
 				pMem[n] = GENERALHEAPFILLMEMORYVALUE;
 			}
 #endif // GENERALHEAPFILLMEMORY
-	
+
 		}
-		else 
+		else
 		{
 			m_pFreeList[i] = NULL;
 		}
@@ -374,7 +374,7 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 	CGeneralHeapHeader* pBestHeader = NULL;
 
 	ASSERT(m_bInitialized);
-	
+
 	// adjust size based on the specified alignment
 	if ((nSize % m_nAlign) != 0) nSize += m_nAlign - (nSize % m_nAlign);
 
@@ -395,11 +395,11 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 
 			// holds size of the free data block
 			uint32 nThisSize;
-			
-			// loop through all items in free list			
+
+			// loop through all items in free list
 			while (pHeader != NULL)
 			{
-			
+
 				// get data size of this block
 				nThisSize = GetMemBlockSize(pHeader);
 
@@ -407,7 +407,7 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 				if (nThisSize >= nSize)
 				{
 					uint32 nNewDiff = nThisSize - nSize;
-				
+
 					// is it better than our current size
 					if (nNewDiff < nBestSizeFoundDiff)
 					{
@@ -421,7 +421,7 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 #endif
 					}
 				}
-				
+
 				// go to next item in free list
 				pHeader = pHeader->m_pNextFreeBlock;
 #ifdef USEFREEZESCREEN
@@ -441,7 +441,7 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 
 		// if we have found an exact match stop searching
 		if (nBestSizeFoundDiff == 0) break;
-		
+
 		// compute new max size for next free list
 		nMinSize = nMaxSize;
 		if (i >= GENERALHEAPFREELISTARRAYSIZE-2) nMaxSize = 0xffffffff;
@@ -455,20 +455,20 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 		if (nBestSizeFound > (nSize + GENERALHEAPMINALLOCATIONSIZE))
 		{
 			// create new free block using the remainder of the space
-			CGeneralHeapHeader* pNewBlock = (CGeneralHeapHeader*)((uint32)pBestHeader + 
+			CGeneralHeapHeader* pNewBlock = (CGeneralHeapHeader*)((uintptr_t)pBestHeader +
 				nSize + GENERALHEAPHEADERSIZE);
 			pNewBlock->SetPrevMemBlock(pBestHeader);
 			pNewBlock->SetNextMemBlock(pBestHeader->GetNextMemBlock());
-					
+
 			// insert new block into approiate free list
-			InsertInFreeList(pNewBlock);				
+			InsertInFreeList(pNewBlock);
 
 			// mark new block as free
 			pNewBlock->SetFreeFlag(true);
-					
+
 			// fix next pointer in previous item
 			pBestHeader->SetNextMemBlock(pNewBlock);
-			
+
 			// fix prev pointer for next item if it exists
 			if (pNewBlock->GetNextMemBlock() != NULL)
 			{
@@ -478,20 +478,20 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 #ifdef GENERALHEAPFILLMEMORY
 		// check fill memory values for this piece of memory
 		CheckFillMemoryValue(pBestHeader);
-#endif				
+#endif
 		// remove this block from the free list
 		DeleteFromFreeList(pBestHeader);
-					
+
 		// this block is no longer free so set the free flag to false
 		pBestHeader->SetFreeFlag(false);
 
 //		printf("CGeneralHeap::Alloc size=%u location=%x\n",nSize,((uint32)pBestHeader + GENERALHEAPHEADERSIZE));
 
 		// return the new memory address
-		return (void*)((uint32)pBestHeader + GENERALHEAPHEADERSIZE);
+		return (void*)((uintptr_t)pBestHeader + GENERALHEAPHEADERSIZE);
 	}
-					
-	// we failed to allocate memory	
+
+	// we failed to allocate memory
 	else return NULL;
 };
 
@@ -499,7 +499,7 @@ GENERALHEAPINLINE void* CGeneralHeap::Alloc(uint32 nSize)
 GENERALHEAPINLINE void CGeneralHeap::Free(void* free)
 {
 	// get the pointer to the header for this memory and the previous and next headers
-	CGeneralHeapHeader* pHeader = (CGeneralHeapHeader*)((uint32)free - GENERALHEAPHEADERSIZE);
+	CGeneralHeapHeader* pHeader = (CGeneralHeapHeader*)((uintptr_t)free - GENERALHEAPHEADERSIZE);
 	CGeneralHeapHeader* pPrevHeader = pHeader->GetPrevMemBlock();
 	CGeneralHeapHeader* pNextHeader = pHeader->GetNextMemBlock();
 
@@ -512,7 +512,7 @@ GENERALHEAPINLINE void CGeneralHeap::Free(void* free)
 	}
 #endif
 
-		
+
 	// check if memory before this memory is free
 	// and combine it with this block if it is
 	// Note : This is currently causing a crash.
@@ -523,23 +523,23 @@ GENERALHEAPINLINE void CGeneralHeap::Free(void* free)
 		{
 			// remove previous block from old free list
 			DeleteFromFreeList(pPrevHeader);
-			
+
 			// we should combine with the previous memory block
 			pPrevHeader->SetNextMemBlock(pHeader->GetNextMemBlock());
-			
+
 			// adjust next mem block if it exists
 			if (pNextHeader != NULL)
 			{
 				pNextHeader->SetPrevMemBlock(pPrevHeader);
 			}
-			
+
 			// make current block now just point to previous block
 			pHeader = pPrevHeader;
 		}
 	}
 	//*/
-	
-	
+
+
 	// check if memory after this memory is free
 	if (pNextHeader != NULL)
 	{
@@ -547,27 +547,27 @@ GENERALHEAPINLINE void CGeneralHeap::Free(void* free)
 		{
 			// remove next mem block from old free list
 			DeleteFromFreeList(pNextHeader);
-		
+
 			// get next memory block after our current next one
 			CGeneralHeapHeader* pNextNextHeader = pNextHeader->GetNextMemBlock();
 
-			// set new next on previous block			
+			// set new next on previous block
 			pHeader->SetNextMemBlock(pNextNextHeader);
 
-			// set new prev for next block if it exists			
+			// set new prev for next block if it exists
 			if (pNextNextHeader != NULL)
 			{
 				pNextNextHeader->SetPrevMemBlock(pHeader);
 			}
 		}
 	}
-	
+
 	// put the new free block back in the free list
 	InsertInFreeList(pHeader);
-	
+
 	// set the free flag of the block to true
 	pHeader->SetFreeFlag(true);
-	
+
 #ifdef GENERALHEAPFILLMEMORY
 	// fill the memory with the fill value
 	void *memStart = ( void * ) ( ( ( uint32 ) pHeader ) + ( ( uint32 ) sizeof( CGeneralHeapHeader ) ) );
@@ -594,11 +594,11 @@ GENERALHEAPINLINE void CGeneralHeap::Free(void* free)
 
 GENERALHEAPINLINE bool CGeneralHeap::InHeap(void* mem)
 {
-	if ((mem >= (void*)m_pHeapStart) && (mem < (void*)m_pHeapEnd)) 
+	if ((mem >= (void*)m_pHeapStart) && (mem < (void*)m_pHeapEnd))
 	{
 		return true;
 	}
-	else 
+	else
 	{
 		return false;
 	}
@@ -616,8 +616,8 @@ GENERALHEAPINLINE void CGeneralHeap::DumpHeap()
 		printf("%08x : ", (uint32)p);
 		printf("next = %08x prev = %08x data = %08x\n", (uint32)p->GetNextMemBlock(), (uint32)p->GetPrevMemBlock(), (uint32)p+GENERALHEAPHEADERSIZE);
 		printf("           size=%08x (%u) ", GetMemBlockSize(p), GetMemBlockSize(p));
-				
-		if (p->GetFreeFlag()) 
+
+		if (p->GetFreeFlag())
 		{
 			printf("free ");
 			printf("\n           freenext = %08x freeprev=%08x ", (uint32)p->m_pNextFreeBlock, (uint32)p->m_pPrevFreeBlock);
@@ -633,15 +633,15 @@ GENERALHEAPINLINE void CGeneralHeap::DumpHeap()
 // get the size of a piece of allocated memory
 GENERALHEAPINLINE uint32 CGeneralHeap::GetSize(void* mem)
 {
-	CGeneralHeapHeader* pHeader = (CGeneralHeapHeader*)((uint32)mem - GENERALHEAPHEADERSIZE);
+	CGeneralHeapHeader* pHeader = (CGeneralHeapHeader*)((uintptr_t)mem - GENERALHEAPHEADERSIZE);
 	return GetMemBlockSize(pHeader);
 }
-	
+
 
 // return true if this is valid allocated memory
 GENERALHEAPINLINE bool CGeneralHeap::ValidMemory(void* mem)
 {
-	CGeneralHeapHeader* pHeader = (CGeneralHeapHeader*)((uint32)mem - GENERALHEAPHEADERSIZE);
+	CGeneralHeapHeader* pHeader = (CGeneralHeapHeader*)((uintptr_t)mem - GENERALHEAPHEADERSIZE);
 
 	if (pHeader->GetFreeFlag() == true) return false;
 	else
@@ -651,34 +651,34 @@ GENERALHEAPINLINE bool CGeneralHeap::ValidMemory(void* mem)
 		{
 			if (pNextHeader->GetPrevMemBlock() != pHeader) return false;
 		}
-	
+
 		CGeneralHeapHeader* pPrevHeader = pHeader->GetPrevMemBlock();
 		if (pPrevHeader != NULL)
 		{
 			if (pPrevHeader->GetNextMemBlock() != pHeader) return false;
 		}
 	}
-	
-	return true;	
+
+	return true;
 }
 
-	
+
 // dump info about a specific piece of memory
 GENERALHEAPINLINE void CGeneralHeap::DumpMemInfo(void* mem)
 {
-	CGeneralHeapHeader* p = (CGeneralHeapHeader*)((uint32)mem - GENERALHEAPHEADERSIZE);
-/*	
+	CGeneralHeapHeader* p = (CGeneralHeapHeader*)((uintptr_t)mem - GENERALHEAPHEADERSIZE);
+/*
 	printf("%08x : ", (uint32)p);
 	printf("next = %08x prev = %08x data = %08x\n", (uint32)p->GetNextMemBlock(), (uint32)p->GetPrevMemBlock(), (uint32)p+GENERALHEAPHEADERSIZE);
 	printf("           size=%08x (%u) ", GetMemBlockSize(p), GetMemBlockSize(p));
 
-	if (p->GetFreeFlag()) 
+	if (p->GetFreeFlag())
 	{
 		printf("free ");
 		printf("\n           freenext = %08x freeprev=%08x ", (uint32)p->m_pNextFreeBlock, (uint32)p->m_pPrevFreeBlock);
 	}
 	else printf("used ");
-	
+
 	printf("\n");
 */
 }
@@ -690,7 +690,7 @@ GENERALHEAPINLINE void CGeneralHeap::DumpMemInfo(void* mem)
 GENERALHEAPINLINE bool CGeneralHeap::CheckFillMemoryValue(CGeneralHeapHeader* pHeader)
 {
 	bool bRetVal = true;
-	
+
 	// check all of the values to make sure they match
 	void *memStart = ( void * ) ( ( ( uint32 ) pHeader ) + ( ( uint32 ) sizeof( CGeneralHeapHeader ) ) );
 	void *memEnd = ( void * ) ( pHeader->GetNextMemBlock() );
@@ -702,10 +702,10 @@ GENERALHEAPINLINE bool CGeneralHeap::CheckFillMemoryValue(CGeneralHeapHeader* pH
 	{
 		memEnd = m_pHeapEnd;
 	}
-			
+
 	uint32* pMem = (uint32*)memStart;
 	unsigned int memSize = (( unsigned int ) memEnd - ( unsigned int ) memStart) / 4;
-			
+
 	for (uint32 n = 0; n < memSize; n++)
 	{
 		if (pMem[n] != GENERALHEAPFILLMEMORYVALUE)
@@ -722,7 +722,7 @@ GENERALHEAPINLINE bool CGeneralHeap::CheckFillMemoryValue(CGeneralHeapHeader* pH
 			// break;
 		}
 	}
-					
+
 	return bRetVal;
 }
 
@@ -730,17 +730,17 @@ GENERALHEAPINLINE bool CGeneralHeap::CheckFillMemoryValue(CGeneralHeapHeader* pH
 GENERALHEAPINLINE bool CGeneralHeap::CheckFillMemoryValues()
 {
 	bool bRetVal = true;
-	
+
 	// loop through all the free list size arrays
 	for (uint32 i = 1; i < GENERALHEAPFREELISTARRAYSIZE; i++)
 	{
 		// get pointer to header for this block
 		CGeneralHeapHeader* pHeader = m_pFreeList[i];
 
-		// loop through all items in free list			
+		// loop through all items in free list
 		while (pHeader != NULL)
 		{
-			// check this memory piece		
+			// check this memory piece
 			if (!CheckFillMemoryValue(pHeader))
 			{
 				// uncomment this if you want to quit after finding a problem
@@ -752,7 +752,7 @@ GENERALHEAPINLINE bool CGeneralHeap::CheckFillMemoryValues()
 			pHeader = pHeader->m_pNextFreeBlock;
 		}
 	}
-	
+
 	return bRetVal;
 }
 #endif

@@ -485,15 +485,15 @@ void dprintfmonoclrscr( void )
 }
 
 #ifdef _CONSOLE
-void dprintfmonoprint(char *message )
+void dprintfmonoprint(const char *message )
 #else
 #ifdef _LINUX
-void dprintfmonoprint(char *message )
+void dprintfmonoprint(const char *message )
 #else
 #ifndef __FLATMODEL__
 void dprintfmonoprint(char far *message )
 #else
-void dprintfmonoprint(char *message )
+void dprintfmonoprint(const char *message )
 #endif
 #endif
 #endif
@@ -539,24 +539,24 @@ void dprintfmonoprint(char *message )
             ATTR + message[i++];
     }
 #else
-  printf(message);
+  printf("%s", message);
 #endif
 #else
   OutputDebugString(message);
 #endif
 #else
-  printf(message);
+  printf("%s", message);
 #endif
 }
 
 
 /********************************  GENERAL ROUTINES *****************************/
 
-void dprintfdoprint (char *Str) {
+void dprintfdoprint (const char *Str) {
 
 #ifdef _CONSOLE
 #ifdef _DEBUG
-	printf(Str);
+	printf("%s",Str);
 	return;
 #endif
 #else
@@ -568,7 +568,7 @@ void dprintfdoprint (char *Str) {
 #else
 #ifdef _LINUX
 #ifdef _DEBUG
-	printf(Str);
+	printf("%s",Str);
 	return;
 #endif
 #else
@@ -606,7 +606,7 @@ void dprintfdoprint (char *Str) {
 }
 #endif
 
-void dprintf(char *format, ...)
+void dprintf(const char *format, ...)
 {
 #ifndef NODPRINTF
 	 if ((dprintfOutType == DPRINTF_NOTHING) || (dprintfOutType == DPRINTF_UNKNOWN)) return;

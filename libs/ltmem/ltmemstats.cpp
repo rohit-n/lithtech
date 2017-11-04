@@ -1,4 +1,4 @@
-// ltmemstats.cpp 
+// ltmemstats.cpp
 //
 
 #include "stdafx.h"
@@ -77,7 +77,7 @@ void LTMemConsoleDump()
 	{
 		if (pFinger->m_nFlags & CMemTrackAllocInfo::k_nFlag_Marked)
 		{
-			bool bIsUnknown = 
+			bool bIsUnknown =
 				(pFinger->m_sFileName[0] == 0) ||
 				(pFinger->m_nAllocationType == LT_MEM_TYPE_UNKNOWN);
 			if (!bIsUnknown)
@@ -92,7 +92,7 @@ void LTMemConsoleDump()
 		pFinger = pFinger->m_pNext;
 	}
 
-	dsi_ConsolePrint("%d (%dk) marked, %d (%dk) known, %d (%dk) unknown", 
+	dsi_ConsolePrint("%d (%dk) marked, %d (%dk) known, %d (%dk) unknown",
 		nMarkedCount, nMarkedSize / 1024, nKnownCount, nKnownSize / 1024,
 		(nMarkedCount - nKnownCount), (nMarkedSize - nKnownSize) / 1024);
 }
@@ -146,59 +146,59 @@ void LTMemConsole(int argc, const char *argv[])
 	}
 
 	// get pointer to the command
-	char* sCommand = argv[0];
+	const char* sCommand = argv[0];
 
 	// make sure command is valid
-	if (sCommand == NULL) 
+	if (sCommand == NULL)
 	{
 		LTMemConsoleHelp();
 		return;
 	}
 
 	// is this the help command
-	if (stricmp(sCommand, "help") == 0) 
+	if (stricmp(sCommand, "help") == 0)
 	{
 		LTMemConsoleHelp();
 	}
 
 	// is this the stats command
-	else if (stricmp(sCommand, "stats") == 0) 
+	else if (stricmp(sCommand, "stats") == 0)
 	{
 		LTMemTrackPrintStats();
 	}
 
 	// is this the log command
-	else if (stricmp(sCommand, "log") == 0) 
+	else if (stricmp(sCommand, "log") == 0)
 	{
 		LTMemLog(argc, argv);
 	}
 
 	// is this the fulllog command
-	else if (stricmp(sCommand, "fulllog") == 0) 
+	else if (stricmp(sCommand, "fulllog") == 0)
 	{
 		LTMemFullLog(argc, argv);
 	}
 
 	// is this the mark command
-	else if (stricmp(sCommand, "mark") == 0) 
+	else if (stricmp(sCommand, "mark") == 0)
 	{
 		LTMemConsoleMark();
 	}
 
 	// is this the un-mark command
-	else if (stricmp(sCommand, "unmark") == 0) 
+	else if (stricmp(sCommand, "unmark") == 0)
 	{
 		LTMemConsoleUnMark();
 	}
 
 	// is this the dump command
-	else if (stricmp(sCommand, "dump") == 0) 
+	else if (stricmp(sCommand, "dump") == 0)
 	{
 		LTMemConsoleDump();
 	}
 
 	// is this the ignore command
-	else if (stricmp(sCommand, "ignore") == 0) 
+	else if (stricmp(sCommand, "ignore") == 0)
 	{
 		LTMemConsoleIgnore();
 	}
@@ -288,7 +288,7 @@ void LTMemLog(uint32 nArgC, const char** ppArgV)
 
 			nNumRecords++;
 		}
-	
+
 		pInfo = pInfo->m_pNext;
 	}
 
@@ -303,7 +303,7 @@ void LTMemLog(uint32 nArgC, const char** ppArgV)
 		CMemTrackTypeToString* pType = LTMemTrackGetPointerFromType(Record.m_nMemType);
 
 		const char* pszTypeName = (pType) ? pType->m_sName : "Unknown";
-		
+
 		fprintf(pOutFile, "%s, %s, %d, %d, %d\n", pszTypeName, Record.m_pszFilename, Record.m_nLine, Record.m_nAllocations, Record.m_nMemorySize);
 	}
 
@@ -349,7 +349,7 @@ void LTMemFullLog(uint32 nArgC, const char** ppArgV)
 		const char* pszTypeName = (pType) ? pType->m_sName : "Unknown";
 
 		fprintf(pOutFile, "%s, %s, %d, %d\n", pszTypeName, pInfo->m_sFileName, pInfo->m_nLineNum, nSize);
-	
+
 		pInfo = pInfo->m_pNext;
 	}
 
@@ -410,12 +410,12 @@ void LTMemTrackPrintStats()
 	{
 		uint32 nSize = pInfo->m_nActualSize - sizeof(CMemTrackAllocInfo);
 		CMemTrackTypeToString* pType = LTMemTrackGetPointerFromType(pInfo->m_nAllocationType);
-		if (pType == NULL) 
+		if (pType == NULL)
 		{
 			nUnregisteredMemory += nSize;
 			nUnregisteredAllocations++;
 		}
-		else 
+		else
 		{
 			pType->m_nMemoryAllocated += nSize;
 			pType->m_nNumAllocations++;
@@ -425,7 +425,7 @@ void LTMemTrackPrintStats()
 			nLargestBlock = nSize;
 		if(nSize < nSmallestBlock)
 			nSmallestBlock = nSize;
-	
+
 		pInfo = pInfo->m_pNext;
 	}
 

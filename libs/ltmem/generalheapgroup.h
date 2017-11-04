@@ -17,38 +17,38 @@
 #include "generalheap.h"
 #endif
 
-class CGeneralHeapGroup 
+class CGeneralHeapGroup
 {
 public:
 	// simple constructor
-	CGeneralHeapGroup() 
-	{ 
+	CGeneralHeapGroup()
+	{
 // these can't be initialized because they sometimes get initialized
 // after the class is set up
-//		m_bInitialized = false; 
+//		m_bInitialized = false;
 //		m_pHeapList = NULL;
 	};
 
 	// constructor which also initializes the class
 	CGeneralHeapGroup(
-		uint32 nInitialHeapSize, 
+		uint32 nInitialHeapSize,
 		uint32 nGrowHeapSize,
 		uint32 nHeapAlign)
-	{ 
-		m_bInitialized = false; 
-		Init(nInitialHeapSize,nGrowHeapSize,nHeapAlign); 
+	{
+		m_bInitialized = false;
+		Init(nInitialHeapSize,nGrowHeapSize,nHeapAlign);
 	};
 
 	// desctructor
-	~CGeneralHeapGroup() 
-	{ 
-		Term(); 
+	~CGeneralHeapGroup()
+	{
+		Term();
 	};
 
 	// function to initialize the class
-	// this must be called before any other calls 
+	// this must be called before any other calls
 	inline bool Init(
-		uint32 nInitialHeapSize, 
+		uint32 nInitialHeapSize,
 		uint32 nGrowHeapSize,
 		uint32 nHeapAlign);
 
@@ -107,14 +107,14 @@ private:
 
 
 inline bool CGeneralHeapGroup::Init(
-		uint32 nInitialHeapSize, 
+		uint32 nInitialHeapSize,
 		uint32 nGrowHeapSize,
 		uint32 nHeapAlign)
 {
 	// check if we are supposed to allocate initial heap space
 	if (nInitialHeapSize > 0)
 	{
-		if (!AddHeap(nInitialHeapSize, nHeapAlign)) 
+		if (!AddHeap(nInitialHeapSize, nHeapAlign))
 		{
 			ASSERT(false);
 			return false;
@@ -125,7 +125,7 @@ inline bool CGeneralHeapGroup::Init(
 	{
 		m_pHeapList = NULL;
 	}
-	
+
 	// save memory grow size in bytes
 	m_nGrowHeapSize = nGrowHeapSize;
 
@@ -168,7 +168,7 @@ inline bool CGeneralHeapGroup::AddHeap(
 	// allocate initial heap item
 	CGeneralHeapItem* pNewHeap = new CGeneralHeapItem;
 //	CGeneralHeapItem* pNewHeap = (CGeneralHeapItem*)malloc(sizeof(CGeneralHeapItem));
-	if (pNewHeap == NULL) 
+	if (pNewHeap == NULL)
 	{
 		ASSERT(false);
 		return false;
@@ -176,8 +176,8 @@ inline bool CGeneralHeapGroup::AddHeap(
 
 	// allocate memory for the general heap and round it to even 256 bytes
 	pNewHeap->m_pMem = malloc(nHeapSize + 0xff);
-	uint8* pHeapMem = (uint8*)(((uint32)((uint8*)pNewHeap->m_pMem) + 0xff) & (~0xff));
-	if (pHeapMem == NULL) 
+	uint8* pHeapMem = (uint8*)(((uintptr_t)((uint8*)pNewHeap->m_pMem) + 0xff) & (~0xff));
+	if (pHeapMem == NULL)
 	{
 		delete pNewHeap;
 		ASSERT(false);
@@ -186,7 +186,7 @@ inline bool CGeneralHeapGroup::AddHeap(
 	}
 
 	// initialize the general heap
-	pNewHeap->m_heap.Init((uint32)pHeapMem, nHeapSize, nHeapAlign);
+	pNewHeap->m_heap.Init((uintptr_t)pHeapMem, nHeapSize, nHeapAlign);
 
 	// add to heap list
 	pNewHeap->m_pNext = m_pHeapList;
@@ -211,7 +211,7 @@ inline void* CGeneralHeapGroup::Alloc(uint32 nSize)
 	{
 		// try to allocate from this heap
 		pMem = pCurHeap->m_heap.Alloc(nSize);
-		if (pMem != NULL) 
+		if (pMem != NULL)
 		{
 			// return memory we allocated
 			return pMem;
