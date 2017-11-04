@@ -1128,8 +1128,13 @@ bool CButeMgr::Save(const char* szNewFileName)
 	char *pssBuf = new char[nFileLength];
 	pssBuf[0] = '\0';
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+	std::string buffer;
+	buffer.reserve(nFileLength);
+
+#if _MSC_VER >= 1300 
 	std::strstream ss(pssBuf, nFileLength, std::ios_base::in | std::ios_base::out);
+#elif defined(__GNUC__)
+	std::stringstream ss(buffer, std::ios_base::in | std::ios_base::out);
 #else
 	strstream ss(pssBuf, nFileLength, ios::in | ios::out);
 #endif // VC7
@@ -1137,8 +1142,12 @@ bool CButeMgr::Save(const char* szNewFileName)
 	if (m_bCrypt)
 	{
 		m_cryptMgr.Decrypt(is, ss);
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300
 		m_pSaveData = new std::iostream(new std::strstreambuf(nFileLength));
+#elif defined(__GNUC__)
+		auto strbuf = new std::stringbuf;
+		strbuf->str().reserve(nFileLength);
+		m_pSaveData = new std::iostream{strbuf};
 #else
 		m_pSaveData = new iostream(new strstreambuf(nFileLength));
 #endif // VC7

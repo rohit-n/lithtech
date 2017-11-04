@@ -35,7 +35,8 @@
 #   include <string>
 #   include <iostream>
 #   include <fstream>
-#   include <strstream>
+#   include <sstream>
+
 struct ci_char_traits : public std::char_traits<char> {
     static char to_upper(char ch) {
         return std::toupper((unsigned char) ch);
@@ -576,29 +577,38 @@ inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* crypt
 {
 	m_bCrypt = true;
 	m_cryptMgr.SetKey(cryptKey);
+#ifndef __GNUC__
 	char* buf2 = new char[(unsigned int)nLen];
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::ostrstream* pOss = new std::ostrstream(buf2, nLen);
+#endif
+#if _MSC_VER >= 1300
+	std::ostrstream pOss{buf2, nLen};
+#elif defined(__GNUC__)
+	std::string buffer{};
+	buffer.reserve(nLen);
+	std::ostringstream pOss{buffer};
 #else
-	ostrstream* pOss = new ostrstream(buf2, nLen);
+	ostrstream pOss(buf2, nLen);
 #endif // VC7
-	m_cryptMgr.Decrypt(iCrypt, *pOss);
+	m_cryptMgr.Decrypt(iCrypt, pOss);
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::istrstream* pIStream = new std::istrstream(const_cast<const char *>(buf2), pOss->pcount());
+#if _MSC_VER >= 1300
+	std::istrstream IStream{const_cast<const char *>(buf2), pOss.pcount()};
+#elif defined(__GNUC__)
+    std::istringstream IStream{const_cast<const std::string&>(buffer)};
 #else
-	istrstream* pIStream = new istrstream(buf2, pOss->pcount());
+	istrstream IStream(buf2, pOss->pcount());
 #endif // VC7
-
-	delete pOss;
 
 	Reset();
 
-	bool retVal = Parse( *pIStream );
+#ifndef __GNUC__
+	bool retVal = Parse( IStream );
 
-	delete pIStream;
 	delete buf2;
 	return retVal;
+#else
+	return Parse( IStream );
+#endif
 }
 
 
@@ -608,18 +618,19 @@ inline bool CButeMgr::Parse(CRezItm* pItem, int decryptCode)
 {
 	if (!pItem)
 		return false;
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::istrstream* pIStream = new std::istrstream((char*)pItem->Load(), pItem->GetSize());
+#if _MSC_VER >= 1300
+	std::istrstream pIStream{(char*)pItem->Load(), pItem->GetSize()};
+#elif defined(__GNUC__)
+	std::istringstream pIStream{std::string{(char*)pItem->Load(), pItem->GetSize()}};
 #else
-	istrstream* pIStream = new istrstream((char*)pItem->Load(), pItem->GetSize());
+	istrstream IStream((char*)pItem->Load(), pItem->GetSize());
 #endif // VC7
 	if( !pIStream )
 		return false;
 
-	retVal = Parse( *pIStream, decryptCode );
+	bool retVal = Parse( IStream, decryptCode );
 
 	pItem->UnLoad();
-	delete pIStream;
 
 	return retVal;
 }
@@ -631,18 +642,19 @@ inline bool CButeMgr::Parse(CRezItm* pItem, const char* cryptKey)
 		return false;
 	char* buf1 = (char*)pItem->Load();
 	int len = pItem->GetSize();
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::istrstream* pIss = new std::istrstream(buf1, len);
+#if _MSC_VER >= 1300
+	std::istrstream Iss{buf1, len};
+#elif defined(__GNUC__)
+	std::istringstream Iss{std::string{buf1, len}};
 #else
-	istrstream* pIss = new istrstream(buf1, len);
+	istrstream Iss(buf1, len);
 #endif // VC7
 
 	Reset();
 
-	retVal = Parse( *pIss, len, cryptKey );
+	bool retVal = Parse( Iss, len, cryptKey );
 
 	pItem->UnLoad();
-	delete pIss;
 	return retVal;
 }
 #endif
@@ -656,20 +668,18 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, int decryptCode,
 {
 	if (!pData)
 		return false;
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::istrstream* pIStream = new std::istrstream((char*)pData, size);
+#if _MSC_VER >= 1300
+	std::istrstream IStream{(char*)pData, size};
+#elif defined(__GNUC__)
+	std::istringstream IStream{std::string{(char*)pData, size}};
 #else
-	istrstream* pIStream = new istrstream((char*)pData, size);
+	istrstream IStream((char*)pData, size);
 #endif // VC7
 
 	// Need to set the attribute filename if we want to Save the butemgr later...
 	m_sAttributeFilename = sAttributeFilename;
 
-	bool retVal = Parse( *pIStream, decryptCode );
-
-	delete pIStream;
-
-	return retVal;
+	return Parse( IStream, decryptCode );
 }
 
 
@@ -681,11 +691,13 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 	if (!pData)
 		return false;
 	char* buf1 = (char*)pData;
-	int len = size;
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::istrstream* pIss = new std::istrstream(buf1, len);
+	size_t len = size;
+#if _MSC_VER >= 1300
+	std::istrstream Iss(buf1, len);
+#elif defined(__GNUC__)
+	std::istringstream Iss{std::string{buf1, len}};
 #else
-	istrstream* pIss = new istrstream(buf1, len);
+	istrstream Iss(buf1, len);
 #endif // VC7
 
 	Reset();
@@ -693,11 +705,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 	// Need to set the attribute filename if we want to Save the butemgr later...
 	m_sAttributeFilename = sAttributeFilename;
 
-	bool retVal = Parse( *pIss, len, cryptKey );
-
-	delete pIss;
-
-	return retVal;
+	return Parse( Iss, len, cryptKey );
 }
 
 
@@ -706,26 +714,18 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 inline bool CButeMgr::Parse(CString sAttributeFilename, int decryptCode)
 {
 #if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::ifstream* pIStream = new std::ifstream(sAttributeFilename, std::ios_base::in);
+	std::ifstream IStream {sAttributeFilename, std::ios_base::in};
 #else
-	ifstream* pIStream = new ifstream(sAttributeFilename, ios::in | ios::nocreate);
+	ifstream IStream(sAttributeFilename, ios::in | ios::nocreate);
 #endif // VC7
-	if( !pIStream )
+	if( !IStream )
 		return false;
-	if (pIStream->fail())
-	{
-		delete pIStream;
-		return false;
-	}
 
 	Reset();
 
 	m_sAttributeFilename = sAttributeFilename;
 
-	bool retVal = Parse( *pIStream, decryptCode );
-
-	delete pIStream;
-	return retVal;
+	return Parse( IStream, decryptCode );
 }
 
 
@@ -733,34 +733,26 @@ inline bool CButeMgr::Parse(CString sAttributeFilename, int decryptCode)
 inline bool CButeMgr::Parse(CString sAttributeFilename, const char* cryptKey)
 {
 #if _MSC_VER >= 1300 || defined(__GNUC__)
-	std::ifstream* pIs = new std::ifstream(sAttributeFilename, std::ios_base::binary);
+	std::ifstream Is(sAttributeFilename, std::ios_base::binary);
 #else
-	ifstream* pIs = new ifstream(sAttributeFilename, ios::nocreate | ios::binary);
+	ifstream Is(sAttributeFilename, ios::nocreate | ios::binary);
 #endif // VC7
-	if (!pIs)
+	if (!Is)
 		return false;
-	if (pIs->fail())
-	{
-		delete pIs;
-		return false;
-	}
 
 #if _MSC_VER >= 1300 || defined(__GNUC__)
-	pIs->seekg(0, std::ios_base::end);
+	Is.seekg(0, std::ios_base::end);
 #else
-	pIs->seekg(0, ios::end);
+	Is.seekg(0, ios::end);
 #endif // VC7
-	std::streamoff len = pIs->tellg();
+	std::streamoff len = Is.tellg();
 
-	pIs->seekg(0);
+	Is.seekg(0);
 
 	Reset();
 	m_sAttributeFilename = sAttributeFilename;
 
-	bool retVal = Parse( *pIs, len, cryptKey );
-
-	delete pIs;
-	return retVal;
+	return Parse( Is, len, cryptKey );
 }
 
 
