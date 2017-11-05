@@ -13,9 +13,9 @@
 
 	// Includes....
 
-	#include "basefx.h"
+	#include "BaseFx.h"
 	#include "linklist.h"
-	#include "fastlist.h"
+	#include "FastList.h"
 	#include "swaplist.h"
 
 	// Structures....
@@ -71,8 +71,8 @@
 		LTFLOAT							m_fMinRadius;
 		LTFLOAT							m_fMaxRadius;
 		LTVector						m_vPlaneDir;
-		LTVector						m_vPerp1;		
-		LTVector						m_vPerp2;				
+		LTVector						m_vPerp1;
+		LTVector						m_vPerp2;
 		LTVector						m_vMinSpriteVelocity;
 		LTVector						m_vMaxSpriteVelocity;
 		LTVector						m_vMinSpriteRotation;
@@ -113,7 +113,7 @@
 			void	AddSprites( );
 			void	UpdateSprites( LTFLOAT tmFrameTime );
 			void	SetupParticle(const LTVector& vPos, float fWidth, float fHeight, const LTRotation& rSpin, uint8 r, uint8 g, uint8 b, uint8 a);
-		
+
 			// Accessors
 
 		protected :

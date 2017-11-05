@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "DynaLightFX.h"
-#include "ClientFX.h"
+#include "dynalightfx.h"
+#include "clientfx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -21,7 +21,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CDynaLightProps::CDynaLightProps() : 
+CDynaLightProps::CDynaLightProps() :
 	m_bFlicker(false),
 	m_bForceLightWorld(false)
 {
@@ -47,11 +47,11 @@ bool CDynaLightProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Flicker"))
+		if( !stricmp( fxProp.m_sName, "Flicker"))
 		{
 			m_bFlicker = fxProp.GetIntegerVal() ? true : false;
 		}
-		else if( !_stricmp( fxProp.m_sName, "ForceLightWorld"))
+		else if( !stricmp( fxProp.m_sName, "ForceLightWorld"))
 		{
 			m_bForceLightWorld = fxProp.GetComboVal() ? true : false;
 		}
@@ -99,7 +99,7 @@ bool CDynaLightFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	LTVector vScale;
@@ -163,14 +163,14 @@ void CDynaLightFX::Term()
 bool CDynaLightFX::Update(float tmFrameTime)
 {
 	// Base class update first
-	
-	if (!CBaseFX::Update(tmFrameTime)) 
+
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
 	if (IsShuttingDown())
 	{
 		m_pLTClient->SetLightRadius(m_hObject, 0);
-		
+
 		return true;
 	}
 
@@ -179,12 +179,12 @@ bool CDynaLightFX::Update(float tmFrameTime)
 	if (GetProps()->m_bFlicker)
 	{
 		float fRand = 0.3f + GetRandom(0.0f, 0.19f);
-		
+
 		m_red   *= fRand;
 		m_green *= fRand;
 		m_blue  *= fRand;
 	}
-	
+
 	// Try to add some sort of intensity based off the alpha...
 
 	m_red	= LTCLAMP( m_red * m_alpha, 0.0f, 1.0f );

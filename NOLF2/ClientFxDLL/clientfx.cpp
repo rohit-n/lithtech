@@ -12,20 +12,20 @@
 
 #include "stdafx.h"
 #include "resource.h"
-#include "ClientFX.h"
-#include "SpriteSystemFX.h"
-#include "SpriteFX.h"
-#include "DynaLightFX.h"
-#include "PlaySoundFX.h"
-#include "CamJitterFX.h"
-#include "CamWobbleFX.h"
-#include "BouncyChunkFX.h"
-#include "NullFX.h"
-#include "FallingStuffFX.h"
-#include "PolyTubeFX.h"
-#include "PlayRandomSoundFX.h"
-#include "LTBModelFX.h"
-#include "LTBBouncyChunkFX.h"
+#include "clientfx.h"
+#include "spritesystemfx.h"
+#include "spritefx.h"
+#include "dynalightfx.h"
+#include "playsoundfx.h"
+#include "camjitterfx.h"
+#include "camwobblefx.h"
+#include "bouncychunkfx.h"
+#include "nullfx.h"
+#include "fallingstufffx.h"
+#include "polytubefx.h"
+#include "playrandomsoundfx.h"
+#include "ltbmodelfx.h"
+#include "LTBbouncychunkfx.h"
 #include "ParticleSystemFX.h"
 #include "CreateFX.h"
 #include "FlareSpriteFX.h"
@@ -33,6 +33,14 @@
 
 #ifdef _WIN32
 	#include "windows.h"
+#else
+    #define APIENTRY
+    #define DLL_PROCESS_ATTACH 1
+    #define DLL_THREAD_ATTACH  2
+    #define DLL_THREAD_DETACH  4
+    #define DLL_PROCESS_DETACH 8
+    typedef void* HANDLE;
+    typedef void* LPVOID;
 #endif
 
 ILTClient *g_pLTClient;
@@ -108,7 +116,7 @@ CBankedList<CPlayRandomSoundFX>		g_PlayRandomSoundFX_Bank;
 CBankedList<CSpriteSystem>			g_SpriteSystem_Bank;
 CBankedList<CCreateFX>				g_CreateFX_Bank;
 CBankedList<CFlareSpriteFX>			g_FlareSpriteFX_Bank;
-CBankedList<CLightningFX>			g_LightningFX_Bank;	
+CBankedList<CLightningFX>			g_LightningFX_Bank;
 
 
 LT_POLYGT3			g_pTris	[MAX_BUFFER_TRIS];
@@ -126,8 +134,8 @@ void*				g_pCreateClientFxUserData;
 extern "C"
 {
 
-bool APIENTRY DllMain( HANDLE hModule, 
-                       uint32  ul_reason_for_call, 
+bool APIENTRY DllMain( HANDLE hModule,
+                       uint32  ul_reason_for_call,
                        LPVOID lpReserved
 					 )
 {
@@ -329,7 +337,7 @@ __declspec(dllexport) FX_REF fxGetRef(int nFx)
 			fxRef.m_pfnCreate	= fxCreateFlareSpriteFX;
 			fxRef.m_pfnDelete	= fxDelete;
 			fxRef.m_pfnGetProps = fxGetFlareSpriteProps;
-		}	
+		}
 		break;
 
 		case 16 :
@@ -349,12 +357,12 @@ __declspec(dllexport) FX_REF fxGetRef(int nFx)
 			fxRef.m_pfnCreate	= LTNULL;
 			fxRef.m_pfnDelete	= LTNULL;
 			fxRef.m_pfnGetProps = LTNULL;
-		}	
-		break;		
+		}
+		break;
 	}
-	
+
 	// Success !!
-	
+
 	return fxRef;
 }
 
@@ -463,13 +471,13 @@ __declspec(dllexport) void fxDelete(CBaseFX *pDeleteFX)
 		break;
 
 		default:
-		{	
+		{
 			// We should never be getting here!
 			ASSERT( LTFALSE );
 		}
 		break;
 	}
-	
+
 }
 
 //------------------------------------------------------------------
@@ -555,8 +563,8 @@ __declspec(dllexport) CBaseFXProps* fxCreatePropList(int nFx)
 		{
 			assert(!"Invalid property type requested");
 			return NULL;
-		}	
-		break;		
+		}
+		break;
 	}
 }
 

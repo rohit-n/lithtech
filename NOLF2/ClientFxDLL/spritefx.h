@@ -13,11 +13,11 @@
 
 	// Includes....
 
-	#include "basefx.h"
+	#include "BaseFx.h"
 
-	// 
+	//
 	// Defines...
-	//	
+	//
 
 	#define FACE_CAMERAFACING	0
 	#define FACE_ALONGNORMAL	1

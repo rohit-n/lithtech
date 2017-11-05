@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "ClientFX.h"
-#include "FallingStuffFX.h"
+#include "clientfx.h"
+#include "fallingstufffx.h"
 #include "FastList.h"
 #include "math.h"
 
@@ -27,7 +27,7 @@ uint32 g_dwSplash = 0;
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CFallingStuffProps::CFallingStuffProps() 
+CFallingStuffProps::CFallingStuffProps()
 {
 	m_nFallingStuffFXEmission	= 1;
 	m_tmFallingStuffFXEmission	= 1.0f;
@@ -119,7 +119,7 @@ bool CFallingStuffProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 			m_vPlaneDir.x = fxProp.m_data.m_fVec[0];
 			m_vPlaneDir.y = fxProp.m_data.m_fVec[1];
 			m_vPlaneDir.z = fxProp.m_data.m_fVec[2];
-		}		
+		}
 		else if (!stricmp(fxProp.m_sName, "ImpactSprite"))
 		{
 			char sTmp[128];
@@ -197,7 +197,7 @@ bool CFallingStuffFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const C
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	// Store the first position as the last position
@@ -211,10 +211,10 @@ bool CFallingStuffFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const C
 	{
 		LTRotation orient;
 		m_pLTClient->GetObjectRotation(m_hParent, &orient);
-		
+
 		LTMatrix mRot;
 		Mat_SetBasisVectors(&mRot, &orient.Right(), &orient.Up(), &orient.Forward());
-		
+
 		LTVector vTmp = m_vPlaneDir;
 
 		MatVMul(&m_vPlaneDir, &mRot, &vTmp);
@@ -229,7 +229,7 @@ bool CFallingStuffFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const C
 	vTest.x = (float)fabs(vTest.x);
 	vTest.y = (float)fabs(vTest.y);
 	vTest.z = (float)fabs(vTest.z);
-	
+
 	if (vTest == vUp)
 	{
 		// Gotsta use another axis
@@ -272,7 +272,7 @@ void CFallingStuffFX::Term()
 		{
 			m_pLTClient->RemoveObject(pNode->m_Data->m_hObject);
 			debug_delete( pNode->m_Data );
-			
+
 			pNode = pNode->m_pNext;
 		}
 
@@ -287,7 +287,7 @@ void CFallingStuffFX::Term()
 		{
 			m_pLTClient->RemoveObject(pNode->m_Data->m_hObject);
 			debug_delete( pNode->m_Data );
-			
+
 			pNode = pNode->m_pNext;
 		}
 
@@ -309,10 +309,10 @@ void CFallingStuffFX::Term()
 bool CFallingStuffFX::Update(float tmFrameTime)
 {
 	// Base class update first
-	
+
 	m_vLastPos = m_vPos;
-	
-	if (!CBaseFX::Update(tmFrameTime)) 
+
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
 	//increment our emission time by the elapsed frame time
@@ -328,9 +328,9 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 
 		LTVector vInterp;
 		LTVector vInterpCur  = m_vPos;
-		
+
 		// Calculate interpolant for particle system
-		
+
 		if (GetProps()->m_nFallingStuffFXEmission)
 		{
 			vInterp = m_vPos - m_vLastPos;
@@ -341,14 +341,14 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 		{
 			ocs.m_ObjectType		= OT_SPRITE;
 			ocs.m_Flags				= FLAG_VISIBLE | FLAG_NOLIGHT | FLAG_ROTATABLESPRITE;
-			
+
 			// Compute the initial position
 
 			float xRand = GetProps()->m_fRadius * ((-10000.0f + (rand() % 20000)) / 10000.0f);
 			float zRand = GetProps()->m_fRadius * ((-10000.0f + (rand() % 20000)) / 10000.0f);
-			
+
 			ocs.m_Pos = m_vPos + (m_vRight * xRand) + (m_vUp * zRand);
-			
+
 			ocs.m_Scale				= vScale;
 			strcpy(ocs.m_Filename, GetProps()->m_sSpriteName);
 
@@ -396,7 +396,7 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 					pNewSprite->m_tmElapsed	= 0.0f;
 					pNewSprite->m_vPos		= ocs.m_Pos;
 					pNewSprite->m_vLastPos	= ocs.m_Pos;
-				
+
 					m_collSprites.AddTail(pNewSprite);
 				}
 			}
@@ -438,9 +438,9 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 	m_pLTClient->GetObjectRotation(m_hCamera, &orient);
 
 	LTRotation dRot(orient);
-	
+
 	LTVector vF = orient.Forward();
-	
+
 	float rot = (float)atan2(vF.x, vF.z);
 
 	// Update the sprites....
@@ -465,20 +465,20 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 
 			m_pLTClient->RemoveObject(pSprite->m_hObject);
 
-			pDelNode = pNode;			
+			pDelNode = pNode;
 		}
 		else
 		{
 			// Update !!
 
 			pSprite->m_vLastPos = pSprite->m_vPos;
-	
+
 			pSprite->m_vPos += (pSprite->m_vVel * tmFrameTime);
 
 			// Rotate if neccessary
 
 			TVector3<float> vPos = pSprite->m_vPos;
-						
+
 			if (GetProps()->m_bUseSpin)
 			{
 				MatVMul_InPlace(&mSpin, &vPos);
@@ -493,13 +493,13 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 			LTVector vPos2 = vPos;
 			m_pLTClient->SetObjectPos(pSprite->m_hObject, &vPos2);
 
-			
+
 			// Setup the colour
-			
+
 			float r, g, b, a;
-			
-			m_pLTClient->GetObjectColor(pSprite->m_hObject, &r, &g, &b, &a);			
-			CalcColour(pSprite->m_tmElapsed, GetProps()->m_tmSpriteLifespan, &r, &g, &b, &a);			
+
+			m_pLTClient->GetObjectColor(pSprite->m_hObject, &r, &g, &b, &a);
+			CalcColour(pSprite->m_tmElapsed, GetProps()->m_tmSpriteLifespan, &r, &g, &b, &a);
 			m_pLTClient->SetObjectColor(pSprite->m_hObject, r, g, b, a);
 
 			// Setup the scale
@@ -513,12 +513,12 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 			m_pLTClient->SetObjectScale(pSprite->m_hObject, &vScale);
 
 			// Setup the rotation
-			
+
 			dRot = LTRotation(0, 0, 0, 1);
 			LTRotation orient(dRot);
 
 			orient.Rotate( orient.Up(), rot );
-			
+
 			m_pLTClient->SetObjectRotation(pSprite->m_hObject, &orient);
 
 			// Check to see if we need to start a splash sprite
@@ -534,7 +534,7 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 				if ((GetProps()->m_sImpactSpriteName[0]) && (m_pLTClient->IntersectSegment(&ciq, &cii)))
 				{
 					// Create a splash sprite
-									
+
 					SPLASH *pSplash = debug_new( SPLASH );
 
 					ObjectCreateStruct ocs;
@@ -559,9 +559,9 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 					m_pLTClient->SetObjectRotation(pSplash->m_hObject, &orient);
 
 					pSplash->m_tmElapsed = 0.0f;
-					
+
 					m_collSplashes.AddTail(pSplash);
-					
+
 					// Destroy this object
 
 					m_pLTClient->RemoveObject(pSprite->m_hObject);
@@ -590,7 +590,7 @@ bool CFallingStuffFX::Update(float tmFrameTime)
 
 		//update the elapsed time on the splash
 		pSplash->m_tmElapsed += tmFrameTime;
-		
+
 		// Calculate the new scale
 
 		float scale = GetProps()->m_fImpactScale1 + ((GetProps()->m_fImpactScale2 - GetProps()->m_fImpactScale1) * (pSplash->m_tmElapsed / GetProps()->m_tmImpactLifespan));

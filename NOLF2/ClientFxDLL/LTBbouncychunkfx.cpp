@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "LTBBouncyChunkFX.h"
-#include "ClientFX.h"
+#include "LTBbouncychunkfx.h"
+#include "clientfx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -21,7 +21,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CLTBBouncyChunkProps::CLTBBouncyChunkProps() : 
+CLTBBouncyChunkProps::CLTBBouncyChunkProps() :
 	m_bPlayImpactSound(false),
 	m_fChunkSpeed(0.0f),
 	m_fChunkSpread(0.0f),
@@ -105,7 +105,7 @@ bool CLTBBouncyChunkProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 			m_vChunkDir.y = fxProp.m_data.m_fVec[1];
 			m_vChunkDir.z = fxProp.m_data.m_fVec[2];
 			m_vChunkDir.Norm();
-		}				
+		}
 		else if (!stricmp(fxProp.m_sName, "ChunkSpeed"))
 		{
 			m_fChunkSpeed = fxProp.m_data.m_fVal;
@@ -162,7 +162,7 @@ bool CLTBBouncyChunkFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	LTVector vChunkDir = GetProps()->m_vChunkDir;
@@ -177,7 +177,7 @@ bool CLTBBouncyChunkFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const
 	{
 		m_pLTClient->GetObjectPos(m_hParent, &vPos);
 		m_pLTClient->GetObjectRotation(m_hParent, &rRot);
-	}	
+	}
 	else
 	{
 		vPos = m_vCreatePos;
@@ -221,7 +221,7 @@ bool CLTBBouncyChunkFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const
 	// Create the base object
 
 	CreateDummyObject();
-		
+
 	// Success !!
 
 	return true;
@@ -260,8 +260,8 @@ void CLTBBouncyChunkFX::Term()
 bool CLTBBouncyChunkFX::Update(float tmFrameTime)
 {
 	// Base class update first
-	
-	if (!CBaseFX::Update(tmFrameTime)) 
+
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
 	if ((m_hImpactSound) && (m_pLTClient->IsDone(m_hImpactSound)))
@@ -278,14 +278,14 @@ bool CLTBBouncyChunkFX::Update(float tmFrameTime)
 
 	LTVector vCur;
 	m_pLTClient->GetObjectPos(m_hBouncyChunk, &vCur);
-		
+
 	// Compute the new position of the chunk
 
 	LTVector vNew = vCur;
 	vNew += m_vVel * tmFrameTime;
-	
+
 	m_vVel += GetProps()->m_vGravity * tmFrameTime;
-	
+
 	// Move the object and collide against the world
 
 	ClientIntersectQuery ciq;
@@ -306,7 +306,7 @@ bool CLTBBouncyChunkFX::Update(float tmFrameTime)
 		L.x = -L.x;
 		L.y = -L.y;
 		L.z = -L.z;
-		
+
 		LTVector vReflected = N * 2.0f;
 		vReflected *= (N.Dot(L));
 		vReflected -= L;
@@ -328,7 +328,7 @@ bool CLTBBouncyChunkFX::Update(float tmFrameTime)
 							PLAYSOUND_CTRL_VOL |
 							PLAYSOUND_CLIENT |
 							PLAYSOUND_TIME |
-							PLAYSOUND_3D | 
+							PLAYSOUND_3D |
 							PLAYSOUND_REVERB;
 
 			psi.m_nVolume = 50;

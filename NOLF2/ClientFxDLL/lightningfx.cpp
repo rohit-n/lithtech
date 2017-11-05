@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "LightningFX.h"
-#include "ClientFX.h"
+#include "lightningfx.h"
+#include "clientfx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -21,7 +21,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CLightningProps::CLightningProps() :	
+CLightningProps::CLightningProps() :
 	m_eBlendMode			( DRAWPRIM_NOBLEND ),
 	m_eAlphaTest			( DRAWPRIM_NOALPHATEST ),
 	m_eColorOp				( DRAWPRIM_NOCOLOROP ),
@@ -67,91 +67,91 @@ bool CLightningProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Texture" ))
+		if( !stricmp( fxProp.m_sName, "Texture" ))
 		{
 			fxProp.GetPath( m_szTexture );
-		} 
-		else if( !_stricmp( fxProp.m_sName, "BlendMode" ))
+		}
+		else if( !stricmp( fxProp.m_sName, "BlendMode" ))
 		{
 			m_eBlendMode = (ELTBlendMode)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "AlphaTest" ))
+		else if( !stricmp( fxProp.m_sName, "AlphaTest" ))
 		{
 			m_eAlphaTest = (ELTTestMode)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "ColorOp" ))
+		else if( !stricmp( fxProp.m_sName, "ColorOp" ))
 		{
 			m_eColorOp = (ELTColorOp)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "FillMode" ))
+		else if( !stricmp( fxProp.m_sName, "FillMode" ))
 		{
 			m_eFillMode = (ELTDPFillMode)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Allignment" ))
+		else if( !stricmp( fxProp.m_sName, "Allignment" ))
 		{
 			m_eAllignment = (EPTAllignment)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "NodeAttractors" ))
+		else if( !stricmp( fxProp.m_sName, "NodeAttractors" ))
 		{
 			fxProp.GetStringVal( m_szNodeAttractors );
 		}
-		else if( !_stricmp( fxProp.m_sName, "SocketAttractors" ))
+		else if( !stricmp( fxProp.m_sName, "SocketAttractors" ))
 		{
 			fxProp.GetStringVal( m_szSocketAttractors );
 		}
-		else if( !_stricmp( fxProp.m_sName, "OmniDirectionalRadius" ))
+		else if( !stricmp( fxProp.m_sName, "OmniDirectionalRadius" ))
 		{
 			m_fOmniDirectionalRadius = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinNumBolts" ))
+		else if( !stricmp( fxProp.m_sName, "MinNumBolts" ))
 		{
 			m_nMinNumBolts = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxNumBolts" ))
+		else if( !stricmp( fxProp.m_sName, "MaxNumBolts" ))
 		{
 			m_nMaxNumBolts = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinSegmentsPerBolt" ))
+		else if( !stricmp( fxProp.m_sName, "MinSegmentsPerBolt" ))
 		{
 			m_nMinSegmentsPerBolt = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxSegmentsPerBolt" ))
+		else if( !stricmp( fxProp.m_sName, "MaxSegmentsPerBolt" ))
 		{
 			m_nMaxSegmentsPerBolt = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinBoltWidth" ))
+		else if( !stricmp( fxProp.m_sName, "MinBoltWidth" ))
 		{
 			m_fMinBoltWidth = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxBoltWidth" ))
+		else if( !stricmp( fxProp.m_sName, "MaxBoltWidth" ))
 		{
 			m_fMaxBoltWidth = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinPerturb" ))
+		else if( !stricmp( fxProp.m_sName, "MinPerturb" ))
 		{
 			m_fMinPerturb = (float)fabs( fxProp.GetFloatVal());
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxPerturb" ))
+		else if( !stricmp( fxProp.m_sName, "MaxPerturb" ))
 		{
 			m_fMaxPerturb = (float)fabs( fxProp.GetFloatVal() );
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinLifetime" ))
+		else if( !stricmp( fxProp.m_sName, "MinLifetime" ))
 		{
 			m_fMinLifetime = (float)fabs( fxProp.GetFloatVal() );
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxLifetime" ))
+		else if( !stricmp( fxProp.m_sName, "MaxLifetime" ))
 		{
 			m_fMaxLifetime = (float)fabs( fxProp.GetFloatVal() );
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinDelay" ))
+		else if( !stricmp( fxProp.m_sName, "MinDelay" ))
 		{
 			m_fMinDelay = (float)fabs( fxProp.GetFloatVal() );
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxDelay" ))
+		else if( !stricmp( fxProp.m_sName, "MaxDelay" ))
 		{
 			m_fMaxDelay = (float)fabs( fxProp.GetFloatVal() );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Pulse" ))
+		else if( !stricmp( fxProp.m_sName, "Pulse" ))
 		{
 			m_fPulse = fxProp.GetFloatVal();
 		}
@@ -207,7 +207,7 @@ bool CLightningFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	ObjectCreateStruct ocs;
@@ -226,8 +226,8 @@ bool CLightningFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 
 	m_bReallyClose = !!(pBaseData->m_dwObjectFlags & FLAG_REALLYCLOSE);
 
-	
-	// Create the max number of bolts 
+
+	// Create the max number of bolts
 
 	CLightningBolt *pBolt = LTNULL;
 	PT_TRAIL_SECTION ts;
@@ -248,7 +248,7 @@ bool CLightningFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 
 		m_lstBolts.push_back( pBolt );
 	}
-	
+
 
 	// Setup the target data so we now where the lightning is going...
 
@@ -266,25 +266,25 @@ bool CLightningFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 		{
 			m_hTarget = LTNULL;
 		}
-		
+
 		m_vTargetPos = pBaseData->m_vTargetPos;
 	}
 	else
 	{
 		// Use our parent as the target if we have one otherwise just use ourselves...
-		
+
 		m_hTarget = (m_hParent ? m_hParent : m_hObject);
 		m_vTargetPos = m_vCreatePos;
 	}
 
 	// Load the texture if one was specified...
-	
+
 	if( !m_hTexture && GetProps()->m_szTexture[0] )
 	{
 		m_pLTClient->GetTexInterface()->CreateTextureFromName( m_hTexture, GetProps()->m_szTexture );
 	}
 
-	// Create a list of attractor nodes 
+	// Create a list of attractor nodes
 
 	if( m_hTarget )
 	{
@@ -309,7 +309,7 @@ bool CLightningFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 						cAttractor.m_hModel		= m_hTarget;
 						cAttractor.m_hAttractor	= hAttractor;
 						cAttractor.m_eType		= CAttractor::eNode;
-					
+
 						m_lstAttractors.push_back( cAttractor );
 					}
 				}
@@ -330,7 +330,7 @@ bool CLightningFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 						cAttractor.m_hModel		= m_hTarget;
 						cAttractor.m_hAttractor = hAttractor;
 						cAttractor.m_eType		= CAttractor::eSocket;
-					
+
 						m_lstAttractors.push_back( cAttractor );
 					}
 				}
@@ -356,15 +356,15 @@ void CLightningFX::Term()
 {
 	if( m_hObject )
 		m_pLTClient->RemoveObject(m_hObject);
-	
+
 	m_hObject = NULL;
-	
+
 	if( m_hTexture )
 	{
 		m_pLTClient->GetTexInterface()->ReleaseTextureHandle(m_hTexture);
 		m_hTexture = LTNULL;
 	}
-		
+
 	LightningBolts::iterator iter;
 	for( iter = m_lstBolts.begin(); iter != m_lstBolts.end(); ++iter )
 	{
@@ -405,14 +405,14 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 		for( nBolt = 0, iter = m_lstBolts.begin(); iter != m_lstBolts.end(), nBolt < nActiveBolts; ++iter, ++nBolt )
 		{
 			pBolt = *iter;
-			
+
 			pBolt->m_fWidth = GetRandom( GetProps()->m_fMinBoltWidth, GetProps()->m_fMaxBoltWidth );
 			pBolt->m_fLifetime = GetRandom( GetProps()->m_fMinLifetime, GetProps()->m_fMaxLifetime );
 			pBolt->m_tmElapsed = 0.0f;
 			pBolt->m_bActive = true;
-			
+
 			// Grab the position of the object to compensate for offset
-		
+
 			if( m_hTarget )
 			{
 				m_pLTClient->GetObjectPos( m_hTarget, &vAttractorPos );
@@ -423,7 +423,7 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 			}
 
 			// Decide if we should use an attractor or radius for the end pos...
-			
+
 			if( bCanUseAttractors && (!bCanUseRadius || GetRandom(0,1)) )
 			{
 				uint8	nIndex = GetRandom( 0, (int)(m_lstAttractors.size()) - 1 );
@@ -433,14 +433,14 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 				{
 					vAttractorPos = lTrans.m_Pos;
 				}
-			}	
+			}
 			else if( bCanUseRadius )
 			{
 				LTVector vRandomPos;
 				vRandomPos.x = GetRandom( -1.0f, 1.0f );
 				vRandomPos.y = GetRandom( -1.0f, 1.0f );
 				vRandomPos.z = GetRandom( -1.0f, 1.0f );
-				
+
 				vRandomPos.Normalize();
 				vRandomPos *= GetRandom( -GetProps()->m_fOmniDirectionalRadius, GetProps()->m_fOmniDirectionalRadius );
 
@@ -458,25 +458,25 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 				}
 			}
 
-			
+
 			LTVector vNew = m_vPos;
 			LTVector vDir = vAttractorPos - vNew;
-						
+
 			float fStep = vDir.Length() / (float)pBolt->m_nNumSegments;
 			float fPerturb = GetRandom( GetProps()->m_fMinPerturb, GetProps()->m_fMaxPerturb );
-			
+
 			vDir.Normalize();
 			LTRotation rRot = LTRotation( vDir, LTVector( 0.0f, 1.0f, 0.0f ));
-				
+
 			CLinkListNode<PT_TRAIL_SECTION> *pNode = pBolt->m_collPathPts.GetHead();
 			while( pNode )
 			{
 				pNode->m_Data.m_vPos = vNew;
 				pNode->m_Data.m_tmElapsed = 0.0f;
 				pNode->m_Data.m_vBisector.Init();
-												
+
 				// Add in some perturb going in the direction of the attractor pos for the next section...
-				
+
 				vNew +=	(rRot.Forward() * fStep );
 				vNew += (rRot.Up() * GetRandom( -fPerturb, fPerturb ));
 				vNew += (rRot.Right() * GetRandom( -fPerturb, fPerturb ));
@@ -507,14 +507,14 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 
 void CLightningFX::PreRender( float tmFrameTime )
 {
-	
+
 	LTVector vPulse;
 	LTVector vF(0.0f, 0.0f, 1.0f);
 	LTVector vU(0.0f, 1.0f, 0.0f);
 	LTVector vR(1.0f, 0.0f, 0.0f);
 
-	
-	// Transform the bolt 
+
+	// Transform the bolt
 
 	LTMatrix mCam;
 	if( m_bReallyClose )
@@ -525,8 +525,8 @@ void CLightningFX::PreRender( float tmFrameTime )
 	{
 		mCam = GetCamTransform(m_pLTClient, m_hCamera);
 	}
-	 
-	
+
+
 	CLightningBolt *pBolt = LTNULL;
 	LightningBolts::iterator iter;
 	for( iter = m_lstBolts.begin(); iter != m_lstBolts.end(); ++iter )
@@ -571,9 +571,9 @@ void CLightningFX::PreRender( float tmFrameTime )
 		float fWidth = pBolt->m_fWidth * fScale;
 
 		// Setup the colour
-		
-		float r, g, b, a;			
-		CalcColour( pBolt->m_tmElapsed, pBolt->m_fLifetime, &r, &g, &b, &a );			
+
+		float r, g, b, a;
+		CalcColour( pBolt->m_tmElapsed, pBolt->m_fLifetime, &r, &g, &b, &a );
 
 		int ir = Clamp( (int)(r * 255.0f), 0, 255 );
 		int ig = Clamp( (int)(g * 255.0f), 0, 255 );
@@ -595,7 +595,7 @@ void CLightningFX::PreRender( float tmFrameTime )
 				{
 					vStart = pNode->m_Data.m_vTran;
 					vEnd   = pNode->m_pNext->m_Data.m_vTran;
-					
+
 					vBisector.x = vEnd.y - vStart.y;
 					vBisector.y = -(vEnd.x - vStart.x);
 				}
@@ -603,7 +603,7 @@ void CLightningFX::PreRender( float tmFrameTime )
 				{
 					vEnd   = pNode->m_Data.m_vTran;
 					vStart = pNode->m_pPrev->m_Data.m_vTran;
-					
+
 					vBisector.x = vEnd.y - vStart.y;
 					vBisector.y = -(vEnd.x - vStart.x);
 				}
@@ -620,25 +620,25 @@ void CLightningFX::PreRender( float tmFrameTime )
 					float x2 = vStart.y - vPrev.y;
 					float y2 = -(vStart.x - vPrev.x);
 					float z2 = vPrev.z - vEnd.z;
-					
+
 					vBisector.x = (x1 + x2) / 2.0f;
 					vBisector.y = (y1 + y2) / 2.0f;
 				}
 
 				pNode->m_Data.m_vBisector = vBisector;
 			}
-			
+
 			// Set the width for this section...
 
 			pNode->m_Data.m_vBisector.Norm( fWidth );
-			
+
 			// Set the color for this section...
 
 			pNode->m_Data.m_red = ir;
 			pNode->m_Data.m_green = ig;
 			pNode->m_Data.m_blue = ib;
 			pNode->m_Data.m_alpha = ia;
-		
+
 			pNode = pNode->m_pNext;
 		}
 	}
@@ -655,14 +655,14 @@ void CLightningFX::PreRender( float tmFrameTime )
 bool CLightningFX::Update(float tmFrameTime)
 {
 	// Base class update first
-	
-	if (!CBaseFX::Update(tmFrameTime)) 
+
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
-	
+
 	if( !IsShuttingDown() )
 	{
-		EmitBolts( tmFrameTime );		
+		EmitBolts( tmFrameTime );
 	}
 
 	// Check to see if any bolts have expired...
@@ -701,7 +701,7 @@ bool CLightningFX::Render()
 {
 	if(!CBaseFX::Render())
 		return false;
-	
+
 	// Render the bolts...
 
 	uint32 nTris = 0;
@@ -733,7 +733,7 @@ bool CLightningFX::Render()
 	CLinkListNode<PT_TRAIL_SECTION> *pNode = LTNULL;
 	CLightningBolt *pBolt = LTNULL;
 	LightningBolts::iterator iter;
-	
+
 	for( iter = m_lstBolts.begin(); iter != m_lstBolts.end(); ++iter )
 	{
 		pBolt = *iter;
@@ -742,12 +742,12 @@ bool CLightningFX::Render()
 			continue;
 
 		pNode = pBolt->m_collPathPts.GetHead();
-	
+
 		while (pNode->m_pNext)
 		{
 			LTVector vStart = pNode->m_Data.m_vTran;
 			LTVector vEnd   = pNode->m_pNext->m_Data.m_vTran;
-		
+
 			LTVector vBisector1 = pNode->m_Data.m_vBisector;
 			LTVector vBisector2 = pNode->m_pNext->m_Data.m_vBisector;
 
@@ -760,12 +760,12 @@ bool CLightningFX::Render()
 			uint8 g1 = pNode->m_Data.m_green;
 			uint8 b1 = pNode->m_Data.m_blue;
 			uint8 a1 = pNode->m_Data.m_alpha;
-			
+
 			uint8 r2 = pNode->m_pNext->m_Data.m_red;
 			uint8 g2 = pNode->m_pNext->m_Data.m_green;
 			uint8 b2 = pNode->m_pNext->m_Data.m_blue;
 			uint8 a2 = pNode->m_pNext->m_Data.m_alpha;
-			
+
 
 			SetupVert(pTri, 0, g_pVerts[nVerts], r1, g1, b1, a1, 0.0f, 0.0f);
 			SetupVert(pTri, 1, g_pVerts[nVerts + 1], r2, g2, b2, a2, 1.0f, 0.0f);
@@ -837,11 +837,11 @@ void CLightningFX::OnRendererShutdown()
 void fxGetLightningProps(CFastList<FX_PROP> *pList)
 {
 	FX_PROP fxProp;
-	
+
 	// Add the base props
 
 	AddBaseProps(pList);
-	
+
 
 	fxProp.Path("Texture", "dtx|...");
 	pList->AddTail(fxProp);

@@ -15,7 +15,7 @@
 
 	// Includes....
 
-	#include "basefx.h"
+	#include "BaseFx.h"
 	#include "clientfx.h"
 
 	struct TRAIL_SECTION

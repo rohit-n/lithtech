@@ -15,7 +15,7 @@
 //
 
 	#include "stdafx.h"
-	#include "fxflags.h"
+	#include "FxFlags.h"
 	#include "CreateFX.h"
 
 // ----------------------------------------------------------------------- //
@@ -25,7 +25,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CCreateProps::CCreateProps() : 
+CCreateProps::CCreateProps() :
 	m_dwFXFlags	( 0 )
 {
 	m_szFXName[0] = '\0';
@@ -51,11 +51,11 @@ bool CCreateProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "FXName" ))
+		if( !stricmp( fxProp.m_sName, "FXName" ))
 		{
 			fxProp.GetStringVal( m_szFXName );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Loop" ))
+		else if( !stricmp( fxProp.m_sName, "Loop" ))
 		{
 			if( fxProp.GetComboVal() )
 				m_dwFXFlags |= FXFLAG_LOOP;
@@ -90,7 +90,7 @@ CCreateFX::CCreateFX( )
 
 CCreateFX::~CCreateFX( )
 {
-	
+
 }
 
 
@@ -100,7 +100,7 @@ CCreateFX::~CCreateFX( )
 //
 //  PURPOSE:	Initialises class CCreateFX
 //
-//	NOTE:		Fill the FX_BASEDATA struct out with the properties for 
+//	NOTE:		Fill the FX_BASEDATA struct out with the properties for
 //				creating a whole new fx in the ClientFXMgr and return false
 //				so this fx will get deleted and the new one will get created.
 //
@@ -114,7 +114,7 @@ bool CCreateFX::Init( ILTClient *pLTClient, FX_BASEDATA *pData, const CBaseFXPro
 		return false;
 
 	// Set the new FX name to the node so we can use it when we create the new FX
-	
+
 	strcpy( pData->m_sNode, GetProps()->m_szFXName );
 	pData->m_dwFlags	= GetProps()->m_dwFXFlags;
 	pData->m_vPos		= m_vCreatePos;

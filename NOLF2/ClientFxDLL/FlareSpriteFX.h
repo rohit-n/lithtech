@@ -17,7 +17,7 @@
 // Includes...
 //
 
-	#include "SpriteFX.h"
+	#include "spritefx.h"
 
 	class CFlareSpriteProps : public CSpriteProps
 	{
@@ -39,7 +39,7 @@
 		LTFLOAT		m_fBlindSprAngle;
 		LTFLOAT		m_fBlindCamAngle;
 		LTFLOAT		m_fBlindMaxScale;
-		LTBOOL		m_bBlindingFlare;	
+		LTBOOL		m_bBlindingFlare;
 	};
 
 
@@ -47,8 +47,8 @@
 	{
 	protected: // Members...
 
-		CFlareSpriteProps*		GetProps()	{ return (CFlareSpriteProps*)m_pProps; }			
-			
+		CFlareSpriteProps*		GetProps()	{ return (CFlareSpriteProps*)m_pProps; }
+
 	public: // Methods...
 
 			CFlareSpriteFX();

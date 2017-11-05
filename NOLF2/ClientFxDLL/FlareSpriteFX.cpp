@@ -15,7 +15,7 @@
 //
 
 	#include "stdafx.h"
-	#include "ClientFX.h"
+	#include "clientfx.h"
 	#include "FlareSpriteFX.h"
 	#include "ClientServerShared.h"
 
@@ -80,43 +80,43 @@ bool CFlareSpriteProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "MinAngle" ))
+		if( !stricmp( fxProp.m_sName, "MinAngle" ))
 		{
 			m_fMinAngle = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "ObjectAngle" ))
+		else if( !stricmp( fxProp.m_sName, "ObjectAngle" ))
 		{
 			m_bUseCameraAngle = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinAlpha" ))
+		else if( !stricmp( fxProp.m_sName, "MinAlpha" ))
 		{
 			m_fMinAlpha = LTCLAMP( fxProp.GetFloatVal(), 0.0f, 1.0f );
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxAlpha" ))
+		else if( !stricmp( fxProp.m_sName, "MaxAlpha" ))
 		{
 			m_fMaxAlpha = LTCLAMP( fxProp.GetFloatVal(), 0.0f, 1.0f );
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinScale" ))
+		else if( !stricmp( fxProp.m_sName, "MinScale" ))
 		{
 			m_fMinScale = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxScale" ))
+		else if( !stricmp( fxProp.m_sName, "MaxScale" ))
 		{
 			m_fMaxScale = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "BlindObjectAngle" ))
-		{	
+		else if( !stricmp( fxProp.m_sName, "BlindObjectAngle" ))
+		{
 			m_bUseCamBlindAngle = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "BlindSpriteAngle" ))
+		else if( !stricmp( fxProp.m_sName, "BlindSpriteAngle" ))
 		{
 			m_fBlindSprAngle = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "BlindCameraAngle" ))
+		else if( !stricmp( fxProp.m_sName, "BlindCameraAngle" ))
 		{
 			m_fBlindCamAngle = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "BlindMaxScale" ))
+		else if( !stricmp( fxProp.m_sName, "BlindMaxScale" ))
 		{
 			m_fBlindMaxScale = fxProp.GetFloatVal();
 		}
@@ -176,7 +176,7 @@ CFlareSpriteFX::CFlareSpriteFX()
 
 CFlareSpriteFX::~CFlareSpriteFX()
 {
-	
+
 }
 
 
@@ -242,7 +242,7 @@ bool CFlareSpriteFX::Update( float tmCur )
 	vDir.Normalize();
 
 	// Find the angles...
-	
+
 	LTFLOAT fCameraAngle = vDir.Dot( vCamF );
 	fCameraAngle = fCameraAngle < 0.0f ? 0.0f : fCameraAngle;
 	fCameraAngle *= 90.0f;
@@ -274,15 +274,15 @@ bool CFlareSpriteFX::Update( float tmCur )
 			m_pLTClient->Common()->SetObjectFlags( m_hObject, OFT_Flags, FLAG_VISIBLE, FLAG_VISIBLE );
 		}
 
-		// Calculate the multiplier we want to use based on the angle 
+		// Calculate the multiplier we want to use based on the angle
 
 		LTFLOAT fMultiplier = ( fAngle + GetProps()->m_fMinAngle - 90.0f ) / GetProps()->m_fMinAngle;
-		
+
 		// Update the color and alpha based on off from direct center of the sprite we are looking
 
 		LTFLOAT	a = LTCLAMP( fMultiplier * m_alpha, GetProps()->m_fMinAlpha, GetProps()->m_fMaxAlpha );
-		m_pLTClient->SetObjectColor( m_hObject, 
-									 fMultiplier * m_red, 
+		m_pLTClient->SetObjectColor( m_hObject,
+									 fMultiplier * m_red,
 									 fMultiplier * m_green,
 									 fMultiplier * m_blue,
 									 a ); // make sure alpha doesn't go outside our range
@@ -293,7 +293,7 @@ bool CFlareSpriteFX::Update( float tmCur )
 
 		m_pLTClient->SetObjectScale( m_hObject,	&LTVector( fScale, fScale, fScale ));
 
-		// No since in updating anymore if the sprite is completly see through 
+		// No since in updating anymore if the sprite is completly see through
 
 		if( a < 0.001 )
 			return LTTRUE;
@@ -323,7 +323,7 @@ bool CFlareSpriteFX::Update( float tmCur )
 					LTFLOAT	fBlindScaleRange = GetProps()->m_fBlindMaxScale - fScale;
 					fScale = fScale + ( fMultiplier * fBlindScaleRange );
 					m_pLTClient->SetObjectScale( m_hObject,	&LTVector( fScale, fScale, fScale ));
-					
+
 					m_pLTClient->Common()->SetObjectFlags( m_hObject, OFT_Flags, FLAG_SPRITE_NOZ, FLAG_SPRITEBIAS | FLAG_SPRITE_NOZ);
 				}
 
