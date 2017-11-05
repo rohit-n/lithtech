@@ -104,7 +104,7 @@ BOOL ExtCheck (const char * sExtensions, const char * sExt )
 //---------------------------------------------------------------------------------------------------
 // Extracts a directory full of resources into files
 void ExtractDir(CRezDir* pDir, const char* sParamPath) {
-  
+
 #ifdef _LINUX
   notSupportedLinux ();
   return;
@@ -610,11 +610,11 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
         // figure out the file name we are working on
         char sFileName[kMaxStr];
         strcpy(sFileName,sPath);
-        strcat(sFileName,fileinfo.name);              
-        
+        strcat(sFileName,fileinfo.name);
+
         // skip if file size is 0
 //        if (fileinfo.size <= 0) continue;
-        
+
         // check for zero len files
 		if (g_bCheckZeroLen) {
 			if (fileinfo.size <= 0) {
@@ -628,7 +628,7 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
         char fname[_MAX_FNAME+1];
         char ext[_MAX_EXT+1];
          _splitpath(sFileName, drive, dir, fname, ext );
-        
+
         // figure out the Name for this file
         char sName[kMaxStr];
         ASSERT(strlen(fname) < kMaxStr);
@@ -647,7 +647,7 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
 		}
 
         if (!g_bLowerCaseUsed) strupr(sName);
-        
+
         // figure out the Type for this file
         char sExt[5];
         REZTYPE nType;
@@ -681,11 +681,11 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
             nID = atol(sName);
           }
         }
-        
-        // convert type back to string 
+
+        // convert type back to string
         char sType[5];
         g_pMgr->TypeToStr(nType,sType);
-       
+
 		BYTE* pData;
 
 		// see if this resource exists already, and if so does it need to be updated
@@ -702,17 +702,17 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
         else {
           // print out message to user
           if (g_bVerbose) zprintf("Adding: Type = %-4s Name = %-12s Size = %-8i ID = %-8i\n",sType,sName,(int)fileinfo.size,(int)nID);
-        
+
           // create new resource
           pItm = pDir->CreateRez(nID,sName,nType);
-        
+
           // make sure resource was created
           if (pItm == NULL) {
             zprintf("ERROR! Unable to create resource from file %s.  Rez Name = %s ID = %i\n",sFileName,sName,(int)nID);
 		    g_nErrCount++;
             continue;
           }
-        
+
         }
 
         // increment resource counter
@@ -727,40 +727,40 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
         // open the file
         FILE* pFile = fopen(sFileName,"rb");
         if (pFile != NULL) {
-        
+
           // if the file has data
           if (fileinfo.size > 0) {
 
             // read in the file
             if (fread(pData,fileinfo.size,1,pFile) == 1) {
-        
+
               // write resource out to resource file
               pItm->Save();
             }
-        
+
             // error if unable to read data file
-            else 
+            else
 			{
 				zprintf("ERROR! Unable to read file: %s\n",sFileName);
 			    g_nErrCount++;
 			}
           }
-        
+
           // close the file
           fclose(pFile);
         }
-        
+
         // error if unable to open data file
-        else 
+        else
 		{
 			zprintf("ERROR! Unable to open file: %s\n",sFileName);
 		    g_nErrCount++;
 		}
-        
+
         // free memory for resource
         pItm->UnLoad();
       }
-        
+
     // get the next entry in this directory
     } while (_findnext(nFindHandle, &fileinfo) == 0);
 
@@ -776,12 +776,12 @@ void FreshenDir(CRezDir* pDir, const char* sParamPath) {
 // Notify of errors and warnings
 void NotifyErrWarn() {
   if (g_nErrCount > 0) {
-	  if (g_nErrCount == 1) zprintf("\n%i ERROR HAS OCCURED!!!!!!!\n",g_nErrCount);
-	  else zprintf("\n%i ERRORS HAVE OCCURED!!!!!!!\n",g_nErrCount);
+	  if (g_nErrCount == 1) zprintf("\n%li ERROR HAS OCCURED!!!!!!!\n",g_nErrCount);
+	  else zprintf("\n%li ERRORS HAVE OCCURED!!!!!!!\n",g_nErrCount);
   }
   if (g_nWarnCount > 0) {
-	  if (g_nWarnCount == 1) zprintf("\n%i WARNING HAS OCCURED!!!!!!!\n",g_nWarnCount);
-	  else  zprintf("\n%i WARNINGS HAVE OCCURED!!!!!!!\n",g_nWarnCount);
+	  if (g_nWarnCount == 1) zprintf("\n%li WARNING HAS OCCURED!!!!!!!\n",g_nWarnCount);
+	  else  zprintf("\n%li WARNINGS HAVE OCCURED!!!!!!!\n",g_nWarnCount);
   }
 }
 
@@ -793,7 +793,7 @@ BOOL CheckLithHeader(CRezMgr* pMgr)
 
 	// check the header
 	char* sCheckTitle = pMgr->GetUserTitle();
-	if (sCheckTitle != NULL) 
+	if (sCheckTitle != NULL)
 	{
 		if (strcmp(sCheckTitle, LithTechUserTitle) == 0)
 		{
@@ -867,14 +867,14 @@ int RezCompiler(const char* sCmd, const char* sRezFile, const char* sTargetDir, 
   g_bLowerCaseUsed	= FALSE;
   g_bLithRez		= bLithRez;
 
- 
+
   //why does it do this uppercasing? This has been removed - JohnO
   //strupr(sRezFile);
   //if (sTargetDir != NULL) strupr(sTargetDir);
-  
+
   // check for the verbose option
   g_bVerbose = IsCommandSet('V', sCmd);
-  
+
   // check for the zero len check option
   g_bCheckZeroLen = IsCommandSet('Z', sCmd);
 
@@ -925,13 +925,13 @@ int RezCompiler(const char* sCmd, const char* sRezFile, const char* sTargetDir, 
 
 	  // output initial message to user
       zprintf("\nExtracting rez file %s to directory %s\n",sRezFile,sTargetDir);
-      
+
       // copy data from directory to resource file
       ExtractDir(pDir,sTargetDir);
 
 	  // output stats to user
       if (g_bVerbose) zprintf("\n");
-      zprintf("Finished extracting %i directories %i resources\n",g_nDirCount,g_nRezCount);
+      zprintf("Finished extracting %li directories %li resources\n",g_nDirCount,g_nRezCount);
 
 	  // if any errors or warnings have occured notify user
 	  NotifyErrWarn();
@@ -958,13 +958,13 @@ int RezCompiler(const char* sCmd, const char* sRezFile, const char* sTargetDir, 
 
 	  // output initial message to user
       zprintf("\nView resource file %s\n",sRezFile);
-      
+
       // view rez file
       ViewDir(pDir,"");
 
 	  // output stats to user
       zprintf("\n");
-      zprintf("File contains %i directories %i resources\n",g_nDirCount,g_nRezCount);
+      zprintf("File contains %li directories %li resources\n",g_nDirCount,g_nRezCount);
 
 	  // if any errors or warnings have occured notify user
 	  NotifyErrWarn();
@@ -1005,13 +1005,13 @@ int RezCompiler(const char* sCmd, const char* sRezFile, const char* sTargetDir, 
 
 	  // output initial message to user
       zprintf("\nCreating rez file %s from directory %s\n",sRezFile,sTargetDir);
-      
+
       // copy data from directory to resource file
       TransferDir(pDir,sTargetDir, sFilespec);
 
 	  // output stats to user
       if (g_bVerbose) zprintf("\n");
-      zprintf("Finished creating %i directories %i resources\n",g_nDirCount,g_nRezCount);
+      zprintf("Finished creating %li directories %li resources\n",g_nDirCount,g_nRezCount);
 
       // force the is sorted flag to true because this was all done in order
       Mgr.ForceIsSortedFlag(TRUE);
@@ -1050,13 +1050,13 @@ int RezCompiler(const char* sCmd, const char* sRezFile, const char* sTargetDir, 
 
 	  // output initial message to user
       zprintf("\nFreshening rez file %s from directory %s\n",sRezFile,sTargetDir);
-      
+
       // copy data from directory to resource file
       FreshenDir(pDir,sTargetDir);
 
 	  // output stats to user
       if (g_bVerbose) zprintf("\n");
-      zprintf("Finished freshening %i directories %i resources\n",g_nDirCount,g_nRezCount);
+      zprintf("Finished freshening %li directories %li resources\n",g_nDirCount,g_nRezCount);
 
 	  // if any errors or warnings have occured notify user
 	  NotifyErrWarn();
@@ -1091,7 +1091,7 @@ int RezCompiler(const char* sCmd, const char* sRezFile, const char* sTargetDir, 
 	// information about rez file
 	case 'I': {
 	  if (g_bLithRez) break;
-	  
+
       // open resource manager
       CZMgrRezMgr Mgr;
 	  Mgr.SetItemByIDUsed(TRUE);

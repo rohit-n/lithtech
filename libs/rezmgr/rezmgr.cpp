@@ -45,7 +45,7 @@ struct _finddata_t {
 enum { _S_IFDIR, _A_SUBDIR };
 long _findfirst(char* filespec, _finddata_t* fileinfo) { return -1; }
 int _findnext(long handle, _finddata_t* fileinfo) { return -1; }
-int _findclose(long handle) { return -1; } 
+int _findclose(long handle) { return -1; }
 
 #endif // !_WIN32
 
@@ -178,9 +178,9 @@ void CRezItm::TermRezItm() {
 };
 
 //---------------------------------------------------------------------------------------------------
-REZTYPE	CRezItm::GetType() { 
-  ASSERT(m_pType != NULL); 
-  return m_pType->GetType(); 
+REZTYPE	CRezItm::GetType() {
+  ASSERT(m_pType != NULL);
+  return m_pType->GetType();
 };
 
 //---------------------------------------------------------------------------------------------------
@@ -263,16 +263,16 @@ BOOL CRezItm::UnLoad() {
   if (m_pData != NULL) {
     delete [] m_pData;
     m_pData = NULL;
-  } 
+  }
   return TRUE;
 };
 
 //---------------------------------------------------------------------------------------------------
-BOOL CRezItm::IsLoaded() { 
+BOOL CRezItm::IsLoaded() {
   ASSERT(m_pParentDir != NULL);
   if (m_pParentDir->m_pMemBlock != NULL) return TRUE;
-  else return (m_pData != NULL); 
-}; 
+  else return (m_pData != NULL);
+};
 
 //---------------------------------------------------------------------------------------------------
 BOOL CRezItm::Get(BYTE* pBytes) {
@@ -302,7 +302,7 @@ BOOL CRezItm::Get(BYTE* pBytes, DWORD startOffset, DWORD length) {
   // Load this part of the resource from disk
   ASSERT(m_pParentDir->m_pRezMgr != NULL);
   if (m_pRezFile->Read(m_nFilePos,startOffset,length,pBytes) != length) return FALSE;
-  
+
   return TRUE;
 };
 
@@ -333,14 +333,14 @@ DWORD CRezItm::Read(BYTE* pBytes, DWORD length, DWORD seekPos) {
   // Check if the whole directory is in memory already and just copy it if it is
   if (m_pParentDir->m_pMemBlock != NULL) {
     memcpy(pBytes,m_pParentDir->m_pMemBlock+m_nFilePos+m_nCurPos-m_pParentDir->m_nItemsPos,length);
-    m_nCurPos += length; 
+    m_nCurPos += length;
     return length;
   }
 
   // Check if this resource is in memory already and just copy it if so
   if (m_pData != NULL) {
     memcpy(pBytes,m_pData+m_nCurPos,length);
-    m_nCurPos += length; 
+    m_nCurPos += length;
     return length;
   }
 
@@ -402,7 +402,7 @@ BYTE* CRezItm::Create(DWORD Size) {
 
   // update the timestamp for this item
   MarkCurTime();
-  
+
   return m_pData;
 };
 
@@ -480,18 +480,18 @@ CRezTyp::CRezTyp(REZTYPE nType, CRezDir* pParentDir, unsigned int nByIDNumHashBi
   m_nType = nType;
   m_heType.SetRezTyp(this);
   m_pParentDir = pParentDir;
-};                                    
+};
 
 //---------------------------------------------------------------------------------------------------
 CRezTyp::CRezTyp(REZTYPE nType, CRezDir* pParentDir, unsigned int nByNameNumHashBins) : m_haID() , m_haName(nByNameNumHashBins) {
   m_nType = nType;
   m_heType.SetRezTyp(this);
   m_pParentDir = pParentDir;
-};                                    
+};
 
 //---------------------------------------------------------------------------------------------------
 CRezTyp::~CRezTyp() {
-  // remove all of the items in the ByID hash table 
+  // remove all of the items in the ByID hash table
   // Don't delete objectes here, they are deleted in the ByName table below!
   if (m_pParentDir->m_pRezMgr->m_bItemByIDUsed)
   {
@@ -528,7 +528,7 @@ CRezTyp::~CRezTyp() {
 // CRezDir implementation
 
 //---------------------------------------------------------------------------------------------------
-CRezDir::CRezDir(CRezMgr* pRezMgr, CRezDir* pParentDir, REZDIRNAME szDirName, DWORD nDirPos, DWORD nDirSize, REZTIME nTime, unsigned int nDirNumHashBins, unsigned int nTypNumHashBins)
+CRezDir::CRezDir(CRezMgr* pRezMgr, CRezDir* pParentDir, const char* szDirName, DWORD nDirPos, DWORD nDirSize, REZTIME nTime, unsigned int nDirNumHashBins, unsigned int nTypNumHashBins)
         : m_haDir(nDirNumHashBins), m_haTypes(nTypNumHashBins) {
   ASSERT(pRezMgr != NULL);
   ASSERT(szDirName != NULL);
@@ -633,7 +633,7 @@ CRezItm* CRezDir::GetRezFromDosName(char* sDosName) {
   }
   else
   {
-  
+
 	// figure out the Type for this file
 	if (strlen(ext) > 0) {
 		strcpy(sExt,&ext[1]);
@@ -699,7 +699,7 @@ BOOL CRezDir::UnLoad(BOOL UnLoadAllSubDirs) {
   // if the memory is not stored globally then unload all items individually
   else {
 
-    // go through all types in this directory 
+    // go through all types in this directory
     CRezTyp* pTyp = GetFirstType();
     while (pTyp != NULL) {
 
@@ -859,7 +859,7 @@ CRezItm* CRezDir::CreateRezInternal(REZID nID, REZNAME sName, CRezTyp* pTyp, CBa
 //  CRezItm* pItm = new CRezItm(this,sName,nID,pTyp,NULL,0,0,m_pRezMgr->GetCurTime(),0,NULL,pRezFile);
   CRezItm* pItm = m_pRezMgr->AllocateRezItm();
   ASSERT(pItm != NULL);
-  if (pItm == NULL) return NULL; 
+  if (pItm == NULL) return NULL;
   pItm->InitRezItm(this,sName,nID,pTyp,NULL,0,0,m_pRezMgr->GetCurTime(),0,NULL,pRezFile);
 
   // add to the types hash tables
@@ -953,7 +953,7 @@ BOOL CRezDir::ReadDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD Size, BOOL b
     return FALSE;
   };
 
-  // process all data in directory block 
+  // process all data in directory block
   BYTE* pCur = pBlk;
   BYTE* pEnd = pBlk+Size;
   while (pCur < pEnd) {
@@ -982,7 +982,7 @@ BOOL CRezDir::ReadDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD Size, BOOL b
 
 	  // make sure this dir doesn't already exist if it does we don't need to add it again
 	  CRezDir* pDir = m_haDir.Find(sDirName,!GetParentMgr()->GetLowerCaseUsed());
-	  if (pDir == NULL) {	
+	  if (pDir == NULL) {
 
         // construct new directory item
         LT_MEM_TRACK_ALLOC(pDir = new CRezDir(m_pRezMgr, this, sDirName, Pos, Size, Time, m_pRezMgr->m_nDirNumHashBins, m_pRezMgr->m_nTypNumHashBins),LT_MEM_TYPE_MISC);
@@ -1108,12 +1108,12 @@ BOOL CRezDir::ReadDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD Size, BOOL b
 
 //---------------------------------------------------------------------------------------------------
 CRezTyp* CRezDir::GetOrMakeTyp(REZTYPE nType) {
-  // find the type 
+  // find the type
   CRezTyp* pTyp = m_haTypes.Find(nType);
 
   // create a new type if this one is not found
   if (pTyp == NULL) {
-    
+
     // create type structure
 	if (m_pRezMgr->m_bItemByIDUsed)
 	{
@@ -1139,9 +1139,9 @@ CRezTyp* CRezDir::GetOrMakeTyp(REZTYPE nType) {
 
 //---------------------------------------------------------------------------------------------------
 CRezMgr::CRezMgr() {
-  m_bFileOpened = FALSE; 
+  m_bFileOpened = FALSE;
   m_bRenumberIDCollisions = TRUE;
-  m_nNextIDNumToUse = 2000000000;	
+  m_nNextIDNumToUse = 2000000000;
   m_pPrimaryRezFile = NULL;
   m_nNumRezFiles = 0;
   m_nRootDirPos = 0;
@@ -1162,11 +1162,11 @@ CRezMgr::CRezMgr() {
   m_bLowerCaseUsed = FALSE;
   m_bItemByIDUsed = FALSE;
   m_nByNameNumHashBins = kDefaultByNameNumHashBins;
-  m_nByIDNumHashBins = kDefaultByIDNumHashBins;	
-  m_nDirNumHashBins = kDefaultDirNumHashBins;	
-  m_nTypNumHashBins = kDefaultTypNumHashBins;	
-  m_nRezItmChunkSize = 100;	
-  m_sUserTitle[0] = '\0';	
+  m_nByIDNumHashBins = kDefaultByIDNumHashBins;
+  m_nDirNumHashBins = kDefaultDirNumHashBins;
+  m_nTypNumHashBins = kDefaultTypNumHashBins;
+  m_nRezItmChunkSize = 100;
+  m_sUserTitle[0] = '\0';
  };
 
 //---------------------------------------------------------------------------------------------------
@@ -1192,12 +1192,12 @@ CRezMgr::~CRezMgr() {
     delete [] m_sFileName;
     m_sFileName = NULL;
   }
-  if (m_sDirSeparators != NULL) 
+  if (m_sDirSeparators != NULL)
   {
 	  delete [] m_sDirSeparators;
 	  m_sDirSeparators = NULL;
   }
-  m_bFileOpened = FALSE; 
+  m_bFileOpened = FALSE;
   m_pPrimaryRezFile = NULL;
   m_nRootDirPos = 0;
   m_nRootDirSize = 0;
@@ -1350,7 +1350,7 @@ BOOL CRezMgr::Open(const char* FileName, BOOL ReadOnly, BOOL CreateNew) {
   }
 
   return TRUE;
-}; 
+};
 
 //---------------------------------------------------------------------------------------------------
 BOOL CRezMgr::OpenAdditional(const char* FileName, BOOL bOverwriteItems) {
@@ -1441,7 +1441,7 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
   ASSERT(this != NULL);
   ASSERT(sParamPath != NULL);
   ASSERT(m_bFileOpened);
-  
+
   _finddata_t fileinfo;
 
   // figure out the path to this dir with added backslash
@@ -1464,7 +1464,7 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
       // skip the files . and ..
       if (strcmp(fileinfo.name,".") == 0) continue;
       if (strcmp(fileinfo.name,"..") == 0) continue;
-      
+
       // if this is a subdirectory
       if ((fileinfo.attrib & _A_SUBDIR) == _A_SUBDIR) {
 
@@ -1476,7 +1476,7 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
         // figure out the path name we are working on
         char sPathName[_MAX_DRIVE+_MAX_DIR+_MAX_FNAME+_MAX_EXT+5];
         strcpy(sPathName,sPath);
-        strcat(sPathName,sBaseName);              
+        strcat(sPathName,sBaseName);
         strcat(sPathName,"\\");
 
         // create new directory entry in resource file (unless directory already exists)
@@ -1486,7 +1486,7 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
 
         // error if directory not found or created
         if (pNewDir == NULL) {
-		  ASSERT(FALSE); 
+		  ASSERT(FALSE);
           continue;
         }
 
@@ -1500,24 +1500,24 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
         // figure out the file name we are working on
         char sFileName[_MAX_DRIVE+_MAX_DIR+_MAX_FNAME+_MAX_EXT+5];
         strcpy(sFileName,sPath);
-        strcat(sFileName,fileinfo.name);              
-        
+        strcat(sFileName,fileinfo.name);
+
         // skip if file size is 0
 //        if (fileinfo.size <= 0) continue;
-        
+
         // split the file name up into its parts
         char drive[_MAX_DRIVE+1];
         char dir[_MAX_DIR+1];
         char fname[_MAX_FNAME+1+_MAX_EXT+1];
         char ext[_MAX_EXT+1];
          _splitpath(sFileName, drive, dir, fname, ext );
-        
+
         // figure out the Name for this file
         char sName[_MAX_DRIVE+_MAX_DIR+_MAX_FNAME+_MAX_EXT+5];
         ASSERT(strlen(fname) < (_MAX_DRIVE+_MAX_DIR+_MAX_FNAME+_MAX_EXT+5));
         strcpy(sName,fname);
         strupr(sName);
-        
+
         // figure out the ID for this file (if name is all digits use it as ID number, otherwise assign a number)
         REZID nID;
         {
@@ -1534,7 +1534,7 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
             nID = atol(sName);
           }
         }
-        
+
         REZTYPE nType;
 
 	    // check if the extension is too long
@@ -1543,9 +1543,9 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
 		  strncat(sName,ext,_MAX_FNAME+1+_MAX_EXT);
 		  fname[_MAX_FNAME] = '\0';
 		  nType = 0;
-		}  
+		}
         else
-		{ 
+		{
           // figure out the Type for this file
           char sExt[5];
           if (strlen(ext) > 0) {
@@ -1555,11 +1555,11 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
 		  }
           else nType = 0;
 		}
-        
-        // convert type back to string 
+
+        // convert type back to string
         char sType[5];
         TypeToStr(nType,sType);
-        
+
         // print out message to user
 //        TRACE("Adding: Type = %-4s Name = %-12s Size = %-8i ID = %-8i\n",sType,sName,(int)fileinfo.size,(int)nID);
 
@@ -1580,7 +1580,7 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
 		    pItm = NULL;
 		  }
 		}
-        
+
         // make sure resource was created
         if (pItm != NULL) {
 
@@ -1595,7 +1595,7 @@ BOOL CRezMgr::ReadEmulationDirectory(CRezFileDirectoryEmulation* pRezFileEmulati
 		  ASSERT(pItm->m_pRezFile != NULL);
         }
       }
-        
+
     // get the next entry in this directory
     } while (_findnext(nFindHandle, &fileinfo) == 0);
 
@@ -1645,7 +1645,7 @@ BOOL CRezMgr::Close(BOOL bCompact) {
   m_bFileOpened = FALSE;
 
   return bRetVal;
-}; 
+};
 
 //---------------------------------------------------------------------------------------------------
 CRezDir* CRezMgr::GetRootDir() {
@@ -1719,14 +1719,14 @@ BOOL CRezMgr::VerifyFileOpen() {
   BOOL bRetVal = TRUE;
   CBaseRezFile* pRezFile = m_lstRezFiles.GetFirst();
   while (pRezFile != NULL) {
-    if (pRezFile->VerifyFileOpen() == FALSE) bRetVal = FALSE; 		
+    if (pRezFile->VerifyFileOpen() == FALSE) bRetVal = FALSE;
 	pRezFile = pRezFile->Next();
   }
   return bRetVal;
 };
 
 //---------------------------------------------------------------------------------------------------
-void CRezMgr::SetHashTableBins(unsigned int nByNameNumHashBins, unsigned int nByIDNumHashBins, 
+void CRezMgr::SetHashTableBins(unsigned int nByNameNumHashBins, unsigned int nByIDNumHashBins,
 							   unsigned int nDirNumHashBins, unsigned int nTypNumHashBins)
 {
 	m_nByNameNumHashBins = nByNameNumHashBins;
@@ -1747,7 +1747,7 @@ BOOL CRezMgr::Flush() {
 
     // write out all of the directories
     m_pRootDir->WriteAllDirs(m_pPrimaryRezFile, &m_nRootDirPos,&m_nRootDirSize);
-    
+
     // fill out the permant parts of the header
     FileMainHeaderStruct Header;
     Header.CR1 = 0x0d;
@@ -1762,24 +1762,24 @@ BOOL CRezMgr::Flush() {
     Header.FileType[strlen(Header.FileType)] = ' ';
     memset(Header.UserTitle,' ',RezMgrUserTitleSize);
 	if (m_sUserTitle[0] != '\0') memcpy(Header.UserTitle,m_sUserTitle,strlen(m_sUserTitle));
-    
+
     // fill out the variable parts of the header
-    Header.FileFormatVersion      = 1;     
-    Header.RootDirPos             = m_nRootDirPos; 			
-    Header.RootDirSize            = m_nRootDirSize;              
-    Header.RootDirTime            = m_nRootDirTime;           
-    Header.NextWritePos           = nSaveWritePos;           
-    Header.Time                   = m_nLastTimeModified; 					
-    Header.LargestKeyAry          = m_nLargestKeyAry;			
-    Header.LargestDirNameSize     = m_nLargestDirNameSize;    
-    Header.LargestRezNameSize     = m_nLargestRezNameSize;	
-    Header.LargestCommentSize     = m_nLargestCommentSize;	
-    Header.IsSorted               = m_bIsSorted;                
-    
+    Header.FileFormatVersion      = 1;
+    Header.RootDirPos             = m_nRootDirPos;
+    Header.RootDirSize            = m_nRootDirSize;
+    Header.RootDirTime            = m_nRootDirTime;
+    Header.NextWritePos           = nSaveWritePos;
+    Header.Time                   = m_nLastTimeModified;
+    Header.LargestKeyAry          = m_nLargestKeyAry;
+    Header.LargestDirNameSize     = m_nLargestDirNameSize;
+    Header.LargestRezNameSize     = m_nLargestRezNameSize;
+    Header.LargestCommentSize     = m_nLargestCommentSize;
+    Header.IsSorted               = m_bIsSorted;
+
     // write the header
     m_pPrimaryRezFile->Write(0,0,sizeof(Header),&Header);
 
-    // actually flush the file 
+    // actually flush the file
     m_pPrimaryRezFile->Flush();
 
     return TRUE;
@@ -1809,7 +1809,7 @@ BOOL CRezDir::WriteAllDirs(CBaseRezFile* pRezFile, DWORD* Pos, DWORD* Size) {
   else m_pRezMgr->m_nNextWritePos += *Size;
 
   return bRetFlag;
-}; 
+};
 
 //---------------------------------------------------------------------------------------------------
 BOOL CRezDir::WriteDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD* Size) {
@@ -1843,7 +1843,7 @@ BOOL CRezDir::WriteDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD* Size) {
     }
   }
 
-  // write all typ hash table contents 
+  // write all typ hash table contents
   {
     Header.Type = ResourceEntry;
     CRezTypeHash* pTyp = m_haTypes.GetFirst();
@@ -1856,7 +1856,7 @@ BOOL CRezDir::WriteDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD* Size) {
       while (pItm != NULL) {
         CRezItm* pRezItm = pItm->GetRezItm();
         ASSERT(pRezItm != NULL);
-        
+
         // Fill out the header we are going to write out
         Header.Rez.Pos = pRezItm->m_nFilePos;
         Header.Rez.Size = pRezItm->m_nSize;
@@ -1903,7 +1903,7 @@ BOOL CRezMgr::VerifyFileOpen() {
     // try to open the file again
     if (!FileOpen(m_sFileName,m_bReadOnly,FALSE)) return FALSE;
   }
-  
+
   return TRUE;
 };
 
@@ -2266,7 +2266,7 @@ BOOL CRezMgr::IsDirectory(const char* sFileName) {
    // Get data associated with "stat.c"
    result = stat( sFileName, &buf );
 
-   // Check if statistics are valid 
+   // Check if statistics are valid
    if( result != 0 ) return FALSE;
 
    // is this a directory
@@ -2304,7 +2304,7 @@ CRezItm* CRezMgr::AllocateRezItm()
 			m_hashRezItmFreeList.Insert(&pNewChunk->m_pRezItmAry[i].m_heName);
 		}
 
-		m_lstRezItmChunks.Insert(pNewChunk);		
+		m_lstRezItmChunks.Insert(pNewChunk);
 
 		pNewItem = m_hashRezItmFreeList.GetFirst()->GetRezItm();
 	}
