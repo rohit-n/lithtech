@@ -2,7 +2,7 @@
 #include "BaseFx.h"
 #include "clientfx.h"
 
-CBaseFXProps::CBaseFXProps() : 
+CBaseFXProps::CBaseFXProps() :
 	m_pScaleKeys		(NULL),
 	m_nNumScaleKeys		(0),
 	m_pColorKeys		(NULL),
@@ -42,31 +42,31 @@ bool CBaseFXProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, FXPROP_UPDATEPOS ))
+		if( !stricmp( fxProp.m_sName, FXPROP_UPDATEPOS ))
 		{
 			m_nFollowType = (uint32)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_ATTACHNAME ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_ATTACHNAME ))
 		{
 			fxProp.GetStringVal( m_szAttach );
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_OFFSET ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_OFFSET ))
 		{
 			m_vOffset = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_ROTATEADD ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_ROTATEADD ))
 		{
 			m_vRotAdd = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_MENULAYER ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_MENULAYER ))
 		{
 			m_nMenuLayer = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Ck" ))
+		else if( !stricmp( fxProp.m_sName, "Ck" ))
 		{
 			nNumColorKeys++;
 		}
-		else if( !_stricmp( fxProp.m_sName, "Sk" ))
+		else if( !stricmp( fxProp.m_sName, "Sk" ))
 		{
 			nNumScaleKeys++;
 		}
@@ -86,7 +86,7 @@ bool CBaseFXProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Ck" ))
+		if( !stricmp( fxProp.m_sName, "Ck" ))
 		{
 			// Add this key to the list of keys
 
@@ -101,7 +101,7 @@ bool CBaseFXProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 			if(m_pColorKeys)
 				m_pColorKeys[m_nNumColorKeys++] = fxClrKey;
 		}
-		else if( !_stricmp( fxProp.m_sName, "Sk" ))
+		else if( !stricmp( fxProp.m_sName, "Sk" ))
 		{
 			// Add this key to the list of keys
 
@@ -114,7 +114,7 @@ bool CBaseFXProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 				m_pScaleKeys[m_nNumScaleKeys++] = fxSclKey;
 		}
 	}
-	
+
 	return true;
 }
 
@@ -122,7 +122,7 @@ bool CBaseFXProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 CBaseFX::CBaseFX( FXType nType) :
 	m_pLTClient			(NULL),
 	m_hObject			(NULL),
-	m_hParent			(NULL),											
+	m_hParent			(NULL),
 	m_dwState			(0),
 	m_nFXType			(nType),
 	m_bUpdateColour		(true),
@@ -157,7 +157,7 @@ bool CBaseFX::Init(ILTClient *pLTClient, FX_BASEDATA *pData, const CBaseFXProps 
 
 	// Store the base data
 
-	m_dwID				 = pData->m_dwID;	
+	m_dwID				 = pData->m_dwID;
 	m_hParent			 = pData->m_hParent;
 	m_hCamera			 = pData->m_hCamera;
 
@@ -234,7 +234,7 @@ bool CBaseFX::Update(float tmFrameTime)
 	m_pLTClient->GetObjectRotation(m_hObject, &rRot);
 
 	// We are in our pre update
-	
+
 	if (m_hParent)
 	{
 		// Compute the aligned offset
@@ -244,17 +244,17 @@ bool CBaseFX::Update(float tmFrameTime)
 		LTVector vRight, vUp, vForward;
 
 		m_pLTClient->GetObjectRotation(m_hParent, &rRot);
-				
+
 		ILTModel *pModelLT = m_pLTClient->GetModelLT();
 
-		vAlignedOffset =	(rRot.Right() * GetProps()->m_vOffset.x) + 
-							(rRot.Up() * GetProps()->m_vOffset.y) + 
+		vAlignedOffset =	(rRot.Right() * GetProps()->m_vOffset.x) +
+							(rRot.Up() * GetProps()->m_vOffset.y) +
 							(rRot.Forward() * GetProps()->m_vOffset.z);
 
 		// Depending on the Update type find the position we should be at...
 
 		switch (GetProps()->m_nFollowType)
-		{				
+		{
 			case UP_FIXED :
 			{
 				// Keep us in place
@@ -272,9 +272,9 @@ bool CBaseFX::Update(float tmFrameTime)
 			}
 			break;
 
-			case UP_PLAYERVIEW :		
+			case UP_PLAYERVIEW :
 			{
-				// Let game code set our position.	
+				// Let game code set our position.
 			}
 			break;
 
@@ -284,11 +284,11 @@ bool CBaseFX::Update(float tmFrameTime)
 
 				LTransform lTrans;
 				HMODELNODE hNode;
-				
+
 				if( LT_OK == pModelLT->GetNode( m_hParent, GetProps()->m_szAttach, hNode ) )
 				{
 					if( LT_OK == pModelLT->GetNodeTransform( m_hParent, hNode, lTrans, LTTRUE ) )
-					{	
+					{
 						m_vPos	= lTrans.m_Pos + vAlignedOffset;
 						rRot	= lTrans.m_Rot;
 					}
@@ -328,11 +328,11 @@ bool CBaseFX::Update(float tmFrameTime)
 
 				LTransform lTrans;
 				HMODELNODE hNode;
-				
+
 				if( LT_OK == pModelLT->GetNode( m_hParent, GetProps()->m_szAttach, hNode ) )
 				{
 					if( LT_OK == pModelLT->GetNodeTransform( m_hParent, hNode, lTrans, LTFALSE ) )
-					{	
+					{
 						//grab the position of the object to compensate for offset
 						LTVector vObjectPos;
 						m_pLTClient->GetObjectPos(m_hParent, &vObjectPos);
@@ -395,7 +395,7 @@ bool CBaseFX::Update(float tmFrameTime)
 		m_pLTClient->SetObjectColor(m_hObject, m_red, m_green, m_blue, m_alpha);
 	}
 
-	// Compute the current scale based on keyframes and update the 
+	// Compute the current scale based on keyframes and update the
 	// keyframe pointer
 	if (m_bUpdateScale && GetProps()->m_pScaleKeys)
 	{
@@ -441,7 +441,7 @@ void CBaseFX::CalcColour(float tmElapsed, float tmLifespan, float *pRed, float *
 	//to run through a lot of keys to get up to that point
 	if(pKeyHint && (pKeys[*pKeyHint].m_tmKey < tmActual))
 		nCurrColour = *pKeyHint;
-	
+
 
 	// Locate the keyframe
 	for (; nCurrColour + 1 < nNumKeys; nCurrColour++)
@@ -455,11 +455,11 @@ void CBaseFX::CalcColour(float tmElapsed, float tmLifespan, float *pRed, float *
 			// Use this and the previous key to compute the colour
 
 			float tmDist = endKey.m_tmKey - startKey.m_tmKey;
-			
+
 			if (tmDist > 0.0f)
 			{
 				float ratio = (tmActual - startKey.m_tmKey) / tmDist;
-				
+
 				*pRed	= (startKey.m_red + ((endKey.m_red - startKey.m_red) * ratio)) / 255.0f;
 				*pGreen = (startKey.m_green + ((endKey.m_green - startKey.m_green) * ratio)) / 255.0f;
 				*pBlue	= (startKey.m_blue + ((endKey.m_blue - startKey.m_blue) * ratio)) / 255.0f;
@@ -521,7 +521,7 @@ void CBaseFX::CalcScale(float tmElapsed, float tmLifespan, float *pScale, uint32
 			// Use this and the previous key to compute the colour
 
 			float tmDist = endKey.m_tmKey - startKey.m_tmKey;
-			
+
 			if (tmDist > 0.0f)
 			{
 				float rat = (endKey.m_scale - startKey.m_scale) / tmDist;
@@ -538,7 +538,7 @@ void CBaseFX::CalcScale(float tmElapsed, float tmLifespan, float *pScale, uint32
 			break;
 		}
 	}
-	
+
 	//save the hint back out
 	if(pKeyHint)
 		*pKeyHint = nCurrScaleKey;
@@ -558,7 +558,7 @@ void CBaseFX::Pause(bool bPause)
 void CBaseFX::CreateDummyObject()
 {
 	ObjectCreateStruct ocs;
-	
+
 	LTVector vScale;
 	vScale.x = 1.0f;
 	vScale.y = 1.0f;

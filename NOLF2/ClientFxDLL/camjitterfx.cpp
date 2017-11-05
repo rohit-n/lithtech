@@ -14,7 +14,7 @@
 
 #include "stdafx.h"
 #include "clientfx.h"
-#include "CamJitterFX.h"
+#include "camjitterfx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -23,7 +23,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CCamJitterProps::CCamJitterProps() : 
+CCamJitterProps::CCamJitterProps() :
 	m_fInnerDistSqrd	( 250000.0f ),
 	m_fOuterDistSqrd	( 360000.0f )
 {
@@ -49,12 +49,12 @@ bool CCamJitterProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "InnerRadius" ))
+		if( !stricmp( fxProp.m_sName, "InnerRadius" ))
 		{
 			LTFLOAT	fRad = fxProp.GetFloatVal();
 			m_fInnerDistSqrd = fRad * fRad;
 		}
-		else if( !_stricmp( fxProp.m_sName, "OuterRadius" ))
+		else if( !stricmp( fxProp.m_sName, "OuterRadius" ))
 		{
 			LTFLOAT fRad = fxProp.GetFloatVal();
 			m_fOuterDistSqrd = fRad * fRad;
@@ -105,7 +105,7 @@ bool CCamJitterFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBas
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	m_bUpdateScale  = true;
@@ -140,13 +140,13 @@ void CCamJitterFX::Term()
 bool CCamJitterFX::Update(float tmCur)
 {
 	// Base class update first
-	
-	if (!CBaseFX::Update(tmCur)) 
+
+	if (!CBaseFX::Update(tmCur))
 		return false;
 
 	// Return out if we have shutdown
 
-	if (IsShuttingDown()) 
+	if (IsShuttingDown())
 		return true;
 
 	if (!g_bAppFocus)
@@ -156,7 +156,7 @@ bool CCamJitterFX::Update(float tmCur)
 
 	LTVector	vCurCamPos;
 	LTVector	vObjPos;
-	
+
 	// Retrieve the current position of the camera and get the distance to it
 
 	m_pLTClient->GetObjectPos(m_hCamera, &vCurCamPos);

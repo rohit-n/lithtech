@@ -21,30 +21,30 @@
 									CLinkListNode() { m_pPrev = NULL; m_pNext = NULL; }
 
 				// Accessors
-				
+
 				CLinkListNode*		GetPrev() { return m_pPrev; }
 				CLinkListNode*		GetNext() { return m_pNext; }
 				T					GetData() { return m_Data; }
-		
+
 				CLinkListNode	   *m_pPrev;
 				CLinkListNode	   *m_pNext;
 				T					m_Data;
 		};
-	
+
 	template <class T> class CLinkList
-	{				
+	{
 		public:
 
 			// Constructor
-								
+
 									CLinkList();
 
 			// Destructor
-					
+
 									~CLinkList() { Term(); }
 
 			// Member Functions
-			
+
 			void					Term();
 
 			bool					AddHead(T data);
@@ -65,7 +65,7 @@
 			void					AppendList(CLinkList<T>& List);
 
 			// Accessors
-			
+
 			CLinkListNode<T>*		GetHead() { return m_pHead; }
 			CLinkListNode<T>*		GetTail() { return m_pTail; }
 			uint32					GetSize() { return m_nSize; }
@@ -113,7 +113,7 @@
 				CLinkListNode<T> *pCur = pNext;
 
 				// Proceed to next link
-				
+
 				if (pNext) pNext = pNext->m_pNext;
 
 				// Delete link
@@ -123,7 +123,7 @@
 
 			m_pHead = NULL;
 			m_pTail = NULL;
-		}		
+		}
 
 		m_nSize = 0;
 	}
@@ -139,8 +139,8 @@
 	template <class T> inline bool CLinkList<T>::AddHead(T data)
 	{
 		if (!m_pHead)
-		{		
-			m_pHead = new CLinkListNode<T>;
+		{
+			m_pHead = new CLinkListNode<T>{};
 			if (!m_pHead) return false;
 
 			m_pHead->m_Data = data;
@@ -151,7 +151,7 @@
 		{
 			CLinkListNode<T> *pNewNode = new CLinkListNode<T>;
 			if (!pNewNode) return false;
-			
+
 			m_pHead->m_pPrev  = pNewNode;
 			pNewNode->m_pNext = m_pHead;
 			pNewNode->m_Data  = data;
@@ -162,7 +162,7 @@
 		m_nSize ++;
 
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -198,9 +198,9 @@
 		}
 
 		m_nSize ++;
-		
+
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -208,7 +208,7 @@
 	//
 	// FUNCTION : CLinkList::AppendList()
 	//
-	// PURPOSE	: Given another linked list, this will add all elements onto the 
+	// PURPOSE	: Given another linked list, this will add all elements onto the
 	//			  existing list and remove them from the passed in list
 	//
 	//----------------------------------------------------------
@@ -264,7 +264,7 @@
 		pNewNode->m_Data = data;
 
 		pNewNode->m_pPrev = pNode;
-		
+
 		if (pNode->m_pNext)
 		{
 			pNewNode->m_pNext = pNode->m_pNext;
@@ -274,13 +274,13 @@
 		{
 			m_pTail = pNewNode;
 		}
-		
+
 		pNode->m_pNext = pNewNode;
 
 		m_nSize ++;
-		
+
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -294,11 +294,11 @@
 
 	template <class T> inline bool CLinkList<T>::InsertBefore(CLinkListNode<T> *pNode, T data)
 	{
-		CLinkListNode *pNewNode = new CLinkListNode;
+		CLinkListNode<T> *pNewNode = new CLinkListNode<T>{};
 		if (!pNewNode) return false;
 
 		pNewNode->m_pNext = pNode;
-		
+
 		if (pNode->m_pPrev)
 		{
 			pNewNode->m_pPrev = pNode->m_pPrev;
@@ -307,13 +307,13 @@
 		{
 			m_pHead = pNewNode;
 		}
-		
+
 		pNode->m_pPrev = pNewNode;
 
 		m_nSize ++;
-		
+
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -336,7 +336,7 @@
 			Data  = m_pHead->m_Data;
 
 			m_pHead = m_pHead->m_pNext;
-		
+
 			if (!m_pHead)
 			{
 				// List is empty..
@@ -348,13 +348,13 @@
 				if (m_pHead->m_pNext)
 				{
 					// Correct link
-	
+
 					m_pHead->m_pNext->m_pPrev = m_pHead;
 				}
 			}
-			
+
 			delete pNode;
-			
+
 			m_nSize --;
 		}
 
@@ -375,13 +375,13 @@
 		T Data;
 
 		if (m_pTail)
-		{	
+		{
 			pNode = m_pTail;
 			Data  = m_pTail->m_Data;
 
 			if (m_pTail->m_pPrev)
 			{
-				m_pTail = m_pTail->m_pPrev;								
+				m_pTail = m_pTail->m_pPrev;
 			}
 			else
 			{
@@ -437,7 +437,7 @@
 		}
 
 		// Delete link
-		
+
 		delete pNode;
 
 		m_nSize --;

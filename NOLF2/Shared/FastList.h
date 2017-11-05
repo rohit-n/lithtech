@@ -19,35 +19,35 @@
 
 				// Constructor
 										CFastListNode() { m_pPrev = NULL; m_pNext = NULL; }
-									
-				// Accessors		
-									
+
+				// Accessors
+
 				CFastListNode*			GetPrev() { return m_pPrev; }
 				CFastListNode*			GetNext() { return m_pNext; }
 				T						GetData() { return m_Data; }
-									
+
 				CFastListNode		   *m_pPrev;
 				CFastListNode		   *m_pNext;
 				T						m_Data;
 		};
-	
+
 	template <class T> class CFastList
-	{				
+	{
 		public:
 
 			// Constructor
-								
+
 										CFastList();
 										CFastList(int nTotalElem);
-										
-			// Destructor				
-										
+
+			// Destructor
+
 										~CFastList() { Term(); }
-										
-			// Member Functions			
-										
+
+			// Member Functions
+
 			void						Term(bool bDeAlloc = true);
-										
+
 			bool						AddHead(T data);
 			bool						AddTail(T data);
 			bool						InsertAfter(CFastListNode<T> *pNode, T data);
@@ -61,8 +61,8 @@
 			T							Get(uint32 dwIndex);
 			int							GetIndex(T data);
 
-			// Accessors				
-										
+			// Accessors
+
 			CFastListNode<T>*			GetBlock() { return m_pBlock; }
 			CFastListNode<T>*			GetHead() { return m_pHead; }
 			CFastListNode<T>*			GetTail() { return m_pTail; }
@@ -157,9 +157,9 @@
 	template <class T> inline bool CFastList<T>::AddHead(T data)
 	{
 		if (!m_pHead)
-		{		
-			m_pHead = new CFastListNode;
-			if (!m_pRoot) return false;
+		{
+			m_pHead = new CFastListNode<T>{};
+			if (!m_pHead) return false;
 
 			m_pHead->m_Data = data;
 
@@ -167,9 +167,9 @@
 		}
 		else
 		{
-			CFastListNode *pNewNode = new CFastListNode;
+			CFastListNode<T> *pNewNode = new CFastListNode<T>{};
 			if (!pNewNode) return false;
-			
+
 			m_pHead->m_pPrev  = pNewNode;
 			pNewNode->m_pNext = m_pHead;
 			pNewNode->m_Data  = data;
@@ -180,7 +180,7 @@
 		m_nSize ++;
 
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -201,7 +201,7 @@
 
 			m_pFreeList = m_pFreeList->m_pNext;
 			m_pFreeList->m_pPrev = NULL;
-			
+
 			m_pTail->m_pPrev = NULL;
 			m_pTail->m_pNext = NULL;
 
@@ -228,9 +228,9 @@
 		}
 
 		m_nSize ++;
-		
+
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -258,7 +258,7 @@
 		pNewNode->m_Data = data;
 
 		pNewNode->m_pPrev = pNode;
-		
+
 		if (pNode->m_pNext)
 		{
 			pNewNode->m_pNext = pNode->m_pNext;
@@ -268,13 +268,13 @@
 		{
 			m_pTail = pNewNode;
 		}
-		
+
 		pNode->m_pNext = pNewNode;
 
 		m_nSize ++;
-		
+
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -295,7 +295,7 @@
 		m_pFreeList->m_pPrev = NULL;
 
 		pNewNode->m_pNext = pNode;
-		
+
 		if (pNode->m_pPrev)
 		{
 			pNewNode->m_pPrev = pNode->m_pPrev;
@@ -304,13 +304,13 @@
 		{
 			m_pHead = pNewNode;
 		}
-		
+
 		pNode->m_pPrev = pNewNode;
 
 		m_nSize ++;
-		
+
 		// Success !!
-		
+
 		return true;
 	}
 
@@ -333,7 +333,7 @@
 			Data  = m_pHead->m_Data;
 
 			m_pHead = m_pHead->m_pNext;
-		
+
 			if (!m_pHead)
 			{
 				// List is empty..
@@ -345,15 +345,15 @@
 				if (m_pHead->m_pNext)
 				{
 					// Correct link
-	
+
 					m_pHead->m_pNext->m_pPrev = m_pHead;
 				}
 			}
-			
+
 			pNode->m_pNext = m_pFreeList->m_pNext;
 			pNode->m_pPrev = m_pFreeList;
 			m_pFreeList->m_pNext = pNode;
-			
+
 			m_nSize --;
 		}
 
@@ -374,13 +374,13 @@
 		T Data;
 
 		if (m_pTail)
-		{	
+		{
 			pNode = m_pTail;
 			Data  = m_pTail->m_Data;
 
 			if (m_pTail->m_pPrev)
 			{
-				m_pTail = m_pTail->m_pPrev;								
+				m_pTail = m_pTail->m_pPrev;
 			}
 			else
 			{
@@ -438,7 +438,7 @@
 		}
 
 		// Delete link
-		
+
 		pNode->m_pNext = m_pFreeList->m_pNext;
 		pNode->m_pPrev = m_pFreeList;
 		m_pFreeList->m_pNext = pNode;

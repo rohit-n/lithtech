@@ -58,37 +58,37 @@
 												m_nType = eDataType::ENUM;
 												m_data.m_nVal = value;
 											}
-		
-		void								Int(char *sName, int value) 
-											{ 
+
+		void								Int(char *sName, int value)
+											{
 												strcpy(m_sName, sName);
 												m_nType = eDataType::INTEGER;
 												m_data.m_nVal = value;
 											}
 
-		void								Float(char *sName, float value) 
-											{ 
+		void								Float(char *sName, float value)
+											{
 												strcpy(m_sName, sName);
 												m_nType = eDataType::FLOAT;
 												m_data.m_fVal = value;
 											}
 
-		void								String(char *sName, char *sString) 
-											{ 
+		void								String(char *sName, char *sString)
+											{
 												strcpy(m_sName, sName);
-												m_nType = eDataType::STRING;												
+												m_nType = eDataType::STRING;
 												strcpy(m_data.m_sVal, sString);
 											}
 
-		void								Combo(char *sName, char *sString) 
-											{ 
+		void								Combo(char *sName, char *sString)
+											{
 												strcpy(m_sName, sName);
 												m_nType = eDataType::COMBO;
 												strcpy(m_data.m_sVal, sString);
 											}
 
-		void								Vector(char *sName, float *pfVec) 
-											{ 
+		void								Vector(char *sName, float *pfVec)
+											{
 												strcpy(m_sName, sName);
 												m_nType = eDataType::VECTOR;
 												m_data.m_fVec[0] = pfVec[0];
@@ -96,8 +96,8 @@
 												m_data.m_fVec[2] = pfVec[2];
 											}
 
-		void								Vector4(char *sName, float *pfVec4) 
-											{ 
+		void								Vector4(char *sName, float *pfVec4)
+											{
 												strcpy(m_sName, sName);
 												m_nType = eDataType::VECTOR;
 												m_data.m_fVec[0] = pfVec4[0];
@@ -114,8 +114,8 @@
 												m_data.m_clrKey.m_dwCol = dwCol;
 											}
 
-		void								Path(char *sName, char *sString) 
-											{ 
+		void								Path(char *sName, char *sString)
+											{
 												strcpy(m_sName, sName);
 												m_nType = eDataType::PATH;
 												strcpy(m_data.m_sVal, sString);
@@ -153,8 +153,8 @@
 
 												char *sExt  = strtok( m_data.m_sVal, "|" );
 												char *sPath = strtok( LTNULL, "|" );
-												
-												if( sPath && _stricmp( sPath, "..." ))
+
+												if( sPath && stricmp( sPath, "..." ))
 													SAFE_STRCPY( szPathOut, sPath );
 											}
 
@@ -164,7 +164,7 @@
 												SAFE_STRCPY( szStrOut, m_data.m_sVal );
 											}
 
-													
+
 		// Member Variables
 
 

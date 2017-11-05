@@ -13,12 +13,12 @@
 
 	// Includes....
 
-	#include "basefx.h"
+	#include "BaseFx.h"
 
 	class CBouncyChunkProps : public CBaseFXProps
 	{
 	public:
-	
+
 		CBouncyChunkProps();
 
 		//this will take a list of properties and convert it to internal values
@@ -26,7 +26,7 @@
 
 		char							m_sModelName[128];
 		char							m_sSkinName[128];
-		
+
 		bool							m_bPlayImpactSound;
 		char							m_sImpactSound[128];
 
@@ -36,7 +36,7 @@
 		float							m_fChunkSpeed;
 		float							m_fChunkSpread;
 
-		LTVector						m_vChunkDir;		
+		LTVector						m_vChunkDir;
 	};
 
 	class CBouncyChunkFX : public CBaseFX

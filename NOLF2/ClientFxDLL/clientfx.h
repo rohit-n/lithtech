@@ -21,13 +21,17 @@
 	// Defines....
 
 	#define NUM_FX								17
-	
+
+#ifdef _LINUX
+    #define __declspec(x)
+#endif
+
 	extern "C"
 	{
 
 		__declspec(dllexport) int				fxGetNum();
 		__declspec(dllexport) FX_REF			fxGetRef(int nFx);
-	
+
 		__declspec(dllexport) void				fxDelete(CBaseFX *pDeleteFX);
 
 		__declspec(dllexport) void				fxSetPlayer(HOBJECT hPlayer);
@@ -49,7 +53,7 @@
 
 	#define MAX_BUFFER_TRIS						256
 	#define MAX_BUFFER_VERTS					(MAX_BUFFER_TRIS * 3)
-	
+
 	extern LT_POLYGT3 g_pTris[MAX_BUFFER_TRIS];
 	extern LTVector g_pVerts[MAX_BUFFER_VERTS];
 
@@ -75,16 +79,16 @@
 		LTVector vPos;
 		LTVector vRight, vUp, vForward;
 		LTRotation orient;
-	
+
 		pClientDE->GetObjectPos(hCamera, &vPos);
 		pClientDE->GetObjectRotation(hCamera, &orient);
-		
+
 		vPos.x = -vPos.x;
 		vPos.y = -vPos.y;
 		vPos.z = -vPos.z;
 
 		LTMatrix mTran, mRot, mFull;
-		
+
 		Mat_SetBasisVectors(&mRot, &orient.Right(), &orient.Up(), &orient.Forward());
 		MatTranspose3x3(&mRot);
 
@@ -95,7 +99,7 @@
 
 		MatMul(&mFull, &mRot, &mTran);
 
-		return mFull;	
+		return mFull;
 	}
 
 
@@ -116,7 +120,7 @@
 		return( (rand() % (max - min + 1)) + min );
 	}
 
-	
+
 	inline void SetupRotationAroundPoint(LTMatrix &mMat, const LTRotation &rRot, const LTVector &vPoint)
 	{
 		LTMatrix mForward, mRotate, mBackward;
@@ -127,10 +131,10 @@
 
 		mForward.SetTranslation( vPoint );
 		mBackward.SetTranslation( -vPoint );
-		
+
 		rRot.ConvertToMatrix( mRotate );
 
-		mMat = mForward * mRotate * mBackward;	
+		mMat = mForward * mRotate * mBackward;
 	}
 
 	inline void SetupRotation(LTMatrix &mMat, const LTRotation &rRot)
@@ -146,9 +150,9 @@
 			vPerp1 = LTVector( 1.0f, 0.0f, 0.0f ).Cross( vPlaneDir );
 		}
 		else
-		{	
+		{
 			vPerp1 = LTVector( 0.0f, 1.0f, 0.0f ).Cross( vPlaneDir );
-		}	
+		}
 
 		// Get coplanar perp vector to initial perp
 		vPerp2 = vPerp1.Cross( vPlaneDir );

@@ -12,7 +12,7 @@
 
 #include "stdafx.h"
 #include "clientfx.h"
-#include "CamWobbleFX.h"
+#include "camwobblefx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -50,24 +50,24 @@ bool CCamWobbleProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "xMultiplier"))
+		if( !stricmp( fxProp.m_sName, "xMultiplier"))
 		{
 			m_xMultiplier = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "yMultiplier"))
+		else if( !stricmp( fxProp.m_sName, "yMultiplier"))
 		{
 			m_yMultiplier = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Reps"))
+		else if( !stricmp( fxProp.m_sName, "Reps"))
 		{
 			m_fPeriod = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "InnerRadius" ))
+		else if( !stricmp( fxProp.m_sName, "InnerRadius" ))
 		{
 			LTFLOAT	fRad = fxProp.GetFloatVal();
 			m_fInnerDistSqrd = fRad * fRad;
 		}
-		else if( !_stricmp( fxProp.m_sName, "OuterRadius" ))
+		else if( !stricmp( fxProp.m_sName, "OuterRadius" ))
 		{
 			LTFLOAT fRad = fxProp.GetFloatVal();
 			m_fOuterDistSqrd = fRad * fRad;
@@ -166,13 +166,13 @@ void CCamWobbleFX::Term()
 bool CCamWobbleFX::Update(float tmFrameTime)
 {
 	// Base class update first
-	
-	if (!CBaseFX::Update(tmFrameTime)) 
+
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
 	// Return out if we have shutdown
 
-	if (IsShuttingDown()) 
+	if (IsShuttingDown())
 		return true;
 
 	if (!g_bAppFocus)
@@ -182,11 +182,11 @@ bool CCamWobbleFX::Update(float tmFrameTime)
 
 	LTVector	vCurCamPos;
 	LTVector	vObjPos;
-	
+
 	// Retrieve the current position of the camera and get the distance to it
 
 	m_pLTClient->GetObjectPos(m_hCamera, &vCurCamPos);
-	
+
 	if( m_hParent )
 	{
 		m_pLTClient->GetObjectPos( m_hParent, &vObjPos );
@@ -221,7 +221,7 @@ bool CCamWobbleFX::Update(float tmFrameTime)
 	float fVal = fmodf(m_tmElapsed, fLen);
 
 	float fRadVal = (MATH_CIRCLE / fLen) * fVal;
-	
+
 	float xOff = m_xFovAnchor + ((float)sin(fRadVal) * GetProps()->m_xMultiplier * fFallOff);
 	float yOff = m_yFovAnchor + ((float)cos(fRadVal) * GetProps()->m_yMultiplier * fFallOff);
 

@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "BouncyChunkFX.h"
-#include "ClientFX.h"
+#include "bouncychunkfx.h"
+#include "clientfx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -21,7 +21,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CBouncyChunkProps::CBouncyChunkProps() : 
+CBouncyChunkProps::CBouncyChunkProps() :
 	m_bPlayImpactSound(false),
 	m_fChunkSpeed(0.0f),
 	m_fChunkSpread(0.0f),
@@ -105,7 +105,7 @@ bool CBouncyChunkProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 			m_vChunkDir.y = fxProp.m_data.m_fVec[1];
 			m_vChunkDir.z = fxProp.m_data.m_fVec[2];
 			m_vChunkDir.Norm();
-		}				
+		}
 		else if (!stricmp(fxProp.m_sName, "ChunkSpeed"))
 		{
 			m_fChunkSpeed = fxProp.m_data.m_fVal;
@@ -160,7 +160,7 @@ CBouncyChunkFX::~CBouncyChunkFX()
 bool CBouncyChunkFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBaseFXProps *pProps)
 {
 	// Perform base class initialisation
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	ObjectCreateStruct ocs;
@@ -222,7 +222,7 @@ bool CBouncyChunkFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CB
 	// Create the base object
 
 	CreateDummyObject();
-		
+
 	// Success !!
 
 	return true;
@@ -261,8 +261,8 @@ void CBouncyChunkFX::Term()
 bool CBouncyChunkFX::Update(float tmFrameTime)
 {
 	// Base class update first
-	
-	if (!CBaseFX::Update(tmFrameTime)) 
+
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
 	if ((m_hImpactSound) && (m_pLTClient->IsDone(m_hImpactSound)))
@@ -284,9 +284,9 @@ bool CBouncyChunkFX::Update(float tmFrameTime)
 
 	LTVector vNew = vCur;
 	vNew += m_vVel * tmFrameTime;
-	
+
 	m_vVel += GetProps()->m_vGravity * tmFrameTime;
-	
+
 	// Move the object and collide against the world
 
 	ClientIntersectQuery ciq;
@@ -307,7 +307,7 @@ bool CBouncyChunkFX::Update(float tmFrameTime)
 		L.x = -L.x;
 		L.y = -L.y;
 		L.z = -L.z;
-		
+
 		LTVector vReflected = N * 2.0f;
 		vReflected *= (N.Dot(L));
 		vReflected -= L;
@@ -329,7 +329,7 @@ bool CBouncyChunkFX::Update(float tmFrameTime)
 							PLAYSOUND_CTRL_VOL |
 							PLAYSOUND_CLIENT |
 							PLAYSOUND_TIME |
-							PLAYSOUND_3D | 
+							PLAYSOUND_3D |
 							PLAYSOUND_REVERB;
 
 			psi.m_nVolume = 50;
