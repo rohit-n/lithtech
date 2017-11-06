@@ -33,14 +33,6 @@
 
 #ifdef _WIN32
 	#include "windows.h"
-#else
-    #define APIENTRY
-    #define DLL_PROCESS_ATTACH 1
-    #define DLL_THREAD_ATTACH  2
-    #define DLL_THREAD_DETACH  4
-    #define DLL_PROCESS_DETACH 8
-    typedef void* HANDLE;
-    typedef void* LPVOID;
 #endif
 
 ILTClient *g_pLTClient;
@@ -133,7 +125,7 @@ void*				g_pCreateClientFxUserData;
 
 extern "C"
 {
-
+#ifdef _WINN32
 bool APIENTRY DllMain( HANDLE hModule,
                        uint32  ul_reason_for_call,
                        LPVOID lpReserved
@@ -150,7 +142,7 @@ bool APIENTRY DllMain( HANDLE hModule,
     }
     return true;
 }
-
+#endif // WINN32
 //------------------------------------------------------------------
 //
 //   FUNCTION : fxGetNum()
