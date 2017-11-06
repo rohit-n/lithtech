@@ -11,10 +11,10 @@
 // Includes....
 
 #include "stdafx.h"
-#include "ClientFX.h"
-#include "SpriteSystemFX.h"
+#include "clientfx.h"
+#include "spritesystemfx.h"
 #include "FastList.h"
-#include "CycleTimer.h"
+#include "cycletimer.h"
 #include "iltspritecontrol.h"
 #include "stdio.h"
 #include "time.h"
@@ -28,7 +28,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CSpriteSystemProps::CSpriteSystemProps() : 
+CSpriteSystemProps::CSpriteSystemProps() :
 	m_nSpritesPerEmission			( 5 ),
 	m_fGravity						( 0.0f) ,
 	m_fEmissionInterval				( 1.0f ),
@@ -73,19 +73,19 @@ bool CSpriteSystemProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Sprite" ))
+		if( !stricmp( fxProp.m_sName, "Sprite" ))
 		{
 			fxProp.GetPath( m_szFileName );
 		}
-		else if( !_stricmp( fxProp.m_sName, "EmissionInterval" ))
+		else if( !stricmp( fxProp.m_sName, "EmissionInterval" ))
 		{
 			m_fEmissionInterval = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "SpritesPerEmission" ))
+		else if( !stricmp( fxProp.m_sName, "SpritesPerEmission" ))
 		{
 			m_nSpritesPerEmission = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinSpriteRotation" ))
+		else if( !stricmp( fxProp.m_sName, "MinSpriteRotation" ))
 		{
 			m_vMinSpriteRotation = fxProp.GetVector();
 
@@ -93,7 +93,7 @@ bool CSpriteSystemProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 			m_vMinSpriteRotation.y = MATH_DEGREES_TO_RADIANS( m_vMinSpriteRotation.y );
 			m_vMinSpriteRotation.z = MATH_DEGREES_TO_RADIANS( m_vMinSpriteRotation.z );
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxSpriteRotation" ))
+		else if( !stricmp( fxProp.m_sName, "MaxSpriteRotation" ))
 		{
 			m_vMaxSpriteRotation = fxProp.GetVector();
 
@@ -101,71 +101,71 @@ bool CSpriteSystemProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 			m_vMaxSpriteRotation.y = MATH_DEGREES_TO_RADIANS( m_vMaxSpriteRotation.y );
 			m_vMaxSpriteRotation.z = MATH_DEGREES_TO_RADIANS( m_vMaxSpriteRotation.z );
 		}
-		else if( !_stricmp( fxProp.m_sName, "GravityAcceleration" ))
+		else if( !stricmp( fxProp.m_sName, "GravityAcceleration" ))
 		{
 			m_fGravity = fxProp.GetFloatVal();
 		}
-		else if (!_stricmp( fxProp.m_sName, "MinSpriteLifespan" ))
+		else if (!stricmp( fxProp.m_sName, "MinSpriteLifespan" ))
 		{
 			m_fMinSpriteLifespan = fxProp.GetFloatVal();
 		}
-		else if (!_stricmp( fxProp.m_sName, "MaxSpriteLifespan" ))
+		else if (!stricmp( fxProp.m_sName, "MaxSpriteLifespan" ))
 		{
 			m_fMaxSpriteLifespan = fxProp.GetFloatVal();
 		}
-		else if (!_stricmp( fxProp.m_sName, "MinRadius" ))
+		else if (!stricmp( fxProp.m_sName, "MinRadius" ))
 		{
 			m_fMinRadius = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxRadius" ))
+		else if( !stricmp( fxProp.m_sName, "MaxRadius" ))
 		{
 			m_fMaxRadius = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "EmissionPlane" ))
+		else if( !stricmp( fxProp.m_sName, "EmissionPlane" ))
 		{
 			m_vPlaneDir = fxProp.GetVector();
-			
+
 			m_vPlaneDir.Norm();
 
 			// Get the perpindicular vectors to this plane
 			FindPerps(m_vPlaneDir, m_vPerp1, m_vPerp2);
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinSpriteVelocity" ))
+		else if( !stricmp( fxProp.m_sName, "MinSpriteVelocity" ))
 		{
 			m_vMinSpriteVelocity = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxSpriteVelocity" ))
+		else if( !stricmp( fxProp.m_sName, "MaxSpriteVelocity" ))
 		{
 			m_vMaxSpriteVelocity = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, "EmissionType" ))
+		else if( !stricmp( fxProp.m_sName, "EmissionType" ))
 		{
 			m_nEmissionType = (uint32)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "AType" ))
+		else if( !stricmp( fxProp.m_sName, "AType" ))
 		{
 			m_nAlphaType = (uint32)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "StretchU" ))
+		else if( !stricmp( fxProp.m_sName, "StretchU" ))
 		{
 			m_fStretchU = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "StretchV" ))
+		else if( !stricmp( fxProp.m_sName, "StretchV" ))
 		{
 			m_fStretchV = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "AnimationLength" ))
+		else if( !stricmp( fxProp.m_sName, "AnimationLength" ))
 		{
 			m_nAnimLengthType = (uint32)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "AnimationSpeed" ))
+		else if( !stricmp( fxProp.m_sName, "AnimationSpeed" ))
 		{
 			m_fAnimSpeed = fxProp.GetFloatVal();
 
 			//make sure it isn't infinitely fast!
 			m_fAnimSpeed = LTMAX(m_fAnimSpeed, 0.001f);
 		}
-		else if( !_stricmp( fxProp.m_sName, "InfiniteLife" ) )
+		else if( !stricmp( fxProp.m_sName, "InfiniteLife" ) )
 		{
 			m_bInfiniteLife = (LTBOOL)fxProp.GetComboVal();
 		}
@@ -187,7 +187,7 @@ CSpriteSystem::CSpriteSystem()
 :	CBaseFX							( CBaseFX::eSpriteSystem ),
 	m_tmElapsedEmission				( 0.0f ),
 	m_pTexArray						( LTNULL ),
-	m_vRandomPoint					( 0.0f, 0.0f, 0.0f ), 
+	m_vRandomPoint					( 0.0f, 0.0f, 0.0f ),
 	m_nSpriteFrames					( 0 )
 {
 
@@ -218,12 +218,12 @@ bool CSpriteSystem::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBa
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 
 	if( GetProps()->m_bUseSpin )
-	{	
+	{
 		m_rSpin.Identity();
 	}
 
@@ -239,14 +239,14 @@ bool CSpriteSystem::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBa
 	// Create the base object
 
 	ObjectCreateStruct ocs;
-	
+
 	ocs.m_ObjectType		= OT_SPRITE;
 	ocs.m_Flags				|= pBaseData->m_dwObjectFlags | FLAG_ROTATEABLESPRITE;
 	ocs.m_Flags2			|= pBaseData->m_dwObjectFlags2;
 	ocs.m_Pos				= m_vCreatePos;
 	ocs.m_Rotation			= m_rCreateRot;
 	ocs.m_Scale.Init( 0.0f, 0.0f, 0.0f );
-	
+
 	SAFE_STRCPY(ocs.m_Filename, GetProps()->m_szFileName);
 
 	// Develop the Right and Up vectors based off the Forward...
@@ -270,23 +270,23 @@ bool CSpriteSystem::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBa
 		ocs.m_Rotation = LTRotation( pBaseData->m_vTargetNorm, vU );
 	}
 
-	
+
 	m_hObject = m_pLTClient->CreateObject(&ocs);
 	if( !m_hObject )
 		return LTFALSE;
 
-	
+
 	ILTSpriteControl *pControl;
 	m_pLTClient->GetSpriteControl(m_hObject, pControl);
 
 	if( pControl )
 	{
 		uint32 tmSpriteLen;
-		
+
 		pControl->GetAnimLength(tmSpriteLen, 0);
 
-		pControl->GetNumFrames(0, m_nSpriteFrames);	
-		
+		pControl->GetNumFrames(0, m_nSpriteFrames);
+
 		//ok, this takes some convoluted math in order to figure out the length of
 		//this sprite. The value of tmSpriteLen is the time FPS * Number of frames,
 		//so we can get the number of frames a second, and find the actual time in seconds
@@ -304,7 +304,7 @@ bool CSpriteSystem::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBa
 			}
 		}
 	}
-	
+
 
 	m_bUpdateColour = LTFALSE;
 	m_bUpdateScale  = LTFALSE;
@@ -317,11 +317,11 @@ bool CSpriteSystem::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBa
 						 (GetProps()->m_vPerp2 * GetRandom( -1.0f, 1.0f ));
 
 		// Normalize it
-		
+
 		m_vRandomPoint.Norm();
 
 		// Now scale it into our desired range
-		
+
 		m_vRandomPoint *= GetRandom( GetProps()->m_fMinRadius, GetProps()->m_fMaxRadius );
 	}
 
@@ -383,12 +383,12 @@ bool CSpriteSystem::SuspendedUpdate( float tmFrameTime )
 
 bool CSpriteSystem::Update(float tmFrameTime)
 {
-	if( !m_hObject ) 
+	if( !m_hObject )
 		return LTFALSE;
 
 	// Base class update first
-		
-	if( !CBaseFX::Update( tmFrameTime ) ) 
+
+	if( !CBaseFX::Update( tmFrameTime ) )
 		return LTFALSE;
 
 	//update our elapsed emission time
@@ -431,7 +431,7 @@ bool CSpriteSystem::Update(float tmFrameTime)
 			}
 		}
 	}
-	
+
 	UpdateSprites( tmFrameTime );
 
 	return LTTRUE;
@@ -471,22 +471,22 @@ void CSpriteSystem::AddSprites( )
 				case SS_SPHERE:
 					{
 						vPos.x = GetRandom( -1.0f, 1.0f );
-						vPos.y = GetRandom( -1.0f, 1.0f ); 
-						vPos.z = GetRandom( -1.0f, 1.0f ); 
+						vPos.y = GetRandom( -1.0f, 1.0f );
+						vPos.z = GetRandom( -1.0f, 1.0f );
 
 						// Normalize it
 						vPos.Norm();
 
 						// Now scale it into our desired range
 						vPos *= GetRandom( GetProps()->m_fMinRadius, GetProps()->m_fMaxRadius );
-						
+
 					}
 					break;
 
 				case SS_POINT:
 					{
 						vPos = m_vRandomPoint;
-					}	
+					}
 					break;
 
 				case SS_CIRCLE:
@@ -555,7 +555,7 @@ void CSpriteSystem::AddSprites( )
 			}
 
 			// Randomize the velocity within our range
-			
+
 			pNewSprite->m_vVel.x = GetRandom( GetProps()->m_vMinSpriteVelocity.x, GetProps()->m_vMaxSpriteVelocity.x );
 			pNewSprite->m_vVel.y = GetRandom( GetProps()->m_vMinSpriteVelocity.y, GetProps()->m_vMaxSpriteVelocity.y );
 			pNewSprite->m_vVel.z = GetRandom( GetProps()->m_vMinSpriteVelocity.z, GetProps()->m_vMaxSpriteVelocity.z );
@@ -596,10 +596,10 @@ void CSpriteSystem::UpdateSprites( LTFLOAT tmFrameTime )
 
 	SPRITE *pSprites = m_collSprites.GetData();
 	uint32 nSprites = m_collSprites.GetUsed();
-	
+
 	if( !pSprites )
 		return;
-	
+
 	if (GetProps()->m_bUseSpin)
 	{
 		// Add on our rotation
@@ -628,7 +628,7 @@ void CSpriteSystem::UpdateSprites( LTFLOAT tmFrameTime )
 				continue;
 			}
 		}
-		
+
 		pSprites->m_vPos += (pSprites->m_vVel * tmFrameTime);
 		pSprites->m_vVel.y += (GetProps()->m_fGravity * tmFrameTime);
 
@@ -652,15 +652,15 @@ void CSpriteSystem::UpdateSprites( LTFLOAT tmFrameTime )
 bool CSpriteSystem::Render()
 {
 	//don't bother if we don't have focus
-	if( !CBaseFX::Render() ) 
+	if( !CBaseFX::Render() )
 		return false;
 
 	SPRITE *pSprites = m_collSprites.GetData();
 	uint32 nSprites = m_collSprites.GetUsed();
-	
+
 	if( !pSprites )
 		return true;
-	
+
 	// Build the camera transform
 
 	LTMatrix	mFull = GetCamTransform(m_pLTClient, m_hCamera);
@@ -677,12 +677,12 @@ bool CSpriteSystem::Render()
 
 		LTVector	vObjPos;
 		LTRotation	rObjRot;
-		
+
 		m_pLTClient->GetObjectPos( m_hObject, &vObjPos );
 		m_pLTClient->GetObjectRotation( m_hObject, &rObjRot );
 
 		// Setup the swarmming matrix
-		SetupRotationAroundPoint( mSpin, rObjRot * m_rSpin, vObjPos ); 
+		SetupRotationAroundPoint( mSpin, rObjRot * m_rSpin, vObjPos );
 	}
 
 	// Setup the draw primitive...
@@ -748,7 +748,7 @@ bool CSpriteSystem::Render()
 		}
 
 		// Setup the color and scale
-		CalcColour( pSprites->m_tmElapsed, pSprites->m_fLifespan, &r, &g, &b, &a );		
+		CalcColour( pSprites->m_tmElapsed, pSprites->m_fLifespan, &r, &g, &b, &a );
 		CalcScale( pSprites->m_tmElapsed, pSprites->m_fLifespan, &scale );
 
 		// Set up the current texture we should be using...
@@ -772,10 +772,10 @@ bool CSpriteSystem::Render()
 
 			hPrevTexture = hTexture;
 		}
-		
+
 		MatVMul(&vWorldPos, &mFull, &vPos);
 
-		SetupParticle(vWorldPos, scale, (float)dwHeight * scale / (float)dwWidth, pSprites->m_rRot, 
+		SetupParticle(vWorldPos, scale, (float)dwHeight * scale / (float)dwWidth, pSprites->m_rRot,
 				(uint8)(r * 255.0f), (uint8)(g * 255.0f), (uint8)(b * 255.0f), (uint8)(a * 255.0f));
 
 		pDrawPrimitive->DrawPrim(g_pTris, 2);
@@ -803,33 +803,33 @@ bool CSpriteSystem::Render()
 //------------------------------------------------------------------
 
 void CSpriteSystem::SetupParticle(const LTVector& vPos, float fWidth, float fHeight, const LTRotation& rSpin, uint8 r, uint8 g, uint8 b, uint8 a)
-{	
+{
 	LT_POLYGT3 *pTris    = g_pTris;
 
-	if (vPos.z < 0.0f) 
+	if (vPos.z < 0.0f)
 		return;
 
 	fWidth  *= GetProps()->m_fStretchU;
 	fHeight *= GetProps()->m_fStretchV;
-	
+
 	LTVector	vVert[4];
 
 	vVert[0] = LTVector( vPos.x - fWidth, vPos.y + fHeight, vPos.z );
 	vVert[1] = LTVector( vPos.x + fWidth, vPos.y + fHeight, vPos.z );
 	vVert[2] = LTVector( vPos.x + fWidth, vPos.y - fHeight, vPos.z );
 	vVert[3] = LTVector( vPos.x - fWidth, vPos.y - fHeight, vPos.z );
-	
+
 	if( !rSpin.IsIdentity() )
 	{
 		LTMatrix mSpin;
 		SetupRotationAroundPoint( mSpin, rSpin, vPos );
-		
+
 		vVert[0] = mSpin * vVert[0];
 		vVert[1] = mSpin * vVert[1];
 		vVert[2] = mSpin * vVert[2];
 		vVert[3] = mSpin * vVert[3];
 	}
-	
+
 	SetupVert(pTris, 0, vVert[0], r, g, b, a, 0.0f, 0.0f);
 	SetupVert(pTris, 1, vVert[1], r, g, b, a, 1.0f, 0.0f);
 	SetupVert(pTris, 2, vVert[2], r, g, b, a, 1.0f, 1.0f);
