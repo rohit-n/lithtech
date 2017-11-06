@@ -128,10 +128,16 @@ public:
 	enum eRelationTraits
 	{
 		kTrait_Invalid = -1,
-
+#ifdef _WIN32
 		#define TRAIT_TYPE_AS_ENUM 1
 		#include "RelationTraitTypeEnums.h"
 		#undef TRAIT_TYPE_AS_ENUM
+#else
+		kTrait_Name = 0,
+		kTrait_Class = 1,
+		kTrait_Alignment = 2,
+		kTrait_Count = 3
+#endif
 	};
 
 	//

@@ -26,13 +26,17 @@ void GBM_DisplayError(const char* szMsg);
 //
 // ----------------------------------------------------------------------- //
 
-#if _MSC_VER == 1300
+#if _MSC_VER == 1300 
 
 typedef std::hash_map< const char *, int, ButeMgrHashCompare > IndexTable;
 
 #elif _MSC_VER > 1300
 
 typedef stdext::hash_map< const char *, int, ButeMgrHashCompare > IndexTable;
+
+#elif defined(__GNUC__)
+
+typedef std::map< const char *, int, equal_str_nocase > IndexTable;
 
 #else
 

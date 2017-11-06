@@ -62,13 +62,13 @@ class CSoundFilterMgr : public CGameButeMgr
 
 		inline LTBOOL	IsDynamic(SOUNDFILTER* pFilter)
 		{
-			return (pFilter && (strcmpi(pFilter->szName, "Dynamic") == 0));
+			return (pFilter && (stricmp(pFilter->szName, "Dynamic") == 0));
 		}
 
 		inline LTBOOL	IsUnFiltered(SOUNDFILTER* pFilter)
 		{
 			// First record is the dynamic filter definition...
-			return (pFilter && (strcmpi(pFilter->szName, "UnFiltered") == 0));
+			return (pFilter && (stricmp(pFilter->szName, "UnFiltered") == 0));
 		}
 
 	private :

@@ -18,6 +18,12 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#else
+typedef void* HANDLE;
+typedef void* HWND;
+#define UINT uintptr_t
+#define WINAPI
+
 #endif // __LINUX
 
 #include <stdio.h>

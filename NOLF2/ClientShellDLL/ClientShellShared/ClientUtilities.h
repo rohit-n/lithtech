@@ -13,6 +13,7 @@
 #ifndef __CLIENT_UTILITIES_H__
 #define __CLIENT_UTILITIES_H__
 
+#include "ClientServerShared.h"
 #include "SoundTypes.h"
 #include "iltclient.h"
 #include "CommonUtilities.h"
