@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "PolyFanFX.h"
-#include "ClientFX.h"
+#include "polyfanfx.h"
+#include "clientfx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -21,7 +21,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CPolyFanProps::CPolyFanProps() : 
+CPolyFanProps::CPolyFanProps() :
 	m_nAlongNormal	(0),
 	m_bParentRotate	(false)
 {
@@ -46,7 +46,7 @@ bool CPolyFanProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	for(uint32 nCurrProp = 0; nCurrProp < nNumProps; nCurrProp++)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
-	
+
 		if (!stricmp(fxProp.m_sName, "PolyFan"))
 		{
 			char sTmp[128];
@@ -115,7 +115,7 @@ bool CPolyFanFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBaseF
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	LTVector vPos;
@@ -172,7 +172,7 @@ void CPolyFanFX::Term()
 bool CPolyFanFX::Update(float tmCur)
 {
 	// Base class update first
-	
+
 	if (!CBaseFX::Update(tmCur)) return false;
 
 	// Align if neccessary, to the rotation of our parent
@@ -216,5 +216,5 @@ void fxGetPolyFanProps(CFastList<FX_PROP> *pList)
 	pList->AddTail(fxProp);
 
 	fxProp.Combo("2nd Node","0,LeftHand,RightHand,LeftFoot,RightFoot,Head,Tail,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10");
-	pList->AddTail(fxProp);	
+	pList->AddTail(fxProp);
 }

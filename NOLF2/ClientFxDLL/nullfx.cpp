@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "NullFX.h"
-#include "ClientFX.h"
+#include "nullfx.h"
+#include "clientfx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -21,7 +21,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CNullProps::CNullProps() : 
+CNullProps::CNullProps() :
 	m_fGravity			( 0.0f ),
 	m_vMinVel			( 0.0f, 0.0f, 0.0f ),
 	m_vMaxVel			( 0.0f, 0.0f, 0.0f ),
@@ -49,19 +49,19 @@ bool CNullProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "GravityAcceleration" ) ) 
+		if( !stricmp( fxProp.m_sName, "GravityAcceleration" ) )
 		{
 			m_fGravity = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinVelocity" ) )
+		else if( !stricmp( fxProp.m_sName, "MinVelocity" ) )
 		{
-			m_vMinVel = fxProp.GetVector();	
+			m_vMinVel = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxVelocity" ) )
+		else if( !stricmp( fxProp.m_sName, "MaxVelocity" ) )
 		{
 			m_vMaxVel = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Bounce" ) )
+		else if( !stricmp( fxProp.m_sName, "Bounce" ) )
 		{
 			m_bBounce = (LTBOOL)fxProp.GetComboVal();
 		}
@@ -111,7 +111,7 @@ bool CNullFX::Init(ILTClient *pClientDE, FX_BASEDATA *pData, const CBaseFXProps 
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pData, pProps))
 		return false;
 
 	//setup our velocity
@@ -125,7 +125,7 @@ bool CNullFX::Init(ILTClient *pClientDE, FX_BASEDATA *pData, const CBaseFXProps 
 	ocs.m_Flags				= FLAG_NOLIGHT;
 	ocs.m_Pos				= m_vPosition = m_vCreatePos;
 	ocs.m_Rotation			= m_rCreateRot;
-	
+
 	// Develop the Right and Up vectors based off the Forward...
 	LTMatrix mInitRot;
 	mInitRot.Identity();
@@ -156,11 +156,11 @@ bool CNullFX::Init(ILTClient *pClientDE, FX_BASEDATA *pData, const CBaseFXProps 
 
 	m_bUpdateColour		= LTFALSE;
 	m_bUpdateScale		= LTFALSE;
-	
+
 	// Compute our Velocity based on Initial Rotation...
 
 	m_vVelocity = mInitRot * m_vVelocity;
-		
+
 	// Success !!
 
 	return LTTRUE;
@@ -191,39 +191,39 @@ void CNullFX::Term()
 bool CNullFX::Update( LTFLOAT tmFrameTime)
 {
 	// Base class update first
-	
+
 	if( !CBaseFX::Update(tmFrameTime) )
 		return false;
 
 	// If we want a bouncy FX check for an intersection on our "next" position...
-	
+
 	if( GetProps()->m_bBounce )
 	{
 		ClientIntersectQuery	iQuery;
 		ClientIntersectInfo		iInfo;
 
 		iQuery.m_From = m_vPosition;
-		iQuery.m_To = iQuery.m_From + (m_vVelocity * tmFrameTime); 
+		iQuery.m_To = iQuery.m_From + (m_vVelocity * tmFrameTime);
 
 		if( m_pLTClient->IntersectSegment( &iQuery, &iInfo ) )
 		{
-	
+
 			LTVector	vNewVel = iInfo.m_Plane.m_Normal * 2;
 			LTVector	vL = -m_vVelocity;
 			LTFLOAT		Dot = iInfo.m_Plane.m_Normal.Dot( vL );
-			
+
 			// Develop the normalized reflected angle...
 
 			vNewVel *= Dot;
 			vNewVel -= vL;
 			vNewVel.Norm();
-			
+
 			// Scale it out with a decreased velocity magnitude
 
 			m_vVelocity = vNewVel * ( m_vVelocity.Mag() * 0.75f);
 		}
 	}
-	
+
 	m_vPosition += m_vVelocity * tmFrameTime;
 	m_vVelocity.y += GetProps()->m_fGravity;
 

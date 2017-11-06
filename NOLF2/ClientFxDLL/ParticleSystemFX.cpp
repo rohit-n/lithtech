@@ -13,9 +13,9 @@
 //
 // Includes...
 //
-	
-	#include "stdafx.h" 
-	#include "ClientFX.h"
+
+	#include "stdafx.h"
+	#include "clientfx.h"
 	#include "ParticleSystemFX.h"
 
 //
@@ -36,13 +36,13 @@
 #define BOUNCE_FLAG					(1<<30)
 #define SPLAT_FLAG					(1<<31)
 
-inline uint32	GetKeyOffset(uint32 nVal, uint32 nOffset)	
-{ 
-	return (nVal >> nOffset) & KEY_INDEX_MASK; 
+inline uint32    GetKeyOffset(uint32 nVal, uint32 nOffset)
+{
+	return (nVal >> nOffset) & KEY_INDEX_MASK;
 }
 
-inline void		SetKeyOffset(uint32& nVal, uint32 nKey, uint32 nOffset)	
-{ 
+inline void      SetKeyOffset(uint32& nVal, uint32 nKey, uint32 nOffset)
+{
 	nVal &= ~(KEY_INDEX_MASK << nOffset);
 	nVal |= (nKey & KEY_INDEX_MASK) << nOffset;
 }
@@ -55,7 +55,7 @@ inline void		SetKeyOffset(uint32& nVal, uint32 nKey, uint32 nOffset)
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CParticleSystemProps::CParticleSystemProps() : 
+CParticleSystemProps::CParticleSystemProps() :
 	m_vMinVelocity				( 0.0f, 0.0f, 0.0f ),
 	m_vMaxVelocity				( 0.0f, 0.0f, 0.0f ),
 	m_vPlaneDir					( 0.0f, 0.0f, 0.0f ),
@@ -106,88 +106,88 @@ bool CParticleSystemProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Sprite" ) )
+		if( !stricmp( fxProp.m_sName, "Sprite" ) )
 		{
 			fxProp.GetPath( m_szFileName );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Texture" ) )
+		else if( !stricmp( fxProp.m_sName, "Texture" ) )
 		{
 			if( !m_szFileName[0] )
 			{
 				fxProp.GetPath( m_szFileName );
 			}
 		}
-		else if( !_stricmp( fxProp.m_sName, "EmissionInterval" ) )
+		else if( !stricmp( fxProp.m_sName, "EmissionInterval" ) )
 		{
 			m_fEmissionInterval = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "ParticlesPerEmission" ) )
+		else if( !stricmp( fxProp.m_sName, "ParticlesPerEmission" ) )
 		{
 			m_nParticlesPerEmission = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "GravityAcceleration" ) ) 
+		else if( !stricmp( fxProp.m_sName, "GravityAcceleration" ) )
 		{
 			fGravity = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinParticleLifeSpan" ) )
+		else if( !stricmp( fxProp.m_sName, "MinParticleLifeSpan" ) )
 		{
 			m_fMinLifeSpan = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxParticleLifeSpan" ) )
-		{	
+		else if( !stricmp( fxProp.m_sName, "MaxParticleLifeSpan" ) )
+		{
 			m_fMaxLifeSpan = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinRadius" ) )
+		else if( !stricmp( fxProp.m_sName, "MinRadius" ) )
 		{
 			m_fMinRadius = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxRadius" ) )
+		else if( !stricmp( fxProp.m_sName, "MaxRadius" ) )
 		{
 			m_fMaxRadius = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "AdditionalAcceleration") )
+		else if( !stricmp( fxProp.m_sName, "AdditionalAcceleration") )
 		{
 			m_vAcceleration = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, "EmissionPlane" ) )
+		else if( !stricmp( fxProp.m_sName, "EmissionPlane" ) )
 		{
 			m_vPlaneDir = fxProp.GetVector();
-			
+
 			m_vPlaneDir.Norm();
 
 			// Get the perpindicular vectors to this plane
 			FindPerps(m_vPlaneDir, m_vPerp1, m_vPerp2);
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinParticleVelocity" ) )
+		else if( !stricmp( fxProp.m_sName, "MinParticleVelocity" ) )
 		{
 			m_vMinVelocity = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxParticleVelocity" ) )
+		else if( !stricmp( fxProp.m_sName, "MaxParticleVelocity" ) )
 		{
 			m_vMaxVelocity = fxProp.GetVector();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Type" ) )
+		else if( !stricmp( fxProp.m_sName, "Type" ) )
 		{
-			m_eType = (ePSType)fxProp.GetComboVal(); 
+			m_eType = (ePSType)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "PercentToBounce" ) )
+		else if( !stricmp( fxProp.m_sName, "PercentToBounce" ) )
 		{
 			m_fPercentToBounce = fxProp.GetFloatVal();
 			m_fPercentToBounce = LTCLAMP(m_fPercentToBounce, 0.0f, 100.0f);
 		}
-		else if( !_stricmp( fxProp.m_sName, "FlipRenderingOrder" ) )
+		else if( !stricmp( fxProp.m_sName, "FlipRenderingOrder" ) )
 		{
 			m_bFlipOrder = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "LightParticles" ) )
+		else if( !stricmp( fxProp.m_sName, "LightParticles" ) )
 		{
 			m_bLight = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "RotateParticles" ) )
+		else if( !stricmp( fxProp.m_sName, "RotateParticles" ) )
 		{
 			m_bRotate = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "BlendMode" ) )
+		else if( !stricmp( fxProp.m_sName, "BlendMode" ) )
 		{
 			int	nBlendMode = fxProp.GetComboVal();
 
@@ -200,44 +200,44 @@ bool CParticleSystemProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 				m_dwBlendMode = FLAG2_MULTIPLY;
 			}
 		}
-		else if( !_stricmp( fxProp.m_sName, "MoveParticlesWithSystem" ) )
+		else if( !stricmp( fxProp.m_sName, "MoveParticlesWithSystem" ) )
 		{
 			m_bObjectSpace = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "MinAngularVelocity" ) )
+		else if( !stricmp( fxProp.m_sName, "MinAngularVelocity" ) )
 		{
 			m_fMinAngularVelocity = DEG_TO_RAD(fxProp.GetFloatVal());
 		}
-		else if( !_stricmp( fxProp.m_sName, "MaxAngularVelocity" ) )
+		else if( !stricmp( fxProp.m_sName, "MaxAngularVelocity" ) )
 		{
 			m_fMaxAngularVelocity = DEG_TO_RAD(fxProp.GetFloatVal());
 		}
-		else if( !_stricmp( fxProp.m_sName, "CollideModels" ) )
+		else if( !stricmp( fxProp.m_sName, "CollideModels" ) )
 		{
 			m_bCollideModels = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Friction" ) )
+		else if( !stricmp( fxProp.m_sName, "Friction" ) )
 		{
 			m_fFriction = fxProp.GetFloatVal();
 			m_fFriction = LTCLAMP(m_fFriction, 0.0f, 1.0f);
 		}
-		else if( !_stricmp( fxProp.m_sName, "VelocityType" ) )
+		else if( !stricmp( fxProp.m_sName, "VelocityType" ) )
 		{
-			m_eVelocityType = (ePSVelocityType)fxProp.GetComboVal(); 
+			m_eVelocityType = (ePSVelocityType)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "InfiniteLife" ) )
+		else if( !stricmp( fxProp.m_sName, "InfiniteLife" ) )
 		{
 			m_bInfiniteLife = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "SplatEffect" ) )
+		else if( !stricmp( fxProp.m_sName, "SplatEffect" ) )
 		{
 			fxProp.GetStringVal(m_szSplatEffect);
 		}
-		else if( !_stricmp( fxProp.m_sName, "SplatPercent" ) )
+		else if( !stricmp( fxProp.m_sName, "SplatPercent" ) )
 		{
 			m_fPercentToSplat = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "KillOnSplat" ) )
+		else if( !stricmp( fxProp.m_sName, "KillOnSplat" ) )
 		{
 			m_bKillOnSplat = (LTBOOL)fxProp.GetComboVal();
 		}
@@ -299,11 +299,11 @@ CParticleSystemFX::~CParticleSystemFX( void )
 bool CParticleSystemFX::Init( ILTClient *pLTClient, FX_BASEDATA *pData, const CBaseFXProps *pProps)
 {
 	// Perform base class initialization
-	if( !CBaseFX::Init( pLTClient, pData, pProps) ) 
+	if( !CBaseFX::Init( pLTClient, pData, pProps) )
 		return false;
 
 	ObjectCreateStruct	ocs;
-	
+
 	// Create Particle System
 	ocs.m_ObjectType	= OT_PARTICLESYSTEM;
 	ocs.m_Flags			|= FLAG_VISIBLE | FLAG_UPDATEUNSEEN | FLAG_FOGDISABLE | pData->m_dwObjectFlags;
@@ -338,7 +338,7 @@ bool CParticleSystemFX::Init( ILTClient *pLTClient, FX_BASEDATA *pData, const CB
 
 	uint32		dwWidth, dwHeight;
 	HSURFACE	hScreen = m_pLTClient->GetScreenSurface();
-	
+
 	m_pLTClient->GetSurfaceDims(hScreen, &dwWidth, &dwHeight);
     m_fVisRadius /= ((LTFLOAT)dwWidth);
 
@@ -357,10 +357,10 @@ bool CParticleSystemFX::Init( ILTClient *pLTClient, FX_BASEDATA *pData, const CB
 	if(!GetProps()->m_bObjectSpace)
 		nFlags |= PS_WORLDSPACE;
 
-	m_pLTClient->SetupParticleSystem(	m_hObject, 
-										GetProps()->m_szFileName, 
-										0.0f, 
-										nFlags, 
+	m_pLTClient->SetupParticleSystem(	m_hObject,
+										GetProps()->m_szFileName,
+										0.0f,
+										nFlags,
 										m_fVisRadius );
 
 	// Dont let the base class update theese
@@ -387,7 +387,7 @@ bool CParticleSystemFX::Init( ILTClient *pLTClient, FX_BASEDATA *pData, const CB
 //
 //  ROUTINE:	CParticleSystemFX::UpdateParticleColor
 //
-//  Given a particle, it will calculate the color of it where RGB range 
+//  Given a particle, it will calculate the color of it where RGB range
 //	from 0..255, and A ranges from 0..1.
 //
 // ----------------------------------------------------------------------- //
@@ -419,9 +419,9 @@ void CParticleSystemFX::UpdateParticleColor(LTParticle* pLTParticle)
 
 			//note that the distance should always be greater than 0
 			assert(tmDist > 0.0f);
-			
+
 			float ratio = (tmActual - startKey.m_tmKey) / tmDist;
-				
+
 			pLTParticle->m_Color.x = (startKey.m_red + ((endKey.m_red - startKey.m_red) * ratio));
 			pLTParticle->m_Color.y = (startKey.m_green + ((endKey.m_green - startKey.m_green) * ratio));
 			pLTParticle->m_Color.z = (startKey.m_blue + ((endKey.m_blue - startKey.m_blue) * ratio));
@@ -467,17 +467,17 @@ void CParticleSystemFX::UpdateParticleScale(LTParticle* pLTParticle)
 			// Use this and the previous key to compute the colour
 
 			float tmDist = endKey.m_tmKey - startKey.m_tmKey;
-			
+
 			assert(tmDist > 0.0f);
 
 			float ratio	 = (endKey.m_scale - startKey.m_scale) / tmDist;
 			pLTParticle->m_Size = startKey.m_scale + (ratio * (tmActual - startKey.m_tmKey));
-			
+
 			//got the scale, bail
 			break;
 		}
 	}
-	
+
 	//cache this scale for next time...
 	SetKeyOffset(pLTParticle->m_nUserData, nCurrScaleKey, SCALE_KEY_OFFSET);
 }
@@ -509,7 +509,7 @@ bool CParticleSystemFX::Render()
 bool CParticleSystemFX::Update( float tmFrameTime )
 {
 	ASSERT( m_hObject );
-	
+
 	uint32 dwFlags;
 
 	// Was this system drawn last frame? Dont update if it was not
@@ -593,7 +593,7 @@ void CParticleSystemFX::AddParticles( )
 	LTRotation	rRot;
 	LTMatrix	mMat;
 
-	
+
 	if( !GetProps()->m_bObjectSpace )
 	{
 		// Get the rotation of the system so we can apply it to the velocity of each particle...
@@ -611,22 +611,22 @@ void CParticleSystemFX::AddParticles( )
 			case PS_eSphere:
 				{
 					vPos.x = GetRandom( -1.0f, 1.0f );
-					vPos.y = GetRandom( -1.0f, 1.0f ); 
-					vPos.z = GetRandom( -1.0f, 1.0f ); 
+					vPos.y = GetRandom( -1.0f, 1.0f );
+					vPos.z = GetRandom( -1.0f, 1.0f );
 
 					// Normalize it
 					vPos.Norm();
 
 					// Now scale it into our desired range
 					vPos *= GetRandom( GetProps()->m_fMinRadius, GetProps()->m_fMaxRadius );
-					
+
 				}
 				break;
 
 			case PS_ePoint:
 				{
 					vPos = m_vRandomPoint;
-				}	
+				}
 				break;
 
 			case PS_eCircle:
@@ -693,7 +693,7 @@ void CParticleSystemFX::AddParticles( )
 				break;
 
 		}
-		
+
 		// Randomize the velocity within our range
 		switch(GetProps()->m_eVelocityType)
 		{
@@ -716,7 +716,7 @@ void CParticleSystemFX::AddParticles( )
 			break;
 		}
 
-		
+
 		if( !GetProps()->m_bObjectSpace )
 		{
 			//convert velocity into world space
@@ -808,7 +808,7 @@ void CParticleSystemFX::RemoveParticle(LTParticle* pParticle)
 	//update our counts
 	assert(m_nNumParticles > 0);
 	m_nNumParticles--;
-	
+
 	if(pParticle->m_nUserData & BOUNCE_FLAG)
 	{
 		m_nNumBounceParticles--;
@@ -841,7 +841,7 @@ void CParticleSystemFX::UpdateParticles( LTFLOAT tmFrame )
 	if( GetProps()->m_bSwarm )
 	{
 		// Setup the swarmming matrix
-		SetupRotation( m_matSwarm, LTRotation(GetProps()->m_vRotAdd.x * tmFrame, GetProps()->m_vRotAdd.y * tmFrame, GetProps()->m_vRotAdd.z * tmFrame)); 
+		SetupRotation( m_matSwarm, LTRotation(GetProps()->m_vRotAdd.x * tmFrame, GetProps()->m_vRotAdd.y * tmFrame, GetProps()->m_vRotAdd.z * tmFrame));
 	}
 
 	// Since the particles pos and velocity is relative to the system we need to convert gravity to world space...
@@ -871,14 +871,14 @@ void CParticleSystemFX::UpdateParticles( LTFLOAT tmFrame )
 
 		//update the lifetime
 		pLTParticle->m_Lifetime -= tmFrame;
-		
+
 		// Check for expiration
 		if( pLTParticle->m_Lifetime <= 0.0f )
 		{
 			if(GetProps()->m_bInfiniteLife)
 			{
 				//this particle has died, but resurrect it since it lives forever
-				pLTParticle->m_Lifetime = pLTParticle->m_TotalLifetime - fmodf(-pLTParticle->m_Lifetime, pLTParticle->m_TotalLifetime); 				
+				pLTParticle->m_Lifetime = pLTParticle->m_TotalLifetime - fmodf(-pLTParticle->m_Lifetime, pLTParticle->m_TotalLifetime);
 
 				//reset the color and scale keys so that they won't get messed up
 				SetKeyOffset(pLTParticle->m_nUserData, 0, COLOR_KEY_OFFSET);
@@ -916,8 +916,8 @@ void CParticleSystemFX::UpdateParticles( LTFLOAT tmFrame )
 		pLTParticle = pNext;
 	}
 
-	//bounce is broken out of the above loop since it was rarely used, so it was 
-	//just adding an additional if per particle as well as adding a lot of code 
+	//bounce is broken out of the above loop since it was rarely used, so it was
+	//just adding an additional if per particle as well as adding a lot of code
 	//to the inner loop
 	if( (m_nNumBounceParticles > 0) || (m_nNumSplatParticles > 0) )
 	{
@@ -935,14 +935,14 @@ void CParticleSystemFX::UpdateParticles( LTFLOAT tmFrame )
 			// Setup rotation
 			LTRotation	rObjRot;
 			LTVector	vObjPos;
-	
+
 			m_pLTClient->GetObjectPos( m_hObject, &vObjPos );
 			m_pLTClient->GetObjectRotation( m_hObject, &rObjRot );
 
 			// Setup the swarmming matrix
-			SetupRotationAroundPoint( mObjTransform, rObjRot, vObjPos ); 
+			SetupRotationAroundPoint( mObjTransform, rObjRot, vObjPos );
 		}
-		
+
 		LTParticle* pNext = NULL;
 		for(pLTParticle = pHead; pLTParticle != pTail; pLTParticle = pNext)
 		{
@@ -1024,7 +1024,7 @@ void CParticleSystemFX::UpdateParticles( LTFLOAT tmFrame )
 
 
 					CLIENTFX_CREATESTRUCT CreateStruct(GetProps()->m_szSplatEffect, 0, iInfo.m_Point, rRot);
-					CreateNewFX(CreateStruct, true);					
+					CreateNewFX(CreateStruct, true);
 
 					//see if we need to kill the particle
 					if(GetProps()->m_bKillOnSplat)
@@ -1060,7 +1060,7 @@ void CParticleSystemFX::Term( void )
 {
 	if( m_hObject )
 		m_pLTClient->RemoveObject( m_hObject );
-		
+
 	m_hObject = LTNULL;
 }
 
@@ -1090,7 +1090,7 @@ void fxGetParticleSystemProps( CFastList<FX_PROP> *pList )
 	AddBaseProps( pList );
 
 	// Add specific Particle System Props
-	
+
 	fxProp.Path( "Sprite", "spr|..." );
 	pList->AddTail( fxProp );
 
@@ -1099,7 +1099,7 @@ void fxGetParticleSystemProps( CFastList<FX_PROP> *pList )
 
 	fxProp.Float( "EmissionInterval", 0.01f );
 	pList->AddTail( fxProp );
-	
+
 	fxProp.Int( "ParticlesPerEmission", 5 );
 	pList->AddTail( fxProp );
 
@@ -1108,7 +1108,7 @@ void fxGetParticleSystemProps( CFastList<FX_PROP> *pList )
 
 	fxProp.Vector( "AdditionalAcceleration", fZeroVec );
 	pList->AddTail( fxProp );
-	
+
 	fxProp.Float( "MinParticleLifeSpan", 2.0f );
 	pList->AddTail( fxProp );
 

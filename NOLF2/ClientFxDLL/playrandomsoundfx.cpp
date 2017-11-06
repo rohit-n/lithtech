@@ -11,8 +11,8 @@
 // Includes....
 
 #include "stdafx.h"
-#include "PlayRandomSoundFX.h"
-#include "ClientFX.h"
+#include "playrandomsoundfx.h"
+#include "clientfx.h"
 #include "stdio.h"
 
 // ----------------------------------------------------------------------- //
@@ -22,7 +22,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CPlayRandomSoundProps::CPlayRandomSoundProps() : 
+CPlayRandomSoundProps::CPlayRandomSoundProps() :
 	m_bLoop			( LTFALSE ),
 	m_bPlayLocal	( LTFALSE ),
 	m_nVolume		( 100 ),
@@ -51,7 +51,7 @@ bool CPlayRandomSoundProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Sound" ))
+		if( !stricmp( fxProp.m_sName, "Sound" ))
 		{
 			fxProp.GetPath( m_sSoundName );
 		}
@@ -59,30 +59,30 @@ bool CPlayRandomSoundProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 		{
 			m_nRand = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "InnerRadius" ))
+		else if( !stricmp( fxProp.m_sName, "InnerRadius" ))
 		{
 			m_fInnerRadius = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "OuterRadius" ))
+		else if( !stricmp( fxProp.m_sName, "OuterRadius" ))
 		{
 			m_fOuterRadius = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Volume" ))
+		else if( !stricmp( fxProp.m_sName, "Volume" ))
 		{
 			m_nVolume = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Priority" ))
+		else if( !stricmp( fxProp.m_sName, "Priority" ))
 		{
 			m_nPriority = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Loop" ))
+		else if( !stricmp( fxProp.m_sName, "Loop" ))
 		{
 			m_bLoop = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "PlayLocal" ))
+		else if( !stricmp( fxProp.m_sName, "PlayLocal" ))
 		{
 			m_bPlayLocal = (LTBOOL)fxProp.GetComboVal();
-		}				
+		}
 	}
 
 	// Strip of the extension and single number
@@ -132,7 +132,7 @@ bool CPlayRandomSoundFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, cons
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	LTVector vPos;
@@ -204,7 +204,7 @@ bool CPlayRandomSoundFX::Update(float tmCur)
 	}
 
 	// Base class update first
-	
+
 	if (!CBaseFX::Update(tmCur)) return false;
 
 	if (IsShuttingDown())
@@ -219,7 +219,7 @@ bool CPlayRandomSoundFX::Update(float tmCur)
 		return true;
 	}
 
-	if (m_hSound) 
+	if (m_hSound)
 	{
 		LTVector vPos = m_vPos;
 		((ILTClientSoundMgr*)m_pLTClient->SoundMgr())->SetSoundPosition(m_hSound, &vPos);
@@ -281,7 +281,7 @@ void CPlayRandomSoundFX::PlaySound()
 		psi.m_dwFlags |= PLAYSOUND_3D | PLAYSOUND_REVERB;
 	}
 
-	if (GetProps()->m_bLoop) 
+	if (GetProps()->m_bLoop)
 	{
 		psi.m_dwFlags |= PLAYSOUND_LOOP;
 	}
@@ -289,7 +289,7 @@ void CPlayRandomSoundFX::PlaySound()
 	psi.m_nVolume = GetProps()->m_nVolume;
 
 	char sTmp[256];
-	
+
 	if (GetProps()->m_nRand)
 	{
 		sprintf(sTmp, "%s%d.wav", GetProps()->m_sSoundName, rand() % GetProps()->m_nRand);
@@ -298,7 +298,7 @@ void CPlayRandomSoundFX::PlaySound()
 	{
 		sprintf(sTmp, "%s.wav", GetProps()->m_sSoundName);
 	}
-	
+
 	strcpy(psi.m_szSoundName, sTmp);
 	psi.m_nPriority		= GetProps()->m_nPriority;
 	psi.m_vPosition		= m_vPos;

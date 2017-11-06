@@ -13,8 +13,8 @@
 //
 
 	#include "stdafx.h"
-	#include "LTBModelFX.h"
-	#include "ClientFX.h"
+	#include "ltbmodelfx.h"
+	#include "clientfx.h"
 
 //
 // Defines...
@@ -30,7 +30,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CLTBModelProps::CLTBModelProps() : 
+CLTBModelProps::CLTBModelProps() :
 	m_vNorm					( 0.0f, 0.0f, 1.0f ),
 	m_nFacing				( 0 ),
 	m_bShadow				( LTFALSE ),
@@ -42,13 +42,13 @@ CLTBModelProps::CLTBModelProps() :
 {
 	m_szModelName[0] = '\0';
 	m_szAnimName[0]  = '\0';
-	
+
 	m_szSkinName[0][0] = '\0';
 	m_szSkinName[1][0] = '\0';
 	m_szSkinName[2][0] = '\0';
 	m_szSkinName[3][0] = '\0';
 	m_szSkinName[4][0] = '\0';
-	
+
 	m_szRenderStyle[0][0] = '\0';
 	m_szRenderStyle[1][0] = '\0';
 	m_szRenderStyle[2][0] = '\0';
@@ -75,35 +75,35 @@ bool CLTBModelProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Model" ))
+		if( !stricmp( fxProp.m_sName, "Model" ))
 		{
 			fxProp.GetPath( m_szModelName );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Skin0" ))
+		else if( !stricmp( fxProp.m_sName, "Skin0" ))
 		{
 			fxProp.GetPath( m_szSkinName[0] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Skin1" ))
+		else if( !stricmp( fxProp.m_sName, "Skin1" ))
 		{
 			fxProp.GetPath( m_szSkinName[1] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Skin2" ))
+		else if( !stricmp( fxProp.m_sName, "Skin2" ))
 		{
 			fxProp.GetPath( m_szSkinName[2] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Skin3" ))
+		else if( !stricmp( fxProp.m_sName, "Skin3" ))
 		{
 			fxProp.GetPath( m_szSkinName[3] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Skin4" ))
+		else if( !stricmp( fxProp.m_sName, "Skin4" ))
 		{
 			fxProp.GetPath( m_szSkinName[4] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Facing" ))
+		else if( !stricmp( fxProp.m_sName, "Facing" ))
 		{
 			m_nFacing = fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Normal" ))
+		else if( !stricmp( fxProp.m_sName, "Normal" ))
 		{
 			m_vNorm = fxProp.GetVector();
 
@@ -121,44 +121,44 @@ bool CLTBModelProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 			}
 
 		}
-		else if( !_stricmp( fxProp.m_sName, "Shadow" ))
+		else if( !stricmp( fxProp.m_sName, "Shadow" ))
 		{
 			m_bShadow = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "OverrideAniLength" ))
+		else if( !stricmp( fxProp.m_sName, "OverrideAniLength" ))
 		{
 			m_bOverrideAniLength = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "AniName" ))
+		else if( !stricmp( fxProp.m_sName, "AniName" ))
 		{
 			fxProp.GetStringVal(m_szAnimName);
 		}
-		else if( !_stricmp( fxProp.m_sName, "AniLength" ))
+		else if( !stricmp( fxProp.m_sName, "AniLength" ))
 		{
 			m_fAniLength = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "RenderStyle0" ))
+		else if( !stricmp( fxProp.m_sName, "RenderStyle0" ))
 		{
 			fxProp.GetPath( m_szRenderStyle[0] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "RenderStyle1" ))
+		else if( !stricmp( fxProp.m_sName, "RenderStyle1" ))
 		{
 			fxProp.GetPath( m_szRenderStyle[1] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "RenderStyle2" ))
+		else if( !stricmp( fxProp.m_sName, "RenderStyle2" ))
 		{
 			fxProp.GetPath( m_szRenderStyle[2] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "RenderStyle3" ))
+		else if( !stricmp( fxProp.m_sName, "RenderStyle3" ))
 		{
 			fxProp.GetPath( m_szRenderStyle[3] );
 		}
-		else if( !_stricmp( fxProp.m_sName, "SyncToModelAnim" ) )
+		else if( !stricmp( fxProp.m_sName, "SyncToModelAnim" ) )
 		{
 			m_bSyncToModelAnim = (LTBOOL)fxProp.GetComboVal();
 			m_bSyncToKey = LTFALSE;
 		}
-		else if( !_stricmp( fxProp.m_sName, "SyncToKey" ) )
+		else if( !stricmp( fxProp.m_sName, "SyncToKey" ) )
 		{
 			m_bSyncToKey = (LTBOOL)fxProp.GetComboVal();
 			m_bSyncToModelAnim = LTFALSE;
@@ -210,7 +210,7 @@ bool CLTBModelFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBase
 {
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
 	// Use the "target" Normal instead, if one was specified...
@@ -252,12 +252,12 @@ bool CLTBModelFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBase
 		ocs.m_Rotation = m_rCreateRot;
 	}
 
-	ocs.m_Rotation = ocs.m_Rotation * m_rNormalRot;	
+	ocs.m_Rotation = ocs.m_Rotation * m_rNormalRot;
 
 	ocs.m_ObjectType		= OT_MODEL;
 	ocs.m_Flags				|= pBaseData->m_dwObjectFlags |	(GetProps()->m_bShadow ? FLAG_SHADOW : 0 );
 	ocs.m_Flags2			|= pBaseData->m_dwObjectFlags2;
-	
+
 	// Calculate the position with the offset in 'local' coordinate space...
 
 	LTMatrix mMat;
@@ -265,27 +265,27 @@ bool CLTBModelFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBase
 
 	m_vPos = ocs.m_Pos = m_vCreatePos + (mMat * GetProps()->m_vOffset);
 
-	
+
 	SAFE_STRCPY( ocs.m_Filename, GetProps()->m_szModelName );
-	
+
 	SAFE_STRCPY( ocs.m_SkinNames[0], GetProps()->m_szSkinName[0] );
 	SAFE_STRCPY( ocs.m_SkinNames[1], GetProps()->m_szSkinName[1] );
 	SAFE_STRCPY( ocs.m_SkinNames[2], GetProps()->m_szSkinName[2] );
 	SAFE_STRCPY( ocs.m_SkinNames[3], GetProps()->m_szSkinName[3] );
 	SAFE_STRCPY( ocs.m_SkinNames[4], GetProps()->m_szSkinName[4] );
-	
+
 	SAFE_STRCPY( ocs.m_RenderStyleNames[0], GetProps()->m_szRenderStyle[0] );
 	SAFE_STRCPY( ocs.m_RenderStyleNames[1], GetProps()->m_szRenderStyle[1] );
 	SAFE_STRCPY( ocs.m_RenderStyleNames[2], GetProps()->m_szRenderStyle[2] );
 	SAFE_STRCPY( ocs.m_RenderStyleNames[3], GetProps()->m_szRenderStyle[3] );
 
 	m_hObject = m_pLTClient->CreateObject(&ocs);
-	if( !m_hObject ) 
+	if( !m_hObject )
 		return LTFALSE;
 
 	ILTModel		*pLTModel = m_pLTClient->GetModelLT();
 	ANIMTRACKERID	nTracker;
-	
+
 	pLTModel->GetMainTracker( m_hObject, nTracker );
 
 	//setup the animation if the user specified one
@@ -313,7 +313,7 @@ bool CLTBModelFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBase
 		pLTModel->SetCurAnimTime( m_hObject, nTracker, 0 );
 
 		float fAniLength = (GetProps()->m_fAniLength < MATH_EPSILON) ? GetProps()->m_tmLifespan : GetProps()->m_fAniLength;
-		
+
 		if( fAniLength >= MATH_EPSILON || fAniLength <= -MATH_EPSILON )
 			m_fAniRate = (nAnimLength * 0.001f) / fAniLength;
 
@@ -384,7 +384,7 @@ bool CLTBModelFX::Update(float tmFrameTime)
 		//we need to find out where in the animation the model currently is
 		ILTModel		*pLTModel = m_pLTClient->GetModelLT();
 		ANIMTRACKERID	nTracker;
-		
+
 		if(pLTModel->GetMainTracker( m_hObject, nTracker ) == LT_OK)
 		{
 			//we have the main tracker, see where in its timeline it is
@@ -414,7 +414,7 @@ bool CLTBModelFX::Update(float tmFrameTime)
 		//we need to find out where in the key we currently are
 		ILTModel		*pLTModel = m_pLTClient->GetModelLT();
 		ANIMTRACKERID	nTracker;
-		
+
 		if(pLTModel->GetMainTracker( m_hObject, nTracker ) == LT_OK)
 		{
 			//we have the main tracker, see where in its timeline it is
@@ -430,9 +430,9 @@ bool CLTBModelFX::Update(float tmFrameTime)
 			pLTModel->SetCurAnimTime(m_hObject, nTracker, nAnimTime);
 		}
 	}
-	
-	// Base class update first	
-	if (!CBaseFX::Update(tmFrameTime)) 
+
+	// Base class update first
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
 
@@ -441,7 +441,7 @@ bool CLTBModelFX::Update(float tmFrameTime)
 	{
 		//Reset the animation
 		ANIMTRACKERID	nTracker;
-		
+
 		m_pLTClient->GetModelLT()->GetMainTracker( m_hObject, nTracker );
 		m_pLTClient->GetModelLT()->ResetAnim( m_hObject, nTracker );
 
@@ -458,10 +458,10 @@ bool CLTBModelFX::Update(float tmFrameTime)
 		rParentRot = (GetProps()->m_bRotate ? rParentRot : rParentRot * m_rNormalRot);
 		m_pLTClient->SetObjectRotation(m_hObject, &rParentRot);
 	}
-	
+
 
 	// If we want to add a rotation, make sure we are facing the correct way...
-	
+
 	if( GetProps()->m_bRotate )
 	{
 		LTFLOAT		tmFrame = tmFrameTime;
@@ -483,9 +483,9 @@ bool CLTBModelFX::Update(float tmFrameTime)
 		m_rRot.Rotate( vR, MATH_DEGREES_TO_RADIANS( GetProps()->m_vRotAdd.x * tmFrame ));
 		m_rRot.Rotate( vU, MATH_DEGREES_TO_RADIANS( GetProps()->m_vRotAdd.y * tmFrame ));
 		m_rRot.Rotate( vF, MATH_DEGREES_TO_RADIANS( GetProps()->m_vRotAdd.z * tmFrame ));
-		
+
 		rRotation = rRotation * m_rRot;
-		
+
 		m_pLTClient->SetObjectRotation( m_hObject, &(rRotation * m_rNormalRot));
 	}
 	else if( GetProps()->m_nFacing == FACE_CAMERAFACING )
@@ -532,7 +532,7 @@ void fxGetLTBModelProps(CFastList<FX_PROP> *pList)
 
 	fxProp.Path( "Skin1", "dtx|..." );
 	pList->AddTail( fxProp );
-	
+
 	fxProp.Path( "Skin2", "dtx|..." );
 	pList->AddTail( fxProp );
 

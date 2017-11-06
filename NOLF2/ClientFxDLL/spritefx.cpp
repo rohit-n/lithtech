@@ -13,8 +13,8 @@
 //
 
 #include "stdafx.h"
-#include "ClientFX.h"
-#include "SpriteFX.h"
+#include "clientfx.h"
+#include "spritefx.h"
 #include "iltspritecontrol.h"
 
 //Function to handle filtering of the intersect segment calls needed by the flare sprite
@@ -39,7 +39,7 @@ inline bool SpriteListFilterFn(HOBJECT hTest, void *pUserData)
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CSpriteProps::CSpriteProps() : 
+CSpriteProps::CSpriteProps() :
 	m_nFacing			( 0 ),
 	m_bCastVisibleRay	( LTFALSE ),
 	m_dwObjectFlags2	( 0 ),
@@ -70,15 +70,15 @@ bool CSpriteProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Sprite" ))
+		if( !stricmp( fxProp.m_sName, "Sprite" ))
 		{
 			fxProp.GetPath( m_sSpriteName );
 		}
-		else if( !_stricmp( fxProp.m_sName, "Facing" ))
+		else if( !stricmp( fxProp.m_sName, "Facing" ))
 		{
 			m_nFacing = fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Normal"))
+		else if( !stricmp( fxProp.m_sName, "Normal"))
 		{
 			m_vNorm = fxProp.GetVector();
 
@@ -95,7 +95,7 @@ bool CSpriteProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 				m_vNorm.Init( 0.0f, 0.0f, 1.0f );
 			}
 		}
-		else if( !_stricmp( fxProp.m_sName, "BlendMode" ))
+		else if( !stricmp( fxProp.m_sName, "BlendMode" ))
 		{
 			int	nBlendMode = fxProp.GetComboVal();
 
@@ -110,23 +110,23 @@ bool CSpriteProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 				m_dwObjectFlags2 |= FLAG2_MULTIPLY;
 			}
 		}
-		else if( !_stricmp( fxProp.m_sName, "DisableZ" ))
+		else if( !stricmp( fxProp.m_sName, "DisableZ" ))
 		{
 			LTBOOL	bNoZ = (LTBOOL)fxProp.GetComboVal();
-			
+
 			m_dwObjectFlags |= ( bNoZ ? FLAG_SPRITE_NOZ : 0 );
 		}
-		else if( !_stricmp( fxProp.m_sName, "DisableLight" ))
+		else if( !stricmp( fxProp.m_sName, "DisableLight" ))
 		{
 			LTBOOL bNoLight = (LTBOOL)fxProp.GetComboVal();
 
 			m_dwObjectFlags |= ( bNoLight ? FLAG_NOLIGHT : 0 );
 		}
-		else if( !_stricmp( fxProp.m_sName, "CastVisibleRay" ))
+		else if( !stricmp( fxProp.m_sName, "CastVisibleRay" ))
 		{
 			m_bCastVisibleRay = (LTBOOL)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "ZBias" ))
+		else if( !stricmp( fxProp.m_sName, "ZBias" ))
 		{
 			if((LTBOOL)fxProp.GetComboVal())
 			{
@@ -152,7 +152,7 @@ bool CSpriteProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 CSpriteFX::CSpriteFX( CBaseFX::FXType nType )
 :	CBaseFX				( nType )
 {
-	
+
 }
 
 //------------------------------------------------------------------
@@ -183,7 +183,7 @@ bool CSpriteFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBaseFX
 
 	if( !CBaseFX::Init( pClientDE, pBaseData, pProps))
 		return false;
-	
+
 	// Use the "target" Normal instead, if one was specified...
 	LTVector vNorm = GetProps()->m_vNorm;
 
@@ -208,7 +208,7 @@ bool CSpriteFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBaseFX
 	vU = vNorm.Cross( vR );
 	m_rNormalRot = LTRotation( vNorm, vU );
 
-	
+
 	// Combine the direction we would like to face with our parents rotation...
 
 	ObjectCreateStruct ocs;
@@ -221,12 +221,12 @@ bool CSpriteFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBaseFX
 		ocs.m_Rotation = m_rCreateRot;
 	}
 
-	ocs.m_Rotation = ocs.m_Rotation * m_rNormalRot;	
+	ocs.m_Rotation = ocs.m_Rotation * m_rNormalRot;
 
 	ocs.m_ObjectType		= OT_SPRITE;
 	ocs.m_Flags				|= GetProps()->m_dwObjectFlags | pBaseData->m_dwObjectFlags | (GetProps()->m_nFacing || GetProps()->m_bRotate ? FLAG_ROTATABLESPRITE : 0);
 	ocs.m_Flags2			|= pBaseData->m_dwObjectFlags2 | GetProps()->m_dwObjectFlags2;
-	
+
 	// Calculate the position with the offset in 'local' coordinate space...
 
 	LTMatrix mMat;
@@ -238,7 +238,7 @@ bool CSpriteFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBaseFX
 
 	if( GetProps()->m_nFacing == FACE_CAMERAFACING )
 		m_rNormalRot.Init();
-	
+
 	strcpy( ocs.m_Filename, GetProps()->m_sSpriteName );
 
 	m_hObject = m_pLTClient->CreateObject( &ocs );
@@ -293,7 +293,7 @@ bool CSpriteFX::Update(float tmFrameTime)
 	}
 
 	// Base class update first
-	
+
 	if( !CBaseFX::Update(tmFrameTime) )
 		return true;
 
@@ -338,7 +338,7 @@ bool CSpriteFX::Update(float tmFrameTime)
 	}
 
 	// If we want to add a rotation, make sure we are facing the correct way...
-	
+
 	if( GetProps()->m_bRotate )
 	{
 		LTFLOAT		tmFrame = tmFrameTime;
@@ -353,7 +353,7 @@ bool CSpriteFX::Update(float tmFrameTime)
 			//grab the flags for this object
 			uint32 nFlags;
 			m_pLTClient->Common()->GetObjectFlags(m_hObject, OFT_Flags, nFlags);
-	
+
 			if(nFlags & FLAG_REALLYCLOSE)
 			{
 				rRotation.Identity();
@@ -371,9 +371,9 @@ bool CSpriteFX::Update(float tmFrameTime)
 		m_rRot.Rotate( vR, MATH_DEGREES_TO_RADIANS(GetProps()->m_vRotAdd.x * tmFrame) );
 		m_rRot.Rotate( vU, MATH_DEGREES_TO_RADIANS(GetProps()->m_vRotAdd.y * tmFrame) );
 		m_rRot.Rotate( vF, MATH_DEGREES_TO_RADIANS(GetProps()->m_vRotAdd.z * tmFrame) );
-		
+
 		rRotation = rRotation * m_rRot;
-		
+
 		m_pLTClient->SetObjectRotation( m_hObject, &(rRotation * m_rNormalRot) );
 	}
 

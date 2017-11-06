@@ -11,8 +11,7 @@
 // Includes....
 
 #include "stdafx.h"
-#include "PolyTubeFX.h"
-#include "ClientFX.h"
+#include "polytubefx.h"
 
 // ----------------------------------------------------------------------- //
 //
@@ -21,7 +20,7 @@
 //  PURPOSE:	Constructor
 //
 // ----------------------------------------------------------------------- //
-CPolyTubeProps::CPolyTubeProps() : 
+CPolyTubeProps::CPolyTubeProps() :
 	m_tmAddPtInterval	(0.1f),
 	m_nMaxTrailLength	(50),
 	m_tmSectionLifespan	(2.0f),
@@ -57,51 +56,51 @@ bool CPolyTubeProps::ParseProperties(FX_PROP* pProps, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pProps[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, "Texture" ))
+		if( !stricmp( fxProp.m_sName, "Texture" ))
 		{
 			fxProp.GetPath( m_sPath );
-		} 
-		else if( !_stricmp( fxProp.m_sName, "TrailWidth" ))
+		}
+		else if( !stricmp( fxProp.m_sName, "TrailWidth" ))
 		{
 			m_fTrailWidth = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "WidthStyle" ))
+		else if( !stricmp( fxProp.m_sName, "WidthStyle" ))
 		{
 			m_eWidthStyle = (EPTWidthStyle)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "UAdd" ))
+		else if( !stricmp( fxProp.m_sName, "UAdd" ))
 		{
 			m_uAdd = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "SectionLifespan" ))
+		else if( !stricmp( fxProp.m_sName, "SectionLifespan" ))
 		{
 			m_tmSectionLifespan = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "TrailLen" ))
+		else if( !stricmp( fxProp.m_sName, "TrailLen" ))
 		{
 			m_nMaxTrailLength = fxProp.GetIntegerVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "SectionInterval" ))
+		else if( !stricmp( fxProp.m_sName, "SectionInterval" ))
 		{
 			m_tmAddPtInterval = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "BlendMode" ))
+		else if( !stricmp( fxProp.m_sName, "BlendMode" ))
 		{
 			m_eBlendMode = (ELTBlendMode)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "AlphaTest" ))
+		else if( !stricmp( fxProp.m_sName, "AlphaTest" ))
 		{
 			m_eAlphaTest = (ELTTestMode)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "ColorOp" ))
+		else if( !stricmp( fxProp.m_sName, "ColorOp" ))
 		{
 			m_eColorOp = (ELTColorOp)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "FillMode" ))
+		else if( !stricmp( fxProp.m_sName, "FillMode" ))
 		{
 			m_eFillMode = (ELTDPFillMode)fxProp.GetComboVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, "Allignment" ))
+		else if( !stricmp( fxProp.m_sName, "Allignment" ))
 		{
 			m_eAllignment = (EPTAllignment)fxProp.GetComboVal();
 		}
@@ -159,10 +158,10 @@ bool CPolyTubeFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBase
 
 	// Perform base class initialisation
 
-	if (!CBaseFX::Init(pClientDE, pBaseData, pProps)) 
+	if (!CBaseFX::Init(pClientDE, pBaseData, pProps))
 		return false;
 
-	if( !GetProps()->m_nMaxTrailLength || !GetProps()->m_fTrailWidth ) 
+	if( !GetProps()->m_nMaxTrailLength || !GetProps()->m_fTrailWidth )
 		return LTFALSE;
 
 	ObjectCreateStruct ocs;
@@ -196,7 +195,7 @@ bool CPolyTubeFX::Init(ILTClient *pClientDE, FX_BASEDATA *pBaseData, const CBase
 
 		vSave = m_vPos;
 	}
-	
+
 	// Add an initial point
 
 	PT_TRAIL_SECTION ts;
@@ -242,7 +241,7 @@ void CPolyTubeFX::Term()
 bool CPolyTubeFX::Update(float tmFrameTime)
 {
 	// Base class update first
-	if (!CBaseFX::Update(tmFrameTime)) 
+	if (!CBaseFX::Update(tmFrameTime))
 		return false;
 
 	if ((!m_hTexture) && (!m_bLoadFailed))
@@ -266,7 +265,7 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 		m_collPathPts.RemoveAll();
 		return true;
 	}
-	
+
 	float tmAddPtInterval = GetProps()->m_tmAddPtInterval * 2.0f;
 
 	LTRotation rRot;
@@ -275,12 +274,12 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 	//increase the emission time elapse
 	m_tmElapsedEmission += tmFrameTime;
 
-	if (!IsShuttingDown() && 
-	    (m_collPathPts.GetSize() < GetProps()->m_nMaxTrailLength) && 
+	if (!IsShuttingDown() &&
+	    (m_collPathPts.GetSize() < GetProps()->m_nMaxTrailLength) &&
 		((m_tmElapsedEmission > GetProps()->m_tmAddPtInterval) || (m_collPathPts.GetSize() == 1)))
 	{
 		LTVector vNew = m_vPos;
-		
+
 		// Only add the new point if it's not the same as the last one....
 
 		// Add a new trail section
@@ -308,15 +307,15 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 				ts.m_vBisector.Init();
 			break;
 		}
-		
-		
+
+
 		// Compute u coordinate
 
 		if (m_collPathPts.GetSize())
 		{
 			LTVector vPrev = m_collPathPts.GetTail()->m_Data.m_vPos;
 			float fUPrev = m_collPathPts.GetTail()->m_Data.m_uVal;
-			
+
 			float fWidth = (float)m_dwWidth;
 			float fScalar = fWidth / GetProps()->m_fTrailWidth;
 
@@ -329,7 +328,7 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 		}
 
 		m_collPathPts.AddTail(ts);
-		
+
 		m_tmElapsedEmission = 0.0f;
 	}
 
@@ -355,7 +354,7 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 	{
 		mCam = GetCamTransform(m_pLTClient, m_hCamera);
 	}
-	 
+
 	while (pNode)
 	{
 		MatVMul(&pNode->m_Data.m_vTran, &mCam, &pNode->m_Data.m_vPos);
@@ -383,7 +382,7 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 			{
 				LTVector vStart = pNode->m_Data.m_vTran;
 				LTVector vEnd   = pNode->m_pNext->m_Data.m_vTran;
-				
+
 				vBisector.x = vEnd.y - vStart.y;
 				vBisector.y = -(vEnd.x - vStart.x);
 			}
@@ -391,7 +390,7 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 			{
 				LTVector vEnd   = pNode->m_Data.m_vTran;
 				LTVector vStart = pNode->m_pPrev->m_Data.m_vTran;
-				
+
 				vBisector.x = vEnd.y - vStart.y;
 				vBisector.y = -(vEnd.x - vStart.x);
 			}
@@ -408,21 +407,21 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 				float x2 = vStart.y - vPrev.y;
 				float y2 = -(vStart.x - vPrev.x);
 				float z2 = vPrev.z - vEnd.z;
-				
+
 				vBisector.x = (x1 + x2) / 2.0f;
 				vBisector.y = (y1 + y2) / 2.0f;
 			}
 
 			pNode->m_Data.m_vBisector = vBisector;
 		}
-		
+
 		LTFLOAT fWidth = CalcCurWidth();
 		pNode->m_Data.m_vBisector.Norm( fWidth );
 
 		// Setup the colour
-		
-		float r, g, b, a;			
-		CalcColour(pNode->m_Data.m_tmElapsed, GetProps()->m_tmSectionLifespan, &r, &g, &b, &a);			
+
+		float r, g, b, a;
+		CalcColour(pNode->m_Data.m_tmElapsed, GetProps()->m_tmSectionLifespan, &r, &g, &b, &a);
 
 		int ir = (int)(r * 255.0f);
 		int ig = (int)(g * 255.0f);
@@ -433,7 +432,7 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 		pNode->m_Data.m_green = Clamp( ig, 0, 255 );
 		pNode->m_Data.m_blue = Clamp( ib, 0, 255 );
 		pNode->m_Data.m_alpha = Clamp( ia, 0, 255 );
-	
+
 		pNode = pNode->m_pNext;
 	}
 
@@ -451,7 +450,7 @@ bool CPolyTubeFX::Update(float tmFrameTime)
 		{
 			pDelNode = pNode;
 		}
-		
+
 		pNode = pNode->m_pNext;
 
 		if (pDelNode) m_collPathPts.Remove(pDelNode);
@@ -513,7 +512,7 @@ bool CPolyTubeFX::Render()
 	{
 		LTVector vStart = pNode->m_Data.m_vTran;
 		LTVector vEnd   = pNode->m_pNext->m_Data.m_vTran;
-	
+
 		LTVector vBisector1 = pNode->m_Data.m_vBisector;
 		LTVector vBisector2 = pNode->m_pNext->m_Data.m_vBisector;
 
@@ -532,7 +531,7 @@ bool CPolyTubeFX::Render()
 		uint8 g2 = pNode->m_pNext->m_Data.m_green;
 		uint8 b2 = pNode->m_pNext->m_Data.m_blue;
 		uint8 a2 = pNode->m_pNext->m_Data.m_alpha;
-		float u2 = pNode->m_pNext->m_Data.m_uVal + m_uOffset;		
+		float u2 = pNode->m_pNext->m_Data.m_uVal + m_uOffset;
 
 		SetupVert(pTri, 0, g_pVerts[nVerts], r1, g1, b1, a1, u1, 0.0f);
 		SetupVert(pTri, 1, g_pVerts[nVerts + 1], r2, g2, b2, a2, u2, 0.0f);
@@ -653,7 +652,7 @@ void CPolyTubeFX::OnRendererShutdown()
 void fxGetPolyTubeProps(CFastList<FX_PROP> *pList)
 {
 	FX_PROP fxProp;
-	
+
 	// Add the base props
 
 	AddBaseProps(pList);
@@ -668,7 +667,7 @@ void fxGetPolyTubeProps(CFastList<FX_PROP> *pList)
 
 	fxProp.Combo("WidthStyle", "0,Constant,SmallToBig,SmallToSmall,BigToSmall" );
 	pList->AddTail( fxProp );
-	
+
 	fxProp.Int("TrailLen", 50);
 	pList->AddTail(fxProp);
 
