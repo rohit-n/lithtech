@@ -11,6 +11,7 @@
 #ifndef __GAME_BUTE_MGR_H__
 #define __GAME_BUTE_MGR_H__
 
+#include "mfcstub.h"
 #include "butemgr.h"
 
 #pragma warning( disable : 4786 )

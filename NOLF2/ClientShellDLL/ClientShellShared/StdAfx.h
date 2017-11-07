@@ -19,7 +19,6 @@
 #include <windows.h>
 
 #else
-typedef void* HANDLE;
 typedef void* HWND;
 #define UINT uintptr_t
 #define WINAPI
@@ -37,6 +36,8 @@ typedef void* HWND;
 #include "iltserver.h"
 #include "iltmessage.h"
 #include "Globals.h"
+
+#include "Sync.h"
 
 #include "iltmodel.h"
 #include "ilttransform.h"

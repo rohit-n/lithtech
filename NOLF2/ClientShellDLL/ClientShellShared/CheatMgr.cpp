@@ -149,7 +149,7 @@ void CCheatMgr::Init()
 //
 // ----------------------------------------------------------------------- //
 
-LTBOOL CCheatMgr::Check( CParsedMsg &cMsg )
+LTBOOL CCheatMgr::Check( const CParsedMsg &cMsg )
 {
 	char buf[100];
 
@@ -181,7 +181,7 @@ LTBOOL CCheatMgr::Check( CParsedMsg &cMsg )
 //
 // ----------------------------------------------------------------------- //
 
-bool CCheatMgr::Process( CheatCode nCheatCode, CParsedMsg &cMsg )
+bool CCheatMgr::Process( CheatCode nCheatCode, const CParsedMsg &cMsg )
 {
 	if ( nCheatCode <= CHEAT_NONE || nCheatCode >= CHEAT_MAX ) return false;
 
@@ -689,7 +689,7 @@ void CCheatMgr::NextMission()
 //
 // ----------------------------------------------------------------------- //
 
-void CCheatMgr::BootPlayer(CParsedMsg &cMsg)
+void CCheatMgr::BootPlayer(const CParsedMsg &cMsg)
 {
 	if (!IsMultiplayerGame()) return;
 

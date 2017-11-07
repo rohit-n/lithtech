@@ -33,6 +33,8 @@
 
 #include "Globals.h"
 
+#include "Sync.h"
+
 #include "iltmodel.h"
 #include "ilttransform.h"
 #include "iltphysics.h"

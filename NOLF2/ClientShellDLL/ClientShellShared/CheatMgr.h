@@ -28,12 +28,12 @@ class CCheatMgr
 
 		void	Init();
 
-        LTBOOL  Check( CParsedMsg &cMsg );
+        LTBOOL  Check(const CParsedMsg &cMsg );
         LTBOOL  Check( const char* pMsg ) { return (pMsg && pMsg[0] ? Check(CParsedMsg(1, (const char * const *)&pMsg)) : LTFALSE); }
         void	ClearCheater() { m_bPlayerCheated = LTFALSE; }
         LTBOOL	IsCheater() { return m_bPlayerCheated; }
 
-		bool	Process( CheatCode nCheatCode, CParsedMsg &cMsg );
+		bool	Process( CheatCode nCheatCode,const CParsedMsg &cMsg );
 
 	private:
 
@@ -65,7 +65,7 @@ class CCheatMgr
 		void	FullGear();
 		void	SetExitLevel();
 		void	NextMission();
-		void	BootPlayer( CParsedMsg &cMsg );
+		void	BootPlayer( const CParsedMsg &cMsg );
 		void	Version();
 		void	BuildGuid();
 		void	GimmeGun( CParsedMsg &cMsg );

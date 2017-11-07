@@ -18,7 +18,7 @@
 	#include "WeaponMgr.h"
 	#include "ActivateTypeMgr.h"
 	#include "SFXMsgIds.h"
-	#include "MsgIds.h"
+	#include "MsgIDs.h"
 
 //
 // Defines...
