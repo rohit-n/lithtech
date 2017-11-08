@@ -73,7 +73,7 @@ struct DTINFO
 	LTBOOL		bScoreTag;
 	LTBOOL		bGrief;
 	bool		bHurtAnim;
-	StringArray saPlayerDamageSounds;
+	CStringArray saPlayerDamageSounds;
 };
 
 
