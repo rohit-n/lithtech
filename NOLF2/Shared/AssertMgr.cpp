@@ -8,9 +8,10 @@
 //
 // ----------------------------------------------------------------------- //
 
+#include <SDL.h>
+
 #include "StdAfx.h"
 #include "AssertMgr.h"
-
 // Statics
 
 LTBOOL CAssertMgr::m_bEnabled = LTFALSE;
@@ -40,7 +41,45 @@ void CAssertMgr::Disable()
 #endif
 }
 
-int CAssertMgr::ReportHook(int nReportType, char* szMessage, int* pnReturnValue)
+int CAssertMgr::CreateMessageBox(SDL_Window *win, const char *szMsg)
+{
+	const SDL_MessageBoxButtonData btns[] = {
+		{0,IDABORT,"Abort"},
+		{0,IDRETRY,"Retry"},
+		{0,IDIGNORE,"Ignore"}
+	};
+    const SDL_MessageBoxColorScheme colors = {
+        { 
+            /* [SDL_MESSAGEBOX_COLOR_BACKGROUND] */
+            { 255,   0,   0 },
+            /* [SDL_MESSAGEBOX_COLOR_TEXT] */
+            {   0, 255,   0 },
+            /* [SDL_MESSAGEBOX_COLOR_BUTTON_BORDER] */
+            { 255, 255,   0 },
+            /* [SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND] */
+            {   0,   0, 255 },
+            /* [SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED] */
+            { 255,   0, 255 }
+        }
+    };
+	if(win)
+		SDL_MinimizeWindow(win);
+	const SDL_MessageBoxData mbox_data = {
+		SDL_MESSAGEBOX_WARNING,
+		win,
+		"Assert",
+		szMsg,
+		SDL_arraysize(btns),
+		btns,
+		&colors
+	};
+	int button=15;
+	SDL_ShowMessageBox(&mbox_data, &button);
+	return button;
+
+}
+
+int CAssertMgr::ReportHook(int nReportType, const char* szMessage, int* pnReturnValue)
 {
     if ( LTFALSE == m_bEnabled )
 	{
@@ -68,26 +107,23 @@ int CAssertMgr::ReportHook(int nReportType, char* szMessage, int* pnReturnValue)
     szAssert = g_pLTServer->GetVarValueString(hAssertVar);
 #endif
 
-	if ( szAssert && !_stricmp(szAssert, "fullscreen") )
+	if ( szAssert && !stricmp(szAssert, "fullscreen") )
 	{
 		// if assert convar = "fullscreen", switch out of renderer then do abort, retry, ignore
 
-		HWND hWnd = FindWindow("LithTech", NULL);
-		ShowWindow(hWnd, SW_MINIMIZE);
-
 		char szBuffer[512];
-		wsprintf(szBuffer, "\
+		sprintf(szBuffer, "\
 An assert has occurred:\n\n%s\n\
 Retry will step into the debugger. You should\n\
 only select this option if you are currently\n\
 running the game under a debugger.\n", szMessage);
 
-		int nResult = MessageBox(hWnd, szBuffer, "Assert", MB_ABORTRETRYIGNORE);
+		SDL_Window *win = SDL_GetGrabbedWindow();
+
+		int nResult = CreateMessageBox(win, szBuffer);
 
 		if ( nResult == IDABORT )
 		{
-			DestroyWindow(hWnd);
-
 			*pnReturnValue = 0;
 		}
 		else if ( nResult == IDRETRY )
@@ -96,32 +132,30 @@ running the game under a debugger.\n", szMessage);
 		}
 		else // if ( nResult == IDIGNORE )
 		{
-			ShowWindow(hWnd, SW_MAXIMIZE);
+			if(win)
+				SDL_MaximizeWindow(win);
 			*pnReturnValue = 0;
 		}
 
 		return TRUE;
 	}
-	else if ( szAssert && !_stricmp(szAssert, "window") )
+	else if ( szAssert && !stricmp(szAssert, "window") )
 	{
 		// if assert convar = "window", then do as normal (usually a dialog)
 
-		HWND hWnd = FindWindow("LithTech", NULL);
-		ShowWindow(hWnd, SW_MINIMIZE);
-
 		char szBuffer[512];
-		wsprintf(szBuffer, "\
+		sprintf(szBuffer, "\
 An assert has occurred:\n\n%s\n\
 Retry will step into the debugger. You should\n\
 only select this option if you are currently\n\
 running the game under a debugger.\n", szMessage);
 
-		int nResult = MessageBox(hWnd, szBuffer, "Assert", MB_ABORTRETRYIGNORE);
+		SDL_Window *win = SDL_GetGrabbedWindow();
+
+		int nResult = CreateMessageBox(win, szBuffer);
 
 		if ( nResult == IDABORT )
 		{
-			DestroyWindow(hWnd);
-
 			*pnReturnValue = 0;
 		}
 		else if ( nResult == IDRETRY )
@@ -135,14 +169,14 @@ running the game under a debugger.\n", szMessage);
 
 		return TRUE;
 	}
-	else if ( szAssert && !_stricmp(szAssert, "null") )
+	else if ( szAssert && !stricmp(szAssert, "null") )
 	{
 		// if assert convar = "null", then totally ignore it
 
 		*pnReturnValue = 0;
 		return TRUE;
 	}
-	else // if ( !_stricmp(szAssert, "console") )
+	else // if ( !stricmp(szAssert, "console") )
 	{
 		// if assert convar = "console" or none of the above, put the assert into the console
 

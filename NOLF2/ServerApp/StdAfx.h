@@ -6,6 +6,7 @@
 #if !defined(AFX_STDAFX_H__C6916249_FA1F_11D0_B46B_00A024805738__INCLUDED_)
 #define AFX_STDAFX_H__C6916249_FA1F_11D0_B46B_00A024805738__INCLUDED_
 
+#ifdef _WIN32
 #if _MSC_VER >= 1000
 #pragma once
 #endif // _MSC_VER >= 1000
@@ -18,6 +19,8 @@
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
+
+#endif // _WIN32
 
 #include "ltbasetypes.h"
 #include "iltserver.h"
