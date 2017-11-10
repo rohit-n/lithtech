@@ -1,6 +1,6 @@
 // (c) 1997-2000 Monolith Productions, Inc.  All Rights Reserved
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "AttachButeMgr.h"
 #include "CommonUtilities.h"
 
@@ -477,5 +477,5 @@ LTVector CAttachButeMgr::GetPVAttachmentScale( int nPVAttachmentID )
 	}
 		
 	sprintf( s_aTagName, "%s%d", ABM_PVATTACHMENT, nPVAttachmentID );
-	return m_buteMgr.GetVector( s_aTagName, ABM_PVATTACHMENT_SCALE, CAVector( 0, 0, 0));
+	return m_buteMgr.GetVector( s_aTagName, ABM_PVATTACHMENT_SCALE, CAVector( 0, 0, 0)); 
 }

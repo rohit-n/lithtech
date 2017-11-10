@@ -334,8 +334,8 @@ public:
 	CPoint& GetPoint(const char* szTagName, const char* szAttName);
 	void SetPoint(const char* szTagName, const char* szAttName, const CPoint& val);
 
-	CAVector& GetVector(const char* szTagName, const char* szAttName, CAVector& defVal);
-	CAVector& GetVector(const char* szTagName, const char* szAttName);
+	const CAVector& GetVector(const char* szTagName, const char* szAttName,const CAVector& defVal);
+	const CAVector& GetVector(const char* szTagName, const char* szAttName);
 	void SetVector(const char* szTagName, const char* szAttName, const CAVector& val);
 
 	CARange& GetRange(const char* szTagName, const char* szAttName, CARange& defVal);

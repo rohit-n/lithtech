@@ -23,6 +23,10 @@ typedef void* HWND;
 #define UINT uintptr_t
 #define WINAPI
 
+#ifndef MAX_PATH
+#define MAX_PATH 1024
+#endif 
+
 #endif // __LINUX
 
 #include <stdio.h>

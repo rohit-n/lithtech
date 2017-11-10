@@ -2155,7 +2155,7 @@ void CButeMgr::SetPoint(const char* szTagName, const char* szAttName, const CPoi
 
 
 
-CAVector& CButeMgr::GetVector(const char* szTagName, const char* szAttName, CAVector& defVal)
+const CAVector& CButeMgr::GetVector(const char* szTagName, const char* szAttName, const CAVector& defVal)
 {
 	m_bSuccess = true;
 	CSymTabItem* pItem;
@@ -2172,10 +2172,10 @@ CAVector& CButeMgr::GetVector(const char* szTagName, const char* szAttName, CAVe
 
 
 
-CAVector& CButeMgr::GetVector(const char* szTagName, const char* szAttName)
+const CAVector& CButeMgr::GetVector(const char* szTagName, const char* szAttName)
 {
 	static CAVector defVal(0, 0, 0);
-	CAVector& vect = GetVector( szTagName, szAttName, defVal );
+	const CAVector& vect = GetVector( szTagName, szAttName, defVal );
 	if( !m_bSuccess )
 		DisplayMessage("Symbol not found - [%s]:%s", szTagName, szAttName);
 
