@@ -1,4 +1,9 @@
 project(NOLF2_ClientShellDLL)
+cmake_minimum_required(VERSION 3.5)
+
+include(FindPkgConfig)
+
+pkg_check_modules(SDL2 REQUIRED sdl2)
 
 add_library(${PROJECT_NAME} SHARED
 	../ClientShellShared/ActivateObjectFX.cpp
@@ -305,11 +310,8 @@ include_directories(../ClientShellShared
 	../../../libs/LTGUIMgr
 	../../../libs/ServerDir
 	../../ClientRes/Shared
+	${SDL2_INCLUDE_DIRS}
 	../../ClientRes/TO2)
-
-if(UNIX)
-  include_directories(/usr/include/SDL2)
-endif()
 
 target_link_libraries(${PROJECT_NAME}
 	LIB_MFCStub
@@ -320,4 +322,5 @@ target_link_libraries(${PROJECT_NAME}
 	LIB_RegMgr
 	LIB_LTGUIMgr
 	ServerDir
+	${SDL2_LIBRARIES}
 	winmm)

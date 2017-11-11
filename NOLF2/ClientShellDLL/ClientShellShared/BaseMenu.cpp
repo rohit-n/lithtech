@@ -45,7 +45,7 @@ LTBOOL CSubMenu::Init(HTEXTURE hFrame,HTEXTURE hFrameTip, LTIntPt size)
 
 LTBOOL CSubMenu::HandleKeyUp (int vkey )
 {
-	if (vkey == VK_ESCAPE)
+	if (vkey == SDLK_ESCAPE)
 	{
 		g_pInterfaceMgr->GetMenuMgr()->HideSubMenu(true);
 		return LTTRUE;
