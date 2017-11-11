@@ -14,7 +14,7 @@
 #define __COMMAND_MGR_H__
 
 #include "ServerUtilities.h"
-#include "LTObjRef.h"
+#include "ltobjref.h"
 
 class ConParse;
 class CCommandMgr;
@@ -99,7 +99,7 @@ struct VAR_STRUCT : public ILTObjRefReceiver
 
 struct OPERATOR_STRUCT
 {
-	OPERATOR_STRUCT( char *pOpName = "", LTBOOL bLogical = LTFALSE, IntOperatorFn pOpFn = LTNULL, ECmdMgrVarType eVarType = eCMVar_Int )
+	OPERATOR_STRUCT(const char *pOpName = "", LTBOOL bLogical = LTFALSE, IntOperatorFn pOpFn = LTNULL, ECmdMgrVarType eVarType = eCMVar_Int )
 		:	m_OpName	( pOpName ),
 			m_bLogical	( bLogical ),
 			m_OpFn		( pOpFn ),
@@ -108,8 +108,8 @@ struct OPERATOR_STRUCT
 
 	}
 
-	char			*m_OpName;
-	LTBOOL			m_bLogical;
+	const char	*m_OpName;
+	LTBOOL		m_bLogical;
 	IntOperatorFn	m_OpFn;
 	ECmdMgrVarType	m_eVarType;
 
@@ -280,7 +280,7 @@ struct CMD_STRUCT_PARAM
 
 struct CMD_PROCESS_STRUCT
 {
-    CMD_PROCESS_STRUCT(char* pCmd="", int nArgs=0, ProcessCmdFn pFn=LTNULL, char* pSyn="", PreCheckCmdFn pPreFn=LTNULL)
+    CMD_PROCESS_STRUCT(const char* pCmd="", int nArgs=0, ProcessCmdFn pFn=LTNULL, const char* pSyn="", PreCheckCmdFn pPreFn=LTNULL)
 	{
 		pCmdName	= pCmd;
 		nNumArgs	= nArgs;
@@ -289,8 +289,8 @@ struct CMD_PROCESS_STRUCT
 		pPreCheckFn	= pPreFn;
 	}
 
-	char*			pCmdName;
-	char*			pSyntax;
+	const char*			pCmdName;
+	const char*			pSyntax;
 	int				nNumArgs;
 	ProcessCmdFn	pProcessFn;
 	PreCheckCmdFn	pPreCheckFn;
@@ -358,7 +358,7 @@ class CCommandMgr
 	private :
 
 		CMD_STRUCT	m_PendingCmds[CMDMGR_MAX_PENDING_COMMANDS];
-		
+
 		VAR_STRUCT	m_aVars[CMDMGR_MAX_VARS];
 		uint16		m_nNumVars;
 
@@ -408,8 +408,8 @@ typedef LTBOOL (*ValidateMsgFn)( ILTPreInterface *pInterface, ConParse &cpMsgPar
 
 struct MSG_PRECHECK
 {
-	MSG_PRECHECK( char *pName = "", int nMinArgs = 0, int nMaxArgs = 0, 
-					ValidateMsgFn pFn = LTNULL, char *pSyntax = "", bool bSpecial = false )
+	MSG_PRECHECK(const char *pName = "", int nMinArgs = 0, int nMaxArgs = 0,
+					ValidateMsgFn pFn = LTNULL, const char *pSyntax = "", bool bSpecial = false )
 	{
 		m_szMsgName		= pName;
 		m_nMinArgs		= nMinArgs;
@@ -419,10 +419,10 @@ struct MSG_PRECHECK
 		m_bSpecial		= bSpecial;
 	};
 
-	char			*m_szMsgName;
-	int				m_nMinArgs;
-	int				m_nMaxArgs;
-	char			*m_szSyntax;
+	const char		*m_szMsgName;
+	int			m_nMinArgs;
+	int			m_nMaxArgs;
+	const char		*m_szSyntax;
 	ValidateMsgFn	m_pValidateFn;
 	bool			m_bSpecial;
 };
@@ -455,7 +455,7 @@ typedef std::vector<CMDMGR_CLASS_DESC*> CMDMGR_CLASS_DESC_VECTOR;
 
 #define CMDMGR_END_REGISTER_CLASS( class_name, parent_class ) \
 	CMDMGR_END_REGISTER_CLASS_FLAGS( class_name, parent_class, 0 )
-	 
+ 
 
 #define CMDMGR_ADD_MSG( msg_name, num_args, validate_fn, syntax ) \
 	MSG_PRECHECK( #msg_name, num_args, num_args, validate_fn, syntax ),
