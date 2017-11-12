@@ -19,6 +19,7 @@
 #include <windows.h>
 
 #else
+typedef void* HINSTANCE;
 typedef void* HWND;
 #define UINT uintptr_t
 #define WINAPI
