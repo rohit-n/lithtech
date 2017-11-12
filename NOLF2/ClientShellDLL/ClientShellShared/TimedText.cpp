@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "TimedText.h"
 #include "GameClientShell.h"
 

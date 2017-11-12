@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "BaseScreen.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"
@@ -67,7 +67,7 @@ void EditFXFn(int argc, char **argv)
 
 	char szName[128];
 	SAFE_STRCPY(szName,argv[0]);
-	_strupr(szName);
+	strupr(szName);
 	ScaleFXMap::iterator iter = g_ScaleFXMap.find(szName);
 	if (iter == g_ScaleFXMap.end())
 	{
@@ -530,7 +530,7 @@ LTBOOL CBaseScreen::HandleKeyDown(int key, int rep)
 
 	switch (key)
 	{
-	case VK_LEFT:
+	case SDLK_LEFT:
 		{
 			if (m_pCaptureCtrl)
 				handled = m_pCaptureCtrl->OnLeft();
@@ -538,7 +538,7 @@ LTBOOL CBaseScreen::HandleKeyDown(int key, int rep)
 				handled = OnLeft();
 			break;
 		}
-	case VK_RIGHT:
+	case SDLK_RIGHT:
 		{
 			if (m_pCaptureCtrl)
 				handled = m_pCaptureCtrl->OnRight();
@@ -546,7 +546,7 @@ LTBOOL CBaseScreen::HandleKeyDown(int key, int rep)
 				handled = OnRight();
 			break;
 		}
-	case VK_UP:
+	case SDLK_UP:
 		{
 			if (m_pCaptureCtrl)
 				handled = m_pCaptureCtrl->OnUp();
@@ -554,7 +554,7 @@ LTBOOL CBaseScreen::HandleKeyDown(int key, int rep)
 				handled = OnUp();
 			break;
 		}
-	case VK_DOWN:
+	case SDLK_DOWN:
 		{
 			if (m_pCaptureCtrl)
 				handled = m_pCaptureCtrl->OnDown();
@@ -562,7 +562,7 @@ LTBOOL CBaseScreen::HandleKeyDown(int key, int rep)
 				handled = OnDown();
 			break;
 		}
-	case VK_RETURN:
+	case SDLK_RETURN:
 		{
 			if (m_pCaptureCtrl)
 				handled = m_pCaptureCtrl->OnEnter();
@@ -580,7 +580,7 @@ LTBOOL CBaseScreen::HandleKeyDown(int key, int rep)
 				if (pCtrl)
 				{
 					handled = pCtrl->HandleKeyDown(key,rep);
-					if (handled && (key == VK_NEXT || key == VK_PRIOR))
+					if (handled && (key == SDLK_PAGEDOWN || key == SDLK_PAGEUP))
 						g_pInterfaceMgr->RequestInterfaceSound(IS_CHANGE);
 				}
 				else
@@ -1860,7 +1860,7 @@ CBaseScaleFX* CBaseScreen::CreateScaleFX(char *szFXName)
 
 		char szTmp[64];
 		SAFE_STRCPY(szTmp,szFXName);
-		_strupr(szTmp);
+		strupr(szTmp);
 		g_ScaleFXMap[szTmp] = pSFX;
 
 		return pSFX;
@@ -2219,49 +2219,49 @@ void HandleEditKey(int key)
 {
 	switch (key)
 	{
-	case VK_LEFT:
+	case SDLK_LEFT:
 		{
 			vSFXPos.x -= fEditDelta;
 		} break;
-	case VK_RIGHT:
+	case SDLK_RIGHT:
 		{
 			vSFXPos.x += fEditDelta;
 		} break;
-	case VK_UP:
+	case SDLK_UP:
 		{
 			vSFXPos.y += fEditDelta;
 		} break;
-	case VK_DOWN:
+	case SDLK_DOWN:
 		{
 			vSFXPos.y -= fEditDelta;
 		} break;
-	case VK_A:
+	case SDLK_a:
 		{
 			vSFXScale.x -= fEditDelta / 10.0f;
 		} break;
-	case VK_D:
+	case SDLK_d:
 		{
 			vSFXScale.x += fEditDelta / 10.0f;
 		} break;
-	case VK_W:
+	case SDLK_w:
 		{
 			vSFXScale.y -= fEditDelta / 10.0f;
 		} break;
-	case VK_S:
+	case SDLK_s:
 		{
 			vSFXScale.y += fEditDelta / 10.0f;
 		} break;
-	case VK_PRIOR:
+	case SDLK_PAGEUP:
 		{
 			fEditDelta *= 10.0f;
 			g_pLTClient->CPrint("Edit scale = %0.3f",fEditDelta);
 		}break;
-	case VK_NEXT:
+	case SDLK_PAGEDOWN:
 		{
 			fEditDelta /= 10.0f;
 			g_pLTClient->CPrint("Edit scale = %0.3f",fEditDelta);
 		}break;
-	case VK_RETURN:
+	case SDLK_RETURN:
 		{
 			bEditSFXMode = false;
 			g_pLTClient->CPrint("Exiting SFX edit mode.");

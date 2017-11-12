@@ -65,13 +65,13 @@ class CCheatMgr
 		void	FullGear();
 		void	SetExitLevel();
 		void	NextMission();
-		void	BootPlayer( const CParsedMsg &cMsg );
+		void	BootPlayer( CParsedMsg const &cMsg );
 		void	Version();
 		void	BuildGuid();
-		void	GimmeGun( CParsedMsg &cMsg );
-		void	GimmeMod( CParsedMsg &cMsg	);
-		void	GimmeGear( CParsedMsg &cMsg );
-		void	GimmeAmmo( CParsedMsg &cMsg );
+		void	GimmeGun( CParsedMsg const &cMsg );
+		void	GimmeMod( CParsedMsg const &cMsg	);
+		void	GimmeGear( CParsedMsg const &cMsg );
+		void	GimmeAmmo( CParsedMsg const &cMsg );
         void    SetConsole( LTBOOL bMode );
 		void	GetSkills();
 		void	ToggleEndgameFlag();

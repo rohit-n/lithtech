@@ -1,7 +1,7 @@
-#include "stdafx.h"
-#include "stdio.h"
+#include "StdAfx.h"
+#include <stdio.h>
 #include "sys\stat.h"
-#include "winutil.h"
+#include "WinUtil.h"
 #include <time.h>
 #include <direct.h>
 #include <IO.h>

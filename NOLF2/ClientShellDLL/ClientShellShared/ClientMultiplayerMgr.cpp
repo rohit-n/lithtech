@@ -10,11 +10,11 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ClientMultiplayerMgr.h"
 #include "GameClientShell.h"
-#include "MsgIds.h"
-#include "CharacterFx.h"
+#include "MsgIDs.h"
+#include "CharacterFX.h"
 #include "CMoveMgr.h"
 #include "iserverdir.h"
 #include "MissionMgr.h"

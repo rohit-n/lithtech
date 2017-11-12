@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "FxFlags.h"
 #include "FxDefs.h"
 #include "iltmessage.h"
@@ -85,32 +85,32 @@ static void SetupKey(FX_KEY* pKey, FX_PROP* pPropList, uint32 nNumProps)
 	{
 		FX_PROP& fxProp = pPropList[nCurrProp];
 
-		if( !_stricmp( fxProp.m_sName, FXPROP_DISABLEATDIST ))
+		if( !stricmp( fxProp.m_sName, FXPROP_DISABLEATDIST ))
 		{
 			pKey->m_bDisableAtDistance = fxProp.GetComboVal() ? true : false;
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_MAXSTARTOFFSET ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_MAXSTARTOFFSET ))
 		{
 			pKey->m_fMaxStartOffset = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_RANDOMSTARTOFFSET ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_RANDOMSTARTOFFSET ))
 		{
 			pKey->m_bRandomStartOffset = fxProp.GetComboVal() ? true : false;
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_STARTOFFSETINTERVAL ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_STARTOFFSETINTERVAL ))
 		{
 			pKey->m_fStartOffsetInterval = fxProp.GetFloatVal();
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_SMOOTHSHUTDOWN ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_SMOOTHSHUTDOWN ))
 		{
 			pKey->m_bSmoothShutdown = fxProp.GetComboVal() ? true : false;
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_DETAILLEVEL ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_DETAILLEVEL ))
 		{
 			pKey->m_nDetailLevel = fxProp.GetComboVal();
 			assert((pKey->m_nDetailLevel < FX_NUM_DETAIL_SETTINGS) && "Found an invalid detail setting");
 		}
-		else if( !_stricmp( fxProp.m_sName, FXPROP_ISGORE ))
+		else if( !stricmp( fxProp.m_sName, FXPROP_ISGORE ))
 		{
 			pKey->m_bGore = fxProp.GetComboVal() ? true : false;
 		}
@@ -772,7 +772,7 @@ bool CClientFXDB::LoadFxGroups(ILTClient* pClient, const char *sFileName )
 	pFxFile->SeekTo( 0 );
 
 	// This is a text file if we can read an asci "Groups:".
-	bool bText = !_stricmp( szTag, "Groups:" );
+	bool bText = !stricmp( szTag, "Groups:" );
 	ReadFXGroups( bText, pFxFile, m_collGroupFX );
 
 	//clean up the file

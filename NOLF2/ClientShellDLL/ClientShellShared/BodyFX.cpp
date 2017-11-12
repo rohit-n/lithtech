@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "BodyFX.h"
 #include "GameClientShell.h"
 #include "SFXMsgIds.h"
@@ -607,11 +607,11 @@ void CBodyFX::OnModelKey(HLOCALOBJ hObj, ArgList *pArgs)
 
 	for(int i=0;i<pArgs->argc;i++)
 	{
-		char* pKey = pArgs->argv[i];
-		if (!pKey) return;
+		if (!(pArgs->argv[i])) return;
+		const char* pKey = pArgs->argv[i];
 
-		LTBOOL bSlump = !_stricmp(pKey, "NOISE");
-		LTBOOL bLand = !_stricmp(pKey, "LAND");
+		LTBOOL bSlump = !stricmp(pKey, "NOISE");
+		LTBOOL bLand = !stricmp(pKey, "LAND");
 
 		if ( bSlump || bLand )
 		{
@@ -663,33 +663,33 @@ void CBodyFX::OnModelKey(HLOCALOBJ hObj, ArgList *pArgs)
 				g_pClientSoundMgr->PlaySoundFromPos(vPos, pSurf->szBodyLedgeFallSnd, pSurf->fBodyLedgeFallSndRadius, SOUNDPRIORITY_MISC_LOW);
 			}
 		}
-		else if(!_stricmp(pKey,BODY_KEY_BUTE_SOUND))
+		else if(!stricmp(pKey,BODY_KEY_BUTE_SOUND))
 		{
 			if( (pArgs->argc > (i+1)) && pArgs->argv[i] )
 			{
 				g_pClientSoundMgr->PlaySoundFromObject( m_hServerObject, pArgs->argv[i+1] );
 			}
 		}
-		else if ( !_stricmp( pKey, "DEATHFX" ))
+		else if ( !stricmp( pKey, "DEATHFX" ))
 		{
 			//
 			// Special FX key
 			//
 			HandleDeathFXKey( hObj, pArgs );
 		}
-		else if ( !_stricmp( pKey, "FX" ))
+		else if ( !stricmp( pKey, "FX" ))
 		{
 			//
 			// Special FX key
 			//
 			HandleFXKey( hObj, pArgs );
 		}
-		else if(!_stricmp(pKey,"HIDE"))
+		else if(!stricmp(pKey,"HIDE"))
 		{
 			g_pLTClient->Common()->SetObjectFlags(m_hServerObject, OFT_Flags, 0, FLAG_VISIBLE);
 			m_bHidden = true;
 		}
-		else if(!_stricmp(pKey,"UNHIDE"))
+		else if(!stricmp(pKey,"UNHIDE"))
 		{
 			g_pLTClient->Common()->SetObjectFlags(m_hServerObject, OFT_Flags, FLAG_VISIBLE, FLAG_VISIBLE);
 			m_bHidden = false;
@@ -787,7 +787,7 @@ bool CBodyFX::HandleFXKey( HLOCALOBJ hObj, ArgList* pArgList )
 //	PURPOSE:	Handle an FX key
 //
 // ----------------------------------------------------------------------- //
-bool CBodyFX::CreateFX( char* pFXName )
+bool CBodyFX::CreateFX( const char* pFXName )
 {
 	if (!pFXName || !pFXName[0])
 		return false;

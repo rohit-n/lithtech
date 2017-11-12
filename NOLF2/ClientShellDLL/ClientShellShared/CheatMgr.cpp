@@ -12,7 +12,7 @@
 //
 //-------------------------------------------------------------------------
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "GameClientShell.h"
 #include "CheatMgr.h"
 #include "HUDMgr.h"
@@ -1194,7 +1194,7 @@ void CCheatMgr::SetConsole( LTBOOL bMode )
 //
 // ----------------------------------------------------------------------- //
 
-void CCheatMgr::GimmeGun( CParsedMsg &cMsg )
+void CCheatMgr::GimmeGun( CParsedMsg const &cMsg )
 {
 	if( !g_pWeaponMgr || cMsg.GetArgCount() < 2 )
 		return;
@@ -1242,7 +1242,7 @@ void CCheatMgr::GimmeGun( CParsedMsg &cMsg )
 //
 // ----------------------------------------------------------------------- //
 
-void CCheatMgr::GimmeMod( CParsedMsg &cMsg )
+void CCheatMgr::GimmeMod( CParsedMsg const &cMsg )
 {
 	if( !g_pWeaponMgr || cMsg.GetArgCount() < 2 )
 		return;
@@ -1289,7 +1289,7 @@ void CCheatMgr::GimmeMod( CParsedMsg &cMsg )
 //
 // ----------------------------------------------------------------------- //
 
-void CCheatMgr::GimmeGear( CParsedMsg &cMsg )
+void CCheatMgr::GimmeGear( CParsedMsg const &cMsg )
 {
 	if( !g_pWeaponMgr || cMsg.GetArgCount() < 2 )
 		return;
@@ -1336,7 +1336,7 @@ void CCheatMgr::GimmeGear( CParsedMsg &cMsg )
 //
 // ----------------------------------------------------------------------- //
 
-void CCheatMgr::GimmeAmmo( CParsedMsg &cMsg )
+void CCheatMgr::GimmeAmmo( CParsedMsg const &cMsg )
 {
 	if( !g_pWeaponMgr || cMsg.GetArgCount() < 2 )
 		return;

@@ -24,7 +24,7 @@ typedef void* HWND;
 #define WINAPI
 
 #ifndef MAX_PATH
-#define MAX_PATH 1024
+#define MAX_PATH 4096
 #endif 
 
 #endif // __LINUX

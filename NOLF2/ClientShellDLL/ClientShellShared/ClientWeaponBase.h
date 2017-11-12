@@ -56,8 +56,8 @@ public:
 	// This pure virtual destructor maintains this class
 	// as an abstract class.  It should not be instantiated,
 	// but all public functions can have default behaviours.
-	virtual       ~IClientWeaponBase() = 0 {}
-	IClientWeaponBase() {}
+	virtual       ~IClientWeaponBase() = 0;
+	IClientWeaponBase() = default;
 
 	// handle messages
 	virtual bool  OnMessage( uint8 messageID, ILTMessage_Read *pMsg ) { return true; }

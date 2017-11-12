@@ -8,13 +8,13 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
-#include "profileMgr.h"
-#include "clientutilities.h"
-#include "commandids.h"
-#include "interfacemgr.h"
-#include "winutil.h"
+#include "ProfileMgr.h"
+#include "ClientUtilities.h"
+#include "CommandIDs.h"
+#include "InterfaceMgr.h"
+#include "WinUtil.h"
 #include "ClientResShared.h"
 #include "GameClientShell.h"
 #include "GameSettings.h"
@@ -23,7 +23,7 @@
 #include "ClientMultiplayerMgr.h"
 #include "VarTrack.h"
 #include "CMoveMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "VersionMgr.h"
 
 extern CGameClientShell* g_pGameClientShell;

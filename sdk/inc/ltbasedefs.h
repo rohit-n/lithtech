@@ -71,6 +71,12 @@
 	inline int notSupportedLinux ()
 	{  ASSERT( false && "Not supported on Linux" ); }
 
+	#define _MAX_DRIVE 4096
+	#define _MAX_DIR 4096
+	#define _MAX_FNAME 4096
+	#define _MAX_EXT 1024
+	void _splitpath(const char *path, char *drive, char *dir, char *file, char *ext);
+
 #endif
 
 #ifdef _WIN32
