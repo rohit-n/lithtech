@@ -71,8 +71,6 @@
 	inline int notSupportedLinux ()
 	{  ASSERT( false && "Not supported on Linux" ); }
 
-	void _splitpath(const char *path, char *drive, char *dir, char *file, char *ext);
-
 #endif
 
 #ifdef _WIN32

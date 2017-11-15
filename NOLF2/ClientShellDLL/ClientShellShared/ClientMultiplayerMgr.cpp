@@ -24,6 +24,9 @@
 #include "WeaponMgr.h"
 #include "CRC32.h"
 
+#include <chrono>
+#include <thread>
+
 #pragma message( "FIXFIX:  Should really be called ClientConnectionMgr." )
 
 
@@ -628,7 +631,7 @@ bool ClientMultiplayerMgr::HandleMsgHandshake( ILTMessage_Read & msg )
 #ifdef SOURCE_RELEASE
 			cResponse.Writeuint32( GAME_HANDSHAKE_PASSWORD );
 #else // SOURCE_RELEASE
-			cResponse.Writeuint32((uint32)this);
+			cResponse.Writeuintptr((uintptr_t)this);
 #endif // SOURCE_RELEASE
 			g_pLTClient->SendToServer(cResponse.Read(), MESSAGE_GUARANTEED);
 		}
@@ -652,7 +655,7 @@ bool ClientMultiplayerMgr::HandleMsgHandshake( ILTMessage_Read & msg )
 			SAFE_STRCPY(sName,pProfile->m_sPlayerGuid.c_str( ));
 
 			// Decrypt it
-			m_nServerKey ^= MessUp32BitValue((uint32)this, (uint32)(sName[0]));
+			m_nServerKey ^= MessUp32BitValue((uintptr_t)this, (uint32)(sName[0]));
 
 			// Encrypt "the string" with it
 			uint32 nPassword = *((uint32*)sName);
@@ -690,11 +693,15 @@ bool ClientMultiplayerMgr::HandleMsgHandshake( ILTMessage_Read & msg )
 			// Just in case getting the file name fails
 			aClientShellName[0] = 0; 
 			// Get the client shell handle from the engine
+#ifdef _WIN32
 			HMODULE hClientShell;
 			g_pLTClient->GetEngineHook("cshell_hinstance", (void**)&hClientShell);
 			DWORD nResult = GetModuleFileName(hClientShell, aClientShellName, sizeof(aClientShellName));
 			uint32 nClientCRC = CRC32::CalcFileCRC(aClientShellName);
-			
+#else
+			// CRC the shared library
+			uint32 nClientCRC = CRC32::CalcFileCRC("libclient.so");
+#endif			
 			// Mask that up too
 			nClientCRC ^= nXORMask;
 
@@ -933,7 +940,8 @@ bool ClientMultiplayerMgr::StartClient( )
 			break;
 
 		// Wait a sec and try again.
-		Sleep(1000);
+		std::chrono::seconds s{1};
+		std::this_thread::sleep_for(s);
 		nRetries--;
 	}
 

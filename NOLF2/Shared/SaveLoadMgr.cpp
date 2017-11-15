@@ -14,8 +14,8 @@
 // Includes...
 //
 
-#include "stdafx.h"
-#include "MsgIds.h"
+#include "StdAfx.h"
+#include "MsgIDs.h"
 #include "WinUtil.h"
 #include <time.h>
 #include "SaveLoadMgr.h"
