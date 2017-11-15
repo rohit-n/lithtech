@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ClientTrackedNodeContext.h"
 
 

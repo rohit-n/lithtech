@@ -10,22 +10,6 @@
 #define MAX_TAG_SIZE		(64)
 #define MAX_LINE_SIZE		(2048)
 
-#ifndef _MAX_DRIVE
-#define _MAX_DRIVE (1024)
-#endif
-#ifndef _MAX_EXT
-#define _MAX_EXT (1024)
-#endif
-#ifndef _MAX_DIR
-#define _MAX_DIR (4096)
-#endif
-#ifndef _MAX_PATH
-#define _MAX_PATH (4096)
-#endif
-#ifndef _MAX_FNAME
-#define _MAX_FNAME (4096)
-#endif
-
 typedef int (*FX_GETNUM)();
 typedef FX_REF (*FX_GETREF)(int);
 
@@ -174,6 +158,10 @@ bool CClientFXDB::Init(ILTClient* pLTClient)
 		// Ignore directorys... only look at files
 		if( pEntry->m_Type == TYPE_FILE )
 		{
+#ifndef _WIN32
+			const char *ext = split(std::string{pEntry->m_pFullFilename}, '.').back().c_str();
+			if( !stricmp("fxf", ext) )
+#else
 			char drive[_MAX_DRIVE];
 			char dir[_MAX_DIR];
 			char fname[_MAX_FNAME];
@@ -183,6 +171,7 @@ bool CClientFXDB::Init(ILTClient* pLTClient)
 
 			// Is this a ClientFx file?
 			if( !stricmp( ".fxf", ext ) )
+#endif
 			{
 				// Try and load it
 				if( !LoadFxGroups( pLTClient, pEntry->m_pFullFilename ) )

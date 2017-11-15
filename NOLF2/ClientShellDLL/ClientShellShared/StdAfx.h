@@ -28,6 +28,13 @@ typedef void* HWND;
 #define MAX_PATH 4096
 #endif 
 
+#include <string>
+#include <vector>
+
+// string split from RegMgr
+template <typename B>
+extern std::vector<std::basic_string<B>> split(const std::basic_string<B> &str, B sep);
+
 #endif // __LINUX
 
 #include <stdio.h>
