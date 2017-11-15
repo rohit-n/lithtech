@@ -423,5 +423,5 @@ bool GetVectorToLine( LTVector const &vLineStart,
 
 int CaseInsensitiveCompare(const void *entry1, const void *entry2)
 {
-    return _stricmp(*(char **)entry1,*(char **)entry2);
+    return stricmp(*(char **)entry1,*(char **)entry2);
 }

@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ClientWeapon.h"
 #include "VarTrack.h"
 #include "LayoutMgr.h"

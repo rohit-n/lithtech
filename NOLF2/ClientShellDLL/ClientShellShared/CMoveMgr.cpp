@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "iltclient.h"
 #include "iltphysics.h"
 #include "CMoveMgr.h"
@@ -1794,7 +1794,7 @@ void CMoveMgr::UpdatePlayerAnimation()
 {
 	HOBJECT hClientObj;
     uint32 modelAnim(0), curModelAnim(0), curFlags(0);
-	HRESULT result(LT_OK);
+	LTRESULT result(LT_OK);
 
 	if (!(hClientObj = g_pLTClient->GetClientObject())) return;
 
@@ -1805,7 +1805,7 @@ void CMoveMgr::UpdatePlayerAnimation()
 	// Make sure we are playing the animation corresponding to the dims...
 	if (m_pCharFX)
 	{
-		HRESULT result = g_pModelLT->GetCurAnim(m_pCharFX->GetServerObj(), m_pCharFX->m_cs.nDimsTracker, modelAnim);
+		LTRESULT result = g_pModelLT->GetCurAnim(m_pCharFX->GetServerObj(), m_pCharFX->m_cs.nDimsTracker, modelAnim);
 		//ASSERT(result == LT_OK);
 	}
 

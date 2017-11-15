@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "VarTrack.h"
 #include "InterfaceMgr.h"
 #include "CursorMgr.h"
@@ -324,7 +324,7 @@ void CCursorMgr::UseSprite(char * pFile)
 	while (iter != m_SpriteArray.end())
 	{
 		// If it is, then set it to "active"
-		if (!strcmpi(pFile, (*iter)->GetName()))
+		if (!stricmp(pFile, (*iter)->GetName()))
 		{
 			m_pCursorSprite = *iter;
 			m_pCursorSprite->Show(LTTRUE);
@@ -370,7 +370,7 @@ void CCursorMgr::UseSprite(CScreenSprite * pSprite)
 	while (iter != m_SpriteArray.end())
 	{
 		// If it is, then set it to "active"
-		if (!strcmpi((*iter)->GetName(), pSprite->GetName()))
+		if (!stricmp((*iter)->GetName(), pSprite->GetName()))
 		{
 			m_pCursorSprite = *iter;
 			m_pCursorSprite->SetCenter(m_CursorCenter);
@@ -423,7 +423,7 @@ void CCursorMgr::UseGlowSprite(char * pSpriteFile)
 	while (iter != m_SpriteArray.end())
 	{
 		// If it is, then set it to "active"
-		if (!strcmpi(pSpriteFile, (*iter)->GetName()))
+		if (!stricmp(pSpriteFile, (*iter)->GetName()))
 		{
 			m_pCursorGlowSprite = *iter;
 			m_pCursorGlowSprite->SetCenter(m_CursorCenter);
@@ -477,7 +477,7 @@ void CCursorMgr::UseBackgroundSprite(char * pSpriteFile)
 	while (iter != m_SpriteArray.end())
 	{
 		// If it is, then set it to "active"
-		if (!strcmpi(pSpriteFile, (*iter)->GetName()))
+		if (!stricmp(pSpriteFile, (*iter)->GetName()))
 		{
 			m_pCursorBackgroundSprite = *iter;
 			m_pCursorBackgroundSprite->SetCenter(m_CursorCenter);

@@ -3,12 +3,16 @@
 #define _STACK_WALK_H_
 
 #include <stdio.h>
+#ifdef _WIN32
+
 #include <Windows.h>
 #include <Winnt.h>
 #include <ImageHlp.h>
 #include <CrtDbg.h>
 
 #pragma comment (lib, "ImageHlp.lib")
+
+#endif
 
 #define	DEBUGMGR_RESOLVESYMBOLS		0x00000001
 #define	DEBUGMGR_UNMANGLESYMBOLS	0x00000002

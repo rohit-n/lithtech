@@ -19,8 +19,11 @@
 #include <windows.h>
 
 #else
+// stubdefs for silly win32 api stuff
 typedef void* HINSTANCE;
 typedef void* HWND;
+typedef void *HRSRC;
+typedef void *HGLOBAL;
 #define UINT uintptr_t
 #define WINAPI
 

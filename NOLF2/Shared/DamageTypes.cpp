@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "DamageTypes.h"
 
 DTINFO DTInfoArray[kNumDamageTypes] =

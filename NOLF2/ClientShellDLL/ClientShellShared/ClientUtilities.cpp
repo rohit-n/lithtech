@@ -131,7 +131,7 @@ void GetConsoleString(char const* sKey, char* sDest, char const* sDefault)
 char*  GetConsoleTempString(char const* sKey, char const* sDefault)
 {
 	static char szTmp[256];
-	szTmp[0] = NULL;
+	szTmp[0] = '\0';
     if (g_pLTClient)
 	{
         HCONSOLEVAR hVar = g_pLTClient->GetConsoleVar(( char* )sKey);
@@ -199,7 +199,7 @@ void WriteConsoleString(char const* sKey, char const* sValue)
     if (g_pLTClient)
 	{
 		char sTemp[256];
-#ifdef __PSX2
+#ifndef _WIN32
         sprintf(sTemp, "+%s \"%s\"", sKey, sValue);
 #else
         wsprintf(sTemp, "+%s \"%s\"", sKey, sValue);
@@ -213,7 +213,7 @@ void WriteConsoleInt(char const* sKey, int nValue)
     if (g_pLTClient)
 	{
 		char sTemp[256];
-#ifdef __PSX2
+#ifndef _WIN32
         sprintf(sTemp, "+%s %i", sKey, nValue);
 #else
 		wsprintf(sTemp, "+%s %i", sKey, nValue);
@@ -364,8 +364,11 @@ LTRESULT SendEmptyServerMsg(uint32 nMsgID, uint32 nFlags)
 	return nResult;
 }
 
+#ifndef _WIN32
 
+#define FormatMessage(a,b,c,d,e,f,g)
 
+#endif
 
 void FormatString(int messageCode, char *outBuf, int outBufLen,  ...)
 {

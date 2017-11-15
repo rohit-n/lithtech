@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // CRC-32 calculation routines
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "CRC32.h"
 #include "CommonUtilities.h"

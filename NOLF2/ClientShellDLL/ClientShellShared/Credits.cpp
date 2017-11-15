@@ -14,12 +14,15 @@
 
 // Includes...
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "GameClientShell.h"
 #include "Credits.h"
+#include "vkdefs.h"
 #include <stdio.h>
+#ifdef _WIN32
 #include <mbstring.h>
-
+#endif
+#include <sstream>
 // Macros...
 
 
@@ -44,7 +47,7 @@ namespace
 	char*	s_sBuf    = LTNULL;
 }
 
-static char* GetTextBuffer(char* sName);
+static char* GetTextBuffer(const char* sName);
 
 
 // Functions...
@@ -80,6 +83,16 @@ LTBOOL CCredit::Init(char* sBuf)
 	char sString[256];
 	int  i = 0;
 
+    std::stringstream stream{sBuf};
+
+	while(stream.getline(sString, 256))
+	{
+		std::string s{sString};
+		if(s.length() < 1)
+			continue;
+		AddString(sString);
+	}
+/*
 	while (*sBuf)
 	{
 		if ((*sBuf == '\n') || (*sBuf == '\r') || (*sBuf == '\0'))
@@ -103,7 +116,7 @@ LTBOOL CCredit::Init(char* sBuf)
 	}
 	sString[i] = '\0';
 	if (strlen(sString) > 0) AddString(sString);
-
+*/
 	// All done...
 	FormatStrings();
 
@@ -150,7 +163,7 @@ LTBOOL CCredit::AddString(char* sString)
 
 	if (strncmp(sString, ">TIME:", 6) == 0)
 	{
-		if (_mbstrlen(sString) > 6)
+		if (strlen(sString) > 6)
 		{
 			m_fHoldTime = (float)atof(&sString[6]);
 			return(LTTRUE);
@@ -874,7 +887,7 @@ void CCredits::AddCredits()
 
 	// Get the credits text buffer...
 
-	char* sName = NULL;
+	const char* sName = NULL;
 
 	switch (GetMode())
 	{
@@ -953,11 +966,16 @@ CCredit* CCredits::GetCredit(uint16 iCredit)
 	return(m_Credits[iCredit]);
 }
 
+#ifndef _WIN32
+// stub... just because I need to figure out the correct way to handle this on unix
+#define FindResource(a,b,c) (nullptr)
+#define LoadResource(a,b) (nullptr)
+#define LockResource(a) (nullptr)
 
-
+#endif
 // Functions...
 
-char* GetTextBuffer(char* sName)
+char* GetTextBuffer(const char* sName)
 {
 	//if (s_sBuf)
 	//{
