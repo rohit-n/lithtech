@@ -41,7 +41,7 @@ ClientFXBank* g_pCLIENTFX_INSTANCE_Bank = NULL;
 
 float GetSystemFrameTime(uint32 nTimeBase, uint32& nPrevTime)
 {
-	uint32 nCurrTime = GetTickCount() - nTimeBase;
+	uint32 nCurrTime = SDL_GetTicks() - nTimeBase;
 	float fElapsed = (nCurrTime - nPrevTime) / 1000.0f;
 	nPrevTime = nCurrTime;
 
@@ -287,7 +287,7 @@ CClientFXMgr::CClientFXMgr()
 	m_dDetailDistSqr[FXLOD_MED]	= FXLOD_DIST_MED * FXLOD_DIST_MED;
 	m_dDetailDistSqr[FXLOD_HIGH]	= FXLOD_DIST_HIGH * FXLOD_DIST_HIGH;
 	m_nPrevSystemTime	= 0;
-	m_nSystemTimeBase	= GetTickCount();
+	m_nSystemTimeBase	= SDL_GetTicks();
 	m_bPaused			= false;
 	m_bGoreEnabled		= true;
 	m_hCamera			= NULL;

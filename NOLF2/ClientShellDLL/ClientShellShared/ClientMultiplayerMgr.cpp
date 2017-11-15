@@ -16,7 +16,7 @@
 #include "MsgIDs.h"
 #include "CharacterFX.h"
 #include "CMoveMgr.h"
-#include "iserverdir.h"
+#include "IServerDir.h"
 #include "MissionMgr.h"
 #include "MissionButeMgr.h"
 #include "InterfaceMgr.h"
