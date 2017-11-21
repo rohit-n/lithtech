@@ -56,6 +56,7 @@ CCursorMgr::~CCursorMgr()
 //	PURPOSE:	Init the cursor
 //
 // ----------------------------------------------------------------------- //
+#define MAKEINTRESOURCE(x) "pointer.pcx"
 
 LTBOOL CCursorMgr::Init()
 {

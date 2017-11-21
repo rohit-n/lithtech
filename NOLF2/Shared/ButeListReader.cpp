@@ -27,8 +27,8 @@ char CButeListReader::ms_aAttName[100];
 
 CButeListReader::CButeListReader()
 {
-	m_cItems	= 0;
-	m_szItems	= '\0';
+	m_cItems  = 0;
+	m_szItems = nullptr;
 }
 
 // ----------------------------------------------------------------------- //

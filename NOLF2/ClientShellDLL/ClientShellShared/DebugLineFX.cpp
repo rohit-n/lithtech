@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "DebugLineFX.h"
 #include "ClientUtilities.h"
 #include "MsgIDs.h"
