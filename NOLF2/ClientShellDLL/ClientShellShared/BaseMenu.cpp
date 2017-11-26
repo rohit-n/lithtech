@@ -211,7 +211,7 @@ LTBOOL CBaseMenu::Init()
 	m_List.UseArrows(nOffset ,1.0f,s_Up,s_UpH,s_Down,s_DownH);
 	CLTGUIWindow::AddControl(&m_List,pos);
 
-	m_Resume.Create(LoadTempString(IDS_RESUME),MC_CLOSE,NULL,pFont,m_TitleFontSize,this);
+	m_Resume.Create(LoadTempString(IDS_RESUME),MC_CLOSE,0,pFont,m_TitleFontSize,this);
 
 	pos.x = s_Size.x - m_Indent.x - m_Resume.GetWidth();
 	pos.y = 12;

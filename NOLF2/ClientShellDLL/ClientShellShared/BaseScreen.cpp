@@ -57,7 +57,7 @@ namespace
 	float fEditDelta = 1.0f;
 }
 
-void EditFXFn(int argc, char **argv)
+void EditFXFn(int argc,const char **argv)
 {
 	if(argc != 1)
 	{
@@ -240,7 +240,7 @@ LTBOOL CBaseScreen::Init(int nScreenID)
 		uint8 nSize = (uint8)((LTFLOAT)s_HelpSize * g_pInterfaceResMgr->GetXRatio());
 
 		CUIFont* pFont = g_pInterfaceResMgr->GetFont(nFont);
-		s_pHelpStr = g_pFontManager->CreateFormattedPolyString(pFont,"",helpX,helpY);
+		s_pHelpStr = g_pFontManager->CreateFormattedPolyString(pFont,"",helpX, helpY);
 		s_pHelpStr->SetCharScreenHeight(nSize);
 		s_pHelpStr->SetColor(argbWhite);
 		s_pHelpStr->SetWrapWidth(nWidth);

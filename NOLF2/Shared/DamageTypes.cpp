@@ -179,7 +179,7 @@ DamageType StringToDamageType(const char* pDTName)
 	for (int i=0; i < kNumDamageTypes; i++)
 	{
 		// Check if it matches the main name.
-		if (_stricmp(DTInfoArray[i].pName, pDTName) == 0)
+		if (stricmp(DTInfoArray[i].pName, pDTName) == 0)
 		{
 			return DTInfoArray[i].eType;
 		}
@@ -187,7 +187,7 @@ DamageType StringToDamageType(const char* pDTName)
 		// Check if it matches the alternate name.  This is just
 		// used for backwards compatibility with some levels processed
 		// with the old names to damagetypes in the VolumeBrush's.
-		if( DTInfoArray[i].pAltName && _stricmp( DTInfoArray[i].pAltName, pDTName ) == 0 )
+		if( DTInfoArray[i].pAltName && stricmp( DTInfoArray[i].pAltName, pDTName ) == 0 )
 		{
 			return DTInfoArray[i].eType;
 		}

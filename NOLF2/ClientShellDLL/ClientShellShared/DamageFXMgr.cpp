@@ -238,7 +238,7 @@ DAMAGEFX *CDamageFXMgr::GetDamageFX( char *pName )
 
 	while( pCur )
 	{
-		if( *pCur && (*pCur)->m_szName[0] && (!_stricmp( (*pCur)->m_szName, pName )) )
+		if( *pCur && (*pCur)->m_szName[0] && (!stricmp( (*pCur)->m_szName, pName )) )
 		{
 			return *pCur;
 		}
@@ -495,7 +495,7 @@ bool CDamageFXMgr::OnModelKey( HLOCALOBJ hObj, ArgList *pArgs )
 {
 	if (!hObj || !pArgs || !pArgs->argv || pArgs->argc == 0) return false;
 
-	char* pKey = pArgs->argv[0];
+	const char* pKey = pArgs->argv[0];
 	if (!pKey) return false;
 
 	if( stricmp( pKey, KEY_DAMAGEFX ) == 0 )
@@ -1066,9 +1066,14 @@ void DAMAGEFX::Update( float fElapsedTime )
 
 	{
 		bool bForce = ( !m_bActive && !m_bUpdateSoundAndVisuals && !m_bFade);
-		g_pDamageFXMgr->SetDamageFXTintColor( UpdateTintColor(), bForce );
-		g_pDamageFXMgr->SetDamageFXLightScale( UpdateLightScale(), bForce );
-
+		{
+			auto tint = UpdateTintColor();
+			g_pDamageFXMgr->SetDamageFXTintColor( tint, bForce );
+		}
+		{
+			auto scale = UpdateLightScale();
+			g_pDamageFXMgr->SetDamageFXLightScale( scale, bForce );
+		}
 		fFovX += m_fFOVXOffset * m_fMoveMult;
 		fFovY += m_fFOVYOffset * m_fMoveMult;
 

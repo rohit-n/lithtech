@@ -182,24 +182,24 @@
 												memset(this, 0, sizeof(CLIENTFX_CREATESTRUCT));
 											}
 
-											CLIENTFX_CREATESTRUCT(const char *sName, uint32 dwFlags, LTVector &vPos)
+											CLIENTFX_CREATESTRUCT(const char *sName, uint32 dwFlags, const LTVector &vPos)
 											{
 												memset(this, 0, sizeof(CLIENTFX_CREATESTRUCT));
 
 												LTStrCpy(m_sName, sName, sizeof(m_sName));
 												m_dwFlags    = dwFlags;
-												m_vPos       = vPos;
+												m_vPos       = LTVector{vPos};
 												m_rRot.Init();
 											}
 
-											CLIENTFX_CREATESTRUCT(const char *sName, uint32 dwFlags, LTVector &vPos, LTRotation &rRot)
+											CLIENTFX_CREATESTRUCT(const char *sName, uint32 dwFlags,const LTVector &vPos,const LTRotation &rRot)
 											{
 												memset(this, 0, sizeof(CLIENTFX_CREATESTRUCT));
 
 												LTStrCpy(m_sName, sName, sizeof(m_sName));
 												m_dwFlags    = dwFlags;
-												m_vPos       = vPos;
-												m_rRot		 = rRot;
+												m_vPos       = LTVector{vPos};
+												m_rRot       = LTRotation{rRot};
 											}
 
 											CLIENTFX_CREATESTRUCT(const char *sName, uint32 dwFlags, HOBJECT hParent)
