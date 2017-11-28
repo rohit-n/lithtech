@@ -57,6 +57,7 @@ There's a few options to maybe get the entirety of NOLF2 working with this code:
 
 Builds on linux
 ---------------
+[![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
 - [x] Target rules for targets named Lib_ZLib
 - [x] Target rules for targets named Lib_Lith
 - [x] Target rules for targets named Lib_StdLith
@@ -78,7 +79,7 @@ Builds on linux
 - [x] Target rules for targets named NOLF2_ClientRes
 - [ ] Target rules for targets named NOLF2_ClientShellDLL
 - [ ] Target rules for targets named NOLF2_ObjectDLL
-- [ ] Target rules for targets named NOLF2_ServerRes
+- [x] Target rules for targets named NOLF2_ServerRes
 - [ ] Target rules for targets named FEAR_ClientFXDLL
 - [ ] Target rules for targets named FEAR_ClientShellDLL
 - [x] Target rules for targets named Test_RegMgr
