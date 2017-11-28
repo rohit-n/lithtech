@@ -32,6 +32,7 @@ if(WIN32)
 	add_definitions(-D_WINDOWS)
 else(WIN32)
 	add_definitions(-D_LINUX -D__LINUX)
+	set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
 endif(WIN32)
 
 if(MSVC)

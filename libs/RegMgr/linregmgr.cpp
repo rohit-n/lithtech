@@ -230,10 +230,10 @@ DWORD CRegMgr::Get(const char* sKey, DWORD nDef){
 void* CRegMgr::Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef, UINT32 nDefSize){
     if(m_hRootKey.HasMember(sKey) ){ 
         if(m_hRootKey[sKey].IsObject() && m_hRootKey[sKey].HasMember("base64")) {
-            if(!b64dec(std::string{m_hRootKey[sKey]["base64"].GetString()},pBuf,nBufSize))
-                return nullptr;
-            return pBuf;
+            if(b64dec(std::string{m_hRootKey[sKey]["base64"].GetString()},pBuf,nBufSize))
+                return pBuf;
         }
+        return nullptr;
     } else {
         Set(sKey, pDef, nDefSize);
         return Get(sKey, pBuf, nBufSize);
