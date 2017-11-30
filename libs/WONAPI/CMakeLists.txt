@@ -31,6 +31,5 @@ include_directories(.
 	WONUpdate)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS -std=c++11 ${CMAKE_CXX_FLAGS})
-	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
+    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
 endif(CMAKE_COMPILER_IS_GNUCXX)

@@ -14,9 +14,4 @@ set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME testRegMgr)
 target_link_libraries(${PROJECT_NAME} ${libs})
 
-
-if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS -std=c++11 ${CMAKE_CXX_FLAGS})
-endif(CMAKE_COMPILER_IS_GNUCXX)
-
 # add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ../../OUT/testRegMgr)
