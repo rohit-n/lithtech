@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.1)
 project (FEAR_ClientShellDLL)
 
 add_library (${PROJECT_NAME} SHARED
@@ -235,7 +235,11 @@ add_library (${PROJECT_NAME} SHARED
 	ServerBrowserCtrl.cpp)
 set_target_properties(${PROJECT_NAME} 
 	PROPERTIES OUTPUT_NAME CShell)
+
+if(MSVC)
 add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CLIENTBUILD -DMEMTRACK_CLIENT)
+endif(MSVC)
+
 include_directories (../Shared 
 	../../sdk/inc
 	../../libs/MFCStub
@@ -244,7 +248,7 @@ include_directories (../Shared
 	../../libs/CryptMgr
 	../../libs/WONAPI
 	../../libs/lith
-	#../libs/RegMgr
+	../libs/RegMgr
 	../Libs/LTGUIMgr
 	#../Libs/ServerDir
 	../ClientRes
@@ -255,7 +259,7 @@ target_link_libraries(${PROJECT_NAME}
 	ButeMgr
 	CryptMgr
 	Lib_Lith
-	#RegMgr
+	RegMgr
 	LTGUIMgr
 	LIB_WONAPI
 	#ServerDir
