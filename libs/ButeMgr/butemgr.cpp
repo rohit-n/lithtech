@@ -624,7 +624,7 @@ void CButeMgr::DisplayMessage(const char* szMsg, ...)
 	va_start(v, szMsg);
 	char aMsgBuffer[2048];
 	vsnprintf(aMsgBuffer, sizeof(aMsgBuffer), szMsg, v);
-	m_sErrorString.Format("ButeMgr (%s, %d):  %s", m_sAttributeFilename, m_lineNumber, aMsgBuffer);
+	m_sErrorString.Format("ButeMgr (%s, %d):  %s", m_sAttributeFilename.GetBuffer(), m_lineNumber, aMsgBuffer);
 
 //	TRACE("%s\n", (m_sErrorString.GetBuffer(0)));
 	if (m_pDisplayFunc)

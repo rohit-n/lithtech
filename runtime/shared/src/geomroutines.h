@@ -333,7 +333,7 @@ uintptr_t g_LocatePointInTree( M *pWorld, TVector3<F> &point, uintptr_t iRoot )
 		side = (dot > 0.0f) ? FrontSide : BackSide;
 
 		if( pRoot->m_Sides[side] != nullptr )
-			iRoot = pRoot->m_Sides[side];
+			iRoot = (uintptr_t)pRoot->m_Sides[side];
 		else
 			return (side == FrontSide) ? iRoot : (uintptr_t)NODE_OUT;
 	}

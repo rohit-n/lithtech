@@ -29,8 +29,7 @@
 #include "version_info.h"
 #endif
 
-#include <stdarg.h>
-
+#include <cstdarg>
 
 #include <SDL.h>
 
