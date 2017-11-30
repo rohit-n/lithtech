@@ -319,7 +319,7 @@ T* g_IntersectRay( T *pRoot, TVector3<F> &pt, TVector3<F> &dir, F &t, TVector3<F
 // ----------------------------------------------------------------------- //
 
 template<class M, class F>
-int g_LocatePointInTree( M *pWorld, TVector3<F> &point, int iRoot )
+uintptr_t g_LocatePointInTree( M *pWorld, TVector3<F> &point, uintptr_t iRoot )
 {
 	F			dot;
 	CNode		*pRoot;
@@ -332,10 +332,10 @@ int g_LocatePointInTree( M *pWorld, TVector3<F> &point, int iRoot )
 
 		side = (dot > 0.0f) ? FrontSide : BackSide;
 
-		if( pRoot->m_Sides[side] >= 0 )
+		if( pRoot->m_Sides[side] != nullptr )
 			iRoot = pRoot->m_Sides[side];
 		else
-			return (side == FrontSide) ? iRoot : (int)NODE_OUT;
+			return (side == FrontSide) ? iRoot : (uintptr_t)NODE_OUT;
 	}
 }
 
