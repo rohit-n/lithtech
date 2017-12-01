@@ -9,10 +9,10 @@ include_directories(../../sdk/inc
 	../../NOLF2/ClientRes/Shared)
 set(libs LIB_WONAPI)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -fPIC")
 	set(libs pthread ${libs})
-endif(CMAKE_COMPILER_IS_GNUCXX)
+endif(LINUX)
 
 target_link_libraries(${PROJECT_NAME}
 	${libs})

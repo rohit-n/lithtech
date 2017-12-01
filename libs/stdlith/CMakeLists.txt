@@ -16,9 +16,9 @@ add_library(${PROJECT_NAME} STATIC
 	zfstream.cpp)
 
 include_directories(../zlib)
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
-endif(CMAKE_COMPILER_IS_GNUCXX)
+endif(LINUX)
 
 target_link_libraries(${PROJECT_NAME}
 	LIB_ZLib)

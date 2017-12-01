@@ -329,6 +329,6 @@ set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME Lithtech)
 target_link_libraries(${PROJECT_NAME} ${libs})
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-g -fpermissive")
-endif(CMAKE_COMPILER_IS_GNUCXX)
+endif(LINUX)

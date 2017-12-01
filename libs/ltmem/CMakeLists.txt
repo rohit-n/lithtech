@@ -15,6 +15,6 @@ include_directories(../../sdk/inc
 	../../runtime/kernel/mem/src
 	/usr/include/SDL2)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -fPIC")
-endif(CMAKE_COMPILER_IS_GNUCXX)
+endif(LINUX)

@@ -1,5 +1,10 @@
 # FIXME: Looks like the code in Engine/clientfx is newer
 project(NOLF2_ClientFXDLL)
+cmake_minimum_required(VERSION 3.1)
+
+include(FindPkgConfig)
+
+pkg_check_modules(SDL2 REQUIRED sdl2)
 
 add_library(${PROJECT_NAME} SHARED
 	BaseFx.cpp
@@ -37,11 +42,9 @@ add_definitions(-DNOPS2 -DMEMTRACK_CLIENTFX)
 include_directories(../Shared
 	../../sdk/inc
 	../../libs/MFCStub
+	${SDL2_INCLUDE_DIRS}
 	../../libs/stdlith)
-if(UNIX)
-  include_directories(/usr/include/SDL2)
-endif()
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fPIC -fpermissive")
-endif(CMAKE_COMPILER_IS_GNUCXX)
+endif(LINUX)
