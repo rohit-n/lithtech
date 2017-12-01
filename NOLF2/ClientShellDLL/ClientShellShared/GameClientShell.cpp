@@ -15,8 +15,8 @@
 #include "InterfaceMgr.h"
 #include "PlayerMgr.h"
 #include "AssertMgr.h"
-#include "MsgIds.h"
-#include "CommandIds.h"
+#include "MsgIDs.h"
+#include "CommandIDs.h"
 #include "ClientUtilities.h"
 #include "vkdefs.h"
 #include "ClientResShared.h"
@@ -54,7 +54,10 @@
 #include "PerformanceTest.h"
 #include "ScmdConsole.h"
 #include "ScmdConsoleDriver_CShell.h"
+
+#ifndef __LINUX
 #include "mmsystem.h"
+#endif
 
 #ifdef STRICT
 	WNDPROC g_pfnMainWndProc = NULL;

@@ -26,7 +26,7 @@
 #ifndef __LINUX
 #define isnan _isnan
 #else
-using std::isnan;
+#define isnan std::isnan
 #endif
 /*
 	BASIC COLLISION ALGORITHM

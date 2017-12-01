@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "GlobalMgr.h"
 #include "WeaponMgr.h"
 #include "ModelButeMgr.h"

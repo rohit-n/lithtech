@@ -1,7 +1,7 @@
 #if !defined(_CRYPTMGR_H_)
 #define _CRYPTMGR_H_
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300 || defined(__LINUX)
 #	include <iostream>
 #else
 #	include <iostream.h>

@@ -788,7 +788,7 @@ void CGibFX::CreateMiniBloodExplosion(int nIndex)
     uint8 nDetailLevel = pSettings->SpecialFXSetting();
 	if (nDetailLevel == RS_LOW) return;
 
-	char* szBlood[2] = { "SpecialFX\\ParticleTextures\\Blood_1.dtx",
+	const char* szBlood[2] = { "SpecialFX\\ParticleTextures\\Blood_1.dtx",
 					     "SpecialFX\\ParticleTextures\\Blood_2.dtx" };
 
 	PARTICLESHOWERCREATESTRUCT ps;

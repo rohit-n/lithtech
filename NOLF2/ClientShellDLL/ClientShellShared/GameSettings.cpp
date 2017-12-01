@@ -11,8 +11,10 @@
 #include "GameClientShell.h"
 #include "iltclient.h"
 #include "GameSettings.h"
-#include "stdio.h"
-#include "windows.h"
+#include <stdio.h>
+#ifndef __LINUX
+#include <windows.h>
+#endif
 #include "GameClientShell.h"
 #include "VarTrack.h"
 

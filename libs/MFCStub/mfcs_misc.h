@@ -24,7 +24,7 @@ inline void MFCStubTrace(const char *pFormat, ...)
 #ifdef _MSC_VER
 #define TRACE __noop
 #else
-#define TRACE (void)0
+#define TRACE(...)
 #endif
 #endif
 

@@ -134,7 +134,7 @@ inline bool UseThisObject(LTObject* pServerObj,
 	return true;
 }
 
-inline bool i_BoundingBoxTest(const LTVector& Point1, const LTVector& Point2, const LTObject *pServerObj, 
+bool i_BoundingBoxTest(const LTVector& Point1, const LTVector& Point2, const LTObject *pServerObj, 
     LTVector *pIntersectPt, LTPlane *pIntersectPlane)
 {
     float t;

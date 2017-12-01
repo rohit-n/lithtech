@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "GameButeMgr.h"
 
 #define BUTE_DEBUG_LEVEL		5
@@ -194,7 +194,7 @@ LTBOOL CGameButeMgr::Parse(const char* sButeFile)
 
 	if (!bRet)
 	{
-		TRACE("ERROR CGameButeMgr::Parse() (%s)!\n", sButeFile);
+		TRACE("ERROR CGameButeMgr::Parse() (%s)!\n", sButeFile.GetBuffer());
 		return(FALSE);
 	}
 
