@@ -23,9 +23,9 @@
 #include "world_blocker_math.h"
 #include "iltphysics.h"
 
-#ifdef _WIN32
+#ifndef __LINUX
 #define isnan _isnan
-#elif GCC_VERSION < 50401
+#else
 using std::isnan;
 #endif
 /*

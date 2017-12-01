@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // Game implementation of the standard allocator
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <stdlib.h>
 
 void* DefStdlithAlloc(uint32 size) 

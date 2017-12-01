@@ -83,7 +83,7 @@ LTBOOL CDTButeMgr::Init(const char* szAttributeFile)
 			if( !m_buteMgr.Success( ))
 				break;
 
-			DTInfoArray[i].saPlayerDamageSounds.push_back( sDamageSound );
+			DTInfoArray[i].saPlayerDamageSounds.Push( sDamageSound.c_str() );
 		}
 	}
 	return LTTRUE;

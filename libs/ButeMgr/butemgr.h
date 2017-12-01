@@ -21,7 +21,7 @@
 #include <map>
 #include <set>
 #include <functional>
-#ifndef __GNUC__
+#ifndef __LINUX
 #include <hash_set>
 #include <hash_map>
 #endif
@@ -29,7 +29,7 @@
 #	include <iosfwd>
 #	include <strstream>
 #	include <iostream>
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
 #   include <unordered_set>
 #   include <unordered_map>
 #   include <string>

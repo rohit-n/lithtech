@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "StdAfx.h"
 	#include "MsgIDs.h"
 	#include "GadgetTargetTypes.h"
 	#include "GadgetDisabler.h"
@@ -189,7 +189,7 @@ void CGadgetDisabler::Update( )
 					m_szCodedText[i] = pBody[i];
 				}
 			}
-			m_szCodedText[i] = NULL;
+			m_szCodedText[i] = '\0';
 
 			g_pPopup->Show( 2, m_szCodedText );
 		}

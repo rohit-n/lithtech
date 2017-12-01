@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "Stdafx.h"
+#include "StdAfx.h"
 #include "FXButeMgr.h"
 #include "WeaponFXTypes.h"
 #include "CommonUtilities.h"
@@ -1049,7 +1049,7 @@ CScaleFX* CFXButeMgr::GetScaleFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1103,7 +1103,7 @@ CPShowerFX* CFXButeMgr::GetPShowerFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1157,7 +1157,7 @@ CPolyDebrisFX* CFXButeMgr::GetPolyDebrisFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1213,7 +1213,7 @@ PROJECTILEFX* CFXButeMgr::GetProjectileFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1242,7 +1242,7 @@ PROJECTILECLASSDATA* CFXButeMgr::GetProjectileClassData(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1298,7 +1298,7 @@ IMPACTFX* CFXButeMgr::GetImpactFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1354,7 +1354,7 @@ FIREFX* CFXButeMgr::GetFireFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1410,7 +1410,7 @@ PEXPLFX* CFXButeMgr::GetPExplFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1466,7 +1466,7 @@ DLIGHTFX* CFXButeMgr::GetDLightFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1522,7 +1522,7 @@ SOUNDFX* CFXButeMgr::GetSoundFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1578,7 +1578,7 @@ PUSHERFX* CFXButeMgr::GetPusherFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1634,7 +1634,7 @@ PVFX* CFXButeMgr::GetPVFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1691,7 +1691,7 @@ CParticleMuzzleFX* CFXButeMgr::GetParticleMuzzleFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1748,7 +1748,7 @@ CMuzzleFX* CFXButeMgr::GetMuzzleFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1804,7 +1804,7 @@ TRACERFX* CFXButeMgr::GetTracerFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1860,7 +1860,7 @@ BEAMFX* CFXButeMgr::GetBeamFX(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}
@@ -1918,7 +1918,7 @@ SPRINKLEFX* CFXButeMgr::GetSprinkleFX( char *pName )
 
 	while( pCur )
 	{
-		if( *pCur && (*pCur)->szName[0] && ( !_stricmp( (*pCur)->szName, pName ) ))
+		if( *pCur && (*pCur)->szName[0] && ( !stricmp( (*pCur)->szName, pName ) ))
 		{
 			return *pCur;
 		}

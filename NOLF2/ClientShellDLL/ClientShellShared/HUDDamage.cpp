@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "HUDMgr.h"
 #include "PlayerStats.h"
 #include "DamageFxMgr.h"
