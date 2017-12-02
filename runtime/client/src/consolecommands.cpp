@@ -130,7 +130,7 @@ static void con_BlastServer(int argc, const char *argv[])
 	}
 
 
-#endif	
+#endif
 }
 
 
@@ -160,7 +160,7 @@ static void con_DoWorldCommand(const char *pWorldName, const char *pRecordFilena
 	const char* pWorldNameExtension = ".dat";
 
 	// Add the filename extension if needed
-	if (pWorldName[strlen(pWorldName)-4] != '.') 
+	if (pWorldName[strlen(pWorldName)-4] != '.')
 	{
 		LTSNPrintF(testName, sizeof(testName), "%s%s", pWorldName, pWorldNameExtension);
 	}
@@ -181,7 +181,7 @@ static void con_DoWorldCommand(const char *pWorldName, const char *pRecordFilena
 		/*
 		// Retry, prepending the worlds folder name first
 		// Add the filename extension if needed
-		if (pWorldName[strlen(pWorldName)-4] != '.') 
+		if (pWorldName[strlen(pWorldName)-4] != '.')
 		{
 			sprintf(testName, "worlds\\%s%s", pWorldName, pWorldNameExtension);
 		}
@@ -259,7 +259,7 @@ static void con_EnableDevice(int argc, const char *argv[])
 static void con_Bind( int argc, const char *argv[] )
 {
 	int i;
-	
+
 	if( argc >= 2 )
 	{
 		INPUTMGR->ClearBindings(INPUTMGR, argv[0], argv[1]);
@@ -280,7 +280,7 @@ static void con_Bind( int argc, const char *argv[] )
 static void con_RangeBind( int argc, const char *argv[] )
 {
 	int i, nActions;
-	
+
 	if( argc >= 4 )
 	{
 		INPUTMGR->ClearBindings(INPUTMGR, argv[0], argv[1]);
@@ -288,7 +288,7 @@ static void con_RangeBind( int argc, const char *argv[] )
 		nActions = (argc - 2) / 3;
 		for(i=0; i < nActions; i++)
 		{
-			if(!INPUTMGR->AddBinding(INPUTMGR, argv[0], argv[1], 
+			if(!INPUTMGR->AddBinding(INPUTMGR, argv[0], argv[1],
 				argv[i*3+4], (float)atof(argv[i*3+2]), (float)atof(argv[i*3+3])))
 			{
 				con_Printf(CONRGB(255,255,255), 1, "Error binding device: %s, trigger: %s",
@@ -316,7 +316,7 @@ static void con_RangeScale( int argc, const char *argv[] )
 {
 	if( argc >= 5 )
 	{
-		if( !INPUTMGR->ScaleTrigger(INPUTMGR, argv[0], argv[1], (float)atof(argv[2]), 
+		if( !INPUTMGR->ScaleTrigger(INPUTMGR, argv[0], argv[1], (float)atof(argv[2]),
 				(float)atof(argv[3]), (float)atof(argv[4]), (float)atof(argv[5]) ))
 			con_Printf( CONRGB(255,255,255), 1, "Error finding device: %s, trigger: %s",
 				argv[0], argv[1] );
@@ -384,7 +384,7 @@ static void con_RestartRender(int argc, const char *argv[])
 		LTSNPrintF(str, sizeof(str), "renderDLL %s", argv[0]);
 		c_CommandHandler(str);
 	}
-		
+
 	r_TermRender(1, false);
 
  	if((dResult = g_pClientMgr->StartRenderFromGlobals()) != LT_OK)
@@ -409,14 +409,14 @@ static void con_ResizeScreen(int argc, const char *argv[])
 		g_ScreenHeight = atoi(argv[1]);
 
 		con_Printf(CONRGB(0,255,0), 1, "Setting screen to %dx%d", g_ScreenWidth, g_ScreenHeight);
-		
+
 		r_TermRender(1, false);
-		
+
 		if(g_pClientMgr->StartRenderFromGlobals() != LT_OK)
 		{
 			g_ScreenWidth = oldScreenWidth;
 			g_ScreenHeight = oldScreenHeight;
-	
+
 			if((dResult = g_pClientMgr->StartRenderFromGlobals()) != LT_OK)
 			{
 				g_pClientMgr->ProcessError(dResult | ERROR_SHUTDOWN);
@@ -563,7 +563,7 @@ static void con_ConsoleHistory(int argc, const char *argv[])
 		const char *pLine = pHistory->Get();
 		if ( !pLine )
 			break;
-		
+
 		dsi_ConsolePrint( (char *)pLine );
 		iCount++;
 	} while ( pHistory->Next() );
@@ -653,7 +653,7 @@ static void con_ReadHistory(int argc, const char *argv[])
 	while ( !feof( fInput ) )
 	{
 		// Read a line from the file
-		if ( fgets( aBuffer, MAX_CONSOLE_TEXTLEN, fInput ) > 0 )
+		if ( fgets( aBuffer, MAX_CONSOLE_TEXTLEN, fInput ) != nullptr )
 		{
 			int iLength = (int)strlen( aBuffer );
 			// Remove trailing newlines
@@ -668,7 +668,7 @@ static void con_ReadHistory(int argc, const char *argv[])
 			pHistory->Add( aBuffer );
 			iCount++;
 		}
-	} 
+	}
 
 	// Close the file
 	fclose( fInput );
@@ -698,14 +698,14 @@ static void con_ShowVersionInfo(int argc, const char *argv[])
 {
 	// Sanity checks
 	IFBREAKRETURN(ilt_client == NULL);
-	if (ilt_client->GetVersionInfoExt == NULL ) return; 
+	if (ilt_client->GetVersionInfoExt == NULL ) return;
 
 	LTVERSIONINFOEXT info;
 
 	// Initialize our structure
 	memset(&info, 0, sizeof(LTVERSIONINFOEXT));
 	info.m_dwSize = sizeof(LTVERSIONINFOEXT);
-	
+
 	// Get the actual information
 	LTRESULT ltResult = ilt_client->GetVersionInfoExt(&info);
 
@@ -872,7 +872,7 @@ static LTCommandStruct g_LTCommandStructs[] =
 	"MoveConsole", con_MoveConsole, 0,
 	"Mem", LTMemConsole, 0,
 	"ShowTicks", con_ShowTicks, 0,
-};	
+};
 
 #define NUM_COMMANDSTRUCTS	(sizeof(g_LTCommandStructs) / sizeof(LTCommandStruct))
 
@@ -905,7 +905,7 @@ static void con_Set(int argc, const char *argv[])
 		hElement = hs_GetNextElement(hIterator);
 		if( !hElement )
 			continue;
-		
+
 		pCurVar = ( LTCommandVar * )hs_GetElementUserData( hElement );
 		cc_PrintVarDescription(&g_ClientConsoleState, pCurVar);
 	}
@@ -932,7 +932,7 @@ void c_InitConsoleCommands()
 	g_ClientConsoleState.m_nCommandStructs = NUM_COMMANDSTRUCTS;
 
 	g_ClientConsoleState.ConsolePrint = con_WhitePrintf;
-	
+
 	g_ClientConsoleState.Alloc = dalloc;
 	g_ClientConsoleState.Free = dfree;
 
@@ -952,7 +952,7 @@ void c_TermConsoleCommands()
 void c_CommandHandler(const char *pCommand)
 {
 	cc_HandleCommand(&g_ClientConsoleState, pCommand);
-}	
+}
 
 
 
@@ -1009,7 +1009,7 @@ bool CClientConIterator::NextItem()
 			}
 
 			// find the next variable
-			do { 
+			do {
 				m_hCurVar = hs_GetNextElement(m_hVarIndex);
 			} while ( m_hVarIndex && !m_hCurVar );
 

@@ -14,7 +14,7 @@
 #ifdef _WIN32
 #define isnan _isnan
 #elif GCC_VERSION < 50401
-using std::isnan;
+#define isnan std::isnan
 #endif
 
 
@@ -106,8 +106,8 @@ bool CPlayerMover::ShouldTouchObject(const LTObject *pObj, bool bSolid) const
 void CPlayerMover::CalculateLineCylinderIntersect(
 		const LTVector &vBase,
 		float fHeight,
-		const LTVector &vStart, 
-		const LTVector &vEnd, 
+		const LTVector &vStart,
+		const LTVector &vEnd,
 		SCollideResult *pResult) const
 {
 	// Get the edge extents
@@ -159,7 +159,7 @@ void CPlayerMover::CalculateLineCylinderIntersect(
 		float fDistSqr = (vIntersectOfs.x * vIntersectOfs.x) + (vIntersectOfs.z * vIntersectOfs.z);
 		if (fDistSqr >= m_fPlayerRadius * m_fPlayerRadius)
 			return;
-		
+
 		// Return the end-cap result
 		pResult->m_bCollision = true;
 		pResult->m_fTime = fIntersectTime;
@@ -170,8 +170,8 @@ void CPlayerMover::CalculateLineCylinderIntersect(
 }
 
 bool CPlayerMover::DoesLineIntersectCircle(
-		const LTVector &vCenter, 
-		const LTVector &vStart, 
+		const LTVector &vCenter,
+		const LTVector &vStart,
 		const LTVector &vEnd,
 		float *pTime) const
 {
@@ -238,7 +238,7 @@ bool CPlayerMover::DoesLineIntersectCircle(
 bool CPlayerMover::DoesLineIntersectCylinder(
 		const LTVector &vBase,
 		float fHeight,
-		const LTVector &vStart, 
+		const LTVector &vStart,
 		const LTVector &vEnd) const
 {
 	// Get the edge extents
@@ -293,9 +293,9 @@ bool CPlayerMover::DoesLineIntersectCylinder(
 }
 
 void CPlayerMover::CalculateLineCircleIntersect(
-		const LTVector &vCenter, 
-		const LTVector &vStart, 
-		const LTVector &vEnd, 
+		const LTVector &vCenter,
+		const LTVector &vStart,
+		const LTVector &vEnd,
 		SCollideResult *pResult) const
 {
 	// Pre-calculate some information
@@ -402,11 +402,11 @@ PolySide CPlayerMover::GetPlaneSide(const LTPlane &cPlane, const LTVector &vPos,
 }
 
 void CPlayerMover::CWWM_Poly_CalcPlaneIntersect(
-	const LTPlane &cPlane, 
-	const LTVector &vStart, 
-	const LTVector &vOffset, 
-	float *pFrontTime, 
-	float *pBackTime, 
+	const LTPlane &cPlane,
+	const LTVector &vStart,
+	const LTVector &vOffset,
+	float *pFrontTime,
+	float *pBackTime,
 	LTPlane *pFrontPlane) const
 {
 	float fPlaneExpand = GetPlaneProjection(cPlane.m_Normal);
@@ -433,11 +433,11 @@ void CPlayerMover::CWWM_Poly_CalcPlaneIntersect(
 
 bool CPlayerMover::CWWM_Poly_CalcEdgeIntersect(
 	const LTPlane &cPolyPlane,
-	const LTVector &vEdgeStart, 
-	const LTVector &vEdgeOffset, 
-	const LTVector &vRayStart, 
-	const LTVector &vRayOffset, 
-	float *pIntersectTime, 
+	const LTVector &vEdgeStart,
+	const LTVector &vEdgeOffset,
+	const LTVector &vRayStart,
+	const LTVector &vRayOffset,
+	float *pIntersectTime,
 	LTPlane *pIntersectPlane) const
 {
 	const float k_fVerticalEdgeEpsilon = 0.001f;
@@ -644,7 +644,7 @@ bool CPlayerMover::CWWM_Poly_CalcEdgeIntersect(
 		float fSweepFrontIntersectTime = (fSweepRayAngle < 0.0f) ? fSweepTopIntersectTime : fSweepBottomIntersectTime;
 
 		// Handle the outside edge being what we hit
-		if ((fOutsideEdgeIntersectTime >= fForwardFrontIntersectTime) && 
+		if ((fOutsideEdgeIntersectTime >= fForwardFrontIntersectTime) &&
 			(fOutsideEdgeIntersectTime >= fSweepFrontIntersectTime) &&
 			(fCylinderEdgeRayAngle < 0.0f) &&
 			(fOutsideEdgeIntersectTime >= 0.0f))
@@ -766,7 +766,7 @@ bool CPlayerMover::CWWM_Poly_CalcEdgeIntersect(
 
 		// Not so fast!  The above stuff doesn't deal with a pre-existing intersection at all.
 		// In theory that shouldn't happen, but it does.  (probably a float inaccuracy thing)
-		// So here we check for an intersection with the edge at time 0, and then handle it 
+		// So here we check for an intersection with the edge at time 0, and then handle it
 		// as a normal intersection so we don't go making things worse.
 		if (!bFinalResult)
 		{
@@ -835,7 +835,7 @@ void CPlayerMover::CollideWithWorldModel_Poly(const WorldPoly *pPoly, const LTVe
 		fPlaneIntersectTime /= -fRayPlaneAngle;
 	else
 		fPlaneIntersectTime = (fPlaneDist > -fPlaneProjection) ? -FLT_MAX : FLT_MAX;
-	
+
 	// Jump out if the plane intersect isn't going to happen until too late..
 	if (fPlaneIntersectTime >= pResult->m_fTime)
 		return;
@@ -886,7 +886,7 @@ void CPlayerMover::CollideWithWorldModel_Poly(const WorldPoly *pPoly, const LTVe
 		LTVector vCurPt = pPoly->GetVertex(nCurIndex);
 		LTVector vEdge = vCurPt - vPrevPt;
 		LTVector vEdgeNormal;
-		if (!bHorizPoly && !bVertPoly && 
+		if (!bHorizPoly && !bVertPoly &&
 			((fabsf(vEdge.x) > k_fVerticalEdgeEpsilon) || (fabsf(vEdge.z) > k_fVerticalEdgeEpsilon)))
 			vEdgeNormal = vPlaneOffset.Cross(vEdge).Unit();
 		else
@@ -991,14 +991,14 @@ void CPlayerMover::CollideWithWorldModel(LTObject *pObject, const LTVector &vSta
 			pRoot = pRoot->m_Sides[BackSide];
 			continue;
 		}
-		
+
 		// Decide which side of the plane we're on
 		float fPlaneProjection = -1.0f;
 		PolySide nStartSide = GetPlaneSide(*pRoot->GetPlane(), vStart, &fPlaneProjection);
 		PolySide nEndSide = GetPlaneSide(*pRoot->GetPlane(), vEnd, &fPlaneProjection);
 
 		// Check for a collision
-		if (((nStartSide == nEndSide) && (nStartSide == Intersect)) || 
+		if (((nStartSide == nEndSide) && (nStartSide == Intersect)) ||
 			((nStartSide != nEndSide) && (nStartSide != BackSide)))
 		{
 			if (((pRoot->m_pPoly->GetSurface()->GetFlags() & SURF_SOLID) != 0) &&
@@ -1082,7 +1082,7 @@ void CPlayerMover::CollideWithAABB(const LTVector &vAABBCenter, const LTVector &
 			bInside		= false;
 
 			// Calculate T distances to candidate planes
-			if (vOffset[i])	
+			if (vOffset[i])
 				MaxT[i] = (MinB[i] - vStart[i]) / vOffset[i];
 		}
 		else if (vStart[i] > MaxB[i])
@@ -1091,7 +1091,7 @@ void CPlayerMover::CollideWithAABB(const LTVector &vAABBCenter, const LTVector &
 			bInside		= false;
 
 			// Calculate T distances to candidate planes
-			if (vOffset[i])	
+			if (vOffset[i])
 				MaxT[i] = (MaxB[i] - vStart[i]) / vOffset[i];
 		}
 	}
@@ -1134,7 +1134,7 @@ void CPlayerMover::CollideWithAABB(const LTVector &vAABBCenter, const LTVector &
 			if(i!=nWhichPlane)
 			{
 				vCoord[i] = vStart[i] + MaxT[nWhichPlane] * vOffset[i];
-				if(vCoord[i] < MinB[i] || vCoord[i] > MaxB[i])	
+				if(vCoord[i] < MinB[i] || vCoord[i] > MaxB[i])
 					bIntersect = false;
 			}
 		}
@@ -1329,7 +1329,7 @@ bool CPlayerMover::Slide(const LTVector &vStart, const LTVector &vEnd, const LTV
 
 	// Maximum number of sliding iterations
 	const uint32 k_nMaxSlideCount = 5;
-	
+
 	// Clipping normals
 	const uint32 k_nMaxClipNormals = (k_nMaxSlideCount + 1) * (k_nMaxSlideCount + 1) + 2;
 	LTVector aClipNormals[k_nMaxClipNormals];
@@ -1507,8 +1507,8 @@ bool CPlayerMover::Slide(const LTVector &vStart, const LTVector &vEnd, const LTV
 
 		// If we're not going to move, break out
 		LTVector vTotalOfs = vCurDest - vStart;
-		if ((vCurOfs.MagSqr() < k_nNonMovementEpsilon) || 
-			(nCurSlide == (k_nMaxSlideCount - 1)) || 
+		if ((vCurOfs.MagSqr() < k_nNonMovementEpsilon) ||
+			(nCurSlide == (k_nMaxSlideCount - 1)) ||
 			(vOffset.Dot(vTotalOfs) < 0.0f))
 		{
 			vCurDest = vCollisionPt;
@@ -1525,7 +1525,7 @@ bool CPlayerMover::Slide(const LTVector &vStart, const LTVector &vEnd, const LTV
 
 	// And this is where we ended up...
 	*pResult = vCurDest;
-	
+
 	return bResult;
 }
 
@@ -1644,7 +1644,7 @@ void CPlayerMover::SetStandingOn(const LTVector &vPos, const LTVector &vMovement
 	}
 
 	const float k_fVerticalCollisionEpsilon = 0.001f;
-	
+
 	bool bSteepAngle = (sCollide.m_pObjectNode ? (sCollide.m_pObjectNode->GetPlane()->m_Normal.y < k_fSteepAngle) : (sCollide.m_cPlane.m_Normal.y < k_fSteepAngle));
 	if (bSteepAngle &&
 		m_pPlayer->m_pNodeStandingOn && (m_pPlayer->m_pNodeStandingOn->GetPlane()->m_Normal.y >= k_fSteepAngle))
@@ -1741,10 +1741,10 @@ void CPlayerMover::TouchObjects(const LTVector &vStart, const LTVector &vEnd) co
 				hPoly = sCollide.m_pObject->ToWorldModel()->MakeHPoly(sCollide.m_pObjectNode);
 			}
 			DoInterObjectCollisionResponse(
-				m_pMoveAbstract, 
-				m_pPlayer, 
-				*pCurObj, 
-				&sCollide.m_cPlane.m_Normal, 
+				m_pMoveAbstract,
+				m_pPlayer,
+				*pCurObj,
+				&sCollide.m_cPlane.m_Normal,
 				sCollide.m_cPlane.m_Dist,
 				hPoly
 				);
@@ -1808,7 +1808,7 @@ void CPlayerMover::MoveTo(const LTVector &vEnd, LTVector *pResult)
 	ChangeDims(vOriginalDims + vSafetyDims * 2.0f);
 
 	TouchObjects(vOrigin, *pResult);
-	
+
 	// Put back the player's dims
 	ChangeDims(vOriginalDims);
 
