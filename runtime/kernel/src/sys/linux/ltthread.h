@@ -101,18 +101,19 @@ CSysSyncVar::CSysSyncVar() {
 
 inline ESyncResult
 CSysSyncVar::Begin() {
-	pthread_mutex_lock (&m_Mutex);
+	return pthread_mutex_lock (&m_Mutex) ? SYNC_OK : SYNC_ERROR;
 }
 
 inline ESyncResult
 CSysSyncVar::End() {
-	pthread_mutex_unlock (&m_Mutex);
+	return pthread_mutex_unlock (&m_Mutex) ? SYNC_OK : SYNC_ERROR;
 }
 
 inline ESyncResult
 CSysSyncVar::Wait() {
-	pthread_mutex_lock (&m_Mutex);
-	pthread_mutex_unlock (&m_Mutex);
+	return (pthread_mutex_lock (&m_Mutex) |
+	pthread_mutex_unlock (&m_Mutex)) ? SYNC_OK : SYNC_ERROR;
+
 }
 
 inline
@@ -139,18 +140,18 @@ class CSysSerialVar : public ISerialVar {
 };
 
 inline
-CSysSerialVar::CSysSerialVar() 
+CSysSerialVar::CSysSerialVar()
 {
 	// allow a thread to call multiple times in a row
 	pthread_mutexattr_init(&m_MutexAttr);
 	pthread_mutexattr_settype(&m_MutexAttr, PTHREAD_MUTEX_RECURSIVE_NP);
 	pthread_mutex_init(&m_Mutex, &m_MutexAttr);
 
-	
+
 }
 
 inline
-CSysSerialVar::~CSysSerialVar() 
+CSysSerialVar::~CSysSerialVar()
 {
 	pthread_mutex_destroy(&m_Mutex);
 	pthread_mutexattr_destroy(&m_MutexAttr);
@@ -158,7 +159,7 @@ CSysSerialVar::~CSysSerialVar()
 
 
 inline ESyncResult
-CSysSerialVar::Lock() 
+CSysSerialVar::Lock()
 {
 	pthread_mutex_lock (&m_Mutex);
 	return SYNC_OK;
@@ -196,7 +197,7 @@ CSysEventVar::Signal() {
 	pthread_cond_signal(&m_Cond);
 };
 
-inline ESyncResult 
+inline ESyncResult
 CSysEventVar::WaitFor(uint32 timeout_ms) {
 //	if (timeout_ms)
 //	{

@@ -2242,7 +2242,7 @@ public:
 //! reserved ID for shadow blur shader
 		PIXELSHADER_SHADOWBLUR 	= -50,
 //! invalid pixel shader ID
-		PIXELSHADER_INVALID		= 0xFFFFFFFF
+		PIXELSHADER_INVALID		= -1
 	};
 
 //! max number of user-defined constants (4 floats each)
