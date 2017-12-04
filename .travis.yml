@@ -60,6 +60,7 @@ matrix:
             - libstdc++-6-dev:i386
             - cmake-data
             - cmake
+            - libsdl2-dev
             - libsdl2-dev:i386
             - libgl1-mesa-dev:i386
             - libglu1-mesa-dev:i386
@@ -73,6 +74,7 @@ matrix:
       addons:
         apt:
           sources:
+            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-4.0
           packages:
             - clang-4.0
@@ -87,6 +89,7 @@ matrix:
       addons:
         apt:
           sources:
+            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-5.0
           packages:
             - clang-5.0
