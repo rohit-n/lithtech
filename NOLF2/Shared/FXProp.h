@@ -175,7 +175,7 @@
 			char							m_sVal[128];
 			int								m_nVal;
 			float							m_fVal;
-			float							m_fVec[3];
+			float							m_fVec[4];
 			float							m_fVec4[4];
 			FX_CLRKEY						m_clrKey;
 		}									m_data;

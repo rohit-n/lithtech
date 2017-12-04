@@ -374,7 +374,10 @@ bool CSpriteFX::Update(float tmFrameTime)
 
 		rRotation = rRotation * m_rRot;
 
-		m_pLTClient->SetObjectRotation( m_hObject, &(rRotation * m_rNormalRot) );
+		{
+			auto rot = rRotation * m_rNormalRot;
+			m_pLTClient->SetObjectRotation( m_hObject, &rot);
+		}
 	}
 
 	// Success !!

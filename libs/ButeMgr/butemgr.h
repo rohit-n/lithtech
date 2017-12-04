@@ -209,23 +209,25 @@ public:
 				// to the string holder.  Because the stringholder strings aren't
 				// reference counted, this is not possible.  This will be ok
 				// as long as unique strings aren't continuously generated.
-				data.s = NULL;
+				data.s = nullptr;
 				break;
 			case RectType:
 				m_pButeMgr->m_RectBank.Free( data.r );
-				data.r = NULL;
+				data.r = nullptr;
 				break;
 			case PointType:
 				m_pButeMgr->m_PointBank.Free( data.point );
-				data.point = NULL;
+				data.point = nullptr;
 				break;
 			case VectorType:
 				m_pButeMgr->m_AVectorBank.Free( data.v );
-				data.v = NULL;
+				data.v = nullptr;
 				break;
 			case RangeType:
 				m_pButeMgr->m_ARangeBank.Free( data.range );
-				data.range = NULL;
+				data.range = nullptr;
+				break;
+			default:
 				break;
 			}
 		}
@@ -273,7 +275,7 @@ public:
 	void SetDisplayFunc(void (*pF)(const char* szMsg)) { m_pDisplayFunc = pF; }
 	CString GetErrorString() { return m_sErrorString; }
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300 || defined(__LINUX)
 	bool Parse( std::istream& iStream, int decryptCode = 0);
 	bool Parse( std::istream& iCrypt, std::streamsize nLen, const char* cryptKey);
 #else
@@ -547,7 +549,7 @@ private:
 };
 
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300 || defined(__LINUX)
 inline bool CButeMgr::Parse( std::istream& iStream, int decryptCode)
 #else
 inline bool CButeMgr::Parse( istream& iStream, int decryptCode)
@@ -569,7 +571,7 @@ inline bool CButeMgr::Parse( istream& iStream, int decryptCode)
 	return retVal;
 }
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300 || defined(__LINUX)
 inline bool CButeMgr::Parse( std::istream& iCrypt, std::streamsize nLen, const char* cryptKey)
 #else
 inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* cryptKey)

@@ -14,7 +14,8 @@ if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
 endif(LINUX)
 
-include_directories(../CryptMgr
+include_directories(.
+    ../CryptMgr
 	../stdlith
 	../lith
 	../MFCStub)
