@@ -18,7 +18,16 @@ typedef void* _CRT_REPORT_HOOK;
 #define IDABORT 0
 #define IDRETRY 1
 #define IDIGNORE 2
+#define IDOK 3
+#define IDCANCEL 4
 #define MBOX_ERROR 15
+
+#define MB_ASSERT 1
+#define MB_OKCANCEL 2
+
+#include <string>
+
+int MessageBox(SDL_Window *win, std::string message, std::string title, uint32 buttonflag);
 
 #endif
 

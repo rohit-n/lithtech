@@ -13,7 +13,7 @@
 
 // Includes...
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "iltclient.h"
 #include "IpMgr.h"
 

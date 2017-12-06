@@ -57,13 +57,13 @@
 
 #ifndef __LINUX
 #include "mmsystem.h"
-#endif
 
 #ifdef STRICT
 	WNDPROC g_pfnMainWndProc = NULL;
 #else
 	FARPROC	g_pfnMainWndProc = NULL;
 #endif
+#endif // !__LINUX
 
 #define MAX_FRAME_DELTA					0.1f
 
@@ -80,10 +80,10 @@
 uint32              g_dwSpecial         = 2342349;
 bool				g_bScreenShotMode   = false;
 
-HWND				g_hMainWnd = NULL;
-RECT*				g_prcClip = NULL;
+HWND				g_hMainWnd = nullptr;
+RECT*				g_prcClip = nullptr;
 
-CGameClientShell*   g_pGameClientShell = NULL;
+CGameClientShell*   g_pGameClientShell = nullptr;
 
 LTVector            g_vWorldWindVel(0.0f, 0.0f, 0.0f);
 
@@ -116,7 +116,11 @@ extern VarTrack		g_vtFOVYNormal;
 extern int g_nSampleRate;
 
 // Speed hack prevention variables
+#ifdef __LINUX
+static timeb g_StartTimeB;
+#else
 static _timeb g_StartTimeB;
+#endif
 static uint32 g_nStartClientTime = 0;
 static uint32 g_nStartTicks = 0;
 
@@ -124,15 +128,12 @@ BOOL SetWindowSize(uint32 nWidth, uint32 nHeight);
 BOOL HookWindow();
 void UnhookWindow();
 
+// would have to be some SDL equivelant for Hook'ing a SDL_Window and steal it's Events
+// the SDL_Window handle should be exposed through g_pLTClient object
+#ifndef __LINUX
 BOOL OnSetCursor(HWND hwnd, HWND hwndCursor, UINT codeHitTest, UINT msg);
 LRESULT CALLBACK HookedWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-
-
-
-
-
-
+#endif
 
 void InitClientShell()
 {
@@ -164,12 +165,12 @@ void TermClientShell()
 }
 
 
-void FragSelfFn(int argc, char **argv)
+void FragSelfFn(int argc, const char **argv)
 {
 	SendEmptyServerMsg(MID_FRAG_SELF);
 }
 
-void ClientFXFn(int argc, char **argv)
+void ClientFXFn(int argc, const char **argv)
 {
 	if(argc == 4)
 	{
@@ -199,7 +200,7 @@ void ClientFXFn(int argc, char **argv)
 	}
 }
 
-void StimulusFn(int argc, char **argv)
+void StimulusFn(int argc, const char **argv)
 {
 	if( (argc == 1) || (argc == 2) )
 	{
@@ -223,7 +224,7 @@ void StimulusFn(int argc, char **argv)
 	}
 }
 
-void RenderStimulusFn(int argc, char **argv)
+void RenderStimulusFn(int argc, const char **argv)
 {
 	CAutoMessage cMsg;
 	cMsg.Writeuint8(MID_RENDER_STIMULUS);
@@ -237,7 +238,7 @@ void RenderStimulusFn(int argc, char **argv)
 	g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);		
 }
 
-void ObjectAlphaFn(int argc, char **argv)
+void ObjectAlphaFn(int argc, const char **argv)
 {
 	CAutoMessage cMsg;
 	cMsg.Writeuint8(MID_OBJECT_ALPHA);
@@ -251,7 +252,7 @@ void ObjectAlphaFn(int argc, char **argv)
 }
 
 
-void AddGoalFn(int argc, char **argv)
+void AddGoalFn(int argc, const char **argv)
 {
 	CAutoMessage cMsg;
 	cMsg.Writeuint8(MID_ADD_GOAL);
@@ -274,7 +275,7 @@ void AddGoalFn(int argc, char **argv)
 	}
 }
 
-void RemoveGoalFn(int argc, char **argv)
+void RemoveGoalFn(int argc, const char **argv)
 {
 	CAutoMessage cMsg;
 	cMsg.Writeuint8(MID_REMOVE_GOAL);
@@ -291,19 +292,19 @@ void RemoveGoalFn(int argc, char **argv)
 	}
 }
 
-void ReloadWeaponAttributesFn(int argc, char **argv)
+void ReloadWeaponAttributesFn(int argc, const char **argv)
 {
     g_pWeaponMgr->Reload();
     g_pLTClient->CPrint("Reloaded weapons attributes file...");
 }
 
-void ReloadSurfacesAttributesFn(int argc, char **argv)
+void ReloadSurfacesAttributesFn(int argc, const char **argv)
 {
     g_pSurfaceMgr->Reload();
     g_pLTClient->CPrint("Reloaded surface attributes file...");
 }
 
-void ReloadFXAttributesFn(int argc, char **argv)
+void ReloadFXAttributesFn(int argc, const char **argv)
 {
     g_pFXButeMgr->Reload();
     g_pLTClient->CPrint("Reloaded fx attributes file...");
@@ -314,7 +315,7 @@ void ReloadFXAttributesFn(int argc, char **argv)
 	ReloadSurfacesAttributesFn(0, 0);
 }
 
-void ExitLevelFn(int argc, char **argv)
+void ExitLevelFn(int argc, const char **argv)
 {
 	if (g_pCheatMgr)
 	{
@@ -323,7 +324,7 @@ void ExitLevelFn(int argc, char **argv)
 	}
 }
 
-void TeleportFn(int argc, char **argv)
+void TeleportFn(int argc, const char **argv)
 {
 	if (argc < 3)
 	{
@@ -351,7 +352,7 @@ void TeleportFn(int argc, char **argv)
 	}
 }
 
-void ChaseToggleFn(int argc, char **argv)
+void ChaseToggleFn(int argc, const char **argv)
 {
 	if (g_pGameClientShell)
 	{
@@ -359,7 +360,7 @@ void ChaseToggleFn(int argc, char **argv)
 	}
 }
 
-void CmdFn(int argc, char **argv)
+void CmdFn(int argc, const char **argv)
 {
 	if (argc < 2)
 	{
@@ -389,7 +390,7 @@ void CmdFn(int argc, char **argv)
     g_pLTClient->FreeString(hstrCmd);
 }
 
-void TriggerFn(int argc, char **argv)
+void TriggerFn(int argc, const char **argv)
 {
 	if (argc < 2)
 	{
@@ -412,7 +413,7 @@ void TriggerFn(int argc, char **argv)
     g_pLTClient->FreeString(hstrMsg);
 }
 
-void ListFn(int argc, char **argv)
+void ListFn(int argc, const char **argv)
 {
 	if (argc < 1 || !argv)
 	{
@@ -445,7 +446,7 @@ void ExitGame(bool bResponse, uint32 nUserData)
 	}
 }
 
-void InitSoundFn(int argc, char **argv)
+void InitSoundFn(int argc, const char **argv)
 {
 	if (g_pGameClientShell)
 	{
@@ -453,7 +454,7 @@ void InitSoundFn(int argc, char **argv)
 	}
 }
 
-void MusicFn(int argc, char **argv)
+void MusicFn(int argc, const char **argv)
 {
 	if (!g_pGameClientShell->GetMusic()->IsInitialized())
 	{
@@ -1408,9 +1409,11 @@ void CGameClientShell::OnEvent(uint32 dwEventID, uint32 dwParam)
 				{
 					HookWindow();
 				}
-
+// needs more SDL window magic here
+#ifndef __LINUX
 				GetWindowRect(g_hMainWnd, g_prcClip);
 				ClipCursor(g_prcClip);
+#endif
 			}
 
 			if (g_pCursorMgr)
@@ -1677,11 +1680,15 @@ void CGameClientShell::UpdatePlaying()
 		g_pLTClient->IsLocalToServer(&bIsLocalClient);
 		if( !bIsLocalClient )
 		{
-			uint32 nEndClientTime = timeGetTime( );
-			uint32 nEndTicks = GetTickCount();
+			uint32 nEndClientTime = SDL_GetTicks( );
+			uint32 nEndTicks = SDL_GetTicks();
+#ifdef __LINUX
+			timeb nEndTimeB;
+			ftime(&nEndTimeB);
+#else
 			_timeb nEndTimeB;
 			_ftime(&nEndTimeB);
-
+#endif
 			// Get the client time since the last check.  Account for wrap.
 			uint32 nDeltaClientTime = ( nEndClientTime > g_nStartClientTime ) ? ( nEndClientTime - g_nStartClientTime ) : 
 				( nEndClientTime + ~g_nStartClientTime );
@@ -1722,9 +1729,13 @@ void CGameClientShell::UpdatePlaying()
 
 				// Reset the timers, the initial _ftime call must be before
 				// the performance counter call!
+#ifdef __LINUX
+				ftime( &g_StartTimeB );
+#else
 				_ftime( &g_StartTimeB );
-				g_nStartTicks = GetTickCount();
-				g_nStartClientTime = timeGetTime( );
+#endif
+				g_nStartTicks = SDL_GetTicks();
+				g_nStartClientTime = SDL_GetTicks( );
 			}
 		}
 	}
@@ -4462,7 +4473,7 @@ void DefaultModelHook (ModelHookData *pData, void *pUser)
 //	PURPOSE:	Hook it real good
 //
 // --------------------------------------------------------------------------- //
-
+#ifndef _LINUX
 LRESULT CALLBACK HookedWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch(uMsg)
@@ -4480,6 +4491,7 @@ LRESULT CALLBACK HookedWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
 	_ASSERT(g_pfnMainWndProc);
 	return(CallWindowProc(g_pfnMainWndProc,hWnd,uMsg,wParam,lParam));
 }
+#endif
 
 void CGameClientShell::HandleEvent(SDL_Event e)
 {
@@ -4579,7 +4591,7 @@ BOOL OnSetCursor(HWND hwnd, HWND hwndCursor, UINT codeHitTest, UINT msg)
 //	PURPOSE:	This will resize the window to the specified dimensions and clip the cursor if necessary
 //
 // --------------------------------------------------------------------------- //
-
+// should use SDL window resize
 BOOL SetWindowSize(uint32 nWidth, uint32 nHeight)
 {
 #if 0
@@ -4628,6 +4640,7 @@ BOOL SetWindowSize(uint32 nWidth, uint32 nHeight)
 
 BOOL HookWindow()
 {
+#ifndef __LINUX
 	// Hook the window
     if(g_pLTClient->GetEngineHook("HWND",(void **)&g_hMainWnd) != LT_OK)
 	{
@@ -4654,7 +4667,7 @@ BOOL HookWindow()
 		TRACE("HookWindow - ERROR - could not set the window procedure!\n");
 		return FALSE;
 	}
-
+#endif
 	return TRUE;
 }
 
@@ -4668,12 +4681,14 @@ BOOL HookWindow()
 
 void UnhookWindow()
 {
+#ifndef __LINUX
 	if(g_pfnMainWndProc && g_hMainWnd)
 	{
 		SetWindowLongPtr(g_hMainWnd, GWLP_WNDPROC, (LONG_PTR)g_pfnMainWndProc);
 		g_hMainWnd = 0;
 		g_pfnMainWndProc = NULL;
 	}
+#endif
 }
 
 // --------------------------------------------------------------------------- //
@@ -4992,6 +5007,11 @@ void CGameClientShell::SendClientLoadedMessage( )
 //	PURPOSE:	Launches the serverapp.
 //
 // --------------------------------------------------------------------------- //
+typedef int PROCESS_INFORMATION;
+struct STARTUPINFO
+{
+	int cb;
+};
 
 bool CGameClientShell::LauncherServerApp( char const* pszProfileFile )
 {
@@ -5018,7 +5038,7 @@ bool CGameClientShell::LauncherServerApp( char const* pszProfileFile )
 	sCmdLine += "\"";
 	sCmdLine += pszProfileFile;
 	sCmdLine += "\"";
-
+#define CreateProcess(...) true
 	// Start the server app.
 	if( !CreateProcess( "NOLF2Srv.exe", ( char * )sCmdLine.c_str( ), NULL, NULL, FALSE, 0, NULL, NULL, 
 		&startInfo, &procInfo ))

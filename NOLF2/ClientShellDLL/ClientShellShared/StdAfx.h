@@ -19,9 +19,10 @@
 #include <windows.h>
 
 #else
+#include <SDL.h>
 // stubdefs for silly win32 api stuff
 typedef void* HINSTANCE;
-typedef void* HWND;
+typedef SDL_Window* HWND;
 typedef void *HRSRC;
 typedef void *HGLOBAL;
 #define UINT uintptr_t

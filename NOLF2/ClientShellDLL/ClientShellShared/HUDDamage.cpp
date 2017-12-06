@@ -11,7 +11,7 @@
 #include "StdAfx.h"
 #include "HUDMgr.h"
 #include "PlayerStats.h"
-#include "DamageFxMgr.h"
+#include "DamageFXMgr.h"
 #include "InterfaceMgr.h"
 
 //******************************************************************************************

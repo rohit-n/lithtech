@@ -12,7 +12,7 @@
 #include "HUDMgr.h"
 #include "InterfaceMgr.h"
 #include "GameClientShell.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "ClientSoundMgr.h"
 #include "ScmdConsole.h"
 
@@ -173,19 +173,19 @@ LTBOOL CHUDChatInput::HandleKeyDown(int key, int rep)
 {
 	switch (key)
 	{
-	case VK_ESCAPE:
+	case SDLK_ESCAPE:
 	{
 		Show(false,false);
 		return LTTRUE;
 	} break;
 
-	case VK_RETURN:
+	case SDLK_RETURN:
 	{
 		Send();
 		return LTTRUE;
 	} break;
 
-	case VK_UP:
+	case SDLK_UP:
 	{
 		int nTest = m_nHistory+1;
 		if (nTest >= 0 && nTest < kMaxChatHistory && strlen(m_szChatHistory[nTest]))
@@ -197,7 +197,7 @@ LTBOOL CHUDChatInput::HandleKeyDown(int key, int rep)
 		return LTTRUE;
 	} break;
 
-	case VK_DOWN:
+	case SDLK_DOWN:
 	{
 		int nTest = m_nHistory-1;
 		if (nTest >= 0 && nTest < kMaxChatHistory && strlen(m_szChatHistory[nTest]))
@@ -209,13 +209,13 @@ LTBOOL CHUDChatInput::HandleKeyDown(int key, int rep)
 		return LTTRUE;
 	} break;
 
-	case VK_PRIOR:
+	case SDLK_PAGEUP:
 	{
 		g_pChatMsgs->IncHistoryOffset();
 		return LTTRUE;
 	} break;
 
-	case VK_NEXT:
+	case SDLK_PAGEDOWN:
 	{
 		g_pChatMsgs->DecHistoryOffset();
 		return LTTRUE;

@@ -17,6 +17,52 @@
 LTBOOL CAssertMgr::m_bEnabled = LTFALSE;
 _CRT_REPORT_HOOK CAssertMgr::m_crhPrevious = LTNULL;
 
+#ifdef __LINUX
+#include <vector>
+
+int
+MessageBox(SDL_Window *win, std::string message, std::string title, uint32 flags)
+{
+	std::vector<SDL_MessageBoxButtonData> btns{};
+    if ((flags & MB_ASSERT) > 0) {
+		btns.emplace_back(SDL_MessageBoxButtonData{0,IDABORT,"Abort"});
+		btns.emplace_back(SDL_MessageBoxButtonData{0,IDRETRY,"Retry"});
+		btns.emplace_back(SDL_MessageBoxButtonData{0,IDIGNORE,"Ignore"});
+	} else if((flags & MB_OKCANCEL)) {
+		btns.emplace_back(SDL_MessageBoxButtonData{0,IDOK,"Ok"});
+		btns.emplace_back(SDL_MessageBoxButtonData{0,IDCANCEL,"Cancel"});
+	}
+
+    const SDL_MessageBoxColorScheme colors = {
+        { 
+            /* [SDL_MESSAGEBOX_COLOR_BACKGROUND] */
+            { 255,   0,   0 },
+            /* [SDL_MESSAGEBOX_COLOR_TEXT] */
+            {   0, 255,   0 },
+            /* [SDL_MESSAGEBOX_COLOR_BUTTON_BORDER] */
+            { 255, 255,   0 },
+            /* [SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND] */
+            {   0,   0, 255 },
+            /* [SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED] */
+            { 255,   0, 255 }
+        }
+    };
+	const SDL_MessageBoxData mbox_data = {
+		SDL_MESSAGEBOX_WARNING,
+		win,
+		title.c_str(),
+		message.c_str(),
+		SDL_arraysize(btns.data()),
+		btns.data(),
+		&colors
+	};
+    int button = MBOX_ERROR;
+	SDL_ShowMessageBox(&mbox_data, &button);
+	return button;
+}
+
+#endif
+
 // Methods
 
 void CAssertMgr::Enable()
