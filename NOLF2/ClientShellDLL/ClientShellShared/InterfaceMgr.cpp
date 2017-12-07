@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "InterfaceMgr.h"
 #include "GameClientShell.h"
 #include "MsgIDs.h"
@@ -30,7 +30,7 @@
 #include "ClientSaveLoadMgr.h"
 #include "ScreenPreload.h"
 #include "ScreenPostload.h"
-#include "timer.h"
+#include "Timer.h"
 #include "WaveFn.h"
 
 CInterfaceMgr*  g_pInterfaceMgr = LTNULL;
@@ -53,7 +53,7 @@ static enum MovieOrderEnum
 	eFox,
 	eMonolith,
 	eLithTech
-};
+} g_eMovieOrder;
 
 //hack to track whether we are trying to host/join a LAN only or an internet game
 bool g_bLAN = false;
@@ -5612,28 +5612,28 @@ HLTSOUND CInterfaceMgr::UpdateInterfaceSound()
 	switch (m_eNextSound)
 	{
 		case IS_SELECT:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundSelect(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundSelect(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		case IS_CHANGE:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundChange(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundChange(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		case IS_PAGE:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundPageChange(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundPageChange(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		case IS_UP:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowUp(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowUp(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		case IS_DOWN:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowDown(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowDown(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		case IS_LEFT:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowLeft(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowLeft(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		case IS_RIGHT:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowRight(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundArrowRight(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		case IS_NO_SELECT:
-			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundUnselectable(), NULL /*PLAYSOUND_GETHANDLE*/);
+			hSnd = g_pClientSoundMgr->PlayInterfaceSound((char*)g_pInterfaceResMgr->GetSoundUnselectable(), 0 /*PLAYSOUND_GETHANDLE*/);
 		break;
 		default :
 		break;

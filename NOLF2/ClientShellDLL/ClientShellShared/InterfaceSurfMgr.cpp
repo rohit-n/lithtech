@@ -6,8 +6,10 @@
 #include "ltbasedefs.h"
 #include "iclientshell.h"
 #include "InterfaceSurfMgr.h"
-#ifndef __PSX2
+#if ! (defined( __PSX2) || defined(__LINUX))
 #include <mbstring.h>
+#else
+#define NO_MB_STRING
 #endif
 
 //////////////////////////////////////////////////////////////////////
@@ -88,13 +90,13 @@ HSURFACE CInterfaceSurfMgr::GetSurface(char *lpszSurface)
 	CSharedSurface *pSharedSurface=debug_new(CSharedSurface);
 
 	// Copy the filename
-#ifdef __PSX2
+#ifdef NO_MB_STRING
     int nBufferSize=strlen(lpszSurface)+1;
 #else
     int nBufferSize=(int)_mbstrlen(lpszSurface)+1;
 #endif
 	pSharedSurface->m_lpszPathName=debug_newa(char, nBufferSize);
-#ifdef __PSX2
+#ifdef NO_MB_STRING
     strncpy(pSharedSurface->m_lpszPathName, lpszSurface, nBufferSize);
 #else
     _mbsncpy((unsigned char*)pSharedSurface->m_lpszPathName, (const unsigned char*)lpszSurface, nBufferSize);
@@ -153,7 +155,7 @@ int CInterfaceSurfMgr::FindSurfaceIndex(char *lpszSurface)
 	unsigned int i;
 	for (i=0; i < m_sharedSurfaceArray.GetSize(); i++)
 	{
-#ifdef __PSX2
+#ifdef NO_MB_STRING
         if (stricmp(m_sharedSurfaceArray[i]->m_lpszPathName, lpszSurface) == 0)
 #else
         if (_mbsicmp((const unsigned char*)m_sharedSurfaceArray[i]->m_lpszPathName, (const unsigned char*)lpszSurface) == 0)

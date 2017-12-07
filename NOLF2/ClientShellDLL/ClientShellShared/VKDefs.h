@@ -13,7 +13,7 @@
 
 char VKToASCII (int nKey);
 
-#ifdef __PSX2
+#if defined(__PSX2) || defined(__LINUX)
 #define DEFINE_WINDOWS_VIRTUAL_KEYS     1
 #endif
 

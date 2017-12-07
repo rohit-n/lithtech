@@ -484,8 +484,8 @@ int CIpMgr::WriteIps()
 
 		if (pIp)
 		{
-			wsprintf(sKey, "Ip%i", i);
-			wsprintf(sTemp, "+%s %s", sKey, pIp->GetAddress());
+			sprintf(sKey, "Ip%i", i);
+			sprintf(sTemp, "+%s %s", sKey, pIp->GetAddress());
 			m_pClientDE->RunConsoleString(sTemp);
 			cIps++;
 		}
@@ -494,7 +494,7 @@ int CIpMgr::WriteIps()
 
 	// Write out the count...
 
-	wsprintf(sTemp, "+IpCount %i", cIps);
+	sprintf(sTemp, "+IpCount %i", cIps);
 	m_pClientDE->RunConsoleString(sTemp);
 
 
@@ -539,7 +539,7 @@ int CIpMgr::ReadIps()
 
 	for (int i = 0; i < cIps; i++)
 	{
-		wsprintf(sKey, "Ip%i", i);
+		sprintf(sKey, "Ip%i", i);
 
 		HCONSOLEVAR hVar = m_pClientDE->GetConsoleVar(sKey);
 		if (hVar)

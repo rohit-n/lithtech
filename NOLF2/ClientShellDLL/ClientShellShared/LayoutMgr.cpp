@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "LayoutMgr.h"
 #include "InterfaceMgr.h"
 

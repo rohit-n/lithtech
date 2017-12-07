@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "KeyMgr.h"
 #include "IDList.h"
 

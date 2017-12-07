@@ -100,7 +100,7 @@ enum PlayerSoundId;
 void PlayWeaponSound(WEAPON const *pWeapon, const LTVector &vPos, PlayerSoundId eSoundId,
 					 LTBOOL bLocal=LTFALSE);
 
-#define IsKeyDown(key)		(GetAsyncKeyState(key) & 0x80000000)
+#define IsKeyDown(key)		(SDL_GetKeyboardState(nullptr)[(key)])
 
 // Send an empty message to the server
 LTRESULT SendEmptyServerMsg(uint32 nMsgID, uint32 nFlags = MESSAGE_GUARANTEED);
