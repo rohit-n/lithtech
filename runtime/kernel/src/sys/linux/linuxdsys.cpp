@@ -53,7 +53,7 @@ LTRESULT dsi_SetupMessage(char *pMsg, int maxMsgLen, LTRESULT dResult, va_list m
     char msg[1000];
     vsnprintf(msg, 999, pMsg, marker);
     if (strlen(msg) < 1) {
-        vsnprintf(msg, 999, "%s", marker);    
+        vsnprintf(msg, 999, "%s", marker);
     }
     auto &&o = (dResult == LT_OK) ? std::cout : std::cerr;;
     switch(dResult){
@@ -221,12 +221,16 @@ return LTTRUE;      // DAN - temporary
 
 LTRESULT _GetOrCopyClientFile(char *pTempPath, const char *pFilename, char *pOutName, int outNameLen)
 {
-return LTTRUE;      // DAN - temporary
+    std::string fname{"./"};
+    fname += pFilename;
+    if(fname.length() < outNameLen)
+        memcpy(pOutName, fname.c_str(), fname.length());
+    return LTTRUE;      // DAN - temporary
 }
 
 LTRESULT GetOrCopyClientFile(const char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied)
 {
-    bFileCopied = true;
+    bFileCopied = false;
     char pTempPath[_MAX_PATH*2] = {'/','t', 'm', 'p', '/', 0};
     return _GetOrCopyClientFile(pTempPath, pFilename, pOutName, outNameLen);
 }
@@ -238,21 +242,27 @@ LTRESULT dsi_InitClientShellDE()
     char filename[MAX_PATH];
     memset(filename, 0, MAX_PATH);
 
-    const char* clientlib = "libclient.so";
+    const char* clientlib = "libCShell.so";
     bool copied;
     LTRESULT dResult = GetOrCopyClientFile(clientlib, filename,MAX_PATH, copied);
-    if (dResult != LT_OK) {
+    if (dResult != LTTRUE) {
         g_pClientMgr->SetupError(LT_ERRORCOPYINGFILE, clientlib);
         RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, clientlib);
     }
 
+    auto status = bm_BindModule(filename, copied, g_pClientMgr->m_hShellModule);
+    if (status != BIND_CANTFINDMODULE) {
+        g_pClientMgr->SetupError(LT_MISSINGSHELLDLL, clientlib);
+        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_MISSINGSHELLDLL,clientlib);
+        dResult = !LTTRUE;
+    }
 	// have the user's cshell and the clientMgr exchange info
 	if ((i_client_shell == NULL ))
     {
 		CRITICAL_ERROR("dsys_interface", "Can't create CShell\n");
 	}
 
-	return LT_OK;
+	return dResult;
 }
 
 void dsi_OnMemoryFailure()

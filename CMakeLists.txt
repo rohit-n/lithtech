@@ -146,3 +146,4 @@ if(BUILD_TOOLS)
 endif(BUILD_TOOLS)
 
 add_subdirectory(tests/RegMgr)
+add_subdirectory(tests/CShell)
