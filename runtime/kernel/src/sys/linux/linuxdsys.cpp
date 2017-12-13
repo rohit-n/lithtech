@@ -243,8 +243,9 @@ LTRESULT dsi_InitClientShellDE()
     memset(filename, 0, MAX_PATH);
 
     const char* clientlib = "libCShell.so";
+    const char* reslib = "libCRes.so";
     bool copied;
-    LTRESULT dResult = GetOrCopyClientFile(clientlib, filename,MAX_PATH, copied);
+    LTRESULT dResult = GetOrCopyClientFile(clientlib, filename, MAX_PATH, copied);
     if (dResult != LTTRUE) {
         g_pClientMgr->SetupError(LT_ERRORCOPYINGFILE, clientlib);
         RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, clientlib);
@@ -253,14 +254,37 @@ LTRESULT dsi_InitClientShellDE()
     auto status = bm_BindModule(filename, copied, g_pClientMgr->m_hShellModule);
     if (status != BIND_CANTFINDMODULE) {
         g_pClientMgr->SetupError(LT_MISSINGSHELLDLL, clientlib);
-        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_MISSINGSHELLDLL,clientlib);
+        RETURN_ERROR(1, InitClientShellDE, LT_MISSINGSHELLDLL);
         dResult = !LTTRUE;
     }
+
 	// have the user's cshell and the clientMgr exchange info
 	if ((i_client_shell == NULL ))
     {
 		CRITICAL_ERROR("dsys_interface", "Can't create CShell\n");
 	}
+
+	copied = false;
+    dResult = GetOrCopyClientFile( reslib, filename, MAX_PATH, copied );
+    if (dResult != LT_OK) 
+	{
+        g_pClientMgr->SetupError(LT_ERRORCOPYINGFILE, reslib);
+        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, reslib);
+    }
+
+    //load the DLL.
+    status = bm_BindModule(filename, copied, g_pClientMgr->m_hClientResourceModule);
+
+    //check if it was loaded.
+    if (status == BIND_CANTFINDMODULE) {
+        //unload the loaded cshell 
+        bm_UnbindModule(g_pClientMgr->m_hShellModule);
+        g_pClientMgr->m_hShellModule = LTNULL;
+
+        g_pClientMgr->SetupError(LT_INVALIDSHELLDLL, reslib);
+        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_INVALIDSHELLDLL, reslib);
+        dResult = !LTTRUE;
+    }
 
 	return dResult;
 }

@@ -1,10 +1,11 @@
 #include "ltbasedefs.h"
 
 #include "iclientshell.h"
-class MyShell : public IClientShell
+class MyShell : public IClientShellStub
 {
-    const char* _InterfaceImplementation() {return "AlchemyTest";};
+public:
+    declare_interface(MyShell)
+    MyShell() = default;
 };
 
-MyShell shell;
-
+define_interface(MyShell, IClientShell)
