@@ -62,7 +62,7 @@ matrix:
             - cmake-data
             - cmake
             - libsdl2-dev
-            - libsdl2:i386
+            - libsdl2-2.0-0:i386
       env:
         - MATRIX_EVAL="CC=gcc-6; CXX=g++-6; CFLAGS=-m32; CXXFLAGS=-m32; LDFLAGS=-m32"
     - os: linux
