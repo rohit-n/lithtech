@@ -59,15 +59,9 @@ matrix:
             - g++-6
             - gcc-multilib
             - libstdc++-6-dev:i386
-            - libsdl2-2.0-0
-            - libsdl2-2.0-0:i386
             - cmake-data
             - cmake
-            - libsdl2-dev
-            - libgl1-mesa-dev:i386
-            - libglu1-mesa-dev:i386
-            - libpulse-dev:i386
-            - libglib2.0-dev:i386
+            - libsdl2-dev:i386
       env:
         - MATRIX_EVAL="CC=gcc-6; CXX=g++-6; CFLAGS=-m32; CXXFLAGS=-m32; LDFLAGS=-m32"
     - os: linux
