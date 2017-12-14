@@ -27,7 +27,7 @@ void
 MyShell::HandleEvent(SDL_Event e)
 {
     if(!QuitSent && e.type == SDL_KEYUP && 
-    (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE )) {
+    (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE || e.key.keysym.scancode == SDL_SCANCODE_Q )) {
         SDL_Event quit{};
         quit.type = SDL_QUIT;
         quit.quit.timestamp = SDL_GetTicks();
