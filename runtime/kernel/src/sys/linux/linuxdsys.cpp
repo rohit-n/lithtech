@@ -252,7 +252,7 @@ LTRESULT dsi_InitClientShellDE()
     }
 
     auto status = bm_BindModule(filename, copied, g_pClientMgr->m_hShellModule);
-    if (status != BIND_CANTFINDMODULE) {
+    if (status == BIND_CANTFINDMODULE) {
         g_pClientMgr->SetupError(LT_MISSINGSHELLDLL, clientlib);
         RETURN_ERROR(1, InitClientShellDE, LT_MISSINGSHELLDLL);
         dResult = !LTTRUE;
@@ -264,9 +264,10 @@ LTRESULT dsi_InitClientShellDE()
 		CRITICAL_ERROR("dsys_interface", "Can't create CShell\n");
 	}
 
-	copied = false;
+    copied = false;
+    memset(filename, 0, MAX_PATH);
     dResult = GetOrCopyClientFile( reslib, filename, MAX_PATH, copied );
-    if (dResult != LT_OK) 
+    if (dResult != LTTRUE) 
 	{
         g_pClientMgr->SetupError(LT_ERRORCOPYINGFILE, reslib);
         RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, reslib);

@@ -41,7 +41,7 @@ int bm_BindModule(const char *pModName, bool bTempFile, CBindModuleType *&pModul
 	}
 
 	pModule = bm_CreateHandleBinding(bTempFile ? pModName : "", (void*)hModule);
-    return 0;
+    return BIND_NOERROR;
 }
 
 void bm_UnbindModule(CBindModuleType *hModule)
