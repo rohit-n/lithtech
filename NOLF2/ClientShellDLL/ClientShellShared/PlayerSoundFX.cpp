@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "PlayerSoundFX.h"
 #include "GameClientShell.h"
 #include "iltclient.h"

@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "MenuMission.h"
 #include "InterfaceMgr.h"
 #include "MissionButeMgr.h"

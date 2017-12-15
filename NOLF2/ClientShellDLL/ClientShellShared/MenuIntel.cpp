@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "MenuIntel.h"
 #include "InterfaceMgr.h"
 #include "ClientResShared.h"

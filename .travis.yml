@@ -66,8 +66,6 @@ matrix:
             - libsdl2-2.0-0:i386
             - libegl1-mesa-dev
             - libgles2-mesa-dev
-            - libegl1-mesa-dev:i386
-            - libgles2-mesa-dev:i386
       env:
         - MATRIX_EVAL="CC=gcc-6; CXX=g++-6; CFLAGS=-m32; CXXFLAGS=-m32; LDFLAGS=-m32"
     - os: linux

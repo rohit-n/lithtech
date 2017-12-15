@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SprinklesFX.h"
 #include "FXButeMgr.h"
 #include "ClientServerShared.h"

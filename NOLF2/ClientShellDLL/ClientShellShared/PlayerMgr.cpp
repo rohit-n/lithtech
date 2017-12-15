@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "PlayerMgr.h"
 #include "AttachButeMgr.h"
 #include "BodyFX.h"

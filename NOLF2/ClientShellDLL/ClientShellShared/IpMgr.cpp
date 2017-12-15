@@ -307,7 +307,7 @@ int CIpMgr::FillListBox(HWND hList)
 	// Sanity checks...
 
 	if (!hList) return(0);
-
+#ifndef __LINUX
 
 	// Empty the list box...
 
@@ -334,10 +334,12 @@ int CIpMgr::FillListBox(HWND hList)
 	InvalidateRect(hList, NULL, FALSE);
 	UpdateWindow(hList);
 
-
 	// All done...
 
 	return(cIps);
+#else
+	return 0;
+#endif
 }
 
 
@@ -359,12 +361,11 @@ BOOL CIpMgr::AddIpFromEditControl(HWND hEdit, HWND hList)
 
 
 	// Get the text from the edit control...
-
+#ifndef __LINUX
 	char sIp[IPM_MAX_ADDRESS + 2];
 
 	int nLen = GetWindowText(hEdit, sIp, IPM_MAX_ADDRESS);
 	if (nLen <= 0) return(FALSE);
-
 
 	// Add the ip...
 
@@ -384,6 +385,7 @@ BOOL CIpMgr::AddIpFromEditControl(HWND hEdit, HWND hList)
 	FillListBox(hList);
 
 
+#endif
 	// All done...
 
 	return(TRUE);
@@ -403,7 +405,7 @@ BOOL CIpMgr::RemoveSelectedIpFromListBox(HWND hList)
 	// Sanity checks...
 
 	if (!hList) return(FALSE);
-
+#ifndef __LINUX
 
 	// Get the currently selected ip text from the list box...
 
@@ -427,7 +429,7 @@ BOOL CIpMgr::RemoveSelectedIpFromListBox(HWND hList)
 
 
 	// All done...
-
+#endif
 	return(TRUE);
 }
 

@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "PerformanceMgr.h"
 #include "interfacemgr.h"

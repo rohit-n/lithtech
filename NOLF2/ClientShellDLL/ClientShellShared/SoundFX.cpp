@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SoundFX.h"
 #include "iltclient.h"
 #include "ClientSoundMgr.h"

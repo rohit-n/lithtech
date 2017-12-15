@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "MissionMgr.h"
 #include "GameClientShell.h"
 #include "VarTrack.h"
