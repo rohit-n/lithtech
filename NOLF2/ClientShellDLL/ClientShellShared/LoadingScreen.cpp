@@ -301,12 +301,15 @@ LTBOOL CLoadingScreen::Init()
 			else
 			{
 				m_missionname = LoadTempString( IDS_CUSTOM_LEVEL );
+#ifndef __LINUX				
 				// Split the worldname up into parts so we can get the load string.
 				char const* pszWorldName = g_pMissionMgr->GetCurrentWorldName( );
 				char szWorldTitle[MAX_PATH] = "";
 				_splitpath( pszWorldName, NULL, NULL, szWorldTitle, NULL );
 				m_levelname = szWorldTitle;
-
+#else
+                m_levelname = split(std::string{pszWorldName},'/').back().c_str();
+#endif
 			}
 
 		}
