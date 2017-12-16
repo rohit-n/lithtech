@@ -23,10 +23,12 @@
 #include "ScreenPostload.h"
 #include "ClientResShared.h"
 
+#include <thread>
+
 extern CGameClientShell* g_pGameClientShell;
 
 CLoadingScreen::CLoadingScreen() :
-	m_eCurState(STATE_NONE)
+	m_eCurState(STATE_NONE),m_MissionUpdate()
 {
 	// Create the event handles
 	m_hEventEnd = CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -54,8 +56,6 @@ CLoadingScreen::CLoadingScreen() :
 	m_nDefaultHelpFont = 0;
 	m_nDefaultHelpFontSize = 0;
 	m_nDefaultHelpColor = 0;
-
-	InitializeCriticalSection(&m_MissionUpdate);
 
 }
 
@@ -688,7 +688,7 @@ int CLoadingScreen::RunThread()
 		Update();
 		
 		// Make sure we're not running faster than 10fps so stuff can still happen in the background
-		Sleep(100);
+		SDL_Delay(100);
 	}
 	return 0;
 }
@@ -712,7 +712,7 @@ LTBOOL CLoadingScreen::Update()
 		m_pRenderScreen->UpdateInterfaceSFX();
 		g_pInterfaceMgr->DrawSFX();
 		
-		EnterCriticalSection(&m_MissionUpdate);
+		Sync_CSAuto CS{m_MissionUpdate};
 
 		g_pLTClient->StartOptimized2D();
 
@@ -724,7 +724,7 @@ LTBOOL CLoadingScreen::Update()
 		g_pLTClient->End3D(END3D_CANDRAWCONSOLE);
 		g_pLTClient->FlipScreen(0);
 
-		LeaveCriticalSection(&m_MissionUpdate);
+		// LeaveCriticalSection(&m_MissionUpdate);
 
 		return bRet;
 	}
@@ -739,10 +739,9 @@ LTBOOL CLoadingScreen::Update()
 	// Update the interface mgr
 	g_pInterfaceMgr->DrawSFX();
 
+	m_MissionUpdate.Enter();
 
-	EnterCriticalSection(&m_MissionUpdate);
-
-    HSURFACE hDestSurf = g_pLTClient->GetScreenSurface();
+	HSURFACE hDestSurf = g_pLTClient->GetScreenSurface();
 
 	// Go into optimized2d so the multiplayer info can draw
 	g_pLTClient->StartOptimized2D();
@@ -771,14 +770,14 @@ LTBOOL CLoadingScreen::Update()
 	}
 
 
-    g_pLTClient->EndOptimized2D();
+	g_pLTClient->EndOptimized2D();
 
 	g_pLTClient->End3D(END3D_CANDRAWCONSOLE);
 
 
-    g_pLTClient->FlipScreen(0);
+	g_pLTClient->FlipScreen(0);
 
-	LeaveCriticalSection(&m_MissionUpdate);
+    m_MissionUpdate.Leave();
 
 	// Count it..
 	++m_nFrameCounter;
@@ -956,7 +955,7 @@ void CLoadingScreen::UpdateMissionInfo()
 	if( m_pRenderScreen )
 		return;
 
-	EnterCriticalSection(&m_MissionUpdate);
+	Sync_CSAuto CS{m_MissionUpdate};
 
 	if( !g_pMissionMgr->IsCustomLevel( ))
 	{
@@ -1037,7 +1036,7 @@ void CLoadingScreen::UpdateMissionInfo()
 
 
 
-	LeaveCriticalSection(&m_MissionUpdate);
+	// LeaveCriticalSection(&m_MissionUpdate);
 }
 
 bool CLoadingScreen::NeedsPostLoadScreen() const

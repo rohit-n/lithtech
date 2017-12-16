@@ -77,7 +77,7 @@ private:
 	HANDLE m_hEventEnd; // Stop rendering, damnit!
 	HANDLE m_hEventThreadRunning; // Ok, the thread is done initializing, continue on
 
-	CRITICAL_SECTION m_MissionUpdate;
+	Sync_CS m_MissionUpdate;
 	
 #endif
 
