@@ -11,7 +11,7 @@
 #include "StdAfx.h"
 #include "MenuPlayer.h"
 #include "InterfaceMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "ClientResShared.h"
 
 
@@ -57,7 +57,7 @@ LTBOOL CSkillPopup::OnMouseMove(int x, int y)
 LTBOOL CSkillPopup::HandleKeyDown (int vkey, int rep)
 {
 
-	if (vkey == VK_ESCAPE)
+	if (vkey == SDLK_ESCAPE)
 	{
 		m_bWaitForUpdate = LTFALSE;
 		g_pInterfaceMgr->GetMenuMgr()->HideSubMenu(true);

@@ -293,7 +293,7 @@ LTBOOL CMenuIntel::HandleKeyDown(int key, int rep)
 {
 	// Close popup if necessary...Use OnEscape
 	// to handle escape key...
-	if (m_PopupText.IsVisible() && (VK_ESCAPE != key))
+	if (m_PopupText.IsVisible() && (SDLK_ESCAPE != key))
 	{
 		ClosePopup();
 		return LTTRUE; 

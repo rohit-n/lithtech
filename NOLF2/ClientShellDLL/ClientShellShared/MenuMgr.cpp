@@ -78,7 +78,7 @@ LTBOOL CMenuMgr::Init()
 	m_nMenuPos		= g_pLayoutMgr->GetMenuPosition();
 
 	char szTemp[128];
-	char *pTag = "Menu";
+	const char *pTag = "Menu";
 
 	g_pLayoutMgr->GetString(pTag,"SlideInSound",szTemp,sizeof(szTemp));
 	m_sSlideInSound = szTemp;
@@ -160,7 +160,7 @@ LTBOOL CMenuMgr::HandleKeyDown (int vkey, int rep)
 
 	//if the key is escape, switch to the system menu, only if there is no open menu
 	//otherwise (i.e. either not Escape or there is no open menu) see if we hit a hot key and switch to the menu
-	if (vkey != VK_ESCAPE || !m_pCurrentMenu)
+	if (vkey != SDLK_ESCAPE || !m_pCurrentMenu)
 	{
 		LTBOOL found = LTFALSE;
 		KeyArray::iterator iter = m_HotKeys.begin();
@@ -200,7 +200,7 @@ LTBOOL CMenuMgr::HandleKeyDown (int vkey, int rep)
 	{
 		switch (vkey)
 		{
-		case VK_LEFT:
+		case SDLK_LEFT:
 			{
 				handled = pMenu->OnLeft();
 				if (!handled && pMenu == m_pCurrentMenu)
@@ -210,7 +210,7 @@ LTBOOL CMenuMgr::HandleKeyDown (int vkey, int rep)
 				}
 				break;
 			}
-		case VK_RIGHT:
+		case SDLK_RIGHT:
 			{
 				LTBOOL handled = LTFALSE;
 				handled = pMenu->OnRight();
@@ -221,7 +221,7 @@ LTBOOL CMenuMgr::HandleKeyDown (int vkey, int rep)
 				}
 				break;
 			}
-		case VK_UP:
+		case SDLK_UP:
 			{
 				if (pMenu->OnUp())
 				{
@@ -230,7 +230,7 @@ LTBOOL CMenuMgr::HandleKeyDown (int vkey, int rep)
 				}
 				break;
 			}
-		case VK_DOWN:
+		case SDLK_DOWN:
 			{
 				if (pMenu->OnDown())
 				{
@@ -239,7 +239,7 @@ LTBOOL CMenuMgr::HandleKeyDown (int vkey, int rep)
 				}
 				break;
 			}
-		case VK_RETURN:
+		case SDLK_RETURN:
 			{
 				if (pMenu->OnEnter())
 				{
@@ -293,7 +293,7 @@ void CMenuMgr::HandleKeyUp (int vkey)
 
 	}
 
-	if (vkey == VK_ESCAPE)
+	if (vkey == SDLK_ESCAPE)
 	{
 		CLTGUIWindow *pMenu = LTNULL;
 		if (m_pSubMenu)

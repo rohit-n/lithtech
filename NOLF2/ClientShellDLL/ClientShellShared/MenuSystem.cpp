@@ -92,7 +92,7 @@ LTBOOL CMenuSystem::Init()
 	m_pServerCtrl = ( CLTGUITextCtrl* )m_List.GetControl( nServerCtrlId );
 
 
-	g_pInterfaceMgr->GetMenuMgr()->RegisterHotKey(VK_ESCAPE,MENU_ID_SYSTEM);
+	g_pInterfaceMgr->GetMenuMgr()->RegisterHotKey(SDLK_ESCAPE,MENU_ID_SYSTEM);
 
 	return LTTRUE;
 }

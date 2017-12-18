@@ -355,9 +355,9 @@ LTBOOL CMessageBox::HandleKeyDown(int key, int rep)
 		// when the edit box is not selected
 		if (m_Dlg.GetSelectedControl() != m_pEdit)
 		{
-			if (key == VK_LEFT)
+			if (key == SDLK_LEFT)
 				return m_Dlg.OnUp();
-			if (key == VK_RIGHT)
+			if (key == SDLK_RIGHT)
 				return m_Dlg.OnDown();
 		}
 
@@ -368,24 +368,24 @@ LTBOOL CMessageBox::HandleKeyDown(int key, int rep)
     LTBOOL handled = LTFALSE;
 	switch (key)
 	{
-	case VK_LEFT:
-	case VK_UP:
+	case SDLK_LEFT:
+	case SDLK_UP:
 		{
 			handled = m_Dlg.OnUp();
 			break;
 		}
-	case VK_RIGHT:
-	case VK_DOWN:
+	case SDLK_RIGHT:
+	case SDLK_DOWN:
 		{
 			handled = m_Dlg.OnDown();
 			break;
 		}
-	case VK_RETURN:
+	case SDLK_RETURN:
 		{
 			handled = m_Dlg.OnEnter();
 			break;
 		}
-	case VK_ESCAPE:
+	case SDLK_ESCAPE:
 		{
 			Close(LTFALSE);
 			handled = LTTRUE;

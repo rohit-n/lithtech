@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ModelButeMgr.h"
 #include "CommonUtilities.h"
 #include "UberAssert.h"
@@ -873,7 +873,7 @@ ModelId CModelButeMgr::GetModelId(const char *szName)
     int iModel;
     for ( iModel = 0 ; iModel < m_cModels ; iModel++ )
 	{
-        if ( !_stricmp(szName, m_aModels[iModel].m_szName) )
+        if ( !stricmp(szName, m_aModels[iModel].m_szName) )
 		{
 			return (ModelId)iModel;
 		}
@@ -1097,7 +1097,7 @@ ModelNode CModelButeMgr::GetSkeletonNode(ModelSkeleton eModelSkeleton, const cha
 
 	for ( int iNode = 0 ; iNode < m_aSkeletons[eModelSkeleton].m_cNodes ; iNode++ )
 	{
-        if ( !_stricmp(m_aSkeletons[eModelSkeleton].m_aNodes[iNode].m_szName, szName) )
+        if ( !stricmp(m_aSkeletons[eModelSkeleton].m_aNodes[iNode].m_szName, szName) )
 		{
 			return (ModelNode)iNode;
 		}

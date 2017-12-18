@@ -152,7 +152,6 @@ uint32_t LoadString(HMODULE mod, uint32_t msgCode, char *buff, size_t len)
 	return 0;
 }
 
-#define INFINITE 0
 #define WAIT_OBJECT_0 0
 #define WAIT_TIMEOUT 0xffffffffL
 

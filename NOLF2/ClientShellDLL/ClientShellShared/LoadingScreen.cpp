@@ -31,8 +31,10 @@ CLoadingScreen::CLoadingScreen() :
 	m_eCurState(STATE_NONE),m_MissionUpdate()
 {
 	// Create the event handles
+#ifndef __LINUX
 	m_hEventEnd = CreateEvent(NULL, TRUE, FALSE, NULL);
 	m_hEventThreadRunning = CreateEvent(NULL, TRUE, FALSE, NULL);
+#endif
 
 	m_nOldFarZ = 10000;
 	m_bOldFogEnable = LTFALSE;
@@ -63,12 +65,10 @@ CLoadingScreen::~CLoadingScreen()
 {
 	// Terminate the object, just in case...
 	Term();
-
+#ifndef __LINUX
 	DeleteObject(m_hEventEnd);
 	DeleteObject(m_hEventThreadRunning);
-
-	DeleteCriticalSection(&m_MissionUpdate);
-
+#endif
 }
 
 void CLoadingScreen::CreateScaleFX(char *szFXName)
@@ -301,9 +301,9 @@ LTBOOL CLoadingScreen::Init()
 			else
 			{
 				m_missionname = LoadTempString( IDS_CUSTOM_LEVEL );
+				char const* pszWorldName = g_pMissionMgr->GetCurrentWorldName( );
 #ifndef __LINUX				
 				// Split the worldname up into parts so we can get the load string.
-				char const* pszWorldName = g_pMissionMgr->GetCurrentWorldName( );
 				char szWorldTitle[MAX_PATH] = "";
 				_splitpath( pszWorldName, NULL, NULL, szWorldTitle, NULL );
 				m_levelname = szWorldTitle;
@@ -675,6 +675,7 @@ unsigned long WINAPI CLoadingScreen::ThreadBootstrap(void *pData)
 
 int CLoadingScreen::RunThread()
 {
+#ifndef __LINUX
 	// Change state
 	m_eCurState = STATE_ACTIVE;
 
@@ -690,6 +691,7 @@ int CLoadingScreen::RunThread()
 		// Make sure we're not running faster than 10fps so stuff can still happen in the background
 		SDL_Delay(100);
 	}
+#endif // will work something out using either std::thread or SDL_Thread
 	return 0;
 }
 
@@ -836,6 +838,7 @@ LTBOOL CLoadingScreen::Show(LTBOOL bRun)
 
 LTBOOL CLoadingScreen::Pause()
 {
+#ifndef __LINUX
 	// Make sure we're in the right state
 	if (m_eCurState != STATE_ACTIVE)
 		return LTFALSE;
@@ -846,12 +849,14 @@ LTBOOL CLoadingScreen::Pause()
 
 	// Ok, it's just visible now..
 	m_eCurState = STATE_SHOW;
+#endif // will work something out using either std::thread or SDL_Thread 
 
 	return LTTRUE;
 }
 
 LTBOOL CLoadingScreen::Resume()
 {
+#ifndef __LINUX
 	// Ensure our state
 	if (m_eCurState != STATE_SHOW)
 		return LTFALSE;
@@ -870,7 +875,7 @@ LTBOOL CLoadingScreen::Resume()
 
 	// Wait for the loading thread to stop touching stuff..
 	WaitForSingleObject(m_hEventThreadRunning, INFINITE);
-
+#endif // will work something out using either std::thread or SDL_Thread
 	// Now we're actually active.  (Thank you Mr. Thread..)
 	return LTTRUE;
 }
