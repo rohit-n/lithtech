@@ -14,7 +14,7 @@
 #include "ClientUtilities.h"
 #include "ParticleTrailSegmentFX.h"
 #include "GameClientShell.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "WeaponFXTypes.h"
 #include "VarTrack.h"
 

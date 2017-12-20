@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ProfileUtils.h"
 #include "butemgr.h"
 #include "ltbasedefs.h"

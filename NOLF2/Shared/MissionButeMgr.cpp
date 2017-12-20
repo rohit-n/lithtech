@@ -9,7 +9,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "MissionButeMgr.h"
 #include "CommonUtilities.h"
 #include "WeaponMgr.h"

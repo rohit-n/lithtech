@@ -12,12 +12,12 @@
 
 #include "StdAfx.h"
 #include "PolyGridFX.h"
-#include "Plasma.h"
+#include "plasma.h"
 #include "iltclient.h"
 #include "ClientServerShared.h"
 #include "GameClientShell.h"
 #include "GameSettings.h"
-#include "ILTCommon.h"  // For g_pCommonLT
+#include "iltcommon.h"  // For g_pCommonLT
 #include "VarTrack.h"
 
 //variable to track if the artist wants to simulate the minimum frame rate of the polygrids

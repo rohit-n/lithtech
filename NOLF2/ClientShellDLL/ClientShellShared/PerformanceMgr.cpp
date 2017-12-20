@@ -11,12 +11,13 @@
 #include "StdAfx.h"
 
 #include "PerformanceMgr.h"
-#include "interfacemgr.h"
+#include "InterfaceMgr.h"
 
 #include <iostream>			// For input and output
 #include <fstream>			// For the files
+#ifndef __LINUX
 #include <IO.h>				// Find first, find next, etc.
-
+#endif
 
 namespace
 {

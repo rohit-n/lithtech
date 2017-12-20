@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // Parsed message class implementation
 
-#include "stdafx.h"
+#include "StdAfx.h"
 
 #include "ParsedMsg.h"
 

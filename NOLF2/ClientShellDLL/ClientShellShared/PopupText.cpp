@@ -145,7 +145,7 @@ void CPopupText::Update()
 LTBOOL CPopupText::OnKeyDown(int key, int rep)
 {
 	// They pressed escape - close the popup
-	if (key == VK_ESCAPE)
+	if (key == SDLK_ESCAPE)
 	{
 		Close();
         return LTTRUE;

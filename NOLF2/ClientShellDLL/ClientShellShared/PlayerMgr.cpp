@@ -42,7 +42,7 @@
 #include "PolyGridFX.h"
 #include "PlayerViewAttachmentMgr.h"
 #include "LTEulerAngles.h"
-#include "DoomsDayPieceFX.h"
+#include "DoomsdayPieceFX.h"
 
 CPlayerMgr* g_pPlayerMgr = NULL;
 
@@ -771,7 +771,7 @@ LTBOOL CPlayerMgr::OnKeyDown(int key, int rep)
 
 	if (m_bUsingExternalCamera)
 	{
-		if (key == VK_SPACE)
+		if (key == SDLK_SPACE)
 		{
 			// Send an activate message to stop the cinemaitc...
 

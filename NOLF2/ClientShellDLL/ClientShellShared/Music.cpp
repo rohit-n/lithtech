@@ -265,8 +265,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 			if (parse.m_Args[1] != NULL)
 			{
 				// change intensity command
-				if ((_stricmp(parse.m_Args[1], "intensity") == 0) ||
-					(_stricmp(parse.m_Args[1], "i") == 0))
+				if ((stricmp(parse.m_Args[1], "intensity") == 0) ||
+					(stricmp(parse.m_Args[1], "i") == 0))
 				{
 					if (parse.m_nArgs > 2)
 					{
@@ -285,8 +285,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 					}
 				}
 				// play secondary segment command
-				if ((_stricmp(parse.m_Args[1], "secondary") == 0) ||
-					(_stricmp(parse.m_Args[1], "ps") == 0))
+				if ((stricmp(parse.m_Args[1], "secondary") == 0) ||
+					(stricmp(parse.m_Args[1], "ps") == 0))
 
 				{
 					if (parse.m_nArgs > 2)
@@ -305,8 +305,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 					}
 				}
 				// play motif command
-				if ((_stricmp(parse.m_Args[1], "motif") == 0) ||
-					(_stricmp(parse.m_Args[1], "pm") == 0))
+				if ((stricmp(parse.m_Args[1], "motif") == 0) ||
+					(stricmp(parse.m_Args[1], "pm") == 0))
 				{
 					if (parse.m_nArgs > 3)
 					{
@@ -335,8 +335,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 					}
 				}
 				// set volume command
-				if ((_stricmp(parse.m_Args[1], "volume") == 0) ||
-					(_stricmp(parse.m_Args[1], "v") == 0))
+				if ((stricmp(parse.m_Args[1], "volume") == 0) ||
+					(stricmp(parse.m_Args[1], "v") == 0))
 				{
 					if (parse.m_nArgs > 2)
 					{
@@ -348,8 +348,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 					}
 				}
 				// stop secondary segment command
-				if ((_stricmp(parse.m_Args[1], "stopsecondary") == 0) ||
-					(_stricmp(parse.m_Args[1], "ss") == 0))
+				if ((stricmp(parse.m_Args[1], "stopsecondary") == 0) ||
+					(stricmp(parse.m_Args[1], "ss") == 0))
 
 				{
 					if (parse.m_nArgs > 2)
@@ -370,8 +370,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 					}
 				}
 				// stop motif command
-				if ((_stricmp(parse.m_Args[1], "stopmotif") == 0) ||
-					(_stricmp(parse.m_Args[1], "sm") == 0))
+				if ((stricmp(parse.m_Args[1], "stopmotif") == 0) ||
+					(stricmp(parse.m_Args[1], "sm") == 0))
 				{
 					if (parse.m_nArgs > 3)
 					{
@@ -400,8 +400,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 					}
 				}
 				// play command
-				if ((_stricmp(parse.m_Args[1], "play") == 0) ||
-					(_stricmp(parse.m_Args[1], "p") == 0))
+				if ((stricmp(parse.m_Args[1], "play") == 0) ||
+					(stricmp(parse.m_Args[1], "p") == 0))
 
 				{
 					int nIntensity = -1;
@@ -426,8 +426,8 @@ void CMusic::ProcessMusicMessage(const char* pMessage)
 					Play(nIntensity, nEnact);
 				}
 				// stop command
-				if ((_stricmp(parse.m_Args[1], "stop") == 0) ||
-					(_stricmp(parse.m_Args[1], "s") == 0))
+				if ((stricmp(parse.m_Args[1], "stop") == 0) ||
+					(stricmp(parse.m_Args[1], "s") == 0))
 
 				{
 					// enact time to stop at
