@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import os
 
 logs = []
 with open(sys.argv[1], 'r') as log:
@@ -32,13 +33,28 @@ for l in logs:
         if k in l:
             counts[k] += 1
 
-if 'Fail EXE_Lithtech' in logs:
-    print('\n'.join(warns))
-
 fmt = 'Pass:  {Pass}\nFail:  {Fail}\n'
 fmt += "Warn:  {warning}\nUnDef: {undefined reference}"
 print(fmt.format(**counts))
 print('warns {0} vs counts {1}'.format(len(warns), counts['warning']))
+
+must_pass = [
+    'EXE_Lithtech',
+    'Test_RegMgr',
+    'Test_CShell',
+]
+failed = False
+for part in must_pass:
+    if 'Fail ' + part in logs:
+        failed = True
+
+if failed:
+    print('\n'.join(warns))
+    print('\n'.join(errs))
+    print("critical parts didn't build, check build log:")
+    os.system('tests/upload_logs.sh')
+    sys.exit(1)
+
 if mins['Pass'] > counts['Pass']:
     print('Pass parts have gone below known limits')
     print('\n'.join(errs))
