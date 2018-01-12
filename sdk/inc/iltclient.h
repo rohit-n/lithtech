@@ -3769,7 +3769,7 @@ what you want and it fills in pData.
 
 Used for: Misc.
 */
-    LTRESULT (*GetEngineHook)(char *pName, void **pData);
+    LTRESULT (*GetEngineHook)(const char *pName, void **pData);
 
 /*!
 \param pCaps Name of engine hook.

@@ -164,7 +164,8 @@ Retry will step into the debugger. You should\n\
 only select this option if you are currently\n\
 running the game under a debugger.\n", szMessage);
 
-		SDL_Window *win = SDL_GetGrabbedWindow();
+		SDL_Window *win = nullptr;
+		g_pLTClient->GetEngineHook("hwnd", (void**)&win);
 
 		int nResult = CreateMessageBox(win, szBuffer);
 
@@ -196,7 +197,8 @@ Retry will step into the debugger. You should\n\
 only select this option if you are currently\n\
 running the game under a debugger.\n", szMessage);
 
-		SDL_Window *win = SDL_GetGrabbedWindow();
+		SDL_Window *win = nullptr;
+		g_pLTClient->GetEngineHook("hwnd", (void**)&win);
 
 		int nResult = CreateMessageBox(win, szBuffer);
 

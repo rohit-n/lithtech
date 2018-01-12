@@ -1,6 +1,8 @@
 #include "ltbasedefs.h"
 
 #include "iclientshell.h"
+#include "iltclient.h"
+
 class MyShell : public IClientShellStub
 {
     bool QuitSent=false;
@@ -14,12 +16,13 @@ public:
 };
 
 define_interface(MyShell, IClientShell)
-
+SETUP_GPLTCLIENT()
 
 LTRESULT
 MyShell::OnEngineInitialized(RMode *mode, LTGUID *appID)
 {
-    SDL_Window *win = SDL_GetGrabbedWindow();
+    SDL_Window *win = nullptr;
+    g_pLTClient->GetEngineHook("SDL_Window", (void**)&win);
     SDL_SetWindowSize(win, mode->m_Width, mode->m_Height);
     SDL_SetWindowDisplayMode(win,nullptr);
     _ren = SDL_GetRenderer(win);

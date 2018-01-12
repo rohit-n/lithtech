@@ -400,7 +400,7 @@ return NULL;     // DAN - temporary
 
 void* dsi_GetMainWindow()
 {
-return (void*)SDL_GetGrabbedWindow();
+    return (void*)g_ClientGlob.m_window;
 }
 
 LTRESULT dsi_DoErrorMessage(char *pMessage)

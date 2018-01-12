@@ -52,7 +52,7 @@ if failed:
     print('\n'.join(warns))
     print('\n'.join(errs))
     print("critical parts didn't build, check build log:")
-    os.system('tests/upload_logs.sh')
+    os.system('../tests/upload_logs.sh')
     sys.exit(1)
 
 if mins['Pass'] > counts['Pass']:
