@@ -102,7 +102,7 @@ void CScreenMgr::HandleKeyDown (int vkey, int rep)
 {
 	if (m_pCurrentScreen)
 	{
-		if (vkey == VK_ESCAPE)
+		if (vkey == SDLK_ESCAPE)
 		{
 			m_pCurrentScreen->Escape();
 		}

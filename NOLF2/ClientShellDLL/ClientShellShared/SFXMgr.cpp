@@ -36,7 +36,7 @@
 #include "ProjectileFX.h"
 #include "LightFX.h"
 #include "PickupItemFX.h"
-#include "DoomsDayPieceFX.h"
+#include "DoomsdayPieceFX.h"
 #include "GadgetTargetFX.h"
 #include "GameClientShell.h"
 #include "CharacterFX.h"

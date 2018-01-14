@@ -759,8 +759,14 @@ void CScreenHost::CreateDefaultCampaign()
 		MISSION *pMission = g_pMissionButeMgr->GetMission(nMission);
 		if (pMission)
 		{
-			char szWorldTitle[MAX_PATH] = "";
+			char szWorldTitle[MAX_PATH];
+#ifndef __LINUX
 			_splitpath( pMission->aLevels[0].szLevel, NULL, NULL, szWorldTitle, NULL );
+#else
+            std::string worldTitle = split(split(std::string{pMission->aLevels[0].szLevel},'/').back(), '.').front();
+			memcpy(szWorldTitle, worldTitle.c_str(), worldTitle.length());
+			szWorldTitle[worldTitle.length()] = '\0';
+#endif
 
 			bAdd = false;
 			switch (g_pGameClientShell->GetGameType())

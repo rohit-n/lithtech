@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 #include "StdAfx.h"
-#include "screentintmgr.h"
+#include "ScreenTintMgr.h"
 #include "GameClientShell.h"
 
 

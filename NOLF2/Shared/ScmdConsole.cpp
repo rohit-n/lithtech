@@ -11,13 +11,13 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ScmdConsole.h"
 #include "ScmdShared.h"
 #include "ParsedMsg.h"
-#include "resshared.h"
+#include "ResShared.h"
 #include "DebugNew.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "CommonUtilities.h"
 #include "AutoMessage.h"
 #include "NetDefs.h"
@@ -1046,7 +1046,7 @@ bool ScmdConsoleCommandHandler_ListClients::Receive( ScmdCommandStatus eScmdComm
 				ScmdClientInfo& clientInfo = *iter;
 				
 				// Format the info string.
-				_snprintf( szClientInfo, ARRAY_LEN( szClientInfo ), "%d) [%s] [%d] [%d.%d.%d.%d]", 
+				snprintf( szClientInfo, ARRAY_LEN( szClientInfo ), "%d) [%s] [%d] [%d.%d.%d.%d]", 
 					clientInfo.m_nClientID, clientInfo.m_szName, clientInfo.m_nPing, 
 					clientInfo.m_aIP[0], clientInfo.m_aIP[1], clientInfo.m_aIP[2], clientInfo.m_aIP[3] );
 				szClientInfo[ ARRAY_LEN( szClientInfo ) - 1 ] = 0;
@@ -1101,7 +1101,7 @@ bool ScmdConsoleCommandHandler_ListMissions::Receive( ScmdCommandStatus eScmdCom
 
 				// Write out the mission and indicate if it's the current mission.
 				bool bIsCurrentMission = ( nMissionIndex == nCurrentMission );
-				_snprintf( szOutput, ARRAY_LEN( szOutput ), "%d) [%s]%s", nMissionIndex, 
+				snprintf( szOutput, ARRAY_LEN( szOutput ), "%d) [%s]%s", nMissionIndex, 
 					szMission, (( bIsCurrentMission ) ? " [*]" : "" ));
 				szOutput[ ARRAY_LEN( szOutput ) - 1 ] = 0;
 				ScmdConsole::Instance( ).GetScmdConsoleDriver( ).WriteMessage( szOutput );

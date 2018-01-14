@@ -329,7 +329,7 @@ bool CSaveLoadMgr::ReadSaveINI( const char *pKey, char* pszSaveTitle, uint32 nSa
 bool CSaveLoadMgr::CopyWorkingDir( const char *pDestDir )
 {
 	if( !pDestDir ) return false;
-	if( !_stricmp( GetSaveWorkingDir( ), pDestDir )) return false;
+	if( !stricmp( GetSaveWorkingDir( ), pDestDir )) return false;
 
 	char szDest[MAX_PATH] = {0};
 	sprintf( szDest, "%s\\%s", pDestDir, WORKING_DIR );
@@ -355,7 +355,7 @@ bool CSaveLoadMgr::CopyWorkingDir( const char *pDestDir )
 bool CSaveLoadMgr::CopyToWorkingDir( const char *pSrcDir )
 {
 	if( !pSrcDir ) return false;
-	if( !_stricmp( GetSaveWorkingDir( ), pSrcDir )) return false;
+	if( !stricmp( GetSaveWorkingDir( ), pSrcDir )) return false;
 
 	char szSrc[MAX_PATH] = {0};
 	sprintf( szSrc, "%s\\%s", pSrcDir, WORKING_DIR );

@@ -66,6 +66,8 @@
 	#include <ctype.h>
 	inline int stricmp(const char* string1, const char* string2)
 	{ return strcasecmp(string1, string2); }
+	inline int strnicmp(const char* string1, const char* string2, size_t len)
+	{ return strncasecmp(string1, string2, len); }
 	inline char* strupr(char* s)
 	{ while (*s) { *s = toupper(*s); ++s; } return s; }
 	inline int notSupportedLinux ()

@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "StdAfx.h"
 	#include "WeaponMgr.h"
 	#include "RadarTypeMgr.h"
 
@@ -199,7 +199,7 @@ RADARTYPE *CRadarTypeMgr::GetRadarType(const char *pName )
 
 	while( pCur )
 	{
-		if( *pCur && (*pCur)->szName[0] && (!_stricmp( (*pCur)->szName , pName )) )
+		if( *pCur && (*pCur)->szName[0] && (!stricmp( (*pCur)->szName , pName )) )
 		{
 			return *pCur;
 		}

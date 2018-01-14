@@ -8,13 +8,13 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SkillsButeMgr.h"
 
 
 #ifdef _CLIENTBUILD
 
-#include "clientresshared.h"
+#include "ClientResShared.h"
 #include "ClientUtilities.h"
 
 int GetSkillNameId(eSkill skl)

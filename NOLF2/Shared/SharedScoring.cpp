@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SharedScoring.h"
 #include "MsgIDs.h"
 #ifndef _CLIENTBUILD

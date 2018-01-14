@@ -704,7 +704,7 @@ int CScreenSpriteMgr::CacheTexture(char * pFile)
 	{
 		char * pTextureName = (*iter)->pName;
 
-		if (!strcmpi(pTextureName, pFile))
+		if (!stricmp(pTextureName, pFile))
 		{
 			return (*iter)->iFrameID;
 		}

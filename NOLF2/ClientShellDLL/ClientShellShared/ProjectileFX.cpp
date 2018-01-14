@@ -466,7 +466,7 @@ void CProjectileFX::CreateFlyingSound(const LTVector & vPos, const LTRotation & 
     LTFLOAT fRadius = (LTFLOAT) m_pProjectileFX->nSoundRadius;
 	if (m_pProjectileFX->szSound[0] )
 	{
-		m_hFlyingSound = g_pClientSoundMgr->PlaySoundFromPos((LTVector)vPos, m_pProjectileFX->szSound,
+		m_hFlyingSound = g_pClientSoundMgr->PlaySoundFromPos(vPos, m_pProjectileFX->szSound,
 			fRadius, SOUNDPRIORITY_MISC_LOW, PLAYSOUND_LOOP | PLAYSOUND_GETHANDLE);
 	}
 }

@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SoundFilterMgr.h"
 #include "CommonUtilities.h"
 
@@ -154,7 +154,7 @@ SOUNDFILTER* CSoundFilterMgr::GetFilter(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}

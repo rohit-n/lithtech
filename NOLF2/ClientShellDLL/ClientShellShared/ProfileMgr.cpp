@@ -28,9 +28,22 @@
 
 extern CGameClientShell* g_pGameClientShell;
 
+#ifndef __LINUX
 #include "dinput.h"
 #include <set>
 #include <IO.H>
+#else
+#include <chrono>
+#include <random>
+
+struct GUID {
+	uint32_t Data1;
+	uint16_t Data2;
+	uint16_t Data3;
+	uint8_t Data4[8];
+	
+};
+#endif
 
 VarTrack	g_vtMouseMinSensitivity;
 VarTrack	g_vtMouseMaxSensitivity;
@@ -262,6 +275,29 @@ CUserProfile::CUserProfile()
 
 	m_nSaveVersion = 0;
 }
+#ifdef __LINUX
+static bool CoCreateGuid(GUID *guid)
+{
+	uint32_t seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::default_random_engine engine(seed);
+	std::uniform_int_distribution<uint32_t> dist32;
+	std::uniform_int_distribution<uint16_t> dist16;
+	guid->Data1 = dist32(engine);
+	guid->Data2 = dist16(engine);
+	guid->Data3 = (dist16(engine) & 0x0fff)|0x4000;
+	uint16_t ggg = dist16(engine) % 0x3fff + 0x8000;
+	memcpy(&guid->Data4[0], &ggg, sizeof(ggg));
+	memcpy(&guid->Data4[2], &guid->Data1, sizeof(guid->Data1));
+	memcpy(&guid->Data4[0], &guid->Data2, sizeof(guid->Data2));
+	guid->Data1 = dist32(engine);
+	guid->Data2 = dist16(engine);
+	
+	return true;
+}
+
+#define SUCCEEDED(x) x
+
+#endif
 
 static bool CreatePlayerGuid( char* pszPlayerGuid, int nSize )
 {
@@ -279,9 +315,8 @@ static bool CreatePlayerGuid( char* pszPlayerGuid, int nSize )
 	GUID guid;
 	if( !SUCCEEDED( CoCreateGuid( &guid )))
 		return false;
-
 	// Write the guid into the string.
-	_snprintf( pszPlayerGuid, nSize, "%X-%X-%X-%X%X-%X%X%X%X%X%X", guid.Data1, guid.Data2, 
+	snprintf( pszPlayerGuid, nSize, "%X-%X-%X-%X%X-%X%X%X%X%X%X", guid.Data1, guid.Data2, 
 		guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3], guid.Data4[4], 
 		guid.Data4[5], guid.Data4[6], guid.Data4[7] );
 	pszPlayerGuid[nSize-1] = 0;
@@ -1633,6 +1668,7 @@ void CProfileMgr::Term()
 
 void CProfileMgr::GetProfileList(StringSet& profileList)
 {
+#ifndef __LINUX
 	struct _finddata_t file;
 	intptr_t hFile;
 
@@ -1649,6 +1685,7 @@ void CProfileMgr::GetProfileList(StringSet& profileList)
 		while(_findnext(hFile, &file) == 0);
 	}
 	_findclose(hFile);
+#endif // __LINUX
 }
 
 void CProfileMgr::ClearBindings()

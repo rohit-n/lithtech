@@ -184,6 +184,7 @@ void CPerformanceMgr::BuildConfigList()
 	m_ConfigList.push_back(&cfgDefaultMid);
 	m_ConfigList.push_back(&cfgDefaultLow);
 
+#ifndef __LINUX
 	struct _finddata_t file;
 	intptr_t hFile;
 
@@ -213,7 +214,7 @@ void CPerformanceMgr::BuildConfigList()
 		while(_findnext(hFile, &file) == 0);
 	}
 	_findclose(hFile);
-		
+#endif // __LINUX		
 
 }
 

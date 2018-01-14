@@ -308,7 +308,7 @@ LTBOOL CLoadingScreen::Init()
 				_splitpath( pszWorldName, NULL, NULL, szWorldTitle, NULL );
 				m_levelname = szWorldTitle;
 #else
-                m_levelname = split(std::string{pszWorldName},'/').back().c_str();
+                m_levelname = split(split(std::string{pszWorldName},'/').back(), '.').front().c_str();
 #endif
 			}
 

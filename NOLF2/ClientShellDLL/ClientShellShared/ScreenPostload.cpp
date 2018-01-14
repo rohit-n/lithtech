@@ -180,9 +180,13 @@ void CScreenPostload::OnFocus(LTBOOL bFocus)
 					m_missionname = LoadTempString( IDS_CUSTOM_LEVEL );
 					// Split the worldname up into parts so we can get the load string.
 					char const* pszWorldName = g_pMissionMgr->GetCurrentWorldName( );
+#ifndef __LINUX
 					char szWorldTitle[MAX_PATH] = "";
 					_splitpath( pszWorldName, NULL, NULL, szWorldTitle, NULL );
 					m_levelname = szWorldTitle;
+#else
+					m_levelname = split(split(std::string{pszWorldName},'/').back(), '.').front().c_str();
+#endif
 
 				}
 
