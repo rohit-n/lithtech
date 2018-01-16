@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "Stdafx.h"
+#include "StdAfx.h"
 #include "WeaponMgr.h"
 #include "CommonUtilities.h"
 #include "WeaponFXTypes.h"
@@ -1168,7 +1168,7 @@ WEAPON const *CWeaponMgr::GetWeapon(const char* pWeaponName) const
 
 	for (int i=0; i < m_nNumWeapons; i++)
 	{
-		if (m_pWeaponList[i] && m_pWeaponList[i]->szName[0] && (_stricmp(m_pWeaponList[i]->szName, pWeaponName) == 0))
+		if (m_pWeaponList[i] && m_pWeaponList[i]->szName[0] && (stricmp(m_pWeaponList[i]->szName, pWeaponName) == 0))
 		{
 			return m_pWeaponList[i];
 		}
@@ -1207,7 +1207,7 @@ AMMO const *CWeaponMgr::GetAmmo(char const* pAmmoName) const
 
 	for (int i=0; i < m_nNumAmmos; i++)
 	{
-		if (m_pAmmoList[i] && m_pAmmoList[i]->szName[0] && (_stricmp(m_pAmmoList[i]->szName, pAmmoName) == 0))
+		if (m_pAmmoList[i] && m_pAmmoList[i]->szName[0] && (stricmp(m_pAmmoList[i]->szName, pAmmoName) == 0))
 		{
 			return m_pAmmoList[i];
 		}
@@ -1245,7 +1245,7 @@ MOD const *CWeaponMgr::GetMod(char const* pModName) const
 
 	for (int i=0; i < m_nNumMods; i++)
 	{
-		if (m_pModList[i] && m_pModList[i]->szName[0] && (_stricmp(m_pModList[i]->szName, pModName) == 0))
+		if (m_pModList[i] && m_pModList[i]->szName[0] && (stricmp(m_pModList[i]->szName, pModName) == 0))
 		{
 			return m_pModList[i];
 		}
@@ -1283,7 +1283,7 @@ GEAR const* CWeaponMgr::GetGear(char const* pGearName) const
 
 	for (int i=0; i < m_nNumGear; i++)
 	{
-		if (m_pGearList[i] && m_pGearList[i]->szName[0] && (_stricmp(m_pGearList[i]->szName, pGearName) == 0))
+		if (m_pGearList[i] && m_pGearList[i]->szName[0] && (stricmp(m_pGearList[i]->szName, pGearName) == 0))
 		{
 			return m_pGearList[i];
 		}
@@ -1313,7 +1313,7 @@ WEAPONANIS* CWeaponMgr::GetWeaponAnis(char* pAnisName)
 
 	for (int i=0; i < m_nNumWeaponAnis; i++)
 	{
-		if (m_pWeaponAnisList[i] && m_pWeaponAnisList[i]->szName[0] && (_stricmp(m_pWeaponAnisList[i]->szName, pAnisName) == 0))
+		if (m_pWeaponAnisList[i] && m_pWeaponAnisList[i]->szName[0] && (stricmp(m_pWeaponAnisList[i]->szName, pAnisName) == 0))
 		{
 			return m_pWeaponAnisList[i];
 		}

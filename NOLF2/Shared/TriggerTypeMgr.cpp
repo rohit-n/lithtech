@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "StdAfx.h"
 	#include "WeaponMgr.h"
 	#include "TriggerTypeMgr.h"
 
@@ -198,7 +198,7 @@ TRIGGERTYPE *CTriggerTypeMgr::GetTriggerType( const char *pName )
 
 	while( ppCur )
 	{
-		if( *ppCur && (*ppCur)->szName[0] && (!_stricmp( (*ppCur)->szName, pName )) )
+		if( *ppCur && (*ppCur)->szName[0] && (!stricmp( (*ppCur)->szName, pName )) )
 		{
 			return *ppCur;
 		}

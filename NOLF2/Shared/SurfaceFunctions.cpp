@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "ContainerCodes.h"
 #include "SurfaceFunctions.h"
 #include "ClientServerShared.h"
@@ -193,7 +193,7 @@ char* GetImpactSound(SurfaceType eSurfType, int nAmmoId)
     if (!(pAmmo->pImpactFX->szSound[0])) return LTNULL;
 	SAFE_STRCPY(s_FileBuffer, pAmmo->pImpactFX->szSound);
 
-	if (_stricmp(s_FileBuffer, "SURFACE") == 0)
+	if (stricmp(s_FileBuffer, "SURFACE") == 0)
 	{
 		SURFACE* pSurf = g_pSurfaceMgr->GetSurface(eSurfType);
 		_ASSERT(pSurf);

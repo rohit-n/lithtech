@@ -1,9 +1,9 @@
 
 #include "StdAfx.h"
-#include "SprinklesFX.h"
+#include "sprinklesfx.h"
 #include "FXButeMgr.h"
 #include "ClientServerShared.h"
-#include "commonutilities.h"
+#include "CommonUtilities.h"
 #include "GameClientShell.h"
 
 class ModelObjControl : public FXObjControl

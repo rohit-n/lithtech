@@ -1,10 +1,12 @@
 #include "StdAfx.h"
 #include <stdio.h>
-#include "sys\stat.h"
 #include "WinUtil.h"
+#ifndef __LINUX
+#include "sys/stat.h"
 #include <time.h>
 #include <direct.h>
 #include <IO.h>
+#endif
 #include "ltbasedefs.h"
 
 BOOL CWinUtil::GetMoviesPath (char* strPath)

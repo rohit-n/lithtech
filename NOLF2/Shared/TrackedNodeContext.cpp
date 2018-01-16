@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "TrackedNodeContext.h"
 #include "ModelButeMgr.h"
 #include "UberAssert.h"

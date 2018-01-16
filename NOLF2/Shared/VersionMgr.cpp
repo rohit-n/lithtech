@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "VersionMgr.h"
 #include "regmgr.h"
 #include "ClientServerShared.h"

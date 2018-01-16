@@ -11,7 +11,7 @@
 // (c) 2001-2002 Monolith Productions, Inc.  All Rights Reserved
 // ----------------------------------------------------------------------- //
 
-#include <stdafx.h>
+#include "StdAfx.h"
 
 // Only used in debug builds of the engine...
 

@@ -13,8 +13,10 @@
 // (c) 2001-2002 Monolith Productions, Inc.  All Rights Reserved
 // ----------------------------------------------------------------------- //
 
-#include <stdafx.h>
+#include "stdafx.h"
+#ifndef __LINUX
 #include <crtdbg.h>
+#endif
 #include "UberAssert.h"
 #include "stacktrace.h"
 

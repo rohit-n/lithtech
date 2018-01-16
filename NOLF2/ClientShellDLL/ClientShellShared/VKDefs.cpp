@@ -13,9 +13,9 @@
 
 char VKToASCII (int nKey)
 {
-    LTBOOL bShiftDown = !!(GetKeyState (VK_SHIFT) & 0x8000);
-    LTBOOL bCapsLockOn = !!(GetKeyState (VK_CAPITAL) & 0x01);
-    LTBOOL bNumLockOn = !!(GetKeyState (VK_NUMLOCK) & 0x01);
+    LTBOOL bShiftDown = IsKeyDown(SDLK_LSHIFT) || IsKeyDown(SDLK_RSHIFT);
+    LTBOOL bCapsLockOn = KMOD_CAPS == (SDL_GetModState() & KMOD_CAPS);
+    LTBOOL bNumLockOn = KMOD_NUM == (SDL_GetModState() & KMOD_NUM);
     LTBOOL bUpperCase = (bCapsLockOn && !bShiftDown) || (!bCapsLockOn && bShiftDown);
 
 	if (nKey >= 'A' && nKey <= 'Z' && !bUpperCase)
@@ -65,27 +65,27 @@ char VKToASCII (int nKey)
 	{
 		switch (nKey)
 		{
-			case VK_NUMPAD0: nKey = '0'; break;
-			case VK_NUMPAD1: nKey = '1'; break;
-			case VK_NUMPAD2: nKey = '2'; break;
-			case VK_NUMPAD3: nKey = '3'; break;
-			case VK_NUMPAD4: nKey = '4'; break;
-			case VK_NUMPAD5: nKey = '5'; break;
-			case VK_NUMPAD6: nKey = '6'; break;
-			case VK_NUMPAD7: nKey = '7'; break;
-			case VK_NUMPAD8: nKey = '8'; break;
-			case VK_NUMPAD9: nKey = '9'; break;
+			case SDLK_KP_0: nKey = '0'; break;
+			case SDLK_KP_1: nKey = '1'; break;
+			case SDLK_KP_2: nKey = '2'; break;
+			case SDLK_KP_3: nKey = '3'; break;
+			case SDLK_KP_4: nKey = '4'; break;
+			case SDLK_KP_5: nKey = '5'; break;
+			case SDLK_KP_6: nKey = '6'; break;
+			case SDLK_KP_7: nKey = '7'; break;
+			case SDLK_KP_8: nKey = '8'; break;
+			case SDLK_KP_9: nKey = '9'; break;
 		}
 	}
 	else if (nKey >= 106 && nKey <= 111)
 	{
 		switch (nKey)
 		{
-			case VK_MULTIPLY:	nKey = '*'; break;
-			case VK_ADD:		nKey = '+'; break;
-			case VK_SUBTRACT:	nKey = '-'; break;
-			case VK_DECIMAL:	nKey = '.'; break;
-			case VK_DIVIDE:		nKey = '/'; break;
+			case SDLK_KP_MULTIPLY:	nKey = '*'; break;
+			case SDLK_KP_ADD:		nKey = '+'; break;
+			case SDLK_KP_SUBTRACT:	nKey = '-'; break;
+			case SDLK_KP_DECIMAL:	nKey = '.'; break;
+			case SDLK_KP_DIVIDE:	nKey = '/'; break;
 		}
 	}
 
