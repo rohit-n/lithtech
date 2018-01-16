@@ -13,7 +13,7 @@
 // (c) 2001-2002 Monolith Productions, Inc.  All Rights Reserved
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #ifndef __LINUX
 #include <crtdbg.h>
 #endif

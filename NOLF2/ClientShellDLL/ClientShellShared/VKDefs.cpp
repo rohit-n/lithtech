@@ -82,8 +82,8 @@ char VKToASCII (int nKey)
 		switch (nKey)
 		{
 			case SDLK_KP_MULTIPLY:	nKey = '*'; break;
-			case SDLK_KP_ADD:		nKey = '+'; break;
-			case SDLK_KP_SUBTRACT:	nKey = '-'; break;
+			case SDLK_KP_PLUS:		nKey = '+'; break;
+			case SDLK_KP_MINUS:		nKey = '-'; break;
 			case SDLK_KP_DECIMAL:	nKey = '.'; break;
 			case SDLK_KP_DIVIDE:	nKey = '/'; break;
 		}
