@@ -1214,24 +1214,18 @@ bool CButeMgr::Save(const char* szNewFileName)
 	if (m_bCrypt)
 	{
 #if _MSC_VER >= 1300 || defined(__GNUC__)
-		std::ofstream encrypted_file;
+		std::ofstream encrypted_file{};
+		auto bin{std::ios_base::binary};
 #else
 		ofstream encrypted_file;
+		auto bin{ios_base::binary};
 #endif // VC7
 		if (szNewFileName)
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-            encrypted_file = std::ofstream(szNewFileName, std::ios_base::binary);
-#else
-            encrypted_file = ofstream(szNewFileName, ios_base::binary);
-#endif // VC7
+           encrypted_file.open(szNewFileName, bin);
 		else
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-            encrypted_file = std::ofstream(m_sAttributeFilename, std::ios_base::binary);
-#else
-            encrypted_file = ofstream(m_sAttributeFilename, ios_base::binary);
-#endif // VC7
+            encrypted_file.open(m_sAttributeFilename, bin);
 
-			m_cryptMgr.Encrypt(*m_pSaveData, encrypted_file);
+		m_cryptMgr.Encrypt(*m_pSaveData, encrypted_file);
 	}
 
 	// Delete the buffer.

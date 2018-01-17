@@ -1,8 +1,8 @@
 #include "StdAfx.h"
 #include <stdio.h>
 #include "WinUtil.h"
+#include <sys/stat.h>
 #ifndef __LINUX
-#include "sys/stat.h"
 #include <time.h>
 #include <direct.h>
 #include <IO.h>
@@ -11,6 +11,7 @@
 
 BOOL CWinUtil::GetMoviesPath (char* strPath)
 {
+#ifndef __LINUX
 	char chDrive   = 'A';
 	strPath[0] = '\0';
 
@@ -45,6 +46,9 @@ BOOL CWinUtil::GetMoviesPath (char* strPath)
 	strPath[0] = '\0';
 
 	return FALSE;
+#else
+	return TRUE;
+#endif
 }
 
 BOOL CWinUtil::DirExist (char const* strPath)
@@ -52,20 +56,23 @@ BOOL CWinUtil::DirExist (char const* strPath)
 	if (!strPath || !*strPath) return FALSE;
 
 	BOOL bDirExists = FALSE;
-
 	char szPath[MAX_PATH];
 	SAFE_STRCPY( szPath, strPath );
-
-	if (szPath[strlen(szPath) - 1] == '\\')
+    char last = szPath[strlen(szPath) - 1];
+	if (last == '\\' || last == '/')
 	{
 		szPath[strlen(szPath) - 1] = '\0';
 	}
 
+#ifndef __LINUX
 	UINT oldErrorMode = SetErrorMode (SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
-	struct stat statbuf;
-	int error = stat (szPath, &statbuf);
+#endif
+	struct stat64 statbuf;
+	int error = stat64(szPath, &statbuf);
+#ifndef __LINUX
 	SetErrorMode (oldErrorMode);
-	if (error != -1) bDirExists = TRUE;
+#endif
+	if (error != -1 && S_ISDIR(statbuf.st_mode)) bDirExists = TRUE;
 
 	return bDirExists;
 }
@@ -82,16 +89,22 @@ BOOL CWinUtil::CreateDir (char const* strPath)
 	char szPath[MAX_PATH];
 	SAFE_STRCPY( szPath, strPath );
 
-	char* token = strtok (szPath, "\\");
+#ifndef __LINUX
+	const char *path_sep = "\\";
+#else
+	const char *path_sep = "\\";
+#endif
+
+	char* token = strtok (szPath, "\\/");
 	while (token)
 	{
 		strcat (strPartialPath, token);
 		if (!DirExist (strPartialPath) && strPartialPath[strlen(strPartialPath) - 1] != ':')
 		{
-			if (!CreateDirectory (strPartialPath, NULL)) return FALSE;
+			if (!mkdir(strPartialPath, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) return FALSE;
 		}
-		strcat (strPartialPath, "\\");
-		token = strtok (NULL, "\\");
+		strcat (strPartialPath, path_sep);
+		token = strtok (NULL, "\\/");
 	}
 
 	return TRUE;
@@ -99,11 +112,18 @@ BOOL CWinUtil::CreateDir (char const* strPath)
 
 BOOL CWinUtil::FileExist (char const* strPath)
 {
-	OFSTRUCT ofs;
-	HFILE hFile = OpenFile (strPath, &ofs, OF_EXIST);
-	if (hFile == HFILE_ERROR) return FALSE;
+	BOOL bFileExist = FALSE;
+#ifndef __LINUX
+	UINT oldErrorMode = SetErrorMode (SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
+#endif
+	struct stat64 statbuf;
+	int error = stat64(strPath, &statbuf);
+#ifndef __LINUX
+	SetErrorMode (oldErrorMode);
+#endif
+	if (error != -1 && S_IFREG(statbuf.st_mode)) bFileExist = TRUE;
 
-	return TRUE;
+	return bFileExist;
 }
 
 BOOL CWinUtil::CopyDir( char const* pSrc, char const* pDest )
@@ -231,13 +251,13 @@ void CWinUtil::DebugBreak()
 
 float CWinUtil::GetTime()
 {
-	return (float)GetTickCount() / 1000.0f;
+	return (float)SDL_GetTicks() / 1000.0f;
 }
 
 char* CWinUtil::GetFocusWindow()
 {
 	static char strText[128];
-
+#ifndef __LINUX
 	HWND hWnd = GetFocus();
 	if (!hWnd)
 	{
@@ -246,6 +266,7 @@ char* CWinUtil::GetFocusWindow()
 	}
 
 	GetWindowText (hWnd, strText, 127);
+#endif
 	return strText;
 }
 
