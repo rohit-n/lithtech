@@ -42,6 +42,10 @@ must_pass = [
     'EXE_Lithtech',
     'Test_RegMgr',
     'Test_CShell',
+    'LIB_Lith',
+    'LIB_StdLith',
+    'LIB_MFCStub',
+    'LIB_ButeMgr'
 ]
 failed = False
 for part in must_pass:
