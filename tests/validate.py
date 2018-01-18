@@ -33,6 +33,12 @@ for l in logs:
         if k in l:
             counts[k] += 1
 
+warns = list(set(warns[:]))
+warns.sort()
+
+errs = list(set(errs[:]))
+errs.sort()
+
 fmt = 'Pass:  {Pass}\nFail:  {Fail}\n'
 fmt += "Warn:  {warning}\nUnDef: {undefined reference}"
 print(fmt.format(**counts))
