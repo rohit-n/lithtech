@@ -6,6 +6,16 @@
 #include <time.h>
 #include <direct.h>
 #include <IO.h>
+#else
+#include <fstream>
+#include <iomanip>
+#include <ctime>
+#include <chrono>
+#include <csignal>
+
+// copied definition from unistd.h
+extern "C" int rmdir (const char *__path) __THROW __nonnull ((1));
+
 #endif
 #include "ltbasedefs.h"
 
@@ -92,7 +102,7 @@ BOOL CWinUtil::CreateDir (char const* strPath)
 #ifndef __LINUX
 	const char *path_sep = "\\";
 #else
-	const char *path_sep = "\\";
+	const char *path_sep = "/";
 #endif
 
 	char* token = strtok (szPath, "\\/");
@@ -121,7 +131,7 @@ BOOL CWinUtil::FileExist (char const* strPath)
 #ifndef __LINUX
 	SetErrorMode (oldErrorMode);
 #endif
-	if (error != -1 && S_IFREG(statbuf.st_mode)) bFileExist = TRUE;
+	if (error != -1 && S_ISREG(statbuf.st_mode)) bFileExist = TRUE;
 
 	return bFileExist;
 }
@@ -142,7 +152,7 @@ BOOL CWinUtil::CopyDir( char const* pSrc, char const* pDest )
 	char szDestFile[MAX_PATH] = {0};
 	char szFiles[MAX_PATH] = {0};
 	sprintf(szFiles, "%s\\*.*", pSrc);
-
+#ifndef __LINUX
 	struct _finddata_t file;
 	intptr_t hFile;
 	StringSet fileList;
@@ -171,6 +181,7 @@ BOOL CWinUtil::CopyDir( char const* pSrc, char const* pDest )
 
 		iter++;
 	}
+#endif
 	
 	return TRUE;
 }
@@ -184,7 +195,7 @@ BOOL CWinUtil::EmptyDir( char const* pDir )
 	char szDelFile[MAX_PATH] = {0};
 	char szFiles[MAX_PATH] = {0};
 	sprintf( szFiles, "%s\\*.*", pDir);
-
+#ifndef __LINUX
 	struct _finddata_t file;
 	intptr_t hFile;
 	StringSet fileList;
@@ -209,7 +220,7 @@ BOOL CWinUtil::EmptyDir( char const* pDir )
 		remove( iter->c_str() );
 		iter++;
 	}
-
+#endif
 	return TRUE;
 }
 
@@ -223,30 +234,84 @@ BOOL CWinUtil::RemoveDir( char const* pDir )
 	if( !EmptyDir( pDir )) return FALSE;
 
 	// Ok, delete it...
-
+#ifndef __LINUX
 	_rmdir( pDir );
+#else
+	rmdir( pDir );
+#endif
 
 	return TRUE;
 }
 
 DWORD CWinUtil::WinGetPrivateProfileString (const char* lpAppName, const char* lpKeyName, const char* lpDefault, char* lpReturnedString, DWORD nSize, const char* lpFileName)
 {
+#ifndef __LINUX
 	return GetPrivateProfileString (lpAppName, lpKeyName, lpDefault, lpReturnedString, nSize, lpFileName);
+#else
+	std::string lookup{lpAppName};
+	lookup += ".";
+	lookup += lpKeyName;
+	std::string line;
+	std::ifstream conf{lpFileName};
+	while(!conf.eof()) {
+		conf >> line;
+		if(line.substr(0, lookup.size()) ==  lookup) {
+			auto b = line.find("=") + 1;
+			lookup = line.substr(b);
+			if(lookup.length() < nSize) {
+				strcpy(lpReturnedString, lookup.c_str());
+				return 0;
+			} else {
+				return 2;
+			}
+		}
+	}
+	strcpy(lpReturnedString, lpDefault);
+	return 1;
+#endif
 }
 
 DWORD CWinUtil::WinWritePrivateProfileString (const char* lpAppName, const char* lpKeyName, const char* lpString, const char* lpFileName)
 {
+#ifndef __LINUX
 	return WritePrivateProfileString (lpAppName, lpKeyName, lpString, lpFileName);
+#else
+    // format app.key=str
+	std::string lookup{lpAppName};
+	lookup += ".";
+	lookup += lpKeyName;
+	std::string line;
+	std::fstream conf{lpFileName, std::ios_base::app|std::ios_base::in|std::ios_base::out};
+	while(!conf.eof()) {
+		conf >> line;
+		if(line.substr(0, lookup.size()) ==  lookup) {
+		    conf.seekp(conf.tellg());
+		    conf.seekp(-line.size(), std::ios_base::cur);
+			break;
+		}
+	}
+	conf << lookup << "=" << lpString << '\n';
+	conf.flush();
+	return 0;
+#endif
 }
 
 void CWinUtil::DebugOut (char const* str)
 {
+#ifndef __LINUX
 	OutputDebugString (str);
+#else
+	std::cerr << str << '\n';
+#endif
 }
 
 void CWinUtil::DebugBreak()
 {
+#ifndef __LINUX
 	::DebugBreak();
+#else
+	std::raise(SIGTRAP);
+#endif
 }
 
 float CWinUtil::GetTime()
@@ -266,12 +331,15 @@ char* CWinUtil::GetFocusWindow()
 	}
 
 	GetWindowText (hWnd, strText, 127);
+#else
+	strText[0] = '\0';
 #endif
 	return strText;
 }
 
 void CWinUtil::WriteToDebugFile (char const* strText)
 {
+#ifndef __LINUX
 	FILE* pFile = fopen ("c:\\shodebug.txt", "a+t");
 	if (!pFile) return;
 
@@ -288,4 +356,10 @@ void CWinUtil::WriteToDebugFile (char const* strText)
 	fwrite ("\n", 1, 1, pFile);
 
 	fclose (pFile);
+#else
+	std::ofstream file{"~/shodebug.log", std::ios_base::app};
+	auto timestamp = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	file << '[' << std::put_time(std::localtime(&timestamp), "%F %T") << "]  ";
+    file << strText << '\n';
+#endif
 }

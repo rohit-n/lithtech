@@ -406,7 +406,7 @@ private:
 
 	// Used to define map of strings to TableOfItems.
 	typedef stdext::hash_map< char const*, TableOfItems*, ButeMgrHashCompare > TableOfTags;
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
 	// Used to define dictionary of strings.
 	// This must be case sensitive!
 	typedef std::unordered_set< CString, std::hash< char const* >, equal_str > StringHolder;
@@ -487,7 +487,7 @@ private:
 	};
 	static bool GetTagsTraverseFunc( char const* pszTagName, TableOfItems& theTableOfItems, void* pContext );
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300 || defined(__LINUX)
 	std::istream* m_pData;
 	std::iostream *m_pSaveData;
 #else
@@ -579,12 +579,12 @@ inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* crypt
 {
 	m_bCrypt = true;
 	m_cryptMgr.SetKey(cryptKey);
-#ifndef __GNUC__
+#ifndef __LINUX
 	char* buf2 = new char[(unsigned int)nLen];
 #endif
 #if _MSC_VER >= 1300
 	std::ostrstream pOss{buf2, nLen};
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
 	std::string buffer{};
 	buffer.reserve(nLen);
 	std::ostringstream pOss{buffer};
@@ -595,7 +595,7 @@ inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* crypt
 
 #if _MSC_VER >= 1300
 	std::istrstream IStream{const_cast<const char *>(buf2), pOss.pcount()};
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
     std::istringstream IStream{const_cast<const std::string&>(buffer)};
 #else
 	istrstream IStream(buf2, pOss->pcount());
@@ -603,7 +603,7 @@ inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* crypt
 
 	Reset();
 
-#ifndef __GNUC__
+#ifndef __LINUX
 	bool retVal = Parse( IStream );
 
 	delete buf2;
@@ -622,7 +622,7 @@ inline bool CButeMgr::Parse(CRezItm* pItem, int decryptCode)
 		return false;
 #if _MSC_VER >= 1300
 	std::istrstream pIStream{(char*)pItem->Load(), pItem->GetSize()};
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
 	std::istringstream pIStream{std::string{(char*)pItem->Load(), pItem->GetSize()}};
 #else
 	istrstream IStream((char*)pItem->Load(), pItem->GetSize());
@@ -646,7 +646,7 @@ inline bool CButeMgr::Parse(CRezItm* pItem, const char* cryptKey)
 	int len = pItem->GetSize();
 #if _MSC_VER >= 1300
 	std::istrstream Iss{buf1, len};
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
 	std::istringstream Iss{std::string{buf1, len}};
 #else
 	istrstream Iss(buf1, len);
@@ -672,7 +672,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, int decryptCode,
 		return false;
 #if _MSC_VER >= 1300
 	std::istrstream IStream{(char*)pData, size};
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
 	std::istringstream IStream{std::string{(char*)pData, size}};
 #else
 	istrstream IStream((char*)pData, size);
@@ -696,7 +696,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 	size_t len = size;
 #if _MSC_VER >= 1300
 	std::istrstream Iss(buf1, len);
-#elif defined(__GNUC__)
+#elif defined(__LINUX)
 	std::istringstream Iss{std::string{buf1, len}};
 #else
 	istrstream Iss(buf1, len);
@@ -715,7 +715,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 
 inline bool CButeMgr::Parse(CString sAttributeFilename, int decryptCode)
 {
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300 || defined(__LINUX)
 	std::ifstream IStream {sAttributeFilename, std::ios_base::in};
 #else
 	ifstream IStream(sAttributeFilename, ios::in | ios::nocreate);
@@ -734,19 +734,17 @@ inline bool CButeMgr::Parse(CString sAttributeFilename, int decryptCode)
 
 inline bool CButeMgr::Parse(CString sAttributeFilename, const char* cryptKey)
 {
-#if _MSC_VER >= 1300 || defined(__GNUC__)
+#if _MSC_VER >= 1300 || defined(__LINUX)
 	std::ifstream Is(sAttributeFilename, std::ios_base::binary);
+	auto e{std::ios_base::end};
 #else
 	ifstream Is(sAttributeFilename, ios::nocreate | ios::binary);
+	auto e{ios_base::end};
 #endif // VC7
 	if (!Is)
 		return false;
 
-#if _MSC_VER >= 1300 || defined(__GNUC__)
-	Is.seekg(0, std::ios_base::end);
-#else
-	Is.seekg(0, ios::end);
-#endif // VC7
+	Is.seekg(0, e);
 	std::streamoff len = Is.tellg();
 
 	Is.seekg(0);
