@@ -54,7 +54,7 @@ LTRESULT        OGlRenderStruct::SetOccluderEnabled(uint32 nID, bool bEnabled){r
 LTRESULT        OGlRenderStruct::GetOccluderEnabled(uint32 nID, bool *pEnabled){ *pEnabled=false; return LT_OK; }
 uint32	        OGlRenderStruct::GetTextureEffectVarID(const char* pszEffectGroup, uint32 nStage){return 0;}
 bool			OGlRenderStruct::SetTextureEffectVar(uint32 nVarID, uint32 nVar, float fValue){return true;}
-bool	        OGlRenderStruct::IsObjectGroupEnabled(uint32 nGroup){return false;}
+bool	        OGlRenderStruct::IsObjectGroupEnabled(uint32 nGroup){return true;}
 void			OGlRenderStruct::SetObjectGroupEnabled(uint32 nGroup, bool bEnable){}
 void			OGlRenderStruct::SetAllObjectGroupEnabled(){}
 bool			OGlRenderStruct::AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo){return true;}
