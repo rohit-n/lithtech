@@ -15,7 +15,7 @@
 
 #include "msgids.h"
 
-#include "clientmultiplayermgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "iserverdir.h"
 
 // Sample rate

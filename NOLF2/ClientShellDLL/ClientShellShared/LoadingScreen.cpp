@@ -302,14 +302,14 @@ LTBOOL CLoadingScreen::Init()
 			{
 				m_missionname = LoadTempString( IDS_CUSTOM_LEVEL );
 				char const* pszWorldName = g_pMissionMgr->GetCurrentWorldName( );
+				char szWorldTitle[MAX_PATH] = "";
 #ifndef __LINUX				
 				// Split the worldname up into parts so we can get the load string.
-				char szWorldTitle[MAX_PATH] = "";
 				_splitpath( pszWorldName, NULL, NULL, szWorldTitle, NULL );
-				m_levelname = szWorldTitle;
 #else
-                m_levelname = split(split(std::string{pszWorldName},'/').back(), '.').front().c_str();
+                getLevelName(pszWorldName, szWorldTitle);
 #endif
+				m_levelname = szWorldTitle;
 			}
 
 		}

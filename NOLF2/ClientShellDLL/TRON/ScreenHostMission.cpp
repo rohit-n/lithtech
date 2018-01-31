@@ -8,7 +8,7 @@
 #include "ClientRes.h"
 #include "NetDefs.h"
 #include "profileMgr.h"
-#include "clientmultiplayermgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "WinUtil.h"
 
 #include "GameClientShell.h"

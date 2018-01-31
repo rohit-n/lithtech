@@ -15,7 +15,7 @@
 #include "CommonUtilities.h"
 #include "ClientRes.h"
 #include "MissionMgr.h"
-#include "clientmultiplayermgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "WinUtil.h"
 #include "ClientSaveLoadMgr.h"
 #include "GameClientShell.h"

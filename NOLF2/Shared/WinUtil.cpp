@@ -15,14 +15,23 @@
 
 // copied definition from unistd.h
 extern "C" int rmdir (const char *__path) __THROW __nonnull ((1));
+extern "C" char* getcwd (char *__path, size_t __len) __THROW __nonnull ((1));
 
+static inline int _rmdir(const char *p){
+	return rmdir(p);
+}
+
+static inline char* _getcwd(char *p, size_t l){
+	return getcwd(p, l);
+}
 #endif
 #include "ltbasedefs.h"
 
 BOOL CWinUtil::GetMoviesPath (char* strPath)
 {
-#ifndef __LINUX
-	char chDrive   = 'A';
+	if (strPath == nullptr)
+		return FALSE;
+    // never derefence a raw pointer before checking if it's valid
 	strPath[0] = '\0';
 
 	char strTemp[256];
@@ -39,6 +48,8 @@ BOOL CWinUtil::GetMoviesPath (char* strPath)
 			return TRUE;
 		}
 	}
+#ifndef __LINUX
+	char chDrive   = 'A';
 
 	while (chDrive <= 'Z')
 	{
@@ -55,10 +66,8 @@ BOOL CWinUtil::GetMoviesPath (char* strPath)
 
 	strPath[0] = '\0';
 
-	return FALSE;
-#else
-	return TRUE;
 #endif
+	return FALSE;
 }
 
 BOOL CWinUtil::DirExist (char const* strPath)
@@ -234,11 +243,7 @@ BOOL CWinUtil::RemoveDir( char const* pDir )
 	if( !EmptyDir( pDir )) return FALSE;
 
 	// Ok, delete it...
-#ifndef __LINUX
 	_rmdir( pDir );
-#else
-	rmdir( pDir );
-#endif
 
 	return TRUE;
 }
@@ -362,4 +367,10 @@ void CWinUtil::WriteToDebugFile (char const* strText)
 	file << '[' << std::put_time(std::localtime(&timestamp), "%F %T") << "]  ";
     file << strText << '\n';
 #endif
+}
+
+void getLevelName(const std::string& path, char* worldname)
+{
+  const std::string& szWorldTitle = split(split(path,'/').back(), '.').front();
+  strcpy(worldname, szWorldTitle.c_str());	
 }

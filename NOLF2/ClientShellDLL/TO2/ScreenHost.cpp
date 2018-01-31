@@ -8,14 +8,14 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenHost.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"
 #include "CommonUtilities.h"
 #include "ClientRes.h"
 #include "MissionMgr.h"
-#include "clientmultiplayermgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "WinUtil.h"
 #include "ClientSaveLoadMgr.h"
 #include "GameClientShell.h"
@@ -763,9 +763,7 @@ void CScreenHost::CreateDefaultCampaign()
 #ifndef __LINUX
 			_splitpath( pMission->aLevels[0].szLevel, NULL, NULL, szWorldTitle, NULL );
 #else
-            std::string worldTitle = split(split(std::string{pMission->aLevels[0].szLevel},'/').back(), '.').front();
-			memcpy(szWorldTitle, worldTitle.c_str(), worldTitle.length());
-			szWorldTitle[worldTitle.length()] = '\0';
+            getLevelName(pMission->aLevels[0].szLevel, szWorldTitle);
 #endif
 
 			bAdd = false;

@@ -636,7 +636,12 @@ bool ScmdServer_Impl::HandleListMissions( HCLIENT hClient, ILTMessage_Read& msg 
 		}
 
 		LEVEL& level = pMission->aLevels[nLevel];
+#ifndef __LINUX
 		_splitpath( level.szLevel, NULL, NULL, fname, NULL );
+#else
+		auto lvlFile = split(std::string{level.szLevel},'/').back();
+		strcpy(fname, lvlFile.c_str());
+#endif
  		cMsg.WriteString( fname );
 	}
 

@@ -4237,8 +4237,12 @@ bool CGameServerShell::OnServerShellInit( )
 		{
 			pszFirstMission = level.szLevel;
 		}
-
+#ifndef __LINUX
 		_splitpath( level.szLevel, NULL, NULL, fname, NULL );
+#else
+		auto lvlFile = split(std::string{level.szLevel},'/').back();
+		strcpy(fname, lvlFile.c_str());
+#endif
  		cLevelsMsg.WriteString( fname );
 	}
 
@@ -5038,7 +5042,12 @@ void CGameServerShell::ServerAppPostStartWorld( )
 	cMsg.Writeuint16(( int )g_pServerMissionMgr->GetCurrentCampaignIndex( ));
 
 	char fname[_MAX_FNAME] = "";
+#ifndef __LINUX
 	_splitpath( GetCurLevel( ), NULL, NULL, fname, NULL );
+#else
+	auto lvlFile = split(std::string{GetCurLevel( )},'/').back();
+	strcpy(fname, lvlFile.c_str());
+#endif
  	cMsg.WriteString( fname );
 
 	// Send to the server app.

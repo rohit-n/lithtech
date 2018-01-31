@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenHostWeapons.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"
@@ -16,7 +16,7 @@
 #include "VarTrack.h"
 #include "NetDefs.h"
 #include "profileMgr.h"
-#include "clientmultiplayermgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "WinUtil.h"
 
 #include "GameClientShell.h"

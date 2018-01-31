@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenFailure.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"
@@ -51,7 +51,7 @@ CScreenFailure::~CScreenFailure()
 // Build the screen
 LTBOOL CScreenFailure::Build()
 {
-	CreateTitle(NULL);
+	CreateTitle(nullptr);
 
 	if (g_pLayoutMgr->HasCustomValue(SCREEN_ID_FAILURE,"FailStringRect"))
 	{

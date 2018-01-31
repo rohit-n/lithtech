@@ -8,15 +8,15 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenHostLevels.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"
 #include "ClientRes.h"
 #include "VarTrack.h"
 #include "NetDefs.h"
-#include "profileMgr.h"
-#include "clientmultiplayermgr.h"
+#include "ProfileMgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "WinUtil.h"
 
 #include "GameClientShell.h"
@@ -304,8 +304,12 @@ LTBOOL CScreenHostLevels::FillAvailList()
 				pCtrl = CreateTextItem((char *)pMission->sName.c_str(),CMD_ADD_LEVEL,pMission->nDescId);
 			else
 			{
-				char szWorldTitle[MAX_PATH] = "";
+				char szWorldTitle[MAX_PATH] = {};
+#ifndef __LINUX
 				_splitpath( pMission->aLevels[0].szLevel, NULL, NULL, szWorldTitle, NULL );
+#else
+				getLevelName(pMission->aLevels[0].szLevel, szWorldTitle);
+#endif
 				pCtrl = CreateTextItem(szWorldTitle,CMD_ADD_LEVEL,0);
 			}
 			pCtrl->SetFont(LTNULL,nListFontSize);
@@ -360,7 +364,11 @@ void CScreenHostLevels::MakeDefaultMissionList()
 		if (pMission)
 		{
 			char szWorldTitle[MAX_PATH] = "";
+#ifndef __LINUX
 			_splitpath( pMission->aLevels[0].szLevel, NULL, NULL, szWorldTitle, NULL );
+#else
+			getLevelName(pMission->aLevels[0].szLevel, szWorldTitle);
+#endif
 
 			switch (g_pGameClientShell->GetGameType())
 			{
@@ -457,7 +465,11 @@ void CScreenHostLevels::AddMissionToList(int nMissionId)
 		else
 		{
 			char szWorldTitle[MAX_PATH] = "";
+#ifndef __LINUX
 			_splitpath( pMission->aLevels[0].szLevel, NULL, NULL, szWorldTitle, NULL );
+#else
+			getLevelName(pMission->aLevels[0].szLevel, szWorldTitle);
+#endif
 			pCtrl = CreateTextItem(szWorldTitle,CMD_REMOVE_LEVEL,0);
 		}
 		pCtrl->SetFont(LTNULL,nListFontSize);

@@ -36,4 +36,6 @@ public:
 	static void WriteToDebugFile (char const* strText);
 };
 
+void getLevelName(const std::string&,char*);
+
 #endif

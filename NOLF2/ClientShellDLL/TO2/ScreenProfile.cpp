@@ -1,7 +1,7 @@
 // ScreenProfile.cpp: implementation of the CScreenProfile class.
 //
 //////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenProfile.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"

@@ -10,12 +10,12 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "TO2GameClientShell.h"
 
 #include "msgids.h"
 
-#include "clientmultiplayermgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "iserverdir.h"
 
 // Sample rate

@@ -8,12 +8,12 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenConfigure.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"
 #include "ClientRes.h"
-#include "dinput.h"
+//s#include "dinput.h"
 #include "InterfaceMgr.h"
 #include "GameClientShell.h"
 
@@ -477,7 +477,7 @@ LTBOOL CScreenConfigure::HandleKeyDown(int key, int rep)
 
 	switch (key)
 	{
-	case VK_DELETE:
+	case SDLK_DELETE:
 		{
 			// Unassign the key
 			if (!m_bWaitingForKey && !m_fInputPauseTimeLeft)
@@ -685,13 +685,13 @@ LTBOOL CScreenConfigure::KeyRemappable (DeviceInput* pInput)
 	if (pInput->m_DeviceType != DEVICETYPE_KEYBOARD) return LTTRUE;
 
 	uint16 nDIK = pInput->m_ControlCode;
-	if (nDIK == DIK_ESCAPE)
+	if (nDIK == SDLK_ESCAPE)
         return LTFALSE;
-	if (nDIK == DIK_PAUSE)
+	if (nDIK == SDLK_PAUSE)
         return LTFALSE;
-	if (nDIK >= DIK_F1 && nDIK <= DIK_F10)
+	if (nDIK >= SDLK_F1 && nDIK <= SDLK_F10)
         return LTFALSE;
-	if (nDIK >= DIK_F11 && nDIK <= DIK_F15)
+	if (nDIK >= SDLK_F11 && nDIK <= SDLK_F15)
         return LTFALSE;
 
 

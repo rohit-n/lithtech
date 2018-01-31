@@ -1,17 +1,18 @@
 // ScreenHostMission.cpp: implementation of the CScreenHostMission class.
 //
 //////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenHostMission.h"
 #include "ScreenMgr.h"
 #include "ScreenCommands.h"
 #include "ClientRes.h"
 #include "NetDefs.h"
-#include "profileMgr.h"
-#include "clientmultiplayermgr.h"
+#include "ProfileMgr.h"
+#include "ClientMultiplayerMgr.h"
 #include "WinUtil.h"
+#ifndef __LINUX
 #include <IO.h>
-
+#endif
 #include "GameClientShell.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -339,7 +340,7 @@ void CScreenHostMission::CreateCampaignList()
 	CUIFont *pFont = g_pInterfaceResMgr->GetFont(nListFont);
 
 	m_CampaignList.insert(DEFAULT_CAMPAIGN);
-
+#ifndef __LINUX // need file listings for LINUX
 	// Get new stuff
 	struct _finddata_t file;
 	intptr_t hFile;
@@ -364,7 +365,7 @@ void CScreenHostMission::CreateCampaignList()
 		while(_findnext(hFile, &file) == 0);
 	}
 	_findclose(hFile);
-
+#endif
 	// add campaigns to the list control
 	for (StringSet::iterator iter = m_CampaignList.begin(); iter != m_CampaignList.end(); ++iter)
 	{
@@ -574,7 +575,11 @@ void CScreenHostMission::NewCampaign(const std::string& campaignName)
 		if (pMission)
 		{
 			char szWorldTitle[MAX_PATH] = "";
+#ifndef __LINUX
 			_splitpath( pMission->aLevels[0].szLevel, NULL, NULL, szWorldTitle, NULL );
+#else
+			getLevelName(pMission->aLevels[0].szLevel,szWorldTitle);
+#endif
 
 			bAdd = false;
 			switch (g_pGameClientShell->GetGameType())
