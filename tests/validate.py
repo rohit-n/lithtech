@@ -11,14 +11,14 @@ with open(sys.argv[1], 'r') as log:
         logs.append(l[:-1])
 
 counts = {
-    'Pass': 0,
-    'Fail': 0,
+    'Pass ': 0,
+    'Fail ': 0,
     'warning': 0,
     'undefined reference': 0
 }
 mins = {
-    'Pass': int(sys.argv[2]),
-    'Fail': int(sys.argv[3]),
+    'Pass ': int(sys.argv[2]),
+    'Fail ': int(sys.argv[3]),
     'warning': int(sys.argv[4]),
     'undefined reference': int(sys.argv[5])
 }
