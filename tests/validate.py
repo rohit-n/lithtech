@@ -39,7 +39,7 @@ warns.sort()
 errs = list(set(errs[:]))
 errs.sort()
 
-fmt = 'Pass:  {Pass}\nFail:  {Fail}\n'
+fmt = 'Pass:  {Pass }\nFail:  {Fail }\n'
 fmt += "Warn:  {warning}\nUnDef: {undefined reference}"
 print(fmt.format(**counts))
 print('warns {0} vs counts {1}'.format(len(warns), counts['warning']))
@@ -65,7 +65,7 @@ if failed:
     os.system('../tests/upload_logs.sh')
     sys.exit(1)
 
-if mins['Pass'] > counts['Pass']:
+if mins['Pass '] > counts['Pass ']:
     print('Pass parts have gone below known limits')
     print('\n'.join(errs))
     sys.exit(1)
