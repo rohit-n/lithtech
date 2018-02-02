@@ -38,4 +38,19 @@ public:
 
 void getLevelName(const std::string&,char*);
 
+#ifdef __LINUX
+// copied definition from unistd.h
+extern "C" int rmdir (const char *__path) __THROW __nonnull ((1));
+extern "C" char* getcwd (char *__path, size_t __len) __THROW __nonnull ((1));
+
+static inline int _rmdir(const char *p){
+	return rmdir(p);
+}
+
+static inline char* _getcwd(char *p, size_t l){
+	return getcwd(p, l);
+}
+
+#endif
+
 #endif

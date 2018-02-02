@@ -451,7 +451,7 @@ LTBOOL CScreenJoinLAN::Render(HSURFACE hDestSurf)
 
 LTBOOL CScreenJoinLAN::HandleKeyDown(int key, int rep)
 {
-	if (key == VK_F5)
+	if (key == SDLK_F5)
 	{
 		FindServers();
         return LTTRUE;

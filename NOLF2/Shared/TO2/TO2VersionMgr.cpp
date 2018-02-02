@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "TO2VersionMgr.h"
 #if defined(_CLIENTBUILD)
 #include "ClientResShared.h"

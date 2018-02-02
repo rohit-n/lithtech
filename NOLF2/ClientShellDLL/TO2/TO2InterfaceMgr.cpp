@@ -196,7 +196,7 @@ LTBOOL CTO2InterfaceMgr::OnCommandOn(int command)
 LTBOOL CTO2InterfaceMgr::OnKeyDown(int key, int rep)
 {
 	//handle stuff before default handling
-	if (g_pRadio->IsVisible() && m_eGameState == GS_PLAYING && key == VK_ESCAPE)
+	if (g_pRadio->IsVisible() && m_eGameState == GS_PLAYING && key == SDLK_ESCAPE)
 	{
 		g_pRadio->Show(false);
 		g_pClientSoundMgr->PlayInterfaceSound("Interface\\Snd\\RadioOff.wav");

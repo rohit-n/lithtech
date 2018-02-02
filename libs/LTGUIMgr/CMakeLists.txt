@@ -18,3 +18,7 @@ add_library(${PROJECT_NAME} STATIC
 add_definitions(-D_LITHTECH2 -DLT15_COMPAT)
 
 include_directories(../../sdk/inc)
+
+if(LINUX)
+    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fPIC")
+endif(LINUX)

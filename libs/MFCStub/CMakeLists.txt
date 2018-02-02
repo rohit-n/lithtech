@@ -8,5 +8,5 @@ add_library(${PROJECT_NAME} STATIC
 include_directories(../stdlith)
 
 if(LINUX)
-    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive")
+    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -fPIC")
 endif(LINUX)

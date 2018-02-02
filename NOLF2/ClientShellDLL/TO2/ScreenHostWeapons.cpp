@@ -15,7 +15,7 @@
 #include "ClientRes.h"
 #include "VarTrack.h"
 #include "NetDefs.h"
-#include "profileMgr.h"
+#include "ProfileMgr.h"
 #include "ClientMultiplayerMgr.h"
 #include "WinUtil.h"
 

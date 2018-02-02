@@ -41,7 +41,7 @@
 #include "AICentralKnowledgeMgr.h"
 #include "ServerTrackedNodeMgr.h"
 #include "GlobalServerMgr.h"
-#include "iserverdir.h"
+#include "IServerDir.h"
 #include "ObjectTemplateMgr.h"
 #include "LiteObjectMgr.h"
 #include "GameBaseLite.h"

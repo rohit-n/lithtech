@@ -15,10 +15,12 @@
 #include "GameClientShell.h"
 #include "ClientSaveLoadMgr.h"
 #include "ClientMultiplayerMgr.h"
-#include "iserverdir.h"
-#include "msgids.h"
+#include "IServerDir.h"
+#include "MsgIDs.h"
 #include "WinUtil.h"
+#ifndef __LINUX
 #include "direct.h"
+#endif
 #include "ClientButeMgr.h"
 
 namespace
@@ -715,6 +717,7 @@ void CScreenMulti::RequestMOTD()
 
 LTBOOL CScreenMulti::LaunchSierraUp()
 {
+#ifndef __LINUX
 	PROCESS_INFORMATION procInfo;
 	STARTUPINFO startInfo;
 	CString sCmdLine;
@@ -754,6 +757,11 @@ LTBOOL CScreenMulti::LaunchSierraUp()
 	g_pLTClient->Shutdown();
 
 	return LTTRUE;
+#else
+	// on linux we don't care about SierraUp...
+	// so don't even try.
+	return LTFALSE;
+#endif
 }
 
 

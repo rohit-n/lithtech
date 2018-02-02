@@ -272,7 +272,7 @@ uint16 CTO2ScreenMgr::GetScreenIDFromName(char * pName)
 {
 	for (uint16 i=0; i < SCREEN_ID_UNASSIGNED; ++i)
 	{
-		if (!strcmpi(pName, s_aScreenName[i]))
+		if (!stricmp(pName, s_aScreenName[i]))
 			return (i);
 	}
 	return 999;

@@ -221,8 +221,11 @@ DWORD CRegMgr::Get(const char* sKey, DWORD nDef){
             return m_hRootKey[sKey].GetUint();
         return -1;
     } else {
-        auto && a = m_Doc.GetAllocator();
-        m_hRootKey.AddMember(Value{sKey,a}, Value{nDef}, a);
+        // only add it if a certain value was requested
+        if (nDef != 0) {
+            auto && a = m_Doc.GetAllocator();
+            m_hRootKey.AddMember(Value{sKey,a}, Value{nDef}, a);
+        }
     }
     return nDef;
 }

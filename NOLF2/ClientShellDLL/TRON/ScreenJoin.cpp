@@ -17,7 +17,7 @@
 #include "msgids.h"
 #include "MissionMgr.h"
 
-#include "iserverdir.h"
+#include "IServerDir.h"
 
 #include "GameClientShell.h"
 

@@ -9,7 +9,6 @@
 #include "NetDefs.h"
 
 #include "GameClientShell.h"
-#include "profileMgr.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

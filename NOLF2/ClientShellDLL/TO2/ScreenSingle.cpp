@@ -19,7 +19,7 @@
 #include "ClientSaveLoadMgr.h"
 #include "ClientButeMgr.h"
 #include "ClientMultiplayerMgr.h"
-#include "clientres.h"
+#include "ClientRes.h"
 
 
 #ifdef _FINAL

@@ -307,7 +307,7 @@ LTBOOL CScreenSave::SaveGame(uint32 slot)
 LTBOOL CScreenSave::HandleKeyDown(int key, int rep)
 {
 
-	if (key == VK_F6)
+	if (key == SDLK_F6)
 	{
 		SendCommand(CMD_CUSTOM,0,0);
         return LTTRUE;

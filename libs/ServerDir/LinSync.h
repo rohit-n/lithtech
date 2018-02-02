@@ -137,17 +137,17 @@ class LinSync_PulseEvent : public LinSync_Event
 
 // stubs for bloody Windows API
 
-uint32_t WaitForMultipleObjects(uint32_t count, const HANDLE *objs, bool flag, uint32_t timeout) { return 0; }
-uint32_t WaitForSingleObject(const HANDLE obj, uint32_t timeout) { return 0; }
-HANDLE CreateThread(void *t, int, ulong (*func)(void *param), void *cl, int, uintptr_t *id)
+static uint32_t WaitForMultipleObjects(uint32_t count, const HANDLE *objs, bool flag, uint32_t timeout) { return 0; }
+static uint32_t WaitForSingleObject(const HANDLE obj, uint32_t timeout) { return 0; }
+static HANDLE CreateThread(void *t, int, ulong (*func)(void *param), void *cl, int, uintptr_t *id)
 {
 	id = 0;
 	return nullptr;
 }
 
-void CloseHandle(HANDLE hdl) {}
+static void CloseHandle(HANDLE hdl) {}
 
-uint32_t LoadString(HMODULE mod, uint32_t msgCode, char *buff, size_t len)
+static uint32_t LoadString(HMODULE mod, uint32_t msgCode, char *buff, size_t len)
 {
 	return 0;
 }

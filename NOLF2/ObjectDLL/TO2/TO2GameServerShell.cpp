@@ -14,7 +14,7 @@
 #include "TO2GameServerShell.h"
 #include "GameStartPoint.h"
 #include "ServerMissionMgr.h"
-#include "iserverdir.h"
+#include "IServerDir.h"
 #include "PlayerObj.h"
 #include "msgids.h"
 #include "iserverdir_titan.h"

@@ -16,7 +16,7 @@
 #include "msgids.h"
 
 #include "ClientMultiplayerMgr.h"
-#include "iserverdir.h"
+#include "IServerDir.h"
 
 // Sample rate
 int g_nSampleRate = 44100;

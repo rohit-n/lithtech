@@ -13,10 +13,10 @@
 #include "Stdafx.h"
 #include "TO2GameClientShell.h"
 
-#include "msgids.h"
+#include "MsgIDs.h"
 
 #include "ClientMultiplayerMgr.h"
-#include "iserverdir.h"
+#include "IServerDir.h"
 
 // Sample rate
 int g_nSampleRate = 22050;

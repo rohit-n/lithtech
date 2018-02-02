@@ -10,7 +10,7 @@
 ;
 ****************************************************************************/
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "TO2MissionButeMgr.h"
 
 CMissionButeMgr* g_pMissionButeMgr = NULL;

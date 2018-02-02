@@ -1,6 +1,7 @@
 
 #include "Stdafx.h"
 
+#include "SurfaceDefs.h"
 #include "StandardCreator.h"
 #include "TO2ClientWeaponAllocator.h"
 #include "ClientWeaponBase.h"

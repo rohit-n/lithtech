@@ -15,7 +15,9 @@
 #include "LayoutMgr.h"
 #include "ScreenCommands.h"
 #include "WinUtil.h"
+#ifndef __LINUX  // should possibly be DX8 something something
 #include "direct.h"
+#endif
 #include "GameClientShell.h"
 #include "ModelButeMgr.h"
 #include "ClientSaveLoadMgr.h"

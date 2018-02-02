@@ -14,10 +14,10 @@
 #include "ScreenCommands.h"
 #include "ClientRes.h"
 #include "ClientMultiplayerMgr.h"
-#include "msgids.h"
+#include "MsgIDs.h"
 #include "MissionMgr.h"
 #include "ResShared.h"
-#include "iserverdir.h"
+#include "IServerDir.h"
 
 #include "GameClientShell.h"
 
@@ -776,7 +776,7 @@ LTBOOL CScreenJoin::Render(HSURFACE hDestSurf)
 
 LTBOOL CScreenJoin::HandleKeyDown(int key, int rep)
 {
-	if (key == VK_F5)
+	if (key == SDLK_F5)
 	{
 		FindServers();
         return LTTRUE;

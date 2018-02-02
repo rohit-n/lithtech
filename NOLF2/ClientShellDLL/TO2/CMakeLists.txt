@@ -320,6 +320,6 @@ target_link_libraries(${PROJECT_NAME}
 	LIB_Lith
 	LIB_RegMgr
 	LIB_LTGUIMgr
-	ServerDir
 	${SDL2_LIBRARIES}
-	winmm)
+	ServerDir
+	pthread)

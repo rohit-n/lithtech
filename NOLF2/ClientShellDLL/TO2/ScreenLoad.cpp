@@ -282,7 +282,7 @@ void CScreenLoad::ParseSaveString(char const* pszWorldName, char const* pszTitle
 LTBOOL CScreenLoad::HandleKeyDown(int key, int rep)
 {
 
-	if (key == VK_F9)
+	if (key == SDLK_F9)
 	{
 		SendCommand(CMD_CUSTOM,0,0);
         return LTTRUE;
