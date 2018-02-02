@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GlobalServerMgr.h"
 #include "ServerSoundMgr.h"
 #include "AIButeMgr.h"

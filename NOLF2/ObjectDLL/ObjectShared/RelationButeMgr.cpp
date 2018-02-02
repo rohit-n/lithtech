@@ -17,7 +17,7 @@
 
 
 // Includes
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #include "RelationButeMgr.h"
 #include "ButeTools.h"

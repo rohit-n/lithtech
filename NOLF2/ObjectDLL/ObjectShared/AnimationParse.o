@@ -27,7 +27,7 @@
 #line 2 "animationparse.y"
 
 
-#include "StdAfx.h"
+#include "Stdafx.h"
 #include "AnimationLex.h"
 #include "AnimationParser.h"
 

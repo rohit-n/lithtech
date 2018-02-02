@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "DecisionObject.h"
 #include "ServerUtilities.h"
 #include "ObjectMsgs.h"

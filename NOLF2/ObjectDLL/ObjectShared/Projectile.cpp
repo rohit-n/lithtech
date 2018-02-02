@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "Projectile.h"
 #include "ltengineobjects.h"
 #include "iltserver.h"

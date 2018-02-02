@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "Alarm.h"
 #include "iltserver.h"
 #include "ServerUtilities.h"

@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "Spawner.h"
 #include "iltserver.h"
 #include "MsgIds.h"

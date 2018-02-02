@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "CommandMgr.h"
 #include "ServerUtilities.h"
 #include "GameBaseLite.h"

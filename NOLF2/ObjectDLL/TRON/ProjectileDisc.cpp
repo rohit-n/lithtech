@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ProjectileDisc.h"
 #include "MsgIDs.h"
 #include "WeaponFireInfo.h"

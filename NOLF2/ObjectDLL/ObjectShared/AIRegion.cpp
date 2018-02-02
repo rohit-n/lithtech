@@ -1,6 +1,6 @@
 // (c) 1997-2002 Monolith Productions, Inc.  All Rights Reserved
 
-#include "StdAfx.h"
+#include "Stdafx.h"
 #include "AIRegion.h"
 #include "AIVolume.h"
 #include "AIVolumeMgr.h"

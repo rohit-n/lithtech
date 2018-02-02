@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "controller.h"
 #include "iltmessage.h"
 #include "commonutilities.h"

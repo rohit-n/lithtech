@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // CObjectTemplateMgr implementation file
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #include "ObjectTemplateMgr.h"
 

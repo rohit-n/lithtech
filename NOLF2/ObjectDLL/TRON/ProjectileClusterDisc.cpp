@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "FXButeMgr.h"
 #include "ProjectileDisc.h"
 #include "ProjectileClusterDisc.h"

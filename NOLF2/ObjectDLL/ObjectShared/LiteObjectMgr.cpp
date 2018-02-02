@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "LiteObjectMgr.h"
 #include "GameBaseLite.h"
 

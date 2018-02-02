@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ServerTrackedNodeContext.h"
 #include "MsgIDs.h"
 

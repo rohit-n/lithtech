@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 #include <vector>
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "WeaponMgr.h"
 #include "Weapons.h"
 #include "PlayerObj.h"

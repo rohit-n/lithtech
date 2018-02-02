@@ -17,7 +17,7 @@
 
 
 // Includes
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __AIHUMANSTATECATCH_H__
 #include "AIHumanStateCatch.h"		

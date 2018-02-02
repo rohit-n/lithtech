@@ -11,7 +11,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScmdServer.h"
 #include "ScmdShared.h"
 #include "GameServerShell.h"

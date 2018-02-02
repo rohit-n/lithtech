@@ -22,7 +22,7 @@
 
 
 // Includes
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #include "ProjectileClusterAutoBurstDisc.h"		
 #include "FXButeMgr.h"

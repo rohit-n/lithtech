@@ -8,14 +8,14 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 
 
 #include "DebugLineSystem.h"
 #include "SFXMsgIds.h"
 #include "DebugLine.h"
 #include "MsgIds.h"
-#include "LTObjRef.h"
+#include "ltobjref.h"
 #if _MSC_VER >= 1300
 #	include "ObjectTemplateMgr.h"
 #endif // VC7

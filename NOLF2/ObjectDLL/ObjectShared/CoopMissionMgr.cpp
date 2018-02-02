@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "CoopMissionMgr.h"
 #include "MusicMgr.h"
 #include "PlayerObj.h"

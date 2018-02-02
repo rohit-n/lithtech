@@ -11,7 +11,7 @@
 ****************************************************************************/
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "BinaryBit.h"
 #include "CommonUtilities.h"
 #include "ObjectMsgs.h"

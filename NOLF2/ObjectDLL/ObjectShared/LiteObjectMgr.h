@@ -70,13 +70,17 @@ public:
 
 private:
 
-#if _MSC_VER == 1300
+#if _MSC_VER == 1300 
 
 	typedef std::hash_map< const char *, GameBaseLite *, ButeMgrHashCompare > TNameMap;
 
 #elif _MSC_VER > 1300
 
 	typedef stdext::hash_map< const char *, GameBaseLite *, ButeMgrHashCompare > TNameMap;
+
+#elif defined(__LINUX)
+
+	typedef std::unordered_map< const char *, GameBaseLite *, hash_str_nocase, equal_str_nocase > TNameMap;
 
 #else
 

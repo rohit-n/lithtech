@@ -21,7 +21,7 @@
 
 
 // Includes
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __AIHUMANSTATESENTRYCHALLENGE_H__
 #include "AIHumanStateSentryChallenge.h"		

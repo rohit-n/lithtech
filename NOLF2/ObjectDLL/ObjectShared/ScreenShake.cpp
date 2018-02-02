@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ScreenShake.h"
 #include "iltserver.h"
 #include "MsgIds.h"

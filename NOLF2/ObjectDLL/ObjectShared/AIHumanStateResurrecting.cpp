@@ -16,7 +16,7 @@
 
 
 // Includes
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __AIHUMANSTATERESURRECTING_H__
 #include "AIHumanStateResurrecting.h"		

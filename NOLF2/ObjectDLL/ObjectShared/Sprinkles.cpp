@@ -1,5 +1,5 @@
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "sprinkles.h"
 #include "sfxmsgids.h"
 

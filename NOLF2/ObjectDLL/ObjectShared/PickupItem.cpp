@@ -11,7 +11,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "PickupItem.h"
 #include "MsgIds.h"
 #include "iltserver.h"

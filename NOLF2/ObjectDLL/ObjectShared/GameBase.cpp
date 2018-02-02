@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GameBase.h"
 #include "CVarTrack.h"
 #include "ObjectMsgs.h"

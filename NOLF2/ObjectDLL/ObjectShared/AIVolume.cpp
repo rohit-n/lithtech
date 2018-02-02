@@ -9,7 +9,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include <limits.h>
 #include "FastHeap.h"
 #include "ContainerCodes.h"

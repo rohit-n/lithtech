@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ServerMissionMgr.h"
 #include "MsgIds.h"
 #include "WinUtil.h"

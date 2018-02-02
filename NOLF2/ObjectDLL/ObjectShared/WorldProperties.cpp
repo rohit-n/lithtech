@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "WorldProperties.h"
 #include "ltengineobjects.h"
 #include "gameservershell.h"

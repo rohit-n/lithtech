@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "Group.h"
 #include "iltmessage.h"
 #include "commonutilities.h"

@@ -15,7 +15,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ServerSpecialFX.h"
 #include "FxFlags.h"
 #include "FxDefs.h"

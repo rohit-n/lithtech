@@ -415,7 +415,7 @@ char *yytext;
 #define INITIAL 0
 #line 3 "AnimationLex.l"
 
-#include "StdAfx.h"
+#include "Stdafx.h"
 #include "AnimationLex.h"
 #include "AnimationLexSymbols.h"
 #include "AnimationParse.h"

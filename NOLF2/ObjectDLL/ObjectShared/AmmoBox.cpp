@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "AmmoBox.h"
 #include "MsgIds.h"
 #include "iltserver.h"

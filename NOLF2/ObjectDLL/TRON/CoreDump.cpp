@@ -10,7 +10,7 @@
 ;
 ****************************************************************************/
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "CoreDump.h"
 #include "TronPlayerObj.h"
 #include "ObjectMsgs.h"

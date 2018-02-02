@@ -9,7 +9,7 @@
 // (c) 2001 Monolith Productions, Inc.  All Rights Reserved
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "AISenseRecorderGame.h"
 #include "AI.h"
 #include "AIBrain.h"

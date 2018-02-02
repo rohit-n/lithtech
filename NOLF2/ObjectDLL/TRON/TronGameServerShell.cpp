@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "TronGameServerShell.h"
 #include "GameStartPoint.h"
 #include "TronPlayerObj.h"

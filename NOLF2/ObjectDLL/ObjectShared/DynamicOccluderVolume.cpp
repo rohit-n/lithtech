@@ -16,7 +16,7 @@
 // Includes..
 //
 
-	#include "stdafx.h"
+	#include "Stdafx.h"
 	#include "MsgIds.h"
 	#include "ObjectMsgs.h"
 	#include "ParsedMsg.h"

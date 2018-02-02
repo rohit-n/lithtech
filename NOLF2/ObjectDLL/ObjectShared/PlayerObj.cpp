@@ -10,10 +10,10 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "PlayerObj.h"
 #include "iltserver.h"
-#include "CommandIds.h"
+#include "CommandIDs.h"
 #include "ServerUtilities.h"
 #include "HHWeaponModel.h"
 #include "GameServerShell.h"

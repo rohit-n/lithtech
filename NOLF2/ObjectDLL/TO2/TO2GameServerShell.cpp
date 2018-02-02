@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "TO2GameServerShell.h"
 #include "GameStartPoint.h"
 #include "ServerMissionMgr.h"

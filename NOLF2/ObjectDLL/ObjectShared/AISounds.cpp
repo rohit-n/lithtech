@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "AISounds.h"
 #include "AI.h"
 #include "ServerUtilities.h"

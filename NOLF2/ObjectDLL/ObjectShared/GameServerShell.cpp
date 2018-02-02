@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "GameServerShell.h"
 #include "PlayerObj.h"
 #include "iltserver.h"

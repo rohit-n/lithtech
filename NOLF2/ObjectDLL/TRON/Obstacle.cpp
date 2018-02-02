@@ -11,7 +11,7 @@
 ****************************************************************************/
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "Obstacle.h"
 #include "PSets.h"
 #include "PlayerObj.h"

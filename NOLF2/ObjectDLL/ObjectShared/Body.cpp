@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "Attachments.h"
 #include "Body.h"
 #include "iltserver.h"
@@ -22,7 +22,7 @@
 #include "ParsedMsg.h"
 #include "SoundMgr.h"
 #include "MsgIDs.h"
-#include "SFXMsgIDs.h"
+#include "SFXMsgIds.h"
 #include "SharedFXStructs.h"
 #include "CharacterHitBox.h"
 #include "AIVolumeMgr.h"

@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "Stdafx.h"
 	#include "MsgIds.h"
 	#include "PlayerObj.h"
 	#include "Spawner.h"

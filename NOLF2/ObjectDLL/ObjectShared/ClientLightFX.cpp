@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include <stdio.h>
 #include "iltserver.h"
 #include "ClientLightFX.h"

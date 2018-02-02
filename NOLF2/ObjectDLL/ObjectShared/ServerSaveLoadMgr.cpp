@@ -14,7 +14,7 @@
 // Includes...
 //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ServerSaveLoadMgr.h"
 #include "MsgIds.h"
 #include "WinUtil.h"

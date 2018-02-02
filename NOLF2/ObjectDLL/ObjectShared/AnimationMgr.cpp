@@ -1,5 +1,5 @@
 
-#include "StdAfx.h"
+#include "Stdafx.h"
 #include "AnimationMgr.h"
 
 #include "AnimationPropStrings.h"

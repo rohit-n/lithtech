@@ -1,13 +1,13 @@
 // (c) 1997-2000 Monolith Productions, Inc.  All Rights Reserved
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ServerUtilities.h"
 #include "AINodeMgr.h"
 #include "AINode.h"
 #include "VolumeBrushTypes.h"
 #include "SurfaceFunctions.h"
 #include "ctype.h"
-#include "SFXMsgIDs.h"
+#include "SFXMsgIds.h"
 #include "NodeLine.h"
 #include "AIUtils.h"
 #include "AIVolume.h"

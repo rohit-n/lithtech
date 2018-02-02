@@ -1,7 +1,7 @@
 
 %{
 
-#include "StdAfx.h"
+#include "Stdafx.h"
 #include "AnimationLex.h"
 #include "AnimationParser.h"
 

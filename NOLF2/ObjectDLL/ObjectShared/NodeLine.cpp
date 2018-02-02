@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "NodeLine.h"
 #include "MsgIds.h"
 #include "iltserver.h"

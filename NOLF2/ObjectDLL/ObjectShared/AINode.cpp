@@ -1,6 +1,6 @@
 // (c) 1997-2002 Monolith Productions, Inc.  All Rights Reserved
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "AITypes.h"
 #include "AINode.h"
 #include "ServerUtilities.h"

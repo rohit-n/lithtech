@@ -10,7 +10,7 @@
 ;
 ****************************************************************************/
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "LightCycleMgr.h"
 #include "MsgIDs.h"
 

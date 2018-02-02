@@ -17,7 +17,7 @@
 
 
 // Includes
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __AISPATIALREPRESENTATIONMGR_H__
 #include "AISpatialRepresentationMgr.h"

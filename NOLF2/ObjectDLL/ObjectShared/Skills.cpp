@@ -8,7 +8,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "MsgIds.h"
 #include "Skills.h"
 #include "MissionButeMgr.h"

@@ -11,7 +11,7 @@
 ****************************************************************************/
 
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "InventoryButeMgr.h"
 
 // Globals/statics

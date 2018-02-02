@@ -14,10 +14,10 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "Stdafx.h"
+	#include "AIStimulusMgr.h"
 	#include "ActiveWorldModel.h"
 	#include "ServerSoundMgr.h"
-	#include "AIStimulusMgr.h"
 	#include "AINode.h"
 	#include "AINodeMgr.h"
 	#include "AIState.h"
@@ -166,7 +166,7 @@ LTRESULT CActiveWorldModelPlugin::PreHook_EditStringList( const char *szRezPath,
 
 	// See if we can handle the list...
 
-	if( !_stricmp( szPropName, "Waveform" ) )
+	if( !stricmp( szPropName, "Waveform" ) )
 	{
 		// Fill the list with our wave types...
 
@@ -177,7 +177,7 @@ LTRESULT CActiveWorldModelPlugin::PreHook_EditStringList( const char *szRezPath,
 
 		return LT_OK;		
 	}
-	else if( !_stricmp( szPropName, "ActivateType" ))
+	else if( !stricmp( szPropName, "ActivateType" ))
 	{
 		if( m_ActivateTypeMgrPlugin.PreHook_EditStringList( szRezPath,
 															szPropName,
@@ -409,7 +409,7 @@ void ActiveWorldModel::ReadProps( ObjectCreateStruct *pOCS )
 		{
 			for( int i = 0; i <= AWM_WAVE_MAXTYPES; i++ )
 			{
-				if( !_stricmp( GenProp.m_String, c_aWaveTypes[i] ) )
+				if( !stricmp( GenProp.m_String, c_aWaveTypes[i] ) )
 				{
 					m_nWaveform = i;
 					break;
@@ -1349,15 +1349,20 @@ void ActiveWorldModel::SetPowerOn( )
 			LTVector	vTestPos1, vTestPos2;
 			LTRotation	rTestRot;
 
-			CalculateNewPosRot( vTestPos1, rTestRot, LTVector(0,0,0), m_fPowerOnTime, cf100Percent );
-
+			{
+				LTVector tmpV{0,0,0};
+				CalculateNewPosRot( vTestPos1, rTestRot, tmpV, m_fPowerOnTime, cf100Percent );
+			}
 			// Calculate the AWM's position if it rotated in opposite direction...
 
 			m_fPitch	= m_vInitOnAngles.x == 0.0f ? 0.0f : m_vInitOnAngles.x > 0.0f ? -1 : 1;
 			m_fYaw		= m_vInitOnAngles.y == 0.0f ? 0.0f : m_vInitOnAngles.y > 0.0f ? -1 : 1;
 			m_fRoll		= m_vInitOnAngles.z == 0.0f ? 0.0f : m_vInitOnAngles.y > 0.0f ? -1 : 1;
 
-			CalculateNewPosRot( vTestPos2, rTestRot, LTVector(0,0,0), m_fPowerOnTime, cf100Percent );
+			{
+				LTVector tmpV{0,0,0};
+				CalculateNewPosRot( vTestPos2, rTestRot, tmpV, m_fPowerOnTime, cf100Percent );
+			}
 
 			// Restore the real angles...
 

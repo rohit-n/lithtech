@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "KeyPad.h"
 #include "SoundMgr.h"
 #include "ServerUtilities.h"

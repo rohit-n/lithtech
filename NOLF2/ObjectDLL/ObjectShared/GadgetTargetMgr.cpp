@@ -14,7 +14,7 @@
 // Includes...
 //
 
-	#include "stdafx.h"
+	#include "Stdafx.h"
 	#include "GadgetTargetMgr.h"
 	#include "WeaponMgr.h"
 	#include "FXButeMgr.h"

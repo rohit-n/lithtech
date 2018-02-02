@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "PropTypeMgr.h"
 #include "CommonUtilities.h"
 #include "DebrisMgr.h"

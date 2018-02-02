@@ -17,7 +17,7 @@
 
 
 // Includes
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #ifndef __BUTETOOLS_H__
 #include "ButeTools.h"		
