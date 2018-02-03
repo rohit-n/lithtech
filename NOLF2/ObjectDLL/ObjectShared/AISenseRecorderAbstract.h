@@ -24,7 +24,7 @@ enum  EnumAITargetMatchID;
 //
 // ENUM: Types of senses exclusive bitflags.
 //
-enum EnumAISenseType
+class enum EnumAISenseType: unsigned int
 {
 	kSense_InvalidType	= 0,
 	kSense_None			= 0,

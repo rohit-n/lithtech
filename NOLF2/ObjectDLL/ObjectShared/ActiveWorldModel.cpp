@@ -15,7 +15,6 @@
 //
 
 	#include "Stdafx.h"
-	#include "AIStimulusMgr.h"
 	#include "ActiveWorldModel.h"
 	#include "ServerSoundMgr.h"
 	#include "AINode.h"
@@ -24,6 +23,7 @@
 	#include "ParsedMsg.h"
 	#include "KeyMgr.h"
 	#include "AIUtils.h"
+	#include "AIStimulusMgr.h"
 
 	extern CAIStimulusMgr* g_pAIStimulusMgr;
 

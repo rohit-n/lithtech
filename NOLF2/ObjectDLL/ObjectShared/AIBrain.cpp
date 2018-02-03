@@ -1,6 +1,7 @@
 // (c) 1997-2000 Monolith Productions, Inc.  All Rights Reserved
 
 #include "Stdafx.h"
+#include "AIStimulusMgr.h"
 #include "AIBrain.h"
 #include "AIHuman.h"
 #include "AITarget.h"
@@ -14,6 +15,7 @@
 #include "AnimatorPlayer.h"
 #include "Weapon.h"
 #include "AIUtils.h"
+#include "AIMovement.h"
 #include "AnimationMgr.h"
 
 DEFINE_AI_FACTORY_CLASS(CAIBrain);

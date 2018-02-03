@@ -19,9 +19,9 @@
 #endif
  
 #if AIDATA_TYPE_AS_ENUM
-	#define ADD_AIDATA_TYPE(label) kAIData_##label##,
+	#define ADD_AIDATA_TYPE(label) kAIData_##label## ,
 #elif AIDATA_TYPE_AS_STRING
-	#define ADD_AIDATA_TYPE(label) #label,
+	#define ADD_AIDATA_TYPE(label) #label ,
 #else
 	#error ! To use this include file, first define either AIDATA_TYPE_AS_ENUM or AIDATA_TYPE_AS_STRING, to include the AIData types as enums, or string constants.
 #endif

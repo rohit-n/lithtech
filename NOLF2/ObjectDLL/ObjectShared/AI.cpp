@@ -10,6 +10,7 @@
 
 #include "Stdafx.h"
 
+#include "AIStimulusMgr.h"
 #include "AI.h"
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
@@ -33,7 +34,6 @@
 #include "AIGoalButeMgr.h"
 #include "ServerSoundMgr.h"
 #include "SurfaceMgr.h"
-#include "AIStimulusMgr.h"
 #include "CharacterMgr.h"
 #include "SurfaceFunctions.h"
 #include "RelationButeMgr.h"
