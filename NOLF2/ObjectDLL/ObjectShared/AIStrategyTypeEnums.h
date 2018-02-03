@@ -10,26 +10,26 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_STRATEGY_TYPE
 	#undef ADD_STRATEGY_TYPE
 #endif
- 
+
 #if STRATEGY_TYPE_AS_ENUM
-	#define ADD_STRATEGY_TYPE(aitype,label) kStrat_##aitype##label##,
+	#define ADD_STRATEGY_TYPE(aitype,label) kStrat_##aitype##label,
 #elif STRATEGY_TYPE_AS_STRING
 	#define ADD_STRATEGY_TYPE(aitype,label) #aitype#label,
 #elif STRATEGY_TYPE_AS_SWITCH
-	#define ADD_STRATEGY_TYPE(aitype,label) case kStrat_##aitype##label##: extern CAIClassAbstract* AIFactoryCreateCAI##aitype##Strategy##label##(); return (CAI##aitype##Strategy*)AIFactoryCreateCAI##aitype##Strategy##label##();
+	#define ADD_STRATEGY_TYPE(aitype,label) case kStrat_##aitype##label: extern CAIClassAbstract* AIFactoryCreateCAI##aitype##Strategy##label(); return (CAI##aitype##Strategy*)AIFactoryCreateCAI##aitype##Strategy##label();
 #else
 	#error	To use this include file, first define either STRATEGY_TYPE_AS_ENUM or STRATEGY_TYPE_AS_STRING, to include the Strategies as enums, or string constants.
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_STRATEGY_TYPE(x) where 
+// USAGE: To add a new enum, just add a ADD_STRATEGY_TYPE(x) where
 // x is the name of the enum without the "kStrat_AITYPE" prefix.
 // --------------------------------------------------------------------------
 

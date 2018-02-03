@@ -10,16 +10,16 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_AIDATA_TYPE
 	#undef ADD_AIDATA_TYPE
 #endif
- 
+
 #if AIDATA_TYPE_AS_ENUM
-	#define ADD_AIDATA_TYPE(label) kAIData_##label## ,
+	#define ADD_AIDATA_TYPE(label) kAIData_##label ,
 #elif AIDATA_TYPE_AS_STRING
 	#define ADD_AIDATA_TYPE(label) #label ,
 #else
@@ -27,7 +27,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_AIDATA_TYPE(x) 
+// USAGE: To add a new enum, just add a ADD_AIDATA_TYPE(x)
 // where x is the name of the enum without the "kAIData" prefix.
 // --------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ ADD_AIDATA_TYPE(DoNotCloseDoors)		// kAIData_DoNotCloseDoors
 ADD_AIDATA_TYPE(DoNotDamageSelf)		// kAIData_DoNotDamageSelf
 ADD_AIDATA_TYPE(DoNotExposeHiding)		// kAIData_DoNotExposeHiding
 ADD_AIDATA_TYPE(DoNotToggleLights)		// kAIData_DoNotToggleLights
-ADD_AIDATA_TYPE(DynMoveTimeMin)			// kAIData_DynMoveTimeMin	
+ADD_AIDATA_TYPE(DynMoveTimeMin)			// kAIData_DynMoveTimeMin
 ADD_AIDATA_TYPE(DynMoveTimeMax)			// kAIData_DynMoveTimeMax
 ADD_AIDATA_TYPE(DynMoveBackupDist)		// kAIData_DynMoveBackupDist
 ADD_AIDATA_TYPE(DynMoveFlankPassDist)	// kAIData_DynMoveFlankPassDist

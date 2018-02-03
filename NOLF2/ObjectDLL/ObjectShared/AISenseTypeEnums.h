@@ -10,7 +10,7 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
@@ -18,9 +18,9 @@
 	#undef ADD_SENSE_TYPE
 	#undef SET_NUM_SENSE_TYPES
 #endif
- 
+
 #if SENSE_TYPE_AS_ENUM
-	#define ADD_SENSE_TYPE(label, val) kSense_##label## = (1 << val),
+	#define ADD_SENSE_TYPE(label, val) kSense_##label = (1 << val),
 	#define SET_NUM_SENSE_TYPES(val) kSense_Count = val,
 #elif SENSE_TYPE_AS_STRING
 	#define ADD_SENSE_TYPE(label, val) #label,
@@ -30,7 +30,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new bitflag enum, just add a ADD_SENSE_TYPE(x, val) 
+// USAGE: To add a new bitflag enum, just add a ADD_SENSE_TYPE(x, val)
 // where x is the name of the enum without the "kSense_" prefix, and val is
 // the bit position index.
 // Set SET_NUM_SENSE_TYPES(val), where val is the total number of enums.

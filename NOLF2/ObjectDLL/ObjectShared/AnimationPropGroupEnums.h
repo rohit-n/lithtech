@@ -10,16 +10,16 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_ANIM_PROP_GROUP
 	#undef ADD_ANIM_PROP_GROUP
 #endif
- 
+
 #if ANIM_PROP_GROUP_AS_ENUM
-	#define ADD_ANIM_PROP_GROUP(label) kAPG_##label##,
+	#define ADD_ANIM_PROP_GROUP(label) kAPG_##label,
 #elif ANIM_PROP_GROUP_AS_STRING
 	#define ADD_ANIM_PROP_GROUP(label) #label,
 #else
@@ -27,13 +27,13 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_ANIM_PROP_GROUP(x) 
+// USAGE: To add a new enum, just add a ADD_ANIM_PROP_GROUP(x)
 // where x is the name of the enum without the "kAPG_" prefix.
 // --------------------------------------------------------------------------
 
 ADD_ANIM_PROP_GROUP(Posture)		// kAPG_Posture
 ADD_ANIM_PROP_GROUP(WeaponAction)	// kAPG_WeaponAction
-ADD_ANIM_PROP_GROUP(WeaponPosition)	// kAPG_WeaponPosition	
+ADD_ANIM_PROP_GROUP(WeaponPosition)	// kAPG_WeaponPosition
 ADD_ANIM_PROP_GROUP(Movement)		// kAPG_Movement
 ADD_ANIM_PROP_GROUP(Weapon)			// kAPG_Weapon
 ADD_ANIM_PROP_GROUP(Mood)			// kAPG_Mood

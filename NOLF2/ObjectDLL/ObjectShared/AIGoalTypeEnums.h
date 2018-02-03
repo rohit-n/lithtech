@@ -10,26 +10,26 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_GOAL_TYPE
 	#undef ADD_GOAL_TYPE
 #endif
- 
+
 #if GOAL_TYPE_AS_ENUM
-	#define ADD_GOAL_TYPE(label) kGoal_##label##,
+	#define ADD_GOAL_TYPE(label) kGoal_##label,
 #elif GOAL_TYPE_AS_STRING
 	#define ADD_GOAL_TYPE(label) #label,
 #elif GOAL_TYPE_AS_SWITCH
-	#define ADD_GOAL_TYPE(label) case kGoal_##label##: extern CAIClassAbstract* AIFactoryCreateCAIGoal##label##(); return (CAIGoalAbstract*)AIFactoryCreateCAIGoal##label##();
+	#define ADD_GOAL_TYPE(label) case kGoal_##label: extern CAIClassAbstract* AIFactoryCreateCAIGoal##label(); return (CAIGoalAbstract*)AIFactoryCreateCAIGoal##label();
 #else
 	#error	To use this include file, first define either GOAL_TYPE_AS_ENUM or GOAL_TYPE_AS_STRING, to include the goals as enums, or string constants.
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_GOAL_TYPE(x) where 
+// USAGE: To add a new enum, just add a ADD_GOAL_TYPE(x) where
 // x is the name of the enum without the "kGoal_" prefix.
 // --------------------------------------------------------------------------
 
@@ -89,9 +89,9 @@ ADD_GOAL_TYPE(Search)					// kGoal_Search
 ADD_GOAL_TYPE(SentryChallenge)			// kGoal_SentryChallenge
 ADD_GOAL_TYPE(SentryMark)				// kGoal_SentryMark
 ADD_GOAL_TYPE(SerumDeath)				// kGoal_SerumDeath
-ADD_GOAL_TYPE(Sleep)					// kGoal_Sleep		
-ADD_GOAL_TYPE(Sniper)					// kGoal_Sniper		
-ADD_GOAL_TYPE(SpecialDamage)			// kGoal_SpecialDamage		
+ADD_GOAL_TYPE(Sleep)					// kGoal_Sleep
+ADD_GOAL_TYPE(Sniper)					// kGoal_Sniper
+ADD_GOAL_TYPE(SpecialDamage)			// kGoal_SpecialDamage
 ADD_GOAL_TYPE(Tail)						// kGoal_Tail
 ADD_GOAL_TYPE(Talk)						// kGoal_Talk
 ADD_GOAL_TYPE(Work)						// kGoal_Work

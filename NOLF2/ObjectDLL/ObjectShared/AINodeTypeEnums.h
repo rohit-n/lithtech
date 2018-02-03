@@ -10,16 +10,16 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_AINODE_TYPE
 	#undef ADD_AINODE_TYPE
 #endif
- 
+
 #if AINODE_TYPE_AS_ENUM
-	#define ADD_AINODE_TYPE(label) kNode_##label##,
+	#define ADD_AINODE_TYPE(label) kNode_##label,
 #elif AINODE_TYPE_AS_STRING
 	#define ADD_AINODE_TYPE(label) #label,
 #else
@@ -27,7 +27,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_AINODE_TYPE(x) 
+// USAGE: To add a new enum, just add a ADD_AINODE_TYPE(x)
 // where x is the name of the enum without the "kNode" prefix.
 // --------------------------------------------------------------------------
 

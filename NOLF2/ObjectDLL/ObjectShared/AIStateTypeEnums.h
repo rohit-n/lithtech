@@ -10,7 +10,7 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
@@ -21,9 +21,9 @@
 	#undef ADD_STATE_PROP
 	#undef ADD_STATE_SMARTOBJ
 #endif
- 
+
 #if STATE_TYPE_AS_ENUM
-	#define ADD_STATE_TYPE(aitype,label) kState_##aitype##label##,
+	#define ADD_STATE_TYPE(aitype,label) kState_##aitype##label,
 	#define ADD_STATE_HUMAN(label) ADD_STATE_TYPE(Human,label)
 	#define ADD_STATE_BODY(label) ADD_STATE_TYPE(Body,label)
 	#define ADD_STATE_PROP(label) ADD_STATE_TYPE(Prop,label)
@@ -35,13 +35,13 @@
 	#define ADD_STATE_PROP(label) ADD_STATE_TYPE(Prop,label)
 	#define ADD_STATE_SMARTOBJ(label) ADD_STATE_TYPE(SmartObject,label)
 #elif STATE_TYPE_AS_SWITCH_HUMAN
-	#define ADD_STATE_TYPE(aitype,label) case kState_##aitype##label##: extern CAIClassAbstract* AIFactoryCreateCAI##aitype##State##label##(); return (CAI##aitype##State*)AIFactoryCreateCAI##aitype##State##label##();
+	#define ADD_STATE_TYPE(aitype,label) case kState_##aitype##label: extern CAIClassAbstract* AIFactoryCreateCAI##aitype##State##label(); return (CAI##aitype##State*)AIFactoryCreateCAI##aitype##State##label();
 	#define ADD_STATE_HUMAN(label) ADD_STATE_TYPE(Human,label)
 	#define ADD_STATE_BODY(label)
 	#define ADD_STATE_PROP(label)
 	#define ADD_STATE_SMARTOBJ(label)
 #elif STATE_TYPE_AS_SWITCH_BODY
-	#define ADD_STATE_TYPE(aitype,label) case kState_##aitype##label##: extern CAIClassAbstract* AIFactoryCreateC##aitype##State##label##(); return (C##aitype##State*)AIFactoryCreateC##aitype##State##label##();
+	#define ADD_STATE_TYPE(aitype,label) case kState_##aitype##label: extern CAIClassAbstract* AIFactoryCreateC##aitype##State##label(); return (C##aitype##State*)AIFactoryCreateC##aitype##State##label();
 	#define ADD_STATE_HUMAN(label)
 	#define ADD_STATE_BODY(label) ADD_STATE_TYPE(Body,label)
 	#define ADD_STATE_PROP(label)
@@ -51,7 +51,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_STATE_TYPE(x) 
+// USAGE: To add a new enum, just add a ADD_STATE_TYPE(x)
 // where x is the name of the enum without the "kState_" prefix.
 // --------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ ADD_STATE_HUMAN(Flee)				// kState_HumanFlee
 ADD_STATE_HUMAN(Search)				// kState_HumanSearch
 ADD_STATE_HUMAN(Chase)				// kState_HumanChase
 ADD_STATE_HUMAN(Tail)				// kState_HumanTail
-ADD_STATE_HUMAN(FollowFootprint)	// kState_HumanFollowFootprint	
+ADD_STATE_HUMAN(FollowFootprint)	// kState_HumanFollowFootprint
 ADD_STATE_HUMAN(Investigate)		// kState_HumanInvestigate
 ADD_STATE_HUMAN(CheckBody)			// kState_HumanCheckBody
 ADD_STATE_HUMAN(UseObject)			// kState_HumanUseObject

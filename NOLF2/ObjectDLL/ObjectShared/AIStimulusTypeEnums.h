@@ -10,7 +10,7 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
@@ -18,12 +18,10 @@
 	#undef ADD_STIMULUS_TYPE
 	#undef SET_NUM_STIMULUS_TYPES
 #endif
- 
+
 #if STIMULUS_TYPE_AS_ENUM
-	#define ADD_STIMULUS_TYPE(label, val) \
-	kStim_##label##=(1 << val) ,
-	#define SET_NUM_STIMULUS_TYPES(val) \
-	kStim_Count = val,
+	#define ADD_STIMULUS_TYPE(label, val) kStim_ ## label = (1 << val) ,
+	#define SET_NUM_STIMULUS_TYPES(val) kStim_Count = val,
 #elif STIMULUS_TYPE_AS_STRING
 	#define ADD_STIMULUS_TYPE(label, val) #label,
 	#define SET_NUM_STIMULUS_TYPES(val)
@@ -32,7 +30,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new bitflag enum, just add a ADD_STIMULUS_TYPE(x, val) 
+// USAGE: To add a new bitflag enum, just add a ADD_STIMULUS_TYPE(x, val)
 // where x is the name of the enum without the "kStim_" prefix, and val is
 // the bit position index.
 // Set SET_NUM_STIMULUS_TYPES(val), where val is the total number of enums.

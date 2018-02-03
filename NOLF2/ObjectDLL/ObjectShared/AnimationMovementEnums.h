@@ -10,16 +10,16 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_ANIM_MOVEMENT
 	#undef ADD_ANIM_MOVEMENT
 #endif
- 
+
 #if ANIM_MOVEMENT_AS_ENUM
-	#define ADD_ANIM_MOVEMENT(label) kAM_##label##,
+	#define ADD_ANIM_MOVEMENT(label) kAM_##label,
 #elif ANIM_MOVEMENT_AS_STRING
 	#define ADD_ANIM_MOVEMENT(label) #label,
 #else
@@ -27,7 +27,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_ANIM_MOVEMENT(x) 
+// USAGE: To add a new enum, just add a ADD_ANIM_MOVEMENT(x)
 // where x is the name of the enum without the "kAM_" prefix.
 // --------------------------------------------------------------------------
 

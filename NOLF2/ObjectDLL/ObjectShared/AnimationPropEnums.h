@@ -10,16 +10,16 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_ANIM_PROP
 	#undef ADD_ANIM_PROP
 #endif
- 
+
 #if ANIM_PROP_AS_ENUM
-	#define ADD_ANIM_PROP(label) kAP_##label##,
+	#define ADD_ANIM_PROP(label) kAP_##label,
 #elif ANIM_PROP_AS_STRING
 	#define ADD_ANIM_PROP(label) #label,
 #else
@@ -27,7 +27,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_ANIM_PROP(x) 
+// USAGE: To add a new enum, just add a ADD_ANIM_PROP(x)
 // where x is the name of the enum without the "kAP_" prefix.
 // --------------------------------------------------------------------------
 
@@ -73,7 +73,7 @@ ADD_ANIM_PROP(Sad)				// kAP_Sad
 ADD_ANIM_PROP(Tense)			// kAP_Tense
 ADD_ANIM_PROP(Agree)			// kAP_Agree
 ADD_ANIM_PROP(Disagree)			// kAP_Disagree
-ADD_ANIM_PROP(CornerLeft)		// kAP_CornerLeft	
+ADD_ANIM_PROP(CornerLeft)		// kAP_CornerLeft
 ADD_ANIM_PROP(CornerRight)		// kAP_CornerRight
 ADD_ANIM_PROP(RollLeft)			// kAP_RollLeft
 ADD_ANIM_PROP(RollRight)		// kAP_RollRight

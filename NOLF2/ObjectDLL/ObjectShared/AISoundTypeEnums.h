@@ -10,16 +10,16 @@
 // ----------------------------------------------------------------------- //
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
 #ifdef ADD_AISOUND_TYPE
 	#undef ADD_AISOUND_TYPE
 #endif
- 
+
 #if AISOUND_TYPE_AS_ENUM
-	#define ADD_AISOUND_TYPE(label) kAIS_##label##,
+	#define ADD_AISOUND_TYPE(label) kAIS_##label,
 #elif AISOUND_TYPE_AS_STRING
 	#define ADD_AISOUND_TYPE(label) #label,
 #else
@@ -27,7 +27,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_AISOUND_TYPE(x, val) 
+// USAGE: To add a new enum, just add a ADD_AISOUND_TYPE(x, val)
 // where x is the name of the enum without the "kAIS" prefix.
 // --------------------------------------------------------------------------
 

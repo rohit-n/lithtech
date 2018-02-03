@@ -115,7 +115,7 @@ struct OPERATOR_STRUCT
 
 };
 
-// This struct holds the information about an 'event' (ON) command. 
+// This struct holds the information about an 'event' (ON) command.
 
 struct CMD_EVENT_STRUCT
 {
@@ -127,12 +127,12 @@ struct CMD_EVENT_STRUCT
 		for( int i = 0; i < CMDMGR_MAX_VARS_IN_EVENT; ++i )
 		{
 			m_aVars[i] = LTNULL;
-			
+
 		}
 	}
 
 	~CMD_EVENT_STRUCT()
-	{	
+	{
 		Clear();
 	}
 
@@ -154,7 +154,7 @@ struct CMD_EVENT_STRUCT
 	}
 
 	eExpressionVal FillVarArray( ConParse &cpExpression );
-	
+
 	LTBOOL	AddVar( VAR_STRUCT *pVar )
 	{
 		if( !pVar ) return LTFALSE;
@@ -167,7 +167,7 @@ struct CMD_EVENT_STRUCT
 			if( m_aVars[i] == pVar )
 				return LTTRUE;
 		}
-		
+
 		// Add it to our list and increment its refcount...
 
 		m_aVars[m_nNumVarsInCmd] = pVar;
@@ -184,7 +184,7 @@ struct CMD_EVENT_STRUCT
 
 	HSTRING		m_hstrExpression;
 	HSTRING		m_hstrCmds;
-	VAR_STRUCT	*m_aVars[CMDMGR_MAX_VARS_IN_EVENT];	// list of variables that are in the command. 
+	VAR_STRUCT	*m_aVars[CMDMGR_MAX_VARS_IN_EVENT];	// list of variables that are in the command.
 	uint8		m_nNumVarsInCmd;
 };
 
@@ -224,10 +224,10 @@ struct CMD_STRUCT : public ILTObjRefReceiver
 	{
 		// Try to set the hObject first.  If the object is going away
 		// hActiveTarget will be NULL so don't set pActiveTarget.
-		
+
 		hActiveTarget = (pObject) ? pObject->m_hObject : LTNULL;
 		pActiveTarget = (hActiveTarget) ? pObject : LTNULL;
-		
+
 	}
 
 	void SetActiveSender(ILTBaseClass *pObject)
@@ -447,7 +447,7 @@ typedef std::vector<CMDMGR_CLASS_DESC*> CMDMGR_CLASS_DESC_VECTOR;
 
 #define CMDMGR_END_REGISTER_CLASS_FLAGS( class_name, parent_class, flags ) \
 	}; \
-	static CMDMGR_CLASS_DESC _CmdMgrClassDesc##class_name##(#class_name, \
+	static CMDMGR_CLASS_DESC _CmdMgrClassDesc##class_name (#class_name, \
 															#parent_class, \
 															sizeof(_##class_name##_Msgs_) / sizeof(MSG_PRECHECK), \
 															&_##class_name##_Msgs_[0], \
@@ -455,7 +455,7 @@ typedef std::vector<CMDMGR_CLASS_DESC*> CMDMGR_CLASS_DESC_VECTOR;
 
 #define CMDMGR_END_REGISTER_CLASS( class_name, parent_class ) \
 	CMDMGR_END_REGISTER_CLASS_FLAGS( class_name, parent_class, 0 )
- 
+
 
 #define CMDMGR_ADD_MSG( msg_name, num_args, validate_fn, syntax ) \
 	MSG_PRECHECK( #msg_name, num_args, num_args, validate_fn, syntax ),
@@ -503,7 +503,7 @@ class CCommandMgrPlugin : public IObjectPlugin
 
 		// Checks the validity of the command.
 		LTBOOL	IsValidCmd( ILTPreInterface *pInterface, const char *pCmd );
-		
+
 		// Checks the list of valid commands to see if the string is a command.
 		LTBOOL	CommandExists( const char *pCmd );
 
@@ -518,7 +518,7 @@ class CCommandMgrPlugin : public IObjectPlugin
 		static char* GetCurrentObjectName() { return s_szCurObject; }
 
 		static void SetForceDisplayPropInfo( bool bForce ) { s_bForceDisplayPropInfo = bForce; }
-		
+
 
 	protected: // Methods...
 
@@ -532,7 +532,7 @@ class CCommandMgrPlugin : public IObjectPlugin
 		typedef std::vector<DYNAMIC_OBJECT> DynamicObjectList;
 		static DynamicObjectList s_lstDynaObjects;
 
-		
+
 	private: // Members...
 
 		friend class CCommandButeMgr;
@@ -550,12 +550,12 @@ class CCommandMgrPlugin : public IObjectPlugin
 
 
 	public: // Members...
-		
+
 		// Modifiers...
 
 		static bool				s_bShowMsgErrors;		// Validates MSG commands but doesn't display any errors
 		static bool				s_bShowVarErrors;		// Validates commands dealing with variables but doesn't display errors
-		static bool				s_bValidateVarCmds;		// Doesn't validate any commands dealing with variables 
+		static bool				s_bValidateVarCmds;		// Doesn't validate any commands dealing with variables
 		static bool				s_bValidateNonVarCmds;	// Doesn't validate any non variable commands
 		static bool				s_bVarDeclerationsOnly;	// Only validate commands that declare variables
 		static bool				s_bValidateVarDecs;		// Doesn't validate any variable decleration commands

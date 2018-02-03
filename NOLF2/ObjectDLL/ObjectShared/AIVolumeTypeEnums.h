@@ -1,20 +1,20 @@
 //----------------------------------------------------------------------------
-//              
+//
 //	MODULE:		AIVolumeTypeEnums.h
-//              
+//
 //	PURPOSE:	Enums and string constants for AIData.
-//              
+//
 //	CREATED:	21.02.2002
 //
 //	(c) 2002 Monolith Productions, Inc.  All Rights Reserved
 //
 //
-//	COMMENTS:	
-//              
+//	COMMENTS:
+//
 //----------------------------------------------------------------------------
 
 //
-// The following macros allow the enum entries to be included as the 
+// The following macros allow the enum entries to be included as the
 // body of an enum, or the body of a const char* string list.
 //
 
@@ -22,9 +22,9 @@
 	#undef ADD_VOLUME_TYPE
 	#undef SET_NUM_VOLUME_TYPES
 #endif
- 
+
 #if VOLUME_TYPE_AS_ENUM
-	#define ADD_VOLUME_TYPE(label, val) kVolumeType_##label## = (1 << val),
+	#define ADD_VOLUME_TYPE(label, val) kVolumeType_##label = (1 << val),
 	#define SET_NUM_VOLUME_TYPES(val) kVolumeType_Count = val,
 #elif VOLUME_TYPE_AS_STRING
 	#define ADD_VOLUME_TYPE(label, val) #label,
@@ -34,7 +34,7 @@
 #endif
 
 // --------------------------------------------------------------------------
-// USAGE: To add a new enum, just add a ADD_VOLUME_TYPE(x) 
+// USAGE: To add a new enum, just add a ADD_VOLUME_TYPE(x)
 // where x is the name of the enum without the "kAIData" prefix.
 // --------------------------------------------------------------------------
 
