@@ -14,7 +14,7 @@
 #define __CPLAYER_OBJ_H__
 
 #include "Character.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "CheatDefs.h"
 #include "TemplateList.h"
 #include "CVarTrack.h"
@@ -38,7 +38,7 @@ class TeleportPoint;
 class PlayerLure;
 class CAI;
 struct WeaponFireInfo;
-enum  EnumAIStimulusID;
+enum class EnumAIStimulusID : uint32_t;
 
 
 struct ObjectiveMsgInfo

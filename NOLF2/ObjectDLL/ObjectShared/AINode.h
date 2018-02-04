@@ -10,9 +10,9 @@
 #include "DebugLineSystem.h"
 
 // Forward declarations.
-enum EnumAISoundType;
-enum EnumAINodeType;
-enum EnumAIStateType;
+enum class EnumAISoundType : uint32_t;
+enum class EnumAINodeType : int32_t;
+enum class EnumAIStateType : uint32_t;
 
 class AIVolume;
 class CAIHuman;
@@ -22,7 +22,7 @@ LINKTO_MODULE( AINode );
 //
 // ENUM: Types of AI nodes.
 //
-enum EnumAINodeType
+enum class EnumAINodeType : int32_t
 {
 	kNode_InvalidType = -1,
 
@@ -44,7 +44,7 @@ static const char* s_aszAINodeTypes[] =
 };
 
 
-enum EnumNodeStatus
+enum class EnumNodeStatus : uint32_t
 {
 	kStatus_Invalid,
 	kStatus_Ok,
@@ -446,7 +446,7 @@ class AINodeSearch : public AINode
 			kNumFlags				= 8,
 		};
 
-		enum EnumSearchType
+		enum class EnumSearchType : uint32_t
 		{
 			kSearch_Default,
 			kSearch_OneWay,
@@ -762,7 +762,7 @@ class AINodeBackup : public AINode
 
 		// Type
 
-		EnumAINodeType GetType() { return kNode_Backup; }
+		EnumAINodeType GetType() { return EnumAINodeType::kNode_Backup; }
 
 		// Status
 
@@ -825,7 +825,7 @@ class AINodeTraining : public AINode
 
 		// Type
 
-		EnumAINodeType GetType() { return kNode_Training; }
+		EnumAINodeType GetType() { return EnumAINodeType::kNode_Training; }
 
 	protected :
 
@@ -847,7 +847,7 @@ class AINodeTrainingFailure : public AINodeTraining
 
 		// Type
 
-		EnumAINodeType GetType() { return kNode_TrainingFailure; }
+		EnumAINodeType GetType() { return EnumAINodeType::kNode_TrainingFailure; }
 };
 
 //---------------------------------------------------------------------------
@@ -865,7 +865,7 @@ class AINodeTrainingSuccess : public AINodeTraining
 
 		// Type
 
-		EnumAINodeType GetType() { return kNode_TrainingSuccess; }
+		EnumAINodeType GetType() { return EnumAINodeType::kNode_TrainingSuccess; }
 };
 
 //---------------------------------------------------------------------------
@@ -883,7 +883,7 @@ class AINodeTail : public AINode
 
 		// Type
 
-		EnumAINodeType GetType() { return kNode_Tail; }
+		EnumAINodeType GetType() { return EnumAINodeType::kNode_Tail; }
 };
 
 //---------------------------------------------------------------------------
@@ -928,11 +928,11 @@ class AINodePatrol : public AINode
 		
 		// Type
 
-		EnumAINodeType GetType() { return kNode_Patrol; }
+		EnumAINodeType GetType() { return EnumAINodeType::kNode_Patrol; }
 
 	protected :
 
-		friend class AINodePatrol;
+		// friend class AINodePatrol;
 
 		void SetPrev(AINodePatrol* pPrev);
 
@@ -1014,7 +1014,7 @@ class AINodeObstruct : public AINode
 
 		// Type
 
-		EnumAINodeType GetType() { return kNode_Obstruct; }
+		EnumAINodeType GetType() { return EnumAINodeType::kNode_Obstruct; }
 
 	protected:
 		// Protected members

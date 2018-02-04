@@ -125,12 +125,12 @@ private:
 
 	void CleanSerializeIDs();
 
-	enum EDirtyFlags {
+	enum class EDirtyFlags : uint32_t {
 		eDirty_SerializeIDs = 1,
 		eDirty_ObjectLists = 2,
 		eDirty_All = 0xFFFFFFFF
 	};
-	void SetDirty(EDirtyFlags eDirty = eDirty_All, bool bYesNo = true);
+	void SetDirty(EDirtyFlags eDirty = EDirtyFlags::eDirty_All, bool bYesNo = true);
 
 	void AddActiveObject(GameBaseLite *pObject);
 

@@ -18,7 +18,7 @@ class CParsedMsg;
 //
 // ENUM: Types of states.
 //
-enum EnumAIStateType
+enum class EnumAIStateType : uint32_t
 {
 	#define STATE_TYPE_AS_ENUM 1
 	#include "AIStateTypeEnums.h"
@@ -40,7 +40,7 @@ static const char* s_aszStateTypes[] =
 //
 // ENUM: State Status.
 //
-enum EnumAIStateStatus
+enum class EnumAIStateStatus : uint32_t
 {
 	kSStat_Invalid,
 	kSStat_Asleep,
@@ -144,7 +144,7 @@ class CAIState : public CAIClassAbstract
 		void SetAllowDialogue(LTBOOL b) { m_bNoCinematics = !b; }
 
 		virtual HMODELANIM GetDeathAni(LTBOOL bFront);
-		virtual EnumAIStateType GetBodyState() { return kState_BodyNormal; }
+		virtual EnumAIStateType GetBodyState() { return EnumAIStateType::kState_BodyNormal; }
 
 		virtual CMusicMgr::Mood GetMusicMood() { return CMusicMgr::eMoodNone; }
 

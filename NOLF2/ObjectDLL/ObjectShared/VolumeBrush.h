@@ -18,7 +18,11 @@ LINKTO_MODULE( VolumeBrush );
 #include "GameBase.h"
 #include "ContainerCodes.h"
 #include "DamageTypes.h"
+#ifndef __LINUX
 #include "..\shared\SoundFilterMgr.h"
+#else
+#include "SoundFilterMgr.h"
+#endif
 #include "SharedMovement.h"
 
 

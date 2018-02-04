@@ -70,8 +70,8 @@ struct CAIClassDesc
 #ifndef _DEBUG
 
 #define DEFINE_AI_FACTORY_CLASS(class_name)														\
-	unsigned long class_name##::k##class_name##Type;											\
-	static void* CreateAIClassInstance##class_name##( void* pPlacement )						\
+	unsigned long class_name::k##class_name##Type;											\
+	static void* CreateAIClassInstance##class_name( void* pPlacement )						\
 	{																							\
 		/* Check if the caller wants to put the object into a pre-allocated memory */			\
 		if( pPlacement )																		\
@@ -79,18 +79,18 @@ struct CAIClassDesc
 			void* pResult = new( pPlacement ) class_name;										\
 			return pResult;																		\
 		}																						\
-		uint8* pData = debug_newa(uint8, sizeof(##class_name##));								\
+		uint8* pData = debug_newa(uint8, sizeof(class_name));								\
 		void* pResult = new ( pData ) class_name;												\
 		return pResult;																			\
 	}																							\
-	static void DeleteAIClassInstance##class_name##( void* pInstance )							\
+	static void DeleteAIClassInstance##class_name( void* pInstance )							\
 	{																							\
 		/* Explicitly call the destructor of on the instance. */								\
-		(( class_name##* )pInstance )->~##class_name##( );										\
+		(( class_name* )pInstance )->~class_name( );										\
 	}																							\
-	static CAIClassDesc sAIClassDesc##class_name##(##class_name##::k##class_name##Type,			\
-		CreateAIClassInstance##class_name##, DeleteAIClassInstance##class_name##);				\
-	CAIClassAbstract* AIFactoryCreate##class_name##() { return AI_FACTORY_NEW(##class_name##); }
+	static CAIClassDesc sAIClassDesc##class_name(class_name::k##class_name##Type,			\
+		CreateAIClassInstance##class_name, DeleteAIClassInstance##class_name);				\
+	CAIClassAbstract* AIFactoryCreate##class_name() { return AI_FACTORY_NEW(class_name); }
 
 #else // _DEBUG
 
@@ -123,7 +123,7 @@ struct CAIClassDesc
 //
 // MACRO: Create/Destroy classes.
 //
-#define AI_FACTORY_NEW(class_name) (class_name##*)g_pAIClassFactory->NewClass(##class_name##::k##class_name##Type);
+#define AI_FACTORY_NEW(class_name) (class_name *)g_pAIClassFactory->NewClass(class_name::k##class_name##Type);
 
 #define AI_FACTORY_DELETE(class_name)														\
 	if( !g_pAIClassFactory )																\

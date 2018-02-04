@@ -18,7 +18,7 @@
 
 // Forward Declarations.
 
-enum EnumAIWeaponType;
+enum class EnumAIWeaponType : uint32_t;
 
 
 class CAIGoalAttack : public CAIGoalAbstractStimulated

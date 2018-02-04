@@ -27,7 +27,7 @@ typedef std::vector<HMODELANIM> HMODELANIM_LIST;
 
 LINKTO_MODULE( Prop );
 
-enum EnumPropAnimationType
+enum class EnumPropAnimationType : uint32_t
 {
 	kPA_Touch,
 	kPA_Knock,

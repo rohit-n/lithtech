@@ -20,9 +20,9 @@
 class  CAIGoalButeMgr;
 struct AIGBM_GoalSet;
 struct AIGBM_SmartObjectTemplate;
-enum EnumAIGoalType;
-enum EnumAINodeType;
-enum EnumAIStateType;
+enum class EnumAIGoalType : uint32_t;
+enum class EnumAINodeType : int32_t;
+enum class EnumAIStateType : uint32_t;
 
 // Globals.
 extern CAIGoalButeMgr* g_pAIGoalButeMgr;

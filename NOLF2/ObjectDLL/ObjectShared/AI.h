@@ -28,9 +28,9 @@ class CAttachmentsPlugin;
 
 struct CHARCREATESTRUCT;
 
-enum  EnumAIStateType;
-enum  EnumTrackedNodeGroup;
-enum  EnumAnimProp;
+enum class EnumAIStateType : uint32_t;
+enum class EnumTrackedNodeGroup : uint32_t;
+enum class EnumAnimProp : uint32_t;
 
 struct DroppedWeapon
 {
@@ -48,14 +48,14 @@ struct DroppedWeapon
 LINKTO_MODULE( AI );
 
 
-enum EnumAIAwareness
+enum class EnumAIAwareness : uint32_t
 {
 	kAware_Relaxed,		// AIVolume SenseMasks enabled, narrow FOV.
 	kAware_Suspicious,	// AIVolume SenseMasks disabled, narrow FOV, searches. 
 	kAware_Alert,		// AIVolume SenseMasks disabled, wide FOV, searches. 
 };
 
-enum EnumAIWeaponType
+enum class EnumAIWeaponType : uint32_t
 {
 	kAIWeap_Invalid = 0,
 	kAIWeap_Ranged,

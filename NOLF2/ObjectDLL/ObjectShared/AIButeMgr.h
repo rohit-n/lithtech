@@ -19,8 +19,8 @@
 
 // Forward declarations.
 class CAIButeMgr;
-enum EnumAISenseType ;
-enum EnumAIStimulusType ;
+enum class EnumAISenseType : uint32_t ;
+enum class EnumAIStimulusType : uint32_t;
 
 
 // Globals/statics
@@ -85,7 +85,7 @@ AIBM_Template;
 //
 // ENUM: Types of AI data.
 //
-enum EnumAIDataType
+enum class EnumAIDataType : uint32_t
 {
 	kAIData_InvalidType = -1,
 

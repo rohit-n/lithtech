@@ -232,7 +232,7 @@ class DEditInternal;
 
 struct PropDef {
 
-    PropDef(char *pName, short type, LTVector valVec,
+    PropDef(const char *pName, short type, LTVector valVec,
         float valFloat, char *valString, unsigned long propFlags)
     {
         m_PropName = pName;
@@ -245,7 +245,7 @@ struct PropDef {
         m_pDEditInternal = 0;
     }
 
-    char *m_PropName;
+    const char *m_PropName;
 
 /*!
 One of the \b PT_ defines above.

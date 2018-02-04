@@ -49,8 +49,8 @@ class RelationSet;
 class CObjectRelationMgr;
 class CSearchable;
 
-enum  EnumAIStateType;
-enum  EnumAIStimulusID;
+enum class EnumAIStateType : uint32_t;
+enum class EnumAIStimulusID : uint32_t;
 enum CharacterClass;
 
 struct CHARCREATESTRUCT;

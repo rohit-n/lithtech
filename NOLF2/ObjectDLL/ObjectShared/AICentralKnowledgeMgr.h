@@ -24,7 +24,7 @@ extern CAICentralKnowledgeMgr *g_pAICentralKnowledgeMgr;
 //
 // ENUM: Types of knowledge.
 //
-enum EnumAICentralKnowledgeType
+enum class EnumAICentralKnowledgeType : uint32_t
 {
 	kCK_InvalidType = 0,
 	kCK_InvestigatingVolume,

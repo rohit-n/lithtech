@@ -5,7 +5,7 @@
 
 #include "AIClassFactory.h"
 
-enum EnumAIStrategyType
+enum class EnumAIStrategyType : uint32_t
 {
 	kStrat_InvalidType= -1,
 	#define STRATEGY_TYPE_AS_ENUM 1

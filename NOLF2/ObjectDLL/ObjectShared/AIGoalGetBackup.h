@@ -16,7 +16,7 @@
 
 // Forward declarations.
 class AINode;
-enum  EnumAIStimulusID;
+enum class EnumAIStimulusID : uint32_t;
 
 class CAIGoalGetBackup : public CAIGoalAbstractSearch
 {

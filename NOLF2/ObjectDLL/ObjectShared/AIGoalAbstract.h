@@ -25,13 +25,13 @@ struct AISenseRecord;
 struct UnblockNode;
 struct BlockNode;
 struct DamageStruct;
-enum   EnumAISoundType;
+enum class EnumAISoundType : uint32_t;
 
 
 //
 // ENUM: Types of goals.
 //
-enum EnumAIGoalType
+enum class EnumAIGoalType : uint32_t
 {
 	kGoal_InvalidType= -1,
 	#define GOAL_TYPE_AS_ENUM 1
@@ -47,7 +47,7 @@ enum EnumAIGoalType
 static const char* s_aszGoalTypes[] =
 {
 	#define GOAL_TYPE_AS_STRING 1
-	#include "AIGOALTypeEnums.h"
+	#include "AIGoalTypeEnums.h"
 	#undef GOAL_TYPE_AS_STRING
 };
 

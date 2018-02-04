@@ -27,9 +27,9 @@ class AINodeTail;
 class AINodePatrol;
 class AINodeAssassinate;
 class CAIHumanStrategyToggleLights;
-enum  EnumAISoundType;
-enum  EnumAIStimulusID;
-enum  EnumTrackedNodeGroup;
+enum class EnumAISoundType : uint32_t;
+enum class EnumAIStimulusID : uint32_t;
+enum class EnumTrackedNodeGroup : uint32_t;
 
 class CAIHumanState : public CAIState
 {
@@ -267,7 +267,7 @@ class CAIHumanStateAttack : public CAIHumanState
 {
 	typedef CAIHumanState super;
 
-	enum EnumAttackFlags
+	enum class EnumAttackFlags : uint32_t
 	{
 		kAttk_None				= 0x00,
 		kAttk_ForceDodge		= 0x01,

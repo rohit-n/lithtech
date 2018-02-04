@@ -78,7 +78,7 @@
 
 // debug output messages to sever console
 #ifdef _DEGUG
-	enum EDebugOutput {eAlways = 0, eSomeTimes = 1, eRarely = 2};
+	enum class EDebugOutput : uint32_t {eAlways = 0, eSomeTimes = 1, eRarely = 2};
 
 	// if true all server messages will be output to console
 	LTBOOL			g_debugOutputMessages(LTFALSE);

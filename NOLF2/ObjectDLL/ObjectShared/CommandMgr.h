@@ -42,7 +42,7 @@ enum eExpressionVal
 	kExpress_TRUE = 1,
 };
 
-enum ECmdMgrVarType
+enum class ECmdMgrVarType : uint32_t
 {
 	eCMVar_Int,
 	eCMVar_Obj
@@ -59,7 +59,7 @@ struct VAR_STRUCT : public ILTObjRefReceiver
 	void Clear()
 	{
 		m_szName[0]	= CMDMGR_NULL_CHAR;
-		m_eType		= eCMVar_Int;
+		m_eType		= ECmdMgrVarType::eCMVar_Int;
 		m_iVal		= 0;
 		m_hObjVal	= 0;
 		m_pObjVal	= 0;
@@ -99,7 +99,7 @@ struct VAR_STRUCT : public ILTObjRefReceiver
 
 struct OPERATOR_STRUCT
 {
-	OPERATOR_STRUCT(const char *pOpName = "", LTBOOL bLogical = LTFALSE, IntOperatorFn pOpFn = LTNULL, ECmdMgrVarType eVarType = eCMVar_Int )
+	OPERATOR_STRUCT(const char *pOpName = "", LTBOOL bLogical = LTFALSE, IntOperatorFn pOpFn = LTNULL, ECmdMgrVarType eVarType = ECmdMgrVarType::eCMVar_Int )
 		:	m_OpName	( pOpName ),
 			m_bLogical	( bLogical ),
 			m_OpFn		( pOpFn ),
@@ -429,7 +429,7 @@ struct MSG_PRECHECK
 
 struct CMDMGR_CLASS_DESC
 {
-	CMDMGR_CLASS_DESC( char *pClassName, char *pParentClass, int nNumMsgs, MSG_PRECHECK *pMsgs, uint32 dwFlags  );
+	CMDMGR_CLASS_DESC( const char *pClassName, const char *pParentClass, int nNumMsgs, MSG_PRECHECK *pMsgs, uint32 dwFlags  );
 
 	char			*m_szClassName;
 	char			*m_szParentClass;
@@ -447,7 +447,7 @@ typedef std::vector<CMDMGR_CLASS_DESC*> CMDMGR_CLASS_DESC_VECTOR;
 
 #define CMDMGR_END_REGISTER_CLASS_FLAGS( class_name, parent_class, flags ) \
 	}; \
-	static CMDMGR_CLASS_DESC _CmdMgrClassDesc##class_name (#class_name, \
+	static CMDMGR_CLASS_DESC _CmdMgrClassDesc##class_name ( #class_name, \
 															#parent_class, \
 															sizeof(_##class_name##_Msgs_) / sizeof(MSG_PRECHECK), \
 															&_##class_name##_Msgs_[0], \

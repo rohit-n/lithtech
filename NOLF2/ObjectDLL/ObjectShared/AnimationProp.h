@@ -16,7 +16,7 @@
 //
 // ENUM: Animation Property Groups.
 //
-enum EnumAnimPropGroup {
+enum class EnumAnimPropGroup : uint32_t {
 	kAPG_Invalid = -1,
 	#define ANIM_PROP_GROUP_AS_ENUM 1
 	#include "AnimationPropGroupEnums.h"
@@ -27,7 +27,7 @@ enum EnumAnimPropGroup {
 //
 // ENUM: Animation Properties.
 //
-enum EnumAnimProp {
+enum class EnumAnimProp : uint32_t {
 	kAP_Invalid = -1,
 	#define ANIM_PROP_AS_ENUM 1
 	#include "AnimationPropEnums.h"

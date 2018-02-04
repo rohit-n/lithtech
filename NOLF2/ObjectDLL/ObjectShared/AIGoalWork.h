@@ -45,7 +45,7 @@ class CAIGoalWork : public CAIGoalAbstractUseObject
 
 	protected:
 
-		enum EnumWorkDeactivationState
+		enum class EnumWorkDeactivationState : uint32_t
 		{
 			kWDS_None,
 			kWDS_Interrupting,

@@ -17,7 +17,7 @@
 class	CAIStimulusRecord;
 struct	AISenseRecord;
 enum	EnumAISenseType;
-enum    EnumAIStimulusID;
+enum class EnumAIStimulusID : uint32_t;
 class   RelationSet;
 
 

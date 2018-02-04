@@ -299,7 +299,7 @@ ActiveWorldModel::ActiveWorldModel( )
 	m_hstrPowerOffCmd( LTNULL ),
 	m_hstrLockedCmd( LTNULL ),
 	m_nActivateAlarmLevel( 0 ),
-	m_eStimID( kStimID_Unset ),
+	m_eStimID( EnumAIStimulusID::kStimID_Unset ),
 	m_bSearchedForNode( LTFALSE ),
 	m_hUseObjectNode( LTNULL )
 {
@@ -335,7 +335,7 @@ ActiveWorldModel::~ActiveWorldModel( )
 
 	StopSound( );
 	
-	if(m_eStimID != kStimID_Unset)
+	if(m_eStimID != EnumAIStimulusID::kStimID_Unset)
 	{
 		g_pAIStimulusMgr->RemoveStimulus(m_eStimID);
 	}
@@ -2064,22 +2064,22 @@ void ActiveWorldModel::RegisterDisturbanceStimulus(LTBOOL bAudioStim)
 
 	if(bAudioStim == LTTRUE)
 	{
-		g_pAIStimulusMgr->RegisterStimulus( kStim_EnemyDisturbanceSound, m_nActivateAlarmLevel, m_hActivateObj, m_hObject, vPos, m_fStimRadius );
+		g_pAIStimulusMgr->RegisterStimulus( EnumAIStimulusType::kStim_EnemyDisturbanceSound, m_nActivateAlarmLevel, m_hActivateObj, m_hObject, vPos, m_fStimRadius );
 	}
 
 	// Add or remove a visual stimulus, depending on the starting state of the object.
 
 	if(m_nCurState != m_nStartingState)
 	{
-		if( m_eStimID == kStimID_Unset )
+		if( m_eStimID == EnumAIStimulusID::kStimID_Unset )
 		{
-			m_eStimID = g_pAIStimulusMgr->RegisterStimulus( kStim_EnemyDisturbanceVisible, m_nActivateAlarmLevel + 1, m_hActivateObj, m_hObject, vPos, m_fStimRadius );
+			m_eStimID = g_pAIStimulusMgr->RegisterStimulus( EnumAIStimulusType::kStim_EnemyDisturbanceVisible, m_nActivateAlarmLevel + 1, m_hActivateObj, m_hObject, vPos, m_fStimRadius );
 
 			// Search for an AINodeUseObject pointing at this object.
 
 			if( !m_bSearchedForNode )
 			{
-				AINode* pNode = g_pAINodeMgr->FindUseObjectNode( kNode_Disturbance, m_hObject, LTTRUE );
+				AINode* pNode = g_pAINodeMgr->FindUseObjectNode( EnumAINodeType::kNode_Disturbance, m_hObject, LTTRUE );
 				m_hUseObjectNode = ( pNode ) ? pNode->m_hObject : LTNULL;
 				m_bSearchedForNode = LTTRUE;
 			}
@@ -2091,24 +2091,24 @@ void ActiveWorldModel::RegisterDisturbanceStimulus(LTBOOL bAudioStim)
 				AINodeUseObject* pUseObjectNode = (AINodeUseObject*)g_pLTServer->HandleToObject( m_hUseObjectNode );
 				AIASSERT( pUseObjectNode, m_hObject, "ActiveWorldModel::RegisterDisturbanceStimulus: Cannot find UseObject Node" );
 
-				pUseObjectNode->SetSmartObjectState( kState_SmartObjectDisturbed );
+				pUseObjectNode->SetSmartObjectState( EnumAIStateType::kState_SmartObjectDisturbed );
 			}
 		}
 	}
 
 	// If a node exists, toggle it to its Default state.
 	
-	else if(m_eStimID != kStimID_Unset)
+	else if(m_eStimID != EnumAIStimulusID::kStimID_Unset)
 	{
 		g_pAIStimulusMgr->RemoveStimulus(m_eStimID);
-		m_eStimID = kStimID_Unset;
+		m_eStimID = EnumAIStimulusID::kStimID_Unset;
 
 		if( m_hUseObjectNode )
 		{
 			AINodeUseObject* pUseObjectNode = (AINodeUseObject*)g_pLTServer->HandleToObject( m_hUseObjectNode );
 			AIASSERT( pUseObjectNode, m_hObject, "ActiveWorldModel::RegisterDisturbanceStimulus: Cannot find UseObject Node" );
 
-			pUseObjectNode->SetSmartObjectState( kState_SmartObjectDefault );
+			pUseObjectNode->SetSmartObjectState( EnumAIStateType::kState_SmartObjectDefault );
 		}
 	}
 }

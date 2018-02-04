@@ -18,7 +18,7 @@ LINKTO_MODULE( AINodeDisturbance );
 
 // Forward declarations.
 
-enum EnumAIStimulusID;
+enum class EnumAIStimulusID : int;
 
 
 class AINodeDisturbance : public AINode

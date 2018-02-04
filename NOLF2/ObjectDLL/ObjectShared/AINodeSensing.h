@@ -28,7 +28,7 @@ class AINodeSensing : public AINode, public IAISensing
 {
 	typedef AINode super;
 
-	enum EnumAlarmLevel 
+	enum class EnumAlarmLevel : uint32_t 
 	{
 		kNone	= -1,
 		kLow	= 0,

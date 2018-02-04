@@ -17,7 +17,7 @@
 
 // Forward Declarations.
 class AINodeGuard;
-enum  EnumAINodeType;
+enum class EnumAINodeType: int32_t;
 
 class CAIGoalGuard : public CAIGoalAbstractTargeted
 {
