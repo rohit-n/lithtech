@@ -55,6 +55,7 @@
 #include "SharedFXStructs.h"
 
 #include <algorithm>
+#include <sstream>
 
 extern CAIGoalButeMgr* g_pAIGoalButeMgr;
 extern CServerSoundMgr* g_pServerSoundMgr;
@@ -257,7 +258,7 @@ static LTBOOL ValidateMsgGoalPrefix( ILTPreInterface *pInterface, ConParse &cpMs
 
 	// Check to see if this is a goal prefix command and verrify the goal...
 
-	if( _strnicmp( cpMsgParams.m_Args[0], GOAL_CMD_PREFIX, len ) == 0 )
+	if( stricmp( std::string{cpMsgParams.m_Args[0]}.substr(0, len).c_str(), GOAL_CMD_PREFIX ) == 0 )
 	{
 		char szMsg[128] = {0};
 		LTStrCpy( szMsg, cpMsgParams.m_Args[0], ARRAY_LEN( szMsg ));
@@ -373,8 +374,8 @@ static LTBOOL VelidateDelcmd( ILTPreInterface *pInterface, ConParse &cpMsgParams
 {
 	if( cpMsgParams.m_Args[1] )
 	{
-		if( !_stricmp( cpMsgParams.m_Args[1], "ACTIVATEON" ) ||
-			!_stricmp( cpMsgParams.m_Args[1], "ACTIVATEOFF" ))
+		if( !stricmp( cpMsgParams.m_Args[1], "ACTIVATEON" ) ||
+			!stricmp( cpMsgParams.m_Args[1], "ACTIVATEOFF" ))
 		{
 			return LTTRUE;
 		}
@@ -1448,7 +1449,7 @@ void CAI::InitialUpdate()
 		// get the head ext value
 		const char *ext_val = g_pLTServer->GetStringData(m_hstrBodySkinExtension) ;
 
-		if( !_stricmp( ext_val, SKIN_EXT_RANDOM ))
+		if( !stricmp( ext_val, SKIN_EXT_RANDOM ))
 		{
 			// Randomly use one of the 'AltBodySkin#' for the model...
 
@@ -1485,7 +1486,7 @@ void CAI::InitialUpdate()
 		// get the head ext value
 		const char *ext_val = g_pLTServer->GetStringData(m_hstrHeadExtension) ;
 
-		if( !_stricmp( ext_val, SKIN_EXT_RANDOM ))
+		if( !stricmp( ext_val, SKIN_EXT_RANDOM ))
 		{
 			// Randomly use one of the 'AltHeadSkin#' for the model...
 
@@ -3619,13 +3620,15 @@ void CAI::UpdateInfo()
 		else if( g_AIInfoTrack.GetFloat() == 4.0f )
 		{
 			// Show Relations.
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 
 			std::ostrstream out;
+#elif __LINUX
+			std::ostringstream out{};
 #else
 			ostrstream out;
 #endif // VC7
-			out << *(m_pRelationMgr->GetRelationUser()) << '\n' << '\0';
-			info += out.str();
+			out << *(m_pRelationMgr->GetRelationUser()) << '\n';
+			info += out.str().c_str();
 		}
 
 		if( info != m_cstrCurrentInfo )
@@ -4546,28 +4549,28 @@ void CAI::HandleModelString(ArgList* pArgList)
 			g_pServerSoundMgr->PlaySoundFromPos(vPos, pSurf->szBodyFallSnd, pSurf->fBodyFallSndRadius, SOUNDPRIORITY_MISC_LOW);
 		}
 	}
-	else if( !_stricmp( pKey, c_szKeyClose ) )
+	else if( !stricmp( pKey, c_szKeyClose ) )
 	{
 		if( m_hAnimObject )
 		{
 			SendTriggerMsgToObject( this, m_hAnimObject, LTFALSE, "OFF" );
 		}
 	}
-	else if( !_stricmp( pKey, c_szKeyOpen ) )
+	else if( !stricmp( pKey, c_szKeyOpen ) )
 	{
 		if( m_hAnimObject )
 		{
 			SendTriggerMsgToObject( this, m_hAnimObject, LTFALSE, "ON" );
 		}
 	}
-	else if( !_stricmp( pKey, c_szActivate ) )
+	else if( !stricmp( pKey, c_szActivate ) )
 	{
 		if( m_hAnimObject )
 		{
 			SendTriggerMsgToObject( this, m_hAnimObject, LTFALSE, "ACTIVATE" );
 		}
 	}
-	else if ( !_stricmp( pKey, c_szAttachmentAnim  ) )
+	else if ( !stricmp( pKey, c_szAttachmentAnim  ) )
 	{
 		// Argument 1:	Attachment position/name to send the animation to
 		// Argument 2:	Name of the animation to send it
@@ -6152,7 +6155,7 @@ LTRESULT CAIPlugin::PreHook_EditStringList(const char* szRezPath, const char* sz
 
 	// See if it's the priority fields
 
-	if (strlen(szPropName) > 5 && _strcmpi("Priority", &szPropName[5]) == 0)
+	if (strlen(szPropName) > 5 && stricmp("Priority", &szPropName[5]) == 0)
 	{
 		for ( uint32 iPriority = 0 ; iPriority < s_cPriorities ; iPriority++ )
 		{
@@ -6185,10 +6188,10 @@ LTRESULT CAIPlugin::PreHook_PropChanged( const char *szObjName,
 											 const char *szModifiers )
 {
 	if( gpPropValue.m_String[0] &&
-		(!_stricmp( szPropName, "Initial" ) ||
-		!_stricmp( szPropName, "ActivateOn" ) ||
-		!_stricmp( szPropName, "ActivateOff" ) ||
-		!_stricmp( szPropName, "ProximityGoalCommand" ) ))
+		(!stricmp( szPropName, "Initial" ) ||
+		!stricmp( szPropName, "ActivateOn" ) ||
+		!stricmp( szPropName, "ActivateOff" ) ||
+		!stricmp( szPropName, "ProximityGoalCommand" ) ))
 	{
 		ConParse cpCmd;
 		cpCmd.Init( gpPropValue.m_String );

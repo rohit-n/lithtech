@@ -125,7 +125,7 @@ private:
 
 	void CleanSerializeIDs();
 
-	enum class EDirtyFlags : uint32_t {
+	enum EDirtyFlags : uint32_t {
 		eDirty_SerializeIDs = 1,
 		eDirty_ObjectLists = 2,
 		eDirty_All = 0xFFFFFFFF

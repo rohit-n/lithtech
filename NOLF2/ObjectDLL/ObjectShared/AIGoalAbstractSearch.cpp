@@ -239,17 +239,17 @@ LTBOOL CAIGoalAbstractSearch::HandleNameValuePair(const char *szName, const char
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "SEARCH") )
+	if ( !stricmp(szName, "SEARCH") )
 	{
 		m_bSearch = IsTrueChar(*szValue);
 		return LTTRUE;
 	}
-	else if ( !_stricmp(szName, "FACESEARCH") )
+	else if ( !stricmp(szName, "FACESEARCH") )
 	{
 		m_bFaceSearch = IsTrueChar(*szValue);
 		return LTTRUE;
 	}
-	else if ( !_stricmp(szName, "ENGAGESEARCH") )
+	else if ( !stricmp(szName, "ENGAGESEARCH") )
 	{
 		m_bEngageSearch = IsTrueChar(*szValue);
 		return LTTRUE;

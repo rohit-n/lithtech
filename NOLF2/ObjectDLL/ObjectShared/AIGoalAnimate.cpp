@@ -149,14 +149,14 @@ LTBOOL CAIGoalAnimate::HandleNameValuePair(const char *szName, const char *szVal
 {
 	AIASSERT(szName && szValue, m_pAI->m_hObject, "CAIGoalAnimate::HandleNameValuePair: Missing name or value.");
 
-	if ( !_stricmp(szName, "ANIM") )
+	if ( !stricmp(szName, "ANIM") )
 	{
 		FREE_HSTRING(m_hstrAnim);
 		m_hstrAnim = g_pLTServer->CreateString((char*)szValue);
 		m_bResetAnim = LTTRUE;
 		return LTTRUE;
 	}
-	else if ( !_stricmp(szName, "LOOP") )
+	else if ( !stricmp(szName, "LOOP") )
 	{
 		m_bLoop = IsTrueChar(szValue[0]);
 		m_bResetAnim = LTTRUE;

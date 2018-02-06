@@ -5,7 +5,7 @@
 
 // Groups of tracking nodes exist for different purposes.
 
-enum EnumTrackedNodeGroup
+enum EnumTrackedNodeGroup : int32_t
 {
 	kTrack_None = -1,
 	kTrack_LookAt,
@@ -15,7 +15,7 @@ enum EnumTrackedNodeGroup
 
 // Tracking nodes may track a model, object, or position.
 
-enum EnumTrackTarget
+enum EnumTrackTarget : uint32_t
 {
 	kTrackTarget_None,
 	kTrackTarget_Model,
@@ -25,7 +25,7 @@ enum EnumTrackTarget
 
 // Server needs to tell client tracking settings.
 
-enum EnumTrackMsg
+enum EnumTrackMsg : uint32_t
 {
 	kTrackMsg_ActivateGroup,
 	kTrackMsg_SetTarget,

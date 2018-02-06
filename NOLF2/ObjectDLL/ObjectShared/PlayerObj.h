@@ -38,7 +38,7 @@ class TeleportPoint;
 class PlayerLure;
 class CAI;
 struct WeaponFireInfo;
-enum class EnumAIStimulusID : uint32_t;
+enum EnumAIStimulusID : int;
 
 
 struct ObjectiveMsgInfo

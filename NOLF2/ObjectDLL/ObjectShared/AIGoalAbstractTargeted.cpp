@@ -47,7 +47,7 @@ LTBOOL CAIGoalAbstractTargeted::HandleNameValuePair(const char *szName, const ch
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "TARGET") )
+	if ( !stricmp(szName, "TARGET") )
 	{
 		HOBJECT hObj = m_hTarget;
 		FindNamedObject(szValue, hObj);

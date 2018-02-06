@@ -558,25 +558,25 @@ LTBOOL CAIGoalAttack::HandleNameValuePair(const char *szName, const char *szValu
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "CHASEDELAY") )
+	if ( !stricmp(szName, "CHASEDELAY") )
 	{
 		m_fChaseDelay = (LTFLOAT)atof(szValue);
 		return LTTRUE;
 	}
-	else if ( !_stricmp(szName, "POSTURE") )
+	else if ( !stricmp(szName, "POSTURE") )
 	{
-		if ( !_stricmp(szValue, "CROUCH") )
+		if ( !stricmp(szValue, "CROUCH") )
 		{
 			m_ePosture = kAP_Crouch;
 			return LTTRUE;
 		}
-		else if ( !_stricmp(szValue, "STAND") )
+		else if ( !stricmp(szValue, "STAND") )
 		{
 			m_ePosture = kAP_Stand;
 			return LTTRUE;
 		}
 	}
-	else if ( !_stricmp(szName, "PANICCANACTIVATE") )
+	else if ( !stricmp(szName, "PANICCANACTIVATE") )
 	{
 		m_bPanicCanActivate = IsTrueChar(*szValue);
 		return LTTRUE;

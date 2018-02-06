@@ -14,7 +14,7 @@
 
 #include "AIGoalAbstractSearch.h"
 
-enum class EnumAIStimulusID : int;
+enum EnumAIStimulusID : int;
 
 class CAIGoalRespondToAlarm : public CAIGoalAbstractSearch
 {

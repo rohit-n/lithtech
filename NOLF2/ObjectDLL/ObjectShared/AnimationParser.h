@@ -10,7 +10,7 @@
 
 // Forward declarations.
 class CAnimationMgr;
-enum class EnumAnimMovement : uint32_t;
+enum EnumAnimMovement : int32_t;
 	
 
 namespace Animation

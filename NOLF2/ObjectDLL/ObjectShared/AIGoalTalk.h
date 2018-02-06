@@ -16,7 +16,7 @@
 
 // Forward Declarations.
 
-enum class EnumAnimProp : uint32_t;
+enum EnumAnimProp : int32_t;
 
 
 class CAIGoalTalk : public CAIGoalGuard

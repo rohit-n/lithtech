@@ -35,7 +35,7 @@ extern CAIStimulusMgr *g_pAIStimulusMgr;
 //
 // ENUM: Types of stimulus exclusive bitflags.
 //
-enum class EnumAIStimulusType: uint32_t
+enum EnumAIStimulusType: uint32_t
 {
 	kStim_InvalidType = 0,
 
@@ -44,13 +44,13 @@ enum class EnumAIStimulusType: uint32_t
 	#undef STIMULUS_TYPE_AS_ENUM
 };
 
-enum class EnumAIStimulusID : int
+enum EnumAIStimulusID : int
 {
 	kStimID_Invalid = -1,
 	kStimID_Unset = 0,
 };
 
-enum class EnumAITargetMatchID : uint32_t
+enum EnumAITargetMatchID : int
 {
 	kTMID_Invalid = -1,
 };

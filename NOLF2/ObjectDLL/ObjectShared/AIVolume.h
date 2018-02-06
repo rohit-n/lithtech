@@ -28,7 +28,7 @@ class AIVolume;
 class AINode;
 class AINodeSearch;
 class CAI;
-enum class EnumAIStimulusID : uint32_t;
+enum EnumAIStimulusID : int;
 
 
 class AISpatialNeighbor;
@@ -140,7 +140,7 @@ class AISpatialRepresentation : public AIGeometry
 public:
 	typedef AIGeometry super;
 
-	enum class EnumUseFlags : uint32_t
+	enum EnumUseFlags : uint32_t
 	{
 		kUseBy_None		= 0x00,
 		kUseBy_AI		= 0x01,
@@ -272,7 +272,7 @@ public:
 
 	protected:
 
-		enum class EnumInfoVolumeState : uint32_t
+		enum EnumInfoVolumeState : uint32_t
 		{
 			kIVS_On,
 			kIVS_Off,
@@ -301,7 +301,7 @@ class AIVolume : public AISpatialRepresentation
 		//
 		// ENUM: Types of AI volumes.
 		//
-		enum class EnumVolumeType : uint32_t
+		enum EnumVolumeType : uint32_t
 		{
 			kVolumeType_Invalid			= 0,
 			kVolumeType_None			= 0,

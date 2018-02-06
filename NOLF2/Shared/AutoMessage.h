@@ -118,4 +118,13 @@ private:
 	ILTMessage_Write *m_pMsg;
 };
 
+#ifdef __LINUX
+static inline void OutputDebugString(const char *msg)
+{
+#ifdef _DEBUG	
+	std::err << msg << '\n';
+#endif
+}
+#endif
+
 #endif //__AUTOMESSAGE_H__

@@ -17,7 +17,7 @@
 // Forward Declarations...
 //
 
-enum class EnumAIStimulusID : int;
+enum EnumAIStimulusID : int;
 
 //
 // Includes...

@@ -24,7 +24,7 @@ struct BANANACLASSDATA;
 struct SPEARCLASSDATA;
 
 enum ContainerCode;
-enum class EnumAIStimulusID : int;
+enum EnumAIStimulusID : int;
 
 LINKTO_MODULE( ProjectileTypes );
 

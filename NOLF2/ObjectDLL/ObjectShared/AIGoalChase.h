@@ -14,7 +14,7 @@
 
 #include "AIGoalAbstractSearch.h"
 
-enum class EnumAIStateStatus : uint32_t;
+enum EnumAIStateStatus : uint32_t;
 class AIVolumeJunction;
 
 

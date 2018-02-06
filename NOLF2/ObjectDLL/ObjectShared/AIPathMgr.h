@@ -68,7 +68,7 @@ struct INTERSECT_CONNECTION_STRUCT
 
 // Constants
 
-enum class EnumConnectionCheck : uint32_t
+enum EnumConnectionCheck : uint32_t
 {
 	kEntrance,
 	kExit,
@@ -126,7 +126,7 @@ class CAIPathMgr
 
 	public :
 
-		enum class EnumPathBuildStatus : uint32_t
+		enum EnumPathBuildStatus : uint32_t
 		{
 			kPath_Unknown,
 			kPath_NoPathFound,

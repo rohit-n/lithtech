@@ -42,7 +42,7 @@ enum eExpressionVal
 	kExpress_TRUE = 1,
 };
 
-enum class ECmdMgrVarType : uint32_t
+enum ECmdMgrVarType : uint32_t
 {
 	eCMVar_Int,
 	eCMVar_Obj

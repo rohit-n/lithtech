@@ -10,9 +10,9 @@
 #include "DebugLineSystem.h"
 
 // Forward declarations.
-enum class EnumAISoundType : uint32_t;
-enum class EnumAINodeType : int32_t;
-enum class EnumAIStateType : uint32_t;
+enum EnumAISoundType : int32_t;
+enum EnumAINodeType : int32_t;
+enum EnumAIStateType : uint32_t;
 
 class AIVolume;
 class CAIHuman;
@@ -22,7 +22,7 @@ LINKTO_MODULE( AINode );
 //
 // ENUM: Types of AI nodes.
 //
-enum class EnumAINodeType : int32_t
+enum EnumAINodeType : int32_t
 {
 	kNode_InvalidType = -1,
 
@@ -44,7 +44,7 @@ static const char* s_aszAINodeTypes[] =
 };
 
 
-enum class EnumNodeStatus : uint32_t
+enum EnumNodeStatus : uint32_t
 {
 	kStatus_Invalid,
 	kStatus_Ok,
@@ -446,7 +446,7 @@ class AINodeSearch : public AINode
 			kNumFlags				= 8,
 		};
 
-		enum class EnumSearchType : uint32_t
+		enum EnumSearchType : uint32_t
 		{
 			kSearch_Default,
 			kSearch_OneWay,

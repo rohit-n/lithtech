@@ -356,7 +356,7 @@ bool RayIntersectBox(const LTVector& vBoxMin,
 
 	// Algorithm taken from Graphics Gems p.736.
 
-	enum class EnumQuadrant : uint32_t
+	enum EnumQuadrant : uint32_t
 	{
 		kQuad_Right,
 		kQuad_Left,

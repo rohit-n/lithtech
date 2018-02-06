@@ -18,7 +18,7 @@ class CParsedMsg;
 //
 // ENUM: Types of states.
 //
-enum class EnumAIStateType : uint32_t
+enum EnumAIStateType : uint32_t
 {
 	#define STATE_TYPE_AS_ENUM 1
 	#include "AIStateTypeEnums.h"
@@ -40,7 +40,7 @@ static const char* s_aszStateTypes[] =
 //
 // ENUM: State Status.
 //
-enum class EnumAIStateStatus : uint32_t
+enum EnumAIStateStatus : uint32_t
 {
 	kSStat_Invalid,
 	kSStat_Asleep,

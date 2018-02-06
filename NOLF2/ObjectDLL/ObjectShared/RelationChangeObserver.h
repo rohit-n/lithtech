@@ -15,7 +15,7 @@
 //----------------------------------------------------------------------------
 
 #ifndef __RELATIONCHANGEOBSERVER_H__
-#define __RELATIONCHANGEOBSERVER_H
+#define __RELATIONCHANGEOBSERVER_H__
 
 #if _MSC_VER >= 1000
 #pragma once

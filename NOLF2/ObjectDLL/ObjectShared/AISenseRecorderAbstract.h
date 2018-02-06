@@ -17,14 +17,14 @@
 
 class CAIStimulusRecord;
 class CAISenseRecorderAbstract;
-enum class EnumAIStimulusID : uint32_t;
-enum class EnumAITargetMatchID : uint32_t;
+enum EnumAIStimulusID : int;
+enum EnumAITargetMatchID : int;
 
 
 //
 // ENUM: Types of senses exclusive bitflags.
 //
-enum class EnumAISenseType : uint32_t
+enum EnumAISenseType : uint32_t
 {
 	kSense_InvalidType	= 0,
 	kSense_None			= 0,
