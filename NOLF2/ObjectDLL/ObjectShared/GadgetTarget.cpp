@@ -124,7 +124,7 @@ LTRESULT CGadgetTargetPlugin::PreHook_EditStringList(
 	{
 		return LT_OK;
 	}
-	else if( !_stricmp("GadgetTargetName", szPropName) )
+	else if( !stricmp("GadgetTargetName", szPropName) )
 	{
 		// Fill the list with our Gadget Target names...
 
@@ -136,7 +136,7 @@ LTRESULT CGadgetTargetPlugin::PreHook_EditStringList(
 			return LT_OK;
 		}
 	}
-	else if( !_stricmp( "Team", szPropName ) )
+	else if( !stricmp( "Team", szPropName ) )
 	{
 		char szTeam[32] = {0};
 
@@ -554,7 +554,7 @@ LTBOOL GadgetTarget::ReadProp( ObjectCreateStruct *pStruct )
 				for( int i = 0; i < MAX_TEAMS; ++i )
 				{
 					sprintf( szTeam, "Team%i", i );
-					if( !_stricmp( gProp.m_String, szTeam ))
+					if( !stricmp( gProp.m_String, szTeam ))
 					{
 						m_nTeamID = i;
 					}

@@ -17,7 +17,7 @@
 #include "gameservershell.h"
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include <stdio.h>
 #include "AIVolumeMgr.h"
 #include "VersionMgr.h"
@@ -184,7 +184,7 @@ LTRESULT CWorldPropertiesPlugin::PreHook_EditStringList(
     const uint32 cMaxStrings,
     const uint32 cMaxStringLength)
 {
-    if (_stricmp(szSoundFilter, szPropName) == 0)
+    if (stricmp(szSoundFilter, szPropName) == 0)
 	{
 		m_SoundFilterMgrPlugin.PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings, cMaxStringLength);
@@ -195,7 +195,7 @@ LTRESULT CWorldPropertiesPlugin::PreHook_EditStringList(
 		return LT_OK;
 	}
 
-    else if (_stricmp(szMinMusicMood, szPropName) == 0)
+    else if (stricmp(szMinMusicMood, szPropName) == 0)
 	{
 		strcpy( aszStrings[(*pcStrings)++], "Routine" );
 		strcpy( aszStrings[(*pcStrings)++], "Investigate" );

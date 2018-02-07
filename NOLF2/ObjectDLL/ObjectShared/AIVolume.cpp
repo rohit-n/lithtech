@@ -733,7 +733,7 @@ LTRESULT AIInformationVolumePlugin::PreHook_EditStringList(const char* szRezPath
 		bPluginInitted = true;
 	}
 
-	if ( !_strcmpi("SenseMask", szPropName) )
+	if ( !stricmp("SenseMask", szPropName) )
 	{
 		// TODO: make sure we don't overflow cMaxStringLength or cMaxStrings
 		uint32 cSenseMasks = s_AIButeMgr.GetNumSenseMasks();

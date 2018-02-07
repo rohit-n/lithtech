@@ -878,7 +878,7 @@ LTBOOL CAIGoalChase::HandleNameValuePair(const char *szName, const char *szValue
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "SEEKPLAYER") )
+	if ( !stricmp(szName, "SEEKPLAYER") )
 	{
 		if( IsTrueChar( szValue[0] ) )
 		{
@@ -902,7 +902,7 @@ LTBOOL CAIGoalChase::HandleNameValuePair(const char *szName, const char *szValue
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "NEVERGIVEUP") )
+	else if ( !stricmp(szName, "NEVERGIVEUP") )
 	{
 		if( IsTrueChar( szValue[0] ) )
 		{
@@ -911,7 +911,7 @@ LTBOOL CAIGoalChase::HandleNameValuePair(const char *szName, const char *szValue
 		}
 	}
 
-	else if ( !_stricmp(szName, "KEEPDISTANCE") )
+	else if ( !stricmp(szName, "KEEPDISTANCE") )
 	{
 		m_bKeepDistance = IsTrueChar( szValue[0] );
 		AITRACE( AIShowGoals, ( m_pAI->m_hObject, "CAIGoalChase: KEEPDISTANCE=%d", m_bKeepDistance ? 1 : 0 ) );

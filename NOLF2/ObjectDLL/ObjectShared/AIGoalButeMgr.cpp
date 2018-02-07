@@ -441,8 +441,11 @@ void CAIGoalButeMgr::ReadGoalTemplate(uint32 iTemplate)
 	Template.fUpdateRate			= (LTFLOAT)CButeTools::GetValidatedDouble(m_buteMgr, s_aTagName, "UpdateRate");
 	Template.bDeleteOnDeactivation	= CButeTools::GetValidatedBool(m_buteMgr, s_aTagName, "DeleteWhenDone", LTFALSE);
 	Template.fChanceToActivate		= (LTFLOAT)CButeTools::GetValidatedDouble(m_buteMgr, s_aTagName, "ChanceToActivate", 1.f);
-	Template.fFrequencyMin			= (LTFLOAT)CButeTools::GetValidatedRange(m_buteMgr, s_aTagName, "Frequency", CARange(0.f, 0.f)).GetMin();
-	Template.fFrequencyMax			= (LTFLOAT)CButeTools::GetValidatedRange(m_buteMgr, s_aTagName, "Frequency", CARange(0.f, 0.f)).GetMax();
+	{
+		CARange range{0.f,0.f};
+		Template.fFrequencyMin			= (LTFLOAT)CButeTools::GetValidatedRange(m_buteMgr, s_aTagName, "Frequency", range).GetMin();
+		Template.fFrequencyMax			= (LTFLOAT)CButeTools::GetValidatedRange(m_buteMgr, s_aTagName, "Frequency", range).GetMax();
+	}
 	Template.nDamagePriority		= CButeTools::GetValidatedInt(m_buteMgr, s_aTagName, "DamagePriority", 0);
 
 	// Get SenseTriggers. (SenseTypes are bitflags)

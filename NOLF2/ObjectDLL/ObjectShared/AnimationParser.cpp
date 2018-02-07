@@ -148,7 +148,7 @@ void CAnimationParser::AddPropertyToCurrentGroup(const std::string& sName)
 {
 	EnumAnimProp eProp = CAnimationMgrList::GetPropFromName(sName.c_str());
 
-	if( (eProp == kAP_Any) || (eProp == kAP_None) || ((eProp == kAP_Invalid) && (_strnicmp(s_aszAnimProp[kAP_Any], sName.c_str(), 3) != 0)) )
+	if( (eProp == kAP_Any) || (eProp == kAP_None) || ((eProp == kAP_Invalid) && (strnicmp(s_aszAnimProp[kAP_Any], sName.c_str(), 3) != 0)) )
 	{
 		char szBuffer[256];
 		sprintf(szBuffer, "CAnimationParser::GetPropertyAndGroupEnums: Unrecognized property in group \"%s\": \"%s\"", s_aszAnimPropGroup[m_ePropertyGroupCurrent], (const char*)sName.c_str() );
@@ -227,7 +227,7 @@ void CAnimationParser::GetPropertyAndGroupEnums(const std::string& sProperty,
 
 	// If prop name wasn't found, but starts with "any", find group name in hash table.
 
-	if( (*peProp == kAP_Invalid) && ( _strnicmp(s_aszAnimProp[kAP_Any], sProperty.c_str(), 3) == 0) )
+	if( (*peProp == kAP_Invalid) && ( strnicmp(s_aszAnimProp[kAP_Any], sProperty.c_str(), 3) == 0) )
 	{
 		*peGroup = CAnimationMgrList::GetPropGroupFromName(sProperty.c_str() + 3);
 		*peProp = kAP_Any;

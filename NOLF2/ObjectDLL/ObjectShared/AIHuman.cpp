@@ -677,7 +677,7 @@ void CAIHuman::TransitioningInMultiplayerWhileCarryingCateTeleportHack( const LT
 {
 	// Make sure the AI is actually Cate...
 
-	if( _stricmp( GetName(), "Cate" ) != 0 )
+	if( stricmp( GetName(), "Cate" ) != 0 )
 		return;
 
 	// Just teleport immediately without saving any teleport state or position so on the
@@ -740,7 +740,7 @@ bool CAIHuman::HandleCommand(const CParsedMsg &cMsg)
 			bOptional = LTTRUE;
 		}
 
-		if ( !_stricmp(&cMsg.GetArg(0)[bOptional], s_aszStateTypes[iState]) )
+		if ( !stricmp(&cMsg.GetArg(0)[bOptional], s_aszStateTypes[iState]) )
 		{
 			if ( bOptional )
 			{
@@ -2515,7 +2515,7 @@ LTRESULT CAIHumanPlugin::PreHook_EditStringList(const char* szRezPath, const cha
 		return LT_OK;
 	}
 
-	if ( !_strcmpi("GoalSet", szPropName) )
+	if ( !stricmp("GoalSet", szPropName) )
 	{
 		// TODO: make sure we don't overflow cMaxStringLength or cMaxStrings
 		uint32 cGoalSets = s_AIGoalButeMgr.GetNumGoalSets();
@@ -2532,7 +2532,7 @@ LTRESULT CAIHumanPlugin::PreHook_EditStringList(const char* szRezPath, const cha
 
 		return LT_OK;
 	}
-	else if ( !_strcmpi("ModelTemplate", szPropName) )
+	else if ( !stricmp("ModelTemplate", szPropName) )
 	{
 		uint32 cModels = g_pModelButeMgr->GetNumModels();
 		_ASSERT(cMaxStrings >= cModels);
@@ -2543,7 +2543,7 @@ LTRESULT CAIHumanPlugin::PreHook_EditStringList(const char* szRezPath, const cha
 
 		return LT_OK;
 	}
-	else if ( !_strcmpi("Brain", szPropName) )
+	else if ( !stricmp("Brain", szPropName) )
 	{
 		// TODO: make sure we don't overflow cMaxStringLength or cMaxStrings
 		uint32 cBrains = s_AIButeMgr.GetNumBrains();

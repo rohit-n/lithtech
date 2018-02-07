@@ -15,7 +15,7 @@
 //
 
 	#include "Stdafx.h"
-	#include "MsgIds.h"
+	#include "MsgIDs.h"
 	#include "PlayerObj.h"
 	#include "Spawner.h"
 	#include "GadgetTargetTypes.h"
@@ -83,7 +83,7 @@ LTRESULT CBombablePlugin::PreHook_EditStringList(
 	{
 		return LT_OK;
 	}
-	else if( !_stricmp("GadgetTargetName", szPropName) )
+	else if( !stricmp("GadgetTargetName", szPropName) )
 	{
 		// Fill the list with our Gadget Target names...
 

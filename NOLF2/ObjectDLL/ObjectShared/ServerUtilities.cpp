@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "ServerUtilities.h"
 #include "iltserver.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "SoundTypes.h"
 #include "CVarTrack.h"
 #include "ObjectMsgs.h"

@@ -312,7 +312,7 @@ LTBOOL CAIGoalDramaDeath::HandleNameValuePair(const char *szName, const char *sz
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "LAUNCH") )
+	if ( !stricmp(szName, "LAUNCH") )
 	{
 		m_bLaunch = IsTrueChar( szValue[0] );
 		return LTTRUE;

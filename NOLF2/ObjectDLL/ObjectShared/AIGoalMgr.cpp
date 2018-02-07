@@ -90,12 +90,12 @@ void CAIGoalMgr::Save(ILTMessage_Write *pMsg)
 
 	// Save pointers.
 
-	SAVE_DWORD( m_pNextGoal ? m_pNextGoal->GetGoalType() : kGoal_InvalidType );
-	SAVE_DWORD( m_pCurGoal ? m_pCurGoal->GetGoalType() : kGoal_InvalidType );
-	SAVE_DWORD( m_pLastGoal ? m_pLastGoal->GetGoalType() : kGoal_InvalidType );
-	SAVE_DWORD( m_pTriggeredGoal ? m_pTriggeredGoal->GetGoalType() : kGoal_InvalidType );
-	SAVE_DWORD( m_pLockedGoal ? m_pLockedGoal->GetGoalType() : kGoal_InvalidType );
-	SAVE_DWORD( m_pDeactivatingGoal ? m_pDeactivatingGoal->GetGoalType() : kGoal_InvalidType );
+	SAVE_INT( m_pNextGoal ? m_pNextGoal->GetGoalType() : kGoal_InvalidType );
+	SAVE_INT( m_pCurGoal ? m_pCurGoal->GetGoalType() : kGoal_InvalidType );
+	SAVE_INT( m_pLastGoal ? m_pLastGoal->GetGoalType() : kGoal_InvalidType );
+	SAVE_INT( m_pTriggeredGoal ? m_pTriggeredGoal->GetGoalType() : kGoal_InvalidType );
+	SAVE_INT( m_pLockedGoal ? m_pLockedGoal->GetGoalType() : kGoal_InvalidType );
+	SAVE_INT( m_pDeactivatingGoal ? m_pDeactivatingGoal->GetGoalType() : kGoal_InvalidType );
 
 
 	// Save goal script.
@@ -1355,7 +1355,7 @@ bool CAIGoalMgr::HandleCommand(const CParsedMsg &cMsg)
 
 	uint8 len = (uint8)strlen(GOAL_CMD_PREFIX);
 
-	if( _strnicmp( cMsg.GetArg(0), GOAL_CMD_PREFIX, len ) == 0 )
+	if( strnicmp( cMsg.GetArg(0), GOAL_CMD_PREFIX, len ) == 0 )
 	{
 		// Do not actually run commands here here.  Queue up commands to run
 		// next update.  This ensures they are run on goals added from commands,

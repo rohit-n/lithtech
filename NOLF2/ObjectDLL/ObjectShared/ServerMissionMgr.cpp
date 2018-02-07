@@ -11,7 +11,7 @@
 
 #include "Stdafx.h"
 #include "ServerMissionMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "WinUtil.h"
 #include "MissionButeMgr.h"
 #include "ServerSaveLoadMgr.h"

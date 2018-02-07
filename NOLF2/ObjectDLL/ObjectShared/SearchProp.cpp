@@ -107,7 +107,7 @@ LTRESULT CSearchPropPlugin::PreHook_EditStringList(
     const uint32 cMaxStringLength)
 {
 
-	if (_strcmpi("Type", szPropName) == 0)
+	if (stricmp("Type", szPropName) == 0)
 	{
 		if (m_PropTypeMgrPlugin.PreHook_EditStringList(szRezPath,
 			szPropName, aszStrings, pcStrings, cMaxStrings, cMaxStringLength) == LT_OK)

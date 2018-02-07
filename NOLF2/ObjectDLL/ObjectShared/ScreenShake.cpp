@@ -11,7 +11,7 @@
 #include "Stdafx.h"
 #include "ScreenShake.h"
 #include "iltserver.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "PlayerObj.h"
 #include "SoundMgr.h"
 #include "ObjectMsgs.h"

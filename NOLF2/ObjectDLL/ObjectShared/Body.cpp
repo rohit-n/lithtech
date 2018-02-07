@@ -663,8 +663,8 @@ bool Body::HandleModelString(ArgList* pArgList)
 		if (!pKey) 
 			return false;
 
-		LTBOOL bSlump = !_stricmp(pKey, s_szKeyNoise);
-		LTBOOL bLand = !_stricmp(pKey, s_szKeyLand);
+		LTBOOL bSlump = !stricmp(pKey, s_szKeyNoise);
+		LTBOOL bLand = !stricmp(pKey, s_szKeyLand);
 
 		if ( bSlump || bLand )
 		{
@@ -717,7 +717,7 @@ bool Body::HandleModelString(ArgList* pArgList)
 			LTFloat fDeathNoiseVolume = pSurf->fDeathNoiseModifier * (bLand ? 2.0f : 1.0f);
 			g_pAIStimulusMgr->RegisterStimulus( kStim_AllyDeathSound, 1, m_hObject, LTNULL, m_DeathScene.GetRelationData(), m_DeathScene.GetPosition(), fDeathNoiseVolume, 1.f );
 		}
-		else if(!_stricmp(pKey,"LIFETIME"))
+		else if(!stricmp(pKey,"LIFETIME"))
 		{
 			if(pArgList->argc > (i+1))
 			{
@@ -726,7 +726,7 @@ bool Body::HandleModelString(ArgList* pArgList)
 				m_bFadeAfterLifetime = false;
 			}
 		}
-		else if(!_stricmp(pKey,"HITBOX_DIMS") && m_hHitBox)
+		else if(!stricmp(pKey,"HITBOX_DIMS") && m_hHitBox)
 		{
 			if(pArgList->argc > (i+2))
 			{
@@ -748,7 +748,7 @@ bool Body::HandleModelString(ArgList* pArgList)
 				}				
 			}
 		}
-		else if(!_stricmp(pKey,"HITBOX_OFFSET") && m_hHitBox)
+		else if(!stricmp(pKey,"HITBOX_OFFSET") && m_hHitBox)
 		{
 			if(pArgList->argc > (i+3))
 			{
@@ -771,7 +771,7 @@ bool Body::HandleModelString(ArgList* pArgList)
 				}
 			}
 		}
-		else if( !_stricmp(pKey,"HITBOX_DEFAULT") && m_hHitBox )
+		else if( !stricmp(pKey,"HITBOX_DEFAULT") && m_hHitBox )
 		{
 			CCharacterHitBox* pHitBox = dynamic_cast<CCharacterHitBox*>(g_pLTServer->HandleToObject(m_hHitBox));
 			if( pHitBox )
@@ -779,7 +779,7 @@ bool Body::HandleModelString(ArgList* pArgList)
 				pHitBox->SetDimsToModel();
 			}
 		}
-		else if( !_stricmp( pKey, KEY_BUTE_SOUND ))
+		else if( !stricmp( pKey, KEY_BUTE_SOUND ))
 		{
 			// Don't let prop have it.  This sound will be played on client.
 			return true;

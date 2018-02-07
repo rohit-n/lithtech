@@ -113,42 +113,42 @@ static LTBOOL ValidateMusicMsg( ILTPreInterface *pInterface, ConParse &cpMsgPara
 	int nRequiredParams = -1;
 	LTBOOL	bValid = LTFALSE;
 
-	if( !_stricmp( cpMsgParams.m_Args[1], "I" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "INTENSITY" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "PS" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "SECONDARY" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "SS" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "STOPSECONDARY" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "SM" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "STOPMOTIF" ))
+	if( !stricmp( cpMsgParams.m_Args[1], "I" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "INTENSITY" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "PS" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "SECONDARY" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "SS" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "STOPSECONDARY" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "SM" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "STOPMOTIF" ))
 	{
 		bValid = LTTRUE;
 		nRequiredParams = 3;
 		nTimingParam = 4;
 	}
-	else if( !_stricmp( cpMsgParams.m_Args[1], "PM" ) ||
-			 !_stricmp( cpMsgParams.m_Args[1], "MOTIF" ))
+	else if( !stricmp( cpMsgParams.m_Args[1], "PM" ) ||
+			 !stricmp( cpMsgParams.m_Args[1], "MOTIF" ))
 	{
 		bValid = LTTRUE;
 		nRequiredParams = 4;
 		nTimingParam = 5;
 	}
-	else if( !_stricmp( cpMsgParams.m_Args[1], "V" ) ||
-			 !_stricmp( cpMsgParams.m_Args[1], "VOLUME" ))
+	else if( !stricmp( cpMsgParams.m_Args[1], "V" ) ||
+			 !stricmp( cpMsgParams.m_Args[1], "VOLUME" ))
 	{
 		bValid = LTTRUE;
 		nRequiredParams = 3;
 		nTimingParam = -1;
 	}
-	else if( !_stricmp( cpMsgParams.m_Args[1], "P" ) ||
-			 !_stricmp( cpMsgParams.m_Args[1], "PLAY" ))
+	else if( !stricmp( cpMsgParams.m_Args[1], "P" ) ||
+			 !stricmp( cpMsgParams.m_Args[1], "PLAY" ))
 	{
 		bValid = LTTRUE;
 		nRequiredParams = 2;
 		nTimingParam = 4;
 	}
-	else if( !_stricmp( cpMsgParams.m_Args[1], "S" ) ||
-			 !_stricmp( cpMsgParams.m_Args[1], "STOP" ))
+	else if( !stricmp( cpMsgParams.m_Args[1], "S" ) ||
+			 !stricmp( cpMsgParams.m_Args[1], "STOP" ))
 	{
 		bValid = LTTRUE;
 		nRequiredParams = 2;
@@ -186,18 +186,18 @@ static LTBOOL ValidateMusicMsg( ILTPreInterface *pInterface, ConParse &cpMsgPara
 		
 		// We have a timing value so make sure it's valid...
 
-		if( !_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Invalid" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Default" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Immediately" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Immediate" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextBeat" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextMeasure" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextGrid" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextSegment" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Beat" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Measure" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Grid" ) ||
-			!_stricmp( cpMsgParams.m_Args[nTimingParam-1], "Segment" ) )
+		if( !stricmp( cpMsgParams.m_Args[nTimingParam-1], "Invalid" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "Default" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "Immediately" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "Immediate" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextBeat" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextMeasure" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextGrid" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "NextSegment" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "Beat" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "Measure" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "Grid" ) ||
+			!stricmp( cpMsgParams.m_Args[nTimingParam-1], "Segment" ) )
 		{
 			bValid = LTTRUE;
 		}
@@ -242,13 +242,13 @@ static LTBOOL ValidateObjectiveMsg( ILTPreInterface *pInterface, ConParse &cpMsg
 	}
 
 	if( cpMsgParams.m_nArgs == 3 && (
-		!_stricmp( cpMsgParams.m_Args[1], "ADD" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "REMOVE" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "COMPLETED" )))
+		!stricmp( cpMsgParams.m_Args[1], "ADD" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "REMOVE" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "COMPLETED" )))
 	{
 		return LTTRUE;
 	}
-	else if( !_stricmp( cpMsgParams.m_Args[1], "REMOVEALL" ) &&
+	else if( !stricmp( cpMsgParams.m_Args[1], "REMOVEALL" ) &&
 			cpMsgParams.m_nArgs == 2 )
 	{
 		return LTTRUE;
@@ -289,12 +289,12 @@ static LTBOOL ValidateKeyMsg( ILTPreInterface *pInterface, ConParse &cpMsgParams
 	}
 
 	if( cpMsgParams.m_nArgs == 3 && (
-		!_stricmp( cpMsgParams.m_Args[1], "ADD" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "REMOVE" )))
+		!stricmp( cpMsgParams.m_Args[1], "ADD" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "REMOVE" )))
 	{
 		return LTTRUE;
 	}
-	else if( !_stricmp( cpMsgParams.m_Args[1], "REMOVEALL" ) &&
+	else if( !stricmp( cpMsgParams.m_Args[1], "REMOVEALL" ) &&
 			cpMsgParams.m_nArgs == 2 )
 	{
 		return LTTRUE;
@@ -323,9 +323,9 @@ static LTBOOL ValidateCreditsMsg( ILTPreInterface *pInterface, ConParse &cpMsgPa
 {
 	if( !pInterface ) return LTFALSE;
 
-	if( !_stricmp( cpMsgParams.m_Args[1], "ON" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "OFF" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "INTRO" ))
+	if( !stricmp( cpMsgParams.m_Args[1], "ON" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "OFF" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "INTRO" ))
 	{
 		return LTTRUE;
 	}
@@ -367,10 +367,10 @@ static LTBOOL ValidateIntelMsg( ILTPreInterface *pInterface, ConParse &cpMsgPara
 
 	if( cpMsgParams.m_nArgs > 3 )
 	{
-		if( !_stricmp( cpMsgParams.m_Args[3], "0" ) ||
-			!_stricmp( cpMsgParams.m_Args[3], "1" ) ||
-			!_stricmp( cpMsgParams.m_Args[4], "0" ) ||
-			!_stricmp( cpMsgParams.m_Args[4], "1" ))
+		if( !stricmp( cpMsgParams.m_Args[3], "0" ) ||
+			!stricmp( cpMsgParams.m_Args[3], "1" ) ||
+			!stricmp( cpMsgParams.m_Args[4], "0" ) ||
+			!stricmp( cpMsgParams.m_Args[4], "1" ))
 		{
 			return LTTRUE;
 		}
@@ -414,8 +414,8 @@ static LTBOOL ValidateTransmissionMsg( ILTPreInterface *pInterface, ConParse &cp
 
 	if( cpMsgParams.m_nArgs == 3 )
 	{
-		if( !_stricmp( cpMsgParams.m_Args[2], "0" ) ||
-			!_stricmp( cpMsgParams.m_Args[2], "1" ))
+		if( !stricmp( cpMsgParams.m_Args[2], "0" ) ||
+			!stricmp( cpMsgParams.m_Args[2], "1" ))
 		{
 			return LTTRUE;
 		}
@@ -433,8 +433,8 @@ static LTBOOL ValidateTransmissionMsg( ILTPreInterface *pInterface, ConParse &cp
 
 	if( cpMsgParams.m_nArgs == 4 )
 	{
-		if( !_stricmp( cpMsgParams.m_Args[3], "0" ) ||
-			!_stricmp( cpMsgParams.m_Args[3], "1" ))
+		if( !stricmp( cpMsgParams.m_Args[3], "0" ) ||
+			!stricmp( cpMsgParams.m_Args[3], "1" ))
 		{
 			return LTTRUE;
 		}
@@ -7798,7 +7798,7 @@ void CPlayerObj::SetCarriedObject( HOBJECT hObject, bool bTransition /* = false 
 						CAIHuman *pCate = dynamic_cast<CAIHuman*>(g_pLTServer->HandleToObject( m_hCarriedObject ));
 						if( pCate )
 						{
-							if( !_stricmp( pCate->GetName(), "Cate" ))
+							if( !stricmp( pCate->GetName(), "Cate" ))
 							{
 								bNormalTeleport = false;
 

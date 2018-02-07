@@ -5149,7 +5149,7 @@ CPlayerObj* CGameServerShell::MatchClientNameToPlayer( char const* pszClientName
 
 		// Get the clientname from the clientref and compare it to the input clientname.
 		g_pLTServer->GetClientRefName( hClientRef, szClientRefName, ARRAY_LEN( szClientRefName ));
-		if( _stricmp( pszClientName, szClientRefName ) != 0 )
+		if( stricmp( pszClientName, szClientRefName ) != 0 )
 			continue;
 
 		// Found a matching player.

@@ -102,7 +102,7 @@ LTRESULT CDebrisPlugin::PreHook_EditStringList(const char* szRezPath, const char
 {
 	// See if we can handle the property...
 
-	if (_strcmpi(DEBRIS_PROPERTY_NAME, szPropName) == 0)
+	if (stricmp(DEBRIS_PROPERTY_NAME, szPropName) == 0)
 	{
 		s_DebrisMgrPlugin.PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings, cMaxStringLength);

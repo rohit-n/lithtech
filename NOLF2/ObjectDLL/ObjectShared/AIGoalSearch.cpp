@@ -144,7 +144,7 @@ LTBOOL CAIGoalSearch::HandleNameValuePair(const char *szName, const char *szValu
 		return LTTRUE;
 	}
 
-	if ( !_stricmp(szName, "REGION") )
+	if ( !stricmp(szName, "REGION") )
 	{
 		AIASSERT( strlen( szValue ) < 128, m_pAI->m_hObject, "CAIGoalSearch::HandleNameValuePair: Regionlist exceeds 128 chars" );
 		char szCopy[128];
@@ -201,7 +201,7 @@ LTBOOL CAIGoalSearch::HandleNameValuePair(const char *szName, const char *szValu
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "MOVEMENT") )
+	else if ( !stricmp(szName, "MOVEMENT") )
 	{
 		EnumAnimProp eMovement = CAnimationMgrList::GetPropFromName( szValue );
 

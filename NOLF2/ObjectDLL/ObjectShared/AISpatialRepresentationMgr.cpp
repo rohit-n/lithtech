@@ -634,7 +634,7 @@ AISpatialRepresentation* CAISpatialRepresentationMgr::GetVolume(const char* szVo
 
 	for ( uint32 iVolume = 0 ; iVolume < m_listpVolumes.size(); iVolume++ )
 	{
-		if ( !_stricmp(szVolume, m_listpVolumes[iVolume]->GetName()) )
+		if ( !stricmp(szVolume, m_listpVolumes[iVolume]->GetName()) )
 		{
 			return m_listpVolumes[iVolume];
 		}

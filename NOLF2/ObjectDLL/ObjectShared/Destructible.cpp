@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "Destructible.h"
 #include "iltserver.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "Projectile.h"
 #include "ServerUtilities.h"
 #include "Character.h"
@@ -1753,7 +1753,7 @@ void CDestructible::HandleTrigger(LPBASECLASS pObject, HOBJECT hSender, ILTMessa
 
 	// See if we should destroy ourself...
 
-    if (_stricmp(TRIGGER_MSG_DESTROY, szMsg) == 0)
+    if (stricmp(TRIGGER_MSG_DESTROY, szMsg) == 0)
 	{
 		DamageStruct damage;
 
@@ -1765,7 +1765,7 @@ void CDestructible::HandleTrigger(LPBASECLASS pObject, HOBJECT hSender, ILTMessa
 
 	// See if we should reset ourself...
 
-    if (_stricmp(TRIGGER_MSG_RESET, szMsg) == 0)
+    if (stricmp(TRIGGER_MSG_RESET, szMsg) == 0)
 	{
 		Reset(GetMaxHitPoints(), GetMaxArmorPoints(), GetMaxEnergy());
 	}
@@ -2171,10 +2171,10 @@ LTRESULT CDestructiblePlugin::PreHook_PropChanged( const char *szObjName,
 {
 	// Check if the props are our commands and then just send it to the CommandMgr..
 
-	if( !_stricmp( "DamageCommand", szPropName ) ||
-		!_stricmp( "DeathCommand", szPropName ) ||
-		!_stricmp( "PlayerDamageCommand", szPropName ) ||
-		!_stricmp( "PlayerDeathCommand", szPropName ) )
+	if( !stricmp( "DamageCommand", szPropName ) ||
+		!stricmp( "DeathCommand", szPropName ) ||
+		!stricmp( "PlayerDamageCommand", szPropName ) ||
+		!stricmp( "PlayerDeathCommand", szPropName ) )
 	{
 		if( m_CommandMgrPlugin.PreHook_PropChanged( szObjName, 
 													szPropName, 

@@ -63,7 +63,7 @@ LTRESULT CPropTypePlugin::PreHook_EditStringList(
 	{
 		return LT_OK;
 	}
-	else if (_strcmpi("Type", szPropName) == 0)
+	else if (stricmp("Type", szPropName) == 0)
 	{
 		if (m_PropTypeMgrPlugin.PreHook_EditStringList(szRezPath,
 			szPropName, aszStrings, pcStrings, cMaxStrings, cMaxStringLength) == LT_OK)

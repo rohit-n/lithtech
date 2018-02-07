@@ -142,7 +142,7 @@ LTBOOL CAIGoalGoto::HandleNameValuePair(const char *szName, const char *szValue)
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "NODE") )
+	if ( !stricmp(szName, "NODE") )
 	{
 		AITRACE( AIShowGoals, ( m_pAI->m_hObject, "GOTO setting node=%s", szValue ) );
 		AINode* pNode = g_pAINodeMgr->GetNode( szValue );
@@ -166,13 +166,13 @@ LTBOOL CAIGoalGoto::HandleNameValuePair(const char *szName, const char *szValue)
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "MOVEMENT") )
+	else if ( !stricmp(szName, "MOVEMENT") )
 	{
 		m_eMovement = CAnimationMgrList::GetPropFromName( szValue );
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "AWARENESS") )
+	else if ( !stricmp(szName, "AWARENESS") )
 	{
 		m_eAwareness = CAnimationMgrList::GetPropFromName( szValue );
 		return LTTRUE;

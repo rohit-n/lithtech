@@ -167,7 +167,7 @@ LTRESULT CWorldModelPlugin::PreHook_EditStringList( const char *szRezPath,
 
 	// See if we can handle the list...
 
-	if( !_stricmp( szPropName, "BlendMode" ) )
+	if( !stricmp( szPropName, "BlendMode" ) )
 	{
 		// Fill the list with our blend modes...
 
@@ -363,7 +363,7 @@ void WorldModel::ReadProps( ObjectCreateStruct *pOCS )
 		{
 			for( int i = 0; i <= WM_BLEND_MAXMODES; i++ )
 			{
-				if( !_stricmp( genProp.m_String, c_aBlendModes[i] ))
+				if( !stricmp( genProp.m_String, c_aBlendModes[i] ))
 				{
 					nBlendMode = i;
 					break;

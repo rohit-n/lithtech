@@ -227,7 +227,7 @@ LTBOOL GameStartPoint::ReadProp(ObjectCreateStruct *pData)
 				for( int i = 0; i < MAX_TEAMS; ++i )
 				{
 					sprintf( szTeam, "Team%i", i );
-					if( !_stricmp( genProp.m_String, szTeam ))
+					if( !stricmp( genProp.m_String, szTeam ))
 					{
 						m_nTeamID = i;
 					}
@@ -314,7 +314,7 @@ LTRESULT CGameStartPointPlugin::PreHook_EditStringList(
 
     // Handle Template...
 
-	if ( !_strcmpi("ModelTemplate", szPropName) )
+	if ( !stricmp("ModelTemplate", szPropName) )
 	{
 		m_ModelButeMgrPlugin.PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings,	cMaxStringLength);
@@ -336,7 +336,7 @@ LTRESULT CGameStartPointPlugin::PreHook_EditStringList(
 
 	// Handle physics model...
 
-    if (_stricmp("PhysicsModel", szPropName) == 0)
+    if (stricmp("PhysicsModel", szPropName) == 0)
 	{
 		for (int i=PPM_FIRST; i < PPM_NUM_MODELS; i++)
 		{
@@ -352,7 +352,7 @@ LTRESULT CGameStartPointPlugin::PreHook_EditStringList(
 
 	// Handle team...
 
-	if( _stricmp( "Team", szPropName ) == 0 )
+	if( stricmp( "Team", szPropName ) == 0 )
 	{
 		char szTeam[32] = {0};
 

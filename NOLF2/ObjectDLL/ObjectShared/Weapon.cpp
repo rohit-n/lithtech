@@ -15,7 +15,7 @@
 #include "ServerUtilities.h"
 #include "iltserver.h"
 #include "ltengineobjects.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "HHWeaponModel.h"
 #include "Character.h"
 #include "WeaponFXTypes.h"

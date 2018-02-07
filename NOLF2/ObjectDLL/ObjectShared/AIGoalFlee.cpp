@@ -352,7 +352,7 @@ LTBOOL CAIGoalFlee::HandleNameValuePair(const char *szName, const char *szValue)
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "NODE") )
+	if ( !stricmp(szName, "NODE") )
 	{
 		AINode* pNode = g_pAINodeMgr->GetNode(szValue);
 		AIASSERT(pNode != LTNULL, m_pAI->m_hObject, "CAIGoalFlee::HandleNameValuePair: Dest node is NULL.");
@@ -360,7 +360,7 @@ LTBOOL CAIGoalFlee::HandleNameValuePair(const char *szName, const char *szValue)
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "OBJECT") )
+	else if ( !stricmp(szName, "OBJECT") )
 	{
 		HOBJECT hObj;
 		DWORD dwResult = FindNamedObject(szValue, hObj);

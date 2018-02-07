@@ -290,7 +290,7 @@ LTBOOL CAIHumanStrategyShootStream::Init(CAIHuman* pAIHuman)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp(szKey, c_szKeyStopFireWeapon) )
+	if ( !stricmp(szKey, c_szKeyStopFireWeapon) )
 	{
 		m_eFireState = eFireStateEnding;
 	}

@@ -75,7 +75,7 @@ static LTBOOL ValidateMoveToMsg( ILTPreInterface *pInterface, ConParse &cpMsgPar
 		return LTFALSE;
 	}
 
-	if( _stricmp( pInterface->GetObjectClass( cpMsgParams.m_Args[1] ), "CameraPoint" ) != 0 )
+	if( stricmp( pInterface->GetObjectClass( cpMsgParams.m_Args[1] ), "CameraPoint" ) != 0 )
 	{
 		if( CCommandMgrPlugin::s_bShowMsgErrors )
 		{

@@ -520,7 +520,7 @@ void CAIHumanStateSentryChallenge::HandleModelString(ArgList* pArgList)
 		return;
 	}
 
-	if ( !_stricmp(szKey, c_szKeyFireWeapon) )
+	if ( !stricmp(szKey, c_szKeyFireWeapon) )
 	{
 	UBER_ASSERT( GetChallengeCharacter(), "Unable to retrieve challenge character" );
 

@@ -16,7 +16,7 @@
 
 #include "Stdafx.h"
 #include "ServerSaveLoadMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "WinUtil.h"
 #include "TransitionMgr.h"
 #include "PlayerObj.h"

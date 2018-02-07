@@ -316,7 +316,7 @@ LTBOOL CAIGoalSniper::HandleNameValuePair(const char *szName, const char *szValu
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "NODE") )
+	if ( !stricmp(szName, "NODE") )
 	{
 		AINode* pNewNode = g_pAINodeMgr->GetNode(szValue);		
 		if( pNewNode && ( pNewNode->GetType() == kNode_UseObject ) )

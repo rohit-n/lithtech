@@ -15,7 +15,7 @@
 #include "AIGoalAbstractSearch.h"
 #include "AnimationMgr.h"
 
-enum DamageType;
+enum DamageType : int32_t;
 enum EnumAIStimulusID : int;
 
 class CAIGoalSpecialDamage : public CAIGoalAbstractSearch

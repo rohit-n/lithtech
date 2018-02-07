@@ -285,7 +285,7 @@ LTBOOL CAIGoalAttackFromView::HandleNameValuePair(const char *szName, const char
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "SEEKPLAYER") )
+	if ( !stricmp(szName, "SEEKPLAYER") )
 	{
 		if( IsTrueChar( szValue[0] ) )
 		{

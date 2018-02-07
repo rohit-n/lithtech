@@ -67,7 +67,7 @@ LTRESULT CSoundButeFXPlugin::PreHook_EditStringList( const char *szRezPath,
 													 const uint32 cMaxStrings,
 													 const uint32 cMaxStringLength )
 {
-	if( !_stricmp( szPropName, "SoundBute" ))
+	if( !stricmp( szPropName, "SoundBute" ))
 	{
 		if( m_SoundButeMgrPlugin.PreHook_EditStringList( szRezPath,
 														 szPropName,

@@ -210,7 +210,7 @@ LTBOOL CAIGoalDistress::HandleNameValuePair(const char *szName, const char *szVa
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "CANACTIVATE") )
+	if ( !stricmp(szName, "CANACTIVATE") )
 	{
 		m_bCanActivate = IsTrueChar(*szValue);
 		return LTTRUE;

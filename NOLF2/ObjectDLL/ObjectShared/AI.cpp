@@ -258,7 +258,7 @@ static LTBOOL ValidateMsgGoalPrefix( ILTPreInterface *pInterface, ConParse &cpMs
 
 	// Check to see if this is a goal prefix command and verrify the goal...
 
-	if( stricmp( std::string{cpMsgParams.m_Args[0]}.substr(0, len).c_str(), GOAL_CMD_PREFIX ) == 0 )
+	if( strnicmp( cpMsgParams.m_Args[0], GOAL_CMD_PREFIX, len ) == 0 )
 	{
 		char szMsg[128] = {0};
 		LTStrCpy( szMsg, cpMsgParams.m_Args[0], ARRAY_LEN( szMsg ));

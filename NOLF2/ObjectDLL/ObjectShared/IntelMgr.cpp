@@ -155,7 +155,7 @@ INTEL* CIntelMgr::GetIntel(char* pName)
 
 	while (pCur)
 	{
-		if (*pCur && (*pCur)->szName[0] && (_stricmp((*pCur)->szName, pName) == 0))
+		if (*pCur && (*pCur)->szName[0] && (stricmp((*pCur)->szName, pName) == 0))
 		{
 			return *pCur;
 		}

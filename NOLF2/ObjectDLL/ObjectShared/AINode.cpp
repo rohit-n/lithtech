@@ -422,7 +422,7 @@ LTRESULT AINodePlugin::PreHook_EditStringList(const char* szRezPath, const char*
 	    s_RelationButeMgr.Init(szFile);
 	}
 		
-	if ( !_strcmpi("Alignment", szPropName) )
+	if ( !stricmp("Alignment", szPropName) )
 	{
 		strcpy( aszStrings[(*pcStrings)++], "None" );
 
@@ -442,7 +442,7 @@ LTRESULT AINodePlugin::PreHook_EditStringList(const char* szRezPath, const char*
 
 LTRESULT AINodePlugin::PreHook_PropChanged( const char *szObjName, const char *szPropName, const int nPropType, const GenericProp &gpPropValue, ILTPreInterface *pInterface, const char *szModifiers )
 {
-	if( !_stricmp( szPropName, "Command" ) && gpPropValue.m_String[0] )
+	if( !stricmp( szPropName, "Command" ) && gpPropValue.m_String[0] )
 	{
 		ConParse cpCmd;
 		cpCmd.Init( gpPropValue.m_String );
@@ -1020,7 +1020,7 @@ EnumNodeStatus AINodeSearch::GetStatus(const LTVector& vPos, HOBJECT hThreat) co
 
 LTRESULT AINodeSearchPlugin::PreHook_EditStringList(const char* szRezPath, const char* szPropName, char** aszStrings, uint32* pcStrings, const uint32 cMaxStrings, const uint32 cMaxStringLength)
 {
-	if ( !_strcmpi("SearchType", szPropName) )
+	if ( !stricmp("SearchType", szPropName) )
 	{
 		strcpy(aszStrings[(*pcStrings)++], "Default");
 		strcpy(aszStrings[(*pcStrings)++], "OneWay");
@@ -1159,7 +1159,7 @@ void AINodeAssassinate::Load(ILTMessage_Read *pMsg)
 
 LTRESULT AINodeAssassinatePlugin::PreHook_EditStringList(const char* szRezPath, const char* szPropName, char** aszStrings, uint32* pcStrings, const uint32 cMaxStrings, const uint32 cMaxStringLength)
 {
-	if ( !_strcmpi("Movement", szPropName) )
+	if ( !stricmp("Movement", szPropName) )
 	{
 		strcpy(aszStrings[(*pcStrings)++], "Walk");
 		strcpy(aszStrings[(*pcStrings)++], "Run");
@@ -1606,7 +1606,7 @@ LTRESULT AINodeUseObjectPlugin::PreHook_EditStringList(const char* szRezPath, co
 	    s_AIGoalButeMgr.Init(szFile);
 	}
 		
-	if ( !_strcmpi("Movement", szPropName) )
+	if ( !stricmp("Movement", szPropName) )
 	{
 		strcpy(aszStrings[(*pcStrings)++], "Walk");
 		strcpy(aszStrings[(*pcStrings)++], "Run");
@@ -1614,7 +1614,7 @@ LTRESULT AINodeUseObjectPlugin::PreHook_EditStringList(const char* szRezPath, co
 		return LT_OK;
 	}
 
-	if ( !_strcmpi("SmartObject", szPropName) )
+	if ( !stricmp("SmartObject", szPropName) )
 	{
 		uint32 cSmartObjects = s_AIGoalButeMgr.GetNumSmartObjectTemplates();
 		for(uint32 iSmartObject=0; iSmartObject < cSmartObjects; ++iSmartObject)
@@ -1625,8 +1625,8 @@ LTRESULT AINodeUseObjectPlugin::PreHook_EditStringList(const char* szRezPath, co
 		return LT_OK;
 	}
 
-	if( ( !_strcmpi("FirstSound", szPropName) ) ||
-		( !_strcmpi("FidgetSound", szPropName) ) )
+	if( ( !stricmp("FirstSound", szPropName) ) ||
+		( !stricmp("FidgetSound", szPropName) ) )
 	{
 		for(uint32 iSound=0; iSound < kAIS_Count; ++iSound)
 		{
@@ -1771,7 +1771,7 @@ void AINodeBackup::Load(ILTMessage_Read *pMsg)
 
 LTRESULT AINodeBackupPlugin::PreHook_EditStringList(const char* szRezPath, const char* szPropName, char** aszStrings, uint32* pcStrings, const uint32 cMaxStrings, const uint32 cMaxStringLength)
 {		
-	if ( !_strcmpi("Movement", szPropName) )
+	if ( !stricmp("Movement", szPropName) )
 	{
 		strcpy(aszStrings[(*pcStrings)++], "Walk");
 		strcpy(aszStrings[(*pcStrings)++], "Run");

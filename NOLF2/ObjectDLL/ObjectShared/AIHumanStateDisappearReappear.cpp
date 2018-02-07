@@ -108,7 +108,7 @@ void CAIHumanStateDisappearReappear::HandleModelString(ArgList* pArgList)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp( szKey, c_szKeyFX ) )
+	if ( !stricmp( szKey, c_szKeyFX ) )
 	{
 		m_bStartFade = LTTRUE;
 	}

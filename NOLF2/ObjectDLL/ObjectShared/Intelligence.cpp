@@ -91,7 +91,7 @@ LTRESULT CIntelPlugin::PreHook_EditStringList(
 	{
 		return LT_OK;
 	}
-	else if (_strcmpi("Type", szPropName) == 0)
+	else if (stricmp("Type", szPropName) == 0)
 	{
 		if (m_IntelMgrPlugin.PreHook_EditStringList(szRezPath,
 			szPropName, aszStrings, pcStrings, cMaxStrings, cMaxStringLength) == LT_OK)
@@ -139,7 +139,7 @@ LTRESULT CIntelPlugin::PreHook_PropChanged( const char *szObjName,
 		return LT_OK;
 	}
 
-	if( !_stricmp( szPropName, "PickedUpCommand" ))
+	if( !stricmp( szPropName, "PickedUpCommand" ))
 	{
 		if( m_CommandMgrPlugin.PreHook_PropChanged( szObjName,
 													szPropName,

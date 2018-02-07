@@ -14,7 +14,7 @@
 #include "DebugLineSystem.h"
 #include "SFXMsgIds.h"
 #include "DebugLine.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "ltobjref.h"
 #if _MSC_VER >= 1300
 #	include "ObjectTemplateMgr.h"

@@ -26,7 +26,7 @@
 #include "AIHuman.h"
 #endif
 
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "DebrisFuncs.h"
 
 // Forward declarations

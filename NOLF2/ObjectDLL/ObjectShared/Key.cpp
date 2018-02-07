@@ -33,7 +33,7 @@ LTRESULT CKeyPlugin::PreHook_PropChanged( const char *szObjName,
 {
 	// Check to see if our coomad prop has changed...
 
-	if( !_stricmp( "Command", szPropName ))
+	if( !stricmp( "Command", szPropName ))
 	{
 		// Pass it to the command mgr to process...
 

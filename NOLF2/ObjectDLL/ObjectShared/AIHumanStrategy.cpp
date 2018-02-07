@@ -247,7 +247,7 @@ void CAIHumanStrategyFollowPath::HandleModelString(ArgList* pArgList)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp(szKey, "DOOR") )
+	if ( !stricmp(szKey, "DOOR") )
 	{
 		m_eDoorState = eDoorStateWaitingForAnimationToFinish;
 	}
@@ -3516,7 +3516,7 @@ void CAIHumanStrategyGrenadeThrow::HandleModelString(ArgList* pArgList)
 
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 || !pArgList->argv[0] ) return;
 
-	if ( !_stricmp(pArgList->argv[0], "THROW") )
+	if ( !stricmp(pArgList->argv[0], "THROW") )
 	{
 		if ( eStateThrowing == m_eState )
 		{
@@ -3821,7 +3821,7 @@ void CAIHumanStrategyShoot::HandleModelString(ArgList* pArgList)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp(szKey, c_szKeyFireWeapon) )
+	if ( !stricmp(szKey, c_szKeyFireWeapon) )
 	{
 		HandleFired( (pArgList->argc>=2 ? pArgList->argv[1] : NULL) );
 	}
@@ -4617,8 +4617,11 @@ void CAIHumanStrategyShootBurst::Aim()
 		{
 			// Make sure our loop sound is killed when switching to aim
 
-			m_eState == eStateFiring ? pWeapon->PlayAnimation( pWeapon->GetPostFireAni(), true, false, true ) :
-									   pWeapon->KillLoopSound();
+			if (m_eState == eStateFiring) { 
+				pWeapon->PlayAnimation( pWeapon->GetPostFireAni(), true, false, true );
+			} else {
+				pWeapon->KillLoopSound();
+			}
 		}
 	}
 
@@ -4789,7 +4792,7 @@ void CAIHumanStrategyFlashlight::HandleModelString(ArgList* pArgList)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp(szKey, "FL_SHOW") )
+	if ( !stricmp(szKey, "FL_SHOW") )
 	{
 		if ( !m_hFlashlightModel ) 
 		{
@@ -4798,11 +4801,11 @@ void CAIHumanStrategyFlashlight::HandleModelString(ArgList* pArgList)
 
 		FlashlightShow();
 	}
-	else if ( !_stricmp(szKey, "FL_HIDE") )
+	else if ( !stricmp(szKey, "FL_HIDE") )
 	{
 		FlashlightHide();
 	}
-	else if ( !_stricmp(szKey, "FL_ON") )
+	else if ( !stricmp(szKey, "FL_ON") )
 	{
 		if ( !m_hFlashlightModel ) 
 		{
@@ -4811,7 +4814,7 @@ void CAIHumanStrategyFlashlight::HandleModelString(ArgList* pArgList)
 
 		FlashlightOn();
 	}
-	else if ( !_stricmp(szKey, "FL_OFF") )
+	else if ( !stricmp(szKey, "FL_OFF") )
 	{
 		FlashlightOff();
 	}

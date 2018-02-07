@@ -91,7 +91,7 @@ LTRESULT CCommandObjectPlugin::PreHook_PropChanged( const	char		*szObjName,
 												    ILTPreInterface	*pInterface,
 													const	char		*szModifiers )
 {
-	if( !_stricmp( szPropName, "FinishedCommand" ))
+	if( !stricmp( szPropName, "FinishedCommand" ))
 	{
 		if( LT_OK == m_CmdMgrPlugin.PreHook_PropChanged( szObjName,
 														 szPropName,

@@ -77,7 +77,7 @@ LTRESULT CStartupCommandPlugin::PreHook_EditStringList(const char* szRezPath,
 												   const uint32 cMaxStringLength)
 {
 
-	if( _stricmp( "RoundCondition", szPropName ) == 0 )
+	if( stricmp( "RoundCondition", szPropName ) == 0 )
 	{
 		_ASSERT(cMaxStrings > (*pcStrings) + 3);
 		strcpy( aszStrings[(*pcStrings)++], "All" );

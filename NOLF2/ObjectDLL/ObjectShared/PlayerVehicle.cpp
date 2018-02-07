@@ -733,7 +733,7 @@ LTRESULT CPlayerVehiclePlugin::PreHook_EditStringList(
 
 	// Handle vehicle type...
 
-	if (_strcmpi("VehicleType", szPropName) == 0)
+	if (stricmp("VehicleType", szPropName) == 0)
 	{
 		for (int i=PPM_FIRST; i < PPM_NUM_MODELS; i++)
 		{
@@ -767,7 +767,7 @@ LTRESULT CPlayerVehiclePlugin::PreHook_PropChanged( const char *szObjName,
 {
 	// Check if the props are our commands and then just send it to the CommandMgr..
 
-	if( !_stricmp( "LockedCommand", szPropName ))
+	if( !stricmp( "LockedCommand", szPropName ))
 	{
 		if( m_CommandMgrPlugin.PreHook_PropChanged( szObjName, 
 													szPropName, 

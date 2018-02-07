@@ -19,7 +19,7 @@
 class AINodeUseObject;
 enum EnumAISoundType : int32_t;
 enum EnumAIStimulusID : int;
-enum EnumAITargetMatchID : uint32_t;
+enum EnumAITargetMatchID : int;
 enum EnumAIStimulusType : uint32_t;
 
 typedef std::multimap< EnumAITargetMatchID, EnumAISenseType > AI_INVESTIGATION_MEMORY_MAP;

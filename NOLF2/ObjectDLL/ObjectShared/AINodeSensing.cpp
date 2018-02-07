@@ -635,7 +635,7 @@ LTRESULT AINodeSensingPlugin::PreHook_EditStringList(const char* szRezPath, cons
 		s_bSensingPluginInitted = LTTRUE;
 	}
 
-	if ( !_strcmpi("AITemplate", szPropName) )
+	if ( !stricmp("AITemplate", szPropName) )
 	{
 		// TODO: make sure we don't overflow cMaxStringLength or cMaxStrings
 		uint32 cTemplates = s_AIButeMgr.GetNumTemplates();

@@ -15,7 +15,7 @@
 //
 
 	#include "Stdafx.h"
-	#include "MsgIds.h"
+	#include "MsgIDs.h"
 	#include "ObjectMsgs.h"
 	#include "ParsedMsg.h"
 	#include "JumpVolume.h"

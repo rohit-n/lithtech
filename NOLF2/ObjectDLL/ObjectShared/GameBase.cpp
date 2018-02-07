@@ -54,10 +54,10 @@ static LTBOOL ValidateMsgVisibleSolid( ILTPreInterface *pInterface, ConParse &cp
 {
 	char *pBoolValue = cpMsgParams.m_Args[1];
 
-	if( (!_stricmp(cpMsgParams.m_Args[1], "1")) ||
-		(!_stricmp(cpMsgParams.m_Args[1], "TRUE")) ||
-		(!_stricmp(cpMsgParams.m_Args[1], "0")) ||
-		(!_stricmp(cpMsgParams.m_Args[1], "FALSE")) )
+	if( (!stricmp(cpMsgParams.m_Args[1], "1")) ||
+		(!stricmp(cpMsgParams.m_Args[1], "TRUE")) ||
+		(!stricmp(cpMsgParams.m_Args[1], "0")) ||
+		(!stricmp(cpMsgParams.m_Args[1], "FALSE")) )
 	{
 		return LTTRUE;
 	}

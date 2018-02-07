@@ -32,6 +32,7 @@
 #include "Timer.h"
 #include "MusicMgr.h"
 #include "PlayerTracker.h"
+#include "CharacterAlignment.h"
 
 LINKTO_MODULE( Character );
 
@@ -51,7 +52,7 @@ class CSearchable;
 
 enum EnumAIStateType : uint32_t;
 enum EnumAIStimulusID : int;
-enum CharacterClass;
+// enum CharacterClass : uint32_t;
 
 struct CHARCREATESTRUCT;
 

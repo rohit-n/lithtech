@@ -13,7 +13,7 @@
 #include "Stdafx.h"
 #include "Trigger.h"
 #include "iltserver.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "PlayerObj.h"
 #include "gameservershell.h"
 #include "SoundMgr.h"

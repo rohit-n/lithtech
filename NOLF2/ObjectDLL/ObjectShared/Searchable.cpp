@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "Searchable.h"
 #include "iltserver.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "ServerUtilities.h"
 #include "PlayerObj.h"
 #include "GameServerShell.h"
@@ -258,7 +258,7 @@ void CSearchable::HandleTrigger(LPBASECLASS pObject, HOBJECT hSender, ILTMessage
 	{
 		if ( parse.m_nArgs > 0 && parse.m_Args[0] )
 		{
-			if ( !_stricmp( parse.m_Args[0], "SEARCH" ))
+			if ( !stricmp( parse.m_Args[0], "SEARCH" ))
 			{
 				ResetPickupItems();
 
@@ -275,7 +275,7 @@ void CSearchable::HandleTrigger(LPBASECLASS pObject, HOBJECT hSender, ILTMessage
 
 		if ( parse.m_nArgs > 1 && parse.m_Args[0] )
 		{
-			if ( !_stricmp( parse.m_Args[0], "UPDATE" ))
+			if ( !stricmp( parse.m_Args[0], "UPDATE" ))
 			{
 				float fTimer = (float)atof(parse.m_Args[1]);
 
@@ -985,7 +985,7 @@ LTRESULT CSearchItemPlugin::PreHook_EditStringList(
     const uint32 cMaxStringLength)
 {
 
-	if (_strcmpi("RandomItemSet", szPropName) == 0)
+	if (stricmp("RandomItemSet", szPropName) == 0)
 	{
 		if (m_SearchItemMgrPlugin.PreHook_EditStringList(szRezPath,
 			szPropName, aszStrings, pcStrings, cMaxStrings, cMaxStringLength) == LT_OK)

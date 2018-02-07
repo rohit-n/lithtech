@@ -200,7 +200,7 @@ GADGETTARGET *CGadgetTargetMgr::GetGadgetTarget( char *pName )
 
 	while( pCur )
 	{
-		if( *pCur && (*pCur)->szName[0] && (!_stricmp( (*pCur)->szName , pName )) )
+		if( *pCur && (*pCur)->szName[0] && (!stricmp( (*pCur)->szName , pName )) )
 		{
 			return *pCur;
 		}

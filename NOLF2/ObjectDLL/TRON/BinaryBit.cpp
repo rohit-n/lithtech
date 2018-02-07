@@ -388,20 +388,20 @@ uint32 BinaryBit::ObjectMessageFn(HOBJECT hSender, ILTMessage_Read *pMsg)
 			{
 				if (parse.m_nArgs > 0 && parse.m_Args[0])
 				{
-					if(_stricmp(parse.m_Args[0], "ACTIVATE") == 0)
+					if(stricmp(parse.m_Args[0], "ACTIVATE") == 0)
 					{
 						// We've just received an activate message
 						HandleActivateMessage(hSender);
 					}
-					else if(_stricmp(parse.m_Args[0], "LOCK") == 0)
+					else if(stricmp(parse.m_Args[0], "LOCK") == 0)
 					{
 						m_bLocked = LTTRUE;
 					}
-					else if(_stricmp(parse.m_Args[0], "UNLOCK") == 0)
+					else if(stricmp(parse.m_Args[0], "UNLOCK") == 0)
 					{
 						m_bLocked = LTFALSE;
 					}
-					else if(_stricmp(parse.m_Args[0], "ATSOCKET") == 0)
+					else if(stricmp(parse.m_Args[0], "ATSOCKET") == 0)
 					{
 						// Check to see if we were going to the socket
 						if(m_eState != BBState_GoingToSocket)

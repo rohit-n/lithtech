@@ -12,7 +12,7 @@
 
 #include "Stdafx.h"
 #include "GearItems.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "iltserver.h"
 #include "PlayerObj.h"
 #include "ObjectMsgs.h"
@@ -370,7 +370,7 @@ LTRESULT CGearPlugin::PreHook_EditStringList(const char* szRezPath, const char* 
 
 	// See if we can handle the property...
 
-	if (_strcmpi("GearType", szPropName) == 0)
+	if (stricmp("GearType", szPropName) == 0)
 	{
         uint32 dwGearIds = g_pWeaponMgr->GetNumGearIds();
 

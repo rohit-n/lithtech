@@ -297,7 +297,7 @@ extern GenericProp g_gp;
 		const char* szValue = g_gp.m_String; \
 		for ( uint32 i = 0 ; i < n ; i++ ) \
 		{ \
-			if ( !_stricmp(a1[i], szValue) ) \
+			if ( !stricmp(a1[i], szValue) ) \
 			{ \
 				y = a2[i]; \
 				break; \

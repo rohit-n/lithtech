@@ -189,11 +189,11 @@ void CEditable::TriggerMsg(LPBASECLASS pObject, HOBJECT hSender, const char* szM
 	{
 		if (parse.m_nArgs > 0 && parse.m_Args[0])
 		{
-			if (_stricmp(parse.m_Args[0], "DISPLAYPROPERTIES") == 0)
+			if (stricmp(parse.m_Args[0], "DISPLAYPROPERTIES") == 0)
 			{
 				ListProperties(pObject);
 			}
-			else if (_stricmp(parse.m_Args[0], "EDIT") == 0)
+			else if (stricmp(parse.m_Args[0], "EDIT") == 0)
 			{
 				if (parse.m_nArgs > 2)
 				{

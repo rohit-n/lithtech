@@ -103,7 +103,7 @@ static LTBOOL ValidateGotoMsg( ILTPreInterface *pInterface, ConParse &cpMsgParam
 		return LTFALSE;
 	}
 
-	if( !_stricmp( pInterface->GetObjectClass( cpMsgParams.m_Args[1] ), "Key" ))
+	if( !stricmp( pInterface->GetObjectClass( cpMsgParams.m_Args[1] ), "Key" ))
 	{
 		return LTTRUE;
 	}
@@ -170,7 +170,7 @@ static LTBOOL ValidateMoveToMsg( ILTPreInterface *pInterface, ConParse &cpMsgPar
 		return LTFALSE;
 	}
 
-	if( bExternalKeyFile || (!_stricmp( pInterface->GetObjectClass( cpMsgParams.m_Args[1] ), "Key" )) )
+	if( bExternalKeyFile || (!stricmp( pInterface->GetObjectClass( cpMsgParams.m_Args[1] ), "Key" )) )
 	{
 		if( cpMsgParams.m_nArgs == 3 && cpMsgParams.m_Args[2] )
 		{
@@ -276,7 +276,7 @@ LTRESULT KeyframerPlugin::PreHook_EditStringList( const char *szRezPath,
 
 	// See if we can handle the list...
 
-	if( !_stricmp( szPropName, "Wavetype" ) )
+	if( !stricmp( szPropName, "Wavetype" ) )
 	{
 		// Fill in the list with our wanve types...
 
@@ -1233,7 +1233,7 @@ LTBOOL KeyFramer::ReadProps()
 		{
 			for( int i = 0; i <= KFWAVE_MAX; i++ )
 			{
-				if( !_stricmp( genProp.m_String, c_aWaveTypes[i] ))
+				if( !stricmp( genProp.m_String, c_aWaveTypes[i] ))
 				{
 					m_eWaveform = static_cast<KFWaveType>(i);
 					break;

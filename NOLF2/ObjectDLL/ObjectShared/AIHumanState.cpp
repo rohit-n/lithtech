@@ -2637,41 +2637,41 @@ void CAIHumanStateUseObject::HandleNameValuePair(char *szName, char *szValue)
 	// ACTIVITY=Smoking LOOPTIME=[10.0,15.0] FIDGETFREQ=[3.0,5.0]
 	//
 
-	if ( !_stricmp(szName, "ACTION") )
+	if ( !stricmp(szName, "ACTION") )
 	{
 		m_eAction = CAnimationMgrList::GetPropFromName(szValue);
 	}
-	else if ( !_stricmp(szName, "WEAPONACTION") )
+	else if ( !stricmp(szName, "WEAPONACTION") )
 	{
 		m_eWeaponAction = CAnimationMgrList::GetPropFromName(szValue);
 	}
-	else if ( !_stricmp(szName, "FIDGETFREQ") )
+	else if ( !stricmp(szName, "FIDGETFREQ") )
 	{
 		GetValueRange( GetAI(), szValue, &m_fMinFidgetTime, &m_fMaxFidgetTime );
 	}
-	else if ( !_stricmp(szName, "ACTIVITY") )
+	else if ( !stricmp(szName, "ACTIVITY") )
 	{
 		m_eActivity = CAnimationMgrList::GetPropFromName(szValue);
 	}
-	else if ( !_stricmp(szName, "POSE") )
+	else if ( !stricmp(szName, "POSE") )
 	{
 		m_ePose = CAnimationMgrList::GetPropFromName(szValue);
 	}
-	else if ( !_stricmp(szName, "MOOD") )
+	else if ( !stricmp(szName, "MOOD") )
 	{
 		m_eMood = CAnimationMgrList::GetPropFromName(szValue);
 	}
-	else if ( !_stricmp(szName, "LOOPTIME") )
+	else if ( !stricmp(szName, "LOOPTIME") )
 	{
 		LTFLOAT fMin, fMax;
 		GetValueRange( GetAI(), szValue, &fMin, &fMax );
 		m_fAnimTime = GetRandom( fMin, fMax );
 	}
-	else if ( !_stricmp(szName, "LOCKNODE") )
+	else if ( !stricmp(szName, "LOCKNODE") )
 	{
 		// Increment the lock count so that the node will remain locked after state exits.
 		AIASSERT(m_pUseNode != LTNULL, GetAI()->m_hObject, "CAIHumanStateUseObject::HandleNameValuePair: UseNode is NULL.");
-		m_bLeaveNodeLocked = !_stricmp(szValue, "TRUE");
+		m_bLeaveNodeLocked = !stricmp(szValue, "TRUE");
 		if( m_pUseNode && m_bLeaveNodeLocked )
 		{
 			m_pUseNode->Lock( GetAI()->m_hObject );
@@ -2764,12 +2764,12 @@ void CAIHumanStateUseObject::HandleModelString(ArgList* pArgList)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp(szKey, c_szKeyPickUp) )
+	if ( !stricmp(szKey, c_szKeyPickUp) )
 	{
 		m_bPickedUp = LTTRUE;
 	}
 
-	else if ( !_stricmp(szKey, c_szKeyFireWeapon) )
+	else if ( !stricmp(szKey, c_szKeyFireWeapon) )
 	{
 		if( GetAI()->GetCurrentWeapon() && m_hObject )
 		{
@@ -2954,7 +2954,7 @@ void CAIHumanStateTail::HandleModelString(ArgList* pArgList)
 
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 || !pArgList->argv[0] ) return;
 
-	if ( !_stricmp(pArgList->argv[0], "WHISTLE") && (GetRandom(0.0f, 1.0f) > 0.50f) )
+	if ( !stricmp(pArgList->argv[0], "WHISTLE") && (GetRandom(0.0f, 1.0f) > 0.50f) )
 	{
 		GetAI()->PlaySound( kAIS_Tail, LTFALSE );
 	}
@@ -3652,7 +3652,7 @@ void CAIHumanStateCheckBody::Update()
 
 	if ( m_pStrategyFollowPath->IsUnset() )
 	{
-		FLOAT fOffset = 32.f;
+		float fOffset = 32.f;
 
 		LTRotation rBodyRot;
 		g_pLTServer->GetObjectRotation( m_hBody, &rBodyRot );
@@ -4853,7 +4853,7 @@ void CAIHumanStateDraw::HandleModelString(ArgList* pArgList)
 
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 || !pArgList->argv[0] ) return;
 
-	if ( GetAI()->HasHolsterString() && !_stricmp(pArgList->argv[0], "DRAW") )
+	if ( GetAI()->HasHolsterString() && !stricmp(pArgList->argv[0], "DRAW") )
 	{
 		char szHolsterRight[64];
 		char szHolsterLeft[64];
@@ -5039,7 +5039,7 @@ void CAIHumanStateHolster::HandleModelString(ArgList* pArgList)
 
 	// Check that AI has a weapon, and the correct model string.
 
-	if ( !GetAI()->GetCurrentWeapon() || _stricmp(pArgList->argv[0], "HOLSTER") )
+	if ( !GetAI()->GetCurrentWeapon() || stricmp(pArgList->argv[0], "HOLSTER") )
 	{
 		return;
 	}
@@ -9555,7 +9555,7 @@ void CAIHumanStateLongJump::HandleModelString(ArgList* pArgList)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp(szKey, c_szKeyFireWeapon) )
+	if ( !stricmp(szKey, c_szKeyFireWeapon) )
 	{
 		if( GetAI()->HasWeapon( kAIWeap_Melee ) &&
 			( GetAI()->GetBrain()->GetRangeStatus( kAIWeap_Melee ) == eRangeStatusOk ) )

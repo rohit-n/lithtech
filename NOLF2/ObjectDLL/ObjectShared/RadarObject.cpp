@@ -15,7 +15,7 @@
 //
 
 	#include "Stdafx.h"
-	#include "MsgIds.h"
+	#include "MsgIDs.h"
 	#include "ParsedMsg.h"
 	#include "RadarObject.h"
 	#include "VersionMgr.h"
@@ -60,7 +60,7 @@ LTRESULT CRadarObjectPlugin::PreHook_EditStringList( const char* szRezPath,
 													 const uint32 cMaxStrings,
 													 const uint32 cMaxStringLength )
 {
-	if( !_stricmp( "Type", szPropName ))
+	if( !stricmp( "Type", szPropName ))
 	{
 		if( m_RadarTypeMgrPlugin.PreHook_EditStringList( szRezPath, szPropName,
 														 aszStrings, pcStrings, 
@@ -69,7 +69,7 @@ LTRESULT CRadarObjectPlugin::PreHook_EditStringList( const char* szRezPath,
 			return LT_OK;
 		}
 	}
-	else if( _stricmp( "Team", szPropName ) == 0 )
+	else if( stricmp( "Team", szPropName ) == 0 )
 	{
 		char szTeam[32] = {0};
 

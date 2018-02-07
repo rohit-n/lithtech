@@ -230,38 +230,38 @@ LTBOOL CAIGoalFollow::HandleNameValuePair(const char *szName, const char *szValu
 		return LTTRUE;
 	}
 
-	if ( !_stricmp(szName, "PANICCANACTIVATE") )
+	if ( !stricmp(szName, "PANICCANACTIVATE") )
 	{
 		m_bPanicCanActivate = IsTrueChar(*szValue);
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "MOVE") )
+	else if ( !stricmp(szName, "MOVE") )
 	{
-		if ( !_stricmp(szValue, "WALK") )
+		if ( !stricmp(szValue, "WALK") )
 		{
 			m_eMovement = kAP_Walk;
 			return LTTRUE;
 		}
-		else if ( !_stricmp(szValue, "RUN") )
+		else if ( !stricmp(szValue, "RUN") )
 		{
 			m_eMovement = kAP_Run;
 			return LTTRUE;
 		}
-		else if ( !_stricmp(szValue, "SWIM") )
+		else if ( !stricmp(szValue, "SWIM") )
 		{
 			m_eMovement = kAP_Swim;
 			return LTTRUE;
 		}
 	}
 
-	else if ( !_stricmp(szName, "RANGETIME") )
+	else if ( !stricmp(szName, "RANGETIME") )
 	{
 		m_fRangeTime = (LTFLOAT)atof(szValue);
 		return LTTRUE;
 	}
 	
-	else if ( !_stricmp(szName, "RANGE") )
+	else if ( !stricmp(szName, "RANGE") )
 	{
 		m_fRangeSqr = (LTFLOAT)atof(szValue);
 		m_fRangeSqr *= m_fRangeSqr;

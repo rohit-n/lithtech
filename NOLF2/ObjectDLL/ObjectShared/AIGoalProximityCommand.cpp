@@ -114,7 +114,7 @@ LTBOOL CAIGoalProximityCommand::HandleNameValuePair(const char *szName, const ch
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "RESET") )
+	if ( !stricmp(szName, "RESET") )
 	{
 		m_bSentCommand = LTFALSE;
 		return LTTRUE;

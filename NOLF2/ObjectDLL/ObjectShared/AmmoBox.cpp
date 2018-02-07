@@ -12,7 +12,7 @@
 
 #include "Stdafx.h"
 #include "AmmoBox.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "iltserver.h"
 #include "PlayerObj.h"
 #include "ObjectMsgs.h"
@@ -35,8 +35,8 @@ static const char s_szDefaultSkin[]		= "Props\\Skins\\PuAmmoBox.dtx";
 		
  
 #define ADD_AMMO_PROP(num) \
-		ADD_STRINGPROP_FLAG(AmmoType##num##, UNUSED_STRING, PF_STATICLIST)\
-		ADD_LONGINTPROP(AmmoCount##num##, 0)
+		ADD_STRINGPROP_FLAG(AmmoType##num, UNUSED_STRING, PF_STATICLIST)\
+		ADD_LONGINTPROP(AmmoCount##num, 0)
 
 LINKFROM_MODULE( AmmoBox );
 
@@ -153,7 +153,7 @@ bool AmmoBox::ReadProp(ObjectCreateStruct *pStruct)
 		sprintf(key, "AmmoType%d", i+1);
         if (g_pLTServer->GetPropGeneric(key, &genProp) == LT_OK)
 		{
-			if (_stricmp(genProp.m_String, UNUSED_STRING) != 0)
+			if (stricmp(genProp.m_String, UNUSED_STRING) != 0)
 			{
 				pAmmo = g_pWeaponMgr->GetAmmo(genProp.m_String);
 				if( pAmmo )
@@ -479,7 +479,7 @@ LTRESULT CAmmoBoxPlugin::PreHook_EditStringList(const char* szRezPath, const cha
 	{
 		sprintf(key, "AmmoType%d", index);
 
-        if (_stricmp(key, szPropName) == 0)
+        if (stricmp(key, szPropName) == 0)
 		{
             uint32 dwAmmoTypes = g_pWeaponMgr->GetNumAmmoIds();
 

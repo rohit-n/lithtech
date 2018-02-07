@@ -188,7 +188,7 @@ PROPTYPE* CPropTypeMgr::GetPropType(char* pType)
 
 	while (pCur)
 	{
-		if (*pCur && !(*pCur)->sType.empty( ) && (_stricmp((*pCur)->sType.c_str( ), pType) == 0))
+		if (*pCur && !(*pCur)->sType.empty( ) && (stricmp((*pCur)->sType.c_str( ), pType) == 0))
 		{
 			return *pCur;
 		}

@@ -215,7 +215,7 @@ LTBOOL CAIGoalDisappearReappearEvasive::HandleNameValuePair(const char *szName, 
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "NOW") )
+	if ( !stricmp(szName, "NOW") )
 	{
 		AITRACE( AIShowGoals, ( m_pAI->m_hObject, "GoalDisappearReappearEvasive: NOW=1" ) );
 
@@ -225,14 +225,14 @@ LTBOOL CAIGoalDisappearReappearEvasive::HandleNameValuePair(const char *szName, 
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "OVERRIDEDIST") )
+	else if ( !stricmp(szName, "OVERRIDEDIST") )
 	{
 		m_fReappearDistOverride = (LTFLOAT)atof( szValue );
 		AITRACE( AIShowGoals, ( m_pAI->m_hObject, "GoalDisappearReappearEvasive: OVERRIDEDIST=%.2f", m_fReappearDistOverride ) );
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "DELAY") )
+	else if ( !stricmp(szName, "DELAY") )
 	{
 		m_fReappearDelay = (LTFLOAT)atof( szValue );
 		AITRACE( AIShowGoals, ( m_pAI->m_hObject, "GoalDisappearReappearEvasive: DELAY=%.2f", m_fReappearDelay ) );

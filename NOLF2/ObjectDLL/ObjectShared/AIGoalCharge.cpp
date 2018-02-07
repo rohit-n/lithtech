@@ -172,19 +172,19 @@ LTBOOL CAIGoalCharge::HandleNameValuePair(const char *szName, const char *szValu
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "ATTACKDIST") )
+	if ( !stricmp(szName, "ATTACKDIST") )
 	{
 		m_fAttackDistanceSqr = (LTFLOAT)atof(szValue);
 		m_fAttackDistanceSqr *= m_fAttackDistanceSqr;
 		return LTTRUE;
 	}
-	else if ( !_stricmp(szName, "YELLDIST") )
+	else if ( !stricmp(szName, "YELLDIST") )
 	{
 		m_fYellDistanceSqr = (LTFLOAT)atof(szValue);
 		m_fYellDistanceSqr *= m_fYellDistanceSqr;
 		return LTTRUE;
 	}
-	else if ( !_stricmp(szName, "STOPDIST") )
+	else if ( !stricmp(szName, "STOPDIST") )
 	{
 		m_fStopDistanceSqr = (LTFLOAT)atof(szValue);
 		m_fStopDistanceSqr *= m_fStopDistanceSqr;

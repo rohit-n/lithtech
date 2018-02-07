@@ -12,7 +12,7 @@
 
 #include "Stdafx.h"
 #include "ModItem.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "iltserver.h"
 #include "PlayerObj.h"
 #include "ObjectMsgs.h"
@@ -370,7 +370,7 @@ LTRESULT CModPlugin::PreHook_EditStringList(const char* szRezPath, const char* s
 
 	// See if we can handle the property...
 
-	if (_strcmpi("ModType", szPropName) == 0)
+	if (stricmp("ModType", szPropName) == 0)
 	{
         uint32 dwModIds = g_pWeaponMgr->GetNumModIds();
 

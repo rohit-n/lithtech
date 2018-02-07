@@ -76,7 +76,7 @@ LTRESULT CDestructibleModelPlugin::PreHook_EditStringList(const char* szRezPath,
 	{
 		return LT_OK;
 	}
-	else if (_strcmpi("SurfaceOverride", szPropName) == 0)
+	else if (stricmp("SurfaceOverride", szPropName) == 0)
 	{
 		m_SurfaceMgrPlugin.PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings, cMaxStringLength);
@@ -359,19 +359,19 @@ uint32 CDestructibleModel::ObjectMessageFn(LPBASECLASS pObject, HOBJECT hSender,
 				{
 					if (!IsDead())
 					{
-						if (_stricmp(parse.m_Args[0], "FIRE") == 0)
+						if (stricmp(parse.m_Args[0], "FIRE") == 0)
 						{
 							char* pTargetName = parse.m_nArgs > 1 ? parse.m_Args[1] : LTNULL;
 							DoExplosion(pTargetName);
 						}
-						else if (_stricmp(parse.m_Args[0], "HIDDEN") == 0)
+						else if (stricmp(parse.m_Args[0], "HIDDEN") == 0)
 						{
 							// Game Base will take care of the solid and visible flags for us...
 
 							if (parse.m_nArgs > 1 && parse.m_Args[1])
 							{
-								if ((_stricmp(parse.m_Args[1], "1") == 0) ||
-									(_stricmp(parse.m_Args[1], "TRUE") == 0))
+								if ((stricmp(parse.m_Args[1], "1") == 0) ||
+									(stricmp(parse.m_Args[1], "TRUE") == 0))
 								{
 									m_bSaveCanDamage = GetCanDamage();
 									m_bSaveNeverDestroy = GetNeverDestroy();
@@ -381,8 +381,8 @@ uint32 CDestructibleModel::ObjectMessageFn(LPBASECLASS pObject, HOBJECT hSender,
 								}
 								else
 								{
-									if ((_stricmp(parse.m_Args[1], "0") == 0) ||
-										(_stricmp(parse.m_Args[1], "FALSE") == 0))
+									if ((stricmp(parse.m_Args[1], "0") == 0) ||
+										(stricmp(parse.m_Args[1], "FALSE") == 0))
 									{
 										SetCanDamage(m_bSaveCanDamage);
 										SetNeverDestroy(m_bSaveNeverDestroy);

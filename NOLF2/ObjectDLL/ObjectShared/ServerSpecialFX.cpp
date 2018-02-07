@@ -507,7 +507,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 
 	// Are we looking at a text or a binary file...
 
-	if( !_stricmp( szBinTest, "Siblings:" ) )
+	if( !stricmp( szBinTest, "Siblings:" ) )
 	{
 		pFxFile = fopen( szFcfPath, "rt" );
 		if (!pFxFile) return LTFALSE;

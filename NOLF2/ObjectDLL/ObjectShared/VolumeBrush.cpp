@@ -20,7 +20,7 @@
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
 #include "SurfaceMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "SurfaceFunctions.h"
 
 LINKFROM_MODULE( VolumeBrush );
@@ -656,7 +656,7 @@ LTRESULT CVolumePlugin::PreHook_EditStringList(const char* szRezPath,
 	
 	// See if we can handle the property...
 
-	if (_strcmpi("DamageType", szPropName) == 0)
+	if (stricmp("DamageType", szPropName) == 0)
 	{
 	   if (!aszStrings || !pcStrings) return LT_UNSUPPORTED;
 		_ASSERT(aszStrings && pcStrings);
@@ -681,7 +681,7 @@ LTRESULT CVolumePlugin::PreHook_EditStringList(const char* szRezPath,
 
 		return LT_OK;
 	}
-	else if (_strcmpi("SoundFilter", szPropName) == 0)
+	else if (stricmp("SoundFilter", szPropName) == 0)
 	{
 		m_pSoundFilterMgrPlugin->PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings, cMaxStringLength);
@@ -691,7 +691,7 @@ LTRESULT CVolumePlugin::PreHook_EditStringList(const char* szRezPath,
 
 		return LT_OK;
 	}
-	else if( _stricmp( "SurfaceOverride", szPropName ) == 0)
+	else if( stricmp( "SurfaceOverride", szPropName ) == 0)
 	{
 		m_pSurfaceMgrPlugin->PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings, cMaxStringLength);
@@ -702,7 +702,7 @@ LTRESULT CVolumePlugin::PreHook_EditStringList(const char* szRezPath,
 			return LT_OK;
 		}
 	}
-	else if( _stricmp("PhysicsModel", szPropName ) == 0 )
+	else if( stricmp("PhysicsModel", szPropName ) == 0 )
 	{
 		for( int i = PPM_FIRST; i < PPM_NUM_MODELS; ++i )
 		{

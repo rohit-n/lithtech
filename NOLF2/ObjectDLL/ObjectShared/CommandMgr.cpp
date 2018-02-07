@@ -510,7 +510,7 @@ static eExpressionVal CheckExpression( ConParse &cpExpression )
 
 	for( int iOp = 0; iOp < c_NumOperators; ++iOp )
 	{
-		if( !_stricmp( s_Operators[iOp].m_OpName, pOp ))
+		if( !stricmp( s_Operators[iOp].m_OpName, pOp ))
 		{
 			OPERATOR_STRUCT *pOperator = &s_Operators[iOp];
 
@@ -611,7 +611,7 @@ static CMDMGR_CLASS_DESC *GetClassDesc( const char *pClassName )
 	for( CMDMGR_CLASS_DESC_VECTOR::iterator iterClassDesc = s_pVecClassDesc->begin(); iterClassDesc != s_pVecClassDesc->end(); iterClassDesc++ )
 	{
 		pClassDesc = *iterClassDesc;
-		if( !_stricmp( pClassDesc->m_szClassName, pClassName ))
+		if( !stricmp( pClassDesc->m_szClassName, pClassName ))
 		{
 			return pClassDesc;	
 		}
@@ -733,7 +733,7 @@ LTBOOL CCommandMgr::ProcessCmd(const char* pCmd, int nCmdIndex)
 		{
 			for (int i=0; i < c_nNumValidCmds; i++)
 			{
-				if (_stricmp(parse.m_Args[0], s_ValidCmds[i].pCmdName) == 0)
+				if (stricmp(parse.m_Args[0], s_ValidCmds[i].pCmdName) == 0)
 				{
 					if (CheckArgs(parse, s_ValidCmds[i].nNumArgs))
 					{
@@ -1158,7 +1158,7 @@ LTBOOL CCommandMgr::ProcessAbort(ConParse & parse, int nCmdIndex)
 		if (m_PendingCmds[i].aCmd[0] != CMDMGR_NULL_CHAR &&
 			m_PendingCmds[i].aId[0] != CMDMGR_NULL_CHAR)
 		{
-			if (_stricmp(m_PendingCmds[i].aId, pId) == 0)
+			if (stricmp(m_PendingCmds[i].aId, pId) == 0)
 			{
 				m_PendingCmds[i].Clear();
                 return LTTRUE;
@@ -1194,7 +1194,7 @@ LTBOOL CCommandMgr::ProcessInt( ConParse & parse, int nCmdIndex )
 
 	for( int i = 0; i < m_nNumVars; ++i )
 	{
-		if( !_stricmp( m_aVars[i].m_szName, parse.m_Args[1] ))
+		if( !stricmp( m_aVars[i].m_szName, parse.m_Args[1] ))
 		{
 			DevPrint( "CCommandMgr::ProcessInteger() WARNING!" );
 			DevPrint( "    Variable, %s, already defined!", m_aVars[i].m_szName );
@@ -1235,7 +1235,7 @@ LTBOOL CCommandMgr::ProcessObj( ConParse & parse, int nCmdIndex )
 
 	for( int i = 0; i < m_nNumVars; ++i )
 	{
-		if( !_stricmp( m_aVars[i].m_szName, parse.m_Args[1] ))
+		if( !stricmp( m_aVars[i].m_szName, parse.m_Args[1] ))
 		{
 			DevPrint( "CCommandMgr::ProcessObj() WARNING!" );
 			DevPrint( "    Variable '%s' already defined!", m_aVars[i].m_szName );
@@ -1898,7 +1898,7 @@ LTBOOL CCommandMgr::IsValidCmd(const char* pCmd)
 		{
 			for (int i=0; i < c_nNumValidCmds; i++)
 			{
-				if (_stricmp(parse.m_Args[0], s_ValidCmds[i].pCmdName) == 0)
+				if (stricmp(parse.m_Args[0], s_ValidCmds[i].pCmdName) == 0)
 				{
 					if( !CheckArgs(parse, s_ValidCmds[i].nNumArgs) )
 					{
@@ -2183,7 +2183,7 @@ VAR_STRUCT* CCommandMgr::GetVar( const char *pName, bool bSilent, uint16 *nId /*
 
 	for( int iVar = 0; iVar < m_nNumVars; ++iVar )
 	{
-		if( !_stricmp( m_aVars[iVar].m_szName, pName ))
+		if( !stricmp( m_aVars[iVar].m_szName, pName ))
 		{
 			if( nId )
 				*nId = iVar;
@@ -2392,7 +2392,7 @@ eExpressionVal CMD_EVENT_STRUCT::FillVarArray( ConParse &cpExpression )
 
 	for( int iOp = 0; iOp < c_NumOperators; ++iOp )
 	{
-		if( !_stricmp( s_Operators[iOp].m_OpName, pOp ))
+		if( !stricmp( s_Operators[iOp].m_OpName, pOp ))
 		{
 			OPERATOR_STRUCT *pOperator = &s_Operators[iOp];
 
@@ -2664,36 +2664,36 @@ LTRESULT CCommandMgrPlugin::PreHook_PropChanged(
 		{
 			if( cpModifiers.m_nArgs > 0 && cpModifiers.m_Args[0] )
 			{
-				if( !_stricmp( cpModifiers.m_Args[0], "IMsgErs" ))
+				if( !stricmp( cpModifiers.m_Args[0], "IMsgErs" ))
 				{
 					s_bShowMsgErrors = false;
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "IVarErs" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "IVarErs" ))
 				{
 					s_bShowVarErrors = false;
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "IVarCmds" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "IVarCmds" ))
 				{
 					s_bValidateVarCmds = false;
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "INonVarCmds" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "INonVarCmds" ))
 				{
 					s_bValidateNonVarCmds = false;
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "VVarDecsOnly" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "VVarDecsOnly" ))
 				{
 					s_bVarDeclerationsOnly = true;
 					s_bValidateNonVarCmds = false;
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "IVarDecs" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "IVarDecs" ))
 				{
 					s_bValidateVarDecs = false;
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "ClearVars" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "ClearVars" ))
 				{
 					s_bClearVarsRequested = true;
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "ClearDynaObjs" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "ClearDynaObjs" ))
 				{
 					s_bClearDynaObjsRequested = true;
 					
@@ -2703,7 +2703,7 @@ LTRESULT CCommandMgrPlugin::PreHook_PropChanged(
 						s_bCanClearDynaObjs = false;
 					}
 				}
-				else if( !_stricmp( cpModifiers.m_Args[0], "IAddDynaObj" ))
+				else if( !stricmp( cpModifiers.m_Args[0], "IAddDynaObj" ))
 				{
 					s_bAddDynamicObjects = false;
 				}
@@ -2738,7 +2738,7 @@ LTRESULT CCommandMgrPlugin::PreHook_PropChanged(
 			{
 				for( int i = 0; i < c_nNumValidCmds; ++i )
 				{
-					if( !_stricmp( CommandString.m_Args[0], s_ValidCmds[i].pCmdName ))
+					if( !stricmp( CommandString.m_Args[0], s_ValidCmds[i].pCmdName ))
 					{
 						// We have a valid command name, check the arguments...
 						
@@ -2869,7 +2869,7 @@ LTBOOL CCommandMgrPlugin::IsValidCmd( ILTPreInterface *pInterface, const char *p
 		{
 			for( int i=0; i < c_nNumValidCmds; ++i )
 			{
-				if( !_stricmp( CommandString.m_Args[0], s_ValidCmds[i].pCmdName ))
+				if( !stricmp( CommandString.m_Args[0], s_ValidCmds[i].pCmdName ))
 				{
 					if( !CheckArgs( pInterface, CommandString, s_ValidCmds[i].nNumArgs ))
 					{
@@ -2971,7 +2971,7 @@ void CCommandMgrPlugin::ListObjectMsgs( ILTPreInterface *pInterface, const char 
 		DynamicObjectList::iterator	iter;
 		for( iter = s_lstDynaObjects.begin(); iter != s_lstDynaObjects.end(); ++iter )
 		{
-			if( !_stricmp( (*iter).m_sName.c_str(), pTargetName ))
+			if( !stricmp( (*iter).m_sName.c_str(), pTargetName ))
 			{
 				pTargetClass = const_cast<char*>((*iter).m_sClassName.c_str());
 				break;
@@ -2985,9 +2985,9 @@ void CCommandMgrPlugin::ListObjectMsgs( ILTPreInterface *pInterface, const char 
 			pTargetClass = "Body";
 		}
 
-		if( !pTargetClass && (!_stricmp( pTargetName, "player" ) ||
-									  !_stricmp( pTargetName, "activeplayer" ) ||
-									  !_stricmp( pTargetName, "otherplayers" ) ))
+		if( !pTargetClass && (!stricmp( pTargetName, "player" ) ||
+									  !stricmp( pTargetName, "activeplayer" ) ||
+									  !stricmp( pTargetName, "otherplayers" ) ))
 		{
 			pTargetClass = "CPlayerObj";
 		}
@@ -3125,7 +3125,7 @@ LTBOOL CCommandMgrPlugin::PreCheckMsg( ILTPreInterface *pInterface, ConParse &pa
 					DynamicObjectList::iterator	iter;
 					for( iter = s_lstDynaObjects.begin(); iter != s_lstDynaObjects.end(); ++iter )
 					{
-						if( !_stricmp( (*iter).m_sName.c_str(), pTargetName ))
+						if( !stricmp( (*iter).m_sName.c_str(), pTargetName ))
 						{
 							pTargetClass = const_cast<char*>((*iter).m_sClassName.c_str());
 							break;
@@ -3157,7 +3157,7 @@ LTBOOL CCommandMgrPlugin::PreCheckMsg( ILTPreInterface *pInterface, ConParse &pa
 								DynamicObjectList::iterator	iter;
 								for( iter = s_lstDynaObjects.begin(); iter != s_lstDynaObjects.end(); ++iter )
 								{
-									if( !_stricmp( (*iter).m_sName.c_str(), pAI ))
+									if( !stricmp( (*iter).m_sName.c_str(), pAI ))
 									{
 										pTargetClass = "Body";
 										break;
@@ -3170,9 +3170,9 @@ LTBOOL CCommandMgrPlugin::PreCheckMsg( ILTPreInterface *pInterface, ConParse &pa
 					// Special case "player" since it is not in the world...
 					// and objects inside prefabs (ie #.)
 
-					if( !pTargetClass && (!_stricmp( pTargetName, "player" ) ||
-										  !_stricmp( pTargetName, "activeplayer" ) ||
-										  !_stricmp( pTargetName, "otherplayers" ) ))
+					if( !pTargetClass && (!stricmp( pTargetName, "player" ) ||
+										  !stricmp( pTargetName, "activeplayer" ) ||
+										  !stricmp( pTargetName, "otherplayers" ) ))
 					{
 						pTargetClass = "CPlayerObj";
 					}
@@ -3276,7 +3276,7 @@ LTBOOL CCommandMgrPlugin::PreCheckMsg( ILTPreInterface *pInterface, ConParse &pa
 					{
 						// Look for the message name or if it's a special message always process it...
 						
-						if( (!_stricmp( cpMsgParams.m_Args[0], pClassMsgs[nMsg].m_szMsgName )) || pClassMsgs[nMsg].m_bSpecial )
+						if( (!stricmp( cpMsgParams.m_Args[0], pClassMsgs[nMsg].m_szMsgName )) || pClassMsgs[nMsg].m_bSpecial )
 						{
 							// Ok! The object can process the msg, try and validate it...
 
@@ -3801,7 +3801,7 @@ LTBOOL CCommandMgrPlugin::DevelopVars( ILTPreInterface *pInterface )
 	bool bNewWorld = true;
 	if( pInterface->GetWorldName() )
 	{
-		if( !_stricmp( s_szLastWorld, pInterface->GetWorldName() ))
+		if( !stricmp( s_szLastWorld, pInterface->GetWorldName() ))
 		{
 			bNewWorld = false;
 		}
@@ -3884,7 +3884,7 @@ VAR_STRUCT *CCommandMgrPlugin::FindVar( const char *pVarName )
 
 	for( int i = 0; i < s_nNumVars; ++i )
 	{
-		if( !_stricmp( s_aVars[i].m_szName, pVarName ))
+		if( !stricmp( s_aVars[i].m_szName, pVarName ))
 			return &s_aVars[i];
 	}
 
@@ -4734,7 +4734,7 @@ LTBOOL CCommandMgrPlugin::IsValidExpression( ILTPreInterface *pInterface, ConPar
 
 	for( int iOp = 0; iOp < c_NumOperators; ++iOp )
 	{
-		if( !_stricmp( s_Operators[iOp].m_OpName, pOp ))
+		if( !stricmp( s_Operators[iOp].m_OpName, pOp ))
 		{
 			OPERATOR_STRUCT *pOperator = &s_Operators[iOp];
 
@@ -4841,7 +4841,7 @@ void CCommandMgrPlugin::AddDynamicObject( CCommandMgrPlugin::DYNAMIC_OBJECT &Dyn
 	DynamicObjectList::const_iterator iter = s_lstDynaObjects.begin();
 	while( iter != s_lstDynaObjects.end() )
 	{
-		if( !_stricmp( (*iter).m_sName.c_str(), DynaObj.m_sName.c_str() ))
+		if( !stricmp( (*iter).m_sName.c_str(), DynaObj.m_sName.c_str() ))
 		{
 			return;	
 		}
@@ -4867,7 +4867,7 @@ LTBOOL CCommandMgrPlugin::CommandExists( const char *pCmd )
 
 	for( int i=0; i < c_nNumValidCmds; ++i )
 	{
-		if( !_stricmp( pCmd, s_ValidCmds[i].pCmdName ))
+		if( !stricmp( pCmd, s_ValidCmds[i].pCmdName ))
 		{
 			return LTTRUE;			
 		}

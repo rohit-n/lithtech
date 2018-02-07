@@ -50,7 +50,7 @@ LTRESULT CDoomsDayPiecePlugin::PreHook_EditStringList(
 	const uint32 cMaxStrings,
 	const uint32 cMaxStringLen )
 {
-	if( _strcmpi("Type", szPropName) == 0 )
+	if( stricmp("Type", szPropName) == 0 )
 	{
 		// Fill the list with our piece types...
 
@@ -196,7 +196,7 @@ bool DoomsDayPiece::ReadProp( ObjectCreateStruct *pOCS )
 		{
 			for( int i = 0; i < kDoomsDay_MAXTYPES; ++i )
 			{
-				if( !_stricmp( GenProp.m_String, c_aDDPieceTypes[i].m_pszPropType ) )
+				if( !stricmp( GenProp.m_String, c_aDDPieceTypes[i].m_pszPropType ) )
 				{
 					m_nDDPieceType = (DDPieceType)i;
 					break;

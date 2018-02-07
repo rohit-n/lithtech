@@ -15,7 +15,7 @@
 //
 
 	#include "Stdafx.h"
-	#include "MsgIds.h"
+	#include "MsgIDs.h"
 	#include "PlayerObj.h"
 	#include "TransitionArea.h"
 	#include "TransitionAggregate.h"

@@ -351,7 +351,7 @@ LTRESULT CPlayerLurePlugin::PreHook_EditStringList(
 
 	// Handle lure type...
 
-	if( _strcmpi("PlayerLureCameraFreedom", szPropName ) == 0 )
+	if( stricmp("PlayerLureCameraFreedom", szPropName ) == 0 )
 	{
 		strcpy(aszStrings[( *pcStrings )++], CAMERA_FREEDOM_NONE );
 		strcpy(aszStrings[( *pcStrings )++], CAMERA_FREEDOM_LIMITED );
@@ -359,7 +359,7 @@ LTRESULT CPlayerLurePlugin::PreHook_EditStringList(
 
 		return LT_OK;
 	}
-	else if( _strcmpi( "DeathFX", szPropName ) == 0 )
+	else if( stricmp( "DeathFX", szPropName ) == 0 )
 	{
 		return m_FXPlugin.PopulateStringList( szRezPath,
 											  aszStrings,

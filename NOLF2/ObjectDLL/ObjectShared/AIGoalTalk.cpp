@@ -512,13 +512,13 @@ LTBOOL CAIGoalTalk::HandleNameValuePair(const char *szName, const char *szValue)
 		return LTTRUE;
 	}
 
-	if ( !_stricmp(szName, "MOOD") )
+	if ( !stricmp(szName, "MOOD") )
 	{
 		m_eMood = CAnimationMgrList::GetPropFromName( szValue );
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "FACETIME") )
+	else if ( !stricmp(szName, "FACETIME") )
 	{
 		m_fFaceTime = (LTFLOAT)atof(szValue);
 		return LTTRUE;
@@ -527,7 +527,7 @@ LTBOOL CAIGoalTalk::HandleNameValuePair(const char *szName, const char *szValue)
 	// Retrigger tells the AI to retrigger the dialogue object
 	// once he is in the radius.
 
-	else if ( !_stricmp(szName, "RETRIGGER") )
+	else if ( !stricmp(szName, "RETRIGGER") )
 	{
 		AITRACE( AIShowGoals, ( m_pAI->m_hObject, "CAIGoalTalk: RETRIGGER=1" ) );
 		m_bRetriggerDialogue = IsTrueChar(*szValue);
@@ -537,21 +537,21 @@ LTBOOL CAIGoalTalk::HandleNameValuePair(const char *szName, const char *szValue)
 	// Disposable tells the AI to remove the Talk goal
 	// once he is out of the radius.
 
-	else if ( !_stricmp(szName, "DISPOSABLE") )
+	else if ( !stricmp(szName, "DISPOSABLE") )
 	{
 		AITRACE( AIShowGoals, ( m_pAI->m_hObject, "CAIGoalTalk: DISPOSABLE=1" ) );
 		m_bDisposableDialogue = IsTrueChar(*szValue);
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "GESTURE") )
+	else if ( !stricmp(szName, "GESTURE") )
 	{
 		FREE_HSTRING( m_hstrGesture );
 		m_hstrGesture = g_pLTServer->CreateString( szValue );
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "MOVEMENT") )
+	else if ( !stricmp(szName, "MOVEMENT") )
 	{
 		m_eMovement = CAnimationMgrList::GetPropFromName( szValue );
 		return LTTRUE;

@@ -102,7 +102,7 @@ LTRESULT CScannerPlugin::PreHook_PropChanged( const char *szObjName,
 	
 	// check to see if it is one of our values that has changed...
 
-	if( !_stricmp( szPropName, "SpotCommand" ) )
+	if( !stricmp( szPropName, "SpotCommand" ) )
 	{
 		if( m_CommandMgrPlugin.PreHook_PropChanged( szObjName,
 													szPropName,

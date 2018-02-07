@@ -79,7 +79,6 @@ class CAnimationProp
 
 	protected :
 
-		friend class CAnimationProp;
 		friend class CAnimationProps;
 		friend class CAnimationMgr;
 

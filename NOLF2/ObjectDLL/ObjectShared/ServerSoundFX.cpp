@@ -54,7 +54,7 @@ LTRESULT CSoundFXPlugin::PreHook_EditStringList(
     const uint32 cMaxStrings,
     const uint32 cMaxStringLength)
 {
-	if (_strcmpi("Filter", szPropName) == 0)
+	if (stricmp("Filter", szPropName) == 0)
 	{
 		m_SoundFilterMgrPlugin.PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings, cMaxStringLength);

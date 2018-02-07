@@ -260,12 +260,12 @@ void CAIState::HandleNameValuePair(char *szName, char *szValue)
 	_ASSERT(szName && szValue);
 	if ( !szName || !szValue ) return;
 
-	if ( !_stricmp(szName, "RETURN") )
+	if ( !stricmp(szName, "RETURN") )
 	{
 		FREE_HSTRING(m_hstrReturn);
         m_hstrReturn = g_pLTServer->CreateString(szValue);
 	}
-	else if ( !_stricmp(szName, "NEXT") )
+	else if ( !stricmp(szName, "NEXT") )
 	{
 		if ( m_cNexts >= kMaxNexts )
 		{
@@ -275,16 +275,16 @@ void CAIState::HandleNameValuePair(char *szName, char *szValue)
 
         m_ahstrNexts[m_cNexts++] = g_pLTServer->CreateString(szValue);
 	}
-	else if ( !_stricmp(szName, "FIRST") )
+	else if ( !stricmp(szName, "FIRST") )
 	{
         FREE_HSTRING(m_hstrFirst);
         m_hstrFirst = g_pLTServer->CreateString(szValue);
 	}
-	else if ( !_stricmp(szName, "FIRSTSOUND") )
+	else if ( !stricmp(szName, "FIRSTSOUND") )
 	{
 		m_bPlayFirstSound = IsTrueChar(*szValue);
 	}
-	else if ( !_stricmp(szName, "NOCINEMATICS") )
+	else if ( !stricmp(szName, "NOCINEMATICS") )
 	{
 		m_bNoCinematics = IsTrueChar(*szValue);
 	}

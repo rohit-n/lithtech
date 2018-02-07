@@ -87,7 +87,7 @@ LTRESULT CPropPlugin::PreHook_EditStringList(
 	{
 		return LT_OK;
 	}
-	else if (_strcmpi("DetailLevel", szPropName) == 0)
+	else if (stricmp("DetailLevel", szPropName) == 0)
 	{
 		strcpy(aszStrings[(*pcStrings)++], "Low");
 		strcpy(aszStrings[(*pcStrings)++], "Medium");

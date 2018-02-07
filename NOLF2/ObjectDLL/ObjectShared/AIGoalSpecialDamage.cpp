@@ -1246,13 +1246,13 @@ LTBOOL CAIGoalSpecialDamage::HandleNameValuePair(const char *szName, const char 
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "PAUSE") )
+	if ( !stricmp(szName, "PAUSE") )
 	{
 		PauseSpecialDamage( IsTrueChar( szValue[0] ) );
 		return LTTRUE;
 	}
 
-	if ( !_stricmp(szName, "SLEEPFOREVER") )
+	if ( !stricmp(szName, "SLEEPFOREVER") )
 	{
 		if( IsTrueChar( szValue[0] ) )
 		{

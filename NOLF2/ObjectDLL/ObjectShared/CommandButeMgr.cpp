@@ -184,7 +184,7 @@ void CCommandButeMgr::ProcessGlobalCmds( )
 			{
 				// We only allow variable declarations for global commands...
 
-				if( (cpCmd.m_nArgs == 3) && (!_stricmp( cpCmd.m_Args[0], "INT" )) )
+				if( (cpCmd.m_nArgs == 3) && (!stricmp( cpCmd.m_Args[0], "INT" )) )
 				{
 					// Process it...
 
@@ -364,7 +364,7 @@ LTBOOL CCommandButeMgr::Pre_CheckGlobalCmds( ILTPreInterface *pInterface, CComma
 			{
 				// We only allow variable declarations for global commands...
 
-				if( (cpCmd.m_nArgs == 3) && (!_stricmp( cpCmd.m_Args[0], "INT" )) )
+				if( (cpCmd.m_nArgs == 3) && (!stricmp( cpCmd.m_Args[0], "INT" )) )
 				{
 					// Process it...
 					

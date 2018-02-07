@@ -623,7 +623,7 @@ LTRESULT CExplosionPlugin::PreHook_EditStringList(const char* szRezPath,
 {
 	// See if we can handle the property...
 
-	if (_strcmpi("ImpactFXName", szPropName) == 0)
+	if (stricmp("ImpactFXName", szPropName) == 0)
 	{
 		m_FXButeMgrPlugin.PreHook_EditStringList(szRezPath, szPropName,
 			aszStrings, pcStrings, cMaxStrings, cMaxStringLength);
@@ -633,7 +633,7 @@ LTRESULT CExplosionPlugin::PreHook_EditStringList(const char* szRezPath,
 
 		return LT_OK;
 	}
-	else if (_strcmpi("DamageType", szPropName) == 0)
+	else if (stricmp("DamageType", szPropName) == 0)
 	{
 	   if (!aszStrings || !pcStrings) return LT_UNSUPPORTED;
 		_ASSERT(aszStrings && pcStrings);

@@ -317,20 +317,20 @@ void LightGroup::HandleTrigger( HOBJECT hSender, ILTMessage_Read *pMsg )
 	cParse.Init(szMsg);
 	while (g_pCommonLT->Parse(&cParse) == LT_OK)
 	{
-		if (_stricmp(cParse.m_Args[0], "TOGGLE") == 0)
+		if (stricmp(cParse.m_Args[0], "TOGGLE") == 0)
 		{
 			// Toggle the flag
 			m_bOn = !m_bOn;
 		}
-		else if (_stricmp(cParse.m_Args[0], "ON") == 0)
+		else if (stricmp(cParse.m_Args[0], "ON") == 0)
 		{
 			m_bOn = true;
 		}
-		else if (_stricmp(cParse.m_Args[0], "OFF") == 0)
+		else if (stricmp(cParse.m_Args[0], "OFF") == 0)
 		{
 			m_bOn = false;
 		}
-		else if ((_stricmp(cParse.m_Args[0], "COLOR") == 0) && ((cParse.m_nArgs == 2) || (cParse.m_nArgs == 4)))
+		else if ((stricmp(cParse.m_Args[0], "COLOR") == 0) && ((cParse.m_nArgs == 2) || (cParse.m_nArgs == 4)))
 		{
 			if (cParse.m_nArgs == 2)
 			{

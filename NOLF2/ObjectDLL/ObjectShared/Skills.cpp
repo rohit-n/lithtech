@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------- //
 
 #include "Stdafx.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "Skills.h"
 #include "MissionButeMgr.h"
 #include "GameServerShell.h"

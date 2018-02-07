@@ -1286,7 +1286,7 @@ AINode* CAINodeMgr::GetNode(const char *szName)
 		pNode = it->second;
         const char* szNodeName = g_pLTServer->GetStringData(pNode->GetName());
 
-		if ( !_stricmp(szNodeName, szName) )
+		if ( !stricmp(szNodeName, szName) )
 		{
 			return pNode;
 		}

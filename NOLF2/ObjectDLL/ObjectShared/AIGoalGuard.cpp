@@ -346,7 +346,7 @@ LTBOOL CAIGoalGuard::HandleNameValuePair(const char *szName, const char *szValue
 		return LTTRUE;
 	}
 
-	if ( !_stricmp(szName, "NODE") )
+	if ( !stricmp(szName, "NODE") )
 	{
 		// If Goal was already active (walking to previous guard node)
 		// Reset the goal.

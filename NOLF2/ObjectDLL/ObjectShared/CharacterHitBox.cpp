@@ -17,7 +17,7 @@
 #include "Projectile.h"
 #include "ServerUtilities.h"
 #include "CVarTrack.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "ObjectMsgs.h"
 #include "Attachments.h"
 #include "GameServerShell.h"

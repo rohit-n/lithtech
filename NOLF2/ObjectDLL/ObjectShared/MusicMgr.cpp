@@ -3,7 +3,7 @@
 #include "Stdafx.h"
 #include "MusicMgr.h"
 #include "GameButeMgr.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "GameServerShell.h"
 
 extern CGameServerShell* g_pGameServerShell;

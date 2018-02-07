@@ -13,7 +13,7 @@
 
 #include "Stdafx.h"
 #include "PickupItem.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "iltserver.h"
 #include "ServerUtilities.h"
 #include "ClientServerShared.h"
@@ -106,7 +106,7 @@ LTRESULT CPickupItemPlugin::PreHook_PropChanged( const char *szObjName,
 {
 	// See if we can handle this property...
 
-	if( !_stricmp( "PickupCommand", szPropName ))
+	if( !stricmp( "PickupCommand", szPropName ))
 	{
 		if( m_CommandMgrPlugin.PreHook_PropChanged( szObjName,
 													szPropName,
@@ -129,7 +129,7 @@ LTRESULT CPickupItemPlugin::PreHook_EditStringList(const char* szRezPath,
 												   const uint32 cMaxStringLength)
 {
 
-	if (_strcmpi("ModelOverride", szPropName) == 0)
+	if (stricmp("ModelOverride", szPropName) == 0)
 	{
 		if (m_PropTypeMgrPlugin.PreHook_EditStringList(szRezPath,
 			szPropName, aszStrings, pcStrings, cMaxStrings, cMaxStringLength) == LT_OK)
@@ -139,7 +139,7 @@ LTRESULT CPickupItemPlugin::PreHook_EditStringList(const char* szRezPath,
 			return LT_OK;
 		}
 	}
-	else if( _strcmpi( "WorldAnimation", szPropName ) == 0 )
+	else if( stricmp( "WorldAnimation", szPropName ) == 0 )
 	{
 		for( int i = 0; i < PICKUP_MAX_WORLD_ANIS; ++i )
 		{
@@ -148,7 +148,7 @@ LTRESULT CPickupItemPlugin::PreHook_EditStringList(const char* szRezPath,
 
 		return LT_OK;
 	}
-	else if( _stricmp( "Team", szPropName ) == 0 )
+	else if( stricmp( "Team", szPropName ) == 0 )
 	{
 		char szTeam[32] = {0};
 

@@ -398,7 +398,7 @@ LTBOOL CAIGoalPatrol::HandleNameValuePair(const char *szName, const char *szValu
 {
 	ASSERT(szName && szValue);
 
-	if ( !_stricmp(szName, "NODE") )
+	if ( !stricmp(szName, "NODE") )
 	{
 		AINode* pNode = g_pAINodeMgr->GetNode(szValue);
 		AIASSERT1( pNode && (pNode->GetType() == kNode_Patrol), m_pAI->m_hObject, "CAIGoalPatrol::HandleNameValuePair: Could not find patrol node: %s", szValue );
@@ -409,7 +409,7 @@ LTBOOL CAIGoalPatrol::HandleNameValuePair(const char *szName, const char *szValu
 		return LTTRUE;
 	}
 
-	else if ( !_stricmp(szName, "AWARENESS") )
+	else if ( !stricmp(szName, "AWARENESS") )
 	{
 		m_eAwareness = CAnimationMgrList::GetPropFromName( szValue );
 		AIASSERT( m_eAwareness != kAP_Invalid, m_pAI->m_hObject, "CAIGoalPatrol::HandleNameValuePair: Awareness is None" );

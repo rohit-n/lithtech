@@ -14,7 +14,7 @@
 #include "Character.h"
 #include "iltserver.h"
 #include "ServerUtilities.h"
-#include "stdio.h"
+#include <stdio.h>
 #include "Body.h"
 #include "VolumeBrush.h"
 #include "Spawner.h"
@@ -118,7 +118,7 @@ static LTBOOL ValidateTelePortMsg( ILTPreInterface *pInterface, ConParse &cpMsgP
 		}
 
 		char const* pszObjClass = pInterface->GetObjectClass( cpMsgParams.m_Args[1] );
-		if( pszObjClass && !_stricmp( pszObjClass, "TeleportPoint" ))
+		if( pszObjClass && !stricmp( pszObjClass, "TeleportPoint" ))
 		{
 			return LTTRUE;
 		}
@@ -176,10 +176,10 @@ static LTBOOL ValidateCrosshairMsg( ILTPreInterface *pInterface, ConParse &cpMsg
 {
 	if( !pInterface ) return LTFALSE;
 
-	if( !_stricmp( cpMsgParams.m_Args[1], "GOOD" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "BAD" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "NEUTRAL" ) ||
-		!_stricmp( cpMsgParams.m_Args[1], "UNKNOWN" ))
+	if( !stricmp( cpMsgParams.m_Args[1], "GOOD" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "BAD" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "NEUTRAL" ) ||
+		!stricmp( cpMsgParams.m_Args[1], "UNKNOWN" ))
 	{
 		return LTTRUE;
 	}
@@ -4840,7 +4840,7 @@ LTRESULT CCharacterPlugin::PreHook_EditStringList(const char* szRezPath, const c
 	for(int i=1;i<=CHARACTER_MAX_INVENTORY;i++)
 	{
 		sprintf(buf,"Item%dID",i);
-		if(!_strcmpi(buf, szPropName))
+		if(!stricmp(buf, szPropName))
 		{
 			uint32 cItems = s_InventoryButeMgr.GetNumItems();
 			ASSERT(cMaxStrings >= cItems);

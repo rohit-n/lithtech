@@ -13,7 +13,7 @@
 #include "Stdafx.h"
 #include "Spawner.h"
 #include "iltserver.h"
-#include "MsgIds.h"
+#include "MsgIDs.h"
 #include "SoundMgr.h"
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
@@ -603,7 +603,7 @@ LTRESULT CSpawnerPlugin::PreHook_PropChanged( const char *szObjName,
 {
 	// Check if the props are our commands and then just send it to the CommandMgr..
 
-	if( !_stricmp( "InitialCommand", szPropName ))
+	if( !stricmp( "InitialCommand", szPropName ))
 	{
 		if( m_CommandMgrPlugin.PreHook_PropChanged( szObjName, 
 													szPropName, 

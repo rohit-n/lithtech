@@ -64,7 +64,7 @@ LTRESULT CDoomsDayDevicePlugin::PreHook_EditStringList(
 {
 	// Handle team...
 
-	if( _stricmp( "Team", szPropName ) == 0 )
+	if( stricmp( "Team", szPropName ) == 0 )
 	{
 		char szTeam[32] = {0};
 

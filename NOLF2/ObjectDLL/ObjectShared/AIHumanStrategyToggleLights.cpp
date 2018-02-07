@@ -457,11 +457,11 @@ void CAIHumanStrategyToggleLights::HandleModelString(ArgList* pArgList)
 	char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
-	if ( !_stricmp(szKey, c_szKeyTurnOn) )
+	if ( !stricmp(szKey, c_szKeyTurnOn) )
 	{
 		strcpy( szCmd, "ON" );
 	}
-	else if( !_stricmp(szKey, c_szKeyTurnOff) )
+	else if( !stricmp(szKey, c_szKeyTurnOff) )
 	{
 		strcpy( szCmd, "OFF" );
 	}

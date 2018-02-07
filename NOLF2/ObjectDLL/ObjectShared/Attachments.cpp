@@ -10,7 +10,7 @@
 #include "iltmodel.h"
 #include "ilttransform.h"
 #include "HHWeaponModel.h"
-#include "prop.h"
+#include "Prop.h"
 #include "Spawner.h"
 #include "Body.h"
 #include "WeaponItems.h"
@@ -261,7 +261,7 @@ void CAttachments::Attach(const char* szAttachmentPosition, const char* szAttach
 		// this map has been in existance)
 		UBER_ASSERT( pAttachmentPosition->GetName()!=NULL, "Attachment Name is null" );
 
-		if ( !_stricmp(szAttachmentPosition, pAttachmentPosition->GetName()) )
+		if ( !stricmp(szAttachmentPosition, pAttachmentPosition->GetName()) )
 		{
 			if ( pAttachmentPosition->HasAttachment() )
 			{
@@ -318,7 +318,7 @@ void CAttachments::Detach(const char* szAttachmentPosition)
 	{
 		CAttachmentPosition* pAttachmentPosition = m_apAttachmentPositions[iAttachmentPosition];
 
-		if ( !_stricmp(szAttachmentPosition, pAttachmentPosition->GetName()) )
+		if ( !stricmp(szAttachmentPosition, pAttachmentPosition->GetName()) )
 		{
 			CAttachment* pAttachment = pAttachmentPosition->GetAttachment();
 			if ( pAttachment )
@@ -367,7 +367,7 @@ CAttachment* CAttachments::GetAttachment(const char* szAttachmentPosition)
 	{
 		CAttachmentPosition* pAttachmentPosition = m_apAttachmentPositions[iAttachmentPosition];
 
-		if ( !_stricmp(szAttachmentPosition, pAttachmentPosition->GetName()) )
+		if ( !stricmp(szAttachmentPosition, pAttachmentPosition->GetName()) )
 		{
 			return pAttachmentPosition->GetAttachment();
 		}
@@ -417,7 +417,7 @@ void CAttachments::CreateAttachment(CAttachmentPosition *pAttachmentPosition)
 
     const char *szAttachmentName = g_pLTServer->GetStringData(pAttachmentPosition->GetAttachmentName());
 
-    if ( !_stricmp(c_szNoAttachment, szAttachmentName) ) return;
+    if ( !stricmp(c_szNoAttachment, szAttachmentName) ) return;
 
     uint8 nWeaponID = WMGR_INVALID_ID;
     uint8 nAmmoID = WMGR_INVALID_ID;
@@ -2090,7 +2090,7 @@ LTRESULT CAttachmentsPlugin::PreHook_EditStringList(const char* szRezPath, const
 
 	}
 
-	if ( !_strcmpi("Attachments", szPropName) )
+	if ( !stricmp("Attachments", szPropName) )
 	{
 		PopulateStringList(aszStrings, pcStrings, cMaxStrings, cMaxStringLength);
 		return LT_OK;
@@ -2136,40 +2136,40 @@ LTRESULT CHumanAttachmentsPlugin::PreHook_EditStringList(const char* szRezPath, 
 		return LT_OK;
 	}
 
-    if ( !_stricmp("LeftHand",      szPropName) ||
-         !_stricmp("RightHand",     szPropName) ||
-         !_stricmp("LeftFoot",      szPropName) ||
-         !_stricmp("RightFoot",     szPropName) ||
-         !_stricmp("Snowmobile",    szPropName) ||
-         !_stricmp("Light",			szPropName) ||
-         !_stricmp("Head",          szPropName) ||
-         !_stricmp("Eyes",          szPropName) ||
-         !_stricmp("Nose",          szPropName) ||
-         !_stricmp("Chin",          szPropName) ||
-         !_stricmp("Back",          szPropName) ||
-         !_stricmp("LeftLowerArm",	szPropName) ||
-         !_stricmp("LeftUpperArm",	szPropName) ||
-         !_stricmp("RightLowerArm",	szPropName) ||
-         !_stricmp("RightUpperArm",	szPropName) ||
-         !_stricmp("LeftLowerLeg",	szPropName) ||
-         !_stricmp("LeftUpperLeg",	szPropName) ||
-         !_stricmp("RightLowerLeg",	szPropName) ||
-         !_stricmp("RightUpperLeg",	szPropName) ||
-         !_stricmp("UpperTorso",	szPropName) ||
-         !_stricmp("Torso",			szPropName) ||
-         !_stricmp("LeftShoulder",	szPropName) ||
-         !_stricmp("RightShoulder",	szPropName) ||
-		 !_stricmp("LeftHand2",		szPropName) ||
-         !_stricmp("RightHand2",	szPropName) ||
-         !_stricmp("LeftLowerArm2",	szPropName) ||
-         !_stricmp("LeftLowerLeg2",	szPropName) ||
-         !_stricmp("LeftUpperArm2",	szPropName) ||
-         !_stricmp("LeftUpperLeg2",	szPropName) ||
-         !_stricmp("RightUpperArm2",	szPropName) ||
-         !_stricmp("RightUpperLeg2",	szPropName) ||
-         !_stricmp("RightLowerArm2",	szPropName) ||
-         !_stricmp("RightLowerLeg2",	szPropName) ||
-         !_stricmp("UpperTorso2",		szPropName) 
+    if ( !stricmp("LeftHand",      szPropName) ||
+         !stricmp("RightHand",     szPropName) ||
+         !stricmp("LeftFoot",      szPropName) ||
+         !stricmp("RightFoot",     szPropName) ||
+         !stricmp("Snowmobile",    szPropName) ||
+         !stricmp("Light",			szPropName) ||
+         !stricmp("Head",          szPropName) ||
+         !stricmp("Eyes",          szPropName) ||
+         !stricmp("Nose",          szPropName) ||
+         !stricmp("Chin",          szPropName) ||
+         !stricmp("Back",          szPropName) ||
+         !stricmp("LeftLowerArm",	szPropName) ||
+         !stricmp("LeftUpperArm",	szPropName) ||
+         !stricmp("RightLowerArm",	szPropName) ||
+         !stricmp("RightUpperArm",	szPropName) ||
+         !stricmp("LeftLowerLeg",	szPropName) ||
+         !stricmp("LeftUpperLeg",	szPropName) ||
+         !stricmp("RightLowerLeg",	szPropName) ||
+         !stricmp("RightUpperLeg",	szPropName) ||
+         !stricmp("UpperTorso",	szPropName) ||
+         !stricmp("Torso",			szPropName) ||
+         !stricmp("LeftShoulder",	szPropName) ||
+         !stricmp("RightShoulder",	szPropName) ||
+		 !stricmp("LeftHand2",		szPropName) ||
+         !stricmp("RightHand2",	szPropName) ||
+         !stricmp("LeftLowerArm2",	szPropName) ||
+         !stricmp("LeftLowerLeg2",	szPropName) ||
+         !stricmp("LeftUpperArm2",	szPropName) ||
+         !stricmp("LeftUpperLeg2",	szPropName) ||
+         !stricmp("RightUpperArm2",	szPropName) ||
+         !stricmp("RightUpperLeg2",	szPropName) ||
+         !stricmp("RightLowerArm2",	szPropName) ||
+         !stricmp("RightLowerLeg2",	szPropName) ||
+         !stricmp("UpperTorso2",		szPropName) 
 		 )
 	{
 		PopulateStringList(aszStrings, pcStrings, cMaxStrings, cMaxStringLength);
