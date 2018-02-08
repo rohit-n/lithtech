@@ -2600,7 +2600,7 @@ void CMD_EVENT_STRUCT::Load(ILTMessage_Read *pMsg)
 //
 // ----------------------------------------------------------------------- //
 
-CMDMGR_CLASS_DESC::CMDMGR_CLASS_DESC( char *pClassName, char *pParentClass, int nNumMsgs, MSG_PRECHECK *pMsgs, uint32 dwFlags )
+CMDMGR_CLASS_DESC::CMDMGR_CLASS_DESC( const char *pClassName, const char *pParentClass, int nNumMsgs, MSG_PRECHECK *pMsgs, uint32 dwFlags )
 {
 	if( nNumMsgs < 1 ) return;
 	

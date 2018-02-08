@@ -17,6 +17,11 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#else
+
+#ifndef MAX_PATH
+#define MAX_PATH 4096
+#endif 
 
 #endif // __LINUX
 
@@ -42,6 +47,8 @@
 #include "ltobjref.h"
 
 #include "Factory.h"
+
+#include "iclientshell.h"
 
 #include "ServerUtilities.h"
 #include "GameServerShell.h"

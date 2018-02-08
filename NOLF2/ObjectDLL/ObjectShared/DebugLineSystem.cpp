@@ -123,7 +123,7 @@ namespace LineSystem
 			  pLineSystem(0) {}
 	};
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__LINUX)
 	typedef std::hash_map< std::string, SystemEntry, ObjectTemplateMgrHashCompare > SystemMap;
 #else
 	typedef std::hash_map< std::string, SystemEntry > SystemMap;

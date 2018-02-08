@@ -233,7 +233,7 @@ class DEditInternal;
 struct PropDef {
 
     PropDef(const char *pName, short type, LTVector valVec,
-        float valFloat, char *valString, unsigned long propFlags)
+        float valFloat, const char *valString, unsigned long propFlags)
     {
         m_PropName = pName;
         m_PropType = type;
@@ -258,7 +258,7 @@ Default vector/color value.
     LTVector m_DefaultValueVector;
 
     float m_DefaultValueFloat;
-    char *m_DefaultValueString;
+    const char *m_DefaultValueString;
 
     unsigned long m_PropFlags;
 

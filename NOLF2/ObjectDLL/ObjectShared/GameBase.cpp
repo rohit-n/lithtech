@@ -65,7 +65,7 @@ static LTBOOL ValidateMsgVisibleSolid( ILTPreInterface *pInterface, ConParse &cp
 	if( CCommandMgrPlugin::s_bShowMsgErrors )
 	{
 		pInterface->CPrint( "ERROR! - ValidateMsgVisibleSolid()" );
-		pInterface->CPrint( "    MSG - %s - 2nd argument '%s' is not a valid bool value.", _strupr(cpMsgParams.m_Args[0]), cpMsgParams.m_Args[1] );
+		pInterface->CPrint( "    MSG - %s - 2nd argument '%s' is not a valid bool value.", strupr(cpMsgParams.m_Args[0]), cpMsgParams.m_Args[1] );
 	}
 	
 	return LTFALSE;

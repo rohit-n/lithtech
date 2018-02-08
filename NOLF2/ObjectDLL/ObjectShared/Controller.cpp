@@ -11,10 +11,10 @@
 // ----------------------------------------------------------------------- //
 
 #include "Stdafx.h"
-#include "controller.h"
+#include "Controller.h"
 #include "iltmessage.h"
-#include "commonutilities.h"
-#include "serverutilities.h"
+#include "CommonUtilities.h"
+#include "ServerUtilities.h"
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
 #include "CommandMgr.h" 

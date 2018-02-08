@@ -58,7 +58,7 @@ void CreateClientWeaponFX(CLIENTWEAPONFX & theStruct)
 				{
 					if (WFX_MARK & pAmmo->pImpactFX->nFlags)
 					{
-                        CreateServerMark((CLIENTWEAPONFX)theStruct);
+                        CreateServerMark(theStruct);
 					}
 				}
 
@@ -68,7 +68,7 @@ void CreateClientWeaponFX(CLIENTWEAPONFX & theStruct)
 				{
 					if (WFX_EXITMARK & pAmmo->pFireFX->nFlags)
 					{
-						CreateServerExitMark((const CLIENTWEAPONFX)theStruct);
+						CreateServerExitMark(theStruct);
 					}
 				}
 			}

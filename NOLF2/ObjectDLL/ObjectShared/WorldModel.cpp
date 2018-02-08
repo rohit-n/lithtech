@@ -115,7 +115,7 @@ static LTBOOL ValidateMsgAttachDetach( ILTPreInterface *pInterface, ConParse &cp
 			{
 				pInterface->ShowDebugWindow( LTTRUE );
 				pInterface->CPrint( "ERROR! - ValidateMsgAttach()" );
-				pInterface->CPrint( "    MSG - %s - Could not find object '%s'!", _strupr(szMsgName), pObjName );
+				pInterface->CPrint( "    MSG - %s - Could not find object '%s'!", strupr(szMsgName), pObjName );
 			}
 			
 			return LTFALSE;

@@ -157,7 +157,7 @@ static LTBOOL ValidateBooleanMsg( ILTPreInterface *pInterface, ConParse &cpMsgPa
 	{
 		pInterface->ShowDebugWindow( LTTRUE );
 		pInterface->CPrint( "ERROR! - ValidateBooleanMsg()" );
-		pInterface->CPrint( "    MSG - %s - '%s' is not a valid boolean value!", _strupr(cpMsgParams.m_Args[0]), cpMsgParams.m_Args[1] );
+		pInterface->CPrint( "    MSG - %s - '%s' is not a valid boolean value!", strupr(cpMsgParams.m_Args[0]), cpMsgParams.m_Args[1] );
 	}
 	
 	return LTFALSE;
@@ -3663,7 +3663,10 @@ void CCharacter::StartDeath()
             LTVector vPos;
 			g_pLTServer->GetObjectPos(m_hObject, &vPos);
 
-			SpawnItem(buf, vPos, LTRotation());
+			{
+				LTRotation tmp_rotation{};
+				SpawnItem(buf, vPos, tmp_rotation);
+			}
 		}
 	}
 }

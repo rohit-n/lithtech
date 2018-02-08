@@ -1,4 +1,9 @@
 project(NOLF2_ObjectDLL)
+cmake_minimum_required(VERSION 3.1)
+
+include(FindPkgConfig)
+
+pkg_check_modules(SDL2 REQUIRED sdl2)
 
 add_library(${PROJECT_NAME} SHARED
 	../../Shared/ActivateTypeMgr.cpp
@@ -347,6 +352,7 @@ endif(LINUX)
 include_directories(./
         ../ObjectShared
 	../../../sdk/inc
+	${SDL2_INCLUDE_DIRS}
 	../../../libs/MFCStub
 	../../../libs/stdlith
 	../../../libs/ButeMgr
@@ -365,4 +371,5 @@ target_link_libraries(${PROJECT_NAME}
 	LIB_MFCStub
 	LIB_RegMgr
 	LIB_StdLith
+	${SDL2_LIBRARIES}
 	ServerDir)
