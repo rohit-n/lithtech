@@ -103,7 +103,7 @@ void CRelationMgr::Save(ILTMessage_Write *pMsg)
 	SAVE_INT( (int32)(m_listCollectives.size()) );
 	std::for_each( m_listCollectives.begin(),
 		m_listCollectives.end(),
-#if _MSC_VER >= 1900
+#if _MSC_VER >= 1900 || defined(__LINUX)
 		std::bind2nd( std::mem_fun(&CCollectiveRelationMgr::Save), pMsg ));
 #else
 		std::bind2nd( std::mem_fun1(&CCollectiveRelationMgr::Save), pMsg ));

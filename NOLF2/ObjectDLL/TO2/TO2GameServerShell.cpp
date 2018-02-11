@@ -10,14 +10,14 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "Stdafx.h"
+#include "StdAfx.h"
 #include "TO2GameServerShell.h"
 #include "GameStartPoint.h"
 #include "ServerMissionMgr.h"
 #include "IServerDir.h"
 #include "PlayerObj.h"
-#include "msgids.h"
-#include "iserverdir_titan.h"
+#include "MsgIDs.h"
+#include "IServerDir_Titan.h"
 
 // Refresh every 5 seconds
 const uint32 k_nRepublishDelay = 5000;
@@ -131,7 +131,7 @@ LTRESULT CTO2GameServerShell::OnServerInitialized()
 	startupInfo.m_sGameSpySecretKey += "o";
 	startupInfo.m_sGameSpySecretKey += "6";
 	startupInfo.m_sGameSpySecretKey += "x";
-	cMsg.Writeuint32(( uint32 )&startupInfo );
+	cMsg.Writeuintptr(( uintptr_t )&startupInfo );
 	pServerDir->SetStartupInfo( *cMsg.Read( ));
 
 	return nResult;
@@ -201,7 +201,7 @@ void CTO2GameServerShell::Update(LTFLOAT timeElapsed)
 
 
 	// Publish the server if we've waited long enough since the last directory update
-	uint32 nCurTime = (uint32)GetTickCount();
+	uint32 nCurTime = (uint32)SDL_GetTicks();
 	if ((m_nLastPublishTime == 0) || 
 		((nCurTime - m_nLastPublishTime) > k_nRepublishDelay))
 	{
@@ -223,9 +223,12 @@ void CTO2GameServerShell::Update(LTFLOAT timeElapsed)
 		cMsg.WriteString(GetHostName());
 		GetServerDir()->SetActivePeerInfo(IServerDirectory::ePeerInfo_Name, *cMsg.Read());
 
+#ifndef __LINUX
 		char fname[_MAX_FNAME] = "";
 		_splitpath( GetCurLevel(), NULL, NULL, fname, NULL );
-
+#else
+		const char *fname = split(std::string{GetCurLevel()}, '/').back().c_str();
+#endif
 		// Update the summary info
 		cMsg.WriteString(g_pVersionMgr->GetBuild());
 		cMsg.WriteString( fname );

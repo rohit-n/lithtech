@@ -467,5 +467,8 @@ class CGameServerShell : public IServerShellStub
 
 extern class CGameServerShell* g_pGameServerShell;
 
+#ifndef _MAX_FNAME
+#define _MAX_FNAME 256
+#endif 
 
 #endif  // __GAME_SERVER_SHELL_H__

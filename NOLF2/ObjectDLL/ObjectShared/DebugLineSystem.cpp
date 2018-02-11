@@ -16,13 +16,18 @@
 #include "DebugLine.h"
 #include "MsgIDs.h"
 #include "ltobjref.h"
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 
 #	include "ObjectTemplateMgr.h"
 #endif // VC7
 
 #pragma warning( disable : 4786 )
 #include <hash_map>
 #include <string>
+#include <sstream>
+
+#ifdef __LINUX
+#include <map>
+#endif
 
 LINKFROM_MODULE( DebugLineSystem );
 
@@ -123,8 +128,10 @@ namespace LineSystem
 			  pLineSystem(0) {}
 	};
 
-#if _MSC_VER >= 1300 || defined(__LINUX)
+#if _MSC_VER >= 1300
 	typedef std::hash_map< std::string, SystemEntry, ObjectTemplateMgrHashCompare > SystemMap;
+#elif defined(__LINUX)
+	typedef std::map< std::string, SystemEntry > SystemMap;    
 #else
 	typedef std::hash_map< std::string, SystemEntry > SystemMap;
 #endif // VC7
@@ -499,9 +506,10 @@ namespace LineSystem
 
 	DebugLineSystem & GetSystem(const void * pOwner, const std::string & name)
 	{
-		char buffer[20];
+		std::stringstream ss{};
+		ss << reinterpret_cast<uintptr_t>(pOwner);
 
-		return GetSystem( std::string(_ltoa(reinterpret_cast<long>(pOwner),buffer,10)) + name);
+		return GetSystem( ss.str() + name);
 	}
 
 	void RemoveSystem( const std::string& name )
@@ -519,9 +527,10 @@ namespace LineSystem
 
 	void RemoveSystem( const void * pOwner, const std::string & name )
 	{
-		char buffer[20];
+		std::stringstream ss{};
+		ss << reinterpret_cast<uintptr_t>(pOwner);
 
-		RemoveSystem( std::string(_ltoa(reinterpret_cast<long>(pOwner),buffer,10)) + name);
+		RemoveSystem(ss.str() + name);
 	}
 
 	void RemoveAll()

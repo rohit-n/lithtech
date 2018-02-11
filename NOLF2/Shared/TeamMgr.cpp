@@ -14,6 +14,9 @@
 #include "TeamMgr.h"
 #include "MsgIDs.h"
 
+#ifndef _UI8_MAX
+#define _UI8_MAX 255
+#endif
 // ----------------------------------------------------------------------- //
 //
 // CTeam - class to manage a team's data

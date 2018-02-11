@@ -4911,7 +4911,7 @@ char* CPlayerObj::GetDamageSound(DamageType eType)
 	if( !pInfo )
 		return NULL;
 
-	if( pInfo->saPlayerDamageSounds.size( ) == 0 )
+	if( pInfo->saPlayerDamageSounds.GetSize( ) == 0 )
 	{
 		char const* PainSounds[] =  { "pain01.wav", "pain02.wav", "pain03.wav", "pain04.wav", "pain05.wav" };
 
@@ -4920,8 +4920,8 @@ char* CPlayerObj::GetDamageSound(DamageType eType)
 	}
 	else
 	{
-		uint32 nRandSelection = GetRandom( 0, (int)(pInfo->saPlayerDamageSounds.size()) - 1 );
-		char const* pszDamageSound = pInfo->saPlayerDamageSounds[nRandSelection].c_str( );
+		uint32 nRandSelection = GetRandom( 0, (int)(pInfo->saPlayerDamageSounds.GetSize()) - 1 );
+		char const* pszDamageSound = pInfo->saPlayerDamageSounds[nRandSelection].GetBuffer( );
 		strcat( s_FileBuffer, pszDamageSound );
 	}
 

@@ -141,7 +141,7 @@ inline float TODHoursToSeconds(float time)
 ClientData::ClientData( )
 {
 	m_hClient = NULL;
-	m_nLastClientUpdateTime = GetTickCount( );
+	m_nLastClientUpdateTime = SDL_GetTicks( );
 }
 
 
@@ -494,7 +494,7 @@ void CGameServerShell::OnAddClient(HCLIENT hClient)
 	// Add this client to our list of clients.
 	ClientData* pClientData = debug_new( ClientData );
 	pClientData->m_hClient = hClient;
-	pClientData->m_nLastClientUpdateTime = GetTickCount( );
+	pClientData->m_nLastClientUpdateTime = SDL_GetTicks( );
 	m_ClientDataList.push_back( pClientData );
 
 	// Check if the client is banned.
@@ -619,7 +619,7 @@ static void CreateClientName( HCLIENT hClient, char const* pszClientGivenPlayerN
 	uint16 nPort;
 	g_pLTServer->GetClientAddr( hClient, aTcpIp, &nPort );
 
-	_snprintf( pszClientName, nSize, "%d.%d.%d.%d:%d#%s", aTcpIp[0], aTcpIp[1], aTcpIp[2], aTcpIp[3], nPort,
+	snprintf( pszClientName, nSize, "%d.%d.%d.%d:%d#%s", aTcpIp[0], aTcpIp[1], aTcpIp[2], aTcpIp[3], nPort,
 		pszClientGivenPlayerName );
 	pszClientName[nSize-1] = 0;
 }
@@ -1258,7 +1258,7 @@ void CGameServerShell::OnMessage(HCLIENT hSender, ILTMessage_Read *pMsg)
 		ClientData* pClientData = GetClientData( hSender );
 		if( pClientData )
 		{
-			pClientData->m_nLastClientUpdateTime = GetTickCount( );
+			pClientData->m_nLastClientUpdateTime = SDL_GetTicks( );
 		}
 	}
 
@@ -2062,7 +2062,7 @@ void CGameServerShell::HandleConsoleTrigger (HCLIENT hSender, ILTMessage_Read *p
 
 	// Special case if we're supposed to list objects of a certain type...
 
-	if (_strnicmp(pCommand, "LIST", 4) == 0)
+	if (strnicmp(pCommand, "LIST", 4) == 0)
 	{
 		ConParse parse;
 		parse.Init(pCommand);
@@ -4080,7 +4080,7 @@ void CGameServerShell::UpdateMultiplayer()
 	// mean there is a bug in the networking code that refuses to kick clients not responding.
 	// Because this bug is rare, it's difficult to track in the networking.  This is just a bit
 	// of fullproofing.  The autoboottime is in seconds, so we need to convert it to ms.
-	uint32 nCurrentTime = GetTickCount( );
+	uint32 nCurrentTime = SDL_GetTicks( );
 	uint32 nAutoBootTime = ( uint32 )( GetConsoleFloat( "AutoBootTime", 5.0f * 60.0f ) * 1000.0f + 0.5f );
 	ClientDataList::const_iterator iter = m_ClientDataList.begin( );
 	for( ; iter != m_ClientDataList.end( ); iter++ )

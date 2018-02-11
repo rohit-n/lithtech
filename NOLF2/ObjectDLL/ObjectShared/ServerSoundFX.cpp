@@ -17,7 +17,7 @@
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
 #include "ServerSoundMgr.h"
-#include "SoundbuteMgr.h"
+#include "SoundButeMgr.h"
 
 LINKFROM_MODULE( ServerSoundFx );
 

@@ -18,6 +18,15 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
+#else
+
+#define HMODULE void*
+#define UINT uintptr_t
+// from regmgr
+#include <vector>
+#include <string>
+template<typename B>
+std::vector<std::basic_string<B>> split(const std::basic_string<B> &src, B sep);
 
 #endif
 #include <stdio.h>

@@ -12,7 +12,7 @@
 
 #include "Stdafx.h"
 
-#include "lightgroup.h"
+#include "LightGroup.h"
 
 #include "MsgIDs.h"
 #include "ObjectMsgs.h"

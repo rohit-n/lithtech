@@ -22,7 +22,9 @@
 #include "iltmessage.h"
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
+#ifndef __LINUX
 #include <IO.h>
+#endif
 #include "CommandMgr.h"
 
 //
@@ -449,7 +451,7 @@ LTRESULT SpecialFXPlugin::PopulateStringList( const char *szRezPath,
 {
 	// always make the first option an invalid FxName
 	strcpy(aszStrings[(*pcStrings)++], "<none>" );
-
+#ifndef __LINUX   // need filesystem operations
 	char	szFile[_MAX_FNAME];
 	
 	_finddata_t fcfFile;
@@ -479,7 +481,7 @@ LTRESULT SpecialFXPlugin::PopulateStringList( const char *szRezPath,
 		if( !ParseFCF( szFile, aszStrings, pcStrings, cMaxStrings, cMaxStringLength ) )
 			return LT_UNSUPPORTED;
 	}
-	
+#endif
 	return LT_OK;
 }
 

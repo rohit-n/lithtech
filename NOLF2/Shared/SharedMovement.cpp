@@ -10,7 +10,7 @@
 //
 // ----------------------------------------------------------------------- //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SharedMovement.h"
 
 #if !defined(_CLIENTBUILD) || defined(__PSX2)
@@ -40,7 +40,7 @@ PlayerPhysicsModel GetPlayerPhysicsModelFromPropertyName(char* pName)
 
 	for (int i = 0; i < PPM_NUM_MODELS; i++)
 	{
-		if (_stricmp(aPPMStrings[i], pName) == 0)
+		if (stricmp(aPPMStrings[i], pName) == 0)
 		{
 			return (PlayerPhysicsModel)i;
 		}

@@ -249,7 +249,7 @@ void RadarObject::ReadProps( ObjectCreateStruct *pOCS )
 				// The team string should be TeamN, when N is the team id.
 				char const szTeam[] = "Team";
 				int nLen = (int)strlen( szTeam );
-				if( !_strnicmp( gProp.m_String, szTeam, nLen ))
+				if( !strnicmp( gProp.m_String, szTeam, nLen ))
 				{
 					uint32 nTeamId = atoi( &gProp.m_String[ nLen ] );
 					if( nTeamId < MAX_TEAMS )

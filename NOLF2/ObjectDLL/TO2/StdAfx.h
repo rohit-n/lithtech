@@ -23,6 +23,15 @@
 #define MAX_PATH 4096
 #endif 
 
+#define HMODULE void*
+#define UINT uintptr_t
+
+// from regmgr
+#include <vector>
+#include <string>
+template<typename B>
+std::vector<std::basic_string<B>> split(const std::basic_string<B> &src, B sep);
+
 #endif // __LINUX
 
 #include <stdio.h>

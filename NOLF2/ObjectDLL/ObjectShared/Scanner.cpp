@@ -14,7 +14,7 @@
 #include "Scanner.h"
 #include "iltserver.h"
 #include "ServerUtilities.h"
-#include "gameservershell.h"
+#include "GameServerShell.h"
 #include "SoundMgr.h"
 #include "PlayerObj.h"
 #include "CharacterMgr.h"

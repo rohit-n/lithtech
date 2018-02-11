@@ -245,7 +245,7 @@ void DisplayTimer::ReadProp(ObjectCreateStruct *)
 				// The team string should be TeamN, when N is the team id.
 				char const szTeam[] = "Team";
 				int nLen = (int)strlen( szTeam );
-				if( !_strnicmp( genProp.m_String, szTeam, nLen ))
+				if( !strnicmp( genProp.m_String, szTeam, nLen ))
 				{
 					uint32 nTeamId = atoi( &genProp.m_String[ nLen ] );
 					if( nTeamId < MAX_TEAMS )

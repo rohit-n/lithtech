@@ -3,11 +3,13 @@
 
 #ifndef __OBJECTTEMPLATEMGR_H__
 #define __OBJECTTEMPLATEMGR_H__
-
+#ifndef __LINUX
 #include <hash_map>
+#else
+#include <map>
+#endif
 
-
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 || defined(__LINUX)
 
 class ObjectTemplateMgrHashCompare
 {
@@ -79,6 +81,10 @@ protected:
 #if _MSC_VER == 1300
 
 	typedef std::hash_map< std::string, ObjectCreateStruct, ObjectTemplateMgrHashCompare > TTemplateMap;
+
+#elif defined(__LINUX)
+
+	typedef std::map< std::string, ObjectCreateStruct, ObjectTemplateMgrHashCompare > TTemplateMap;
 
 #elif _MSC_VER > 1300
 

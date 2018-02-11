@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------- //
 
 #include "Stdafx.h"
-#include "weapon.h"
+#include "Weapon.h"
 #include "ServerUtilities.h"
 #include "iltserver.h"
 #include "ltengineobjects.h"

@@ -38,7 +38,7 @@ bool Sparam_Get(char* sDest, const char* sSource, const char* sId)
 	// Scan for the ID...
 
 	char sRealId[256];
-	wsprintf(sRealId, "[%s:", sId);
+	sprintf(sRealId, "[%s:", sId);
 
 	const char* sStart = strstr(sSource, sRealId);
 	if (!sStart) return(false);
@@ -122,7 +122,7 @@ bool Sparam_Add(char* sSource, const char* sId, const char* sParam)
 bool Sparam_Add(char* sSource, const char* sId, int nParam)
 {
 	char sTmp[256];
-	wsprintf(sTmp, "%i", nParam);
+	sprintf(sTmp, "%i", nParam);
 
 	return(Sparam_Add(sSource, sId, sTmp));
 }

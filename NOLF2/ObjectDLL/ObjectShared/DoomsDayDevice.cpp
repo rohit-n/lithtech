@@ -294,7 +294,7 @@ bool DoomsDayDevice::ReadProp( ObjectCreateStruct* pStruct )
 				// The team string should be TeamN, when N is the team id.
 				char const szTeam[] = "Team";
 				int nLen = (int)strlen( szTeam );
-				if( !_strnicmp( genProp.m_String, szTeam, nLen ))
+				if( !strnicmp( genProp.m_String, szTeam, nLen ))
 				{
 					uint32 nTeamId = atoi( &genProp.m_String[ nLen ] );
 					if( nTeamId < MAX_TEAMS )
@@ -359,7 +359,11 @@ void DoomsDayDevice::InitialUpdate( )
 			char *pszSocket = strtok( NULL, "\0" );
 
 			HATTACHMENT hAttachment;
-			g_pLTServer->CreateAttachment( m_hObject, pObj->m_hObject, pszSocket, &LTVector(0,0,0), &LTRotation(), &hAttachment );
+			{
+				LTVector vec{0,0,0};
+				LTRotation rot{};
+				g_pLTServer->CreateAttachment( m_hObject, pObj->m_hObject, pszSocket, &vec, &rot, &hAttachment );
+			}
 	
 		}
 	}

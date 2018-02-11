@@ -1280,7 +1280,7 @@ bool WorldModel::CreateServerMark(CLIENTWEAPONFX & theStruct)
 		// Since this mark is already attached to us, remove the attachment
 		DetachObject( pMoveMark->m_hObject );
 
-		if( !AttachServerMark( *pMoveMark, (CLIENTWEAPONFX)theStruct))
+		if( !AttachServerMark( *pMoveMark, theStruct))
 		{
 			g_pLTServer->RemoveObject( pMoveMark->m_hObject );
 			RemoveMarkFromList( pMoveMark->m_hObject );
@@ -1330,7 +1330,7 @@ bool WorldModel::CreateServerMark(CLIENTWEAPONFX & theStruct)
         g_pLTServer->ScaleObject(pMark->m_hObject, &vScale);
 	}
 
-	if( !AttachServerMark( *pMark, (CLIENTWEAPONFX)theStruct))
+	if( !AttachServerMark( *pMark, theStruct))
 	{
 		g_pLTServer->RemoveObject( pMark->m_hObject );
 		pMark = NULL;

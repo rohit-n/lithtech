@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------- //
 
 #include "Stdafx.h"
-#include "key.h"
+#include "Key.h"
 
 LINKFROM_MODULE( Key );
 

@@ -14,7 +14,7 @@
 #include "Stdafx.h"
 #include "WorldProperties.h"
 #include "ltengineobjects.h"
-#include "gameservershell.h"
+#include "GameServerShell.h"
 #include "ObjectMsgs.h"
 #include "ParsedMsg.h"
 #include "MsgIDs.h"

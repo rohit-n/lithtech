@@ -13,6 +13,14 @@
 #ifndef __SERVERSAVELOADMGR_H__
 #define __SERVERSAVELOADMGR_H__
 
+#ifdef __LINUX
+
+#ifndef MAX_PATH
+#define MAX_PATH 4096
+#endif
+
+#endif
+
 #include "SaveLoadMgr.h"
 #include "PlayerTracker.h"
 

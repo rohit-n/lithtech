@@ -13,8 +13,8 @@
 #include "Stdafx.h"
 #include "Group.h"
 #include "iltmessage.h"
-#include "commonutilities.h"
-#include "serverutilities.h"
+#include "CommonUtilities.h"
+#include "ServerUtilities.h"
 #include "ParsedMsg.h"
 
 LINKFROM_MODULE( Group );

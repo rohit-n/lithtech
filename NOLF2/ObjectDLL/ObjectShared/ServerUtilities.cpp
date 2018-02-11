@@ -23,7 +23,7 @@
 #include "UberAssert.h"
 #include "GameServerShell.h"
 #include "PlayerObj.h"
-#include "FXDefs.h"
+#include "FxDefs.h"
 #include "GameBaseLite.h"
 #include "ParsedMsg.h"
 
@@ -318,7 +318,7 @@ void ObjectCPrint(HOBJECT hObject, const char *pMsg, ...)
 	const int msg_length = sizeof(msg);
 
 	va_start(marker, pMsg);
-	_vsnprintf(msg, msg_length, pMsg, marker);
+	vsnprintf(msg, msg_length, pMsg, marker);
 	va_end(marker);
 	msg[msg_length] = '\0';
 
@@ -343,7 +343,7 @@ void ObjectCPrint(const char *pName, const char *pMsg, ...)
 	const int msg_length = sizeof(msg);
 
 	va_start(marker, pMsg);
-	_vsnprintf(msg, msg_length, pMsg, marker);
+	vsnprintf(msg, msg_length, pMsg, marker);
 	va_end(marker);
 	msg[msg_length] = '\0';
 
@@ -1053,7 +1053,7 @@ uint8 TeamStringToTeamId( char const* pszTeamString )
 	static char const szTeam[] = "Team";
 	static int nLen = (int)strlen( szTeam );
 	uint32 nTeamId = INVALID_TEAM;
-	if( !_strnicmp( pszTeamString, szTeam, nLen ))
+	if( !strnicmp( pszTeamString, szTeam, nLen ))
 	{
 		nTeamId = atoi( &pszTeamString[ nLen ] );
 		if( nTeamId >= MAX_TEAMS )
@@ -1291,7 +1291,7 @@ void WriteConsoleString(char* sKey, char* sValue)
     if (g_pLTServer)
 	{
 		char sTemp[256];
-        wsprintf(sTemp, "+%s \"%s\"", sKey, sValue);
+        sprintf(sTemp, "+%s \"%s\"", sKey, sValue);
         g_pLTServer->RunGameConString(sTemp);
 	}
 }
@@ -1301,7 +1301,7 @@ void WriteConsoleInt(char* sKey, int nValue)
     if (g_pLTServer)
 	{
 		char sTemp[256];
-		wsprintf(sTemp, "+%s %i", sKey, nValue);
+		sprintf(sTemp, "+%s %i", sKey, nValue);
         g_pLTServer->RunGameConString(sTemp);
 	}
 }
