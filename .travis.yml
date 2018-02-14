@@ -9,7 +9,8 @@ install: true
 script:
   - cd Build
   - cmake ../
-  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make -j$(lscpu | awk '/CPU\(/ {print $NF}' | head -1) $part >> make.log 2>&1 && echo Pass $part || echo Fail $part; done | tee -a build.log
+  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part 2>&1 && echo Pass $part >> build.log || echo Fail $part >>build.log; done | tee -a make.log
+  - cat build.log
   - "cat make.log build.log > make.build.log"
   - "python3 ../tests/validate.py make.build.log"
   - OUT/testRegMgr
