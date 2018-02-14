@@ -586,7 +586,7 @@ LTRESULT CLTClient::OpenFile(const char *pFilename, ILTStream **pStream)
 	}
 
 	FileRef ref;
-	ref.m_FileType = FILE_ANYFILE;
+	ref.m_FileType = FILE_ANYFILE; // already an anyfile by default
 	ref.m_pFilename = pFilename;
 	*pStream = client_file_mgr->OpenFile(&ref);
 	if (*pStream)

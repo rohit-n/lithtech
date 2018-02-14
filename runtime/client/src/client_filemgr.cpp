@@ -491,12 +491,20 @@ ILTStream *CClientFileMgr::OpenFileIdentifier(FileIdentifier *pFile) {
     return df_Open(pFile->m_hFileTree, pFile->m_Filename, 0);
 }
 
+static inline void FilePath2Unix(char *path)
+{
+    char *x;
+    while( (x = strchr(path,'\\')) != nullptr) 
+        *x = '/';
+}
+
 
 ILTStream *CClientFileMgr::OpenFile(FileRef *pDesc) {
     ServerFile *pFile;
     ClientFileTree *pTree;
     LTLink *pCur;
     ILTStream *pStream;
+    char linuxFilePath[MAX_PATH];    
 
     if (pDesc->m_FileType == FILE_SERVERFILE) {
         // Just get a ServerFile from it.
@@ -509,11 +517,14 @@ ILTStream *CClientFileMgr::OpenFile(FileRef *pDesc) {
         }
     }
     else {
+        strncpy(linuxFilePath, pDesc->m_pFilename, MAX_PATH);
+        FilePath2Unix(linuxFilePath);
+
         // Look in the main file trees.
         for (pCur=m_FileTrees.m_pNext; pCur != &m_FileTrees; pCur=pCur->m_pNext) {
             pTree = (ClientFileTree*)pCur->m_pData;
             
-            pStream = df_Open(pTree->m_hFileTree, pDesc->m_pFilename, 0);
+            pStream = df_Open(pTree->m_hFileTree, linuxFilePath, 0);
             if (pStream) {
                 return pStream;
             }
@@ -521,7 +532,7 @@ ILTStream *CClientFileMgr::OpenFile(FileRef *pDesc) {
         
         // Possibly check the cache tree.
         if (pDesc->m_FileType == FILE_ANYFILE) {
-            pStream = df_Open(m_hCacheTree, pDesc->m_pFilename, 0);
+            pStream = df_Open(m_hCacheTree, linuxFilePath, 0);
             if (pStream) {
                 return pStream;
             }

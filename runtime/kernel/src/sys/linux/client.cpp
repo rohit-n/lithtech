@@ -217,7 +217,7 @@ int RunClientApp()
 
     if (pGlob->m_ExitMessage[0]) {
         r_TermRender(2, true);
-        std::cout << pGlob->m_ExitMessage[0] << '\n';
+        std::cout << pGlob->m_ExitMessage << '\n';
     }
     pGlob->m_bProcessWindowMessages = LTFALSE;
 
