@@ -141,8 +141,12 @@ static LTMatrix GetCameraTransform(HOBJECT hCamera)
 	vPos.z = -vPos.z;
 
     LTMatrix mTran, mRot, mFull;
-
-	mRot.SetBasisVectors((LTVector*)&rRot.Right(), (LTVector*)&rRot.Up(), (LTVector*)&rRot.Forward());
+	{
+		auto right{rRot.Right()};
+		auto up{rRot.Up()};
+		auto forward{rRot.Forward()};
+		mRot.SetBasisVectors(&right, &up, &forward);
+	}
 	MatTranspose3x3(&mRot);
 
 	Mat_Identity(&mTran);
@@ -5252,7 +5256,7 @@ void CInterfaceMgr::AddInterfaceSFX(CSpecialFX* pSFX, ISFXType eType)
 
 	if (GetObjectType(hObj)== OT_MODEL)
 	{
-		char* pAniName = LTNULL;
+		const char* pAniName = LTNULL;
 		switch (eType)
 		{
 			case IFX_NORMAL :
@@ -5668,7 +5672,7 @@ void CInterfaceMgr::NextMovie(bool bEndMovies /*=false*/)
 		m_hMovie = LTNULL;
 	}
 
-	char* pMovie = (bEndMovies ? LTNULL : GetCurrentMovie());
+	const char* pMovie = (bEndMovies ? LTNULL : GetCurrentMovie());
 
 	if (!pMovie || pVideoMgr->StartOnScreenVideo(pMovie, PLAYBACK_FULLSCREEN, m_hMovie) != LT_OK)
 	{
@@ -5689,9 +5693,9 @@ void CInterfaceMgr::NextMovie(bool bEndMovies /*=false*/)
 //
 // --------------------------------------------------------------------------- //
 
-char* CInterfaceMgr::GetCurrentMovie()
+const char* CInterfaceMgr::GetCurrentMovie()
 {
-	char* pMovie = LTNULL;
+	const char* pMovie = LTNULL;
 
 	switch (m_nCurMovie)
 	{

@@ -132,7 +132,7 @@ void CHUDWeapons::Update()
 
 void CHUDWeapons::UpdateLayout()
 {
-	char *pTag = "HUDWeapons";
+	const char *pTag = "HUDWeapons";
 
 	uint8 nFont = (uint8)g_pLayoutMgr->GetInt(pTag,"Font");
 	m_pFont = g_pInterfaceResMgr->GetFont(nFont);

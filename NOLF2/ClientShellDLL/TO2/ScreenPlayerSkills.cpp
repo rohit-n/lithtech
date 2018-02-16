@@ -105,7 +105,7 @@ LTBOOL CScreenPlayerSkills::Build()
 
 			pos.x += (kColumn + kSlider + 5);
 
-			m_pLabel[i] = AddCycle(" ",NULL,20,&s_nLevels[i],pos,LTTRUE);
+			m_pLabel[i] = AddCycle(" ",LTNULL,20,&s_nLevels[i],pos,LTTRUE);
 			for (int j = 0; j < kNumSkillLevels; j++)
 			{
 				eSkillLevel nxt = (eSkillLevel)(j+1);

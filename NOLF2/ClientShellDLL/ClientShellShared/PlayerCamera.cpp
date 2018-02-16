@@ -855,9 +855,10 @@ bool CPlayerCamera::CreateCameraCollisionObject()
 	m_hCollisionObject = g_pLTClient->CreateObject( &ocs );
 	if( !m_hCollisionObject )
 		return false;
-
-	g_pPhysicsLT->SetObjectDims( m_hCollisionObject, &LTVector( fScale, fScale, fScale ), 0 );
-
+	{
+		LTVector tVec{fScale, fScale, fScale};
+		g_pPhysicsLT->SetObjectDims( m_hCollisionObject, &tVec, 0 );
+	}
 	return true;
 }
 

@@ -47,7 +47,7 @@ LTBOOL CScreenJoystick::Build()
 	uint8 nLarge = g_pLayoutMgr->GetScreenCustomInt(SCREEN_ID_JOYSTICK,"HeaderFontSize");
 
 	
-	CLTGUICycleCtrl *pCtrl = AddCycle(IDS_JOYSTICK_AXIS, NULL, kGap, NULL, kDefaultPos, LTTRUE );
+	CLTGUICycleCtrl *pCtrl = AddCycle(IDS_JOYSTICK_AXIS, LTNULL, kGap, NULL, kDefaultPos, LTTRUE );
 	pCtrl->AddString(LoadTempString(IDS_JOYSTICK_ACTION));
 	pCtrl->SetFont(NULL,nLarge);
 	m_nextPos.y += 8;

@@ -27,13 +27,13 @@ namespace
 	{
 		CScreenPlayer *pThisScreen = (CScreenPlayer *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_PLAYER);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_NAME);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_NAME);
 	};
 	void EditBandwidthCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenPlayer *pThisScreen = (CScreenPlayer *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_PLAYER);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_BANDWIDTH);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_BANDWIDTH);
 	};
 
 	#define INVALID_ANI			((HMODELANIM)-1)
@@ -137,7 +137,7 @@ LTBOOL CScreenPlayer::Build()
 	return CBaseScreen::Build();
 }
 
-uint32 CScreenPlayer::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenPlayer::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	if (dwCommand == CMD_OK)
 	{
@@ -216,7 +216,7 @@ void CScreenPlayer::OnFocus(LTBOOL bFocus)
 			for (n = 0; n < g_pModelButeMgr->GetNumCPModels(); n++)
 			{
 				ModelId id = g_pModelButeMgr->GetCPModel(n);
-				HMODELDB dummy = NULL;
+				HMODELDB dummy = LTNULL;
 				g_pILTModelClient->CacheModelDB(g_pModelButeMgr->GetModelFilename(id),dummy);
 			}
 			m_nCurrentModel = pProfile->m_nCPPlayerModel;
@@ -228,7 +228,7 @@ void CScreenPlayer::OnFocus(LTBOOL bFocus)
 			for (n = 0; n < g_pModelButeMgr->GetNumDMModels(); n++)
 			{
 				ModelId id = g_pModelButeMgr->GetDMModel(n);
-				HMODELDB dummy = NULL;
+				HMODELDB dummy = LTNULL;
 				g_pILTModelClient->CacheModelDB(g_pModelButeMgr->GetModelFilename(id),dummy);
 			}
 			m_nCurrentModel = pProfile->m_nDMPlayerModel;
@@ -561,13 +561,13 @@ void CScreenPlayer::UpdateBandwidth()
 	}
 }
 
-void CScreenPlayer::HandleCallback(uint32 dwParam1, uint32 dwParam2)
+void CScreenPlayer::HandleCallback(uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch(dwParam2)
 	{
 	case CMD_EDIT_BANDWIDTH:
 		{
-			char *pszBandwidth = (char *)dwParam1;
+			const char *pszBandwidth = (const char *)dwParam1;
 			uint32 nBandwidth = (uint32)atoi(pszBandwidth);
 			if ( IsValidBandwidth(nBandwidth) )
 			{
@@ -588,7 +588,7 @@ void CScreenPlayer::HandleCallback(uint32 dwParam1, uint32 dwParam2)
 		break;
 	case CMD_EDIT_NAME:
 		{
-			char* pName = ((char *)dwParam1);
+			const char* pName = ((const char *)dwParam1);
 			if (pName && strlen(pName))
 			{
 				m_sPlayerName = pName;

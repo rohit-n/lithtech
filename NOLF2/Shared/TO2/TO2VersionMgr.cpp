@@ -64,15 +64,16 @@ CVersionMgr* g_pVersionMgr = NULL;
 
 
 // Creates a build guid based on the game guid.
-#define MAKEBUILDGUID( _a, _b, _c, _d0, _d1, _d2, _d3, _d4, _d5, _d6, _d7 )										\
-static const LTGUID s_BuildGuid =																				\
-{																												\
-	(_a) + GAMEGUID.guid.a, (_b) + GAMEGUID.guid.b, (_c) + GAMEGUID.guid.c,										\
-	{																											\
-		(_d0) + GAMEGUID.guid.d[0], (_d1) + GAMEGUID.guid.d[1], (_d2) + GAMEGUID.guid.d[2], (_d3) + GAMEGUID.guid.d[3],	\
-		(_d4) + GAMEGUID.guid.d[4], (_d5) + GAMEGUID.guid.d[5], (_d6) + GAMEGUID.guid.d[6], (_d7) + GAMEGUID.guid.d[7]	\
-	}																										\
-};																											\
+#define MAKEBUILDGUID( _a, _b, _c, _d0, _d1, _d2, _d3, _d4, _d5, _d6, _d7 )												\
+static const LTGUID s_BuildGuid =																						\
+{																														\
+	(_a) + GAMEGUID.guid.a, (uint16)((_b) + GAMEGUID.guid.b), (uint16)((_c) + GAMEGUID.guid.c),							\
+	{																													\
+        (uint8)((_d0) + GAMEGUID.guid.d[0]), (uint8)((_d1) + GAMEGUID.guid.d[1]), (uint8)((_d2) + GAMEGUID.guid.d[2]),	\
+        (uint8)((_d3) + GAMEGUID.guid.d[3]), (uint8)((_d4) + GAMEGUID.guid.d[4]), (uint8)((_d5) + GAMEGUID.guid.d[5]),	\
+		(uint8)((_d6) + GAMEGUID.guid.d[6]), (uint8)((_d7) + GAMEGUID.guid.d[7])                                    	\
+	}                                                                                                           		\
+};                                                                                                              		\
 
 
 #ifdef _TO2DEMO

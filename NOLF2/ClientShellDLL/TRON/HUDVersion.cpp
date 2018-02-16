@@ -100,7 +100,7 @@ void CHUDVersion::Update()
 	else
 	{
 /*
-	char *pTag = "ChatInput";
+	const char *pTag = "ChatInput";
 	m_BasePos = g_pLayoutMgr->GetPoint(pTag,"BasePos");
 	uint8 nFont = (uint8)g_pLayoutMgr->GetInt(pTag,"Font");
 	CUIFont* pFont	= g_pInterfaceResMgr->GetFont(nFont);
@@ -135,7 +135,7 @@ void CHUDVersion::UpdateLayout()
 //	m_vColor		= g_pLayoutMgr->GetVersionColor(nCurrentLayout);
 
 /*
-	char *pTag = "ChatInput";
+	const char *pTag = "ChatInput";
 	m_BasePos = g_pLayoutMgr->GetPoint(pTag,"BasePos");
 	uint8 nFont = (uint8)g_pLayoutMgr->GetInt(pTag,"Font");
 	CUIFont* pFont	= g_pInterfaceResMgr->GetFont(nFont);

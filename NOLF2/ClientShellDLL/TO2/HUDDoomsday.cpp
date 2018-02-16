@@ -197,7 +197,7 @@ void CHUDDoomsday::Update()
 
 void CHUDDoomsday::UpdateLayout()
 {
-	char *pTag = "Doomsday";
+	const char *pTag = "Doomsday";
 	m_BasePos	= g_pLayoutMgr->GetPoint(pTag,"BasePos");
 	m_nSize		= (uint8)g_pLayoutMgr->GetInt(pTag,"IconSize");
 

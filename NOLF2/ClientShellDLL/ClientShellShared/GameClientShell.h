@@ -100,7 +100,7 @@ public:
 
     void        SetInputState(bool bAllowInput);
 
-	void		CSPrint(char* msg, ...);
+	void		CSPrint(const char* msg, ...);
 
 	void		BuildClientSaveMsg(ILTMessage_Write *pMsg, SaveDataState eSaveDataState);
 	void		UnpackClientSaveMsg(ILTMessage_Read *pMsg);
@@ -301,7 +301,7 @@ private :
 	// Private helper functions...
 
 	void	FirstUpdate();
-	void	MirrorSConVar(char *pSVarName, char *pCVarName);
+	void	MirrorSConVar(const char *pSVarName, const char *pCVarName);
 	void	Adjust1stPersonCamera();
 	void	UpdateWeaponPosition();
 	void	UpdateWeaponMuzzlePosition();
@@ -356,7 +356,7 @@ private :
 
 	enum DSSL { eDSBottomLeft, eDSBottomRight };
 
-	void	SetDebugString(char* strMessage, DSSL eLoc=eDSBottomRight, uint8 nLine=0);
+	void	SetDebugString(const char* strMessage, DSSL eLoc=eDSBottomRight, uint8 nLine=0);
 	void	ClearDebugStrings();
 	void	RenderDebugStrings();
 

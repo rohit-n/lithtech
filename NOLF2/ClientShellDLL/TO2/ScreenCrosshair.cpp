@@ -89,7 +89,7 @@ LTBOOL CScreenCrosshair::Build()
 	char szTmp[kMaxStringBuffer];
 
 	uint8 style = 0;
-	char *szTag = "HUDCrosshair";
+	const char *szTag = "HUDCrosshair";
 	char szAtt[32];
 	sprintf(szAtt,"Crosshair%d",style);
 

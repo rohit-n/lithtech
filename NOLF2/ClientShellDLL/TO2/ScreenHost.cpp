@@ -31,31 +31,31 @@ namespace
 	{
 		CScreenHost *pThisScreen = (CScreenHost *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_HOST);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_NAME);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_NAME);
 	};
 	void EditPassCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenHost *pThisScreen = (CScreenHost *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_HOST);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_PASS);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_PASS);
 	};
 	void EditScmdPassCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenHost *pThisScreen = (CScreenHost *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_HOST);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_SCMDPASS);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_SCMDPASS);
 	};
 	void EditPortCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenHost *pThisScreen = (CScreenHost *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_HOST);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_PORT);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_PORT);
 	};
 	void EditBandwidthCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenHost *pThisScreen = (CScreenHost *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_HOST);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_BANDWIDTH);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_BANDWIDTH);
 	};
 
 }
@@ -179,7 +179,7 @@ LTBOOL CScreenHost::Build()
 	return CBaseScreen::Build();
 }
 
-uint32 CScreenHost::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenHost::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	if (dwCommand == CMD_OK)
 	{
@@ -529,7 +529,7 @@ void CScreenHost::UpdateBandwidth()
 }
 
 
-void CScreenHost::HandleCallback(uint32 dwParam1, uint32 dwParam2)
+void CScreenHost::HandleCallback(uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch(dwParam2)
 	{
@@ -552,18 +552,18 @@ void CScreenHost::HandleCallback(uint32 dwParam1, uint32 dwParam2)
 		}
 		break;
 	case CMD_EDIT_PASS:
-		m_sPassword = ((char *)dwParam1);
+		m_sPassword = ((const char *)dwParam1);
 		m_sPassword = m_sPassword.Left( MAX_PASSWORD );
 		m_pPassword->SetString(1,m_sPassword);
 		break;
 	case CMD_EDIT_SCMDPASS:
-		m_sScmdPassword = ((char *)dwParam1);
+		m_sScmdPassword = ((const char *)dwParam1);
 		m_sScmdPassword = m_sScmdPassword.Left( MAX_PASSWORD );
 		m_pScmdPassword->SetString(1,m_sScmdPassword);
 		break;
 	case CMD_EDIT_PORT:
 		{
-			char *pszPort = (char *)dwParam1;
+			const char *pszPort = (const char *)dwParam1;
 			uint16 nPort = (uint16)atoi(pszPort);
 			m_sPort = pszPort;
 			m_sPort = m_sPort.Left( kMaxPortStrLen );
@@ -575,7 +575,7 @@ void CScreenHost::HandleCallback(uint32 dwParam1, uint32 dwParam2)
 		break;
 	case CMD_EDIT_BANDWIDTH:
 		{
-			char *pszBandwidth = (char *)dwParam1;
+			const char *pszBandwidth = (const char *)dwParam1;
 			uint32 nBandwidth = (uint32)atoi(pszBandwidth);
 			if ( IsValidBandwidth(nBandwidth) )
 			{

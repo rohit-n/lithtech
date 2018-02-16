@@ -60,8 +60,12 @@ static LTMatrix GetCameraTransform(HOBJECT hCamera)
 	vPos.z = -vPos.z;
 
     LTMatrix mTran, mRot, mFull;
-
-	mRot.SetBasisVectors((LTVector*)&rRot.Right(), (LTVector*)&rRot.Up(), (LTVector*)&rRot.Forward());
+	{
+		auto tRight{rRot.Right()};
+		auto tUp{rRot.Up()};
+		auto tForward{rRot.Forward()};
+		mRot.SetBasisVectors(&tRight, &tUp, &tForward);
+	}
 	MatTranspose3x3(&mRot);
 
 	Mat_Identity(&mTran);

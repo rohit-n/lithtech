@@ -50,7 +50,7 @@ LTBOOL CScreenEndDMMission::Build()
 	//CreateTitle(IDS_TITLE_ENDMISSION);
 
 	LTIntPt pos(GetPageLeft(),GetPageBottom());
-	m_pContinue = AddTextItem(LoadTempString(IDS_PRESS_ANY_KEY),NULL,NULL,pos,LTTRUE);
+	m_pContinue = AddTextItem(LoadTempString(IDS_PRESS_ANY_KEY),0,0,pos,LTTRUE);
 
 
 	// Make sure to call the base class

@@ -105,7 +105,7 @@ LTBOOL CNodeController::Init(CCharacterFX* pCharacterFX)
 		{
 			_ASSERT(eModelNode < kMaxNodes);
 
-			if (eModelNode < kMaxNodes)
+			if ((uint)eModelNode < (uint)kMaxNodes)
 			{
 				m_aNodes[eModelNode].eModelNode = eModelNode;
 				m_aNodes[eModelNode].hModelNode = hCurNode;

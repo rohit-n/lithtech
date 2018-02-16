@@ -659,7 +659,7 @@ void CGibFX::HandleBounce(int nIndex)
 		sc.fFinalAlpha		= 0.0f;
 		sc.nType			= OT_SPRITE;
 
-		char* pBloodFiles[] =
+		const char* pBloodFiles[] =
 		{
 			"Sprites\\BloodSplat1.spr",
 			"Sprites\\BloodSplat2.spr",
@@ -723,7 +723,7 @@ void CGibFX::CreateLingeringSmoke(int nIndex)
 
 	SMCREATESTRUCT sm;
 
-	char* pTexture = "Sprites\\SmokeTest.spr";
+	const char* pTexture = "Sprites\\SmokeTest.spr";
 
 	VEC_SET(sm.vColor1, 100.0f, 100.0f, 100.0f);
 	VEC_SET(sm.vColor2, 125.0f, 125.0f, 125.0f);
@@ -854,7 +854,7 @@ void CGibFX::CreateBloodSpray()
 	sc.fFinalAlpha		= 0.0f;
 	sc.nType			= OT_SPRITE;
 
-	char* pBloodFiles[] =
+	const char* pBloodFiles[] =
 	{
 		"Sprites\\BloodSplat1.spr",
 		"Sprites\\BloodSplat2.spr",

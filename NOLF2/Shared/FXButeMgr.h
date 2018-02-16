@@ -739,56 +739,56 @@ class CFXButeMgr : public CGameButeMgr
 		SPRINKLEFX*		GetSprinkleFX( char *pName );
 
 		PUSHERFX*		GetPusherFX(int nFXId);
-		PUSHERFX*		GetPusherFX(char* pName);
+		PUSHERFX*		GetPusherFX(const char* pName);
 
 		SOUNDFX*		GetSoundFX(int nSoundFXId);
-		SOUNDFX*		GetSoundFX(char* pName);
+		SOUNDFX*		GetSoundFX(const char* pName);
 
 		TRACERFX*		GetTracerFX(int nTracerFXId);
-		TRACERFX*		GetTracerFX(char* pName);
+		TRACERFX*		GetTracerFX(const char* pName);
 
 		BEAMFX*			GetBeamFX(int nBeamFXId);
-		BEAMFX*			GetBeamFX(char* pName);
+		BEAMFX*			GetBeamFX(const char* pName);
 
 		CMuzzleFX*		GetMuzzleFX(int nMuzzleFXId);
-		CMuzzleFX*		GetMuzzleFX(char* pName);
+		CMuzzleFX*		GetMuzzleFX(const char* pName);
 
 		CParticleMuzzleFX*	GetParticleMuzzleFX(int nParticleMuzzleFXId);
-		CParticleMuzzleFX*	GetParticleMuzzleFX(char* pName);
+		CParticleMuzzleFX*	GetParticleMuzzleFX(const char* pName);
 
 		PVFX*			GetPVFX(int nPVFXId);
-		PVFX*			GetPVFX(char* pName);
+		PVFX*			GetPVFX(const char* pName);
 
 		CScaleFX*		GetScaleFX(int nScaleFXId);
-		CScaleFX*		GetScaleFX(char* pName);
+		CScaleFX*		GetScaleFX(const char* pName);
 
 		CPShowerFX*		GetPShowerFX(int nPShowerFXId);
-		CPShowerFX*		GetPShowerFX(char* pName);
+		CPShowerFX*		GetPShowerFX(const char* pName);
 
 		CPolyDebrisFX*	GetPolyDebrisFX(int nPolyDebrisFXId);
-		CPolyDebrisFX*	GetPolyDebrisFX(char* pName);
+		CPolyDebrisFX*	GetPolyDebrisFX(const char* pName);
 
 		PEXPLFX*		GetPExplFX(int nPExplFXId);
-		PEXPLFX*		GetPExplFX(char* pName);
+		PEXPLFX*		GetPExplFX(const char* pName);
 
 		DLIGHTFX*		GetDLightFX(int nDLightFXId);
-		DLIGHTFX*		GetDLightFX(char* pName);
+		DLIGHTFX*		GetDLightFX(const char* pName);
 
 #ifndef _CLIENTBUILD
 		int				GetNumImpactFX() const { return m_ImpactFXList.GetLength(); }
-        LTBOOL           ReadImpactFXProp(char* pPropName, uint8 & nImpactFXId);
+        LTBOOL           ReadImpactFXProp(const char* pPropName, uint8 & nImpactFXId);
 #endif // _CLIENTBUILD
 
 		IMPACTFX*		GetImpactFX(int nImpactFXId);
-		IMPACTFX*		GetImpactFX(char* pName);
+		IMPACTFX*		GetImpactFX(const char* pName);
 
 		PROJECTILEFX*	GetProjectileFX(int nProjFXId);
-		PROJECTILEFX*	GetProjectileFX(char* pName);
+		PROJECTILEFX*	GetProjectileFX(const char* pName);
 
-		PROJECTILECLASSDATA*	GetProjectileClassData(char* pName);
+		PROJECTILECLASSDATA*	GetProjectileClassData(const char* pName);
 
 		FIREFX*			GetFireFX(int nFireFXId);
-		FIREFX*			GetFireFX(char* pName);
+		FIREFX*			GetFireFX(const char* pName);
 
 	protected :
 

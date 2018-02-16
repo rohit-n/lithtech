@@ -65,7 +65,7 @@ namespace
 		CScreenJoin *pThisScreen = (CScreenJoin *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_JOIN);
 		if (bReturn && pThisScreen)
 		{
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_PASS);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_PASS);
 		}
 	};
 
@@ -282,7 +282,7 @@ LTBOOL CScreenJoin::Build()
 	uint8 nFontSize = g_pLayoutMgr->GetDialogFontSize();
 
 	CLTGUITextCtrl*	pText = debug_new(CLTGUITextCtrl);
-    if (!pText->Create(LoadTempString(IDS_QUERYING), NULL, LTNULL, pFont, nFontSize, this))
+    if (!pText->Create(LoadTempString(IDS_QUERYING), LTNULL, LTNULL, pFont, nFontSize, this))
 	{
 		debug_delete(pText);
         return LTFALSE;
@@ -378,7 +378,7 @@ LTBOOL CScreenJoin::Build()
 	return LTTRUE;
 }
 
-uint32 CScreenJoin::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenJoin::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch(dwCommand)
 	{
@@ -496,13 +496,13 @@ uint32 CScreenJoin::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2
 	return 1;
 }
 
-uint32 CScreenJoin::HandleCallback(uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenJoin::HandleCallback(uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch (dwParam2)
 	{
 		case CMD_EDIT_PASS :
 		{
-			m_sPassword = (char *)dwParam1;
+			m_sPassword = (const char *)dwParam1;
 			JoinCurGame();
 			break;
 		}

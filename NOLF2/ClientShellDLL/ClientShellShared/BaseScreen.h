@@ -54,7 +54,7 @@ public:
 
 	virtual void	Escape();
 
-    virtual uint32 OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2);
+    virtual uint32 OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2);
 
 	// Get the screen ID
 	inline int	GetScreenID() const	{ return m_nScreenID; }
@@ -72,7 +72,7 @@ public:
     void    SetTitleColor(uint32 titleColor);
 
     LTBOOL	CreateTitle(int nStringID);
-    LTBOOL	CreateTitle(char *lpszTitle);
+    LTBOOL	CreateTitle(const char *lpszTitle);
 
 	//set the background for the screen
     void         UseBack(LTBOOL	bBack=LTTRUE,LTBOOL	bOK=LTFALSE, LTBOOL bReturn = LTFALSE );
@@ -135,19 +135,19 @@ public:
 	//default font for items is the large font
 	// These AddXXX() functions call CreateXXX() and then add the control to the control list
     CLTGUITextCtrl*     AddTextItem(int stringID, uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUITextCtrl*     AddTextItem(char *pString, uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
+    CLTGUITextCtrl*     AddTextItem(const char *pString, uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
 	CLTGUIListCtrl*		AddList(LTIntPt pos, uint16 nHeight, LTBOOL bUseArrows = LTFALSE, uint16 nArrowOffset = 0);
 
     CLTGUICycleCtrl*     AddCycle(int stringID, int helpID, int nHeaderWidth, uint8 *pnValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUICycleCtrl*     AddCycle(char *pString, int helpID, int nHeaderWidth, uint8 *pnValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
+    CLTGUICycleCtrl*     AddCycle(const char *pString, int helpID, int nHeaderWidth, uint8 *pnValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
     CLTGUIToggle*     AddToggle(int stringID, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUIToggle*     AddToggle(char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
+    CLTGUIToggle*     AddToggle(const char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
     CLTGUISlider*     AddSlider(int stringID,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUISlider*     AddSlider(char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
+    CLTGUISlider*     AddSlider(const char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
 	CLTGUIColumnCtrl* AddColumnCtrl(uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
@@ -155,19 +155,19 @@ public:
 
 	// These CreateXXX() create controls but do not add them to the control list
     CLTGUITextCtrl*     CreateTextItem(int stringID, uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUITextCtrl*     CreateTextItem(char *pString, uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
+    CLTGUITextCtrl*     CreateTextItem(const char *pString, uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
 	CLTGUIListCtrl*		CreateList(LTIntPt pos, uint16 nHeight, LTBOOL bUseArrows = LTFALSE, uint16 nArrowOffset = 0);
 
     CLTGUICycleCtrl*     CreateCycle(int stringID, int helpID, int nHeaderWidth, uint8 *pnValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUICycleCtrl*     CreateCycle(char *pString, int helpID, int nHeaderWidth, uint8 *pnValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
+    CLTGUICycleCtrl*     CreateCycle(const char *pString, int helpID, int nHeaderWidth, uint8 *pnValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
     CLTGUIToggle*     CreateToggle(int stringID, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUIToggle*     CreateToggle(char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
+    CLTGUIToggle*     CreateToggle(const char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue=LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
     CLTGUISlider*     CreateSlider(int stringID,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
-    CLTGUISlider*     CreateSlider(char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
+    CLTGUISlider*     CreateSlider(const char *pString,  int helpID, int nHeaderWidth, int nBarWidth, int nBarHeight = -1,
 								int *pnValue = LTNULL, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
 
 	CLTGUIColumnCtrl* CreateColumnCtrl(uint32 commandID, int helpID, LTIntPt pos = kDefaultPos, LTBOOL bFixed = LTFALSE, int nFont = -1);
@@ -197,9 +197,9 @@ protected:
 	virtual void	CreateInterfaceSFX();
 	virtual void	RemoveInterfaceSFX();
 
-	CBaseScaleFX*	CreateScaleFX(char *szFXName);
+	CBaseScaleFX*	CreateScaleFX(const char *szFXName);
 
-	void			CreateLightFX(char *szFXName);
+	void			CreateLightFX(const char *szFXName);
 	void			CreateCharFX(INT_CHAR *pChar);
 	void			CreateAttachFX(INT_ATTACH *pAttach);
 	virtual void	ClearAttachFX();
@@ -298,7 +298,7 @@ inline  CLTGUITextCtrl* CBaseScreen::AddTextItem(int stringID, uint32 commandID,
 		AddControl(pCtrl);
 	return pCtrl;
 }
-inline  CLTGUITextCtrl* CBaseScreen::AddTextItem(char *pString, uint32 commandID, int helpID, LTIntPt pos, LTBOOL bFixed, int nFont)
+inline  CLTGUITextCtrl* CBaseScreen::AddTextItem(const char *pString, uint32 commandID, int helpID, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUITextCtrl* pCtrl = CreateTextItem(pString, commandID, helpID,  pos, bFixed, nFont);
 	if (pCtrl)
@@ -323,7 +323,7 @@ inline  CLTGUICycleCtrl* CBaseScreen::AddCycle(int stringID, int helpID, int nHe
 		AddControl(pCtrl);
 	return pCtrl;
 }
-inline  CLTGUICycleCtrl* CBaseScreen::AddCycle(char *pString, int helpID, int nHeaderWidth, uint8 *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
+inline  CLTGUICycleCtrl* CBaseScreen::AddCycle(const char *pString, int helpID, int nHeaderWidth, uint8 *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUICycleCtrl* pCtrl = CreateCycle(pString, helpID, nHeaderWidth, pnValue, pos, bFixed, nFont);
 	if (pCtrl)
@@ -339,7 +339,7 @@ inline  CLTGUIToggle* CBaseScreen::AddToggle(int stringID, int helpID, int nHead
 		AddControl(pCtrl);
 	return pCtrl;
 }
-inline  CLTGUIToggle* CBaseScreen::AddToggle(char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue, LTIntPt pos, LTBOOL bFixed, int nFont)
+inline  CLTGUIToggle* CBaseScreen::AddToggle(const char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUIToggle* pCtrl = CreateToggle(pString, helpID, nHeaderWidth, pbValue, pos, bFixed, nFont);
 	if (pCtrl)
@@ -356,7 +356,7 @@ inline  CLTGUISlider* CBaseScreen::AddSlider(int stringID, int helpID, int nHead
 		AddControl(pCtrl);
 	return pCtrl;
 }
-inline  CLTGUISlider* CBaseScreen::AddSlider(char *pString, int helpID, int nHeaderWidth,  int nBarWidth, int nBarHeight,
+inline  CLTGUISlider* CBaseScreen::AddSlider(const char *pString, int helpID, int nHeaderWidth,  int nBarWidth, int nBarHeight,
 												int *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUISlider* pCtrl = CreateSlider(pString, helpID, nHeaderWidth, nBarWidth, nBarHeight, pnValue, pos, bFixed, nFont);

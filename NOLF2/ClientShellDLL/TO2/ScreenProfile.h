@@ -31,7 +31,7 @@ public:
 	// Build the screen
     LTBOOL   Build();
 
-    virtual uint32	OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2);
+    virtual uint32	OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2);
 	void			Escape();
 	void			OnFocus(LTBOOL bFocus);
 	LTBOOL			OnRButtonUp(int x, int y);

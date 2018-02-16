@@ -75,7 +75,7 @@ LTBOOL CScreenEndCoopMission::Build()
 	m_pList = AddList(m_nextPos,(GetPageBottom() - m_nextPos.y));
 
 	LTIntPt pos(GetPageLeft(),GetPageBottom());
-	m_pContinue = AddTextItem(LoadTempString(IDS_PRESS_ANY_KEY),NULL,NULL,pos,LTTRUE);
+	m_pContinue = AddTextItem(LoadTempString(IDS_PRESS_ANY_KEY),0,0,pos,LTTRUE);
 
 
 	// Make sure to call the base class
@@ -116,7 +116,7 @@ void CScreenEndCoopMission::OnFocus(LTBOOL bFocus)
 
 		CClientInfoMgr* pCIMgr = g_pInterfaceMgr->GetClientInfoMgr();
 
-		CLTGUIColumnCtrl *pCtrl=CreateColumnCtrl(NULL,NULL,kDefaultPos,LTTRUE);
+		CLTGUIColumnCtrl *pCtrl=CreateColumnCtrl(0,0,kDefaultPos,LTTRUE);
 
 		pCtrl->AddColumn(" ", (NameWidth-16));
 		pCtrl->AddColumn(LoadTempString(IDS_COOP_STAT_ACCURACY), AccuracyWidth);
@@ -133,7 +133,7 @@ void CScreenEndCoopMission::OnFocus(LTBOOL bFocus)
 		char szTmp[64];
 		while (pInfo)
 		{
-			CLTGUIColumnCtrl *pCtrl=CreateColumnCtrl(NULL,NULL,kDefaultPos,LTTRUE);
+			CLTGUIColumnCtrl *pCtrl=CreateColumnCtrl(0,0,kDefaultPos,LTTRUE);
 			pCtrl->SetFont(LTNULL,statSize);
 
 			m_pList->AddControl(pCtrl);

@@ -240,7 +240,10 @@ LTBOOL CBaseScreen::Init(int nScreenID)
 		uint8 nSize = (uint8)((LTFLOAT)s_HelpSize * g_pInterfaceResMgr->GetXRatio());
 
 		CUIFont* pFont = g_pInterfaceResMgr->GetFont(nFont);
-		s_pHelpStr = g_pFontManager->CreateFormattedPolyString(pFont,"",helpX, helpY);
+		{
+			char p[1] = {'\0'};
+			s_pHelpStr = g_pFontManager->CreateFormattedPolyString(pFont,p,helpX, helpY);
+		}
 		s_pHelpStr->SetCharScreenHeight(nSize);
 		s_pHelpStr->SetColor(argbWhite);
 		s_pHelpStr->SetWrapWidth(nWidth);
@@ -448,7 +451,7 @@ LTBOOL CBaseScreen::Render(HSURFACE hDestSurf)
 // ----------------------------------------------------------------------- //
 
 
-LTBOOL CBaseScreen::CreateTitle(char *lpszTitle)
+LTBOOL CBaseScreen::CreateTitle(const char *lpszTitle)
 {
 	if (m_pTitleString)
 	{
@@ -1115,7 +1118,7 @@ CLTGUITextCtrl* CBaseScreen::CreateTextItem(int stringID, uint32 commandID, int 
 
 }
 
-CLTGUITextCtrl* CBaseScreen::CreateTextItem(char *pString, uint32 commandID, int helpID, LTIntPt pos, LTBOOL bFixed, int nFont)
+CLTGUITextCtrl* CBaseScreen::CreateTextItem(const char *pString, uint32 commandID, int helpID, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUITextCtrl* pCtrl=debug_new(CLTGUITextCtrl);
 
@@ -1196,7 +1199,7 @@ CLTGUICycleCtrl* CBaseScreen::CreateCycle(int stringID, int helpID, int nHeaderW
 
 }
 
-CLTGUICycleCtrl* CBaseScreen::CreateCycle(char *pString, int helpID, int nHeaderWidth, uint8 *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
+CLTGUICycleCtrl* CBaseScreen::CreateCycle(const char *pString, int helpID, int nHeaderWidth, uint8 *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUICycleCtrl* pCtrl=debug_new(CLTGUICycleCtrl);
 
@@ -1257,7 +1260,7 @@ CLTGUIToggle* CBaseScreen::CreateToggle(int stringID, int helpID, int nHeaderWid
 
 }
 
-CLTGUIToggle* CBaseScreen::CreateToggle(char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue, LTIntPt pos, LTBOOL bFixed, int nFont)
+CLTGUIToggle* CBaseScreen::CreateToggle(const char *pString, int helpID, int nHeaderWidth, LTBOOL *pbValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUIToggle* pCtrl=debug_new(CLTGUIToggle);
 
@@ -1317,7 +1320,7 @@ CLTGUISlider* CBaseScreen::CreateSlider(int stringID, int helpID, int nHeaderWid
 
 }
 
-CLTGUISlider* CBaseScreen::CreateSlider(char *pString, int helpID, int nHeaderWidth, int nBarWidth,
+CLTGUISlider* CBaseScreen::CreateSlider(const char *pString, int helpID, int nHeaderWidth, int nBarWidth,
 										int nBarHeight, int *pnValue, LTIntPt pos, LTBOOL bFixed, int nFont)
 {
 	CLTGUISlider* pCtrl=debug_new(CLTGUISlider);
@@ -1504,7 +1507,7 @@ void CBaseScreen::RemoveControl(CLTGUICtrl* pControl,LTBOOL bDelete)
 
 }
 
-uint32 CBaseScreen::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CBaseScreen::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch(dwCommand)
 	{
@@ -1847,7 +1850,7 @@ uint16 CBaseScreen::GetIndex(CLTGUICtrl* pCtrl)
 }
 
 
-CBaseScaleFX* CBaseScreen::CreateScaleFX(char *szFXName)
+CBaseScaleFX* CBaseScreen::CreateScaleFX(const char *szFXName)
 {
 	CScaleFX* pScaleFX = g_pFXButeMgr->GetScaleFX(szFXName);
 	if (pScaleFX)
@@ -1867,7 +1870,7 @@ CBaseScaleFX* CBaseScreen::CreateScaleFX(char *szFXName)
 	}
 	return NULL;
 }
-void CBaseScreen::CreateLightFX(char *szFXName)
+void CBaseScreen::CreateLightFX(const char *szFXName)
 {
 	INT_LIGHT* pLight = g_pLayoutMgr->GetLight(szFXName);
 	if (pLight)

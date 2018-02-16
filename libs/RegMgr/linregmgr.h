@@ -1,6 +1,11 @@
+/*
+   A registry manager backed by a JSON document
+   Rene Kjellerup (c) 2017, 
+   release under GNU General Public License version 3 or later
+   see https://www.gnu.org/licenses/gpl.html
+*/
 #ifndef RegMgr_H
 #define RegMgr_H
-
 
 // Includes...
 

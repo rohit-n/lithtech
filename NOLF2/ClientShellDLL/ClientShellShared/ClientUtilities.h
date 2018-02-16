@@ -58,9 +58,9 @@ void	WriteConsoleFloat(char const* sKey, LTFLOAT fValue);
 // NOTE:  The timing information is only printed to the console if the server
 // console variable "ShowTiming" is set to 1. (i.e., showtiming 1)
 void StartTimingCounter();
-void EndTimingCounter(char *msg, ...);
+void EndTimingCounter(const char *msg, ...);
 
-inline LTBOOL GetAttachmentSocketTransform(HOBJECT hObj, char* pSocketName,
+inline LTBOOL GetAttachmentSocketTransform(HOBJECT hObj, const char* pSocketName,
                                           LTVector & vPos, LTRotation & rRot)
 {
     if (!hObj || !pSocketName) return LTFALSE;

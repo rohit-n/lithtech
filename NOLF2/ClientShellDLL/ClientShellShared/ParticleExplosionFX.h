@@ -33,15 +33,15 @@ struct PESCREATESTRUCT : public BPSCREATESTRUCT
     LTFLOAT      fOffsetTime;
     LTFLOAT      fRadius;
     LTFLOAT      fGravity;
-    uint8       nSurfaceType;
-    uint8       nNumPerPuff;
-    uint8       nNumEmitters;
-    uint8       nEmitterFlags;
-    uint8       nNumSteps;
+    uint8        nSurfaceType;
+    uint8        nNumPerPuff;
+    uint8        nNumEmitters;
+    uint8        nEmitterFlags;
+    uint8        nNumSteps;
     LTBOOL       bCreateDebris;
     LTBOOL       bRotateDebris;
     LTBOOL       bIgnoreWind;
-	char*		pFilename;
+	const char*  pFilename;
 };
 
 inline PESCREATESTRUCT::PESCREATESTRUCT()

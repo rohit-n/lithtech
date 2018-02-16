@@ -25,7 +25,7 @@ namespace
 	{
 		CScreenTeam *pThisScreen = (CScreenTeam *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_TEAM);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_NAME);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_NAME);
 	};
 
 	#define INVALID_ANI			((HMODELANIM)-1)
@@ -159,7 +159,7 @@ void CScreenTeam::OnFocus(LTBOOL bFocus)
 		for (n = 0; n < g_pModelButeMgr->GetNumTeamModels(); n++)
 		{
 			ModelId id = g_pModelButeMgr->GetTeamModel(n);
-			HMODELDB dummy = NULL;
+			HMODELDB dummy = 0;
 			g_pILTModelClient->CacheModelDB(g_pModelButeMgr->GetModelFilename(id),dummy);
 		}
 
@@ -375,7 +375,7 @@ void CScreenTeam::UpdateChar()
 }
 
 
-void CScreenTeam::HandleCallback(uint32 dwParam1, uint32 dwParam2)
+void CScreenTeam::HandleCallback(uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch(dwParam2)
 	{

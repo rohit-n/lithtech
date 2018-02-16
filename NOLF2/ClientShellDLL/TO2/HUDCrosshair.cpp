@@ -514,7 +514,7 @@ void CHUDCrosshair::UpdateLayout()
 
 void CHUDCrosshair::SetStyle(uint8 style)
 {
-	char *szTag = "HUDCrosshair";
+	const char *szTag = "HUDCrosshair";
 	char szAtt[32];
 	sprintf(szAtt,"Crosshair%d",style);
 

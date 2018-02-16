@@ -88,7 +88,7 @@ void StartTimingCounter()
     g_pLTClient->StartCounter(&s_counter);
 }
 
-void EndTimingCounter(char *msg, ...)
+void EndTimingCounter(const char *msg, ...)
 {
     if (!g_pLTClient || g_vtShowTimingTrack.GetFloat() < 1.0f) return;
 

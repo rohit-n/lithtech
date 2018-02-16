@@ -32,7 +32,7 @@ namespace
 	{
 		CScreenJoinLAN *pThisScreen = (CScreenJoinLAN *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_JOIN_LAN);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_PORT);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_PORT);
 	};
 
 	void EditPassCallBack(LTBOOL bReturn, void *pData)
@@ -40,7 +40,7 @@ namespace
 		CScreenJoinLAN *pThisScreen = (CScreenJoinLAN *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_JOIN_LAN);
 		if (bReturn && pThisScreen)
 		{
-			pThisScreen->SendCommand(CMD_OK,(uint32)pData,CMD_EDIT_PASS);
+			pThisScreen->SendCommand(CMD_OK,(uintptr_t)pData,CMD_EDIT_PASS);
 		}
 	};
 
@@ -99,7 +99,7 @@ LTBOOL CScreenJoinLAN::Build()
 	return LTTRUE;
 }
 
-uint32 CScreenJoinLAN::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenJoinLAN::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch(dwCommand)
 	{
@@ -123,7 +123,7 @@ uint32 CScreenJoinLAN::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwPar
 		{
 			if (dwParam2 == CMD_EDIT_PORT)
 			{
-				char *pszPort = (char *)dwParam1;
+				const char *pszPort = (const char *)dwParam1;
 				uint16 nPort = (uint16)atoi(pszPort);
 				if (IsValidPort(nPort))
 				{

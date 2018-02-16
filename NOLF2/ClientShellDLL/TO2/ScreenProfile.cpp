@@ -24,25 +24,25 @@ namespace
 	{
 		CScreenProfile *pThisScreen = (CScreenProfile *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_PROFILE);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_CONFIRM,(uint32)pData,CMD_DELETE);
+			pThisScreen->SendCommand(CMD_CONFIRM,(uintptr_t)pData,CMD_DELETE);
 	}
 	void CreateCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenProfile *pThisScreen = (CScreenProfile *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_PROFILE);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_CONFIRM,(uint32)pData,CMD_CREATE);
+			pThisScreen->SendCommand(CMD_CONFIRM,(uintptr_t)pData,CMD_CREATE);
 	}
 	void LoadCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenProfile *pThisScreen = (CScreenProfile *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_PROFILE);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_CONFIRM,(uint32)pData,CMD_LOAD);
+			pThisScreen->SendCommand(CMD_CONFIRM,(uintptr_t)pData,CMD_LOAD);
 	}
 	void EditCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenProfile *pThisScreen = (CScreenProfile *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_PROFILE);
 		if (bReturn && pThisScreen)
-			pThisScreen->SendCommand(CMD_EDIT,(uint32)pData,0);
+			pThisScreen->SendCommand(CMD_EDIT,(uintptr_t)pData,0);
 	};
 
 	int kDlgHt = 240;
@@ -151,7 +151,7 @@ LTBOOL CScreenProfile::Build()
 	return CBaseScreen::Build();
 }
 
-uint32 CScreenProfile::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenProfile::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch (dwCommand)
 	{
@@ -390,7 +390,7 @@ void CScreenProfile::HandleDlgCommand(uint32 dwCommand, uint16 nIndex)
 						MBCreate mb;
 						mb.eType = LTMB_YESNO;
 						mb.pFn = LoadCallBack,
-						mb.pData = (void *)nIndex;
+						mb.pData = (void *)(nIndex & 0xffffL);
 						g_pInterfaceMgr->ShowMessageBox(IDS_CONFIRM_NEWPROFILE,&mb);
 					}
 					else
@@ -405,7 +405,7 @@ void CScreenProfile::HandleDlgCommand(uint32 dwCommand, uint16 nIndex)
 			MBCreate mb;
 			mb.eType = LTMB_YESNO;
 			mb.pFn = DeleteCallBack,
-			mb.pData = (void *)nIndex;
+			mb.pData = (void *)(nIndex & 0xffffL);
 			g_pInterfaceMgr->ShowMessageBox(IDS_CONFIRM_DELETE_PROFILE,&mb);
 		}
 		break;

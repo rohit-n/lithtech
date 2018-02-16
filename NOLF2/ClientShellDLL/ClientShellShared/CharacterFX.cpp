@@ -844,7 +844,7 @@ void CCharacterFX::UpdateSounds()
 			{
 //				g_pLTClient->CPrint("Playing Ding Sound at Time %.2f", m_fNextDingTime[i]);
 				m_fNextDingTime[i] = -1.0f;
-				char* pSound = "Guns\\snd\\Impacts\\MultiDing.wav";
+				const char* pSound = "Guns\\snd\\Impacts\\MultiDing.wav";
 				g_pClientSoundMgr->PlaySoundLocal(pSound, SOUNDPRIORITY_PLAYER_HIGH);
 			}
 		}
@@ -1317,7 +1317,7 @@ void CCharacterFX::OnModelKey(HLOCALOBJ hObj, ArgList *pArgs)
 {
 	if (!hObj || !pArgs || !pArgs->argv || pArgs->argc == 0) return;
 
-	char* pKey = pArgs->argv[0];
+	const char* pKey = pArgs->argv[0];
 	if (!pKey) return;
 
 	if (g_vtModelKey.GetFloat() > 0.0f)

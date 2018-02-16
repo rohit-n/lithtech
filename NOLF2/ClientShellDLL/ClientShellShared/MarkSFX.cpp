@@ -170,9 +170,10 @@ LTBOOL CMarkSFX::CreateObject(ILTClient *pClientDE)
 	m_hObject = pClientDE->CreateObject(&createStruct);
 
 	m_fScale *= fScaleAdjust;
-
-	m_pClientDE->SetObjectScale(m_hObject, &LTVector(m_fScale, m_fScale, m_fScale));
-
+	{
+		LTVector tVec{m_fScale, m_fScale, m_fScale};
+		m_pClientDE->SetObjectScale(m_hObject, &tVec);
+	}
 	if (g_cvarClipMarks.GetFloat() > 0)
 	{
 		// Clip the mark to th poly...

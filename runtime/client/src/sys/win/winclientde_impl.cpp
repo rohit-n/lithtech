@@ -1303,7 +1303,7 @@ static LTRESULT cis_FreeHeightmap(uint8* pData)
 }
 
 
-static HSURFACE cis_CreateSurfaceFromBitmap(char *pBitmapName)
+static HSURFACE cis_CreateSurfaceFromBitmap(const char *pBitmapName)
 {
 	LoadedBitmap bitmap;
 	HSURFACE hRet;

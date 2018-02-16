@@ -74,7 +74,7 @@ LTBOOL CScreenFailure::Build()
 	LTIntPt stringPos;
 	stringPos.x = (stringRect.left + stringRect.right) / 2;
 	stringPos.y = stringRect.top;
-	m_pString = AddTextItem("failed",NULL,NULL,stringPos,LTTRUE);
+	m_pString = AddTextItem("failed",LTNULL,LTNULL,stringPos,LTTRUE);
 	if (m_pString)
 	{
 		m_pString->SetFont(NULL,stringSize);
@@ -93,7 +93,7 @@ LTBOOL CScreenFailure::Build()
 
 	if( !g_pClientMultiplayerMgr->IsConnectedToRemoteServer( ))
 	{
-		m_pHelp = AddTextItem(IDS_HELP_FAILURE,NULL,NULL,helpPos,LTTRUE);
+		m_pHelp = AddTextItem(IDS_HELP_FAILURE,LTNULL,LTNULL,helpPos,LTTRUE);
 		if (m_pHelp)
 		{
 			m_pHelp->SetFont(NULL,helpSize);

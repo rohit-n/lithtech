@@ -34,13 +34,13 @@ namespace
 	{
 		CScreenMulti *pThisScreen = (CScreenMulti *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_MULTI);
 		if (pThisScreen)
-			pThisScreen->SendCommand(bReturn ? CMD_OK : CMD_CANCEL,(uint32)pData,CMD_EDIT_CDKEY);
+			pThisScreen->SendCommand(bReturn ? CMD_OK : CMD_CANCEL,(uintptr_t)pData,CMD_EDIT_CDKEY);
 	}
 	void NewVersionCallBack(LTBOOL bReturn, void *pData)
 	{
 		CScreenMulti *pThisScreen = (CScreenMulti *)g_pInterfaceMgr->GetScreenMgr()->GetScreenFromID(SCREEN_ID_MULTI);
 		if (pThisScreen)
-			pThisScreen->SendCommand(CMD_OK,NULL,CMD_UPDATE);
+			pThisScreen->SendCommand(CMD_OK,LTNULL,CMD_UPDATE);
 	}
 }
 
@@ -185,7 +185,7 @@ LTBOOL CScreenMulti::Build()
 	uint8 nFontSize = g_pLayoutMgr->GetDialogFontSize();
 
 	m_pWaitText = debug_new(CLTGUITextCtrl);
-    if (!m_pWaitText->Create(LoadTempString(IDS_INTERNET), NULL, LTNULL, pFont, nFontSize, this))
+    if (!m_pWaitText->Create(LoadTempString(IDS_INTERNET), LTNULL, LTNULL, pFont, nFontSize, this))
 	{
 		debug_delete(m_pWaitText);
         return LTFALSE;
@@ -229,7 +229,7 @@ LTBOOL CScreenMulti::Build()
 	return CBaseScreen::Build();
 }
 
-uint32 CScreenMulti::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenMulti::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	if (m_eCurState == eState_Startup || m_eCurState == eState_ValidateCDKey) return 0;
 	switch(dwCommand)
@@ -389,7 +389,7 @@ void    CScreenMulti::OnFocus(LTBOOL bFocus)
 
 
 
-uint32 CScreenMulti::HandleCallback(uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenMulti::HandleCallback(uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch (dwParam2)
 	{

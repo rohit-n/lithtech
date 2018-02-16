@@ -8,7 +8,7 @@
 static ILTClient *ilt_client;
 define_holder(ILTClient, ilt_client);
 
-LTRESULT
+static LTRESULT
 cis_GetEngineHook(const char *name, void **pData)
 {
     if(stricmp("hwnd", name) == 0)
@@ -24,10 +24,6 @@ cis_GetEngineHook(const char *name, void **pData)
     return LT_ERROR;
 }
 
-void cis_Init()
-{
-    ilt_client->GetEngineHook = cis_GetEngineHook;
-}
 void cis_Term()
 {}
 
@@ -45,4 +41,18 @@ HSURFACE
 cis_CreateSurfaceFromPcx(LoadedBitmap *pBitmap)
 {
     return nullptr;
+}
+
+static HSURFACE
+cis_CreateSurfaceFromBitmap(const char* pBitmap)
+{
+    return cis_CreateSurfaceFromPcx(nullptr);
+}
+
+void cis_Init()
+{
+    ilt_client->GetEngineHook = cis_GetEngineHook;
+    ilt_client->CreateSurfaceFromBitmap = cis_CreateSurfaceFromBitmap;
+    ilt_client->DeleteSurface = cis_DeleteSurface;
+    
 }

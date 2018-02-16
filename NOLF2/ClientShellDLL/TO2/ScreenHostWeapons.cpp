@@ -63,14 +63,14 @@ LTBOOL CScreenHostWeapons::Build()
 
 	m_pAdd = AddTextItem(IDS_HOST_ADD_WEAPON, CMD_ADD_LEVEL, IDS_HELP_ADD_WEAPONS, addPos);
 	addPos.y -= (nFontSize + m_nItemSpacing);
-	AddTextItem(IDS_ALLOWED_WEAPONS,NULL,NULL,addPos,LTTRUE);
+	AddTextItem(IDS_ALLOWED_WEAPONS,LTNULL,LTNULL,addPos,LTTRUE);
 	
 //	m_pAddAll = AddTextItem(IDS_HOST_ADD_ALL, CMD_ADD_ALL, 0 /*IDS_HELP_ADD_ALL_WPNS*/, commandPos);
 	m_pRemoveAll = AddTextItem(IDS_HOST_REMOVE_ALL, CMD_REMOVE_ALL, IDS_HELP_REM_ALL_WPNS, commandPos);
 
 	m_pRemove = AddTextItem(IDS_HOST_REMOVE_WEAPON, CMD_REMOVE_LEVEL, IDS_HELP_REM_WEAPONS, removePos);
 	removePos.y -= (nFontSize + m_nItemSpacing);
-	AddTextItem(IDS_DISABLED_WEAPONS,NULL,NULL,removePos,LTTRUE);
+	AddTextItem(IDS_DISABLED_WEAPONS,LTNULL,LTNULL,removePos,LTTRUE);
 
 	
 	LTRect rcAvailRect = g_pLayoutMgr->GetScreenCustomRect((eScreenID)m_nScreenID,"AvailRect");
@@ -124,7 +124,7 @@ void CScreenHostWeapons::Escape()
 
 
 
-uint32 CScreenHostWeapons::OnCommand(uint32 dwCommand, uint32 dwParam1, uint32 dwParam2)
+uint32 CScreenHostWeapons::OnCommand(uint32 dwCommand, uintptr_t dwParam1, uint32 dwParam2)
 {
 	switch(dwCommand)
 	{

@@ -16,7 +16,7 @@
 
 VarTrack g_vtAdjustedRadius;
 
-void TestSubtitleFn(int argc, char **argv)
+void TestSubtitleFn(int argc, const char **argv)
 {
 
 	if (argc <= 0) return;
@@ -355,7 +355,7 @@ void CHUDSubtitles::SetScale(float fScale)
 void CHUDSubtitles::UpdateLayout()
 {
 
-	char *pTag = "Subtitle";
+	const char *pTag = "Subtitle";
 
 	m_CinematicPos = g_pLayoutMgr->GetPoint(pTag,"Pos");
 	m_nCinematicWidth = (uint16)g_pLayoutMgr->GetInt(pTag,"Width");

@@ -1039,7 +1039,7 @@ CScaleFX* CFXButeMgr::GetScaleFX(int nScaleFXId)
 //
 // ----------------------------------------------------------------------- //
 
-CScaleFX* CFXButeMgr::GetScaleFX(char* pName)
+CScaleFX* CFXButeMgr::GetScaleFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1095,7 +1095,7 @@ CPShowerFX* CFXButeMgr::GetPShowerFX(int nPShowerFXId)
 //
 // ----------------------------------------------------------------------- //
 
-CPShowerFX* CFXButeMgr::GetPShowerFX(char* pName)
+CPShowerFX* CFXButeMgr::GetPShowerFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1149,7 +1149,7 @@ CPolyDebrisFX* CFXButeMgr::GetPolyDebrisFX(int nPolyDebrisFXId)
 //
 // ----------------------------------------------------------------------- //
 
-CPolyDebrisFX* CFXButeMgr::GetPolyDebrisFX(char* pName)
+CPolyDebrisFX* CFXButeMgr::GetPolyDebrisFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1203,7 +1203,7 @@ PROJECTILEFX* CFXButeMgr::GetProjectileFX(int nProjectileFXId)
 //
 // ----------------------------------------------------------------------- //
 
-PROJECTILEFX* CFXButeMgr::GetProjectileFX(char* pName)
+PROJECTILEFX* CFXButeMgr::GetProjectileFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1232,7 +1232,7 @@ PROJECTILEFX* CFXButeMgr::GetProjectileFX(char* pName)
 //
 // ----------------------------------------------------------------------- //
 
-PROJECTILECLASSDATA* CFXButeMgr::GetProjectileClassData(char* pName)
+PROJECTILECLASSDATA* CFXButeMgr::GetProjectileClassData(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1288,7 +1288,7 @@ IMPACTFX* CFXButeMgr::GetImpactFX(int nImpactFXId)
 //
 // ----------------------------------------------------------------------- //
 
-IMPACTFX* CFXButeMgr::GetImpactFX(char* pName)
+IMPACTFX* CFXButeMgr::GetImpactFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1344,7 +1344,7 @@ FIREFX* CFXButeMgr::GetFireFX(int nFireFXId)
 //
 // ----------------------------------------------------------------------- //
 
-FIREFX* CFXButeMgr::GetFireFX(char* pName)
+FIREFX* CFXButeMgr::GetFireFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1400,7 +1400,7 @@ PEXPLFX* CFXButeMgr::GetPExplFX(int nPExpFXId)
 //
 // ----------------------------------------------------------------------- //
 
-PEXPLFX* CFXButeMgr::GetPExplFX(char* pName)
+PEXPLFX* CFXButeMgr::GetPExplFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1456,7 +1456,7 @@ DLIGHTFX* CFXButeMgr::GetDLightFX(int nDLightFXId)
 //
 // ----------------------------------------------------------------------- //
 
-DLIGHTFX* CFXButeMgr::GetDLightFX(char* pName)
+DLIGHTFX* CFXButeMgr::GetDLightFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1512,7 +1512,7 @@ SOUNDFX* CFXButeMgr::GetSoundFX(int nSoundFXId)
 //
 // ----------------------------------------------------------------------- //
 
-SOUNDFX* CFXButeMgr::GetSoundFX(char* pName)
+SOUNDFX* CFXButeMgr::GetSoundFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1568,7 +1568,7 @@ PUSHERFX* CFXButeMgr::GetPusherFX(int nSoundFXId)
 //
 // ----------------------------------------------------------------------- //
 
-PUSHERFX* CFXButeMgr::GetPusherFX(char* pName)
+PUSHERFX* CFXButeMgr::GetPusherFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1624,7 +1624,7 @@ PVFX* CFXButeMgr::GetPVFX(int nPVFXId)
 //
 // ----------------------------------------------------------------------- //
 
-PVFX* CFXButeMgr::GetPVFX(char* pName)
+PVFX* CFXButeMgr::GetPVFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1681,7 +1681,7 @@ CParticleMuzzleFX* CFXButeMgr::GetParticleMuzzleFX(int nPMFXId)
 //
 // ----------------------------------------------------------------------- //
 
-CParticleMuzzleFX* CFXButeMgr::GetParticleMuzzleFX(char* pName)
+CParticleMuzzleFX* CFXButeMgr::GetParticleMuzzleFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1738,7 +1738,7 @@ CMuzzleFX* CFXButeMgr::GetMuzzleFX(int nMuzzleFXId)
 //
 // ----------------------------------------------------------------------- //
 
-CMuzzleFX* CFXButeMgr::GetMuzzleFX(char* pName)
+CMuzzleFX* CFXButeMgr::GetMuzzleFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1794,7 +1794,7 @@ TRACERFX* CFXButeMgr::GetTracerFX(int nTracerFXId)
 //
 // ----------------------------------------------------------------------- //
 
-TRACERFX* CFXButeMgr::GetTracerFX(char* pName)
+TRACERFX* CFXButeMgr::GetTracerFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -1850,7 +1850,7 @@ BEAMFX* CFXButeMgr::GetBeamFX(int nBeamFXId)
 //
 // ----------------------------------------------------------------------- //
 
-BEAMFX* CFXButeMgr::GetBeamFX(char* pName)
+BEAMFX* CFXButeMgr::GetBeamFX(const char* pName)
 {
 	if (!pName) return LTNULL;
 
@@ -4596,7 +4596,7 @@ void CFXButeMgr::CreateImpactFX(IMPACTFX* pImpactFX, IFXCS & cs)
 //
 // ----------------------------------------------------------------------- //
 
-LTBOOL CFXButeMgr::ReadImpactFXProp(char* pPropName, uint8 & nImpactFXId)
+LTBOOL CFXButeMgr::ReadImpactFXProp(const char* pPropName, uint8 & nImpactFXId)
 {
     if (!pPropName || !pPropName[0]) return LTFALSE;
 

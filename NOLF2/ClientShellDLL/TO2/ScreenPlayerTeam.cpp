@@ -293,7 +293,7 @@ void CScreenPlayerTeam::UpdateTeam()
 
 			uint32 nColor = nTeamColors[pCI->nTeamID];
 
-			pItem = CreateTextItem(szTemp,NULL,NULL,kDefaultPos,LTTRUE);
+			pItem = CreateTextItem(szTemp,0,0,kDefaultPos,LTTRUE);
 			pItem->SetColors(nColor,nColor,nColor);
 			pItem->SetFont(LTNULL, nListFontSize);
 			pItem->SetFixedWidth(nListWidth,LTTRUE);

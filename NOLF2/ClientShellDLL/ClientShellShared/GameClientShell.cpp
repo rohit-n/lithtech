@@ -842,7 +842,7 @@ void CGameClientShell::ResetCharacterFXSoundData()
 //
 // ----------------------------------------------------------------------- //
 
-void CGameClientShell::CSPrint(char* msg, ...)
+void CGameClientShell::CSPrint(const char* msg, ...)
 {
 	// parse the message
 
@@ -3620,7 +3620,7 @@ void CGameClientShell::UpdateDebugInfo()
 //
 // --------------------------------------------------------------------------- //
 
-void CGameClientShell::SetDebugString(char* strMessage, DSSL eLoc, uint8 nLine)
+void CGameClientShell::SetDebugString(const char* strMessage, DSSL eLoc, uint8 nLine)
 {
 	if (!strMessage || strMessage[0] == '\0') return;
 	if (nLine < 0 || nLine >= kMaxDebugStrings) return;
@@ -4054,7 +4054,7 @@ void CGameClientShell::RestoreMusic()
 ///				specified by pCVarName.
 //
 // --------------------------------------------------------------------------- //
-void CGameClientShell::MirrorSConVar(char *pSVarName, char *pCVarName)
+void CGameClientShell::MirrorSConVar(const char *pSVarName, const char *pCVarName)
 {
 	char buf[512];
 	float fVal = 0.0f;

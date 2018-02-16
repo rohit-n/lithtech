@@ -292,7 +292,7 @@ uint16 CBaseMenu::AddControl (int stringID, uint32 commandID, LTBOOL bStatic)
 	return AddControl(LoadTempString(stringID),commandID,bStatic);
 }
 
-uint16 CBaseMenu::AddControl (char *pString, uint32 commandID, LTBOOL bStatic)
+uint16 CBaseMenu::AddControl (const char *pString, uint32 commandID, LTBOOL bStatic)
 {
 	CUIFont* pFont = g_pInterfaceResMgr->GetFont(m_FontFace);
 	if (!pFont) return -1;

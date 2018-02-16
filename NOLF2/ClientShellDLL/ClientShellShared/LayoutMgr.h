@@ -133,7 +133,7 @@ public:
 	LTBOOL		GetScreenSelectFXCenter(eScreenID screenId);
 
 	INT_CHAR   *GetScreenCharacter(eScreenID screenId);
-	INT_CHAR   *GetScreenCustomCharacter(eScreenID screenId, char* pName);
+	INT_CHAR   *GetScreenCustomCharacter(eScreenID screenId, const char* pName);
 	int			GetScreenNumAttachments(eScreenID screenId);
 	void		GetScreenAttachment(eScreenID screenId, int num, char *pBuf, int nBufLen);
 
@@ -141,13 +141,13 @@ public:
 	uint32		GetScreenNonSelectedColor(eScreenID screenId);
 	uint32		GetScreenDisabledColor(eScreenID screenId);
 
-    LTBOOL      HasCustomValue(eScreenID screenId, char *pAttribute);
-    LTIntPt     GetScreenCustomPoint(eScreenID screenId, char *pAttribute);
-    LTRect      GetScreenCustomRect(eScreenID screenId, char *pAttribute);
-	int			GetScreenCustomInt(eScreenID screenId, char *pAttribute);
-    LTFLOAT     GetScreenCustomFloat(eScreenID screenId, char *pAttribute);
-	void		GetScreenCustomString(eScreenID screenId, char *pAttribute, char *pBuf, int nBufLen);
-    LTVector    GetScreenCustomVector(eScreenID screenId, char *pAttribute);
+    LTBOOL      HasCustomValue(eScreenID screenId, const char *pAttribute);
+    LTIntPt     GetScreenCustomPoint(eScreenID screenId, const char *pAttribute);
+    LTRect      GetScreenCustomRect(eScreenID screenId, const char *pAttribute);
+	int			GetScreenCustomInt(eScreenID screenId, const char *pAttribute);
+    LTFLOAT     GetScreenCustomFloat(eScreenID screenId, const char *pAttribute);
+	void		GetScreenCustomString(eScreenID screenId, const char *pAttribute, char *pBuf, int nBufLen);
+    LTVector    GetScreenCustomVector(eScreenID screenId, const char *pAttribute);
 
 	INT_LIGHT	*GetLight(const char*szLight);
 	INT_FX		*GetFX(const char*szFX);
@@ -333,13 +333,13 @@ public:
 	uint32		GetMenuNonSelectedColor(eMenuID menuId);
 	uint32		GetMenuDisabledColor(eMenuID menuId);
 
-    LTBOOL      MenuHasCustomValue(eMenuID menuId, char *pAttribute);
-    LTIntPt     GetMenuCustomPoint(eMenuID menuId, char *pAttribute);
-    LTRect      GetMenuCustomRect(eMenuID menuId, char *pAttribute);
-	int			GetMenuCustomInt(eMenuID menuId, char *pAttribute);
-    LTFLOAT     GetMenuCustomFloat(eMenuID menuId, char *pAttribute);
-	void		GetMenuCustomString(eMenuID menuId, char *pAttribute, char *pBuf, int nBufLen);
-    LTVector    GetMenuCustomVector(eMenuID menuId, char *pAttribute);
+    LTBOOL      MenuHasCustomValue(eMenuID menuId, const char *pAttribute);
+    LTIntPt     GetMenuCustomPoint(eMenuID menuId, const char *pAttribute);
+    LTRect      GetMenuCustomRect(eMenuID menuId, const char *pAttribute);
+	int			GetMenuCustomInt(eMenuID menuId, const char *pAttribute);
+    LTFLOAT     GetMenuCustomFloat(eMenuID menuId, const char *pAttribute);
+	void		GetMenuCustomString(eMenuID menuId, const char *pAttribute, char *pBuf, int nBufLen);
+    LTVector    GetMenuCustomVector(eMenuID menuId, const char *pAttribute);
 
 	LTFLOAT		GetCreditsFadeInTime();
 	LTFLOAT		GetCreditsHoldTime();
@@ -350,15 +350,15 @@ public:
 	LTIntPt		GetCreditsPositionLL();
 	LTIntPt		GetCreditsPositionLR();
 	
-	LTBOOL      Exist(char *pTag);
-	LTBOOL      HasValue(char *pTag,char *pAttribute);
-    LTBOOL      GetBool(char *pTag,char *pAttribute, LTBOOL bDefault = LTFALSE);
-    LTFLOAT     GetFloat(char *pTag,char *pAttribute, float fDefault = 0.0f);
-	int			GetInt(char *pTag,char *pAttribute, int nDefault = 0);
-    LTIntPt     GetPoint(char *pTag,char *pAttribute);
-    LTRect      GetRect(char *pTag,char *pAttribute);
-	void		GetString(char *pTag,char *pAttribute, char *pBuf, int nBufLen);
-    LTVector    GetVector(char *pTag,char *pAttribute);
+	LTBOOL      Exist(const char *pTag);
+	LTBOOL      HasValue(const char *pTag,const char *pAttribute);
+    LTBOOL      GetBool(const char *pTag,const char *pAttribute, LTBOOL bDefault = LTFALSE);
+    LTFLOAT     GetFloat(const char *pTag,const char *pAttribute, float fDefault = 0.0f);
+	int			GetInt(const char *pTag,const char *pAttribute, int nDefault = 0);
+    LTIntPt     GetPoint(const char *pTag,const char *pAttribute);
+    LTRect      GetRect(const char *pTag,const char *pAttribute);
+	void		GetString(const char *pTag,const char *pAttribute, char *pBuf, int nBufLen);
+    LTVector    GetVector(const char *pTag,const char *pAttribute);
 
 
 protected:

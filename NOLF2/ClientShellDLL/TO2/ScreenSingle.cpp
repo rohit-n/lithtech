@@ -362,7 +362,7 @@ void CScreenSingle::OnFocus(LTBOOL bFocus)
 #ifndef _REMOVE_CUSTOM_LEVELS
 		m_pCustom->Show(LTFALSE);
 		m_pCustomFrame->Show(LTFALSE);
-#endif _REMOVE_CUSTOM_LEVELS
+#endif // _REMOVE_CUSTOM_LEVELS
 
 		//have they completed game?
 		LTBOOL bCompleted = LTFALSE;
