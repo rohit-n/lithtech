@@ -17,11 +17,15 @@
 #include <fstream.h>
 #pragma warning( disable : 4786 )
 
+#ifdef _MSC_VER
+#include <hash_map>
+#else
+#include <map>
+#endif
+
 #include <set>
 #include <vector>
 #include <string>
-#include <hash_map>
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE

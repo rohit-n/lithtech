@@ -14,9 +14,12 @@
 #include "mfcstub.h"
 #include "butemgr.h"
 
+#ifdef _MSC_VER
 #pragma warning( disable : 4786 )
 #include <hash_map>
-
+#else
+#include <map>
+#endif
 
 void GBM_DisplayError(const char* szMsg);
 

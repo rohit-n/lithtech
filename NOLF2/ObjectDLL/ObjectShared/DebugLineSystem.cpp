@@ -20,8 +20,11 @@
 #	include "ObjectTemplateMgr.h"
 #endif // VC7
 
+#ifdef _MSC_VER
 #pragma warning( disable : 4786 )
 #include <hash_map>
+#endif
+
 #include <string>
 #include <sstream>
 
