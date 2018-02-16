@@ -651,6 +651,7 @@ uint32 CBankedList<T>::GetFootprint()
 		nSize += sizeof(*pFinger);
 		pFinger = pFinger->GetNext();
 	}
+	return nSize;
 }
 
 template <typename T>
@@ -757,6 +758,7 @@ LTBOOL CBankedList<T>::PreAlloc(uint32 nMinItems)
 		pNewBank->InsertList(m_pEmptyHead);
 		m_pEmptyHead = pNewBank;
 	}
+	return LTTRUE;
 }
 
 template <typename T>

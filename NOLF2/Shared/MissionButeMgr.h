@@ -72,6 +72,7 @@ struct REWARD
 struct MISSION
 {
 	MISSION();
+	virtual ~MISSION() {};
     virtual LTBOOL   Init(CButeMgr & buteMgr, const char* aTagName);
     virtual LTBOOL   Save(CButeMgr & buteMgr, const char* aTagName);
 

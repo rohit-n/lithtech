@@ -186,8 +186,8 @@
 
 		//we cannot allow copying since that will lead to the possibility that items
 		//are deleted twice
-		CLIENTFX_LINK(const CLIENTFX_LINK&)					{}
-		CLIENTFX_LINK& operator=(const CLIENTFX_LINK&)		{}
+		CLIENTFX_LINK(const CLIENTFX_LINK&)					= delete;
+		CLIENTFX_LINK& operator=(const CLIENTFX_LINK&)		= delete;
 	};
 
 	//a node for a linked list of CLIENTFX_LINKs

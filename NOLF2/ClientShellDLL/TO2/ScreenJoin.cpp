@@ -672,7 +672,7 @@ void CScreenJoin::DisplayCurServerList()
 
 		// Do the mod...
 
-		sprintf( aTempBuffer, "%s", iCurServer->m_sModName );
+		sprintf( aTempBuffer, "%s", iCurServer->m_sModName.c_str() );
 		pCtrl->AddColumn( aTempBuffer, kColumnWidth_Mod );
 
 		// Do the ping

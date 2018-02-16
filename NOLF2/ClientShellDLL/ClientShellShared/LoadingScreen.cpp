@@ -273,7 +273,7 @@ LTBOOL CLoadingScreen::Init()
 		if( g_pClientMultiplayerMgr->IsConnectedToRemoteServer( ))
 		{
 			// Make a loading string using the IP to be joined.
-			char szLoadingString[256];
+			char szLoadingString[8192];
 
 			if (strlen(g_pClientMultiplayerMgr->GetStartGameRequest( ).m_HostInfo.m_sName))
 			{

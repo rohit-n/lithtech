@@ -151,7 +151,7 @@ void CScreenPostload::OnFocus(LTBOOL bFocus)
 			if( g_pClientMultiplayerMgr->IsConnectedToRemoteServer( ))
 			{
 				// Make a loading string using the IP to be joined.
-				char szLoadingString[256];
+				char szLoadingString[8192];
 				if (strlen(g_pClientMultiplayerMgr->GetStartGameRequest( ).m_HostInfo.m_sName))
 				{
 					sprintf( szLoadingString, "%s:  %s", LoadTempString(IDS_CONNECTING_TO_SERVER), 

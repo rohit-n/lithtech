@@ -2044,7 +2044,7 @@ void input_SaveBindings( FILE *fp )
 				}
 
 				LTStrCat( str, "\n", sizeof(str) );
-				fprintf( fp, str );
+				fprintf( fp, "%s", str );
 
 				if( (pTrigger->m_fRangeScaleMin != 0.0f) || (pTrigger->m_fRangeScaleMax != 0.0f)  || (pTrigger->m_fRangeScalePreCenterOffset != 0.0f))
 					fprintf( fp, "rangescale \"%s\" \"%s\" %f %f %f %f\n", pDeviceName, pTrigger->m_RealName, pTrigger->m_Scale, pTrigger->m_fRangeScaleMin, pTrigger->m_fRangeScaleMax, pTrigger->m_fRangeScalePreCenterOffset );

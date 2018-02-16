@@ -334,7 +334,7 @@ const char FXBMGR_CLUSTERAUTOBURSTCLASS_MAXBURSTDIST[] =		"AutoBurstMaxDist";
 
 #define FXBMGR_MIN_BLASTMARK_RADIUS		100.0f
 
-static char s_aTagName[30];
+static char s_aTagName[60];
 static char s_aAttName[100];
 static char s_FileBuffer[MAX_CS_FILENAME_LEN];
 
