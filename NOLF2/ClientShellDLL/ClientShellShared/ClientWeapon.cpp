@@ -3112,7 +3112,7 @@ void CClientWeapon::InitAnimations( bool bAllowSelectOverride )
 		}
 		else
 		{
-			sprintf( buf, ns_szAltFireAnimationName );
+			sprintf( buf, "%s", ns_szAltFireAnimationName );
 		}
 
 		m_nAltFireAnis[ i ] = g_pLTClient->GetAnimIndex( m_hObject, buf );
