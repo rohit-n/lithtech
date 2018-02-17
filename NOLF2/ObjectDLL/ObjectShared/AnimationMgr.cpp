@@ -802,7 +802,7 @@ void CAnimationContext::SetSpecial(const char* szName)
 void CAnimationContext::SetSpecial(const CAnimationProps& Props)
 {
 	const CAnimation& Animation = m_pAnimationMgr->FindAnimation( Props, &m_iCachedAnimation, &m_iRandomSeed, LTTRUE, m_hObject );
-	VerifyAnimation( m_hObject, Animation.GetName(), &(CAnimationProps)Props );
+	VerifyAnimation( m_hObject, Animation.GetName(), (CAnimationProps*)&Props );
 
 	AITRACE(AIShowAnimation, ( m_hObject, "Setting special anim %s\n", Animation.GetName() ) );
 

@@ -79,11 +79,11 @@ static CVarTrack s_vtBodyCapRadiusCount;
 static CVarTrack s_vtBodyCapTotalCount;
 
 
-char* g_szArrowFrontDeath = "DArrow";
-static char* s_szArrowFrontSlump = "arrowfall";
+const char* g_szArrowFrontDeath = "DArrow";
+static const char* s_szArrowFrontSlump = "arrowfall";
 
-char* g_szArrowBackDeath = "DArrowBack";
-static char* s_szArrowBackSlump = "arrowfallBack";
+const char* g_szArrowBackDeath = "DArrowBack";
+static const char* s_szArrowBackSlump = "arrowfallBack";
 
 CVarTrack g_vtBodyExplosionVelMultiplier;
 float g_kfDefaultBodyExplosionVelocity = 3.0f;
@@ -659,7 +659,7 @@ bool Body::HandleModelString(ArgList* pArgList)
 
 	for(int i=0;i<pArgList->argc;i++)
 	{
-		char* pKey = pArgList->argv[i];
+		const char* pKey = pArgList->argv[i];
 		if (!pKey) 
 			return false;
 
@@ -1015,7 +1015,7 @@ void Body::Init(const BODYINITSTRUCT& bi)
 	bool bRemoveWeapons		= IsMultiplayerGame() ? !IsPlayer( m_hCharacter ) : true;
 	bool bCanSearch			= IsMultiplayerGame() ? !IsPlayer( m_hCharacter ) : true;
 
-	if (!m_pAttachments && bi.eBodyState != eBodyStateLaser)
+	if (!m_pAttachments && bi.eBodyState != kState_BodyLaser)
 	{
 		bi.pCharacter->TransferWeapons(this, bRemoveWeapons);
 	}
@@ -1528,7 +1528,9 @@ void Body::AddWeapon(HOBJECT hWeapon, char *pszPosition)
 	{
 
 		HATTACHMENT hAttachment;
-		if ( LT_OK == g_pLTServer->CreateAttachment(m_hObject, hWeapon, pszPosition, &LTVector(0,0,0), &LTRotation(), &hAttachment) )
+		LTVector tVec{0,0,0};
+		LTRotation tRot{};
+		if ( LT_OK == g_pLTServer->CreateAttachment(m_hObject, hWeapon, pszPosition, &tVec, &tRot, &hAttachment) )
 		{
 			m_ahWeapons[m_cWeapons++] = hWeapon;
 			return;

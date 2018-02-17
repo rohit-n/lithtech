@@ -244,7 +244,7 @@ void CAIHumanStrategyFollowPath::HandleModelString(ArgList* pArgList)
 {
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 ) return;
 
-	char* szKey = pArgList->argv[0];
+	const char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
 	if ( !stricmp(szKey, "DOOR") )
@@ -3818,7 +3818,7 @@ void CAIHumanStrategyShoot::HandleModelString(ArgList* pArgList)
 {
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 ) return;
 
-	char* szKey = pArgList->argv[0];
+	const char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
 	if ( !stricmp(szKey, c_szKeyFireWeapon) )
@@ -4726,7 +4726,9 @@ void CAIHumanStrategyFlashlight::FlashlightCreate()
 		::SetNextUpdate(m_hFlashlightModel, UPDATE_NEVER);
 
 		HATTACHMENT hAttachment;
-		if ( LT_OK == g_pLTServer->CreateAttachment(GetAI()->GetObject(), m_hFlashlightModel, "Light", &LTVector(0,0,0), &LTRotation(), &hAttachment) )
+		LTVector tVec{0,0,0};
+		LTRotation tRot{};
+		if ( LT_OK == g_pLTServer->CreateAttachment(GetAI()->GetObject(), m_hFlashlightModel, "Light", &tVec, &tRot, &hAttachment) )
 		{
 
 		}
@@ -4789,7 +4791,7 @@ void CAIHumanStrategyFlashlight::HandleModelString(ArgList* pArgList)
 {
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 ) return;
 
-	char* szKey = pArgList->argv[0];
+	const char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
 	if ( !stricmp(szKey, "FL_SHOW") )

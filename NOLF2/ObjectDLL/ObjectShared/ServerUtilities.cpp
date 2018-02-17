@@ -289,7 +289,7 @@ void StartTimingCounter()
     g_pLTServer->StartCounter(&s_counter);
 }
 
-void EndTimingCounter(char *msg, ...)
+void EndTimingCounter(const char *msg, ...)
 {
     if (!g_pLTServer || g_ShowTimingTrack.GetFloat() < 1.0f) return;
 
@@ -297,7 +297,7 @@ void EndTimingCounter(char *msg, ...)
 
 	// parse the message
 
-	char pMsg[256];
+	char pMsg[512];
 	va_list marker;
 	va_start(marker, msg);
 	int nSuccess = vsprintf(pMsg, msg, marker);
@@ -1237,7 +1237,7 @@ LTBOOL IsVector(const char* szString)
 	return LTTRUE;
 }
 
-void GetConsoleString(char* sKey, char* sDest, char* sDefault)
+void GetConsoleString(const char* sKey, char* sDest, const char* sDefault)
 {
     if (g_pLTServer)
 	{
@@ -1256,7 +1256,7 @@ void GetConsoleString(char* sKey, char* sDest, char* sDefault)
 	strcpy(sDest, sDefault);
 }
 
-int GetConsoleInt(char* sKey, int nDefault)
+int GetConsoleInt(const char* sKey, int nDefault)
 {
     if (g_pLTServer)
 	{
@@ -1271,7 +1271,7 @@ int GetConsoleInt(char* sKey, int nDefault)
 	return(nDefault);
 }
 
-LTFLOAT GetConsoleFloat(char* sKey, LTFLOAT fDefault)
+LTFLOAT GetConsoleFloat(const char* sKey, LTFLOAT fDefault)
 {
     if (g_pLTServer)
 	{
@@ -1286,7 +1286,7 @@ LTFLOAT GetConsoleFloat(char* sKey, LTFLOAT fDefault)
 	return(fDefault);
 }
 
-void WriteConsoleString(char* sKey, char* sValue)
+void WriteConsoleString(const char* sKey, char* sValue)
 {
     if (g_pLTServer)
 	{
@@ -1296,7 +1296,7 @@ void WriteConsoleString(char* sKey, char* sValue)
 	}
 }
 
-void WriteConsoleInt(char* sKey, int nValue)
+void WriteConsoleInt(const char* sKey, int nValue)
 {
     if (g_pLTServer)
 	{
@@ -1306,7 +1306,7 @@ void WriteConsoleInt(char* sKey, int nValue)
 	}
 }
 
-void WriteConsoleFloat(char* sKey, LTFLOAT fValue)
+void WriteConsoleFloat(const char* sKey, LTFLOAT fValue)
 {
     if (g_pLTServer)
 	{

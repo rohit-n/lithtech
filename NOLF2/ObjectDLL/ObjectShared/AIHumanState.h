@@ -917,7 +917,7 @@ class CAIHumanStateUseObject : public CAIHumanState
 		// Handlers
 
 		void HandleVolumeEnter(AIVolume* pVolume);
-		void HandleNameValuePair(char *szName, char *szValue);
+		void HandleNameValuePair(const char *szName, const char *szValue);
 		void HandleModelString(ArgList* pArgList);
 		void HandleDamage(const DamageStruct& damage);
 

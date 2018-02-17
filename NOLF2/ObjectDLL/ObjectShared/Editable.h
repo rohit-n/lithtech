@@ -51,11 +51,11 @@ class CEditable : public IAggregate
 		CEditable();
 		virtual ~CEditable();
 
-        void AddFloatProp(char* pPropName, LTFLOAT* pPropAddress);
-        void AddDWordProp(char* pPropName, uint32* pPropAddress);
-        void AddByteProp(char* pPropName, uint8* pPropAddress);
-        void AddBoolProp(char* pPropName, LTBOOL* pPropAddress);
-        void AddVectorProp(char* pPropName, LTVector* pPropAddress);
+        void AddFloatProp(const char* pPropName, LTFLOAT* pPropAddress);
+        void AddDWordProp(const char* pPropName, uint32* pPropAddress);
+        void AddByteProp(const char* pPropName, uint8* pPropAddress);
+        void AddBoolProp(const char* pPropName, LTBOOL* pPropAddress);
+        void AddVectorProp(const char* pPropName, LTVector* pPropAddress);
 
 	protected :
 

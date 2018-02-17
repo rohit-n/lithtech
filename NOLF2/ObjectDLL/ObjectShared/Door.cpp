@@ -605,16 +605,14 @@ void Door::OnLoad( ILTMessage_Read *pMsg, uint32 dwSaveFlags )
 //
 // ----------------------------------------------------------------------- //
 
-void Door::PlayDoorKnobAni( char *pAniName )
+void Door::PlayDoorKnobAni( const char *pAniName )
 {
 	if( !pAniName ) return;
 
 	// Look for all door knobs attached to us...
-
-	for( ObjRefNotifierList::iterator iter = m_AttachmentList.begin( ); iter != m_AttachmentList.end( ); iter++ )
+	for (auto && hObj : m_AttachmentList) 
 	{
 		bool bCanPlay = false;
-		HOBJECT hObj = *iter;
 
 		DoorKnob* pDoorKnob = dynamic_cast< DoorKnob* >( g_pLTServer->HandleToObject( hObj ));
 		if( pDoorKnob )

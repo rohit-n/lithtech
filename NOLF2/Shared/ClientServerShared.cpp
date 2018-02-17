@@ -49,7 +49,7 @@ void ConsoleToButeString( CButeMgr &bute, const char *pszButeTag, const char *ps
 {
 	char szVal[MAX_PATH*2];
 
-	GetConsoleString(( char * )pszConsoleVar, szVal, "" );
+	GetConsoleString(pszConsoleVar, szVal, "" );
 	bute.SetString( pszButeTag, pszButeAttr, szVal );
 }
 

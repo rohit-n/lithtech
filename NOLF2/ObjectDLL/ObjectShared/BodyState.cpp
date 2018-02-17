@@ -67,8 +67,10 @@ void CBodyState::Init(Body* pBody)
 		FLAG_SOLID | FLAG_GRAVITY | 
 		FLAG_GOTHRUWORLD | FLAG_TOUCH_NOTIFY | FLAG_RAYHIT);
 
-    g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &LTVector(0,0,0));
-    g_pPhysicsLT->SetAcceleration(m_pBody->m_hObject, &LTVector(0,0,0));
+	LTVector tVel{0,0,0};
+	LTVector tAccel{0,0,0};
+    g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &tVel);
+    g_pPhysicsLT->SetAcceleration(m_pBody->m_hObject, &tAccel);
 
 	if (!s_RemovePowerups.IsInitted())
 	{
@@ -630,7 +632,8 @@ void CBodyStateLedge::Update()
 
 			g_pCommonLT->SetObjectFlags(m_pBody->m_hObject, OFT_Flags, FLAG_GRAVITY, FLAG_GRAVITY | FLAG_GOTHRUWORLD);
 
-			g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &LTVector(pVolume->GetForward().x*100.0f,-500,pVolume->GetForward().y*100.0f));
+			LTVector tNewVel{pVolume->GetForward().x*100.0f,-500,pVolume->GetForward().y*100.0f};
+			g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &tNewVel);
 		}
 	}
 }
@@ -737,8 +740,9 @@ void CBodyStateLadder::Init(Body* pBody)
     m_fTimer = (LTFLOAT)dwLength/1000.0f;
 
 	// Move away from the ladder.
-
-	g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &LTVector( -pVolume->GetForward().x*10.f, 0.f, -pVolume->GetForward().z*10.f ) );
+	
+	LTVector tPushOff{ -pVolume->GetForward().x*10.f, 0.f, -pVolume->GetForward().z*10.f };
+	g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &tPushOff );
 }
 
 void CBodyStateLadder::InitLoad(Body* pBody)
@@ -802,7 +806,8 @@ void CBodyStateLadder::Update()
 
 			g_pCommonLT->SetObjectFlags(m_pBody->m_hObject, OFT_Flags, FLAG_GRAVITY, FLAG_GRAVITY | FLAG_GOTHRUWORLD);
 
-			g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &LTVector( 0.f, -500.f, 0.f ) );
+			LTVector tNewVel{ 0.f, -500.f, 0.f };
+			g_pPhysicsLT->SetVelocity(m_pBody->m_hObject, &tNewVel );
 		}
 	}
 }
@@ -1090,9 +1095,9 @@ void CBodyStateCrush::Init(Body* pBody)
 {
 	CBodyState::Init(pBody);
 
-	static char* aszCrushDeaths[] = { "DCrush" };
+	static const char* aszCrushDeaths[] = { "DCrush" };
     static int cCrushDeaths = sizeof(aszCrushDeaths)/sizeof(char*);
-	char* szDeath = aszCrushDeaths[GetRandom(0, cCrushDeaths-1)];
+	const char* szDeath = aszCrushDeaths[GetRandom(0, cCrushDeaths-1)];
 
 	HMODELANIM hAni = g_pLTServer->GetAnimIndex(m_pBody->m_hObject, szDeath);
 
@@ -1113,9 +1118,9 @@ void CBodyStateChair::Init(Body* pBody)
 {
 	CBodyState::Init(pBody);
 
-	static char* aszChairDeaths[] = { "DSit2" /*, "DSitFall"*/ };
+	static const char* aszChairDeaths[] = { "DSit2" /*, "DSitFall"*/ };
     static int cChairDeaths = sizeof(aszChairDeaths)/sizeof(char*);
-	char* szDeath = aszChairDeaths[GetRandom(0, cChairDeaths-1)];
+	const char* szDeath = aszChairDeaths[GetRandom(0, cChairDeaths-1)];
 
 	HMODELANIM hAni = g_pLTServer->GetAnimIndex(m_pBody->m_hObject, szDeath);
 
@@ -1136,9 +1141,9 @@ void CBodyStatePoison::Init(Body* pBody)
 {
 	CBodyState::Init(pBody);
 
-	static char* aszPoisonDeaths[] = { "DPoison" };
+	static const char* aszPoisonDeaths[] = { "DPoison" };
     static int cPoisonDeaths = sizeof(aszPoisonDeaths)/sizeof(char*);
-	char* szDeath = aszPoisonDeaths[GetRandom(0, cPoisonDeaths-1)];
+	const char* szDeath = aszPoisonDeaths[GetRandom(0, cPoisonDeaths-1)];
 
 	HMODELANIM hAni = g_pLTServer->GetAnimIndex(m_pBody->m_hObject, szDeath);
 
@@ -1159,9 +1164,9 @@ void CBodyStateAcid::Init(Body* pBody)
 {
 	CBodyState::Init(pBody);
 
-	static char* aszAcidDeaths[] = { "DAcid" };
+	static const char* aszAcidDeaths[] = { "DAcid" };
     static int cAcidDeaths = sizeof(aszAcidDeaths)/sizeof(char*);
-	char* szDeath = aszAcidDeaths[GetRandom(0, cAcidDeaths-1)];
+	const char* szDeath = aszAcidDeaths[GetRandom(0, cAcidDeaths-1)];
 
 	HMODELANIM hAni = g_pLTServer->GetAnimIndex(m_pBody->m_hObject, szDeath);
 

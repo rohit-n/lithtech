@@ -56,7 +56,7 @@ extern void LTMemConsole(int argc, const char *argv[]);
 // Helpers.
 // ------------------------------------------------------------------ //
 
-static LTBOOL _FindClassInList(char *pClassName, char classNames[500][32], int nClassNames, int *pIndex)
+static LTBOOL _FindClassInList(const char *pClassName, char classNames[500][32], int nClassNames, int *pIndex)
 {
     int i;
 

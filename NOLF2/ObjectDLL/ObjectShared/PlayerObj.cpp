@@ -77,8 +77,8 @@ END_CLASS_DEFAULT_FLAGS(CPlayerObj, CCharacter, NULL, NULL, CF_HIDDEN)
 
 CPlayerObj::PlayerObjList CPlayerObj::m_lstPlayerObjs;
 
-static char* s_pMPBodySounds[] = { "Chars\\Snd\\MaleBodyMoveCloth_1.WAV", "Chars\\Snd\\MaleBodyMoveLeather_1.WAV" };
-static char* s_pBodySounds[] = { "Chars\\Snd\\BodyMoveCloth_1.WAV", "Chars\\Snd\\BodyMoveLeather_1.WAV" };
+static const char* s_pMPBodySounds[] = { "Chars\\Snd\\MaleBodyMoveCloth_1.WAV", "Chars\\Snd\\MaleBodyMoveLeather_1.WAV" };
+static const char* s_pBodySounds[] = { "Chars\\Snd\\BodyMoveCloth_1.WAV", "Chars\\Snd\\BodyMoveLeather_1.WAV" };
 
 
 namespace
@@ -4473,7 +4473,7 @@ void CPlayerObj::StartDeath()
 
 	if (m_ePPhysicsModel != PPM_NORMAL)
 	{
-		char* pSound;
+		const char* pSound;
 		if (GetRandom(0, 1) == 1)
 		{
 			pSound = "Snd\\Vehicle\\vehiclecrash1.wav";
@@ -4972,7 +4972,7 @@ char* CPlayerObj::GetDeathSound()
 
 		default:
 		{
-			char* DeathSounds[] =  { "death01.wav", "death02.wav", "death03.wav", "death04.wav", "death05.wav" };
+			const char* DeathSounds[] =  { "death01.wav", "death02.wav", "death03.wav", "death04.wav", "death05.wav" };
 
 			int nSize = (sizeof(DeathSounds)/sizeof(DeathSounds[0])) - 1;
 			strcat(s_FileBuffer, DeathSounds[GetRandom(0, nSize)]);
@@ -5941,9 +5941,10 @@ void CPlayerObj::BuildKeepAlives(ObjectList* pList)
 	// make sure we still update the client)...
 	
 	g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, FLAG_FORCECLIENTUPDATE, FLAGMASK_ALL);
-
-	g_pPhysicsLT->SetVelocity(m_hObject, &(LTVector(0, 0, 0)) );
-
+	{
+		LTVector tVec{0,0,0};
+		g_pPhysicsLT->SetVelocity(m_hObject, &tVec );
+	}
 	{ ///////////////////////////////////////////////////////////////////////////
 
 		// Clear any player/character data that we don't want to save
@@ -7887,15 +7888,18 @@ void CPlayerObj::SetCarriedObject( HOBJECT hObject, bool bTransition /* = false 
 		LTRotation rRot;
 		g_pLTServer->GetObjectRotation(m_hObject, &rRot);
 
-		static char* pSocket = "Body";
+		static const char* pSocket = "Body";
 
 		HATTACHMENT hAttachment;
-		if (LT_OK != g_pLTServer->CreateAttachment(m_hObject, m_hCarriedObject, pSocket, &LTVector(0,0,0), &LTRotation(), &hAttachment))
 		{
-			ASSERT(!"CreateAttachment() failed.");
-			g_pLTServer->CPrint("Failed to attach body.");
+			LTVector tVec{0,0,0};
+			LTRotation tRot{};
+			if (LT_OK != g_pLTServer->CreateAttachment(m_hObject, m_hCarriedObject, pSocket, &tVec, &tRot, &hAttachment))
+			{
+				ASSERT(!"CreateAttachment() failed.");
+				g_pLTServer->CPrint("Failed to attach body.");
+			}
 		}
-		
 		
 		if (IsMultiplayerGame())
 		{

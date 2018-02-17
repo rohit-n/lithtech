@@ -157,7 +157,9 @@ static LTBOOL ValidateBooleanMsg( ILTPreInterface *pInterface, ConParse &cpMsgPa
 	{
 		pInterface->ShowDebugWindow( LTTRUE );
 		pInterface->CPrint( "ERROR! - ValidateBooleanMsg()" );
-		pInterface->CPrint( "    MSG - %s - '%s' is not a valid boolean value!", strupr(cpMsgParams.m_Args[0]), cpMsgParams.m_Args[1] );
+		char szArg0[1024];
+		strncpy(szArg0, cpMsgParams.m_Args[0], 1024);
+		pInterface->CPrint( "    MSG - %s - '%s' is not a valid boolean value!", strupr(szArg0), cpMsgParams.m_Args[1] );
 	}
 	
 	return LTFALSE;
@@ -2258,7 +2260,7 @@ void CCharacter::HandleModelString(ArgList* pArgList)
 		
 	if (!pArgList || !pArgList->argv || pArgList->argc == 0) return;
 
-	char* pKey = pArgList->argv[0];
+	const char* pKey = pArgList->argv[0];
 	if (!pKey) return;
 
 	CParsedMsg::CToken tok( pKey );
@@ -2319,7 +2321,7 @@ void CCharacter::HandleModelString(ArgList* pArgList)
 	{
 		// Get sound name from message...
 
-		char* pSoundName = pArgList->argv[1];
+		const char* pSoundName = pArgList->argv[1];
 
 		if (pSoundName)
 		{
@@ -2842,7 +2844,7 @@ void CCharacter::UpdateSounds()
 //
 // ----------------------------------------------------------------------- //
 
-void CCharacter::PlaySound(char *pSoundName, LTFLOAT fRadius, LTBOOL bAttached)
+void CCharacter::PlaySound(const char *pSoundName, LTFLOAT fRadius, LTBOOL bAttached)
 {
     LTVector vPos;
 	g_pLTServer->GetObjectPos(m_hObject, &vPos);
@@ -3121,7 +3123,7 @@ LTBOOL CCharacter::PlayDialogue( DWORD dwID )
 //
 // ----------------------------------------------------------------------- //
 
-LTBOOL CCharacter::PlayDialogue( char *szDialogue )
+LTBOOL CCharacter::PlayDialogue( const char *szDialogue )
 {
     if (!szDialogue) return LTFALSE;
 

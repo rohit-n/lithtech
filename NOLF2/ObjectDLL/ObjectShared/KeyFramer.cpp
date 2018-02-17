@@ -1371,7 +1371,7 @@ void KeyFramer::Update()
 			CAutoMessage cTempMsg;
 			cTempMsg.Writeuint32(MID_TRIGGER);
 			// MW-TODO Writeuintptr?
-			cTempMsg.Writeuint32((uint32)m_pCommands);
+			cTempMsg.Writeuintptr((uintptr_t)m_pCommands);
 			ObjectMessageFn(m_hObject, cTempMsg.Read());
 			debug_deletea(m_pCommands);
 			m_pCommands = LTNULL;

@@ -390,9 +390,9 @@ void CGlobalServerMgr::Term()
 //
 // ----------------------------------------------------------------------- //
 
-void CGlobalServerMgr::ShutdownWithError(char* pMgrName, char* pButeFilePath)
+void CGlobalServerMgr::ShutdownWithError(const char* pMgrName, const char* pButeFilePath)
 {
-	char errorBuf[256];
+	char errorBuf[8192];
 	sprintf(errorBuf, "ERROR in CGlobalServerMgr::Init()\n\nCouldn't initialize %s.  Make sure the %s file is valid!", pMgrName, pButeFilePath);
     g_pLTServer->CPrint(errorBuf);
 

@@ -1474,5 +1474,5 @@ LTBOOL CAnimatorPlayer::IsAnimatingDirectionDone(Direction eDirection) const
 
 LTBOOL CAnimatorPlayer::IsAnimatingLeanDone(Lean eLean) const
 {
-	return ( m_eLastWeapon == eLean && IsAniTrackerDone(m_eAniTrackerUpper) );
+	return ( m_eLastLean == eLean && IsAniTrackerDone(m_eAniTrackerUpper) );
 }

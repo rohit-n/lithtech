@@ -33,9 +33,9 @@ extern CAIStimulusMgr* g_pAIStimulusMgr;
 
 // Statics
 
-static char *s_szActivate	= "ACTIVATE";
-static char *s_szLock		= "LOCK";
-static char *s_szUnlock		= "UNLOCK";
+static const char *s_szActivate	 = "ACTIVATE";
+static const char *s_szLock	     = "LOCK";
+static const char *s_szUnlock    = "UNLOCK";
 
 // ----------------------------------------------------------------------- //
 //

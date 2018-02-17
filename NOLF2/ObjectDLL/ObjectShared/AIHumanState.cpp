@@ -2624,7 +2624,7 @@ void CAIHumanStateUseObject::HandleVolumeEnter(AIVolume* pVolume)
 
 // ----------------------------------------------------------------------- //
 
-void CAIHumanStateUseObject::HandleNameValuePair(char *szName, char *szValue)
+void CAIHumanStateUseObject::HandleNameValuePair(const char *szName, const char *szValue)
 {
 	super::HandleNameValuePair(szName, szValue);
 
@@ -2761,7 +2761,7 @@ void CAIHumanStateUseObject::HandleModelString(ArgList* pArgList)
 
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 ) return;
 
-	char* szKey = pArgList->argv[0];
+	const char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
 	if ( !stricmp(szKey, c_szKeyPickUp) )
@@ -9552,7 +9552,7 @@ void CAIHumanStateLongJump::HandleModelString(ArgList* pArgList)
 
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 ) return;
 
-	char* szKey = pArgList->argv[0];
+	const char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
 	if ( !stricmp(szKey, c_szKeyFireWeapon) )

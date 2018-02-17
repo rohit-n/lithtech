@@ -454,7 +454,7 @@ void CAIHumanStrategyToggleLights::HandleModelString(ArgList* pArgList)
 	if ( !pArgList || !pArgList->argv || pArgList->argc == 0 ) return;
 
 	char szCmd[4];
-	char* szKey = pArgList->argv[0];
+	const char* szKey = pArgList->argv[0];
 	if ( !szKey ) return;
 
 	if ( !stricmp(szKey, c_szKeyTurnOn) )

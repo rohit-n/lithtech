@@ -381,42 +381,42 @@ const int c_nNumValidCmds = sizeof(s_ValidCmds)/sizeof(s_ValidCmds[0]);
 // Operator methods
 ///////////////////////////////////
 
-eExpressionVal CheckExpression( ConParse &cpExpression );
+static eExpressionVal CheckExpression( ConParse &cpExpression );
 
-static LTBOOL Op_Int_equals( void *arg1, void *arg2 )
+static LTBOOL Op_Int_equals( const void *arg1, const void *arg2 )
 {
-	return( *(int*)arg1 == *(int*)arg2 );
+	return( *(const int*)arg1 == *(const int*)arg2 );
 }
 
-static LTBOOL Op_Int_notequals( void *arg1, void *arg2 )
+static LTBOOL Op_Int_notequals( const void *arg1, const void *arg2 )
 {
-	return( *(int*)arg1 != *(int*)arg2 );
+	return( *(const int*)arg1 != *(const int*)arg2 );
 }
 
-static LTBOOL Op_Int_greaterthan( void *arg1, void *arg2 )
+static LTBOOL Op_Int_greaterthan( const void *arg1, const void *arg2 )
 {
-	return( *(int*)arg1 > *(int*)arg2 );
+	return( *(const int*)arg1 > *(const int*)arg2 );
 }
 
-static LTBOOL Op_Int_lessthan( void *arg1, void *arg2 )
+static LTBOOL Op_Int_lessthan( const void *arg1, const void *arg2 )
 {
-	return( *(int*)arg1 < *(int*)arg2 );
+	return( *(const int*)arg1 < *(const int*)arg2 );
 }
 
-static LTBOOL Op_Int_greaterthan_equalto( void *arg1, void *arg2 )
+static LTBOOL Op_Int_greaterthan_equalto( const void *arg1, const void *arg2 )
 {
-	return( *(int*)arg1 >= *(int*)arg2 );
+	return( *(const int*)arg1 >= *(const int*)arg2 );
 }
 
-static LTBOOL Op_Int_lessthan_equalto( void *arg1, void *arg2 )
+static LTBOOL Op_Int_lessthan_equalto( const void *arg1, const void *arg2 )
 {
-	return( *(int*)arg1 <= *(int*)arg2 );
+	return( *(const int*)arg1 <= *(const int*)arg2 );
 }
 
-static LTBOOL Op_Logical_and( void *arg1, void *arg2 )
+static LTBOOL Op_Logical_and( const void *arg1, const void *arg2 )
 {
 	ConParse cpArg1;
-	cpArg1.Init( (char*)arg1 );
+	cpArg1.Init( (const char*)arg1 );
 
 	if( g_pCommonLT->Parse( &cpArg1 ) == LT_OK )
 	{
@@ -436,13 +436,13 @@ static LTBOOL Op_Logical_and( void *arg1, void *arg2 )
 	return LTFALSE;
 }
 
-static LTBOOL Op_Logical_or( void *arg1, void *arg2 )
+static LTBOOL Op_Logical_or(const void *arg1, const void *arg2 )
 {
 	ConParse cpArg1;
-	cpArg1.Init( (char*)arg1 );
+	cpArg1.Init( (const char*)arg1 );
 
 	ConParse cpArg2;
-	cpArg2.Init( (char*)arg2 );
+	cpArg2.Init( (const char*)arg2 );
 
 	if( (g_pCommonLT->Parse( &cpArg1 ) == LT_OK) && (g_pCommonLT->Parse( &cpArg2 ) == LT_OK) )
 	{
@@ -499,9 +499,9 @@ static eExpressionVal CheckExpression( ConParse &cpExpression )
 	if( cpExpression.m_nArgs != 3 )
 		return kExpress_ERROR;
 
-	char *pArg1 = cpExpression.m_Args[0];
+	const char *pArg1 = cpExpression.m_Args[0];
 	const char *pOp = cpExpression.m_Args[1];
-	char *pArg2 = cpExpression.m_Args[2];
+	const char *pArg2 = cpExpression.m_Args[2];
 
 	if( !pArg1 || !pOp || !pArg2 || !g_pCmdMgr )
 		return kExpress_ERROR;
@@ -535,8 +535,8 @@ static eExpressionVal CheckExpression( ConParse &cpExpression )
 				continue;
 			}
 
-			int	nValue1 = (pVar1->m_eType == eCMVar_Obj) ? (int)pVar1->m_pObjVal : pVar1->m_iVal;
-			int nValue2 = 0;
+			uintptr_t	nValue1 = (pVar1->m_eType == eCMVar_Obj) ? (uintptr_t)pVar1->m_pObjVal : pVar1->m_iVal;
+			uintptr_t   nValue2 = 0;
 					
 			// Is the second arg a number value or another variable...
 
@@ -567,7 +567,7 @@ static eExpressionVal CheckExpression( ConParse &cpExpression )
 
 					ILTBaseClass *pVar2Obj = 0;
 					FindNamedObject( pArg2, pVar2Obj, LTTRUE );
-					nValue2 = (int)pVar2Obj;
+					nValue2 = (uintptr_t)pVar2Obj;
 				}
 				else if( pVar1->m_eType != pVar2->m_eType )
 				{
@@ -577,7 +577,7 @@ static eExpressionVal CheckExpression( ConParse &cpExpression )
 				{
 					// Get the comparison value
 
-					nValue2 = (pVar2->m_eType == eCMVar_Obj) ? (int)pVar2->m_pObjVal : pVar2->m_iVal;
+					nValue2 = (pVar2->m_eType == eCMVar_Obj) ? (uintptr_t)pVar2->m_pObjVal : pVar2->m_iVal;
 				}
 			}
 					
@@ -821,7 +821,7 @@ LTBOOL CCommandMgr::ProcessDelayId(ConParse & parse, int nCmdIndex)
 //
 // ----------------------------------------------------------------------- //
 
-static void ParseMsg_Target(char *pName, char **pResultClass, char **pResultName)
+static void ParseMsg_Target(char *pName, const char **pResultClass, const char **pResultName)
 {
 	// Look for <ClassName>
 	char *pClassStart = strchr(pName, '<');
@@ -854,8 +854,8 @@ static void ParseMsg_Target(char *pName, char **pResultClass, char **pResultName
 
 LTBOOL CCommandMgr::ProcessMsg(ConParse & parse, int nCmdIndex, bool bObjVar)
 {
-	char* pObjectNames	= parse.m_Args[1];
-	char* pMsg			= parse.m_Args[2];
+	const char* pObjectNames	= parse.m_Args[1];
+	const char* pMsg			= parse.m_Args[2];
 
     if (!pObjectNames || !pMsg) return LTFALSE;
 
@@ -873,9 +873,11 @@ LTBOOL CCommandMgr::ProcessMsg(ConParse & parse, int nCmdIndex, bool bObjVar)
 			// Did we succeed?
 			bool bResult = false;
 
-			char *pTargetClass = NULL;
+			const char *pTargetClass = NULL;
 			const char *pTargetName = NULL;
-			ParseMsg_Target(parse2.m_Args[i], &pTargetClass, (char**)&pTargetName);
+			char szArgN[1024];
+			strcpy(szArgN, parse2.m_Args[i]);
+			ParseMsg_Target(szArgN, &pTargetClass, &pTargetName);
 
 			// Check for an object variable with this name, if this is an object variable message command
 			if (bObjVar)
@@ -960,8 +962,8 @@ LTBOOL CCommandMgr::ProcessMsg(ConParse & parse, int nCmdIndex, bool bObjVar)
 LTBOOL CCommandMgr::ProcessRand(ConParse & parse, int nCmdIndex)
 {
     LTFLOAT fPercent = (LTFLOAT) atof(parse.m_Args[1]);
-	char* pCmd1		= parse.m_Args[2];
-	char* pCmd2		= parse.m_Args[3];
+	const char* pCmd1		= parse.m_Args[2];
+	const char* pCmd2		= parse.m_Args[3];
 
     if (fPercent < 0.001f || fPercent > 1.0f || !pCmd1 || !pCmd2) return LTFALSE;
 
@@ -1141,7 +1143,7 @@ LTBOOL CCommandMgr::ProcessLoopId(ConParse & parse, int nCmdIndex)
 
 LTBOOL CCommandMgr::ProcessAbort(ConParse & parse, int nCmdIndex)
 {
-	char* pId = parse.m_Args[1];
+	const char* pId = parse.m_Args[1];
 
 	if (!pId || pId[0] == CMDMGR_NULL_CHAR)
 	{
@@ -1504,8 +1506,8 @@ LTBOOL CCommandMgr::ProcessSub( ConParse &parse, int nCmdIndex )
 
 LTBOOL CCommandMgr::ProcessIf( ConParse &parse, int nCmdIndex )
 {
-	char *pExpression	= parse.m_Args[1];
-	char *pCmds			= parse.m_Args[3];
+	const char *pExpression	= parse.m_Args[1];
+	const char *pCmds		= parse.m_Args[3];
 
 	if( !pExpression || !pCmds )
 	{
@@ -1572,8 +1574,8 @@ LTBOOL CCommandMgr::ProcessIf( ConParse &parse, int nCmdIndex )
 
 LTBOOL CCommandMgr::ProcessWhen( ConParse &parse, int nCmdIndex )
 {
-	char *pExpression	= parse.m_Args[1];
-	char *pCmds			= parse.m_Args[3];
+	const char *pExpression	= parse.m_Args[1];
+	const char *pCmds		= parse.m_Args[3];
 
 	if( !pExpression || !pCmds )
 	{
@@ -1988,11 +1990,11 @@ LTBOOL CCommandMgr::ProcessListCommands(ConParse & parse, int nCmdIndex)
 //
 // ----------------------------------------------------------------------- //
 
-void CCommandMgr::DevPrint(char *msg, ...)
+void CCommandMgr::DevPrint(const char *msg, ...)
 {
 #define _DEV_BUILD
 #ifdef _DEV_BUILD
-	char pMsg[256];
+	char pMsg[1024];
 	va_list marker;
 	va_start(marker, msg);
 	int nSuccess = vsprintf(pMsg, msg, marker);
@@ -2381,9 +2383,9 @@ eExpressionVal CMD_EVENT_STRUCT::FillVarArray( ConParse &cpExpression )
 	if( cpExpression.m_nArgs != 3 )
 		return kExpress_ERROR;
 
-	char *pArg1 = cpExpression.m_Args[0];
+	const char *pArg1 = cpExpression.m_Args[0];
 	const char *pOp = cpExpression.m_Args[1];
-	char *pArg2 = cpExpression.m_Args[2];
+	const char *pArg2 = cpExpression.m_Args[2];
 
 	if( !pArg1 || !pOp || !pArg2 || !g_pCmdMgr )
 		return kExpress_ERROR;
@@ -2961,7 +2963,7 @@ void CCommandMgrPlugin::ListObjectMsgs( ILTPreInterface *pInterface, const char 
 	SAFE_STRCPY(aMsgBuffer, pObj);
 
 	// Pull out the class & target names
-	char *pTargetClass, *pTargetName;
+	const char *pTargetClass, *pTargetName;
 	ParseMsg_Target(aMsgBuffer, &pTargetClass, &pTargetName);
 
 	if (!pTargetClass)
@@ -3079,8 +3081,8 @@ LTBOOL CCommandMgrPlugin::PreCheckMsg( ILTPreInterface *pInterface, ConParse &pa
 		s_bDisplayPropInfo = false;
 	}
 
-	char* pObjectNames	= parse.m_Args[1];
-	char* pMsg			= parse.m_Args[2];
+	const char* pObjectNames	= parse.m_Args[1];
+	const char* pMsg			= parse.m_Args[2];
 
     if( !pObjectNames || !pMsg || !pInterface ) return LTFALSE;
 
@@ -3100,7 +3102,7 @@ LTBOOL CCommandMgrPlugin::PreCheckMsg( ILTPreInterface *pInterface, ConParse &pa
 			SAFE_STRCPY(aMsgBuffer, cpObjNames.m_Args[i]);
 
 			// Pull out the class & target names
-			char *pTargetClass, *pTargetName;
+			const char *pTargetClass, *pTargetName;
 			ParseMsg_Target(aMsgBuffer, &pTargetClass, &pTargetName);
 
 			if (!pTargetClass)
@@ -3127,7 +3129,7 @@ LTBOOL CCommandMgrPlugin::PreCheckMsg( ILTPreInterface *pInterface, ConParse &pa
 					{
 						if( !stricmp( (*iter).m_sName.c_str(), pTargetName ))
 						{
-							pTargetClass = const_cast<char*>((*iter).m_sClassName.c_str());
+							pTargetClass = (*iter).m_sClassName.c_str();
 							break;
 						}
 					}
@@ -3440,9 +3442,9 @@ LTBOOL CCommandMgrPlugin::PreCheckRand( ILTPreInterface *pInterface, ConParse &p
 
 	if( !pInterface ) return LTFALSE;
 
-	LTFLOAT fPercent = (LTFLOAT) atof(parse.m_Args[1]);
-	char* pCmd1		= parse.m_Args[2];
-	char* pCmd2		= parse.m_Args[3];
+	LTFLOAT fPercent 		= (LTFLOAT) atof(parse.m_Args[1]);
+	const char* pCmd1		= parse.m_Args[2];
+	const char* pCmd2		= parse.m_Args[3];
 
     // Make sure percent value is good...
 
@@ -3769,7 +3771,7 @@ LTBOOL CCommandMgrPlugin::PreCheckAbort( ILTPreInterface *pInterface, ConParse &
 	if( !s_bValidateNonVarCmds )
 		return LTTRUE;
 
-	char* pId = parse.m_Args[1];
+	const char* pId = parse.m_Args[1];
 
 	if( !pId || pId[0] == CMDMGR_NULL_CHAR )
 	{

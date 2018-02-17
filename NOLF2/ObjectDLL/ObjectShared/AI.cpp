@@ -2209,7 +2209,9 @@ void CAI::SetUnconscious(bool bUnconscious)
 
 					//attach pickup item
 					HATTACHMENT hAttachment;
-					if ( LT_OK != g_pLTServer->CreateAttachment(m_hObject, pObj->m_hObject, (char *)apAttachmentPositions[cWeapons]->GetName(), &LTVector(0,0,0), &LTRotation(), &hAttachment) )
+					LTVector tVec{0,0,0};
+					LTRotation tRot{};
+					if ( LT_OK != g_pLTServer->CreateAttachment(m_hObject, pObj->m_hObject, (const char *)apAttachmentPositions[cWeapons]->GetName(), &tVec, &tRot, &hAttachment) )
 					{
 						g_pLTServer->RemoveObject(pObj->m_hObject);
 					}
@@ -2515,7 +2517,8 @@ bool CAI::HandleCommand(const CParsedMsg &cMsg)
 			}
 			else
 			{
-                g_pPhysicsLT->SetVelocity(m_hObject, &LTVector(0,0,0));
+				LTVector tVec{0,0,0};
+                g_pPhysicsLT->SetVelocity(m_hObject, &tVec);
 
 				bGravity = false;
 			}
@@ -4516,7 +4519,7 @@ void CAI::HandleModelString(ArgList* pArgList)
 {
     if (!g_pLTServer || !pArgList || !pArgList->argv || pArgList->argc == 0) return;
 
-	char* pKey = pArgList->argv[0];
+	const char* pKey = pArgList->argv[0];
 	if (!pKey) return;
 
 	if (stricmp(pKey, c_szKeyBodySlump) == 0)

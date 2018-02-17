@@ -29,7 +29,7 @@
 void AISenseRecord::Save(ILTMessage_Write *pMsg)
 {
 	SAVE_DWORD(eSenseType);
-	SAVE_DWORD(pAIBM_Last_Stimulus ? pAIBM_Last_Stimulus->eSenseType : kStim_InvalidType);
+	SAVE_DWORD((pAIBM_Last_Stimulus ? pAIBM_Last_Stimulus->eSenseType : kSense_InvalidType));
 	SAVE_HOBJECT(hLastStimulusSource);
 	SAVE_HOBJECT(hLastStimulusTarget);
 	SAVE_DWORD(eLastTargetMatchID);

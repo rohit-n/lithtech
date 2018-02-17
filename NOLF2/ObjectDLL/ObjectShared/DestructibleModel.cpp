@@ -361,7 +361,7 @@ uint32 CDestructibleModel::ObjectMessageFn(LPBASECLASS pObject, HOBJECT hSender,
 					{
 						if (stricmp(parse.m_Args[0], "FIRE") == 0)
 						{
-							char* pTargetName = parse.m_nArgs > 1 ? parse.m_Args[1] : LTNULL;
+							const char* pTargetName = parse.m_nArgs > 1 ? parse.m_Args[1] : LTNULL;
 							DoExplosion(pTargetName);
 						}
 						else if (stricmp(parse.m_Args[0], "HIDDEN") == 0)
@@ -601,7 +601,7 @@ void CDestructibleModel::CreateDebris()
 //
 // ----------------------------------------------------------------------- //
 
-void CDestructibleModel::DoExplosion(char* pTargetName)
+void CDestructibleModel::DoExplosion(const char* pTargetName)
 {
 	CWeapons weapons;
 	weapons.Init(m_hObject);

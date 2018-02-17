@@ -89,7 +89,7 @@ BEGIN_CLASS(CAIHuman)
 	ADD_SEARCHABLE_AGGREGATE(PF_GROUP(5), 0)
 	ADD_STRINGPROP_FLAG(RandomItemSet, "Bodies General", PF_GROUP(5) | PF_STATICLIST  ) 
 
-END_CLASS_DEFAULT_FLAGS_PLUGIN(CAIHuman, CAI, NULL, NULL, NULL, CAIHumanPlugin)
+END_CLASS_DEFAULT_FLAGS_PLUGIN(CAIHuman, CAI, NULL, NULL, LTNULL, CAIHumanPlugin)
 #pragma force_active off
 
 
@@ -472,13 +472,13 @@ HMODELANIM CAIHuman::GetDeathAni(LTBOOL bFront)
 
 	if ( GetAnimationContext()->IsPropSet(kAPG_Movement, kAP_Run) )
 	{
-		char* aszDeathRunsFront[] = { "DRun", "DRun2" };
-		char* aszDeathRunsBack[]  = { "DRunBack", "DRunBack2" };
+		const char* aszDeathRunsFront[] = { "DRun", "DRun2" };
+		const char* aszDeathRunsBack[]  = { "DRunBack", "DRunBack2" };
 
 		int cDeathRuns = sizeof(aszDeathRunsBack)/sizeof(const char*);
-		char** pDeathRuns = (bFront ? aszDeathRunsFront : aszDeathRunsBack);
+		const char** pDeathRuns = (bFront ? aszDeathRunsFront : aszDeathRunsBack);
 
-        if ( INVALID_MODEL_ANIM != (hAni = g_pLTServer->GetAnimIndex(m_hObject, (char*)pDeathRuns[GetRandom(0, cDeathRuns-1)])) )
+        if ( INVALID_MODEL_ANIM != (hAni = g_pLTServer->GetAnimIndex(m_hObject, pDeathRuns[GetRandom(0, cDeathRuns-1)])) )
 		{
 			return hAni;
 		}
@@ -486,7 +486,7 @@ HMODELANIM CAIHuman::GetDeathAni(LTBOOL bFront)
 
 	if ( GetAnimationContext()->IsPropSet(kAPG_Posture, kAP_Crouch) )
 	{
-        if ( INVALID_MODEL_ANIM != (hAni = g_pLTServer->GetAnimIndex(m_hObject, (char*)GetCrouchDeathAni())) )
+        if ( INVALID_MODEL_ANIM != (hAni = g_pLTServer->GetAnimIndex(m_hObject, GetCrouchDeathAni())) )
 		{
 			return hAni;
 		}
@@ -494,7 +494,7 @@ HMODELANIM CAIHuman::GetDeathAni(LTBOOL bFront)
 
 	if ( GetAnimationContext()->IsPropSet(kAPG_Posture, kAP_Prone) )
 	{
-        if ( INVALID_MODEL_ANIM != (hAni = g_pLTServer->GetAnimIndex(m_hObject, (char*)GetProneDeathAni())) )
+        if ( INVALID_MODEL_ANIM != (hAni = g_pLTServer->GetAnimIndex(m_hObject, GetProneDeathAni())) )
 		{
 			return hAni;
 		}
