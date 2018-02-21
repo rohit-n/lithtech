@@ -342,7 +342,7 @@ void DoomsDayDevice::InitialUpdate( )
 
 	for( uint32 i = 0; i < kDoomsDay_MAXTYPES; ++i )
 	{
-		sprintf( szType, c_aDDPieceTypes[i].m_pszPropType );
+		sprintf( szType, "%s", c_aDDPieceTypes[i].m_pszPropType );
 		sprintf( szSpawn, "PropType Type %s_target", szType );
 
 		BaseClass* pObj = SpawnObject( szSpawn, vPos, rRot );

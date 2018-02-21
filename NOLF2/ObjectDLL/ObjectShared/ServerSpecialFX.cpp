@@ -550,7 +550,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 
 		// Seek past the state
 		uint32 dwDummy;
-		fscanf( pFxFile, "%s %lu", szTag, &dwDummy );
+		fscanf( pFxFile, "%s %u", szTag, &dwDummy );
 		
 		if( bChildren )
 		{
@@ -559,7 +559,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 			// Read in how many
 		
 			int nNumGroups;
-			fscanf( pFxFile, "%s %lu", szTag, &nNumGroups );
+			fscanf( pFxFile, "%s %u", szTag, &nNumGroups );
 			
 			if( nNumGroups == 0 )
 			{
@@ -593,7 +593,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 				fscanf( pFxFile, "%s %i", szTag, &iDummy );
 				fscanf( pFxFile, "%s %i", szTag, &iDummy );
 				fscanf( pFxFile, "%s %i", szTag, &bChildren );
-				fscanf( pFxFile, "%s %lu", szTag, &dwDummy );
+				fscanf( pFxFile, "%s %u", szTag, &dwDummy );
 			}
 		}
 

@@ -524,7 +524,7 @@ uint32 GameBase::EngineMessageFn(uint32 messageID, void *pData, LTFLOAT fData)
 			ArgList* pArgList = (ArgList*)pData;
 
 			char szBuffer[256];
-			sprintf(szBuffer, "");
+			szBuffer[0] = LTNULL;
 
 			for ( int iArg = 0 ; iArg < pArgList->argc ; iArg++ )
 			{

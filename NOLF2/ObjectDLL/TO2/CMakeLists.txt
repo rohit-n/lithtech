@@ -346,7 +346,7 @@ if(MSVC)
 	add_definitions(-D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS)	# VC14 deprecated stdext::hash_*
 endif(MSVC)
 if(LINUX)
-    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Werror -fPIC -fpermissive")
+    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Werror -fPIC")
 endif(LINUX)
 
 include_directories(./
