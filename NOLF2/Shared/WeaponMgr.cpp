@@ -2928,7 +2928,7 @@ LTBOOL GEAR::Override( CButeMgr &buteMgr, char *aTagName )
 //
 // ----------------------------------------------------------------------- //
 
-LTBOOL CWeaponMgr::ReadWeaponProp(char* pPropName, uint8 & nWeaponId, uint8 & nAmmoId)
+LTBOOL CWeaponMgr::ReadWeaponProp(const char* pPropName, uint8 & nWeaponId, uint8 & nAmmoId)
 {
     if (!pPropName || !pPropName[0]) return LTFALSE;
 
@@ -2973,11 +2973,13 @@ LTBOOL CWeaponMgr::ReadWeaponProp(char* pPropName, uint8 & nWeaponId, uint8 & nA
 //
 // ----------------------------------------------------------------------- //
 
-void CWeaponMgr::ReadWeapon(char* szString, uint8 & nWeaponId, uint8 & nAmmoId)
+void CWeaponMgr::ReadWeapon(const char* szString, uint8 & nWeaponId, uint8 & nAmmoId)
 {
 	// Get the weapon name...
 
-	WEAPON const *pWeapon = GetWeapon(strtok(szString,","));
+    char WeaponToken[256];
+	strcpy(WeaponToken, szString);
+	WEAPON const *pWeapon = GetWeapon(strtok(WeaponToken,","));
 	if (pWeapon)
 	{
 		nWeaponId = pWeapon->nId;

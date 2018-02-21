@@ -7381,7 +7381,7 @@ void CPlayerObj::SetVehiclePhysicsModel(PlayerPhysicsModel eModel)
 		LTRotation rRot = m_rFullPlayerRot.IsIdentity() ? rPlayerRot : m_rFullPlayerRot;
 
 		char buff[256];
-		char* pPropName = GetPropertyNameFromPlayerPhysicsModel(eModel);
+		const char* pPropName = GetPropertyNameFromPlayerPhysicsModel(eModel);
 		sprintf(buff, "PlayerVehicle VehicleType %s;Gravity 1", pPropName);
 
 		BaseClass* pModel = SpawnObject(buff, vPos, rRot);

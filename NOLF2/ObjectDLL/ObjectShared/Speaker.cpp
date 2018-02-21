@@ -81,7 +81,8 @@ uint32 Speaker::EngineMessageFn(uint32 messageID, void *pData, LTFLOAT fData)
 			m_damage.SetCanDamage(LTFALSE);
 			m_damage.SetNeverDestroy(LTTRUE);
 
-			g_pPhysicsLT->SetObjectDims(m_hObject, &LTVector(.01f,.01f,.01f), 0);
+			LTVector tVec{.01f,.01f,.01f};
+			g_pPhysicsLT->SetObjectDims(m_hObject, &tVec, 0);
 		}
 		break;
 

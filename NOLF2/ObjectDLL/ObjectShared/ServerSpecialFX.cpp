@@ -535,7 +535,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 		fgets(sTmp, ARRAY_LEN(sTmp), pFxFile );
 		int iStrSize = (int)strlen( sTmp );
 		if( (iStrSize > 0) && (sTmp[iStrSize - 1] == '\n') )
-			sTmp[iStrSize - 1] = NULL;
+			sTmp[iStrSize - 1] = LTNULL;
 
 		// Seek past the image data
 		int	iDummy;
@@ -578,7 +578,7 @@ LTBOOL SpecialFXPlugin::ParseFCF( const char *szFcfPath, char **aszStrings, uint
 				fgets(szName, ARRAY_LEN(szName), pFxFile );
 				int iStrSize = (int)strlen( szName );
 				if( (iStrSize > 0) && (szName[iStrSize - 1] == '\n') )
-					szName[iStrSize - 1] = NULL;
+					szName[iStrSize - 1] = LTNULL;
 				
 				if( (*pcStrings) == cMaxStrings )
 				{

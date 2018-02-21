@@ -49,7 +49,7 @@ CSearchable::CSearchable() : IAggregate()
     m_hObject			= LTNULL;
 	m_pRandomItemSet	= NULL;
 	
-	m_nPickupItems		= NULL;
+	m_nPickupItems		= LTNULL;
 	m_bEnabled			= true;
 
 	m_hPreSearchAnimIndex	= INVALID_MODEL_ANIM;

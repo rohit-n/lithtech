@@ -160,7 +160,7 @@ void CRelationTools::ParseRelation(const char* const pszLine, RelationDescriptio
 	AIASSERT( pszLine != NULL, NULL, "Attempted to parse NULL Relation" );
 
 	char tokenSpace[512];
-	char* pTokens[3];
+	const char* pTokens[3];
 	const char *pCommandPos;
 
 	int nArgs;
@@ -215,7 +215,7 @@ void CRelationTools::ParseData(const char* const pszLine, RelationTraits::eRelat
 	}
 
 	char tokenSpace[512];
-	char* pTokens[2];
+	const char* pTokens[2];
 	const char *pCommandPos;
 
 	int nArgs;

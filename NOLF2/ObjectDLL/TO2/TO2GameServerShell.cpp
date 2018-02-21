@@ -305,7 +305,7 @@ void CTO2GameServerShell::Update(LTFLOAT timeElapsed)
 		}
 
 
-		cMsg.Writeuint32(( uint32 )&peerInfo );
+		cMsg.Writeuintptr(( uintptr_t )&peerInfo );
 		GetServerDir()->SetActivePeerInfo(IServerDirectory::ePeerInfo_Service, *cMsg.Read());
 
 		// Tell the world about me...
