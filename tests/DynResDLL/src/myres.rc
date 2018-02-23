@@ -1,0 +1,7 @@
+#include "..\src\resources.h"
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_VERSION        "TestStringLoader: 1.0"
+    IDS_APPNAME        "StingLoader TestResource dynamic Sharable Object"
+END
