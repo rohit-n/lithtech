@@ -66,6 +66,9 @@ add_subdirectory(libs/lith)								# LIB_Lith
 add_subdirectory(libs/stdlith)							# LIB_StdLith
 add_subdirectory(libs/ltmem)							# LIB_LTMem
 add_subdirectory(libs/rezmgr)							# LIB_RezMgr
+if(LINUX)
+add_subdirectory(libs/DynRes)                               # LIB_DynRes
+endif(LINUX)
 
 if(BUILD_ENGINE)
 	add_subdirectory(runtime/ui)						# LIB_UI

@@ -7,6 +7,9 @@ add_library(${PROJECT_NAME} SHARED
 include_directories(../Shared
 	../Shared/Lang/EN
 	../../Shared/Lang/EN)
+if(LINUX)
+include_directories(../../../libs/DynRes)
+endif(LINUX)
 
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES OUTPUT_NAME CRes)
