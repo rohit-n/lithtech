@@ -1,7 +1,8 @@
 #include <dlfcn.h>
 #include <cstring>
+#include <cinttypes>
 
-typedef const char* (resString*)(uint32_t);
+typedef const char* (*resString)(uint32_t);
 
 void LoadString(void *h, int id, char* buff, int len)
 {
