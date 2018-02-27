@@ -979,7 +979,7 @@ inline LTRESULT ReadSoundSubPacket(CClientShell *pShell, CPacket_Read &cPacket, 
 
         ReadNewSoundInfo(pShell, cPacket, &playSoundInfo, &fileRef, &fOffsetTime);
 
-        playSoundInfo.m_hSound = (HLTSOUND)objectID;
+        playSoundInfo.m_hSound = (HLTSOUND)(objectID & 0xFFFFL);
     }
     else 
 	{

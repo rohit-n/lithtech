@@ -1256,7 +1256,7 @@ uint32 CLTClient::GetContainedObjects(HOBJECT hContainer,
 	// Must be a container
     // m_ObjType is an Enum type which techically only have 2 members
 	// world_tree.h:32 WTObj_DObject or WTObj_Light
-	if (pObj->m_ObjType != OT_CONTAINER)
+	if (pObj->m_ObjectType != OT_CONTAINER)
 		return 0;
 
 	ContainerInstance *pContainer = (ContainerInstance*)pObj;
