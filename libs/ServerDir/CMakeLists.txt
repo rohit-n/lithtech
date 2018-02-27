@@ -11,7 +11,11 @@ set(libs LIB_WONAPI)
 
 if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -fPIC")
-	set(libs pthread ${libs})
+	set(libs 
+	pthread 
+	${libs}
+	LIB_DynRes)
+	include_directories(../DynRes)
 endif(LINUX)
 
 target_link_libraries(${PROJECT_NAME}
