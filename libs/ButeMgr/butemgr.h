@@ -25,7 +25,7 @@
 #include <hash_set>
 #include <hash_map>
 #endif
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 #	include <iosfwd>
 #	include <strstream>
 #	include <iostream>
@@ -76,7 +76,7 @@ using ci_string = std::basic_string<char, ci_char_traits>;
 #include <fstream>
 
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 
 class ButeMgrHashCompare
 {
@@ -386,7 +386,7 @@ private:
 
 	void (*m_pDisplayFunc)(const char* szMsg);
 
-#if _MSC_VER == 1300 // NET 2002
+#if _MSC_VER == 1300  && !defined(__clang__)// NET 2002
 	// Used to define dictionary of strings.
 	// This must be case sensitive!
 	typedef std::hash_set< CString, ButeMgrHashCompare > StringHolder;
@@ -396,7 +396,7 @@ private:
 
 	// Used to define map of strings to TableOfItems.
 	typedef std::hash_map< char const*, TableOfItems*, ButeMgrHashCompare > TableOfTags;
-#elif _MSC_VER > 1300  // NET 2003
+#elif _MSC_VER > 1300   && !defined(__clang__)// NET 2003
 	// Used to define dictionary of strings.
 	// This must be case sensitive!
 	typedef stdext::hash_set< CString, ButeMgrHashCompare > StringHolder;
@@ -582,7 +582,7 @@ inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* crypt
 #ifndef __LINUX
 	char* buf2 = new char[(unsigned int)nLen];
 #endif
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 	std::ostrstream pOss{buf2, nLen};
 #elif defined(__LINUX)
 	std::string buffer{};
@@ -593,7 +593,7 @@ inline bool CButeMgr::Parse( istream& iCrypt, streamsize nLen, const char* crypt
 #endif // VC7
 	m_cryptMgr.Decrypt(iCrypt, pOss);
 
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 	std::istrstream IStream{const_cast<const char *>(buf2), pOss.pcount()};
 #elif defined(__LINUX)
     std::istringstream IStream{const_cast<const std::string&>(buffer)};
@@ -620,7 +620,7 @@ inline bool CButeMgr::Parse(CRezItm* pItem, int decryptCode)
 {
 	if (!pItem)
 		return false;
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 	std::istrstream pIStream{(char*)pItem->Load(), pItem->GetSize()};
 #elif defined(__LINUX)
 	std::istringstream pIStream{std::string{(char*)pItem->Load(), pItem->GetSize()}};
@@ -644,7 +644,7 @@ inline bool CButeMgr::Parse(CRezItm* pItem, const char* cryptKey)
 		return false;
 	char* buf1 = (char*)pItem->Load();
 	int len = pItem->GetSize();
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 	std::istrstream Iss{buf1, len};
 #elif defined(__LINUX)
 	std::istringstream Iss{std::string{buf1, len}};
@@ -670,7 +670,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, int decryptCode,
 {
 	if (!pData)
 		return false;
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 	std::istrstream IStream{(char*)pData, size};
 #elif defined(__LINUX)
 	std::istringstream IStream{std::string{(char*)pData, size}};
@@ -694,7 +694,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 		return false;
 	char* buf1 = (char*)pData;
 	size_t len = size;
-#if _MSC_VER >= 1300
+#if _MSC_VER >= 1300 && !defined(__clang__)
 	std::istrstream Iss(buf1, len);
 #elif defined(__LINUX)
 	std::istringstream Iss{std::string{buf1, len}};
