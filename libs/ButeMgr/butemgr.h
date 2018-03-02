@@ -289,8 +289,8 @@ public:
 #endif
 	bool Parse(CString sAttributeFilename, int decryptCode = 0);
 	bool Parse(CString sAttributeFilename, const char* cryptKey);
-	bool Parse(void* pData, unsigned long size, int decryptCode = 0, CString sAttributeFilename="");
-	bool Parse(void* pData, unsigned long size, const char* cryptKey, CString sAttributeFilename="");
+	bool Parse(void* pData, unsigned long size, int decryptCode = 0, CString sAttributeFilename=CString{""});
+	bool Parse(void* pData, unsigned long size, const char* cryptKey, CString sAttributeFilename=CString{""});
 
 	bool Save(const char* szNewFileName = NULL);
 
@@ -697,7 +697,8 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 #if _MSC_VER >= 1300 && !defined(__clang__)
 	std::istrstream Iss(buf1, len);
 #elif defined(__LINUX)
-	std::istringstream Iss{std::string{buf1, len}};
+	std::istringstream _Iss{std::string{buf1, len}};
+	std::istream& Iss = _Iss;
 #else
 	istrstream Iss(buf1, len);
 #endif // VC7
