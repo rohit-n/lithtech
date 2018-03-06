@@ -647,7 +647,8 @@ inline bool CButeMgr::Parse(CRezItm* pItem, const char* cryptKey)
 #if _MSC_VER >= 1300 && !defined(__clang__)
 	std::istrstream Iss{buf1, len};
 #elif defined(__LINUX)
-	std::istringstream Iss{std::string{buf1, len}};
+	std::istringstream _Iss{std::string{buf1, len}};
+	std::istream& Iss = _Iss;
 #else
 	istrstream Iss(buf1, len);
 #endif // VC7
@@ -659,7 +660,7 @@ inline bool CButeMgr::Parse(CRezItm* pItem, const char* cryptKey)
 	pItem->UnLoad();
 	return retVal;
 }
-#endif
+#endif //_USE_REZFILE_
 
 
 
