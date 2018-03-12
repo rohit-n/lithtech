@@ -1,9 +1,6 @@
 #if !defined(_BUTEMGR_H_)
 #define _BUTEMGR_H_
 
-// disable warning C4786: symbol greater than 255 character,
-// okay to ignore
-#pragma warning(disable: 4786)
 
 #include "limits.h"
 #include "float.h"
@@ -18,13 +15,18 @@
 
 #include "lithtypes.h"
 
-#include <map>
-#include <set>
-#include <functional>
 #ifndef __LINUX
-#include <hash_set>
-#include <hash_map>
+// disable warning C4786: symbol greater than 255 character,
+// okay to ignore
+#pragma warning(disable: 4786)
+
+#	include <map>
+#	include <set>
+#	include <hash_set>
+#	include <hash_map>
 #endif
+
+#include <functional>
 #if _MSC_VER >= 1300 && !defined(__clang__)
 #	include <iosfwd>
 #	include <strstream>
@@ -73,7 +75,6 @@ using ci_string = std::basic_string<char, ci_char_traits>;
 #	include "fstream.h"
 #	include "strstrea.h"
 #endif // VC7
-#include <fstream>
 
 
 #if _MSC_VER >= 1300 && !defined(__clang__)
@@ -662,10 +663,6 @@ inline bool CButeMgr::Parse(CRezItm* pItem, const char* cryptKey)
 }
 #endif //_USE_REZFILE_
 
-
-
-
-
 inline bool CButeMgr::Parse(void* pData, unsigned long size, int decryptCode,
 							CString sAttributeFilename)
 {
@@ -684,9 +681,6 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, int decryptCode,
 
 	return Parse( IStream, decryptCode );
 }
-
-
-
 
 inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKey,
 							CString sAttributeFilename)
@@ -756,9 +750,6 @@ inline bool CButeMgr::Parse(CString sAttributeFilename, const char* cryptKey)
 
 	return Parse( Is, len, cryptKey );
 }
-
-
-
 
 
 #endif
