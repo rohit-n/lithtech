@@ -22,16 +22,17 @@ option(USE_INTERNAL_FREETYPE "Use bundled freetype" ON)	# eventually want defaul
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/OUT")
+set(CMAKE_CXX_STANDARD 11)
 
 if(ENABLE_D3D)
 	add_definitions(-D__D3D -D__D3DREND)
 endif(ENABLE_D3D)
 
+
 if(WIN32)
 	add_definitions(-D_WINDOWS)
 else(WIN32)
 	add_definitions(-D_LINUX -D__LINUX)
-	set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 	set(LINUX 1)
 endif(WIN32)
 
@@ -150,3 +151,5 @@ endif(BUILD_TOOLS)
 
 add_subdirectory(tests/RegMgr)
 add_subdirectory(tests/CShell)
+add_subdirectory(tests/DynRes)
+add_subdirectory(tests/DynResDLL)

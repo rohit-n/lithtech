@@ -1,7 +1,7 @@
 project(Test_DynRes)
 
 set(exec_src
-    testReg.cpp)
+    src/main.cpp)
 
 set(libs
     Test_DynResDLL
