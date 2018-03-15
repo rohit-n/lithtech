@@ -13,5 +13,11 @@ void printString(int id, void *resdll)
 int main(int, char**)
 {
     std::cout << "loading strings from sharable object\n";
+    void *h = dlopen("./libCRes.so", RTLD_NOW);
+    if(h != nullptr) {
+        printString(IDS_APPNAME, h);
+        printString(IDS_VERSION, h);
+        dlclose(h);
+    }
     return 0;
 }

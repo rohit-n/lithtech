@@ -5,7 +5,7 @@ from sys import argv
 includes = []
 v=[]
 with open(argv[1], 'r') as f:
-    v = f.read().replace('\\','/').split('\n')
+    v = f.read().replace('\\', '/').split('\n')
 
 for x in v[:]:
     if 'include' in x:
@@ -25,23 +25,26 @@ with open(argv[1].split('/')[-1] + '.cpp', 'w') as o:
     o.write('''
 #include <string>
 #include <unordered_map>
+#include <cinttypes>
 
-static std::unordered_map<uint32, std::string> g_string_table;
+static std::unordered_map<uint32_t, std::string> g_string_table;
 
-void Add2StringTable(uint32 id, const char* str)
+void Add2StringTable(uint32_t id, const char* str)
 {
     g_string_table[id] = std::string{str};
 }
 
 
-const char* LoadString(uint32 id)
+const char* LoadString(uint32_t id)
 {
     auto res = g_string_table.find(id);
     if(res != g_string_table.end())
-        return res->second.c_str()
+        return res->second.c_str();
     else
         return nullptr;
 }
+
+void setup_cursors() { }
 
 void setup_string_tables() { // all discardable string table labels here
 ''')
