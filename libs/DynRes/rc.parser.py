@@ -34,7 +34,7 @@ void Add2StringTable(uint32_t id, const char* str)
     g_string_table[id] = std::string{str};
 }
 
-
+extern "C" {
 const char* LoadString(uint32_t id)
 {
     auto res = g_string_table.find(id);
@@ -42,6 +42,7 @@ const char* LoadString(uint32_t id)
         return res->second.c_str();
     else
         return nullptr;
+}
 }
 
 void setup_cursors() { }
