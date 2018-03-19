@@ -688,13 +688,15 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 	if (!pData)
 		return false;
 	char* buf1 = (char*)pData;
-	size_t len = size;
 #if _MSC_VER >= 1300 && !defined(__clang__)
+	std::streamsize len = size;
 	std::istrstream Iss(buf1, len);
 #elif defined(__LINUX)
-	std::istringstream _Iss{std::string{buf1, len}};
+	std::streamsize len = size;
+	std::istringstream _Iss{std::string{buf1, size}};
 	std::istream& Iss = _Iss;
 #else
+	streamsize len = size;
 	istrstream Iss(buf1, len);
 #endif // VC7
 
