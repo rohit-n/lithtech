@@ -533,7 +533,7 @@
 		int i = 0;
 		CFastListNode<T> *pNode = m_pHead;
 
-		if (!pNode) return NULL;
+		if (!pNode) return 0;
 
 		while (pNode)
 		{

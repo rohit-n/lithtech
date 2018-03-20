@@ -68,7 +68,7 @@ class VarTrack
 
 		if(m_pClientDE && m_hVar)
 		{
-			if(pRet = m_pClientDE->GetVarValueString(m_hVar))
+			if((pRet = m_pClientDE->GetVarValueString(m_hVar)) != nullptr)
 				return pRet;
 		}
 		return pDefault;

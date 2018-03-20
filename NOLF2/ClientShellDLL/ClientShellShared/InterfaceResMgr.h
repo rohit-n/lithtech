@@ -130,13 +130,19 @@ protected:
 
 inline uint32 CInterfaceResMgr::GetScreenWidth()
 {
-	if (m_dwScreenWidth < 0)
+	RMode currentMode;
+    g_pLTClient->GetRenderMode(&currentMode);
+
+	if (m_dwScreenWidth != currentMode.m_Width)
 		ScreenDimsChanged();
 	return m_dwScreenWidth;
 }
 inline uint32 CInterfaceResMgr::GetScreenHeight()
 {
-	if (m_dwScreenHeight < 0)
+	RMode currentMode;
+    g_pLTClient->GetRenderMode(&currentMode);
+
+	if (m_dwScreenHeight != currentMode.m_Height)
 		ScreenDimsChanged();
 	return m_dwScreenHeight;
 }
