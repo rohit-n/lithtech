@@ -42,7 +42,7 @@ public:
   bool DeleteApp();
   bool DeleteSubKey();
   bool DeleteUnderSubKey(const char* sKey);
-  bool IsValid() { return (this != nullptr); };
+  bool IsValid() { return true; };
 
 private:
   bool m_bInitialized;

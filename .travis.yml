@@ -23,7 +23,6 @@ matrix:
     - clang: 4.0
     - clang: 5.0
     - gcc: "6 32bit"
-    - gcc: 7
   include:
     - os: linux
       dist: trusty

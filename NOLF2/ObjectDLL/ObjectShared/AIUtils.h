@@ -41,8 +41,8 @@ private:
 
 	// Copy Constructor and Asignment Operator private to prevent 
 	// automatic generation and inappropriate, unintentional use
-	CAIUtils(const CAIUtils& rhs) {}
-	CAIUtils& operator=(const CAIUtils& rhs ) {}
+	CAIUtils(const CAIUtils& rhs) = delete;
+	CAIUtils& operator=(const CAIUtils& rhs ) = delete;
 };
 
 inline LTFLOAT FOV2DP(LTFLOAT fFOV)
