@@ -216,8 +216,8 @@ public:
 private:
 	// Copy Constructor and Asignment Operator private to prevent 
 	// automatic generation and inappropriate, unintentional use
-	AutoNodeBlocker(const AutoNodeBlocker& rhs) {}
-	AutoNodeBlocker& operator=(const AutoNodeBlocker& rhs ) {}
+	AutoNodeBlocker(const AutoNodeBlocker& rhs) = delete;
+	AutoNodeBlocker& operator=(const AutoNodeBlocker& rhs )  = delete;
 
 	// Don't save:
 	std::vector<INVALID_NODE*>* m_plistInvalidNodes;

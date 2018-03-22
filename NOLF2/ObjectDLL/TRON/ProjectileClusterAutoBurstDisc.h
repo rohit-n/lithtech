@@ -69,7 +69,7 @@ class CClusterAutoBurstDisc : public CClusterDisc
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CClusterAutoBurstDisc(const CClusterAutoBurstDisc& rhs) {}
-		CClusterAutoBurstDisc& operator=(const CClusterAutoBurstDisc& rhs ) {}
+		CClusterAutoBurstDisc& operator=(const CClusterAutoBurstDisc& rhs )  = delete;
 };
 
 #endif // __PROJECTILECLUSTERAUTOBURSTDISC_H__

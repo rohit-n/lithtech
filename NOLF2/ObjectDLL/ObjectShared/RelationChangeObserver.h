@@ -119,7 +119,7 @@ public:
 
 protected:
 	RelationChangeNotifier(const RelationChangeNotifier& rhs) {}
-	RelationChangeNotifier& operator=(const RelationChangeNotifier& rhs ) {}
+	RelationChangeNotifier& operator=(const RelationChangeNotifier& rhs )  = delete;
 		
 private:
 	

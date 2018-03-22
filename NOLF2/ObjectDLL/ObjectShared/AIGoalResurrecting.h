@@ -78,7 +78,7 @@ class CAIGoalResurrecting : public CAIGoalAbstractSearch
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CAIGoalResurrecting(const CAIGoalResurrecting& rhs) {}
-		CAIGoalResurrecting& operator=(const CAIGoalResurrecting& rhs ) {}
+		CAIGoalResurrecting& operator=(const CAIGoalResurrecting& rhs )  = delete;
 
 		LTFLOAT		m_fTimeToResurrect;
 		LTBOOL		m_bReactivateGoalOnUpdate;

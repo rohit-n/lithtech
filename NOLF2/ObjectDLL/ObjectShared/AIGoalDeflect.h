@@ -84,7 +84,7 @@ class CAIGoalDeflect : public CAIGoalAbstractStimulated
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 //		CAIGoalDeflect(const CAIGoalDeflect& rhs) {}
-//		CAIGoalDeflect& operator=(const CAIGoalDeflect& rhs ) {}
+//		CAIGoalDeflect& operator=(const CAIGoalDeflect& rhs )  = delete;
 };
 
 #endif // __AIGOALDEFLECT_H__

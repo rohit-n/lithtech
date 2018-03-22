@@ -69,7 +69,7 @@ class CAIGoalReclassifyToEnemy : public CAIGoalAbstractStimulated
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 //		CAIGoalReclassifyToEnemy(const CAIGoalReclassifyToEnemy& rhs) {}
-//		CAIGoalReclassifyToEnemy& operator=(const CAIGoalReclassifyToEnemy& rhs ) {}
+//		CAIGoalReclassifyToEnemy& operator=(const CAIGoalReclassifyToEnemy& rhs )  = delete;
 };
 
 #endif // __AIGOALRECLASSIFYTOENEMY_H__
