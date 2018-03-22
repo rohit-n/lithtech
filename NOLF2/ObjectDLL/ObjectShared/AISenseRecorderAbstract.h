@@ -102,7 +102,7 @@ class CAISenseRecorderAbstract : public ILTObjRefReceiver
 	public : // Public methods
 
 		 CAISenseRecorderAbstract();
-		~CAISenseRecorderAbstract();
+		virtual ~CAISenseRecorderAbstract();
 
         virtual void	Save(ILTMessage_Write *pMsg);
         virtual void	Load(ILTMessage_Read *pMsg);

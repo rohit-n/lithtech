@@ -61,7 +61,7 @@ void CButeListReader::Read(CButeMgr* pButeMgr, const char* pszTagName, const cha
 {
 	ASSERT(pButeMgr && pszTagName && pszAttName && nStrLen);
 
-	// Count the items.
+	// Count the items. limit is 255 items.
 	uint8 cTemp = 0;
 	sprintf(ms_aAttName, "%s%d", pszAttName, cTemp);
 	while (pButeMgr->Exist(pszTagName, ms_aAttName))
@@ -74,8 +74,6 @@ void CButeListReader::Read(CButeMgr* pButeMgr, const char* pszTagName, const cha
 	char szTemp[256];
 	if(cTemp > 0)
 	{
-		ASSERT(cTemp < 256);
-
 		// free the list if there is one
 		if ( m_szItems )
 		{
