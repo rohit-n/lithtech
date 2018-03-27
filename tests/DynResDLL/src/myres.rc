@@ -1,4 +1,4 @@
-#include "src\resources.h"
+#include "resources.h"
 
 STRINGTABLE DISCARDABLE 
 BEGIN
