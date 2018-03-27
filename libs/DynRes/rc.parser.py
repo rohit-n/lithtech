@@ -3,14 +3,22 @@
 from sys import argv
 
 includes = []
-v=[]
+str_table = []
+text = []
 with open(argv[1], 'r') as f:
-    v = f.read().replace('\\', '/').split('\n')
+    cur_lst = None
+    for l in f.readlines():
+        if '#include' in l.lower():
+            n = l.split('"')
+            includes.append(n[1].replace('\\', '/'))
+        if 'stringtable' in l.lower():
+            cur_lst = str_table
+        if 'end' in l.lower():
+            cur_lst = None
+        if l.startswith(' ') and cur_lst is not None:
+            n = l.split('"')
+            cur_lst.append((n[0].strip(), n[1]))
 
-for x in v[:]:
-    if 'include' in x:
-        includes.append(x)
-        v.remove(x)
 
 with open(argv[1].split('/')[-1] + '.cpp', 'w') as o:
     o.write('''/* 
@@ -21,7 +29,7 @@ with open(argv[1].split('/')[-1] + '.cpp', 'w') as o:
 #include "dynres.h"
 ''')
     for i in includes:
-        o.write(i+'\n')
+        o.write('#include "{0}"'.format(i)+'\n')
     o.write('''
 #include <string>
 #include <unordered_map>
@@ -49,8 +57,6 @@ void setup_cursors() { }
 
 void setup_string_tables() { // all discardable string table labels here
 ''')
-    for l in v:
-        if 'IDS' in l:
-            x = l.split()
-            o.write('    Add2StringTable({0}, {1});\n'.format(x[0], ' '.join(x[1:])))
+    for x in str_table:
+            o.write('    Add2StringTable({0}, "{1}");\n'.format(x[0], x[1]))
     o.write('}\n')
