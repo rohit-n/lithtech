@@ -312,8 +312,8 @@ private:
 
 	// Copy Constructor and Asignment Operator private to prevent 
 	// automatic generation and inappropriate, unintentional use
-	AINodeChangeWeapons(const AINodeChangeWeapons& rhs) {}
-	AINodeChangeWeapons& operator=(const AINodeChangeWeapons& rhs ) {}
+	AINodeChangeWeapons(const AINodeChangeWeapons& rhs) = delete;
+	AINodeChangeWeapons& operator=(const AINodeChangeWeapons& rhs ) = delete;
 
 	std::vector<ChangeWeaponSet> m_WeaponSets;
 };
@@ -1033,8 +1033,8 @@ class AINodeObstruct : public AINode
 
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
-		AINodeObstruct(const AINodeObstruct& rhs) {}
-		AINodeObstruct& operator=(const AINodeObstruct& rhs ) {}
+		AINodeObstruct(const AINodeObstruct& rhs) = delete;
+		AINodeObstruct& operator=(const AINodeObstruct& rhs ) =delete;
 };
 
 #endif // _AI_NODE_H_

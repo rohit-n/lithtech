@@ -54,7 +54,7 @@ class CSpecialFXList
 
         CSpecialFX* operator[] (unsigned int nIndex)
 		{
-            if (!m_pArray || nIndex < 0 || nIndex >= m_nArraySize) return LTNULL;
+            if (!m_pArray || nIndex >= m_nArraySize) return LTNULL;
 			return m_pArray[nIndex];
 		}
 

@@ -56,7 +56,7 @@ protected:
 	// Copy Constructor and Asignment Operator private to prevent 
 	// automatic generation and inappropriate, unintentional use
 	CAIInformationVolumeMgr(const CAIInformationVolumeMgr& rhs) {}
-	CAIInformationVolumeMgr& operator=(const CAIInformationVolumeMgr& rhs ) {}
+	CAIInformationVolumeMgr& operator=(const CAIInformationVolumeMgr& rhs )  = delete;
 };
 
 

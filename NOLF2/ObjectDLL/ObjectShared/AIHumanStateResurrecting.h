@@ -84,7 +84,7 @@ class CAIHumanStateResurrecting : public CAIHumanState
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CAIHumanStateResurrecting(const CAIHumanStateResurrecting& rhs) {}
-		CAIHumanStateResurrecting& operator=(const CAIHumanStateResurrecting& rhs ) {}
+		CAIHumanStateResurrecting& operator=(const CAIHumanStateResurrecting& rhs )  = delete;
 
 		// Save:
 

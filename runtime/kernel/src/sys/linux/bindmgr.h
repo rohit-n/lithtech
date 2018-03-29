@@ -1,1 +1,1 @@
-../win/bindmgr.h
+#include "../win/bindmgr.h"

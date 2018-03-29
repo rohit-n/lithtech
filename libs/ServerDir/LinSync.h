@@ -147,10 +147,7 @@ static HANDLE CreateThread(void *t, int, ulong (*func)(void *param), void *cl, i
 
 static void CloseHandle(HANDLE hdl) {}
 
-static uint32_t LoadString(HMODULE mod, uint32_t msgCode, char *buff, size_t len)
-{
-	return 0;
-}
+#include "dynres.h"
 
 #define WAIT_OBJECT_0 0
 #define WAIT_TIMEOUT 0xffffffffL

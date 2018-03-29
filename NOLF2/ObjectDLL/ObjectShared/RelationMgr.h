@@ -100,7 +100,7 @@ class CRelationMgr : public ILTObjRefReceiver
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CRelationMgr(const CRelationMgr& rhs) {}
-		CRelationMgr& operator=(const CRelationMgr& rhs ) {}
+		CRelationMgr& operator=(const CRelationMgr& rhs )  = delete;
 
 		static CRelationMgr* m_pSingleInstance;
 

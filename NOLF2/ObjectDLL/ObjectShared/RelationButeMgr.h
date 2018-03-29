@@ -213,7 +213,7 @@ private:
 	// Copy Constructor and Asignment Operator private to prevent
 	// automatic generation and inappropriate, unintentional use
 	CRelationButeMgr(const CRelationButeMgr& rhs) {}
-	CRelationButeMgr& operator=(const CRelationButeMgr& rhs ) {}
+	CRelationButeMgr& operator=(const CRelationButeMgr& rhs )  = delete;
 
 	int GetTemplateIDByName( const char* const, CDataUser* ) const;
 	int GetTemplateIDByName( const char* const, CRelationUser* ) const;
@@ -321,7 +321,7 @@ private:
 	// Copy Constructor and Asignment Operator private to prevent
 	// automatic generation and inappropriate, unintentional use
 	RelationMomento(const RelationMomento& rhs) {}
-	RelationMomento& operator=(const RelationMomento& rhs ) {}
+	RelationMomento& operator=(const RelationMomento& rhs )  = delete;
 
 	// Accessor functions:
 
@@ -387,7 +387,7 @@ protected:
 	// Copy Constructor and Asignment Operator private to prevent
 	// automatic generation and inappropriate, unintentional use
 	CRelationUser(const CRelationUser& rhs) {}
-	CRelationUser& operator=(const CRelationUser& rhs ) {}
+	CRelationUser& operator=(const CRelationUser& rhs )  = delete;
 
 	RelationSet& SetRelations() { return m_RelationSet; }
 
@@ -440,7 +440,7 @@ private:
 	// Copy Constructor and Asignment Operator private to prevent
 	// automatic generation and inappropriate, unintentional use
 	CDataUser(const CDataUser& rhs) {}
-	CDataUser& operator=(const CDataUser& rhs ) {}
+	CDataUser& operator=(const CDataUser& rhs )  = delete;
 
 	// Data:
 	// Save:

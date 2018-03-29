@@ -97,7 +97,7 @@ class CAIHumanStrategyShootStream : public CAIHumanStrategyShoot
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CAIHumanStrategyShootStream(const CAIHumanStrategyShootStream& rhs) {}
-		CAIHumanStrategyShootStream& operator=(const CAIHumanStrategyShootStream& rhs ) {}
+		CAIHumanStrategyShootStream& operator=(const CAIHumanStrategyShootStream& rhs )  = delete;
 };
 
 #endif // __AIHUMANSTRATEGYSHOOTSTREAM_H__

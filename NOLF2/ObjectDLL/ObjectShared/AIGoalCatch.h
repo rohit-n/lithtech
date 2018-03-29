@@ -83,7 +83,7 @@ class CAIGoalCatch : public CAIGoalAbstractStimulated
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CAIGoalCatch(const CAIGoalCatch& rhs) {}
-		CAIGoalCatch& operator=(const CAIGoalCatch& rhs ) {}
+		CAIGoalCatch& operator=(const CAIGoalCatch& rhs )  = delete;
 };
 
 #endif // __AIGOALCATCH_H__

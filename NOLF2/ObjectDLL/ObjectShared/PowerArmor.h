@@ -77,7 +77,7 @@ class PowerArmor : public Prop
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		PowerArmor(const PowerArmor& rhs) {}
-		PowerArmor& operator=(const PowerArmor& rhs ) {}
+		PowerArmor& operator=(const PowerArmor& rhs )  = delete;
 
 		// Save:
 		enum ePA_State
@@ -167,7 +167,7 @@ class ShellArmor : public Prop, public IHitBoxUser
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		ShellArmor(const PowerArmor& rhs) {}
-		ShellArmor& operator=(const PowerArmor& rhs ) {}
+		ShellArmor& operator=(const PowerArmor& rhs )  = delete;
 };
 #endif // __POWERARMOR_H__
 

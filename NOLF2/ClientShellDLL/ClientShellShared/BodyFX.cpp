@@ -408,6 +408,8 @@ LTBOOL CBodyFX::Update()
 				UpdateFade();
 			}
 			break;
+		default:
+			break;
 	}
 
 	if (m_hBackpack)

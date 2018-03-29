@@ -105,7 +105,7 @@ private:
 	// Copy Constructor and Asignment Operator private to prevent 
 	// automatic generation and inappropriate, unintentional use
 	CObjectRelationMgr(const CObjectRelationMgr& rhs) {}
-	CObjectRelationMgr& operator=(const CObjectRelationMgr& rhs ) {}
+	CObjectRelationMgr& operator=(const CObjectRelationMgr& rhs )  = delete;
 
 	// Non Modifying:
 	const char* const GetCollectiveName() const			{ return m_szCollectiveName; }

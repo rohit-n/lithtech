@@ -84,7 +84,7 @@ private:
 	// Copy Constructor and Asignment Operator private to prevent 
 	// automatic generation and inappropriate, unintentional use
 	CCollectiveRelationMgr(const CCollectiveRelationMgr& rhs) {}
-	CCollectiveRelationMgr& operator=(const CCollectiveRelationMgr& rhs ) {}
+	CCollectiveRelationMgr& operator=(const CCollectiveRelationMgr& rhs )  = delete;
 
 	// Save:
 	char			m_szName[RELATION_VALUE_LENGTH];

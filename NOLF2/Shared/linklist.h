@@ -507,7 +507,7 @@
 	{
 		CLinkListNode<T> *pNode = m_pHead;
 
-		if (!pNode) return NULL;
+		if (!pNode) return 0;
 
 		for (uint32 i = 0; i < dwIndex; i ++)
 		{
@@ -532,7 +532,7 @@
 		int i = 0;
 		CLinkListNode<T> *pNode = m_pHead;
 
-		if (!pNode) return NULL;
+		if (!pNode) return 0;
 
 		while (pNode)
 		{

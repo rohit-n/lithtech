@@ -82,7 +82,7 @@ class CSwimmingMovementModifier : public IMovementModifier
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CSwimmingMovementModifier(const CSwimmingMovementModifier& rhs) {}
-		CSwimmingMovementModifier& operator=(const CSwimmingMovementModifier& rhs ) {}
+		CSwimmingMovementModifier& operator=(const CSwimmingMovementModifier& rhs )  = delete;
 };
 
 //----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ class CHoverMovementModifier : public IMovementModifier
 		// Copy Constructor and Asignment Operator private to prevent 
 		// automatic generation and inappropriate, unintentional use
 		CHoverMovementModifier(const CHoverMovementModifier& rhs) {}
-		CHoverMovementModifier& operator=(const CHoverMovementModifier& rhs ) {}
+		CHoverMovementModifier& operator=(const CHoverMovementModifier& rhs )  = delete;
 
 		float	GetLowerBound( HOBJECT hObject, float flCheckDist, const LTVector& vDims, const LTVector& vPos );
 		float	GetUpperBound( HOBJECT hObject, float flCheckDist, const LTVector& vDims, const LTVector& vPos );

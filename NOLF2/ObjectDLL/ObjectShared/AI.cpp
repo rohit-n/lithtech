@@ -3169,9 +3169,9 @@ EnumAnimProp CAI::GetWeaponProp(EnumAIWeaponType eWeaponType)
 // HACK: for TO2 AIs with grenades, comment out Thrown weapons so AI choose correct animations.
 //		case kAIWeap_Thrown:
 			return kAP_Weapon2;
+		default:
+			return kAP_Weapon3;
 	}
-
-	return kAP_Weapon3;
 }
 
 // ----------------------------------------------------------------------- //

@@ -57,7 +57,7 @@ private:
 	uint32			m_dwHeight;
 
 	int				m_nLineHeight;
-#ifndef __PSX2 //*@
+#ifndef __PSX2 
 	int				m_nKey;
 
 	HSURFACE		m_hForeSurf;
