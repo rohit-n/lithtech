@@ -8,6 +8,10 @@ uint32_t LoadString(void *h, int id, char* buff, int len)
 {
     auto s = (resString)dlsym(h, "LoadString");
     const char *tmp =  s(id);
-    std::strncpy(buff, tmp, len);
-    return std::strlen(buff);
+    uint32_t out = 0;
+    if(tmp != nullptr) {
+        std::strncpy(buff, tmp, len);
+        out = std::strlen(buff);
+    }
+    return out;
 }

@@ -12,13 +12,13 @@
 #define __FACTORY_H__
 
 #define FACTORY_NEW(fact)\
-	CFactory<##fact##>::Create();
+	CFactory< fact >::Create();
 
 #define FACTORY_DELETE(fact)\
 	fact->Destroy();
 
 #define DEFINE_FACTORY_CLASS(fact)\
-	public CFactory<##fact##>
+	public CFactory< fact >
 
 #define	DEFINE_ABSTRACT_FACTORY_METHODS(fact) \
 	public:\
@@ -31,14 +31,14 @@
 	public:\
 	virtual void Constructor();\
 	virtual void Destructor();\
-	virtual void Destroy() { CFactory<##fact##>::Destroy((##fact##*)this); }\
+	virtual void Destroy() { CFactory< fact >::Destroy((fact*)this); }\
 	private:
 
 #define IMPLEMENT_FACTORY(fact, size)\
-	CFactory<##fact##>::CCleaner CFactory<##fact##>::s_Cleaner;\
-	int CFactory<##fact##>::s_cTYPE;\
-	int CFactory<##fact##>::s_iCursor;\
-	##fact##** CFactory<##fact##>::s_aPTYPE = CFactory<##fact##>::Initialize(size);
+	CFactory< fact >::CCleaner CFactory< fact >::s_Cleaner;\
+	int CFactory< fact >::s_cTYPE;\
+	int CFactory< fact >::s_iCursor;\
+	fact** CFactory< fact >::s_aPTYPE = CFactory< fact >::Initialize(size);
 
 template<class TYPE> class CFactory
 {
@@ -81,11 +81,11 @@ template<class TYPE> class CFactory
 						for ( int iPTYPE = 0 ; iPTYPE < m_cTYPE ; iPTYPE++ )
 						{
 							debug_delete(m_aPTYPE[iPTYPE]);
-							m_aPTYPE[iPTYPE] = NULL;
+							m_aPTYPE[iPTYPE] = nullptr;
 						}
 
 						debug_deletea(m_aPTYPE);
-						m_aPTYPE = NULL;
+						m_aPTYPE = nullptr;
 						m_cTYPE = 0;
 					}
 				}
@@ -194,7 +194,7 @@ TYPE** CFactory<TYPE>::Initialize(int cTYPE)
 	}
 	else
 	{
-		aPTYPE = NULL;
+		aPTYPE = nullptr;
 		cTYPE = 0;
 	}
 

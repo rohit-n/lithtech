@@ -63,35 +63,39 @@ with open(argv[1].split('/')[-1] + '.cpp', 'w') as o:
 
 #include "dynres.h"
 #include <string>
-#include <unordered_map>
 #include <cinttypes>
+#include <utility>
+#include <algorithm>
+#include <vector>
 ''')
     for i in defs:
         o.write('{0}'.format(i)+'\n')
     o.write('''
 
-static std::unordered_map<uint32_t, std::string> g_string_table;
-
-void Add2StringTable(uint32_t id, const char* str)
-{
-    g_string_table[id] = std::string{str};
-}
+std::vector<std::pair<uint32_t,const char*>> str_tab {
+''')
+    for x in str_table:
+        o.write('   std::make_pair({0},"{1}"),'.format(x[0],x[1]))
+    o.write('''
+    std::make_pair(0,"LithTech")
+};
 
 extern "C" {
-const char* LoadString(uint32_t id)
-{
-    auto res = g_string_table.find(id);
-    if(res != g_string_table.end())
-        return res->second.c_str();
+  const char* LoadString(uint32_t id)
+  {
+    auto res = std::find_if(str_tab.begin(),str_tab.end(), [id](std::pair<uint32_t, const char*> x){return (x.first == id);});
+    if(res != str_tab.end())
+        return res->second;
     else
         return nullptr;
-}
+  }
 }
 
 void setup_cursors() { }
 
-void setup_string_tables() { // all discardable string table labels here
+void setup_string_tables() {
+    bool c = false;
+    for(auto&& p : str_tab)
+        c = (LoadString(p.first) == p.second);
+}
 ''')
-    for x in str_table:
-            o.write('    Add2StringTable({0}, "{1}");\n'.format(x[0], x[1]))
-    o.write('}\n')

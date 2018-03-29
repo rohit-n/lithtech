@@ -1,7 +1,9 @@
 #include "bdefs.h"
 
+#include "clientmgr.h"
 #include "iltclient.h"
 #include "console.h"
+#include "bindmgr.h"
 #include "linuxclientde_impl.h"
 
 //the ILTClient game interface
@@ -19,6 +21,12 @@ cis_GetEngineHook(const char *name, void **pData)
     {
 		*pData = g_ClientGlob.m_window;
         return LT_OK;
+    } else if(stricmp(name, "cshell_hinstance") == 0)
+	{
+		return bm_GetInstanceHandle(g_pClientMgr->m_hShellModule, pData);
+	} else if(stricmp("cres_hinstance", name) == 0)
+    {
+		return bm_GetInstanceHandle(g_pClientMgr->m_hClientResourceModule, pData);
     }
 
     return LT_ERROR;
