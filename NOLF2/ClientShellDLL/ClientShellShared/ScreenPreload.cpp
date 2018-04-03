@@ -196,6 +196,8 @@ bool CScreenPreload::UpdateCDKeyValidation( )
 			}
 
 			break;
+		default:
+			break;
 		}
 	}
 

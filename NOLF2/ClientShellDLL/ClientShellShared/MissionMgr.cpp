@@ -688,6 +688,8 @@ bool CMissionMgr::HandleEndGame( ILTMessage_Read& msg  )
 			case eGameTypeDoomsDay:
 				g_pInterfaceMgr->SwitchToScreen(SCREEN_ID_END_DM_MISSION);
 				break;
+			default:
+				break;
 		}
 	}
 	else

@@ -5077,6 +5077,8 @@ void CGameClientShell::SetGameType(GameType eGameType)
 		}
 		break;
 		
+		default:
+			break;
 	}
 	m_eGameType = eGameType;
 }

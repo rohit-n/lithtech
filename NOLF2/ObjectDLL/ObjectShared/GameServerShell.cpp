@@ -324,6 +324,8 @@ LTRESULT CGameServerShell::OnServerInitialized()
 			ApplyWeaponRestrictions( );
 		}
 		break;
+		default:
+			break;
 	}
 
 	// Seed the random number generator so GetRandom() isn't the same each game.

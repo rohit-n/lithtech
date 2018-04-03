@@ -849,6 +849,8 @@ void Prop::HandleTouch(HOBJECT hToucher)
 						return;
 					}
 					break;
+				default:
+					break;
 			}
 		}
 	}

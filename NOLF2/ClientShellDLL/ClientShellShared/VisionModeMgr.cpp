@@ -109,6 +109,8 @@ void CVisionModeMgr::Update( )
 		case eVM_SPY :
 			g_pPlayerMgr->EndSpyVision();
 			break;
+		default:
+			break;
 	};
 
 	// Enable the new vision mode
@@ -122,6 +124,8 @@ void CVisionModeMgr::Update( )
 			g_pPlayerMgr->BeginSpyVision();
 			break;
 
+		default:
+			break;
 	};
 
 	m_eLastVisionMode = m_eVisionMode;

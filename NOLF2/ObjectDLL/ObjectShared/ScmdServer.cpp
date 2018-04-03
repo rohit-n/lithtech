@@ -432,6 +432,9 @@ bool ScmdServer_Impl::HandleScmdMessage( HCLIENT hClient, ILTMessage_Read& msg )
 			return HandleSetGameOption( hClient, msg );
 			break;
 
+		default:
+			break;
+
 	}
 
 	return false;

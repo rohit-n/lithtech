@@ -242,6 +242,8 @@ bool GameBaseLite::ReadProp( ObjectCreateStruct* pStruct )
 				return false;
 		}	
 		break;
+		default:
+			break;
 	}
 
 	return true;

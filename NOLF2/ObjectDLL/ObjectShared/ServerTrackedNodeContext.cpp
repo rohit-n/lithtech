@@ -219,6 +219,8 @@ void CServerTrackedNodeContext::UpdateClient()
 			case kTrackTarget_Position:
 				SetTrackedTarget( (EnumTrackedNodeGroup)iGroup, m_TrackedNodeTargets[iGroup].vTarget );
 				break;
+			default:
+				break;
 		}
 	}
 

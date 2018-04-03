@@ -458,6 +458,8 @@ uint32 BinaryBit::ObjectMessageFn(HOBJECT hSender, ILTMessage_Read *pMsg)
 
 							break;
 						}
+						default:
+							break;
 					}
 				}
 
@@ -607,6 +609,8 @@ LTBOOL BinaryBit::ChangeState(BinaryBitState eNewState)
 				SetObjectRenderStyle(m_hObject,0,BB_RS_NO);
 			}
 
+			break;
+		default:
 			break;
 		}
 	}
@@ -816,6 +820,8 @@ void BinaryBit::HandleActivateMessage(HOBJECT hSender)
 			ChangeState(BBState_Off);
 			break;
 		}
+		default:
+			break;
 	}
 }
 

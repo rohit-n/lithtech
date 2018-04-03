@@ -871,6 +871,8 @@ void Body::Init(const BODYINITSTRUCT& bi)
 		case kState_BodyFade:
 			m_BCS.eBodyState = eBodyStateFade;
 			break;	
+		default:
+			break;
 	}
 	
 	if (IsPlayer(bi.pCharacter->m_hObject))

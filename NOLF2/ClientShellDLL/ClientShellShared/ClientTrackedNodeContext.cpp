@@ -61,6 +61,8 @@ void CClientTrackedNodeContext::HandleServerMessage(ILTMessage_Read *pMsg)
 		case kTrackMsg_SetTarget:
 			HandleSetTarget( pMsg );
 			break;
+		default:
+			break;
 	}
 }
 
@@ -102,6 +104,8 @@ void CClientTrackedNodeContext::HandleSetTarget(ILTMessage_Read *pMsg)
 
 		case kTrackTarget_Position:
 			SetTrackedTarget( eGroup, vTarget );
+			break;
+		default:
 			break;
 	}
 }
