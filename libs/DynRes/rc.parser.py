@@ -75,7 +75,7 @@ with open(argv[1].split('/')[-1] + '.cpp', 'w') as o:
 std::vector<std::pair<uint32_t,const char*>> str_tab {
 ''')
     for x in str_table:
-        o.write('   std::make_pair({0},"{1}"),'.format(x[0],x[1]))
+        o.write('   std::make_pair({0},"{1}"),'.format(x[0], x[1]))
     o.write('''
     std::make_pair(0,"LithTech")
 };
@@ -83,7 +83,11 @@ std::vector<std::pair<uint32_t,const char*>> str_tab {
 extern "C" {
   const char* LoadString(uint32_t id)
   {
-    auto res = std::find_if(str_tab.begin(),str_tab.end(), [id](std::pair<uint32_t, const char*> x){return (x.first == id);});
+    auto res = std::find_if(str_tab.begin(),
+                            str_tab.end(),
+                            [id](std::pair<uint32_t, const char*> x){
+                                return (x.first == id);
+                            });
     if(res != str_tab.end())
         return res->second;
     else

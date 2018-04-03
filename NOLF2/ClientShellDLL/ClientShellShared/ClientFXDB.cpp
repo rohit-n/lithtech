@@ -420,6 +420,7 @@ bool CClientFXDB::ReadFXProp( bool bText, ILTStream* pFxFile, FX_PROP& fxProp )
 				break;
 
 			case FX_PROP::PATH	  : ReadTextFile( pFxFile, "%s %s", fxProp.m_data.m_sVal ); break;
+			default: break;
 		}							
 	}
 	else
@@ -447,6 +448,7 @@ bool CClientFXDB::ReadFXProp( bool bText, ILTStream* pFxFile, FX_PROP& fxProp )
 			case FX_PROP::VECTOR4 : pFxFile->Read(&fxProp.m_data.m_fVec4, sizeof(float) * 4); break;
 			case FX_PROP::CLRKEY  : pFxFile->Read(&fxProp.m_data.m_clrKey, sizeof(FX_PROP::FX_CLRKEY) ); break;
 			case FX_PROP::PATH	  : pFxFile->Read(&fxProp.m_data.m_sVal, 128); break;
+			default: break;
 		}							
 	}
 
