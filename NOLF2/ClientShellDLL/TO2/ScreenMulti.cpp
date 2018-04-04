@@ -316,6 +316,7 @@ void    CScreenMulti::OnFocus(LTBOOL bFocus)
 			// Initialize to the doomsday mission bute.
 			sMissionFile = MISSION_DD_FILE;
 			break;
+			default: break;
 		}
 
 		if( !g_pMissionButeMgr->Init( sMissionFile.c_str() ))

@@ -741,6 +741,7 @@ void CScreenJoin::ReadDetails()
 	case eGameTypeCooperative:
 		ReadCoopDetails(sOptions,cRead);
 		break;
+	default: break;
 	}
 	
 	m_pOptions->SetString(sOptions.c_str());

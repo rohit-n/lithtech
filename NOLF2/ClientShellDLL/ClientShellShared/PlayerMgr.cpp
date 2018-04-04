@@ -5477,6 +5477,7 @@ uint8 CPlayerMgr::CanCarryObject()
 			case kDoomsDay_Core:
 				return (CFX_CARRY_DD_CORE);
 				break;
+			default: break;
 			}
 		}
 

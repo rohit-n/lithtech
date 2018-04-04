@@ -2508,6 +2508,7 @@ void CGameClientShell::HandleMsgMultiplayerOptions( ILTMessage_Read* pMsg )
 		pProfile->m_ServerGameOptions.GetDoomsday().m_nRounds = nRounds;
 		pProfile->m_ServerGameOptions.GetDoomsday().m_bFriendlyFire = bFriendlyFire;
 		break;
+	default: break;
 	}
 
 	pProfile->Save( );

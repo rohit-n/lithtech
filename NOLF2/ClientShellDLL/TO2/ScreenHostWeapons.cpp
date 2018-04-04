@@ -432,6 +432,7 @@ void CScreenHostWeapons::SaveItemList()
 						pProfile->m_ServerGameOptions.m_setRestrictedGear.insert(sItem);
 					}
 				} break;
+			default: break;
 			}
 		}
 	}
@@ -542,6 +543,7 @@ void CScreenHostWeapons::AddItemToList(int nId, bool bSelected, eItemTypes eType
 				ASSERT(!"Invalid Gear id");
 			}
 		} break;
+	default: break;
 	}
 
 }

@@ -168,6 +168,7 @@ void CHUDDoomsday::Update()
 					case kDoomsDay_Core:
 						nIcon = eDD_Core;
 						break;
+					default: break;
 				}
 
 				// if we've got a match (which should be always)

@@ -920,8 +920,7 @@ LTBOOL CInterfaceMgr::Update()
             bHandled = LTTRUE;
 		}
 		break;
-
-
+		default: break;
 	}
 
 	//in playing state, message box is drawn in InterfaceMgr::Draw(),
@@ -3057,7 +3056,7 @@ LTBOOL CInterfaceMgr::OnKeyUp(int key)
 			}
 			g_bLockPopup &= bKeepLocked;
 		} break;
-
+	default: break;
 	}
 
     return LTFALSE;
@@ -4373,6 +4372,7 @@ void CInterfaceMgr::OnLButtonUp(int x, int y)
 			}
 			g_bLockPopup = false;
 		} break;
+	default: break;
 	}
 }
 
@@ -4422,6 +4422,7 @@ void CInterfaceMgr::OnLButtonDown(int x, int y)
 		}	
 		break;
 
+	default: break;
 	}
 }
 
@@ -4449,6 +4450,7 @@ void CInterfaceMgr::OnLButtonDblClick(int x, int y)
 			m_MenuMgr.OnLButtonDblClick(x,y);
 		} 
 		break;
+	default: break;
 	}
 
 }
@@ -4480,6 +4482,7 @@ void CInterfaceMgr::OnRButtonUp(int x, int y)
 			}
 			g_bLockPopup = false;
 		} break;
+	default: break;
 	}
 
 
@@ -4530,6 +4533,7 @@ void CInterfaceMgr::OnRButtonDown(int x, int y)
 		}	
 		break;
 	
+	default: break;
 	}
 }
 
@@ -4556,6 +4560,7 @@ void CInterfaceMgr::OnRButtonDblClick(int x, int y)
 			m_MenuMgr.OnRButtonDblClick(x,y);
 		} 
 		break;
+	default: break;
 	}
 
 }
@@ -4595,6 +4600,7 @@ void CInterfaceMgr::OnMouseMove(int x, int y)
 			m_MenuMgr.OnMouseMove(x,y);
 		} 
 		break;
+	default: break;
 	}
 }
 

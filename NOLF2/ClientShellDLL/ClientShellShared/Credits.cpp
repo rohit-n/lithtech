@@ -246,6 +246,7 @@ void CCredit::FormatStrings()
 	case CP_UL:
 		offset = 0.0f;
 		break;
+	default: break;
 	}
 
 	if (offset > 0.0f)

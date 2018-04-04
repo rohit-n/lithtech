@@ -101,6 +101,7 @@ LTBOOL CHUDMessage::Create(MsgCreate &mc)
 	case kMsgCenter:
 		m_pText->SetAlignmentH(CUI_HALIGN_CENTER);
 		break;
+	default: break;
 	};
 
 
@@ -268,6 +269,7 @@ void CHUDMessage::SetBasePos ( LTIntPt pos )
 				break;
 			case kMsgRight:
 				break;
+			default: break;
 			};
 
 		}
@@ -301,6 +303,7 @@ void CHUDMessage::SetScale(float fScale)
 				break;
 			case kMsgRight:
 				break;
+			default: break;
 			};			
 		}
 		m_pText->SetPosition(x,y);
@@ -385,6 +388,7 @@ void CHUDMessage::JustifyPoly()
 			break;
 		case kMsgLeft:
 			break;
+		default: break;
 		};
 	}
 

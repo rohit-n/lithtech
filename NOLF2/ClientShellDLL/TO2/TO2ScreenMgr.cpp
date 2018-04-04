@@ -250,7 +250,7 @@ void CTO2ScreenMgr::AddScreen(eScreenID screenID)
 	case SCREEN_ID_POSTLOAD:
 		pScreen = debug_new(CScreenPostload);
 		break;
-
+	default: break;
 	}
 
 	if (pScreen)

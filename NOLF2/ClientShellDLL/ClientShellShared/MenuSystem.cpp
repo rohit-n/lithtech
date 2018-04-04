@@ -125,6 +125,7 @@ uint32 CMenuSystem::OnCommand(uint32 nCommand, uint32 nParam1, uint32 nParam2)
 		case eGameTypeDoomsDay:
 			g_pInterfaceMgr->SwitchToScreen(SCREEN_ID_HOST_DD_OPTIONS);
 			break;
+		default: break;
 		};
 		break;
 	case MC_PLAYER:

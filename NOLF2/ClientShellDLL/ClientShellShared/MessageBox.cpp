@@ -275,6 +275,7 @@ void CMessageBox::Show(const char *pString, MBCreate* pCreate, uint8 nFontSize, 
 			m_Dlg.SetControlOffset(m_pCancel,offset);
 			m_pCancel->Show(LTTRUE);
 		} break;
+	default: break;
 	};
 
 
