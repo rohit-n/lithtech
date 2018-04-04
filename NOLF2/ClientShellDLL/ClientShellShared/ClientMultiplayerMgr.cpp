@@ -143,6 +143,8 @@ bool ClientMultiplayerMgr::InitMultiPlayer()
 //
 //		modelId = g_pModelButeMgr->GetDMModel(pProfile->m_nDMPlayerModel);
 		break;
+	default:
+		break;
 	};
 
 	CAutoMessage cMsg;
@@ -210,6 +212,8 @@ bool ClientMultiplayerMgr::UpdateMultiPlayer()
 			pProfile->m_nDMPlayerModel = 0;
 
 		modelId = g_pModelButeMgr->GetDMModel(pProfile->m_nDMPlayerModel);
+		break;
+	default:
 		break;
 	};
 
@@ -386,6 +390,8 @@ bool ClientMultiplayerMgr::SetupServerHost( int nPort, bool bLANOnly )
 		LTStrCpy( m_StartGameRequest.m_HostInfo.m_sName, pProfile->m_ServerGameOptions.GetDoomsday().m_sSessionName.c_str( ),
 					sizeof(m_StartGameRequest.m_HostInfo.m_sName));
 		break;
+		default:
+			break;
 	};
 
 
@@ -1132,6 +1138,8 @@ bool ClientMultiplayerMgr::UpdateNetClientData( )
 			break;
 		case eGameTypeDeathmatch:
 			m_NetClientData.m_ePlayerModelId = g_pModelButeMgr->GetDMModel( pProfile->m_nDMPlayerModel );
+			break;
+		default:
 			break;
 	};
 
