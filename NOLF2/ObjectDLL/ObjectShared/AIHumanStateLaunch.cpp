@@ -91,6 +91,7 @@ void CAIHumanStateLaunch::Update()
 				m_eStateStatus = kSStat_StateComplete;
 			}
 			break;
+		default: break;
 	}
 }
 

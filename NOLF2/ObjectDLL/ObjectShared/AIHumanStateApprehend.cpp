@@ -167,6 +167,7 @@ void CAIHumanStateApprehend::Update()
 			}
 
 			break;
+		default: break;
 	}
 
 	if ( m_pStrategyFollowPath->IsSet() )
@@ -191,5 +192,6 @@ void CAIHumanStateApprehend::UpdateAnimation()
 			m_pStrategyFollowPath->UpdateAnimation();
 			GetAnimationContext()->SetProp(kAPG_Awareness, kAP_Investigate);
 			break;
+		default: break;
 	}
 }

@@ -218,6 +218,7 @@ void CAIHumanStateSniper::Update()
 			}
 
 			break;
+		default: break;
 	}
 }
 
@@ -242,6 +243,7 @@ void CAIHumanStateSniper::UpdateAnimation()
 			GetAnimationContext()->SetProp(kAPG_Posture, m_ePose);
 			m_pStrategyShoot->UpdateAnimation();
 			break;
+		default: break;
 	}
 }
 

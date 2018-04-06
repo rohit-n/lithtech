@@ -436,6 +436,7 @@ LTBOOL CAIHumanStrategyToggleLights::UpdateAnimation()
 			GetAnimationContext()->Lock();
 
 			break;
+		default: break;
 	}
 
 	return LTTRUE;

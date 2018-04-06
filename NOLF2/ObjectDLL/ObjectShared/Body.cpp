@@ -904,6 +904,7 @@ void Body::Init(const BODYINITSTRUCT& bi)
 			m_eDeathType = CD_GIB;
 		}
 		break;
+		default: break;
 	}
 
 	CDestructible* pDest = bi.pCharacter->GetDestructible();
@@ -2009,6 +2010,7 @@ LTBOOL Body::CanCheckPulse()
 				// Plus we avoid some squirrely animation issues.
 				return (g_pLTServer->GetTime() > m_fStartTime + 4.0f);
 				break;
+			default: break;
 		}
 	}
 

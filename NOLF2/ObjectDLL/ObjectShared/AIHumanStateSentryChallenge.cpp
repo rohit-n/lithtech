@@ -229,6 +229,7 @@ void CAIHumanStateSentryChallenge::SetAnimProp(eActionType Action,
 	case kChallengeAction:
 		m_ChallengeProps.Set( eGroup, eProp );
 		break;
+	default: break;
 }
 }
 

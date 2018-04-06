@@ -117,6 +117,7 @@ void CAIGoalDrawWeapon::ActivateGoal()
 					}
 				}
 				break;
+			default: break;
 		}
 	}
 }

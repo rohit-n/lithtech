@@ -197,6 +197,7 @@ void CAIGoalSerumDeath::HandleStateAnimate()
 						m_fCurImportance = 0.f;
 					}
 					break;
+				default: break;
 			}
 			break;
 

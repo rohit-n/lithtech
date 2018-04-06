@@ -424,6 +424,7 @@ LTBOOL CAISenseRecorderGame::HandleSpecificStimuli(CAIStimulusRecord* pStimulusR
 		case kStim_AllySpecialDamageVisible:	return HandleAllySpecialDamageVisible(pStimulusRecord);
 		case kStim_AllyDeathVisible:			return HandleAllyDeathVisible(pStimulusRecord);
 		case kStim_UndeterminedVisible:			return HandleUndeterminedVisible(pStimulusRecord, pfRateModifier);
+		default: break;
 	}
 
 	return LTTRUE;

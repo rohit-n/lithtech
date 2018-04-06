@@ -336,6 +336,7 @@ void CAIHumanStateDeflect::Update(void)
 			}
 		}
 		break;
+		default: break;
 	}
 
 	// If we changed states, force an animation recalculation by locking,
@@ -463,6 +464,7 @@ void CAIHumanStateDeflect::UpdateAnimation(void)
 		{
 			break;
 		}
+		default: break;
 	}
 
 	// Always lock the animation.  Let the caller handle unlocking later

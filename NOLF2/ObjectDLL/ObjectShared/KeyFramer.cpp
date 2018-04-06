@@ -53,6 +53,7 @@ LTFLOAT GetKFWaveValue(LTFLOAT fSpeed, LTFLOAT fPercent, KFWaveType eWaveType)
 		case KFWAVE_SLOWON:
 			fNewSpeed = MATH_HALFPI * fSpeed * (LTFLOAT)sin( fPercent * MATH_HALFPI ) + fScalePercent;
 		break;
+		default: break;
 	}
 
 	return fNewSpeed;

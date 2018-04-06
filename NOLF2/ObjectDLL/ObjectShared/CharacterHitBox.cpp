@@ -601,6 +601,7 @@ static LTVector GetNodeModelColor(ModelSkeleton eModelSkeleton, ModelNode eModel
 		case HL_LEG :
 			vColor = LTVector(0, 0, 1);
 		break;
+		default: break;
 	}
 
 	return vColor;

@@ -1150,7 +1150,7 @@ void CClientWeaponMgr::ChangeToNextRealWeapon()
 		uint8 nWeaponId = nWeaponPriorities[i];
 		if (WMGR_INVALID_ID != nWeaponId)
 		{
-			uint8 iCur = WeaponIdToIndex(nWeaponId);
+			int iCur = WeaponIdToIndex(nWeaponId);
 
 			if (CWM_NO_WEAPON != iCur)
 			{

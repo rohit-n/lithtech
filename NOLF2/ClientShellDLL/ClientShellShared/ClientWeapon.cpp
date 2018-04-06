@@ -2977,6 +2977,7 @@ void CClientWeapon::UpdateFiring()
 			}
 		}
 		break;
+		default: break;
 	}
 }
 
@@ -3047,6 +3048,7 @@ void CClientWeapon::UpdateNonFiring()
 			PlayIdleAnimation();
 		}
 		break;
+		default: break;
 	}
 }
 

@@ -146,6 +146,7 @@ uint32 AINode::EngineMessageFn(uint32 messageID, void *pv, LTFLOAT fData)
 			SetNextUpdate(0.0f);
 		}
 		break;
+		default: break;
 	}
 
 	return BaseClass::EngineMessageFn(messageID, pv, fData);

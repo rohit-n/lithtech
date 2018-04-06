@@ -288,6 +288,7 @@ void AISpatialNeighbor::FindNearestEntryPoint(const LTVector& vPoint, LTVector* 
 			*pvEntryPoint = m_avConnectionEndpoints[0];
 			pvEntryPoint->x = fMin + ( ((LTFLOAT)iOpening) * fWidth ) + ( fWidth * 0.5f );
 			break;
+		default: break;
 	}
 }
 

@@ -535,6 +535,7 @@ uint32 AINodeSensing::EngineMessageFn(uint32 messageID, void *pv, LTFLOAT fData)
 			}
 		}
 		break;
+		default: break;
 	}
 
 	return super::EngineMessageFn(messageID, pv, fData);

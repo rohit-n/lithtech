@@ -557,6 +557,7 @@ void CAIGoalChase::HandleJunctionVolume()
 			AITRACE(AIShowJunctions, ( m_pAI->m_hObject, "Junction has no JunctionAction!\n" ) );
 			HandleJunctionVolume();
 			break;
+		default: break;
 	}
 }
 

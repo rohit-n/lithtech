@@ -292,6 +292,7 @@ void CAIPath::GetFinalDir(LTVector* pvDir)
 					rit = m_lstWaypoints.rend() - 1;
 				}
 				break;
+		default: break;
 		}
 	}
 

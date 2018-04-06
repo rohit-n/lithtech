@@ -3379,6 +3379,7 @@ EnumAIStateType CCharacter::GetPriorityBodyState(EnumAIStateType bs1, EnumAIStat
 			return bs1;
 		case kState_BodyAcid:
 			return bs1;
+		default: break;
 	}
 
 	switch ( bs2 )
@@ -3405,6 +3406,7 @@ EnumAIStateType CCharacter::GetPriorityBodyState(EnumAIStateType bs1, EnumAIStat
 			return bs2;
 		case kState_BodyAcid:
 			return bs2;
+		default: break;
 	}
 
 	_ASSERT(bs1 == bs2);

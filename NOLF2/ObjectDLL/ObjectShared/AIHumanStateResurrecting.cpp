@@ -180,6 +180,7 @@ CAIHumanStateResurrecting::CAIHumanStateResurrecting()
 			}
 		}
 		break;
+		default: break;
 	}
 }
 
@@ -206,6 +207,7 @@ CAIHumanStateResurrecting::CAIHumanStateResurrecting()
 			GetAI()->GetAnimationContext()->SetProp(kAPG_Posture, kAP_Stand);
 			GetAI()->GetAnimationContext()->SetProp(kAPG_WeaponPosition, kAP_Down);
 			break;
+		default: break;
 	}
 }
 

@@ -1295,6 +1295,7 @@ void CAIPathMgr::BuildPath(CAI* pAI, CAIPath* pPath, AIVolume* pVolume, const LT
 					++it;
 				}
 				break;
+			default: break;
 		}
 	}
 }
@@ -1892,6 +1893,7 @@ AI_WAYPOINT_LIST::iterator CAIPathMgr::BoundWaypointsToVolume(const BOUND_PATH_S
 				case eVolumeConnectionLocationBack:
 					dwCheck &= ~( ( ics.pVolumeNeighborNext->GetConnectionLocation() == eVolumeConnectionLocationFront ) ? eVolumeConnectionLocationBack : eVolumeConnectionLocationFront );
 					break;
+				default: break;
 			}
 		}
 
@@ -2211,6 +2213,7 @@ LTBOOL CAIPathMgr::IntersectConnectionEdges(INTERSECT_CONNECTION_STRUCT* pics,
 			}
 		}
 		break;
+		default: break;
 	}
 
 	return LTFALSE;

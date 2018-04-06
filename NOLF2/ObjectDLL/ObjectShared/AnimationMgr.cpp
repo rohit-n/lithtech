@@ -772,6 +772,7 @@ void CAnimationContext::Update()
 
 		}
 		break;
+		default: break;
 	}
 
 	m_iRandomSeed = -1;
@@ -868,6 +869,7 @@ LTBOOL CAnimationContext::IsPlayingSpecial()
 		case eStateSpecialLoop:
 		case eStateSpecialLinger:
 			return LTTRUE;
+		default: break;
 	}
 
 	return LTFALSE;

@@ -600,6 +600,7 @@ void CScreenMulti::Update()
 						
 				} break;
 
+			default: break;
 
 			}
 
