@@ -2057,7 +2057,7 @@ void CMoveMgr::SetClientObjNonsolid()
 {
 	HOBJECT hObj;
 
-	if(hObj = g_pLTClient->GetClientObject())
+	if((hObj = g_pLTClient->GetClientObject()))
 	{
 		g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, FLAG_CLIENTNONSOLID, FLAG_CLIENTNONSOLID);
 	}

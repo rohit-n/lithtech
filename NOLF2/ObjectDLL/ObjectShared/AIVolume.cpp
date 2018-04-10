@@ -2305,6 +2305,7 @@ LTBOOL AIVolumeJunction::GetAction(CAI* pAI, uint8* pmskActionVolumes, AIVolume*
 							}
 						}
 						break;
+					default: break;
 				}
 	
 				// Record the action. Set percent chance to zero if invalid.
