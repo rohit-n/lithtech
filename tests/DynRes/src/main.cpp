@@ -15,6 +15,7 @@ int main(int, char**)
     std::cout << "loading strings from sharable object\n";
     void *h = dlopen("./libCRes.so", RTLD_NOW);
     if(h != nullptr) {
+        printString(0, h); // sentinel value in the string resource generated file
         printString(IDS_VERSION, h);
         printString(IDS_APPNAME, h);
         dlclose(h);
