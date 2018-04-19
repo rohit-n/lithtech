@@ -260,7 +260,7 @@ void CAICentralKnowledgeMgr::OnLinkBroken( LTObjRefNotifier *pRef, HOBJECT hObj 
 				it->second->m_pAI = LTNULL;
 			}
 
-			if( &it->second->m_hKnowledgeTarget != nullptr)
+			if( &(it->second->m_hKnowledgeTarget) != nullptr)
 			{
 				it->second->m_pKnowledgeTarget = LTNULL;
 			}
