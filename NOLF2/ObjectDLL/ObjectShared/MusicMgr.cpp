@@ -100,7 +100,7 @@ void CMusicMgr::Init(const char* szMusicControlFile)
 
     strcpy(m_szTheme, szMusicControlFile);
     char* pchDot;
-    if ( pchDot = strchr(m_szTheme, '.') )
+    if ( (pchDot = strchr(m_szTheme, '.') ))
     {
         *pchDot = 0;
     }

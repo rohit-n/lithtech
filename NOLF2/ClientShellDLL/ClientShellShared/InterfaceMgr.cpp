@@ -1604,7 +1604,7 @@ LTBOOL CInterfaceMgr::OnMessage(uint8 messageID, ILTMessage_Read *pMsg)
 			{
 				CLIENT_INFO *pClient;
 
-				if(pClient = m_ClientInfo.GetClientByID(nID))
+				if((pClient = m_ClientInfo.GetClientByID(nID)))
 					pClient->sStats.ReadData(pMsg);
 
 			}
@@ -1620,7 +1620,7 @@ LTBOOL CInterfaceMgr::OnMessage(uint8 messageID, ILTMessage_Read *pMsg)
             uint32 nID = pMsg->Readuint32();
 			CLIENT_INFO *pClient;
 
-			if(pClient = m_ClientInfo.GetClientByID(nID))
+			if((pClient = m_ClientInfo.GetClientByID(nID)))
 			{
 				pClient->sScore.ReadData(pMsg);
 				m_ClientInfo.UpdateClientSort(pClient);
@@ -1866,7 +1866,7 @@ LTBOOL CInterfaceMgr::OnMessage(uint8 messageID, ILTMessage_Read *pMsg)
 					break;
 
                 ping = pMsg->Readuint16();
-				if(pClient = m_ClientInfo.GetClientByID(id,false))
+				if((pClient = m_ClientInfo.GetClientByID(id,false)))
 					pClient->nPing = ping;
 			}
 

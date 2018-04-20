@@ -704,7 +704,7 @@ void CScreenJoin::DisplayCurServerList()
 		// Add the server
 		uint16 nCtrlIndex = m_pServerListCtrl->AddControl(pCtrl);
 
-		if (nServerIndex = m_nSelectedServer)
+		if ((nServerIndex = m_nSelectedServer))
 			nSelected = nCtrlIndex;
 
 	}
