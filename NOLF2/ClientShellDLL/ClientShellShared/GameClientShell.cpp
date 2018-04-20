@@ -1150,14 +1150,14 @@ uint32 CGameClientShell::OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid)
 
 	// Process command line.
 
-	if (hVar = g_pLTClient->GetConsoleVar("join")) // looking for join [ip] format
+	if ((hVar = g_pLTClient->GetConsoleVar("join"))) // looking for join [ip] format
 	{
 		g_pInterfaceMgr->SetCommandLineJoin( true );
 
 		// Change to the splash screen.  We'll start the game after that.
 		GetInterfaceMgr( )->ChangeState(GS_SPLASHSCREEN);
 	}
-	else if (hVar = g_pLTClient->GetConsoleVar("host")) // looking for host [1] format
+	else if ((hVar = g_pLTClient->GetConsoleVar("host"))) // looking for host [1] format
 	{
 		int nHost = atoi(g_pLTClient->GetVarValueString( hVar ));
 		
@@ -1229,7 +1229,7 @@ uint32 CGameClientShell::OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid)
 			GetInterfaceMgr( )->ChangeState(GS_SPLASHSCREEN);
 		}
 	}
-	else if (hVar = g_pLTClient->GetConsoleVar("runworld"))
+	else if ((hVar = g_pLTClient->GetConsoleVar("runworld")))
 	{
 		const char* pMap = g_pLTClient->GetVarValueString(hVar);
 		if (!pMap)
@@ -1708,9 +1708,9 @@ void CGameClientShell::UpdatePlaying()
 						( nEndTicks + ~g_nStartTicks );
 
 					// Make sure all the counters match up.
-					if( (( uint32 ) abs( (long)(nDeltaTimeB - nDeltaClientTime) ) > g_nTolerance ) || 
-						(( uint32 ) abs( (long)(nDeltaTicks - nDeltaClientTime) ) > g_nTolerance ) ||
-						(( uint32 ) abs( (long)(nDeltaTimeB - nDeltaTicks) ) > g_nTolerance ) )
+					if( (( uint32 ) abs( (int)(nDeltaTimeB - nDeltaClientTime) ) > g_nTolerance ) || 
+						(( uint32 ) abs( (int)(nDeltaTicks - nDeltaClientTime) ) > g_nTolerance ) ||
+						(( uint32 ) abs( (int)(nDeltaTimeB - nDeltaTicks) ) > g_nTolerance ) )
 					{
 						g_pLTClient->CPrint( "Speedhack kick" );
 						g_pLTClient->CPrint( "nDeltaTimeB %d", nDeltaTimeB );

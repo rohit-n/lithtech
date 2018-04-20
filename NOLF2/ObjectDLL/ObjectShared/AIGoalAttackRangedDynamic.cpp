@@ -194,6 +194,7 @@ void CAIGoalAttackRangedDynamic::UpdateGoal()
 		case kState_HumanAttackMove:
 			HandleStateAttackMove();
 			return;
+		default: break;
 	}
 
 	super::ActivateGoal();
