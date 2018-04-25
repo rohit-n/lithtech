@@ -1949,7 +1949,7 @@ void CProfileMgr::SetDeviceData()
 	// loop through all joystick objects and store the axis ones with our devicename the m_aDeviceData array
 	while ((pObj != NULL) && (m_nNumDeviceAxis < kMaxDeviceAxis))
 	{
-		if ((pObj->m_ObjectName != NULL) && (pObj->m_DeviceName != NULL))
+		if ((pObj->m_ObjectName[0] != 0) && (pObj->m_DeviceName[0] != 0))
 		{
 			if	(	(pObj->m_DeviceType == DEVICETYPE_JOYSTICK || pObj->m_DeviceType == DEVICETYPE_GAMEPAD) &&
 					(stricmp(pObj->m_DeviceName, strDeviceName[2]) == 0) &&
@@ -1967,7 +1967,7 @@ void CProfileMgr::SetDeviceData()
 			}
 
 		}
-		if ((pObj->m_ObjectName != NULL) && (pObj->m_DeviceName != NULL))
+		if ((pObj->m_ObjectName[0] != 0) && (pObj->m_DeviceName[0] != 0))
 		{
 			if	(	(pObj->m_DeviceType == DEVICETYPE_JOYSTICK || pObj->m_DeviceType == DEVICETYPE_GAMEPAD) &&
 					(stricmp(pObj->m_DeviceName, strDeviceName[2]) == 0) &&

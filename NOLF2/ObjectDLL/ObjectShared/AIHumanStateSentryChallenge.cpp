@@ -891,7 +891,7 @@ void Challenge::DoChallenge( const CCharacter* pChallengedChar )
 
 	const AIInformationVolume* pInformationVolume = g_pAIInformationVolumeMgr->FindContainingVolume( LTNULL, vPos, eAxisHorizontal );
 
-	if ( !pInformationVolume || pInformationVolume && !pInformationVolume->HasRegion() )
+	if ( !pInformationVolume || !pInformationVolume->HasRegion() )
 	{
 		// If we have no Volume, or if the Volume does not have a Region, issue
 		// a warning, and let the character pass

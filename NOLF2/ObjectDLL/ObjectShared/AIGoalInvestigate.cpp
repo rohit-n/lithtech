@@ -346,6 +346,7 @@ void CAIGoalInvestigate::SetStateInvestigate()
 				m_vStimulusDir.Normalize();
 			}
 			break;
+		default: break;
 	}
 
 
@@ -940,6 +941,7 @@ LTBOOL CAIGoalInvestigate::SelectTriggeredAISound(EnumAISoundType* peAISoundType
 				}
 			}
 			break;
+		default: break;
 	}
 
 	if( eAISound != kAIS_None )
@@ -981,7 +983,7 @@ LTBOOL CAIGoalInvestigate::SelectTriggeredAISound(EnumAISoundType* peAISoundType
 				eAISound = kAIS_DisturbanceHeardMinor;
 			}
 			break;
-
+		default: break;
 	}
 
 	*peAISoundType = eAISound;
@@ -1110,6 +1112,7 @@ LTBOOL CAIGoalInvestigate::HandleGoalSenseTrigger(AISenseRecord* pSenseRecord)
 					return LTFALSE;
 				}
 				break;
+			default: break;
 		}
 
 		

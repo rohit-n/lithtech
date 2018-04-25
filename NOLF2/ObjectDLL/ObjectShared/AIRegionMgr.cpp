@@ -45,7 +45,7 @@ void CAIRegionMgr::Init()
 
 	HCLASS  hAIRegion = g_pLTServer->GetClass("AIRegion");
 	HOBJECT	hCurObject = LTNULL;
-	while (hCurObject = g_pLTServer->GetNextObject(hCurObject))
+	while ((hCurObject = g_pLTServer->GetNextObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hAIRegion))
 		{
@@ -54,7 +54,7 @@ void CAIRegionMgr::Init()
 	}
 
 	hCurObject = LTNULL;
-	while (hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject))
+	while ((hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hAIRegion))
 		{
@@ -72,7 +72,7 @@ void CAIRegionMgr::Init()
 
 	uint32 nId = 0;
 	hCurObject = LTNULL;
-	while (hCurObject = g_pLTServer->GetNextObject(hCurObject))
+	while ((hCurObject = g_pLTServer->GetNextObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hAIRegion))
 		{
@@ -83,7 +83,7 @@ void CAIRegionMgr::Init()
 	}
 
 	hCurObject = LTNULL;
-	while (hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject))
+	while ((hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hAIRegion))
 		{

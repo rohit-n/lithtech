@@ -187,7 +187,7 @@ LTBOOL CSkillsButeMgr::Init(const char* szAttributeFile)
 		char *pId = strtok(szStr,",");
 		char *pMin = strtok(LTNULL,"");
 
-		if (*pId && &pMin)
+		if (*pId && pMin != nullptr)
 		{
 			m_Ranks[m_nNumRanks].nNameId = atoi(pId);
 			m_Ranks[m_nNumRanks].nMinScore = atoi(pMin);
@@ -357,6 +357,7 @@ const SkillModifiers* CSkillsButeMgr::GetModifiers(eSkill skl, eSkillLevel lvl)
 			return &m_Gadget[lvl];
 		case SKL_SEARCH:
 			return &m_Search[lvl];
+		default: break;
 	}
 
 	ASSERT(!"Invalid Skill specified.");
@@ -427,6 +428,7 @@ uint8 CSkillsButeMgr::GetNumModifiers(eSkill skl)
 			return GadgetModifiers::kNumModifiers;
 		case SKL_SEARCH:
 			return SearchModifiers::kNumModifiers;
+		default: break;
 	}
 
 	ASSERT(!"Invalid Skill specified.");

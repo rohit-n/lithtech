@@ -1354,7 +1354,7 @@ void CPlayerMgr::HandleMsgPlayerDamage (ILTMessage_Read *pMsg)
 	
 
 /*******************************
-/****** Damage Sector Map ******
+******* Damage Sector Map ******
 	            3
 		     4     2
 
@@ -4951,7 +4951,7 @@ void CPlayerMgr::UpdateUnderWaterFX(LTBOOL bUpdate)
     uint32 dwWidth = 640, dwHeight = 480;
     g_pLTClient->GetSurfaceDims(g_pLTClient->GetScreenSurface(), &dwWidth, &dwHeight);
 
-	if (dwWidth < 0 || dwHeight < 0) return;
+	if (dwWidth == 0 || dwHeight == 0) return;
 
 
 	// Initialize to default fov x and y...

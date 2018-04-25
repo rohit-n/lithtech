@@ -35,7 +35,7 @@
 class ScmdConsoleCommandHandler
 {
 	public:
-
+		virtual ~ScmdConsoleCommandHandler() = default;
 		// String token.
 		virtual CParsedMsg::CToken const& Token( ) = 0;
 

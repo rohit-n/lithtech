@@ -29,7 +29,7 @@ void VerifyAnimation( HOBJECT hObject, const char* const pszAnimationName, CAnim
 {
 	// No matches were found.
 
-	if( pszAnimationName == "" )
+	if( pszAnimationName[0] == 0 )
 	{
 		char szBuffer[256];
 		sprintf(szBuffer, "Could not find anim with props:\n");

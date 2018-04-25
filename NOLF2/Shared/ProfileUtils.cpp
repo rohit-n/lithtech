@@ -82,7 +82,7 @@ static void DelimitedStringToStringSet( std::string const& sDelimitedString, Str
 	uint32 nPos = 0;
 	while( nPos < sDelimitedString.size( ))
 	{
-		uint32 nNextPos = (uint32)(sDelimitedString.find( ',', nPos ));
+		auto nNextPos = sDelimitedString.find( ',', nPos );
 		if( nNextPos == std::string::npos )
 			nNextPos = (uint32)(sDelimitedString.size());
 
@@ -236,7 +236,7 @@ const char*	ServerGameOptions::GetCampaignName() const
 	case eGameTypeDoomsDay:
 		return m_DD.m_sCampaignName.c_str();
 		break;
-		
+	default: break;		
 	};
 
 	return DEFAULT_CAMPAIGN;
@@ -257,6 +257,7 @@ void ServerGameOptions::SetCampaignName(const char*	pszName)
 	case eGameTypeDoomsDay:
 		m_DD.m_sCampaignName = pszName;
 		break;
+	default: break;		
 	};
 }
 
@@ -279,6 +280,7 @@ const char*	ServerGameOptions::GetSessionName() const
 		return m_DD.m_sSessionName.c_str();
 		break;
 		
+	default: break;		
 	};
 
 
@@ -300,6 +302,7 @@ void ServerGameOptions::SetSessionName(const char*	pszName)
 	case eGameTypeDoomsDay:
 		m_DD.m_sSessionName = pszName;
 		break;
+	default: break;		
 	};
 }
 

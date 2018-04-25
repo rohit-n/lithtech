@@ -957,7 +957,7 @@ void CNodeController::HandleNodeControlHeadFollowObjMessage(ILTMessage_Read *pMs
 	m_aNodeControls[iNodeControl].bFollowOn = bOn;
 
 	// Find the node in the follow object...
-	if(szFollowObjNode)
+	if(szFollowObjNode[0])
 	{
 		HMODELNODE hCurNode = INVALID_MODEL_NODE;
 

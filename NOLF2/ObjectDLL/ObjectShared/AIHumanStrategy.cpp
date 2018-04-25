@@ -591,6 +591,7 @@ LTBOOL CAIHumanStrategyFollowPath::UpdateAnimation()
 					}
 				}
 				break;
+				default: break;
 			}
 		}
 		break;
@@ -771,6 +772,7 @@ LTBOOL CAIHumanStrategyFollowPath::UpdateClimbTo(CAIPathWaypoint* pWaypoint)
 				return LTTRUE;
 			}
 			break;
+		default: break;
 	}
 
 
@@ -848,6 +850,7 @@ LTBOOL CAIHumanStrategyFollowPath::UpdateClimbTo(CAIPathWaypoint* pWaypoint)
 					m_pAIHuman->GetAnimationContext()->Lock();
 				}
 				break;
+			default: break;
 		}
 	}
 
@@ -1051,6 +1054,7 @@ LTBOOL CAIHumanStrategyFollowPath::UpdateOpenDoors(CAIPathWaypoint* pWaypoint)
 				GetAI()->KickDoors( hDoor1, hDoor2 );
 				m_eDoorState = eDoorStateWaitingForDoorToOpen;
 				return LTTRUE;
+			default: break;
 		}
 	}
 
@@ -1233,6 +1237,7 @@ LTBOOL CAIHumanStrategyFollowPath::UpdateOpenDoors(CAIPathWaypoint* pWaypoint)
 				}
 			}
 			break;
+		default: break;
 	}
 
 	return LTTRUE;
@@ -1735,6 +1740,7 @@ void CAIHumanStrategyFollowPath::DebugRemainingDrawPath()
 					vLastPos = vPos;
 				}
 				break;
+				default: break;
 			}
 		}
 	}
@@ -1780,6 +1786,7 @@ void CAIHumanStrategyFollowPath::DebugDrawPath()
    							vLastPos = vPos;
    						}
    						break;
+						default: break;
    					}
    				}
    			}
@@ -2744,6 +2751,7 @@ void CAIHumanStrategyCover::Update()
 				}
 			}
 		}
+		default: break;
 	}
 }
 

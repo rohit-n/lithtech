@@ -451,7 +451,7 @@ bool CTrackedNodeContext::GetRootBasis(EnumTrackedNodeGroup eGroup,
 
 	// Last constraint node listed is the root.
 
-	uint32 iRootNode = m_cTrackedNodesPerGroup[eGroup] - 1;
+	int64 iRootNode = m_cTrackedNodesPerGroup[eGroup] - 1;
 	if( iRootNode < 0 )
 	{
 		return false;

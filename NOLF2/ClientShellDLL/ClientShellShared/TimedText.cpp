@@ -106,15 +106,13 @@ void CTimedText::Init( TIMED_TEXT_INIT_STRUCT const &initData )
 	//
 	
 	// get character complete sound name (if any)
-	if ( initData.textDisplaySound && 
-	     initData.textDisplaySound[ 0 ] != '\0' )
+	if ( initData.textDisplaySound[ 0 ] != '\0' )
 	{
 		strncpy( m_textDisplaySoundName, initData.textDisplaySound, TIMED_TEXT_SOUND_NAME_LENGTH );
 	}
 	
 	// get scrolling sound name (if any)
-	if ( initData.scrollSound &&
-	     initData.scrollSound[ 0 ] != '\0' )
+	if ( initData.scrollSound[ 0 ] != '\0' )
 	{
 		strncpy( m_scrollSoundName, initData.scrollSound, TIMED_TEXT_SOUND_NAME_LENGTH );
 	}

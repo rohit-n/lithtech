@@ -294,7 +294,7 @@ uint32 CGameSoundMgr::GetSoundIdFromFilename(const char* pSoundFile)
 	char* pStr = (char*) pSoundFile;
 	char* pStr2;
 
-	while (pStr2 = strstr(pStr, "\\"))
+	while ((pStr2 = strstr(pStr, "\\")))
 	{
 		pStr = pStr2;
 		pStr++;

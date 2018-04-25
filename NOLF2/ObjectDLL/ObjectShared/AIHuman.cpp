@@ -1760,7 +1760,7 @@ void CAIHuman::Load(ILTMessage_Read *pMsg, uint32 dwLoadFlags)
 	uint32 dwState;
 	LOAD_DWORD(dwState);
 
-	if (dwState != (DWORD)-1)
+	if (dwState != 0xffffffff)
 	{
 		SetState((EnumAIStateType)dwState, LTFALSE);
 

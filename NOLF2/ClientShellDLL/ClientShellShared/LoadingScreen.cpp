@@ -94,7 +94,7 @@ void CLoadingScreen::CreateScaleFX(char *szFXName)
 		{
 			LTVector vNewPos;
 			g_pLTClient->GetObjectPos(hSFX, &vNewPos);
-			vNewPos.z;
+			vNewPos.z += 0;
 			g_pLTClient->SetObjectPos(hSFX, &vNewPos);
 		}
 	}

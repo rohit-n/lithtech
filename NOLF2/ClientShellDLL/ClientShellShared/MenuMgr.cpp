@@ -1010,7 +1010,7 @@ bool CMenuSlide::IsDone()
 
 uint32 CMenuBar::OnCommand(uint32 nCommand, uint32 nParam1, uint32 nParam2)
 {
-	if (nParam1 >= 0 && nParam1 < MENU_ID_UNASSIGNED)
+	if (nParam1 < MENU_ID_UNASSIGNED)
 	{
 		g_pInterfaceMgr->GetMenuMgr()->SetCurrentMenu((eMenuID)nParam1);
 		g_pInterfaceMgr->RequestInterfaceSound(IS_SELECT);

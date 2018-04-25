@@ -104,7 +104,7 @@ LTBOOL CTriggerFX::Init( HLOCALOBJ hServObj, ILTMessage_Read *pMsg )
 	LTVector vDims = m_cs.vDims;
 	g_pPhysicsLT->SetObjectDims( m_hDimsObject, &vDims, 0 );
 
-	if( m_cs.nTriggerTypeId != TTMGR_INVALID_ID )
+	if( m_cs.nTriggerTypeId != uint8(TTMGR_INVALID_ID) )
 	{
 		TRIGGERTYPE *pType = g_pTriggerTypeMgr->GetTriggerType( m_cs.nTriggerTypeId );
 		if( pType )

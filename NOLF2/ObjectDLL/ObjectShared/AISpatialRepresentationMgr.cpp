@@ -113,7 +113,7 @@ int CAISpatialRepresentationMgr::CountInstances(const char* const szClass) const
 	int nInstances = 0;
 	HCLASS  hClass = g_pLTServer->GetClass((char*)szClass);
 	HOBJECT	hCurObject = LTNULL;
-    while (hCurObject = g_pLTServer->GetNextObject(hCurObject))
+    while ((hCurObject = g_pLTServer->GetNextObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hClass))
 		{
@@ -122,7 +122,7 @@ int CAISpatialRepresentationMgr::CountInstances(const char* const szClass) const
 	}
 
 	hCurObject = LTNULL;
-    while (hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject))
+    while ((hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hClass))
 		{
@@ -147,7 +147,7 @@ void CAISpatialRepresentationMgr::SetupInstanceArray(const char* const szClass)
 	uint32 nId = 0;
 	HCLASS hClass = g_pLTServer->GetClass((char*)szClass);
 	HOBJECT hCurObject = LTNULL;
-    while (hCurObject = g_pLTServer->GetNextObject(hCurObject))
+    while ((hCurObject = g_pLTServer->GetNextObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hClass))
 		{
@@ -158,7 +158,7 @@ void CAISpatialRepresentationMgr::SetupInstanceArray(const char* const szClass)
 	}
 
 	hCurObject = LTNULL;
-    while (hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject))
+    while ((hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject)))
 	{
         if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hClass))
 		{

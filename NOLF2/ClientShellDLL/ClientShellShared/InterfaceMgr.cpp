@@ -269,7 +269,7 @@ static LTBOOL HandleDebugKey(int key )
 
 		szTempStr[0] = 0;
 		g_pClientButeMgr->GetDebugString(iID,uint8(fCurrentLevel), szTempStr, 256);
-		if( szTempStr )
+		if( szTempStr[0] )
 		{
 			g_pLTClient->RunConsoleString( szTempStr );
 #ifdef _DEBUG

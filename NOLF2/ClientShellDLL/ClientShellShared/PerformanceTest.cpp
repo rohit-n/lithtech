@@ -178,7 +178,7 @@ void CPerformanceTest::Stop()
 		m_nPercentAboveMax = int(100.0 * float(m_nSamplesAboveMax) / float(m_nTotalSamples));
 		m_nPercentMintoMax  = (100 - (m_nPercentBelowMin + m_nPercentAboveMax));
 
-		if (m_nPercentMintoMax < 0) m_nPercentMintoMax = 0;
+		if (m_nPercentMintoMax > 100) m_nPercentMintoMax = 0;
 	}
 }
 

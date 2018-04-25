@@ -2406,7 +2406,7 @@ bool AINodeChangeWeapons::ShouldChangeWeapons(CAIHuman* pAIHuman) const
 	AIASSERT( pAIHuman, m_hObject, "NULL pAIHuman" );
 	if (pAIHuman==NULL)
 	{
-		return NULL;
+		return false;
 	}
 
 	return (!!GetWeaponTransition(pAIHuman));
