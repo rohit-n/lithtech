@@ -493,7 +493,7 @@ int CRelationButeMgr::GetTemplateIDByName( const char* const pszName, CObjectRel
 void CRelationButeMgr::CopyTemplate(const char* const szName,
 									CObjectRelationMgr* pORM ) const
 {
-	uint32 nTemplateID = GetTemplateIDByName( szName, pORM );
+	auto nTemplateID = GetTemplateIDByName( szName, pORM );
 	if ( nTemplateID < 0 || nTemplateID > m_listpObjectRelationMgrTemplates.size() )
 	{
 		AIASSERT1( 0, NULL, "Out of range RelationDataID: %d", nTemplateID );
@@ -514,7 +514,7 @@ void CRelationButeMgr::CopyTemplate(const char* const szName,
 void CRelationButeMgr::CopyTemplate(const char* const szName,
 									CDataUser* pDataUser ) const
 {
-	uint32 nTemplateID = GetTemplateIDByName( szName, pDataUser );
+	auto nTemplateID = GetTemplateIDByName( szName, pDataUser );
 	if ( nTemplateID < 0 || nTemplateID > m_listpRelationDataTemplates.size() )
 	{
 		AIASSERT1( 0, NULL, "Out of range RelationDataID: %d", nTemplateID );
@@ -535,7 +535,7 @@ void CRelationButeMgr::CopyTemplate(const char* const szName,
 void CRelationButeMgr::CopyTemplate(const char* const szName,
 									CCollectiveRelationMgr* pCollective ) const
 {
-	uint32 nTemplateID = GetTemplateIDByName( szName, pCollective );
+	auto nTemplateID = GetTemplateIDByName( szName, pCollective );
 	if ( nTemplateID < 0 || nTemplateID > m_listpCollectiveTemplates.size() )
 	{
 		AIASSERT1( 0, NULL, "Out of range Collective: %d", nTemplateID );
@@ -556,7 +556,7 @@ void CRelationButeMgr::CopyTemplate(const char* const szName,
 void CRelationButeMgr::CopyTemplate(const char* const szName,
 									CRelationUser* pRelationUser) const
 {
-	uint32 nTemplateID = GetTemplateIDByName( szName, pRelationUser );
+	auto nTemplateID = GetTemplateIDByName( szName, pRelationUser );
 	if ( nTemplateID < 0 || nTemplateID > m_listpRelationUserTemplates.size() )
 	{
 		AIASSERT1( 0, NULL, "Out of range RelationSetID: %d", nTemplateID );
@@ -776,7 +776,7 @@ void CRelationButeMgr::FillRelationSet(const char* const szTemplateName, Relatio
 		AIASSERT1( 0, NULL, "Unable to find template with name %s", szTemplateName );
 	}
 
-	uint32 nTemplateID = RelationTemplateIterator->second;
+	auto nTemplateID = RelationTemplateIterator->second;
 	if ( nTemplateID < 0 || nTemplateID > m_listpRelationUserTemplates.size() )
 	{
 		AIASSERT1( 0, NULL, "Out of range RelationSetID: %d", nTemplateID );

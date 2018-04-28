@@ -642,7 +642,7 @@ void CScreenMulti::Update()
 				
 								
 			}
-			else if ((eErrorRequest == IServerDirectory::eRequest_MOTD) )
+			else if (eErrorRequest == IServerDirectory::eRequest_MOTD)
 			{
 
 				g_pLTClient->CPrint( "QueueRequest(IServerDirectory::eRequest_MOTD) : FAILED");

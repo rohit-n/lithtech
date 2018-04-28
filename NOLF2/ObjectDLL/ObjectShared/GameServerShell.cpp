@@ -1086,11 +1086,11 @@ void CGameServerShell::ProcessHandshake(HCLIENT hClient, ILTMessage_Read *pMsg)
 			// Encrypt the first 4 bytes of the client name
 			uint32 nClientName = *((uint32*)( &szClientName[0] ));
 			// Handle short client names...
-			if ((nClientName && 0xFF) == 0)
+			if ((nClientName & 0xFF) == 0)
 				nClientName = 0;
-			else if ((nClientName && 0xFF00) == 0)
+			else if ((nClientName & 0xFF00) == 0)
 				nClientName &= 0xFF;
-			else if ((nClientName && 0xFF0000) == 0)
+			else if ((nClientName & 0xFF0000) == 0)
 				nClientName &= 0xFFFF;
 			uint32 nXORMask = MessUp32BitValue((uintptr_t)this, (uint32)(szClientName[0]));
 			nClientName ^= nXORMask;
@@ -1965,6 +1965,7 @@ void CGameServerShell::HandlePlayerCheat (HCLIENT hSender, ILTMessage_Read *pMsg
 		{
 			case CHEAT_NEXTMISSION:		CheatNextMission(pPlayer, nData);	break;
 			case CHEAT_BOOT:			CheatBootPlayer	(pPlayer, nData);	break;
+			default: break;
 		}
 		return;
 	}
@@ -3278,7 +3279,7 @@ void CGameServerShell::UpdateClientPingTimes()
 		cMsg.Writeuint8(MID_PINGTIMES);
 
         hClient = LTNULL;
-        while(hClient = g_pLTServer->GetNextClient(hClient))
+        while((hClient = g_pLTServer->GetNextClient(hClient)))
 		{
             clientID = g_pLTServer->GetClientID(hClient);
             g_pLTServer->GetClientPing(hClient, ping);

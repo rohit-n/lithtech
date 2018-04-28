@@ -196,6 +196,7 @@ void CTO2GameServerShell::Update(LTFLOAT timeElapsed)
 				GetServerDir()->ProcessRequestList();
 			}
 			break;
+		default: break;
 	};
 
 

@@ -167,9 +167,9 @@ static LTBOOL ValidateMusicMsg( ILTPreInterface *pInterface, ConParse &cpMsgPara
 		return LTFALSE;
 	}
 
-	if( cpMsgParams.m_nArgs < nRequiredParams ||
-		(nTimingParam != -1 ) && (cpMsgParams.m_nArgs > nTimingParam) ||
-		(nTimingParam == -1) && (cpMsgParams.m_nArgs > nRequiredParams) )
+	if( (cpMsgParams.m_nArgs < nRequiredParams) ||
+		((nTimingParam != -1 ) && (cpMsgParams.m_nArgs > nTimingParam)) ||
+		((nTimingParam == -1) && (cpMsgParams.m_nArgs > nRequiredParams)) )
 	{
 		if( CCommandMgrPlugin::s_bShowMsgErrors )
 		{
@@ -1291,7 +1291,7 @@ bool CPlayerObj::OnTrigger(HOBJECT hSender, const CParsedMsg &cMsg)
 	{
 		HCLASS  hClass = g_pLTServer->GetClass("Body");
 		HOBJECT hCurObject = LTNULL;
-		while (hCurObject = g_pLTServer->GetNextObject(hCurObject))
+		while ((hCurObject = g_pLTServer->GetNextObject(hCurObject)))
 		{
 			if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hClass))
 			{
@@ -1301,7 +1301,7 @@ bool CPlayerObj::OnTrigger(HOBJECT hSender, const CParsedMsg &cMsg)
 		}
 
 		hCurObject = LTNULL;
-		while (hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject))
+		while ((hCurObject = g_pLTServer->GetNextInactiveObject(hCurObject)))
 		{
 			if (g_pLTServer->IsKindOf(g_pLTServer->GetObjectClass(hCurObject), hClass))
 			{
@@ -7866,6 +7866,7 @@ void CPlayerObj::SetCarriedObject( HOBJECT hObject, bool bTransition /* = false 
 				case kDoomsDay_Core:
 					SetCarrying(CFX_CARRY_DD_CORE);
 					break;
+				default: break;
 				}
 			}
 		}

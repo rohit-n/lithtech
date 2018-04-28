@@ -538,7 +538,7 @@ class CCommandMgrPlugin : public IObjectPlugin
 		friend class CCommandButeMgr;
 
 		static VAR_STRUCT		s_aVars[CMDMGR_MAX_VARS];
-		static uint8			s_nNumVars;
+		static uint16			s_nNumVars;
 		static CCommandButeMgr	s_CommandButeMgr;
 		static LTBOOL			s_bFileLoadError;
 		static char				s_szLastWorld[128];

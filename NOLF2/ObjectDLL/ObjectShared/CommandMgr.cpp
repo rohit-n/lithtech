@@ -2570,7 +2570,7 @@ void CMD_EVENT_STRUCT::Load(ILTMessage_Read *pMsg)
 //
 
 	VAR_STRUCT		CCommandMgrPlugin::s_aVars[CMDMGR_MAX_VARS];
-	uint8			CCommandMgrPlugin::s_nNumVars;
+	uint16			CCommandMgrPlugin::s_nNumVars;
 	CCommandButeMgr CCommandMgrPlugin::s_CommandButeMgr;
 
 	CCommandMgrPlugin::DynamicObjectList CCommandMgrPlugin::s_lstDynaObjects;

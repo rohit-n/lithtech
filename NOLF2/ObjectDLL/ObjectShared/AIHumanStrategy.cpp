@@ -588,6 +588,7 @@ LTBOOL CAIHumanStrategyFollowPath::UpdateAnimation()
 							}
 						}
 						break;
+						default: break;
 					}
 				}
 				break;

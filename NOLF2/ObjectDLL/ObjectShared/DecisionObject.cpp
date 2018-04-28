@@ -323,7 +323,7 @@ void DecisionObject::HandleChoose(uint8 nChoice)
 
 	//special case of closing a open decision window as another one is being opened
 	// in this case do not notify the client
-	if (nChoice == -1)
+	if (nChoice == 0xff)
 	{
 		HandleAbort(false);
 		return;

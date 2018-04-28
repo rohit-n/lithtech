@@ -1634,7 +1634,7 @@ void Prop::HandleAttachmentTouch( HOBJECT hToucher )
         LTFLOAT fDot1 = VEC_DOT( info.m_Plane.m_Normal, vP0 ) - info.m_Plane.m_Dist;
         LTFLOAT fDot2 = VEC_DOT( info.m_Plane.m_Normal, vP1 ) - info.m_Plane.m_Dist;
 
-		if( fDot1 < 0.0f && fDot2 < 0.0f || fDot1 > 0.0f && fDot2 > 0.0f )
+		if( (fDot1 < 0.0f && fDot2 < 0.0f) || (fDot1 > 0.0f && fDot2 > 0.0f) )
 		{
 			vPos = vP1;
 		}

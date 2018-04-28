@@ -685,13 +685,13 @@ LTBOOL CScreenConfigure::KeyRemappable (DeviceInput* pInput)
 	if (pInput->m_DeviceType != DEVICETYPE_KEYBOARD) return LTTRUE;
 
 	uint16 nDIK = pInput->m_ControlCode;
-	if (nDIK == SDLK_ESCAPE)
+	if (nDIK == SDL_SCANCODE_ESCAPE)
         return LTFALSE;
-	if (nDIK == SDLK_PAUSE)
+	if (nDIK == SDL_SCANCODE_PAUSE)
         return LTFALSE;
-	if (nDIK >= SDLK_F1 && nDIK <= SDLK_F10)
+	if (nDIK >= SDL_SCANCODE_F1 && nDIK <= SDL_SCANCODE_F10)
         return LTFALSE;
-	if (nDIK >= SDLK_F11 && nDIK <= SDLK_F15)
+	if (nDIK >= SDL_SCANCODE_F11 && nDIK <= SDL_SCANCODE_F15)
         return LTFALSE;
 
 

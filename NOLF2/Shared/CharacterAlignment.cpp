@@ -715,15 +715,11 @@ void RelationData::Clear( void )
 //----------------------------------------------------------------------------
 void RelationData::SetTraitValue(RelationTraits::eRelationTraits Trait, char const * const pszString )
 {
-	std::string szString;
+	std::string szString{};
 
 	// Prevent the NULL string case == if a null char ptr is passed in,
 	// then assign a null value.
-	if ( pszString == NULL )
-	{
-		szString == "";
-	}
-	else
+	if ( pszString != nullptr )
 	{
 		szString.assign( pszString );
 	}

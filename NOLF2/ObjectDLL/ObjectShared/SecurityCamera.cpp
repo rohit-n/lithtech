@@ -1126,7 +1126,7 @@ void SecurityCamera::SetupDisabledState()
 
 	LTFLOAT	fRadius = g_pServerButeMgr->GetSecurityCameraFloat( SCS_SOUND_RADIUS );
 	
-	if( szFile )
+	if( szFile[0] )
 		g_pServerSoundMgr->PlaySoundFromPos(m_vPos, szFile, fRadius, SOUNDPRIORITY_MISC_LOW);
 
 

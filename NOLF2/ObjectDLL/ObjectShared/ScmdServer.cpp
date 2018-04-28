@@ -359,8 +359,8 @@ bool ScmdServer_Impl::HandleScmdMessage( HCLIENT hClient, ILTMessage_Read& msg )
 
 	// Check if we're not controlled by an admin.  Since Login is the only
 	// command you can send without being logged in, it has special handling.
-	if( eScmdCommand != kScmdCommandLogin &&
-		( m_eAdminControl == kAdminControlNone ) ||
+	if( ((eScmdCommand != kScmdCommandLogin) &&
+		( m_eAdminControl == kAdminControlNone )) ||
 		( m_eAdminControl == kAdminControlClient && hClient != m_hAdminClient ) ||
 		( m_eAdminControl == kAdminControlServerapp && hClient != NULL ))
 	{
