@@ -267,6 +267,7 @@ class CClientMgr {
         CBindModuleType         *m_hClientResourceModule;
         CBindModuleType         *m_hLocalizedClientResourceModule;
         CBindModuleType         *m_hShellModule;
+        CBindModuleType         *m_hRenderModule;
 
         char                    m_ErrorString[MAX_CLIENTERRORSTRING_LEN+1];
 

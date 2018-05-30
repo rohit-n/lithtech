@@ -4,27 +4,24 @@
 #include "dsys.h"
 #include "clientmgr.h"
 #include "sysclientde_impl.h"
+#include "bindmgr.h"
 
 
-#ifdef LT_VK_AVAILABLE
-VKRenderStruct vkrdr;
-void vkReadConsoleVariables()
-{
-  vkrdr.ReadConsoleVariables();
-}
-#endif
-OGlRenderStruct oglrdr;
-void oglReadConsoleVariables()
-{
-  oglrdr.ReadConsoleVariables();
-}
+typedef void (*getRenderStructFn)(RenderStruct*);
 
 void r_InitRenderStruct(bool bFullClear)
 {
     char filename[MAX_PATH];
     memset(filename, 0, MAX_PATH);
-
-    const char* renderlib = "libOglrender.so";
+    const char* renderlib = nullptr;
+#ifdef LT_VK_AVAILABLE
+	ci_string render(command_line_args->FindArgDash("render"));
+	if(render == ci_string("vulkan"))
+	{
+        renderlib = "libVkRender.so"
+    } else
+#endif
+    renderlib = "libOGLRender.so";
     bool copied;
     LTRESULT dResult = GetOrCopyClientFile(renderlib, filename, MAX_PATH, copied);
     if (dResult != LTTRUE) {
@@ -32,29 +29,20 @@ void r_InitRenderStruct(bool bFullClear)
         RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, renderlib);
     }
 
-    auto status = bm_BindModule(filename, copied, g_Render);
-
-    RenderStructInit rsi{0,bFullClear, '\0'};
-    g_Render.Init(&rsi);
+    auto status = bm_BindModule(filename, copied, g_pClientMgr->m_hRenderModule);
+    auto getRender = (getRenderStructFn)bm_GetFunctionPointer(g_pClientMgr->m_hRenderModule, "rdll_RenderDLLSetup");
+    getRender(&g_Render);
 }
 
 int RenderStruct::Init(RenderStructInit * pInit)
 {
-#ifdef LT_VK_AVAILABLE
-	ci_string render(command_line_args->FindArgDash("render"));
-	if(render == ci_string("vulkan"))
-	{
-	    this->m_pRender = &vkrdr;
-            this->ReadConsoleVariables = &(vkReadConsoleVariables);
-
-        } else
-#endif
-        {
-            this->m_pRender = &oglrdr;
-            this->ReadConsoleVariables = &(oglReadConsoleVariables);
-        }
-	pInit->m_RendererVersion = LTRENDER_VERSION;
-	return 0;
+    int ret = 0;
+	if(pInit->m_RendererVersion == LTRENDER_VERSION) {
+        this->m_pRender = (SysRender*)pInit->m_hWnd;
+    } else {
+        ret = 1;
+    }
+	return ret;
 }
 
 HRENDERCONTEXT RenderStruct::CreateContext()

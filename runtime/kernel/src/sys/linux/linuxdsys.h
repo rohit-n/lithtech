@@ -127,7 +127,7 @@ void* dsi_GetMainWindow();		// Returns an HWND.
 void dsi_MessageBox(char *pMsg, char *pTitle);
 
 // System functions
-LTRESULT GetOrCopyClientFile(char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied);
+LTRESULT GetOrCopyClientFile(const char *pFilename, char *pOutName, int outNameLen, bool &bFileCopied);
 
 // Get the version info of the executable.
 // Returns LT_OK or an error.
