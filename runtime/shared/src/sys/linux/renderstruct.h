@@ -124,6 +124,7 @@ struct RenderStruct {
         // The renderer maintains these.
         uint32          m_SystemTextureMemory;      // How much memory the renderer is using for textures.
         // Functions implemented by the render driver.
+        void            clear();
         int             Init(RenderStructInit *pInit);   // Returns RENDER_OK for success, or an error code.
         // Render a scene.
         int             RenderScene(SceneDesc *pScene);
@@ -219,6 +220,7 @@ public:
     virtual bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo)=0;
     virtual bool			SetGlowDefaultRenderStyle(const char* pszFile)=0;
     virtual bool			SetNoGlowRenderStyle(const char* pszFile)=0;
+    virtual bool            SetRMode(RMode mode)=0;
 };
 
 // This is what you use to select how you want to initialize the renderer..  Get a list of

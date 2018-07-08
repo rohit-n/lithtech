@@ -116,7 +116,7 @@ static void RemoveAllObjectsFromWorldTree(LTList *pList)
 static bool cs_ShouldUseTCPIP() {
     LTCommandVar *pVar;
 
-    if (pVar = cc_FindConsoleVar(&g_ClientConsoleState, "tcpip"))
+    if ((pVar = cc_FindConsoleVar(&g_ClientConsoleState, "tcpip")))
     {
         if (pVar->floatVal != 0.0f)
             return true;

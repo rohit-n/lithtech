@@ -221,7 +221,9 @@ else(WIN32)
 	../kernel/src/sys/linux/musicdriver.cpp
 	../kernel/src/sys/linux/input.cpp
 	../model/src/sys/linux/linuxmodel_load.cpp
-    ${exec_src})
+	../shared/src/sys/linux/ltvertexshadermgr.cpp
+	../shared/src/sys/linux/ltpixelshadermgr.cpp
+${exec_src})
 endif(WIN32)
 
 include_directories(src
@@ -302,17 +304,16 @@ set(libs ${libs}
 
 if(ENABLE_OPENGL)
 	include_directories(../render_a/src/sys/ogl)
-    add_definitions(-D__ENABLE_OGL)
-	set(exec_src 
-	../render_a/src/sys/ogl/common_init.cpp
-	../render_a/src/sys/ogl/ogl_render.cpp
-	../render_a/src/sys/ogl/ltvertexshadermgr.cpp
-	../render_a/src/sys/ogl/ltpixelshadermgr.cpp
-	../render_a/src/sys/ogl/rendererframestats.cpp
-	${exec_src})
-	set(libs ${libs}
-		GL
-		)
+#    add_definitions(-D__ENABLE_OGL)
+#	set(exec_src 
+#	../render_a/src/sys/ogl/common_init.cpp
+#	../render_a/src/sys/ogl/ogl_render.cpp
+#	../render_a/src/sys/ogl/ltpixelshadermgr.cpp
+#	../render_a/src/sys/ogl/rendererframestats.cpp
+#	${exec_src})
+#	set(libs ${libs}
+#		GL
+#		)
 endif(ENABLE_OPENGL)
 
 if(ENABLE_VULKAN)

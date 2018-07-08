@@ -1,12 +1,10 @@
-#ifndef __LTVERTEXSHADERMGR_H__
-#define __LTVERTEXSHADERMGR_H__
 
-#define __OPENGL 3.3
+#ifndef __GLVERTEXSHADER_H__
+#define __GLVERTEXSHADER_H__
 
 #include "ltbasedefs.h"
 #include "ltidtoobjecttable.h"
 #include <vector>
-#include <map>
 
 struct VertexElement {
     float x, y, z, w;
@@ -75,15 +73,4 @@ private:
 
 	float							m_Constants[LTVertexShader::MAX_CONSTANT_REGISTERS*4];			// user-defined constants
 };
-
-class LTVertexShaderMgr {
-	std::map<uint32, VertexShader*> shaders;
-public:
-    static LTVertexShaderMgr& GetSingleton();
-    bool AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &size, bool &compile);
-    void RemoveVertexShader(uint32 id);
-    void RemoveAllVertexShaders();
-    VertexShader* GetVertexShader(uint32 id);
-};
-
-#endif // __LTVERTEXSHADERMGR_H__
+#endif

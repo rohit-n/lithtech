@@ -239,11 +239,21 @@ LTRESULT dsi_InitClientShellDE()
 {
 	g_pClientMgr->m_hShellModule = nullptr;
 	g_pClientMgr->m_hClientResourceModule = nullptr;
+    g_pClientMgr->m_hRenderModule = nullptr;
     char filename[MAX_PATH];
     memset(filename, 0, MAX_PATH);
 
     const char* clientlib = "libCShell.so";
     const char* reslib = "libCRes.so";
+    const char* renderlib = nullptr;
+#ifdef LT_VK_AVAILABLE
+	ci_string render(command_line_args->FindArgDash("render"));
+	if(render == ci_string("vulkan"))
+	{
+        renderlib = "libVkRender.so"
+    } else
+#endif
+    renderlib = "libOGLRender.so";
     bool copied;
     LTRESULT dResult = GetOrCopyClientFile(clientlib, filename, MAX_PATH, copied);
     if (dResult != LTTRUE) {
@@ -259,7 +269,7 @@ LTRESULT dsi_InitClientShellDE()
     }
 
 	// have the user's cshell and the clientMgr exchange info
-	if ((i_client_shell == NULL ))
+	if (i_client_shell == nullptr )
     {
 		CRITICAL_ERROR("dsys_interface", "Can't create CShell\n");
 	}
@@ -284,6 +294,31 @@ LTRESULT dsi_InitClientShellDE()
 
         g_pClientMgr->SetupError(LT_INVALIDSHELLDLL, reslib);
         RETURN_ERROR_PARAM(1, InitClientShellDE, LT_INVALIDSHELLDLL, reslib);
+        dResult = !LTTRUE;
+    }
+    
+    
+    copied = false;
+    memset(filename, 0, MAX_PATH);
+    dResult = GetOrCopyClientFile(renderlib, filename, MAX_PATH, copied);
+    if (dResult != LTTRUE) {
+        g_pClientMgr->SetupError(LT_ERRORCOPYINGFILE, renderlib);
+        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, renderlib);
+    }
+    
+    //load the dll
+    status = bm_BindModule(filename, copied, g_pClientMgr->m_hRenderModule);
+
+    //check if it was loaded.
+    if (status == BIND_CANTFINDMODULE) {
+        //unload the loaded cshell 
+        bm_UnbindModule(g_pClientMgr->m_hShellModule);
+        bm_UnbindModule(g_pClientMgr->m_hClientResourceModule);
+        g_pClientMgr->m_hShellModule = nullptr;
+        g_pClientMgr->m_hClientResourceModule = nullptr;
+
+        g_pClientMgr->SetupError(LT_INVALIDSHELLDLL, renderlib);
+        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_INVALIDSHELLDLL, renderlib);
         dResult = !LTTRUE;
     }
 

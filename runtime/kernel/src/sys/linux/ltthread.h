@@ -194,8 +194,13 @@ CSysEventVar::CSysEventVar() {
 
 inline ESyncResult
 CSysEventVar::Signal() {
-	pthread_cond_signal(&m_Cond);
-};
+	switch (pthread_cond_signal(&m_Cond))
+	{
+		case 0:         return SYNC_OK;
+		case ETIMEDOUT: return SYNC_TIMEOUT;
+		default:        return SYNC_ERROR;
+	}
+}
 
 inline ESyncResult
 CSysEventVar::WaitFor(uint32 timeout_ms) {

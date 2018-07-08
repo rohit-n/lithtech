@@ -7,42 +7,24 @@
 #include "bindmgr.h"
 
 
-typedef void (*getRenderStructFn)(RenderStruct*);
+void
+RenderStruct::clear() {
+    this->m_pRender = nullptr;
+}
 
-void r_InitRenderStruct(bool bFullClear)
+static bool checkNullRMode(const RMode &mode)
 {
-    char filename[MAX_PATH];
-    memset(filename, 0, MAX_PATH);
-    const char* renderlib = nullptr;
-#ifdef LT_VK_AVAILABLE
-	ci_string render(command_line_args->FindArgDash("render"));
-	if(render == ci_string("vulkan"))
-	{
-        renderlib = "libVkRender.so"
-    } else
-#endif
-    renderlib = "libOGLRender.so";
-    bool copied;
-    LTRESULT dResult = GetOrCopyClientFile(renderlib, filename, MAX_PATH, copied);
-    if (dResult != LTTRUE) {
-        g_pClientMgr->SetupError(LT_ERRORCOPYINGFILE, renderlib);
-        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_ERRORCOPYINGFILE, renderlib);
-    }
-
-    auto status = bm_BindModule(filename, copied, g_pClientMgr->m_hRenderModule);
-    auto getRender = (getRenderStructFn)bm_GetFunctionPointer(g_pClientMgr->m_hRenderModule, "rdll_RenderDLLSetup");
-    getRender(&g_Render);
+    return (mode.m_Width == 0 && mode.m_Height == 0 && mode.m_BitDepth == 0);
 }
 
 int RenderStruct::Init(RenderStructInit * pInit)
 {
-    int ret = 0;
-	if(pInit->m_RendererVersion == LTRENDER_VERSION) {
+	pInit->m_RendererVersion = LTRENDER_VERSION;
+    if (pInit->m_hWnd != nullptr && checkNullRMode(pInit->m_Mode))
         this->m_pRender = (SysRender*)pInit->m_hWnd;
-    } else {
-        ret = 1;
-    }
-	return ret;
+    else
+        this->m_pRender->SetRMode(pInit->m_Mode);
+    return (this->m_pRender != nullptr) ? 0 : 1;
 }
 
 HRENDERCONTEXT RenderStruct::CreateContext()

@@ -9,8 +9,8 @@ pkg_check_modules(SDL2 REQUIRED sdl2)
 
 add_library(${PROJECT_NAME} SHARED
     common_init.cpp
-    ltpixelshadermgr.cpp
-    ltvertexshadermgr.cpp
+    glpixelshader.cpp
+    glvertexshader.cpp
     ogl_render.cpp
     rendererframestats.cpp)
 

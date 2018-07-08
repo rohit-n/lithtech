@@ -10,6 +10,7 @@
 #include "videomgr.h"
 #include "sysconsole_impl.h"
 #include "dtxmgr.h"
+#include "bindmgr.h"
 #include <SDL.h>
 //IClientFileMgr
 #include "client_filemgr.h"
@@ -47,6 +48,18 @@ void rdll_RenderDLLSetup(RenderStruct *pStruct)
 	r_InitRenderStruct(true);
 }
 */
+
+void r_InitRenderStruct(bool bFullClear) {
+	if(bFullClear)
+	    g_Render = RenderStruct{};
+	else
+	    g_Render.clear();
+	
+	g_Render.m_GlobalLightDir.Init(0.0f, -2.0f, -1.0f);
+    g_Render.m_GlobalLightDir.Norm();
+
+}
+
 LTObject*
 r_ProcessAttachment(LTObject *pParent, Attachment *pAttachment)
 {
@@ -70,9 +83,9 @@ LTRESULT r_InitRender(RMode *pMode, const char *window_name)
 		SDL_WINDOWPOS_UNDEFINED, pMode->m_Width, pMode->m_Height, 0);
 	g_ClientGlob.m_window = window;
 
-	// not really needed... as we will dynamically link OpenGL and Vulkan
-	// and let SDL2 handle the setup.
-    rdll_RenderDLLSetup(&g_Render);
+    // get the function pointer from the renderModule and pass our stuct to it for setup.
+    auto getRender = (RenderDLLSetupFn)bm_GetFunctionPointer(g_pClientMgr->m_hRenderModule, "rdll_RenderDLLSetup");
+    getRender(&g_Render);
 
 	// Store these.. the renderer may change them for pixel doubling.
 	g_Render.m_Width = pMode->m_Width;

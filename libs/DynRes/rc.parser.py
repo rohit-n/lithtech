@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-
+"""
+    2018 (c) Rene 'Katana Steel' Kjellerup, distributed under the terms of
+    the GNU General Public Licenses version 3 or later for details see:
+    http://www.gnu.org/licenses/gpl.html
+"""
 from sys import argv
 from os.path import exists
 

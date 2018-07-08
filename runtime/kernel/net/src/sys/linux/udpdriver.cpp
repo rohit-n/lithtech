@@ -1111,9 +1111,9 @@ bool CUDPConn::FlushOutgoingQueues()
 	bool bSendEmptyFrame = ShouldSendEmptyFrame() && !m_bPauseGuaranteed;
 
 	// Jump out if there's nothing to do
-	if ((m_bPauseGuaranteed ||
+	if ((m_bPauseGuaranteed || (
 		(m_nOutgoingGCount == 0) &&
-		(m_nOutgoingUCount == 0)) &&
+		(m_nOutgoingUCount == 0))) &&
 		!bSendHeartbeat &&
 		!bSendEmptyFrame)
 		return true;

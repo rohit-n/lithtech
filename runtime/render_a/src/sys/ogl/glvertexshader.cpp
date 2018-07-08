@@ -1,7 +1,5 @@
-#include "bdefs.h"
+#include "glvertexshader.h"
 
-#include "ltvertexshadermgr.h"
-#include <map>
 
 VertexShader::VertexShader()
     : LTVertexShader(),
@@ -62,42 +60,9 @@ bool VertexShader::SetConstant(unsigned RegisterNum, float f0, float f1, float f
 bool VertexShader::SetConstant(unsigned RegisterNum, const LTMatrix &Matrix)
 { return false; }
 
-LTVertexShaderMgr& LTVertexShaderMgr::GetSingleton()
-{
-    static LTVertexShaderMgr mgr;
-    return mgr;
-}
 
-bool LTVertexShaderMgr::AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &elementSize, bool &bCompileShader)
+VertexShader* createVertexShader()
 {
-    if(shaders.count(id) > 0)
-        return false;
-    VertexShader *s = new VertexShader();
-    s->Init(file, elements, elementSize, bCompileShader);
-    s->SetName(sname);
-    s->SetID(id);
-    shaders[id] = s;
-    
-
-    return true;
-}
-void LTVertexShaderMgr::RemoveVertexShader(uint32 id)
-{
-    if(shaders.count(id) > 0){
-        delete shaders[id];
-        shaders.erase(id);
-    }
-}
-void LTVertexShaderMgr::RemoveAllVertexShaders()
-{
-    for( auto&& p : shaders)
-        delete p.second;
-    shaders.clear();
-}
-
-VertexShader* LTVertexShaderMgr::GetVertexShader(uint32 id)
-{
-    if(shaders.count(id) == 0)
-        return nullptr;
-    return shaders[id];
+    VertexShader *ptr = new VertexShader{};
+    return ptr;
 }

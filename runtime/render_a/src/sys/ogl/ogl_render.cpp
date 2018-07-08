@@ -8,6 +8,13 @@ OGlRenderStruct::OGlRenderStruct()
 {
 }
 
+bool
+OGlRenderStruct::SetRMode(RMode mode)
+{
+    // currently just accept any render mode
+    return true;
+}
+
 bool OGlRenderStruct::LoadWorldData(ILTStream *pStream)
 {
     return false; // STUB we currently want to fail loading data;

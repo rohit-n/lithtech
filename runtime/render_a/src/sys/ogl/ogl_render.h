@@ -6,6 +6,8 @@
 
 extern void rdll_OGlRenderSetup(RenderStruct *pStruct);
 
+#define __OPENGL 3.3
+
 class OGlRenderStruct : public SysRender
 {
 public:
@@ -40,6 +42,7 @@ public:
     bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo);
     bool			SetGlowDefaultRenderStyle(const char* pszFile);
     bool			SetNoGlowRenderStyle(const char* pszFile);
+    bool            SetRMode(RMode mode)=0;
     int             m_DontClearMarker;
     LTVector		m_GlobalLightDir;
     LTVector		m_GlobalLightColor;
