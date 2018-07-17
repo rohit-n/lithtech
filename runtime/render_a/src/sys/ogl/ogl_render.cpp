@@ -2,6 +2,9 @@
 #include "ogl_render.h"
 #include "iclientshell.h"
 #include "iltclient.h"
+#include "ltvertexshadermgr.h"
+#include "ltpixelshadermgr.h"
+#include "lteffectshadermgr.h"
 #include <GL/gl.h>
 
 OGlRenderStruct::OGlRenderStruct()
@@ -67,3 +70,37 @@ void			OGlRenderStruct::SetAllObjectGroupEnabled(){}
 bool			OGlRenderStruct::AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo){return true;}
 bool			OGlRenderStruct::SetGlowDefaultRenderStyle(const char* pszFile){return true;}
 bool			OGlRenderStruct::SetNoGlowRenderStyle(const char* pszFile){return true;}
+
+
+void OGLRenderer::Update() 
+{
+    return;
+}
+LTVertexShaderMgr* OGLRenderer::getVertexShaderMgrSingleton() 
+{
+    return m_pVSM;
+}
+LTPixelShaderMgr* OGLRenderer::getPixelShaderMgrSingleton() 
+{
+    return m_pPSM;
+}
+LTEffectShaderMgr* OGLRenderer::getEffectShaderMgrSingleton() 
+{
+    return m_pESM;
+}
+RenderStruct* OGLRenderer::getRenderStruct() 
+{
+    return m_pRender;
+}
+bool OGLRenderer::active() 
+{
+    return true;
+}
+
+static LTVertexShaderMgr VSM;
+static LTPixelShaderMgr  PSM;
+static LTEffectShaderMgr ESM;
+
+OGLRenderer::OGLRenderer() : m_pVSM{&VSM},m_pPSM{&PSM},m_pESM{&ESM} {
+    m_pRender = nullptr;
+}

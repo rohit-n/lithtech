@@ -6,7 +6,6 @@
 #include "sysclientde_impl.h"
 #include "bindmgr.h"
 
-
 void
 RenderStruct::clear() {
     this->m_pRender = nullptr;

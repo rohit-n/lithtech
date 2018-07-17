@@ -26,15 +26,14 @@ public:
 };
 
 class LTPixelShaderMgr {
-    std::map<uint32, PixelShader*> shaders;
-    LTPixelShaderMgr();
+    std::map<uint32, LTPixelShader*> shaders;
 public:
     ~LTPixelShaderMgr();
     static LTPixelShaderMgr& GetSingleton();
     bool AddPixelShader(ILTStream* file, const char* sname, uint32 id, bool compile);
     void RemovePixelShader(uint32 id);
     void RemoveAllPixelShaders();
-    PixelShader* GetPixelShader(uint32 id);
+    LTPixelShader* GetPixelShader(uint32 id);
 };
 
 #endif // __LTPIXELSHADERMGR_H__

@@ -1,7 +1,11 @@
-#include "ltbasedefs.h"
-
 #include "ltpixelshadermgr.h"
-#include <map>
+#include "clientmgr.h"
+#include "bindmgr.h"
+#include "render.h"
+
+static IRenderer *g_pRender;
+define_holder(IRenderer, g_pRender)
+
 
 PixelShader::PixelShader()
 : LTPixelShader()
@@ -28,15 +32,13 @@ bool PixelShader::SetConstant(unsigned RegisterNum, float pf0, float pf1, float 
     return false;
 }
 
-LTPixelShaderMgr::LTPixelShaderMgr()
-{}
 LTPixelShaderMgr::~LTPixelShaderMgr()
 { RemoveAllPixelShaders(); }
 
 LTPixelShaderMgr& LTPixelShaderMgr::GetSingleton()
 {
-    static LTPixelShaderMgr ShaderMgr;
-    return ShaderMgr;
+    auto sm = g_pRender->getPixelShaderMgrSingleton();
+    return *sm;
 }
 
 bool LTPixelShaderMgr::AddPixelShader(ILTStream* file, const char* sname, uint32 id, bool compile)
@@ -62,7 +64,7 @@ void LTPixelShaderMgr::RemovePixelShader(uint32 id)
 }
 
 
-PixelShader* LTPixelShaderMgr::GetPixelShader(uint32 id)
+LTPixelShader* LTPixelShaderMgr::GetPixelShader(uint32 id)
 {
     if(shaders.count(id) == 0)
         return nullptr;

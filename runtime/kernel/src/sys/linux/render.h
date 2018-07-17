@@ -2,6 +2,7 @@
 // the global RenderStruct used to talk to it.
 #ifndef __RENDER_H__
 #define __RENDER_H__
+#include "ltmodule.h"
 struct RenderStruct;
 struct RMode;
 //  Functions that used to be extracted from the render DLL with GetProcAddress
@@ -25,6 +26,31 @@ void rdll_RenderDLLSetup(RenderStruct *pStruct);
 extern RenderStruct g_Render;
 extern RMode        g_RMode;                // The current (or last successful) config for the renderer.
 class CClientMgr;
+class LTVertexShaderMgr;
+class LTPixelShaderMgr;
+class LTEffectShaderMgr;
+
+class IRenderer : public IBase
+{
+protected:
+    RenderStruct *m_pRender;
+    RMode        *m_pRMode;
+public:
+    interface_version(IRenderer, 4);
+    virtual ~IRenderer() = default;
+    virtual void Update() = 0;
+    virtual LTVertexShader* createEmptyLTVertexShader() = 0;
+    virtual LTPixelShader* createEmptyLTPixelShader() = 0;
+    virtual LTEffectShader* createEmptyLTEffectShader() = 0;
+    virtual LTVertexShaderMgr* getVertexShaderMgrSingleton() = 0;
+    virtual LTPixelShaderMgr* getPixelShaderMgrSingleton() = 0;
+    virtual LTEffectShaderMgr* getEffectShaderMgrSingleton() = 0;
+    virtual RenderStruct* getRenderStruct() = 0;
+    virtual bool active() = 0;
+};
+
+
+extern IRenderer *g_pRenderer;
 // Render initialization status codes.
 #define R_OK                    0
 #define R_CANTLOADLIBRARY       1
@@ -32,8 +58,8 @@ class CClientMgr;
 #define R_INVALIDRENDEROPTIONS  3
 // Returns the RenderStruct it's using to talk to the driver.
 // Better be initialized...
-inline RenderStruct* r_GetRenderStruct() {return &g_Render;}
-inline LTBOOL r_IsRenderInitted() {return g_Render.m_bInitted;}
+inline RenderStruct* r_GetRenderStruct() {return g_pRenderer->getRenderStruct();}
+inline LTBOOL r_IsRenderInitted() {return g_pRenderer->active();}
 // Called right at the beginning by the client.. initializes the RenderStruct
 // data members.
 void r_InitRenderStruct(bool bFullClear);

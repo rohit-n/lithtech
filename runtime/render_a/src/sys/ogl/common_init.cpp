@@ -3,6 +3,8 @@
 #include "render.h"
 #include "ogl_render.h"
 
+define_interface(OGLRenderer, IRenderer)
+
 static OGlRenderStruct oglrdr;
 void oglReadConsoleVariables()
 {
@@ -12,7 +14,7 @@ void oglReadConsoleVariables()
 void rdll_OGlRenderSetup(RenderStruct *pStruct)
 {
     RMode e{};
-    memset(&e, 0 sizeof(RMode));
+    memset(&e, 0, sizeof(RMode));
     RenderStructInit rsi{0, e, (void*)&oglrdr};
     if (pStruct->Init(&rsi) == 0)
         pStruct->ReadConsoleVariables = &(oglReadConsoleVariables);

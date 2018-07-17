@@ -3,10 +3,28 @@
 
 #include "bdefs.h"
 #include "renderstruct.h"
+#include "render.h"
 
 extern void rdll_OGlRenderSetup(RenderStruct *pStruct);
 
 #define __OPENGL 3.3
+
+class OGLRenderer : public IRenderer
+{
+  LTVertexShaderMgr *m_pVSM;
+  LTPixelShaderMgr  *m_pPSM;
+  LTEffectShaderMgr *m_pESM;
+public:
+    declare_interface(OGLRenderer)
+    OGLRenderer();
+    ~OGLRenderer() = default;
+    virtual void Update();
+    virtual LTVertexShaderMgr* getVertexShaderMgrSingleton();
+    virtual LTPixelShaderMgr* getPixelShaderMgrSingleton();
+    virtual LTEffectShaderMgr* getEffectShaderMgrSingleton();
+    virtual RenderStruct* getRenderStruct();
+    virtual bool active();
+};
 
 class OGlRenderStruct : public SysRender
 {
@@ -42,7 +60,7 @@ public:
     bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo);
     bool			SetGlowDefaultRenderStyle(const char* pszFile);
     bool			SetNoGlowRenderStyle(const char* pszFile);
-    bool            SetRMode(RMode mode)=0;
+    bool            SetRMode(RMode mode);
     int             m_DontClearMarker;
     LTVector		m_GlobalLightDir;
     LTVector		m_GlobalLightColor;

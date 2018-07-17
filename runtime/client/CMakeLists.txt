@@ -223,6 +223,7 @@ else(WIN32)
 	../model/src/sys/linux/linuxmodel_load.cpp
 	../shared/src/sys/linux/ltvertexshadermgr.cpp
 	../shared/src/sys/linux/ltpixelshadermgr.cpp
+	../shared/src/sys/linux/lteffectshadermgr.cpp
 ${exec_src})
 endif(WIN32)
 
