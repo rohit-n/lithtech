@@ -2,22 +2,32 @@
 #include "resources.h"
 #include "dynres.h"
 #include <dlfcn.h>
+#include <string>
+#include <vector>
 
 void printString(int id, void *resdll)
 {
-    char buffer[512] = {'\0'};
-    LoadString(resdll, id, buffer, 500);
+    uint32_t buffer_size = GetStringSize(resdll, id) + 3;
+    char *buffer = new char[buffer_size];
+    LoadString(resdll, id, buffer, buffer_size);
     std::cout << buffer << '\n';
+    delete[] buffer;
 }
 
-int main(int, char**)
+int main(int count, const char **args)
 {
-    std::cout << "loading strings from sharable object\n";
-    void *h = dlopen("./libCRes.so", RTLD_NOW);
+    const char *default_res = "./libCRes.so";
+    const char *res = default_res;
+    if(count > 1)
+        res = args[1];
+
+    std::cout << "loading strings from sharable object '" << res << "'\n";
+    void *h = dlopen(res, RTLD_NOW);
     if(h != nullptr) {
         printString(0, h); // sentinel value in the string resource generated file
         printString(IDS_VERSION, h);
         printString(IDS_APPNAME, h);
+        printString(IDS_CHAPTER_ONE, h);
         dlclose(h);
     }
     return 0;

@@ -1,7 +1,8 @@
 #include "resources.h"
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE DISCARDABLE
 BEGIN
     IDS_VERSION        "TestStringLoader: 1.0"
     IDS_APPNAME        "StingLoader TestResource dynamic Sharable Object"
+    IDS_CHAPTER_ONE    "Chapter One: The lost souls."
 END

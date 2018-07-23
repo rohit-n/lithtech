@@ -4,7 +4,6 @@ set(exec_src
     src/main.cpp)
 
 set(libs
-    Test_DynResDLL
 	LIB_DynRes
     dl)
 

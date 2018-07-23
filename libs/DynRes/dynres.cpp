@@ -15,3 +15,10 @@ uint32_t LoadString(void *h, int id, char* buff, int len)
     }
     return out;
 }
+
+uint32_t GetStringSize(void *h, int id)
+{
+    auto s = (resString)dlsym(h, "LoadString");
+    const char *tmp =  s(id);
+    return std::strlen(tmp);
+}
