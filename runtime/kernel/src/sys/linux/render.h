@@ -23,12 +23,23 @@ void rdll_RenderDLLSetup(RenderStruct *pStruct);
 #ifndef __RENDERSTRUCT_H__
 #include "renderstruct.h"
 #endif
+
+#include <vector>
+
 extern RenderStruct g_Render;
 extern RMode        g_RMode;                // The current (or last successful) config for the renderer.
 class CClientMgr;
 class LTVertexShaderMgr;
 class LTPixelShaderMgr;
 class LTEffectShaderMgr;
+
+
+struct BaseShaderInfo 
+{
+    uint32 id;
+    ILTStream *file;
+    const char *filename;
+};
 
 class IRenderer : public IBase
 {
@@ -39,13 +50,14 @@ public:
     interface_version(IRenderer, 4);
     virtual ~IRenderer() = default;
     virtual void Update() = 0;
-    virtual LTVertexShader* createEmptyLTVertexShader() = 0;
+    virtual LTVertexShader* createLTVertexShader(const BaseShaderInfo& bsi, const std::vector<uint32> &elements, bool &compile) = 0;
     virtual LTPixelShader* createEmptyLTPixelShader() = 0;
     virtual LTEffectShader* createEmptyLTEffectShader() = 0;
     virtual LTVertexShaderMgr* getVertexShaderMgrSingleton() = 0;
     virtual LTPixelShaderMgr* getPixelShaderMgrSingleton() = 0;
     virtual LTEffectShaderMgr* getEffectShaderMgrSingleton() = 0;
     virtual RenderStruct* getRenderStruct() = 0;
+    virtual int getFrameStats(LTRendererStats&) = 0;
     virtual bool active() = 0;
 };
 

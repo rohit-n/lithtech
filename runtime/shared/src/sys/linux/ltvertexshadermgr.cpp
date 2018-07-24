@@ -2,11 +2,11 @@
 
 
 #include "ltvertexshadermgr.h"
-#include "glvertexshader.h"
 #include "clientmgr.h"
 #include "bindmgr.h"
 #include "render.h"
 #include <map>
+#include <iterator>
 
 static IRenderer *g_pRender;
 define_holder(IRenderer, g_pRender)
@@ -17,17 +17,15 @@ LTVertexShaderMgr& LTVertexShaderMgr::GetSingleton()
     return *sm;
 }
 
-bool LTVertexShaderMgr::AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &elementSize, bool &bCompileShader)
+bool LTVertexShaderMgr::AddVertexShader(ILTStream* file, const char* sname, uint32 id, const uint32 *elements, uint32 &elementSize, bool &bCompileShader)
 {
     if(shaders.count(id) > 0)
         return false;
-    LTVertexShader *s = g_pRender->createEmptyLTVertexShader();
-    s->Init(file, elements, elementSize, bCompileShader);
-    s->SetName(sname);
-    s->SetID(id);
-    shaders[id] = s;
     
-
+    BaseShaderInfo bsi{id, file, sname};
+    std::vector<uint32> vtele{elements, elements+elementSize};
+    LTVertexShader *s = g_pRender->createLTVertexShader(bsi, vtele, bCompileShader);
+    shaders[id] = s; // create the ID entry in the shader map
     return true;
 }
 void LTVertexShaderMgr::RemoveVertexShader(uint32 id)

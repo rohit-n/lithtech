@@ -6,12 +6,11 @@
 #include <vector>
 #include <map>
 
-class VertexElement;
 class LTVertexShaderMgr {
 	std::map<uint32, LTVertexShader*> shaders;
 public:
     static LTVertexShaderMgr& GetSingleton();
-    bool AddVertexShader(ILTStream* file, const char* sname, uint32 id, VertexElement *elements, uint32 &size, bool &compile);
+    bool AddVertexShader(ILTStream* file, const char* sname, uint32 id, const uint32 *elements, uint32 &size, bool &compile);
     void RemoveVertexShader(uint32 id);
     void RemoveAllVertexShaders();
     LTVertexShader* GetVertexShader(uint32 id);

@@ -41,7 +41,6 @@
 
 #include "ltvertexshadermgr.h"
 #include "ltpixelshadermgr.h"
-#include "lteffectshadermgr.h"
 #include "ltinfo_impl.h"
 
 //------------------------------------------------------------------
@@ -1090,7 +1089,7 @@ bool CLTClient::AddVertexShader(const char *pFileName, int VertexShaderID,
 	{
 		bSuccess = LTVertexShaderMgr::GetSingleton().AddVertexShader(pStream, pFileName, VertexShaderID,
 #if defined(__LINUX)
-																	 (VertexElement*)pVertexElements,
+																	 pVertexElements,
 #else
 																	 (D3DVERTEXELEMENT9*)pVertexElements,
 #endif
@@ -1532,7 +1531,7 @@ LTRESULT CLTClient::SetLightGroupColor(uint32 nID, const LTVector &vColor)
 	if (!world_bsp_client)
 		return LT_NOTINWORLD;
 
-	if (!r_GetRenderStruct() || !r_GetRenderStruct()->SetLightGroupColor(nID,vColor))
+	if (!r_GetRenderStruct())
 		return LT_NOTINWORLD;
 
 	// Get the old color

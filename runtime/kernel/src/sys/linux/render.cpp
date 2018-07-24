@@ -42,6 +42,9 @@ extern int32	g_CV_CursorCenter;
 RMode g_RMode;
 
 RenderStruct g_Render;
+
+IRenderer *g_pRenderer;
+define_holder(IRenderer, g_pRenderer);
 /*
 void rdll_RenderDLLSetup(RenderStruct *pStruct)
 {
@@ -116,4 +119,9 @@ uint32 GetInternalTextureMemory()
 uint32 GetRendererTextureMemory()
 {
 	return 0;
+}
+
+int GetFrameStats(LTRendererStats &Stats)
+{
+	return (g_pRenderer != nullptr) ? g_pRenderer->getFrameStats(Stats) : 0 ;
 }
