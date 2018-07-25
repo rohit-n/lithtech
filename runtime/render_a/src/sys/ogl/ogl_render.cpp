@@ -23,6 +23,9 @@ bool OGlRenderStruct::LoadWorldData(ILTStream *pStream)
     return false; // STUB we currently want to fail loading data;
 }
 
+ILTClient  *g_pLTClient;
+define_holder(ILTClient, g_pLTClient);
+
 HRENDERCONTEXT OGlRenderStruct::CreateContext()
 {
     SDL_Window *_win;

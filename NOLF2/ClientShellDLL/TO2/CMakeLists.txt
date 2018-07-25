@@ -296,6 +296,7 @@ if(LINUX)
 	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Werror -fPIC")
 	include_directories(../../../libs/DynRes
                             ${CMAKE_SOURCE_DIR}/rapidjson/include)
+	set(CLANG_DEFAULT_CXX_STDLIB "libc++")
 endif(LINUX)
 
 include_directories(../ClientShellShared
