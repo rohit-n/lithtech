@@ -50,7 +50,7 @@ int OGlRenderStruct::RenderScene(SceneDesc *pScene){
 void OGlRenderStruct::SwapBuffers(uint flags ){
     SDL_Window *_win;
     g_pLTClient->GetEngineHook("SDL_Window", (void**)&_win);
-    SDL_GL_SwapWindow(_win);    
+    SDL_GL_SwapWindow(_win);
 }
 
 void            OGlRenderStruct::RenderCommand(uint32 argc, const char** argv){}
@@ -72,27 +72,27 @@ bool			OGlRenderStruct::SetGlowDefaultRenderStyle(const char* pszFile){return tr
 bool			OGlRenderStruct::SetNoGlowRenderStyle(const char* pszFile){return true;}
 
 
-void OGLRenderer::Update() 
+void OGLRenderer::Update()
 {
     return;
 }
-LTVertexShaderMgr* OGLRenderer::getVertexShaderMgrSingleton() 
+LTVertexShaderMgr* OGLRenderer::getVertexShaderMgrSingleton()
 {
     return m_pVSM;
 }
-LTPixelShaderMgr* OGLRenderer::getPixelShaderMgrSingleton() 
+LTPixelShaderMgr* OGLRenderer::getPixelShaderMgrSingleton()
 {
     return m_pPSM;
 }
-LTEffectShaderMgr* OGLRenderer::getEffectShaderMgrSingleton() 
+LTEffectShaderMgr* OGLRenderer::getEffectShaderMgrSingleton()
 {
     return m_pESM;
 }
-RenderStruct* OGLRenderer::getRenderStruct() 
+RenderStruct* OGLRenderer::getRenderStruct()
 {
     return m_pRender;
 }
-bool OGLRenderer::active() 
+bool OGLRenderer::active()
 {
     return true;
 }
@@ -103,4 +103,11 @@ static LTEffectShaderMgr ESM;
 
 OGLRenderer::OGLRenderer() :IRenderer{},  m_pVSM{&VSM},m_pPSM{&PSM},m_pESM{&ESM} {
     m_pRender = nullptr;
+    m_pRMode = nullptr;
+}
+
+LTEffectShader*
+OGLRenderer::createEmptyLTEffectShader()
+{
+    return nullptr;
 }

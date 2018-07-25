@@ -2,6 +2,7 @@
 // the global RenderStruct used to talk to it.
 #ifndef __RENDER_H__
 #define __RENDER_H__
+#include "ltbasedefs.h"
 #include "ltmodule.h"
 struct RenderStruct;
 struct RMode;
@@ -34,12 +35,14 @@ class LTPixelShaderMgr;
 class LTEffectShaderMgr;
 
 
-struct BaseShaderInfo 
+struct BaseShaderInfo
 {
     uint32 id;
     ILTStream *file;
     const char *filename;
 };
+
+class LTRendererStats;
 
 class IRenderer : public IBase
 {
@@ -102,13 +105,13 @@ void r_UnbindTexture(SharedTexture *pTexture, bool bUnloadEngineData);
 // Called by the renderer and ILTClient::ProcessAttachments.
 LTObject* r_ProcessAttachment(LTObject *pParent, Attachment *pAttachment);
 
-struct SysCache 
+struct SysCache
 {
     uint32  m_CurMem;   // How much memory currently used?
 
     // All the loaded TextureDatas, in an MRU (most recently used are at
     // the start of the list).
-    LTList  m_List; 
+    LTList  m_List;
 };
 
 extern SysCache g_SysCache;

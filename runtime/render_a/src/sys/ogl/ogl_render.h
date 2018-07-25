@@ -8,7 +8,6 @@
 extern void rdll_OGlRenderSetup(RenderStruct *pStruct);
 
 #define __OPENGL 3.3
-
 class OGLRenderer : public IRenderer
 {
   LTVertexShaderMgr *m_pVSM;
@@ -19,13 +18,15 @@ public:
     OGLRenderer();
     ~OGLRenderer() = default;
     virtual void Update();
-    virtual LTVertexShader* createLTVertexShader(const BaseShaderInfo& bsi, const std::vector<uint32> &elements, bool &compile);
+    virtual LTVertexShader* createLTVertexShader(const BaseShaderInfo& bsi, const std::vector<uint32> &elements, bool &compile);
+    virtual LTPixelShader* createEmptyLTPixelShader();
+    virtual LTEffectShader* createEmptyLTEffectShader();
     virtual LTVertexShaderMgr* getVertexShaderMgrSingleton();
     virtual LTPixelShaderMgr* getPixelShaderMgrSingleton();
     virtual LTEffectShaderMgr* getEffectShaderMgrSingleton();
     virtual RenderStruct* getRenderStruct();
     virtual bool active();
-    virtual int getFrameStats(LTRenderStats &);
+    virtual int getFrameStats(LTRendererStats &);
 };
 
 class OGlRenderStruct : public SysRender

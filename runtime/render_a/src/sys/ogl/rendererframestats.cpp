@@ -11,5 +11,5 @@ int    GetFrameStats(LTRendererStats &refStats)
 int
 OGLRenderer::getFrameStats(LTRendererStats &stats)
 {
-  return GetFrameStats(stats);
+    return GetFrameStats(stats);
 }
