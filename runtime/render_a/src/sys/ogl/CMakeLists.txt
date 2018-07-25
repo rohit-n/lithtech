@@ -40,5 +40,5 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 
 target_link_libraries(${PROJECT_NAME}
     ${SDL2_LIBRARIES}
-    GLX
+    GLU
     GL)
