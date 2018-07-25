@@ -101,6 +101,6 @@ static LTVertexShaderMgr VSM;
 static LTPixelShaderMgr  PSM;
 static LTEffectShaderMgr ESM;
 
-OGLRenderer::OGLRenderer() : m_pVSM{&VSM},m_pPSM{&PSM},m_pESM{&ESM} {
+OGLRenderer::OGLRenderer() :IRenderer{},  m_pVSM{&VSM},m_pPSM{&PSM},m_pESM{&ESM} {
     m_pRender = nullptr;
 }

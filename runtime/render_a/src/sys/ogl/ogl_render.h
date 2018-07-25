@@ -1,7 +1,7 @@
 #ifndef __LT_OGL_RENDER_H
 #define __LT_OGL_RENDER_H
 
-#include "bdefs.h"
+#include "ltbasedefs.h"
 #include "renderstruct.h"
 #include "render.h"
 
@@ -19,11 +19,13 @@ public:
     OGLRenderer();
     ~OGLRenderer() = default;
     virtual void Update();
+    virtual LTVertexShader* createLTVertexShader(const BaseShaderInfo& bsi, const std::vector<uint32> &elements, bool &compile);
     virtual LTVertexShaderMgr* getVertexShaderMgrSingleton();
     virtual LTPixelShaderMgr* getPixelShaderMgrSingleton();
     virtual LTEffectShaderMgr* getEffectShaderMgrSingleton();
     virtual RenderStruct* getRenderStruct();
     virtual bool active();
+    virtual int getFrameStats(LTRenderStats &);
 };
 
 class OGlRenderStruct : public SysRender

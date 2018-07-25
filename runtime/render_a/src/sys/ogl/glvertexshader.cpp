@@ -1,5 +1,13 @@
 #include "glvertexshader.h"
+#include "ogl_render.h"
 
+LTVertexShader* 
+OGLRenderer::createLTVertexShader(const BaseShaderInfo& bsi, const std::vector<uint32> &elements, bool &compile)
+{   // this needs better creation of a vx shader.
+    VertexShader *s = new VertexShader{};
+    s->Init(bsi.file,(VertexElement*)elements. data(),elements.size(), compile);
+    return s;
+}
 
 VertexShader::VertexShader()
     : LTVertexShader(),
