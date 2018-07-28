@@ -1,10 +1,13 @@
+#include <cstring>
 #include "ltbasedefs.h"
+#include "rendererframestats.h"
+#include "ltrendererstats.h"
 #include "ogl_render.h"
 
-#include "rendererframestats.h"
 
 int    GetFrameStats(LTRendererStats &refStats)
 {
+    memset(&refStats,0,sizeof(LTRendererStats));
     return 0;
 }
 
