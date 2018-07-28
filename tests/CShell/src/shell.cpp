@@ -5,7 +5,6 @@
 
 #include <GL/gl.h>
 #include <vector>
-#include <numeric>
 
 class MyShell : public IClientShellStub
 {
@@ -45,7 +44,6 @@ MyShell::OnEngineInitialized(RMode *mode, LTGUID *appID)
     return LT_OK;
 }
 
-#include <iostream>
 void
 MyShell::HandleEvent(SDL_Event e)
 {
@@ -55,6 +53,7 @@ MyShell::HandleEvent(SDL_Event e)
     }
 }
 
+#include <iostream>
 void
 MyShell::sdlQuit()
 {
@@ -68,6 +67,7 @@ MyShell::sdlQuit()
     }
 }
 
+#include <numeric>
 void
 MyShell::Update()
 {
@@ -106,7 +106,8 @@ MyShell::Update()
     }
     if (frame_time.size() > 29500) {
         auto total = std::accumulate(frame_time.begin(),frame_time.end(), 0.0f);
-        std::cout << "frame time: " << total / frame_time.size() << " - " << start << '\n';
+        auto fpt = 1.0f / (total / frame_time.size());
+        std::cout << "frames per Tick: " << fpt << "\n - " << start << "\n - " << total << '\n';
         sdlQuit();
     }
 }

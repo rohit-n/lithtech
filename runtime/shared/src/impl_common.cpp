@@ -166,7 +166,7 @@ HMODELANIM ic_GetAnimIndex(HOBJECT hObj, const char *pAnimName)
 
 const char *ic_GetAnimName (HOBJECT hObj, HMODELANIM hAnim)
 {
-	if ( hAnim < 0 )
+	if ( (hAnim & 0x80000000) > 0 )
 		return LTNULL;
 
 	Model *pModel;

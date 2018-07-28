@@ -1462,7 +1462,7 @@ void ModelInstance::UpdateCollisionObjects( ModelOBB *user_obbs )
 void ModelInstance::UpdateCollisionObject( uint32 obb_index , ModelOBB &user_obb)
 {
 	// ditch if the index is wrong...
-	if( obb_index >= m_NumOBBs || obb_index < 0 ){
+	if( obb_index >= m_NumOBBs){
 		ASSERT(0) ; // wrong index value
 		return ;
 	}
