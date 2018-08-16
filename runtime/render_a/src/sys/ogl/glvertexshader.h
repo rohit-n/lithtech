@@ -8,7 +8,7 @@
 
 struct VertexElement {
     float x, y, z, w;
-	float r, g, b;
+	float r, g, b, a;
 };
 
 struct SysVertexDeclaration;
@@ -60,7 +60,7 @@ public:
 
 	// constants
 	virtual float*					GetConstants()							{ return m_Constants; }
-    
+
 private:
 
 	bool                            m_bCompileShader;		// this flag specifies whether the shader is already compiled

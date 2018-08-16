@@ -7,8 +7,18 @@
 #include "lteffectshadermgr.h"
 #include <GL/gl.h>
 
+struct VertexElement {
+    float x, y, z, w;
+	float r, g, b, a;
+};
+
 OGlRenderStruct::OGlRenderStruct()
 {
+    VertexElement{
+        -0.5f,-0.5f,0.1,1.0f,
+        0.5f,0.5f,1.0f,1.0f
+    }
+
 }
 
 bool

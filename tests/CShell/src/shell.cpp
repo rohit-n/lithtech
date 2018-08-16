@@ -6,6 +6,30 @@
 #include <GL/gl.h>
 #include <vector>
 
+struct VertexElement {
+    float  x,  y,  z, w;
+	float  r,  g,  b, a;
+	float nx, ny, nz;
+};
+std::vector<VertexElement> vertexData = {
+    VertexElement{
+        -0.5f, -0.5f,  0.1f,  1.0f,
+         0.5f,  0.5f,  1.0f,  1.0f,
+         0.0f,  0.0f,  1.0f
+    },
+    VertexElement{
+         0.0f,  0.5f,  0.1f,  1.0f,
+         0.5f,  0.0f,  1.0f,  1.0f,
+         0.0f,  0.0f,  1.0f
+    },
+    VertexElement{
+         0.5f, -0.5f,  0.1f,  1.0f,
+         0.0f,  1.0f,  0.0f,  1.0f,
+         0.0f,  0.0f,  1.0f
+    }
+};
+
+
 class MyShell : public IClientShellStub
 {
     bool QuitSent=false;
@@ -74,12 +98,12 @@ MyShell::Update()
     auto start = SDL_GetTicks();
     if(_glcx) {
         glClearColor(0,0,0,1);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glBegin(GL_TRIANGLES);
-            glColor4f(0.5,0.5,1.0,1.0);
-            glVertex3f(ani,ani,0.1);
-            glVertex3f(0.0, 0.5,0.1);
-            glVertex3f(0.5,-0.5,0.1);
+        for( auto &&v : vertexData ) {
+            glColor4f(v.r,v.g,v.b,v.a);
+            glVertex4f(v.x,v.y,v.z,v.w);
+        }
         glEnd();
         SDL_GL_SwapWindow(_win);
     } else {
