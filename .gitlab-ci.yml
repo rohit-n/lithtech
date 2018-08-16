@@ -1,0 +1,26 @@
+before_script:
+  - apt-get -qq update && apt-get install -y -qq cmake make lsb-release
+  - lsb_release -a
+  - g++ --version
+  - clang --version
+  - cmake --version
+
+stages:
+  - test
+
+gcc:
+  image: "gcc:7"
+  stage: test
+  script:
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make
+clang:
+  image: "clang:5"
+  stage: test
+  script:
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make
