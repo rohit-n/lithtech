@@ -1,5 +1,5 @@
 before_script:
-  - apt-get -qq update && apt-get install -y -qq cmake make lsb-release
+  - apt-get -qq update && apt-get install -y -qq cmake make lsb-release libsdl2-dev
   - lsb_release -a
   - cmake --version
 
