@@ -3,6 +3,9 @@ before_script:
   - lsb_release -a
   - cmake --version
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
 stages:
   - test
 
