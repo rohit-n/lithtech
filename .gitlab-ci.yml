@@ -8,7 +8,7 @@ before_script:
 stages:
   - test
 
-gcc:
+gcc 7:
   image: "gcc:7"
   stage: test
   script:
@@ -16,7 +16,7 @@ gcc:
     - cd build
     - cmake ..
     - make
-clang:
+clang 5:
   image: "clang:5"
   stage: test
   script:
