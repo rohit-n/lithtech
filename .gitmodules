@@ -1,3 +1,6 @@
 [submodule "libs/RegMgr/cppcodec"]
 	path = cppcodec
 	url = https://github.com/tplgy/cppcodec.git
+[submodule "libs/RegMgr/json"]
+	path = rapidjson
+	url = https://github.com/Tencent/rapidjson.git
