@@ -294,7 +294,8 @@ if(MSVC)
 endif(MSVC)
 if(LINUX)
 	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Werror -fPIC")
-	include_directories(../../../libs/DynRes)
+	include_directories(../../../libs/DynRes
+                            ${CMAKE_SOURCE_DIR}/rapidjson/include)
 endif(LINUX)
 
 include_directories(../ClientShellShared

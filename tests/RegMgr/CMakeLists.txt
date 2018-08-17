@@ -6,8 +6,9 @@ set(exec_src
 set(libs
 	LIB_RegMgr)
 
-include_directories(../../libs/RegMgr
-    ../../libs/lith)
+include_directories(${CMAKE_SOURCE_DIR}/libs/RegMgr
+    ${CMAKE_SOURCE_DIR}/libs/lith
+    ${CMAKE_SOURCE_DIR}/rapidjson/include)
 
 add_executable(${PROJECT_NAME} ${exec_src})
 set_target_properties(${PROJECT_NAME}
