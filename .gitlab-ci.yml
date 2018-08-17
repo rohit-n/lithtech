@@ -19,7 +19,7 @@ gcc 7:
     - cmake ..
     - make
 clang 5:
-  image: "clang:5"
+  image: "rferraro/cxx-clang:5.0"
   stage: test
   script:
     - clang --version

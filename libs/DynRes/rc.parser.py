@@ -85,7 +85,7 @@ while len(includes) > 0:
     includes = getIncludes(base, paths, includes[:])
 
 
-with open(main_rc.split(u'/')[-1] + u'.cpp', 'w') as o:
+with open(main_rc.split(u'/')[-1] + u'.cpp', 'w', encoding='utf-8') as o:
     o.write(u'''/*
   my template c++ file which implements the internal resource
   lookup and storage
