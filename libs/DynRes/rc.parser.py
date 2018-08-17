@@ -10,7 +10,7 @@ defs = []
 
 def parseRC(rcFile):
     ret_incl = []
-    with open(rcFile, 'r') as f:
+    with open(rcFile, 'r', encoding='utf-8') as f:
         cur_lst = None
         str_id = None
         txt = None
