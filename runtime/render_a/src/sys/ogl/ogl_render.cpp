@@ -14,10 +14,10 @@ struct VertexElement {
 
 OGlRenderStruct::OGlRenderStruct()
 {
-    VertexElement{
+    VertexElement vx1 {
         -0.5f,-0.5f,0.1,1.0f,
         0.5f,0.5f,1.0f,1.0f
-    }
+    };
 
 }
 
