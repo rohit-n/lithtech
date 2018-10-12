@@ -51,10 +51,10 @@ typedef LTRESULT (DrawWarpFn)(CisSurface *pDest, CisSurface *pSrc,
 // Note: this clips a little differently than ClipRectsNonScaled.  It first
 // CLAMPS the source coordinates to be inside the source rectangle, then clips
 // the destination rectangle.
-inline LTBOOL cis_IsScreenSurface(CisSurface *pSurface) {} // stub
+inline LTBOOL cis_IsScreenSurface(CisSurface *pSurface) { return LTFALSE; } // stub
 inline void cis_SetDirty(CisSurface *pSurface) {} // stub
-inline void* cis_LockSurface(CisSurface *pSurface, long &pitch, LTBOOL bSetDirty=LTFALSE) {} // stub
+inline void* cis_LockSurface(CisSurface *pSurface, long &pitch, LTBOOL bSetDirty=LTFALSE) { return nullptr; } // stub
         //pitch = pSurface->m_Pitch;
 inline void cis_UnlockSurface(CisSurface *pSurface) {} // stub
-inline LTBOOL IsColorTransparent(HLTCOLOR hColor) {} // stub
+inline LTBOOL IsColorTransparent(HLTCOLOR hColor) { return LTFALSE; } // stub
 #endif  // __INTERFACE_HELPERS_H__

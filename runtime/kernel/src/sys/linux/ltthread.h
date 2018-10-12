@@ -194,7 +194,7 @@ CSysEventVar::CSysEventVar() {
 
 inline ESyncResult
 CSysEventVar::Signal() {
-	pthread_cond_signal(&m_Cond);
+	return (pthread_cond_signal(&m_Cond) == 0) ? SYNC_OK : SYNC_ERROR;
 };
 
 inline ESyncResult
