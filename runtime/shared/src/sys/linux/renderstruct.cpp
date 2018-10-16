@@ -16,14 +16,17 @@ static bool checkNullRMode(const RMode &mode)
     return (mode.m_Width == 0 && mode.m_Height == 0 && mode.m_BitDepth == 0);
 }
 
+void
+RenderStruct::SetSysRender(SysRender &render)
+{
+    this->m_pRender = &render;
+}
+
 int RenderStruct::Init(RenderStructInit * pInit)
 {
 	pInit->m_RendererVersion = LTRENDER_VERSION;
-    if (pInit->m_hWnd != nullptr && checkNullRMode(pInit->m_Mode))
-        this->m_pRender = (SysRender*)pInit->m_hWnd;
-    else
-        this->m_pRender->SetRMode(pInit->m_Mode);
-    return (this->m_pRender != nullptr) ? 0 : 1;
+    this->m_pRender->SetRMode(pInit->m_Mode, (SDL_Window*)pInit->m_hWnd);
+    return 0;
 }
 
 HRENDERCONTEXT RenderStruct::CreateContext()

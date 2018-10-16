@@ -68,12 +68,15 @@ struct SceneDesc
     void            (*m_ModelHookFn)(ModelHookData *pData, void *pUser);
     void            *m_ModelHookUser;
 };
+
+class SDL_Window;
+
 struct RenderStructInit
 {
-    int     m_RendererVersion;  // The renderer MUST set this to LTRENDER_VERSION.
-    RMode   m_Mode;     // What mode we want to use.
+    int         m_RendererVersion;  // The renderer MUST set this to LTRENDER_VERSION.
+    RMode       m_Mode;     // What mode we want to use.
                         // The renderer fills in the actual mode that it set.
-    void    *m_hWnd;    // The main window.
+    SDL_Window  *m_hWnd;    // The main window.
 };
 // A blit command.
 class BlitRequest {
@@ -178,6 +181,7 @@ struct RenderStruct {
 		float			m_GlobalLightConvertToAmbient;
 		// Timing variables
 		uint32			m_Time_Vis;
+        void            SetSysRender(SysRender &render); // takes the address of the SysRender and saves it in m_pRender.
 private:
         SysRender *m_pRender;
 }; //stub
@@ -185,6 +189,7 @@ private:
 class SysRender 
 {
 protected:
+    SDL_Window     *m_hWindow;
     uint32          m_Width;
     uint32          m_Height;
     int             m_bInitted;
@@ -220,7 +225,7 @@ public:
     virtual bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo)=0;
     virtual bool			SetGlowDefaultRenderStyle(const char* pszFile)=0;
     virtual bool			SetNoGlowRenderStyle(const char* pszFile)=0;
-    virtual bool            SetRMode(RMode mode)=0;
+    virtual bool            SetRMode(RMode mode, SDL_Window*)=0;
 };
 
 // This is what you use to select how you want to initialize the renderer..  Get a list of

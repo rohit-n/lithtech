@@ -10,7 +10,7 @@ void oglReadConsoleVariables()
 {
   oglrdr.ReadConsoleVariables();
 }
-
+/*
 void rdll_OGlRenderSetup(RenderStruct *pStruct)
 {
     RMode e{};
@@ -19,9 +19,9 @@ void rdll_OGlRenderSetup(RenderStruct *pStruct)
     if (pStruct->Init(&rsi) == 0)
         pStruct->ReadConsoleVariables = &(oglReadConsoleVariables);
 }
-
+*/
 
 void rdll_RenderDLLSetup(RenderStruct *pStruct)
 {
-    rdll_OGlRenderSetup(pStruct);
+    pStruct->SetSysRender(oglrdr);
 }

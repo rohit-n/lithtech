@@ -79,6 +79,11 @@ void r_UnbindTexture(SharedTexture *pSharedTex, bool bUnload )
 
 LTRESULT r_InitRender(RMode *pMode, const char *window_name)
 {
+	if(g_ClientGlob.m_bInitializingRenderer)
+		return LT_OK;
+
+	VarSetter<bool> setter(&g_ClientGlob.m_bInitializingRenderer, true, false);
+
     r_TermRender(0, false);
     SDL_Window *window = g_ClientGlob.m_window;
 	SDL_DestroyWindow(window);
@@ -93,7 +98,7 @@ LTRESULT r_InitRender(RMode *pMode, const char *window_name)
 	// Store these.. the renderer may change them for pixel doubling.
 	g_Render.m_Width = pMode->m_Width;
 	g_Render.m_Height = pMode->m_Height;
-    RenderStructInit init{0, *pMode, (void*)window};
+    RenderStructInit init{0, *pMode, window};
     int initStatus = g_Render.Init(&init);
 	if(initStatus != RENDER_OK || init.m_RendererVersion != LTRENDER_VERSION)
 	{

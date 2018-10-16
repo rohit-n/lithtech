@@ -63,7 +63,7 @@ public:
     bool			AddGlowRenderStyleMapping(const char* pszSource, const char* pszMapTo);
     bool			SetGlowDefaultRenderStyle(const char* pszFile);
     bool			SetNoGlowRenderStyle(const char* pszFile);
-    bool            SetRMode(RMode mode);
+    bool            SetRMode(RMode mode, SDL_Window *win);
     int             m_DontClearMarker;
     LTVector		m_GlobalLightDir;
     LTVector		m_GlobalLightColor;

@@ -22,8 +22,9 @@ OGlRenderStruct::OGlRenderStruct()
 }
 
 bool
-OGlRenderStruct::SetRMode(RMode mode)
+OGlRenderStruct::SetRMode(RMode mode, SDL_Window *win)
 {
+    this->m_hWindow = win;
     // currently just accept any render mode
     return true;
 }
@@ -38,9 +39,7 @@ define_holder(ILTClient, g_pLTClient);
 
 HRENDERCONTEXT OGlRenderStruct::CreateContext()
 {
-    SDL_Window *_win;
-    g_pLTClient->GetEngineHook("SDL_Window", (void**)&_win);
-    SDL_GLContext cx = SDL_GL_CreateContext(_win);
+    SDL_GLContext cx = SDL_GL_CreateContext(this->m_hWindow);
     return (HRENDERCONTEXT)cx;
 }
 
