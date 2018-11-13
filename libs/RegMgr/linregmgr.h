@@ -10,7 +10,7 @@
 // Includes...
 
 #include "lith.h"
-#include "rapidjson/document.h"
+#include <nlohmann/json.hpp>
 #include <string>
 
 struct rootKeys;
@@ -27,7 +27,7 @@ class CRegMgr {
 public:
 
   // public functions
-  CRegMgr() : m_Doc() { m_bInitialized = false; };
+  CRegMgr() : m_jDoc{},m_jCurKey{&m_jDoc} { m_bInitialized = false; };
   ~CRegMgr() { Term(); };
   bool Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey = nullptr, HKEY hRootKey = HKEY_LOCAL_MACHINE, const char* sRoot2 = nullptr);
   void Term();
@@ -46,10 +46,8 @@ public:
 
 private:
   bool m_bInitialized;
-  char iobuffer[65536];
-  std::string rootPath;
-  rapidjson::Document m_Doc;
-  rapidjson::Value m_hRootKey;
+  nlohmann::json m_jDoc;
+  nlohmann::json *m_jCurKey;
 };            
 
 #endif

@@ -6,27 +6,11 @@
 */
 #include "linregmgr.h"
 
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/filereadstream.h"
-#include "rapidjson/filewritestream.h"
-#include <cstdio>
+#include <fstream>
 #include <vector>
 #include "base_string_manip.h"
 
-using std::FILE;
-using std::fopen;
-using std::fclose;
-using rapidjson::Document;
-using rapidjson::Writer;
-using rapidjson::Type;
-using rapidjson::Value;
-using rapidjson::FileReadStream;
-using rapidjson::FileWriteStream;
-/*
-using rapidjson::IStreamWrapper;
-using rapidjson::OStreamWrapper;
-*/
+using nlohmann::json;
 /*
 the json registry:
 {
@@ -84,39 +68,19 @@ HKEY HKEY_USERS{&hkus};
 
 bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion, const char* sSubKey, HKEY hRootKey, const char* sRoot2)
 {
-    FILE *jfp = fopen("LithTech.reg.json", "r");
-    if(jfp)
-    {
-        FileReadStream isw(jfp, iobuffer, sizeof(iobuffer));
-        m_Doc.ParseStream(isw);
-        fclose(jfp);
-        memset(iobuffer,0,sizeof(iobuffer));
-    } else {
-        const char *base = "{\"HKEY_LOCAL_MACHINE\":{\"software\":{}},\"HKEY_CURRENT_USER\":{\"software\":{}}}";
-        m_Doc.Parse(base);
-    }
-    auto && alloc = m_Doc.GetAllocator();
     const char *pSubKey = (sRoot2 != nullptr) ? sRoot2 : "software";
-    rootPath = std::string{hRootKey->key} + "/" + pSubKey + "/" + sCompany + "/" + sApp;
-
-    if(!m_Doc[hRootKey->key][pSubKey].IsObject())
-        m_Doc[hRootKey->key][pSubKey].SetObject();
-
-    if(!m_Doc[hRootKey->key][pSubKey].HasMember(sCompany))
-        m_Doc[hRootKey->key][pSubKey].AddMember(Value{sCompany, alloc}, Value{Type::kObjectType}, alloc);
-    
-    if(!m_Doc[hRootKey->key][pSubKey][sCompany].HasMember(sApp)) {
-        m_Doc[hRootKey->key][pSubKey][sCompany].AddMember(Value{sApp, alloc}, Value{Type::kObjectType}, alloc);
-    } else {
-        m_hRootKey.CopyFrom(m_Doc[hRootKey->key][pSubKey][sCompany][sApp], alloc);
+    std::string base{"{\"HKEY_LOCAL_MACHINE\":{\"software\":{}},\"HKEY_CURRENT_USER\":{\"software\":{}}}\n"};
+    auto a = split(base, ',');
+    std::ifstream json_file{"LithTech.reg.json"};
+    if (json_file.is_open()) {
+        m_jDoc = json::parse(json_file);
+    } 
+    if (m_jDoc.is_null()) {
+        m_jDoc = json::parse(base);
     }
-
-    if(!m_hRootKey.IsObject())
-        m_hRootKey.SetObject();
-    if (!m_hRootKey.HasMember("version"))
-        m_hRootKey.AddMember(Value{"version"}, Value{sVersion, alloc}, alloc);
-    else
-        m_hRootKey["version"].SetString(sVersion,alloc);
+    
+    m_jDoc[hRootKey->key][pSubKey][sCompany][sApp]["version"] = sVersion;
+    m_jCurKey = &(m_jDoc[hRootKey->key][pSubKey][sCompany][sApp]);
 
     m_bInitialized = true;
     return m_bInitialized;
@@ -124,76 +88,46 @@ bool CRegMgr::Init(const char* sCompany, const char* sApp, const char* sVersion,
 
 void CRegMgr::Term()
 {
-    auto path = split(rootPath, '/');
-    m_Doc[path.at(0).c_str()][path.at(1).c_str()][path.at(2).c_str()][path.at(3).c_str()] = m_hRootKey;
-    FILE *jfp = fopen("LithTech.reg.json", "w");
-    if(jfp)
-    {
-        FileWriteStream osw(jfp, iobuffer, sizeof(iobuffer));
-        Writer<FileWriteStream> writer(osw);
-        m_Doc.Accept(writer);
-        fwrite("\n",1,1,jfp);
-        fclose(jfp);
-    }
+    std::ofstream json_file{"LithTech.reg.json"};
+    if(json_file.is_open())
+        json_file << m_jDoc << '\n';
+
     m_bInitialized = false;
 }
 
 bool CRegMgr::SetSubKey(const char* sSubKey){
-    auto && a = m_Doc.GetAllocator();
-    if(m_hRootKey.HasMember(sSubKey)){
-        if(! m_hRootKey[sSubKey].IsObject())
-            m_hRootKey[sSubKey].SetObject();
-    } else {
-        m_hRootKey.AddMember(Value{sSubKey, a}, Value{Type::kObjectType}, a);
-    }
-
-    m_hRootKey.CopyFrom(m_hRootKey[sSubKey], a);
-    rootPath += std::string{"/"} + sSubKey;
+    json &key = *m_jCurKey;
+    if (m_jCurKey->is_object())
+        m_jCurKey = &(key[sSubKey]);
+    else
+        return false;
     return true;
 }
 bool CRegMgr::Set(const char* sKey, const char* sValue){
-    if(m_hRootKey.HasMember(sKey) ){ 
-        if(m_hRootKey[sKey].IsString()) {
-            auto &&a = m_Doc.GetAllocator();
-            m_hRootKey[sKey].SetString(sValue, a);
-            return true;
-        }
-    } else {
-        auto &&a = m_Doc.GetAllocator();
-        m_hRootKey.AddMember(Value{sKey,a}, Value{sValue, a}, a);
-        return true;
-    }
-    return false;
+    json &key = *m_jCurKey;
+    if(key[sKey].is_string() || key[sKey].is_null())
+        key[sKey] = sValue;
+    else
+        return false;
+    return true;
 }
-bool CRegMgr::Set(const char* sKey, void* pValue, int nLen){
-    if(m_hRootKey.HasMember(sKey) ){ 
-        if(m_hRootKey[sKey].IsObject() && m_hRootKey[sKey].HasMember("base64")) {
-            auto &&a = m_Doc.GetAllocator();
-            m_hRootKey[sKey]["base64"].SetString(b64enc(pValue,nLen).c_str(),a);
-            return true;
-        }
-    } else {
-        auto &&a = m_Doc.GetAllocator();
-        Value b64data;
-        b64data.SetObject();
-        b64data.AddMember(Value{"base64",a}, Value{b64enc(pValue, nLen).c_str(),a}, a);
-        m_hRootKey.AddMember(Value{sKey,a}, b64data, a);
-        return true;
-    }
 
-    return false;
-}
-bool CRegMgr::Set(const char* sKey, DWORD nValue){
-    if(m_hRootKey.HasMember(sKey) ){ 
-        if(m_hRootKey[sKey].IsNumber()) {
-            m_hRootKey[sKey].SetUint(nValue);
-            return true;
-        }
-    } else {
-        auto &&a = m_Doc.GetAllocator();
-        m_hRootKey.AddMember(Value{sKey,a}, Value{nValue},a);
+bool CRegMgr::Set(const char* sKey, void* pValue, int nLen){
+    json &key = *m_jCurKey;
+    if (key[sKey].is_null() || key[sKey].find("base64") != key[sKey].end()) {
+        key[sKey]["base64"] = b64enc(pValue, nLen);
+        return true;
     }
     return false;
+}
+
+bool CRegMgr::Set(const char* sKey, DWORD nValue){
+    json &key = *m_jCurKey;
+    if(key[sKey].is_null() || key[sKey].is_number_unsigned())
+        key[sKey] = nValue;
+    else if(!key.is_null())
+        return false;
+    return true;
 }
 
 /*
@@ -201,47 +135,40 @@ bool CRegMgr::Set(const char* sKey, DWORD nValue){
  * based on usage in NOLF2 VersionMgr.cpp VersionMgr constructor
  */
 const char* CRegMgr::Get(const char* sKey, char* sBuf, UINT32& nBufSize, const char* sDef){
-    if(m_hRootKey.HasMember(sKey) ){ 
-        if(m_hRootKey[sKey].IsString())
-            std::strncpy(sBuf, m_hRootKey[sKey].GetString(), nBufSize);
-            return sBuf;
+    if((*m_jCurKey)[sKey].is_string()) {
+        std::strncpy(sBuf, std::string{(*m_jCurKey)[sKey]}.c_str(), nBufSize);
+        return sBuf;
     } else {
         if(sDef != nullptr) {
-            auto && a = m_Doc.GetAllocator();
-            m_hRootKey.AddMember(Value{sKey,a}, Value{sDef, a}, a);
+            (*m_jCurKey)[sKey] = sDef;
             std::strncpy(sBuf, sDef, nBufSize);
         }
+        return sDef;
     }
-    return sDef;
 }
 
 DWORD CRegMgr::Get(const char* sKey, DWORD nDef){
-    if(m_hRootKey.HasMember(sKey) ){ 
-        if(m_hRootKey[sKey].IsNumber())
-            return m_hRootKey[sKey].GetUint();
-        return -1;
-    } else {
-        // only add it if a certain value was requested
-        if (nDef != 0) {
-            auto && a = m_Doc.GetAllocator();
-            m_hRootKey.AddMember(Value{sKey,a}, Value{nDef}, a);
-        }
-    }
+    if((*m_jCurKey)[sKey].is_null())
+        (*m_jCurKey)[sKey] = nDef;
+    if((*m_jCurKey)[sKey].is_number_unsigned())
+        return (*m_jCurKey)[sKey];
+
     return nDef;
 }
 
 void* CRegMgr::Get(const char* sKey, void* pBuf, UINT32& nBufSize, void* pDef, UINT32 nDefSize){
-    if(m_hRootKey.HasMember(sKey) ){ 
-        if(m_hRootKey[sKey].IsObject() && m_hRootKey[sKey].HasMember("base64")) {
-            if(b64dec(std::string{m_hRootKey[sKey]["base64"].GetString()},pBuf,nBufSize))
+    json &key = *m_jCurKey;
+    if(key[sKey].is_object()) {
+        if(key[sKey].find("base64") != key[sKey].end())
+            if(b64dec(key[sKey]["base64"], pBuf, nBufSize))
                 return pBuf;
-        }
-        return nullptr;
-    } else {
+    } else if(pDef != nullptr) {
         Set(sKey, pDef, nDefSize);
         return Get(sKey, pBuf, nBufSize);
     }
+    return nullptr;
 }
+
 bool CRegMgr::Delete(const char* sKey){return true;}
 bool CRegMgr::DeleteApp(){return true;}
 bool CRegMgr::DeleteSubKey(){return true;}

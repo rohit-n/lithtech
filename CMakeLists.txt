@@ -26,40 +26,40 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED 11)
 
 if(ENABLE_D3D)
-	add_definitions(-D__D3D -D__D3DREND)
+    add_definitions(-D__D3D -D__D3DREND)
 endif(ENABLE_D3D)
 
 
 if(WIN32)
-	add_definitions(-D_WINDOWS)
+    add_definitions(-D_WINDOWS)
 else(WIN32)
-	add_definitions(-D_LINUX -D__LINUX)
-	set(LINUX 1)
+    add_definitions(-D_LINUX -D__LINUX)
+    set(LINUX 1)
 endif(WIN32)
 
 if(MSVC)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
 endif(MSVC)
 
 if(DEBUG)
-	add_definitions(-D_DEBUG)
+    add_definitions(-D_DEBUG)
 else(DEBUG)
-	add_definitions(-D_FINAL)
+    add_definitions(-D_FINAL)
 endif(DEBUG)
 
 
 if(USE_INTERNAL_ZLIB)
-	#set zlib vars
-	add_subdirectory(libs/zlib)							# LIB_ZLib
+    #set zlib vars
+    add_subdirectory(libs/zlib)							# LIB_ZLib
 else(USE_INTERNAL_ZLIB)
-	find_package(ZLIB)
+    find_package(ZLIB)
 endif(USE_INTERNAL_ZLIB)
 
 # move to Lib_UI CMakeLists.txt?
 if(USE_INTERNAL_FREETYPE)
-	#set freetype vars
+    #set freetype vars
 else(USE_INTERNAL_FREETYPE)
-	find_package(Freetype)
+    find_package(Freetype)
 endif(USE_INTERNAL_FREETYPE)
 
 
@@ -69,17 +69,18 @@ add_subdirectory(libs/ltmem)							# LIB_LTMem
 add_subdirectory(libs/rezmgr)							# LIB_RezMgr
 
 if(LINUX)
-add_subdirectory(libs/DynRes)
+    add_subdirectory(libs/DynRes)
+    add_subdirectory(json)
 endif(LINUX)
 
 if(BUILD_ENGINE)
-	add_subdirectory(runtime/ui)						# LIB_UI
-	add_subdirectory(runtime/info)						# LIB_Info
-	add_subdirectory(runtime/sound)						# LIB_ILTSound
-	add_subdirectory(runtime/server)					# DLL_Server
-	add_subdirectory(runtime/client)					# EXE_Lithtech
+    add_subdirectory(runtime/ui)						# LIB_UI
+    add_subdirectory(runtime/info)						# LIB_Info
+    add_subdirectory(runtime/sound)						# LIB_ILTSound
+    add_subdirectory(runtime/server)					# DLL_Server
+    add_subdirectory(runtime/client)					# EXE_Lithtech
 
-	if(WIN32)
+    if(WIN32)
         if(ENABLE_D3D)
             add_subdirectory(runtime/render_a/src/sys/d3d)	# LIB_D3DRender
         endif(ENABLE_D3D)
@@ -101,18 +102,18 @@ if(BUILD_ENGINE)
 endif(BUILD_ENGINE)
 
 if(BUILD_NOLF2)
-	add_subdirectory(libs/MFCStub)						# LIB_MFCStub
-	add_subdirectory(libs/ButeMgr)						# LIB_ButeMgr
-	add_subdirectory(libs/CryptMgr)						# LIB_CryptMgr
-	add_subdirectory(libs/RegMgr)						# LIB_RegMgr
-	add_subdirectory(libs/LTGUIMgr)						# LIB_LTGUIMgr
-	add_subdirectory(libs/ServerDir)					# ServerDir
-	add_subdirectory(libs/WONAPI)						# LIB_WONAPI
-	add_subdirectory(NOLF2/ClientFxDLL)					# ClientFXDLL
-	add_subdirectory(NOLF2/ClientRes/TO2)				# ClientRes
-	add_subdirectory(NOLF2/ClientShellDLL/TO2)			# ClientShellDLL
-	add_subdirectory(NOLF2/ObjectDLL/TO2)				# ObjectDLL
-	add_subdirectory(NOLF2/ServerRes/TO2)				# ServerRes
+    add_subdirectory(libs/MFCStub)						# LIB_MFCStub
+    add_subdirectory(libs/ButeMgr)						# LIB_ButeMgr
+    add_subdirectory(libs/CryptMgr)						# LIB_CryptMgr
+    add_subdirectory(libs/RegMgr)						# LIB_RegMgr
+    add_subdirectory(libs/LTGUIMgr)						# LIB_LTGUIMgr
+    add_subdirectory(libs/ServerDir)					# ServerDir
+    add_subdirectory(libs/WONAPI)						# LIB_WONAPI
+    add_subdirectory(NOLF2/ClientFxDLL)					# ClientFXDLL
+    add_subdirectory(NOLF2/ClientRes/TO2)				# ClientRes
+    add_subdirectory(NOLF2/ClientShellDLL/TO2)			# ClientShellDLL
+    add_subdirectory(NOLF2/ObjectDLL/TO2)				# ObjectDLL
+    add_subdirectory(NOLF2/ServerRes/TO2)				# ServerRes
 endif(BUILD_NOLF2)
 
 if(BUILD_FEAR)
@@ -125,33 +126,33 @@ if(BUILD_FEAR)
         add_subdirectory(libs/ServerDir)					# ServerDir
         add_subdirectory(libs/WONAPI)						# LIB_WONAPI
     endif(NOT BUILD_NOLF2)
-	add_subdirectory(FEAR/ClientFxDLL)					# ClientFXDLL
+    add_subdirectory(FEAR/ClientFxDLL)					# ClientFXDLL
 #	add_subdirectory(NOLF2/ClientRes/TO2)				# ClientRes
-	add_subdirectory(FEAR/ClientShellDLL)				# ClientShellDLL
+    add_subdirectory(FEAR/ClientShellDLL)				# ClientShellDLL
 #	add_subdirectory(NOLF2/ObjectDLL/TO2)				# ObjectDLL
 #	add_subdirectory(NOLF2/ServerRes/TO2)				# ServerRes
 endif(BUILD_FEAR)
 
 if(BUILD_TRON)
-	if(NOT BUILD_NOLF2)
-		add_subdirectory(libs/MFCStub)
-		add_subdirectory(libs/ButeMgr)
-		add_subdirectory(libs/CryptMgr)
-		add_subdirectory(libs/RegMgr)
-		add_subdirectory(libs/LTGUIMgr)
-		add_subdirectory(libs/ServerDir)
-		add_subdirectory(libs/WONAPI)
-		add_subdirectory(NOLF2/ClientFxDLL)		# ClientFXDLL
-	endif(NOT BUILD_NOLF2)
-	add_subdirectory(NOLF2/ClientRes/TRON)		# ClientRes
-	add_subdirectory(NOLF2/ClientShellDLL/TRON)	# ClientShellDLL
-	add_subdirectory(NOLF2/ObjectDLL/TRON)		# ObjectDLL
-	add_subdirectory(NOLF2/ServerRes/TRON)		# ServerRes
+    if(NOT BUILD_NOLF2)
+        add_subdirectory(libs/MFCStub)
+        add_subdirectory(libs/ButeMgr)
+        add_subdirectory(libs/CryptMgr)
+        add_subdirectory(libs/RegMgr)
+        add_subdirectory(libs/LTGUIMgr)
+        add_subdirectory(libs/ServerDir)
+        add_subdirectory(libs/WONAPI)
+        add_subdirectory(NOLF2/ClientFxDLL)		# ClientFXDLL
+    endif(NOT BUILD_NOLF2)
+    add_subdirectory(NOLF2/ClientRes/TRON)		# ClientRes
+    add_subdirectory(NOLF2/ClientShellDLL/TRON)	# ClientShellDLL
+    add_subdirectory(NOLF2/ObjectDLL/TRON)		# ObjectDLL
+    add_subdirectory(NOLF2/ServerRes/TRON)		# ServerRes
 endif(BUILD_TRON)
 
 if(BUILD_TOOLS)
-	add_subdirectory(tools/DtxView)			# TOOLS_DtxView
-	add_subdirectory(tools/LithRez)			# TOOLS_LithRez
+    add_subdirectory(tools/DtxView)			# TOOLS_DtxView
+    add_subdirectory(tools/LithRez)			# TOOLS_LithRez
 endif(BUILD_TOOLS)
 
 add_subdirectory(tests/RegMgr)

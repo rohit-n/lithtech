@@ -27,21 +27,21 @@
 #include <chrono>
 #include <thread>
 
-#pragma message( "FIXFIX:  Should really be called ClientConnectionMgr." )
+// #pragma message( "FIXFIX:  Should really be called ClientConnectionMgr." )
 
 
-ClientMultiplayerMgr* g_pClientMultiplayerMgr = NULL;
+ClientConnectionMgr* g_pClientMultiplayerMgr = NULL;
 
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::ClientMultiplayerMgr
+//	ROUTINE:	ClientConnectionMgr::ClientConnectionMgr
 //
 //	PURPOSE:	Constructor
 //
 // --------------------------------------------------------------------------- //
 
-ClientMultiplayerMgr::ClientMultiplayerMgr( )
+ClientConnectionMgr::ClientConnectionMgr( )
 {
 	m_nServerPort = -1;
 	m_nServerKey = 0;
@@ -69,13 +69,13 @@ ClientMultiplayerMgr::ClientMultiplayerMgr( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::~ClientMultiplayerMgr
+//	ROUTINE:	ClientConnectionMgr::~ClientConnectionMgr
 //
 //	PURPOSE:	Destructor
 //
 // --------------------------------------------------------------------------- //
 
-ClientMultiplayerMgr::~ClientMultiplayerMgr( )
+ClientConnectionMgr::~ClientConnectionMgr( )
 {
 	delete GetServerDir();
 
@@ -84,13 +84,13 @@ ClientMultiplayerMgr::~ClientMultiplayerMgr( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::InitSinglePlayer
+//	ROUTINE:	ClientConnectionMgr::InitSinglePlayer
 //
 //	PURPOSE:	Send the server the initial single player info
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::InitSinglePlayer()
+bool ClientConnectionMgr::InitSinglePlayer()
 {
 
 	g_pWeaponMgr->LoadOverrideButes( WEAPON_DEFAULT_FILE );
@@ -111,13 +111,13 @@ bool ClientMultiplayerMgr::InitSinglePlayer()
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::InitMultiPlayer
+//	ROUTINE:	ClientConnectionMgr::InitMultiPlayer
 //
 //	PURPOSE:	Send the server the initial multiplayer info
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::InitMultiPlayer()
+bool ClientConnectionMgr::InitMultiPlayer()
 {
 	if (!IsMultiplayerGame())
 		return false;
@@ -183,13 +183,13 @@ bool ClientMultiplayerMgr::InitMultiPlayer()
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::UpdateMultiPlayer
+//	ROUTINE:	ClientConnectionMgr::UpdateMultiPlayer
 //
 //	PURPOSE:	Send the server the updated multiplayer info
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::UpdateMultiPlayer()
+bool ClientConnectionMgr::UpdateMultiPlayer()
 {
 	if (!IsMultiplayerGame())
 		return false;
@@ -237,7 +237,7 @@ bool ClientMultiplayerMgr::UpdateMultiPlayer()
 }
 
 // returns true if the passed in address matches the current server address
-bool ClientMultiplayerMgr::CheckServerAddress(char const*pszTestAddress, int nPort)
+bool ClientConnectionMgr::CheckServerAddress(char const*pszTestAddress, int nPort)
 {
 	if (!pszTestAddress) return false;
 	if (nPort != m_nServerPort) return false;
@@ -245,7 +245,7 @@ bool ClientMultiplayerMgr::CheckServerAddress(char const*pszTestAddress, int nPo
 }
 
 
-void ClientMultiplayerMgr::DoTaunt(uint32 nClientID, uint32 nTauntID)
+void ClientConnectionMgr::DoTaunt(uint32 nClientID, uint32 nTauntID)
 {
 	//if you're not listening to taunts, you're not allowed to send them
 	if (GetConsoleInt("IgnoreTaunts",0) > 0) return;
@@ -281,12 +281,12 @@ void ClientMultiplayerMgr::DoTaunt(uint32 nClientID, uint32 nTauntID)
 
 
 
-bool ClientMultiplayerMgr::SetupClient(char const* pszIpAddress, char const* pszHostName, char const* pszPassword)
+bool ClientConnectionMgr::SetupClient(char const* pszIpAddress, char const* pszHostName, char const* pszPassword)
 {
 	// Check inputs.
 	if( !pszIpAddress || !pszIpAddress[0] )
 	{
-		ASSERT( !"ClientMultiplayerMgr::SetupClient: Invalid inputs." );
+		ASSERT( !"ClientConnectionMgr::SetupClient: Invalid inputs." );
 		return false;
 	}
 
@@ -320,12 +320,12 @@ bool ClientMultiplayerMgr::SetupClient(char const* pszIpAddress, char const* psz
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::SetupServerSinglePlayer
+//	ROUTINE:	ClientConnectionMgr::SetupServerSinglePlayer
 //
 //	PURPOSE:	Setup server for singleplayer game.
 //
 // ----------------------------------------------------------------------- //
-bool ClientMultiplayerMgr::SetupServerSinglePlayer( )
+bool ClientConnectionMgr::SetupServerSinglePlayer( )
 {
 	memset(&m_StartGameRequest, 0, sizeof(StartGameRequest));
 	m_ServerGameOptions.Clear( );
@@ -343,7 +343,7 @@ bool ClientMultiplayerMgr::SetupServerSinglePlayer( )
 }
 // --------------------------------------------------------------------------- //
 //
-//  ROUTINE:    ClientMultiplayerMgr::SetupServerHost()
+//  ROUTINE:    ClientConnectionMgr::SetupServerHost()
 //
 //  PURPOSE:    Host a game.
 //
@@ -351,7 +351,7 @@ bool ClientMultiplayerMgr::SetupServerSinglePlayer( )
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::SetupServerHost( int nPort, bool bLANOnly )
+bool ClientConnectionMgr::SetupServerHost( int nPort, bool bLANOnly )
 {
 	memset( &m_StartGameRequest, 0, sizeof( m_StartGameRequest ));
 	m_ServerGameOptions.Clear( );
@@ -417,13 +417,13 @@ bool ClientMultiplayerMgr::SetupServerHost( int nPort, bool bLANOnly )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::SetDisconnectCode
+//	ROUTINE:	ClientConnectionMgr::SetDisconnectCode
 //
 //	PURPOSE:	Sets the disconnection code and message
 //
 // --------------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::SetDisconnectCode(uint32 nCode, const char *pMsg)
+void ClientConnectionMgr::SetDisconnectCode(uint32 nCode, const char *pMsg)
 {
 	// Don't override what someone already told us
 	if (m_nDisconnectCode)
@@ -439,13 +439,13 @@ void ClientMultiplayerMgr::SetDisconnectCode(uint32 nCode, const char *pMsg)
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::ClearDisconnectCode
+//	ROUTINE:	ClientConnectionMgr::ClearDisconnectCode
 //
 //	PURPOSE:	Clears the disconnection code and message
 //
 // --------------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::ClearDisconnectCode()
+void ClientConnectionMgr::ClearDisconnectCode()
 {
 	m_nDisconnectCode = 0;
 	m_sDisconnectMsg.Empty( );
@@ -454,13 +454,13 @@ void ClientMultiplayerMgr::ClearDisconnectCode()
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::CreateServerDir
+//	ROUTINE:	ClientConnectionMgr::CreateServerDir
 //
 //	PURPOSE:	Creates the client's serverdir for joining a remote game.
 //
 // --------------------------------------------------------------------------- //
 
-IServerDirectory* ClientMultiplayerMgr::CreateServerDir( )
+IServerDirectory* ClientConnectionMgr::CreateServerDir( )
 {
 	// Make sure we don't already have one.
 	DeleteServerDir( );
@@ -491,13 +491,13 @@ IServerDirectory* ClientMultiplayerMgr::CreateServerDir( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::DeleteServerDir
+//	ROUTINE:	ClientConnectionMgr::DeleteServerDir
 //
 //	PURPOSE:	Remove the server dir.
 //
 // --------------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::DeleteServerDir( )
+void ClientConnectionMgr::DeleteServerDir( )
 { 
 	if( m_pServerDir )
 	{
@@ -509,13 +509,13 @@ void ClientMultiplayerMgr::DeleteServerDir( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::SetCurMessageSource
+//	ROUTINE:	ClientConnectionMgr::SetCurMessageSource
 //
 //	PURPOSE:	Set the source address of the message which is currently being processed
 //
 // --------------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::SetCurMessageSource(const uint8 aAddr[4], uint16 nPort)
+void ClientConnectionMgr::SetCurMessageSource(const uint8 aAddr[4], uint16 nPort)
 {
 	m_aCurMessageSourceAddr[0] = aAddr[0];
 	m_aCurMessageSourceAddr[1] = aAddr[1];
@@ -526,13 +526,13 @@ void ClientMultiplayerMgr::SetCurMessageSource(const uint8 aAddr[4], uint16 nPor
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::GetCurMessageSource
+//	ROUTINE:	ClientConnectionMgr::GetCurMessageSource
 //
 //	PURPOSE:	Get the source address of the message which is currently being processed
 //
 // --------------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::GetCurMessageSource(uint8 aAddr[4], uint16 *pPort)
+void ClientConnectionMgr::GetCurMessageSource(uint8 aAddr[4], uint16 *pPort)
 {
 	aAddr[0] = m_aCurMessageSourceAddr[0];
 	aAddr[1] = m_aCurMessageSourceAddr[1];
@@ -559,18 +559,18 @@ inline uint32 MessUp32BitValue(uint32 nValue, uint32 nRot)
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::OnMessage()
+//	ROUTINE:	ClientConnectionMgr::OnMessage()
 //
 //	PURPOSE:	Handle client messages
 //
 // ----------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::OnMessage(uint8 messageID, ILTMessage_Read *pMsg)
+bool ClientConnectionMgr::OnMessage(uint8 messageID, ILTMessage_Read *pMsg)
 {
 	// Check inputs.
 	if( !pMsg )
 	{
-		ASSERT( !"ClientMultiplayerMgr::OnMessage: Invalid msg." );
+		ASSERT( !"ClientConnectionMgr::OnMessage: Invalid msg." );
 		return false;
 	}
 
@@ -611,7 +611,7 @@ bool ClientMultiplayerMgr::OnMessage(uint8 messageID, ILTMessage_Read *pMsg)
 }
 
 
-bool ClientMultiplayerMgr::HandleMsgHandshake( ILTMessage_Read & msg )
+bool ClientConnectionMgr::HandleMsgHandshake( ILTMessage_Read & msg )
 {
 	int nHandshakeSub = (int)msg.Readuint8();
 	switch (nHandshakeSub)
@@ -753,13 +753,13 @@ bool ClientMultiplayerMgr::HandleMsgHandshake( ILTMessage_Read & msg )
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::HandleMsgPlayerSingleplayerInit()
+//	ROUTINE:	ClientConnectionMgr::HandleMsgPlayerSingleplayerInit()
 //
 //	PURPOSE:	
 //
 // ----------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::HandleMsgPlayerSingleplayerInit (ILTMessage_Read& msg)
+bool ClientConnectionMgr::HandleMsgPlayerSingleplayerInit (ILTMessage_Read& msg)
 {
 	return InitSinglePlayer();
 }
@@ -767,13 +767,13 @@ bool ClientMultiplayerMgr::HandleMsgPlayerSingleplayerInit (ILTMessage_Read& msg
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::HandleMsgPlayerMultiplayerInit()
+//	ROUTINE:	ClientConnectionMgr::HandleMsgPlayerMultiplayerInit()
 //
 //	PURPOSE:	
 //
 // ----------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::HandleMsgPlayerMultiplayerInit(ILTMessage_Read& msg)
+bool ClientConnectionMgr::HandleMsgPlayerMultiplayerInit(ILTMessage_Read& msg)
 {
 	return InitMultiPlayer();
 }
@@ -781,13 +781,13 @@ bool ClientMultiplayerMgr::HandleMsgPlayerMultiplayerInit(ILTMessage_Read& msg)
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::HandleMsgMultiplayerData()
+//	ROUTINE:	ClientConnectionMgr::HandleMsgMultiplayerData()
 //
 //	PURPOSE:	Read multiplayer data sent from server.
 //
 // ----------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::HandleMsgMultiplayerData( ILTMessage_Read& msg )
+bool ClientConnectionMgr::HandleMsgMultiplayerData( ILTMessage_Read& msg )
 {
     GameType eGameType = ( GameType )msg.Readuint8();
 	g_pGameClientShell->SetGameType( eGameType );
@@ -795,7 +795,7 @@ bool ClientMultiplayerMgr::HandleMsgMultiplayerData( ILTMessage_Read& msg )
 	// Check if some joker set us to single player.
 	if( eGameType == eGameTypeSingle )
 	{
-		ASSERT( !"ClientMultiplayerMgr::HandleMsgMultiplayerData: Invalid game type." );
+		ASSERT( !"ClientConnectionMgr::HandleMsgMultiplayerData: Invalid game type." );
 		return false;
 	}
 
@@ -809,14 +809,14 @@ bool ClientMultiplayerMgr::HandleMsgMultiplayerData( ILTMessage_Read& msg )
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::OnEvent()
+//	ROUTINE:	ClientConnectionMgr::OnEvent()
 //
 //	PURPOSE:	Called for asynchronous errors that cause the server
 //				to shut down
 //
 // ----------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::OnEvent(uint32 dwEventID, uint32 dwParam)
+void ClientConnectionMgr::OnEvent(uint32 dwEventID, uint32 dwParam)
 {
 	if( !IsMultiplayerGame( ))
 		return;
@@ -839,13 +839,13 @@ void ClientMultiplayerMgr::OnEvent(uint32 dwEventID, uint32 dwParam)
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::Update()
+//	ROUTINE:	ClientConnectionMgr::Update()
 //
 //	PURPOSE:	Frame update.
 //
 // ----------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::Update( )
+void ClientConnectionMgr::Update( )
 {
 	// This will happen when something wanted to disconnect, but wasn't
 	// in a valid location to do so.  (e.g. when processing packets..)
@@ -859,13 +859,13 @@ void ClientMultiplayerMgr::Update( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::SetService
+//	ROUTINE:	ClientConnectionMgr::SetService
 //
 //	PURPOSE:	Selects the connection service for hosting/joining internet games.
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::SetService( )
+bool ClientConnectionMgr::SetService( )
 {
 	NetService *pCur, *pListHead;
 	HNETSERVICE hNetService;
@@ -907,13 +907,13 @@ bool ClientMultiplayerMgr::SetService( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::StartClient
+//	ROUTINE:	ClientConnectionMgr::StartClient
 //
 //	PURPOSE:	Start a client of a remote server.
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::StartClient( )
+bool ClientConnectionMgr::StartClient( )
 {
 
 	// Initialize the networking.  Always start a new server with hosted games.
@@ -957,13 +957,13 @@ bool ClientMultiplayerMgr::StartClient( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::StartServerHost
+//	ROUTINE:	ClientConnectionMgr::StartServerHost
 //
 //	PURPOSE:	Start a hosted game.
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::StartServerAsHost( )
+bool ClientConnectionMgr::StartServerAsHost( )
 {
 	// If they want a dedicated server, then launch the serverapp.
 	if( m_ServerGameOptions.m_bDedicated )
@@ -1010,13 +1010,13 @@ bool ClientMultiplayerMgr::StartServerAsHost( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::StartServerSinglePlayer
+//	ROUTINE:	ClientConnectionMgr::StartServerSinglePlayer
 //
 //	PURPOSE:	Starts the single player server.
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::StartServerAsSinglePlayer( )
+bool ClientConnectionMgr::StartServerAsSinglePlayer( )
 {
 	// Check if we're already connected to a server.
   	if( g_pLTClient->IsConnected( ))
@@ -1045,13 +1045,13 @@ bool ClientMultiplayerMgr::StartServerAsSinglePlayer( )
 
 // --------------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::StartClientServer
+//	ROUTINE:	ClientConnectionMgr::StartClientServer
 //
 //	PURPOSE:	Starts a client/server based on previously set startgamerequest.
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::StartClientServer( )
+bool ClientConnectionMgr::StartClientServer( )
 {
 	//clear out old session specific data before starting new session
 	m_nTeam = INVALID_TEAM;
@@ -1069,7 +1069,7 @@ bool ClientMultiplayerMgr::StartClientServer( )
 			return StartClient( );
 			break;
 		default:
-			ASSERT( !"ClientMultiplayerMgr::StartClientServer: Invalid gamerequest type." );
+			ASSERT( !"ClientConnectionMgr::StartClientServer: Invalid gamerequest type." );
 			return false;
 			break;
 	}
@@ -1080,13 +1080,13 @@ bool ClientMultiplayerMgr::StartClientServer( )
 
 // ----------------------------------------------------------------------- //
 //
-//	ROUTINE:	ClientMultiplayerMgr::SelectTeam()
+//	ROUTINE:	ClientConnectionMgr::SelectTeam()
 //
 //	PURPOSE:	choose a team.
 //
 // ----------------------------------------------------------------------- //
 
-void ClientMultiplayerMgr::SelectTeam(uint8 nTeam, bool bPlayerSelected )
+void ClientConnectionMgr::SelectTeam(uint8 nTeam, bool bPlayerSelected )
 {
 	if (bPlayerSelected)
 		m_bHasSelectedTeam = true;
@@ -1095,19 +1095,19 @@ void ClientMultiplayerMgr::SelectTeam(uint8 nTeam, bool bPlayerSelected )
 
 // --------------------------------------------------------------------------- //
 //
-//  ROUTINE:    ClientMultiplayerMgr::UpdateNetClientData
+//  ROUTINE:    ClientConnectionMgr::UpdateNetClientData
 //
 //  PURPOSE:    Updates the NetClientData to reflect current settings.
 //
 // --------------------------------------------------------------------------- //
 
-bool ClientMultiplayerMgr::UpdateNetClientData( )
+bool ClientConnectionMgr::UpdateNetClientData( )
 {
 	// Setup our client...
 	CUserProfile *pProfile = g_pProfileMgr->GetCurrentProfile();
 	if( !pProfile )
 	{
-		ASSERT( !"ClientMultiplayerMgr::UpdateNetClientData: Invalid profile." );
+		ASSERT( !"ClientConnectionMgr::UpdateNetClientData: Invalid profile." );
 		return false;
 	}
 

@@ -42,7 +42,7 @@ class CPlayerMgr;
 class CMissionMgr;
 class CClientSaveLoadMgr;
 class CClientWeaponAllocator;
-class ClientMultiplayerMgr;
+class ClientConnectionMgr;
 class CClientTrackedNodeMgr;
 class CPerformanceTest;
 
@@ -364,7 +364,7 @@ private :
 	CUIPolyString* 	m_pRightDebugString[kMaxDebugStrings];
 
 	// Contains all multiplayer functionality.
-	ClientMultiplayerMgr*	m_pClientMultiplayerMgr;
+	ClientConnectionMgr*	m_pClientMultiplayerMgr;
 
 	// Are we in a world
     bool	m_bInWorld;

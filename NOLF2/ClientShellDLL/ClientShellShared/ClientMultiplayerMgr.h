@@ -28,12 +28,12 @@ enum eDisconnectCodes
 };
 
 
-class ClientMultiplayerMgr
+class ClientConnectionMgr
 {
 public:
 	
-	ClientMultiplayerMgr( );
-	~ClientMultiplayerMgr( );
+	ClientConnectionMgr( );
+	~ClientConnectionMgr( );
 
 	// Update called once per frame.
 	void		Update( );
@@ -163,7 +163,7 @@ private:
 	
 };
 
-extern ClientMultiplayerMgr* g_pClientMultiplayerMgr;
+extern ClientConnectionMgr* g_pClientMultiplayerMgr;
 
 #endif // __CLIENTMULTIPLAYERMGR_H_
 

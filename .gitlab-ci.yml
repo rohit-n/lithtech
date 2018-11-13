@@ -1,5 +1,4 @@
 before_script:
-  - apt-get -qq update && apt-get install -y -qq cmake make lsb-release libsdl2-dev
   - lsb_release -a
   - cmake --version
 
@@ -10,20 +9,20 @@ stages:
   - test
 
 gcc 7:
-  image: "gcc:7"
+  image: "registry.gitlab.com/katana-steel/lithtech/gcc"
   stage: test
   script:
     - g++ --version
     - mkdir build
     - cd build
-    - cmake ..
-    - make
+    - cmake -G Ninja -DJSON_BuildTests=off ..
+    - cmake --build .
 clang 5:
-  image: "rferraro/cxx-clang:5.0"
+  image: "registry.gitlab.com/katana-steel/lithtech/clang"
   stage: test
   script:
     - clang --version
     - mkdir build
     - cd build
-    - cmake ..
-    - make
+    - cmake -G Ninja -DJSON_BuildTests=off ..
+    - cmake --build .

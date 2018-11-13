@@ -1124,7 +1124,7 @@ uint32 CGameClientShell::OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid)
 	g_waterPhysicsState.m_fVelocityDampen = 0.25f;
 
 
-	m_pClientMultiplayerMgr = debug_new( ClientMultiplayerMgr );
+	m_pClientMultiplayerMgr = debug_new( ClientConnectionMgr );
 
 	// Init the special fx mgr...
 	if (!m_sfxMgr.Init(g_pLTClient))
