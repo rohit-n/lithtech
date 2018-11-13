@@ -71,7 +71,6 @@ add_subdirectory(libs/rezmgr)							# LIB_RezMgr
 if(LINUX)
     add_subdirectory(libs/DynRes)
     add_subdirectory(json)
-    set(JSON_BuildTests OFF)
 endif(LINUX)
 
 if(BUILD_ENGINE)

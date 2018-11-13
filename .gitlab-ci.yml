@@ -15,7 +15,7 @@ gcc 7:
     - g++ --version
     - mkdir build
     - cd build
-    - cmake -G Ninja ..
+    - cmake -G Ninja -DJSON_BuildTests=off ..
     - cmake --build .
 clang 5:
   image: "registry.gitlab.com/katana-steel/lithtech/clang"
@@ -24,5 +24,5 @@ clang 5:
     - clang --version
     - mkdir build
     - cd build
-    - cmake -G Ninja ..
+    - cmake -G Ninja -DJSON_BuildTests=off ..
     - cmake --build .
