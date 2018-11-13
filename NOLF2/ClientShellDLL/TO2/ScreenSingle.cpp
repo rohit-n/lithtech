@@ -339,7 +339,7 @@ void CScreenSingle::OnFocus(LTBOOL bFocus)
 		// We should not be connected to a server at this point.
 		if(g_pLTClient->IsConnected())
 		{
-			_ASSERT(!"ERROR: ClientMultiplayerMgr::StartClient( ) : Already connected!");
+			_ASSERT(!"ERROR: ClientConnectionMgr::StartClient( ) : Already connected!");
 			g_pLTClient->Disconnect();
 		}
 
