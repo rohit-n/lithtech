@@ -281,7 +281,7 @@ LTRESULT CClientMgr::Init(const char **resTrees, uint32 nResTrees, uint32 nNumCo
 
     // Setup the ClientShellDE.
     dResult = dsi_InitClientShellDE();
-    if (dResult != LTTRUE)
+    if (dResult != LT_OK)
     {
         ProcessError(dResult | ERROR_SHUTDOWN);
         return dResult;

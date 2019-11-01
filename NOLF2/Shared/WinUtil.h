@@ -36,9 +36,8 @@ public:
 	static void WriteToDebugFile (char const* strText);
 };
 
-void getLevelName(const std::string&,char*);
-
 #ifdef __LINUX
+void getLevelName(const std::string&,char*);
 // copied definition from unistd.h
 extern "C" int rmdir (const char *__path) __THROW __nonnull ((1));
 extern "C" char* getcwd (char *__path, size_t __len) __THROW __nonnull ((1));
