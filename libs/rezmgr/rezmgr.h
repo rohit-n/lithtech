@@ -14,9 +14,12 @@
 #define __REZMGR_H__
 
 // defines
-
 #ifndef DWORD
 typedef unsigned long int	DWORD;
+#endif
+
+#ifndef UINT32
+typedef unsigned int	UINT32;
 #endif
 
 #define RezMgrUserTitleSize     60

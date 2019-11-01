@@ -64,16 +64,16 @@ struct FileMainHeaderStruct {
   char CR3;
   char LF3;
   char EOF1;
-  DWORD FileFormatVersion; 	// the file format version number only 1 is possible here right now
-  DWORD RootDirPos; 		// Position of the root directory structure in the file
-  DWORD RootDirSize;        // Size of root directory
-  DWORD RootDirTime;        // Time Root dir was last updated
-  DWORD NextWritePos;       // Position of first directory in the file
-  DWORD Time; 				// Time resource file was last updated
-  DWORD LargestKeyAry;		// Size of the largest key array in the resource file
-  DWORD LargestDirNameSize; // Size of the largest directory name in the resource file (including 0 terminator)
-  DWORD LargestRezNameSize;	// Size of the largest resource name in the resource file (including 0 terminator)
-  DWORD LargestCommentSize;	// Size of the largest comment in the resource file (including 0 terminator)
+  UINT32 FileFormatVersion; 	// the file format version number only 1 is possible here right now
+  UINT32 RootDirPos; 		// Position of the root directory structure in the file
+  UINT32 RootDirSize;        // Size of root directory
+  UINT32 RootDirTime;        // Time Root dir was last updated
+  UINT32 NextWritePos;       // Position of first directory in the file
+  UINT32 Time; 				// Time resource file was last updated
+  UINT32 LargestKeyAry;		// Size of the largest key array in the resource file
+  UINT32 LargestDirNameSize; // Size of the largest directory name in the resource file (including 0 terminator)
+  UINT32 LargestRezNameSize;	// Size of the largest resource name in the resource file (including 0 terminator)
+  UINT32 LargestCommentSize;	// Size of the largest comment in the resource file (including 0 terminator)
   BYTE  IsSorted;           // If 0 then data is not sorted if 1 then it is sorted
 };
 
@@ -83,19 +83,19 @@ enum FileDirEntryType {
 };
 
 struct FileDirEntryDirHeader {
-  DWORD Pos; 					// File positon of dir entry
-  DWORD Size;					// Size of directory data
-  DWORD Time;					// Last time anything in directory was modified
+  UINT32 Pos; 					// File positon of dir entry
+  UINT32 Size;					// Size of directory data
+  UINT32 Time;					// Last time anything in directory was modified
 //  char Name[];				// Name of this directory
 };
 
 struct FileDirEntryRezHeader {
-  DWORD Pos; 					// File positon of dir entry
-  DWORD Size;					// Size of directory data
-  DWORD Time;					// Last time this resource was modified
-  DWORD ID;                     // Resource ID number
-  DWORD Type;					// Type of resource this is
-  DWORD NumKeys;				// The number of keys to read in for this resource
+  UINT32 Pos; 					// File positon of dir entry
+  UINT32 Size;					// Size of directory data
+  UINT32 Time;					// Last time this resource was modified
+  UINT32 ID;                     // Resource ID number
+  UINT32 Type;					// Type of resource this is
+  UINT32 NumKeys;				// The number of keys to read in for this resource
 //  char Name[];				// The name of this resource
 //  char Comment[];             // The comment data for this resource
 //  DWORD Keys[];				// The key values for this resource
@@ -959,8 +959,8 @@ BOOL CRezDir::ReadDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD Size, BOOL b
   while (pCur < pEnd) {
 
     // if this is a directory entry
-    if ((*(DWORD*)pCur) == DirectoryEntry) {
-      pCur += sizeof(DWORD);
+    if ((*(UINT32*)pCur) == DirectoryEntry) {
+      pCur += sizeof(UINT32);
 
       // variables to store data read in
       DWORD Pos;
@@ -969,17 +969,17 @@ BOOL CRezDir::ReadDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD Size, BOOL b
       char* sDirName;
 
       // convert simple header variables
-      Pos = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
-      Size = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
-      Time = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
+      Pos = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
+      Size = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
+      Time = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
 
       // convert dir name
       sDirName = (char*)pCur;
       pCur += strlen(sDirName)+1;
-
+      
 	  // make sure this dir doesn't already exist if it does we don't need to add it again
 	  CRezDir* pDir = m_haDir.Find(sDirName,!GetParentMgr()->GetLowerCaseUsed());
 	  if (pDir == NULL) {
@@ -1000,8 +1000,8 @@ BOOL CRezDir::ReadDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD Size, BOOL b
 
     // if this is a resource item entry
     else {
-      ASSERT((*(DWORD*)pCur) == ResourceEntry); // Type is not a resource or a directory!!!!
-      pCur += sizeof(DWORD);
+      ASSERT((*(UINT32*)pCur) == ResourceEntry); // Type is not a resource or a directory!!!!
+      pCur += sizeof(UINT32);
 
       // variables to store data read in
       DWORD Pos;
@@ -1015,18 +1015,18 @@ BOOL CRezDir::ReadDirBlock(CBaseRezFile* pRezFile, DWORD Pos, DWORD Size, BOOL b
       DWORD* pKeyAry;
 
       // convert simple header variables
-      Pos = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
-      Size = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
-      Time = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
-      ID = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
-      Type = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
-      NumKeys = (*(DWORD*)pCur);
-      pCur += sizeof(DWORD);
+      Pos = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
+      Size = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
+      Time = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
+      ID = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
+      Type = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
+      NumKeys = (*(UINT32*)pCur);
+      pCur += sizeof(UINT32);
 
       // convert item name
       sName = (char*)pCur;
@@ -2270,7 +2270,7 @@ BOOL CRezMgr::IsDirectory(const char* sFileName) {
    if( result != 0 ) return FALSE;
 
    // is this a directory
-   if ((buf.st_mode & _S_IFDIR) == _S_IFDIR) return TRUE;
+   if (S_ISDIR(buf.st_mode)) return TRUE;
    else return FALSE;
 }
 
