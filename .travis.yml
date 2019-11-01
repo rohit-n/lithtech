@@ -8,9 +8,9 @@ install: true
 
 script:
   - cd Build
-  - cmake ../
+  - cmake -DJSON_BuildTests=off ../
   - make -j4 2>&1 | tee make.log
-  - for part in $(grep 'Target rules' Makefile| awk '{print $NF}'); do make $part > /dev/null 2>&1 && echo Pass $part || echo Fail $part; done > build.log
+  - for part in $(grep 'Target rules' Makefile| awk '/_|Dir/ {print $NF}'); do make $part > /dev/null 2>&1 && echo Pass $part || echo Fail $part; done > build.log
   - cat build.log
   - "cat make.log build.log > make.build.log"
   - "python3 ../tests/validate.py make.build.log"
