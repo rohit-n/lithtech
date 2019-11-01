@@ -26,6 +26,9 @@
 // 4 - display file open and close and read calls
 extern int32 g_CV_ShowFileAccess;
 
+CRezItm* g_pDeFileLastRezItm;
+uint32 g_nDeFileLastRezPos;
+
 // PlayDemo profile info.
 uint32 g_PD_FOpen=0;
 
@@ -46,11 +49,12 @@ public:
 		{
 			m_FileLen = 0;
 			m_SeekOffset = 0;
-			m_pFile = LTNULL;
-			m_pTree = LTNULL;
+			m_pFile = nullptr;
+			m_pTree = nullptr;
 			m_ErrorStatus = 0;
 			m_nNumReadCalls = 0;
 			m_nTotalBytesRead = 0;
+			m_pRezItm = nullptr;
 		}
 
 	virtual	~BaseFileStream()
@@ -84,13 +88,88 @@ public:
 		return LT_ERROR;
 	}
 
-	unsigned long	m_FileLen;		// Stored when the file is opened.
-	unsigned long	m_SeekOffset;	// Seek offset (used in rezfiles) (NOTE: in a rezmgr rez file this is the current position inside the resource).
-	FILE			*m_pFile;
-	struct FileTree_t	*m_pTree;
-	int				m_ErrorStatus;
-	unsigned long	m_nNumReadCalls;
-	unsigned long	m_nTotalBytesRead;
+	unsigned long       m_FileLen;		// Stored when the file is opened.
+	unsigned long       m_SeekOffset;	// Seek offset (used in rezfiles) (NOTE: in a rezmgr rez file this is the current position inside the resource).
+	FILE*               m_pFile;
+	struct FileTree_t*  m_pTree;
+	int                 m_ErrorStatus;
+	unsigned long       m_nNumReadCalls;
+	unsigned long       m_nTotalBytesRead;
+	CRezItm*            m_pRezItm;
+};
+
+
+class RezFileStream : public BaseFileStream
+{
+public:
+
+	RezFileStream() :
+	  m_SeekOffset(0)
+	{
+	}
+
+	void		Release();
+
+	LTRESULT	GetPos(uint32 *pos)
+	{
+		*pos = m_SeekOffset;
+		return LT_OK;
+	}
+
+	LTRESULT	SeekTo(uint32 offset)
+	{
+		if(m_pRezItm->Seek(offset))
+		{
+			m_SeekOffset = offset;
+			return LT_OK;
+		}
+		else
+		{
+			m_ErrorStatus = 1;
+			return LT_ERROR;
+		}
+	}
+
+	LTRESULT Read(void *pData, uint32 size)
+	{
+		size_t sizeRead;
+
+		if(size != 0)
+		{
+			if ((g_pDeFileLastRezItm == m_pRezItm) && (g_nDeFileLastRezPos == m_SeekOffset))
+			{
+				sizeRead = m_pRezItm->Read(pData, size);
+			}
+			else
+			{
+				sizeRead = m_pRezItm->Read(pData, size, m_SeekOffset);
+			}
+			
+			m_SeekOffset += (uint32)sizeRead;
+			g_pDeFileLastRezItm = m_pRezItm;
+			g_nDeFileLastRezPos = m_SeekOffset;
+			if(sizeRead != size)
+			{
+				memset(pData, 0, size);
+				m_ErrorStatus = 1;
+				return LT_ERROR;
+			}
+		}
+		return LT_OK;
+	}
+
+	bool IsRawFileInfoAvailable()
+	{
+		return false;
+	}
+
+	LTRESULT GetRawFileInfo(char* sFileName, uint32* nPos)
+	{
+		return 0;
+	}
+
+	uint32		m_SeekOffset;	// Seek offset (used in rezfiles) (NOTE: in a rezmgr rez file this is the current position inside the resource).
+
 };
 
 
@@ -159,11 +238,17 @@ public:
 };
 
 static ObjectBank<UnixFileStream> g_UnixFileStreamBank(8, 8);
+static ObjectBank<RezFileStream> g_RezFileStreamBank(8, 8);
 
 
 void UnixFileStream::Release()
 {
 	g_UnixFileStreamBank.Free(this);
+}
+
+void RezFileStream::Release()
+{
+	g_RezFileStreamBank.Free(this);
 }
 
 // LTFindInfo::m_pInternal..
@@ -201,7 +286,21 @@ int df_OpenTree(const char *pName, HLTFileTree *&pTreePointer)
 
 	allocSize = sizeof(FileTree) + strlen(pName);
 	pTree = (FileTree*)dalloc_z(allocSize);
-	pTree->m_TreeType = UnixTree;
+	if(S_ISDIR(info.st_mode)) {
+		pTree->m_TreeType = UnixTree;
+	} else if(S_ISREG(info.st_mode)) {
+		pTree->m_TreeType = RezFileTree;
+		LT_MEM_TRACK_ALLOC(pTree->m_pRezMgr = new CRezMgr(), LT_MEM_TYPE_FILE);
+		if (pTree->m_pRezMgr == LTNULL)
+			return -2;
+
+		if(!pTree->m_pRezMgr->Open(pName))
+		{
+			delete pTree->m_pRezMgr;
+			dfree(pTree);
+			return -2;
+		}
+	}
 
 	strcpy(pTree->m_BaseName, pName);
 	pTreePointer = (HLTFileTree*)pTree;
@@ -343,6 +442,24 @@ ILTStream* df_Open(HLTFileTree* hTree, const char *pName, int openMode)
 	pTree = (FileTree*)hTree;
 	if(!pTree)
 		return NULL;
+
+	if(pTree->m_TreeType == RezFileTree) {
+		CRezItm* pRezItm = pTree->m_pRezMgr->GetRezFromDosPath(pName);
+		if (pRezItm == LTNULL) return LTNULL;
+			// Use fp to setup the stream.
+		RezFileStream *pRezStream = g_RezFileStreamBank.Allocate();
+		pRezStream->m_pRezItm = pRezItm;
+		pRezStream->m_pTree = pTree;
+		pRezStream->m_FileLen = pRezItm->GetSize();
+		pRezStream->m_SeekOffset = 0;
+
+		if (g_CV_ShowFileAccess >= 1)
+		{
+			dsi_ConsolePrint("stream %p open rez %s size = %u",pRezStream,pName,pRezItm->GetSize());
+		}
+
+		return pRezStream;
+	}
 
 	if(pTree->m_TreeType != UnixTree) {
 		return NULL;
