@@ -78,6 +78,7 @@ public:
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
     //returns the name of the implementation class.
     virtual const char *_InterfaceImplementation() = 0;
+    virtual ~IBase() = default;
     #endif
 };
 
