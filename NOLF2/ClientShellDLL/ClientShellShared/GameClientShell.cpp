@@ -4668,6 +4668,13 @@ BOOL HookWindow()
 		TRACE("HookWindow - ERROR - could not set the window procedure!\n");
 		return FALSE;
 	}
+#else
+    if(g_pLTClient->GetEngineHook("SDL_Window",(void **)&g_hMainWnd) != LT_OK)
+	{
+		TRACE("HookWindow - ERROR - could not get the engine window!\n");
+		return FALSE;
+	}
+
 #endif
 	return TRUE;
 }
