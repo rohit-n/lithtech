@@ -224,20 +224,24 @@ void CClientFXDB::Term()
 //-----------------------------------------------------------------
 // CClientFXDB DLL management
 //-----------------------------------------------------------------
-
+#ifdef WIN32
+#define CLIENTFXDLL "ClientFX.fxd"
+#define PSEP "\\"
+#else
+#define CLIENTFXDLL "libClientFx.fxd"
+#define PSEP "/"
+#endif
 //loads the effect DLL
 bool CClientFXDB::LoadFxDll()
 {
-
-#ifdef WIN32
 
 	//make sure that we don't have any other dll's already bound
 	UnloadFxDll();
 
 	// Load the library
-	const char *sName = "ClientFX.fxd";
+	const char *sName = CLIENTFXDLL;
 	char sTmp[MAX_PATH + 1];
-	LTSNPrintF(sTmp, sizeof(sTmp), "Game\\%s", sName);
+	LTSNPrintF(sTmp, sizeof(sTmp), "Game%s%s", PSEP, sName);
 
 	//if we have a local copy use it
 	if( CWinUtil::FileExist( sTmp ))
@@ -247,6 +251,7 @@ bool CClientFXDB::LoadFxDll()
 		if (!m_hDLLInst) 
 			return false;
 	}
+#ifdef WIN32
 	else
 	{
 		//otherwise copy it out of the rez file
@@ -262,12 +267,14 @@ bool CClientFXDB::LoadFxDll()
 				return false;
 		}
 
-
-
 		m_hDLLInst = ::LoadLibrary(sDLLTmpFile);
 		if (!m_hDLLInst) 
 			return false;
 	}
+#else
+	else
+		return false;
+#endif
 
 	//merge our interface database with the database in the DLL we just loaded.
 	TSetMasterFn pSetMasterFn = (TSetMasterFn)GetProcAddress(m_hDLLInst, "SetMasterDatabase");
@@ -339,8 +346,6 @@ bool CClientFXDB::LoadFxDll()
 			m_pEffectTypes[nCurrEffect] = pfnRef(nCurrEffect);
 		}
 	}
-
-#endif
 
 	// Success !!
 
