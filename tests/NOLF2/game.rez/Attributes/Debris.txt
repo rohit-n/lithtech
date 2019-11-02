@@ -1,0 +1,3 @@
+[Debris0]
+FxLevel=1
+	

@@ -1,0 +1,6 @@
+[Weapon0]
+
+[Ammo0]
+
+[Gear0]
+

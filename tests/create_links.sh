@@ -12,7 +12,7 @@ RES=$(for f in ${R[@]}; do [[ "${f}" =~ ${1:-test} ]] && echo $f; done)
 SHELL=$(for f in ${S[@]}; do [[ "${f}" =~ ${2:-test} ]] && echo $f; done)
 
 ln -svfT ../sdk/rez/Engine.REZ ./engine.rez
-ln -svfT ../test/NOLF2/game.rez ./game.rez
+ln -svfT ../tests/NOLF2/game.rez ./game.rez
 ln -svfT ${RES} ./libCRes.so
 ln -svfT ${SHELL} ./libCShell.so
 ln -svfT runtime/render_a/src/sys/ogl/libOGLRender.so ./libOGLRender.so
