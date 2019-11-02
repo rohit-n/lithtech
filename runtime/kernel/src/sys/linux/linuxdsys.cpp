@@ -33,6 +33,10 @@ define_holder(IClientFileMgr, client_file_mgr);
 static IClientShell *i_client_shell;
 define_holder(IClientShell, i_client_shell);
 
+//IInstanceHandleClient
+static IInstanceHandleClient *instance_handle_client;
+define_holder(IInstanceHandleClient, instance_handle_client);
+
 
 void dsi_OnReturnError(int err)
 {
@@ -255,13 +259,13 @@ LTRESULT dsi_InitClientShellDE()
     if (status == BIND_CANTFINDMODULE) {
         g_pClientMgr->SetupError(LT_MISSINGSHELLDLL, clientlib);
         RETURN_ERROR(1, InitClientShellDE, LT_MISSINGSHELLDLL);
-        dResult = !LTTRUE;
     }
 
 	// have the user's cshell and the clientMgr exchange info
-	if ((i_client_shell == NULL ))
+    if (i_client_shell == nullptr )
     {
-		CRITICAL_ERROR("dsys_interface", "Can't create CShell\n");
+        g_pClientMgr->SetupError(LT_INVALIDSHELLDLL, clientlib);
+        RETURN_ERROR_PARAM(1, InitClientShellDE, LT_INVALIDSHELLDLL, clientlib);
 	}
 
     copied = false;
@@ -280,14 +284,17 @@ LTRESULT dsi_InitClientShellDE()
     if (status == BIND_CANTFINDMODULE) {
         //unload the loaded cshell 
         bm_UnbindModule(g_pClientMgr->m_hShellModule);
-        g_pClientMgr->m_hShellModule = LTNULL;
+        g_pClientMgr->m_hShellModule = nullptr;
 
         g_pClientMgr->SetupError(LT_INVALIDSHELLDLL, reslib);
         RETURN_ERROR_PARAM(1, InitClientShellDE, LT_INVALIDSHELLDLL, reslib);
-        dResult = !LTTRUE;
     }
 
-	return dResult;
+    if (instance_handle_client != nullptr) {
+        instance_handle_client->SetInstanceHandle(g_pClientMgr->m_hShellModule);
+    }
+
+	return LT_OK;
 }
 
 void dsi_OnMemoryFailure()
