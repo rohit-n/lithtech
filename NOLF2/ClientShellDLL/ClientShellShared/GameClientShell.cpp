@@ -1041,7 +1041,8 @@ uint32 CGameClientShell::OnEngineInitialized(RMode *pMode, LTGUID *pAppGuid)
 	}
 
 	// Init the ClientFX Database
-	if(!CClientFXDB::GetSingleton().Init(g_pLTClient))
+	CClientFXDB &fxdb = CClientFXDB::GetSingleton();
+	if(!fxdb.Init(g_pLTClient))
 	{
 		g_pLTClient->ShutdownWithMessage( "Could not init ClientFXDB!" );
 		return LT_ERROR;
