@@ -215,12 +215,12 @@ return LTTRUE;      // DAN - temporary
 
 LTRESULT dsi_SetRenderMode(RMode *pMode, const char *pName)
 {
-return LTTRUE;      // DAN - temporary
+return LT_OK;      // DAN - temporary
 }
 
 LTRESULT dsi_ShutdownRender(uint32 flags)
 {
-return LTTRUE;      // DAN - temporary
+return LT_OK;      // DAN - temporary
 }
 
 LTRESULT _GetOrCopyClientFile(char *pTempPath, const char *pFilename, char *pOutName, int outNameLen)
