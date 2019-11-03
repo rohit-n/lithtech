@@ -73,13 +73,15 @@ BOOL CWinUtil::DirExist (char const* strPath)
 
 #ifndef __LINUX
 	UINT oldErrorMode = SetErrorMode (SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
-#endif
+	struct _stat64 statbuf;
+	int error = _stat64(szPath, &statbuf);
+	SetErrorMode (oldErrorMode);
+	if (error != -1) bDirExists = TRUE;
+#else
 	struct stat64 statbuf;
 	int error = stat64(szPath, &statbuf);
-#ifndef __LINUX
-	SetErrorMode (oldErrorMode);
-#endif
 	if (error != -1 && S_ISDIR(statbuf.st_mode)) bDirExists = TRUE;
+#endif
 
 	return bDirExists;
 }
@@ -108,7 +110,11 @@ BOOL CWinUtil::CreateDir (char const* strPath)
 		strcat (strPartialPath, token);
 		if (!DirExist (strPartialPath) && strPartialPath[strlen(strPartialPath) - 1] != ':')
 		{
+#ifdef __LINUX
 			if (!mkdir(strPartialPath, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) return FALSE;
+#else
+			if (!CreateDirectory(strPartialPath, NULL)) return FALSE;
+#endif
 		}
 		strcat (strPartialPath, path_sep);
 		token = strtok (NULL, "\\/");
@@ -119,18 +125,24 @@ BOOL CWinUtil::CreateDir (char const* strPath)
 
 BOOL CWinUtil::FileExist (char const* strPath)
 {
+#if defined(_WIN32)
+	OFSTRUCT ofs;
+	HFILE hFile = OpenFile(strPath, &ofs, OF_EXIST);
+	if (hFile == HFILE_ERROR) return FALSE;
+
+	return TRUE;
+#elif defined (__LINUX)
 	BOOL bFileExist = FALSE;
-#ifndef __LINUX
-	UINT oldErrorMode = SetErrorMode (SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
-#endif
+
 	struct stat64 statbuf;
 	int error = stat64(strPath, &statbuf);
-#ifndef __LINUX
-	SetErrorMode (oldErrorMode);
-#endif
+
 	if (error != -1 && S_ISREG(statbuf.st_mode)) bFileExist = TRUE;
 
 	return bFileExist;
+#else
+#error Please define your platform.
+#endif
 }
 
 BOOL CWinUtil::CopyDir( char const* pSrc, char const* pDest )
@@ -357,8 +369,10 @@ void CWinUtil::WriteToDebugFile (char const* strText)
 #endif
 }
 
+#ifdef __LINUX
 void getLevelName(const std::string& path, char* worldname)
 {
   const std::string& szWorldTitle = split(split(path,'/').back(), '.').front();
   strcpy(worldname, szWorldTitle.c_str());	
 }
+#endif

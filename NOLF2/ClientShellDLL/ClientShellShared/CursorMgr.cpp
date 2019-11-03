@@ -56,8 +56,9 @@ CCursorMgr::~CCursorMgr()
 //	PURPOSE:	Init the cursor
 //
 // ----------------------------------------------------------------------- //
+#ifdef __LINUX
 #define MAKEINTRESOURCE(x) "pointer.pcx"
-
+#endif
 LTBOOL CCursorMgr::Init()
 {
 	if (m_bInitialized)

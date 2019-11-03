@@ -2270,7 +2270,11 @@ BOOL CRezMgr::IsDirectory(const char* sFileName) {
    if( result != 0 ) return FALSE;
 
    // is this a directory
+#if __LINUX
    if (S_ISDIR(buf.st_mode)) return TRUE;
+#else
+   if ((buf.st_mode & _S_IFDIR) == _S_IFDIR) return TRUE;
+#endif
    else return FALSE;
 }
 

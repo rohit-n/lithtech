@@ -194,7 +194,12 @@ LTBOOL CGameButeMgr::Parse(const char* sButeFile)
 
 	if (!bRet)
 	{
-		TRACE("ERROR CGameButeMgr::Parse() (%s)!\n", sButeFile.GetBuffer());
+		TRACE("ERROR CGameButeMgr::Parse() (%s)!\n",
+#ifdef __LINUX
+			sButeFile.GetBuffer());
+#else
+			sButeFile);
+#endif
 		return(FALSE);
 	}
 
