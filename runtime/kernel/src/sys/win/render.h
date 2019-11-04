@@ -99,7 +99,7 @@ extern SysCache g_SysCache;
 
 HLTPARAM r_GetParameter(char *pName);
 float r_GetParameterValueFloat(HLTPARAM hParam);
-char* r_GetParameterValueString(HLTPARAM hParam);
+const char* r_GetParameterValueString(HLTPARAM hParam);
 void r_RunConsoleString(char *pStr);
 
 #endif  // __RENDER_H__

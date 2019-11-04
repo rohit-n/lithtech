@@ -32,7 +32,7 @@ define_holder(IServerShell, i_server_shell);
 // Class tick related variables...
 uint32 g_Ticks_ClassUpdate = 0;
 extern int32 g_CV_ShowClassTicks;
-extern char	*g_CV_ShowClassTicksSpecific;
+extern const char	*g_CV_ShowClassTicksSpecific;
 
 // ----------------------------------------------------------------------- //
 // CClassDatafunctions.

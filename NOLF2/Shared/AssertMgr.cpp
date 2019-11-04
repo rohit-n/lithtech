@@ -125,7 +125,7 @@ int CAssertMgr::CreateMessageBox(SDL_Window *win, const char *szMsg)
 
 }
 
-int CAssertMgr::ReportHook(int nReportType, const char* szMessage, int* pnReturnValue)
+int CAssertMgr::ReportHook(int nReportType, char* szMessage, int* pnReturnValue)
 {
     if ( LTFALSE == m_bEnabled )
 	{
@@ -163,7 +163,7 @@ An assert has occurred:\n\n%s\n\
 Retry will step into the debugger. You should\n\
 only select this option if you are currently\n\
 running the game under a debugger.\n", szMessage);
-
+#ifdef _CLIENTBUILD
 		SDL_Window *win = nullptr;
 		g_pLTClient->GetEngineHook("hwnd", (void**)&win);
 
@@ -183,7 +183,7 @@ running the game under a debugger.\n", szMessage);
 				SDL_MaximizeWindow(win);
 			*pnReturnValue = 0;
 		}
-
+#endif
 		return TRUE;
 	}
 	else if ( szAssert && !stricmp(szAssert, "window") )
@@ -196,7 +196,7 @@ An assert has occurred:\n\n%s\n\
 Retry will step into the debugger. You should\n\
 only select this option if you are currently\n\
 running the game under a debugger.\n", szMessage);
-
+#ifdef _CLIENTBUILD
 		SDL_Window *win = nullptr;
 		g_pLTClient->GetEngineHook("hwnd", (void**)&win);
 
@@ -214,7 +214,7 @@ running the game under a debugger.\n", szMessage);
 		{
 			*pnReturnValue = 0;
 		}
-
+#endif
 		return TRUE;
 	}
 	else if ( szAssert && !stricmp(szAssert, "null") )

@@ -41,7 +41,7 @@ class CAssertMgr
 
 	protected : // Protected methods
 
-		static int ReportHook(int nReportType, const char* szMessage, int* pnReturnValue);
+		static int ReportHook(int nReportType, char* szMessage, int* pnReturnValue);
 		static int CreateMessageBox(SDL_Window *win, const char *szMsg);
 
 	protected : // Protected member variables
