@@ -54,7 +54,7 @@ define_holder(IClientShell, i_client_shell);
 #define SCROLL_INDICATOR_UP " \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/  \\/ "
 
 extern int32 g_CV_TraceConsole;
-extern char* g_CV_Console_FontTexFile;
+extern const char* g_CV_Console_FontTexFile;
 	
 // The global console variable	
 CConsole g_Console;

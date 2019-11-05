@@ -44,7 +44,7 @@ void d3d_UnoptimizeSurface(HLTBUFFER hBuffer);
 bool d3d_PostInitializeDevice(RenderStructInit *pInit,bool bFullInit);
 HRENDERCONTEXT d3d_CreateContext();
 void d3d_DeleteContext(HRENDERCONTEXT hContext);
-void d3d_RenderCommand(int argc, char **argv);
+void d3d_RenderCommand(int argc, const char **argv);
 bool d3d_AddGlowRenderStyleMapping(const char*, const char*);
 bool d3d_SetGlowDefaultRenderStyle(const char*);
 bool d3d_SetNoGlowRenderStyle(const char*);
@@ -109,7 +109,7 @@ void d3d_Term(bool bFullTerm)						// We don't do a FullTerm on Alt-Tab (will be
 
 int d3d_Init(RenderStructInit *pInit)
 {
-	char* pStr; RECT wndRect,screenRect;
+	const char* pStr; RECT wndRect,screenRect;
 	pInit->m_RendererVersion = LTRENDER_VERSION;
 
 #ifdef _DEBUG

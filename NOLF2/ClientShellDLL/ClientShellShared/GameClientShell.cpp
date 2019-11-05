@@ -5016,12 +5016,13 @@ void CGameClientShell::SendClientLoadedMessage( )
 //	PURPOSE:	Launches the serverapp.
 //
 // --------------------------------------------------------------------------- //
+#ifdef __LINUX
 typedef int PROCESS_INFORMATION;
 struct STARTUPINFO
 {
 	int cb;
 };
-
+#endif
 bool CGameClientShell::LauncherServerApp( char const* pszProfileFile )
 {
 	PROCESS_INFORMATION procInfo;
@@ -5047,7 +5048,9 @@ bool CGameClientShell::LauncherServerApp( char const* pszProfileFile )
 	sCmdLine += "\"";
 	sCmdLine += pszProfileFile;
 	sCmdLine += "\"";
+#ifdef __LINUX
 #define CreateProcess(...) true
+#endif
 	// Start the server app.
 	if( !CreateProcess( "NOLF2Srv.exe", ( char * )sCmdLine.c_str( ), NULL, NULL, FALSE, 0, NULL, NULL, 
 		&startInfo, &procInfo ))

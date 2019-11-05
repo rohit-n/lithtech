@@ -523,7 +523,7 @@ float r_GetParameterValueFloat(HLTPARAM hParam)
 	}
 }
 
-char* r_GetParameterValueString(HLTPARAM hParam)
+const char* r_GetParameterValueString(HLTPARAM hParam)
 {
 	if(hParam)
 	{

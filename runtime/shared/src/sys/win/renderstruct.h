@@ -184,7 +184,7 @@ struct RenderStruct
         
         // Gets the value of a parameter .. returns 0/NULL if you pass in NULL.
         float           (*GetParameterValueFloat)(HLTPARAM hParam);
-        char*           (*GetParameterValueString)(HLTPARAM hParam);
+        const char*     (*GetParameterValueString)(HLTPARAM hParam);
 
         // Increments the object frame code.  This is needed for portals.
         uint32          (*IncObjectFrameCode)();
@@ -259,7 +259,7 @@ struct RenderStruct
         int             (*RenderScene)(SceneDesc *pScene);
 
         // Handle a command from the console.
-        void            (*RenderCommand)(int argc, char **argv);
+        void            (*RenderCommand)(int argc, const char **argv);
 
         // Show the backbuffer.
         void            (*SwapBuffers)(uint flags );

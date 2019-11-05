@@ -46,8 +46,8 @@ DEFINE_AI_FACTORY_CLASS_SPECIFIC(State, CBodyStateFade, kState_BodyFade);
 DEFINE_AI_FACTORY_CLASS_SPECIFIC(State, CBodyStateCarried, kState_BodyCarried);
 DEFINE_AI_FACTORY_CLASS_SPECIFIC(State, CBodyStateDropped, kState_BodyDropped);
 
-extern char* g_szArrowFrontDeath;
-extern char* g_szArrowBackDeath;
+extern const char* g_szArrowFrontDeath;
+extern const char* g_szArrowBackDeath;
 
 // CBodyState
 

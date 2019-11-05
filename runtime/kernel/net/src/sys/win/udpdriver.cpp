@@ -34,8 +34,8 @@ extern int32 g_CV_IPClientPortMRU;
 extern int32 g_CV_UDPDebug;
 
 // IP override.
-extern char *g_CV_IP;
-extern char *g_CV_BindIP;
+extern const char *g_CV_IP;
+extern const char *g_CV_BindIP;
 
 // When querying servers, it removes one from the list if it hasn't
 // heard from one in this amount of time.

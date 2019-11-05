@@ -3631,7 +3631,11 @@ void CAI::UpdateInfo()
 			ostrstream out;
 #endif // VC7
 			out << *(m_pRelationMgr->GetRelationUser()) << '\n';
+#ifdef __LINUX
 			info += out.str().c_str();
+#else
+			info += out.str();
+#endif
 		}
 
 		if( info != m_cstrCurrentInfo )
