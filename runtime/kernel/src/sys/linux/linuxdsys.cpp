@@ -210,7 +210,14 @@ void dsi_RelinquishRenderModes(RMode *pMode)
 
 LTRESULT dsi_GetRenderMode(RMode *pMode)
 {
-return LTTRUE;      // DAN - temporary
+    pMode->m_BitDepth = 32;
+    pMode->m_Width = g_ScreenWidth;
+    pMode->m_Height = g_ScreenHeight;
+    pMode->m_Description[0] = 0;
+    pMode->m_InternalName[0] = 0;
+    pMode->m_bHWTnL = false;
+    pMode->m_pNext = nullptr;
+    return LTTRUE;      // DAN - temporary
 }
 
 LTRESULT dsi_SetRenderMode(RMode *pMode, const char *pName)

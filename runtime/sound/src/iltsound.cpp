@@ -353,6 +353,63 @@ ILTSoundSys* CFooSoundFactory::MakeSoundSystem( const char* pcSoundSystemName )
 
 #endif
 #endif
+#ifdef __LINUX
+
+DECLARE_SOUND_FACTORY(Linux)
+ILTSoundSys* csdl_MakeSoundSys();
+
+bool CLinuxSoundFactory::FillSoundSystems( char* pcSoundSysNames, uint uiMaxStringLen )
+{
+	return true;
+}
+ILTSoundSys* CLinuxSoundFactory::MakeSoundSystem( const char* pcSoundSystemName )
+{
+	return csdl_MakeSoundSys();
+}
+
+#ifdef PULSEAUDIO
+DECLARE_SOUND_FACTORY(Pulse)
+
+bool CPulseSoundFactory::FillSoundSystems( char* pcSoundSysNames, uint uiMaxStringLen )
+{
+	return false;
+}
+
+ILTSoundSys* CPulseSoundFactory::MakeSoundSystem( const char* pcSoundSystemName )
+{
+	return nullptr;
+}
+#endif
+#ifdef ALSA
+DECLARE_SOUND_FACTORY(ALSA)
+
+bool CALSASoundFactory::FillSoundSystems( char* pcSoundSysNames, uint uiMaxStringLen )
+{
+	return false;
+}
+
+ILTSoundSys* CALSASoundFactory::MakeSoundSystem( const char* pcSoundSystemName )
+{
+	return nullptr;
+}
+
+#endif
+#ifdef __SDL
+#include <SDL2/SDL_mixer.h>
+DECLARE_SOUND_FACTORY(SDL)
+
+bool CSDLSoundFactory::FillSoundSystems( char* pcSoundSysNames, uint uiMaxStringLen )
+{
+	return true;
+}
+
+ILTSoundSys* CSDLSoundFactory::MakeSoundSystem( const char* pcSoundSystemName )
+{
+	return nullptr;
+}
+
+#endif
+#endif
 
 //	===========================================================================
 #endif	// USE_ABSTRACT_SOUND_INTERFACES

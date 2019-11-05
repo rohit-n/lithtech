@@ -491,9 +491,109 @@ ILTStream* df_Open(HLTFileTree* hTree, const char *pName, int openMode)
 	return pUnixStream;
 }
 
+struct UnixTreeSearch
+{
+	char searchPath[MAX_PATH];
+	DIR* m_pDir;
+	UnixTreeSearch(const char* bName, const char *dName)
+	{
+		memset(searchPath, 0, sizeof(searchPath));
+		LTSNPrintF(searchPath, sizeof(searchPath)-1, "%s/%s", bName, dName);
+		m_pDir = opendir(searchPath);
+	};
+
+	bool GetNextFile(LTFindInfo *pInfo) 
+	{
+		errno = 0;
+		bool found = false;
+		dirent64 *pEntry = readdir64(this->m_pDir);
+		while(pEntry != nullptr) {
+			if (pEntry->d_type == DT_DIR)
+				if (pEntry->d_name[0] == '.') { // skip hidden files, '.' and '..' directories
+					pEntry = readdir64(this->m_pDir);
+					continue;
+				}
+
+			if (pEntry->d_type & (DT_REG|DT_DIR|DT_LNK)) 
+			{
+				found = true;
+				break;
+			}
+			pEntry = readdir64(this->m_pDir);
+		}
+        if(found) 
+			fillFileInfo(pEntry, pInfo);
+		return found;
+	};
+	
+	void fillFileInfo(dirent64 *pEntry, LTFindInfo *pInfo)
+	{
+		char filePath[MAX_PATH];
+		struct stat64 st;
+		strncpy(pInfo->m_Name, pEntry->d_name, sizeof(pInfo->m_Name)-1);
+		pInfo->m_Type = (pEntry->d_type == DT_DIR) ? DIRECTORY_TYPE : FILE_TYPE;
+		memset(filePath, 0, sizeof(filePath));
+		LTSNPrintF(filePath, sizeof(filePath)-1, "%s/%s", searchPath, pEntry->d_name);
+		stat64(filePath, &st);
+		pInfo->m_Size = st.st_size;
+		pInfo->m_Date = st.st_ctim.tv_sec;
+	};
+
+	~UnixTreeSearch()
+	{
+		closedir(m_pDir);
+	};
+};
+
+
+static void cleanUnixTreeSearch(LTFindInfo *pInfo)
+{
+	UnixTreeSearch *search = reinterpret_cast<UnixTreeSearch*>(pInfo->m_pInternal);
+	if(search != nullptr) 
+		delete search;
+	
+	pInfo->m_pInternal = nullptr;
+}
+
+static bool findNextUnixTree(const char *pBaseDir, const char *pDirName, LTFindInfo *pInfo)
+{
+	UnixTreeSearch *search = reinterpret_cast<UnixTreeSearch*>(pInfo->m_pInternal);
+	if(search == nullptr) {
+		search = new UnixTreeSearch(pBaseDir, pDirName);
+		pInfo->m_pInternal = search;
+	}
+	return search->GetNextFile(pInfo);
+}
+
+
+static bool findNextRezMgr(CRezMgr *pRez, const char *pDirName, LTFindInfo *pInfo)
+{
+	return false;
+}
+
 
 int df_FindNext(HLTFileTree* hTree, const char *pDirName, LTFindInfo *pInfo)
 {
+	if(!hTree)
+		return 0;
+	
+	FileTree *pTree = reinterpret_cast<FileTree*>(hTree);
+	if(pTree->m_TreeType == UnixTree)
+	{
+		if(findNextUnixTree(pTree->m_BaseName, pDirName, pInfo))
+			return 1;
+		else {
+			cleanUnixTreeSearch(pInfo);
+			return 0;
+		}
+	}
+	if(pTree->m_TreeType == RezFileTree)
+	{
+		if(findNextRezMgr(pTree->m_pRezMgr, pDirName, pInfo))
+			return 1;
+		else
+			return 0;
+	}
 	return 0;
 }
 

@@ -57,10 +57,20 @@ cis_CreateSurfaceFromBitmap(const char* pBitmap)
     return cis_CreateSurfaceFromPcx(nullptr);
 }
 
+static HSURFACE cis_GetScreenSurface()
+{
+    return nullptr;
+}
+
+static void cis_GetSurfaceDimentions(HSURFACE, uint32 *x, uint32 *y)
+{
+}
+
 void cis_Init()
 {
     ilt_client->GetEngineHook = cis_GetEngineHook;
     ilt_client->CreateSurfaceFromBitmap = cis_CreateSurfaceFromBitmap;
     ilt_client->DeleteSurface = cis_DeleteSurface;
-    
+    ilt_client->GetScreenSurface = cis_GetScreenSurface;
+    ilt_client->GetSurfaceDims = cis_GetSurfaceDimentions;
 }

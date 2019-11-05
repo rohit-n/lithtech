@@ -195,11 +195,13 @@ if(WIN32)
 else(WIN32)
 	set(exec_src
 	../kernel/mem/src/sys/linux/de_memory.cpp
+	../render_b/src/sys/sdl/sdltexinterface.cpp
 	src/sys/linux/customfontfilemgr.cpp
 	src/sys/linux/texturestringimage.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
 	../kernel/net/src/sys/linux/linux_ltthread.cpp
 	../kernel/net/src/sys/linux/udpdriver.cpp
+	../kernel/src/sys/linux/lt_cursor_impl.cpp
 	../kernel/src/sys/linux/dutil.cpp
 	../kernel/src/sys/linux/bindmgr.cpp
 	../kernel/src/sys/linux/timemgr.cpp
@@ -221,6 +223,7 @@ else(WIN32)
 	../kernel/src/sys/linux/musicdriver.cpp
 	../kernel/src/sys/linux/input.cpp
 	../model/src/sys/linux/linuxmodel_load.cpp
+	../sound/src/sys/linux/sdl.cpp
     ${exec_src})
 endif(WIN32)
 
