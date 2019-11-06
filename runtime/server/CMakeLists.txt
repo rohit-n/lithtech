@@ -3,7 +3,6 @@ project(DLL_Server)
 add_definitions(-DDE_SERVER_COMPILE -DDIRECTENGINE_COMPILE -DSTDLITH_ALLOC_OVERRIDE -DLT15_COMPAT -DNO_PRAGMA_LIBS)
 
 set(libsources
-	../kernel/net/src/sys/win/udpdriver.cpp
 	src/server_iltcommon.cpp
 	../shared/src/shared_iltcommon.cpp
 	../shared/src/modellt_impl.cpp
@@ -95,6 +94,7 @@ set(libsources
 
 if(WIN32)
 	set(libsources ${libsources}
+		../kernel/net/src/sys/win/udpdriver.cpp
 		../model/src/sys/d3d/d3d_model_load.cpp
 		../kernel/src/sys/win/bindmgr.cpp
 		../kernel/src/sys/win/dutil.cpp
@@ -111,6 +111,7 @@ if(WIN32)
 		../kernel/src/sys/win/timemgr.cpp)
 else(WIN32)
 	set(libsources ${libsources}
+		../kernel/net/src/sys/linux/udpdriver.cpp
 		../kernel/src/sys/linux/bindmgr.cpp
 		../kernel/src/sys/linux/dutil.cpp
 		../kernel/src/sys/linux/stringmgr.cpp
