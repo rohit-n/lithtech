@@ -399,13 +399,10 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 		bool	bCanUseAttractors = (m_lstAttractors.size() > 0);
 		bool	bCanUseRadius = (GetProps()->m_fOmniDirectionalRadius >= 1.0f);
 
-		CLightningBolt *pBolt = LTNULL;
 		LightningBolts::iterator iter;
-
-		for( nBolt = 0, iter = m_lstBolts.begin(); iter != m_lstBolts.end(), nBolt < nActiveBolts; ++iter, ++nBolt )
+		nBolt = 0;
+        for (auto &&pBolt : m_lstBolts) 
 		{
-			pBolt = *iter;
-
 			pBolt->m_fWidth = GetRandom( GetProps()->m_fMinBoltWidth, GetProps()->m_fMaxBoltWidth );
 			pBolt->m_fLifetime = GetRandom( GetProps()->m_fMinLifetime, GetProps()->m_fMaxLifetime );
 			pBolt->m_tmElapsed = 0.0f;
@@ -488,6 +485,9 @@ void CLightningFX::EmitBolts( float tmFrameTime )
 
 				pNode = pNode->m_pNext;
 			}
+
+			if (++nBolt >= nActiveBolts)
+				break;
 		}
 
 		// Decide when the next emission will be...
