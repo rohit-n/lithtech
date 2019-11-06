@@ -882,7 +882,7 @@ static LTRESULT sm_RestoreNextObject(ILTStream *pStream, LTObject *pObj, uint32 
     // Next position indicators.
 	uint32 nextObjectPos;
     GS_STREAM_READ(nextObjectPos);
-    if (nextObjectPos == (unsigned long)-1)
+    if (nextObjectPos == (uint32)-1)
         return LT_FINISHED;
 
 	uint32 objDataPos;
