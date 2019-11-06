@@ -189,8 +189,11 @@ void MD5::Digest(unsigned char digest[16])
 //----------------------------------------------------------------------------
 void MD5::Transform(uint32 buf[4], uint32 in[16])
 {
+#ifndef __LINUX
 	register uint32 a, b, c, d;
-
+#else
+	uint32 a, b, c, d;
+#endif
 	a = buf[0];
 	b = buf[1];
 	c = buf[2];
