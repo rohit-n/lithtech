@@ -1,5 +1,5 @@
-#ifndef __WON_MEDIAMETRIX_H__
-#define __WON_HEDIAMETRIX_H__
+#ifndef WON_MEDIAMETRIX_H
+#define WON_MEDIAMETRIX_H
 #include "WONShared.h"
 #include "WONCommon/Platform.h"
 #include <string>
