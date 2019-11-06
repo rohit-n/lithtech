@@ -211,7 +211,7 @@ void dfree(void *ptr)
 		return dalloc(size);
 	}
 
-	void operator delete(void *ptr)
+	void operator delete(void *ptr) noexcept
 	{
 		dfree(ptr);
 	}
