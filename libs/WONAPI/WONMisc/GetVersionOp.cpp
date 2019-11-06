@@ -59,7 +59,7 @@ bool VersionBaseOp::IsFiltered(const std::string &theVersion, const std::string&
 
 			// Depending upon how the info was entered, we might have '\n' or '\r\n' line breaks, 
 			// so assume the worst and remove both as needed.
-			unsigned int aRemove = (unsigned int)(aKeyValue.find('\n'));
+			size_t aRemove = aKeyValue.find('\n');
 			if (aRemove != std::string::npos)
 				aKeyValue = aKeyValue.erase(aRemove, 1);
 

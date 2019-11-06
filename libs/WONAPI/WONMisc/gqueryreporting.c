@@ -162,7 +162,6 @@ int qr_init(qr_t *qrec, const char *ip, int baseport, const char *gamename, cons
 {
 	int lasterror;
 	struct sockaddr_in saddr;
-	int saddrlen;
 	int maxport;
 	SOCKET querysock;
 	SOCKET hbsock;
@@ -205,7 +204,7 @@ int qr_init(qr_t *qrec, const char *ip, int baseport, const char *gamename, cons
 
 	if (baseport == 0) //we bound it dynamically
 	{
-		saddrlen = sizeof(saddr);
+		unsigned int saddrlen = sizeof(saddr);
 		lasterror = getsockname(querysock,(struct sockaddr *)&saddr, &saddrlen);
 		if (lasterror)
 			return E_GOA_BINDERROR;
@@ -267,7 +266,7 @@ void qr_check_queries(qr_t qrec)
 {
 	static char indata[INBUF_LEN]; //256 byte input buffer
 	struct sockaddr_in saddr;
-	int saddrlen = sizeof(struct sockaddr_in);
+	unsigned int saddrlen = sizeof(struct sockaddr_in);
 	fd_set set; 
 	struct timeval timeout = {0,0};
 	int error;
