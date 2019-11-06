@@ -37,7 +37,7 @@
 
 	If __DEBUG and _DEBUG are not defined, CUI_PRINT resolves to a comment.
 */
-#define CUI_PRINT CUIDebug::DebugPrint
+#define CUI_PRINT(x, ...) CUIDebug::DebugPrint(x __VA_OPT(,) __VA_ARGS__)
 
 
 /*!
@@ -56,7 +56,7 @@
 
 	If __DEBUG and _DEBUG are not defined, CUI_DBG resolves to a comment.
 */
-#define CUI_DBG CUIDebug::DebugPrint("%s: ", this->GetClassName()), CUIDebug::DebugPrint
+#define CUI_DBG(x, ...) CUIDebug::DebugPrint("%s: ", this->GetClassName()); CUIDebug::DebugPrint(x __VA_OPT(,) __VA_ARGS__)
 
 
 /*!
@@ -71,7 +71,7 @@
 	to be sucessful, even though 2 functions are being called and the conditional
 	does not enclose a new code block in curly braces '{}'.
 */
-#define CUI_ERR CUIDebug::DebugPrint("Error in %s at line %i:\n    ", __FILE__, __LINE__), CUIDebug::DebugPrint  
+#define CUI_ERR(x, ...) CUIDebug::DebugPrint("Error in %s at line %i:\n    ", __FILE__, __LINE__); CUIDebug::DebugPrint(x __VA_OPT(,) __VA_ARGS__)
 
 
 /*!
@@ -104,9 +104,9 @@ Text storage is defined statically for better performance.
 // if debugging is not turned on, these macros will resolve to comments, and
 // the CUIDebug class will not be defined.
 
-#define CUI_DBG //
-#define CUI_ERR //
-#define CUI_PRINT //
+#define CUI_DBG(x, ...) // x
+#define CUI_ERR(x, ...) // x
+#define CUI_PRINT(x, ...) // x
 
 
 #endif  //__DEBUG
