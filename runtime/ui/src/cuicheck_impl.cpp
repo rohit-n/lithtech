@@ -148,7 +148,8 @@ CUI_RESULTTYPE CUICheck_Impl::SetColors(CUI_ELEMENTTYPE elm,
 			//return CUIButton_Impl::SetColors(CUIE_BUTTON_DISABLED, argb0, argb1, argb2, argb3);
 			break;
 
-		//default:			
+		default:
+		    break;
 	}
 
 	return CUIButton_Impl::SetColors(elm, argb0, argb1, argb2, argb3);	
@@ -457,6 +458,8 @@ void CUICheck_Impl::AlignTextInWidget()
 				ypos = m_Rect.y + (m_Rect.height - h - m_GutterBottom);
 				break;
 
+			default:
+				break;
 		}
 
 		switch (m_Halign) {
@@ -473,6 +476,8 @@ void CUICheck_Impl::AlignTextInWidget()
 				xpos = m_Rect.x + m_GutterLeft;
 				break;
 
+			default:
+				break;
 		}
 
 		m_pPolyStr->SetPosition(xpos, ypos);

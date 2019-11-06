@@ -426,7 +426,8 @@ LTBOOL CLTGUIEditCtrl::HandleChar(unsigned char c)
 		if ( c == 37 || c == 92 )
 			  return LTFALSE;
 		break;
-
+    default:
+      break;
 	};
 
 

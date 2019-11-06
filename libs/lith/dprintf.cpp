@@ -858,6 +858,8 @@ dprintfinittype::dprintfinittype () {
       dprintffile = fopen ("PRN","w");
       if (dprintffile == NULL) dprintfOutType = DPRINTF_NOTHING;
       break;
+    default:
+      break;
   }
 }
 
@@ -887,7 +889,8 @@ dprintfinittype::~dprintfinittype () {
 #endif
 #endif
 #endif
-
+    default:
+      break;
   }
 }
 #endif

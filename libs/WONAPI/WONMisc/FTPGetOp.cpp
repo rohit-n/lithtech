@@ -172,6 +172,7 @@ bool FTPGetOp::SendRequest()
 	std::string aReq;
 	switch(mRequestState)
 	{
+		case RequestState_Start: break;
 		case RequestState_User: aReq = "USER " + mUserName; break;
 		case RequestState_Password: aReq = "PASS " + mPassword; break;
 		case RequestState_ChangeDir: aReq = "CWD " + mActualPath; break;

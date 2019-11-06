@@ -101,19 +101,15 @@ LTRESULT CLTCommonServer::SetObjectFlags(HOBJECT hObj, const ObjFlagType nFlagTy
 	uint32 nChangingFlags = (nMask & (*pFlags ^ nFlags));
 
 	// Take care of anything that has to happen before the flags get modified...
-	switch (nFlagType)
+	if (nFlagType == OFT_Flags)
 	{
-		case OFT_Flags :
-        {
-            // They changed a FLAGS_.
-            hObj->m_InternalFlags |= IFLAG_APPLYPHYSICS;
-            // If we're going to nonsolid, get rid of anything standing on us.
-            if ((nChangingFlags & FLAG_SOLID) && (nFlags & FLAG_SOLID)) 
-			{
-                DetachObjectStanding(hObj);
-            }
+		// They changed a FLAGS_.
+		hObj->m_InternalFlags |= IFLAG_APPLYPHYSICS;
+		// If we're going to nonsolid, get rid of anything standing on us.
+		if ((nChangingFlags & FLAG_SOLID) && (nFlags & FLAG_SOLID)) 
+		{
+			DetachObjectStanding(hObj);
 		}
-		break;
 	}
 
 	// Change the flags
@@ -144,6 +140,8 @@ LTRESULT CLTCommonServer::SetObjectFlags(HOBJECT hObj, const ObjFlagType nFlagTy
 		{
             SetObjectChangeFlags(hObj, CF_FLAGS);
 		}
+		break;
+		default:
 		break;
     }
 

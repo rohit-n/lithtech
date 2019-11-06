@@ -360,6 +360,7 @@ void SmartRoutingConnection::RoutingOpCompleteHook(RoutingOp *theOp)
 		case RoutingOp_GroupJoinAttempt:		HandleGroupJoinAttempt		((RoutingGroupJoinAttemptOp*)	theOp); break;
 		case RoutingOp_PeerChat:				HandlePeerChat				((RoutingPeerChatOp*)			theOp); break;
 
+		default: break; // rest not handled here.
 	}	
 }
 
@@ -1290,6 +1291,8 @@ bool SmartRoutingConnection::HandleCommand(const std::wstring &theInput, int the
 			mLastMatchName = GetWord(theInput,aPos,false,true);
 			needName = true;
 			break;
+		default:
+			break;
 	}
 	
 	// Find corresponding client/member
@@ -1422,26 +1425,18 @@ bool SmartRoutingConnection::HandleCommand(const std::wstring &theInput, int the
 					return false;
 				}
 			}
-				
-			switch(mLastInputCommand)
-			{
-				case InputCommand_Mute:
-					MuteClientByClientId(theGroupIdContext,true,aSeconds,L"",mLastTargetClient->mId); 
-					break;
+
+			uint16_t context = RoutingId_Global;
+			if(mLastInputCommand == InputCommand_Mute)
+			 	context = theGroupIdContext;
+			else if (mLastInputCommand == InputCommand_Ban)
+			 	context = theGroupIdContext;
+
+			if(mLastInputCommand % 2)
+			    MuteClientByClientId(context,true,aSeconds,L"",mLastTargetClient->mId);
+			else
+				BanClientByClientId(context,true,aSeconds,L"",mLastTargetClient->mId);
 			
-				case InputCommand_ServerMute:
-					MuteClientByClientId(RoutingId_Global,true,aSeconds,L"",mLastTargetClient->mId); 
-					break;
-
-				case InputCommand_Ban:
-					BanClientByClientId(theGroupIdContext,true,aSeconds,L"",mLastTargetClient->mId); 
-					break;
-
-				case InputCommand_ServerBan:
-					BanClientByClientId(RoutingId_Global,true,aSeconds,L"",mLastTargetClient->mId);
-					break;
-			}
-
 			return true;
 		}
 
@@ -1457,6 +1452,8 @@ bool SmartRoutingConnection::HandleCommand(const std::wstring &theInput, int the
 			MuteClientByClientId(aGroupId,false,0,L"",mLastTargetClient->mId);
 			return true;
 		}
+		default:
+			break;
 		
 	}
 
