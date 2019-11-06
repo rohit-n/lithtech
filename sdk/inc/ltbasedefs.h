@@ -2210,6 +2210,8 @@ public:
 //! get the number of constants, there are 4 floats per register
 	unsigned				GetNumConstants() const		{ return MAX_CONSTANT_REGISTERS*4; }
 
+	virtual ~LTVertexShader() = default;
+
 protected:
 
 	LTVertexShader()
@@ -2281,6 +2283,8 @@ public:
 
 //! get the number of constants, there are 4 floats per register
 	unsigned					GetNumConstants() const		{ return MAX_CONSTANT_REGISTERS*4; }
+
+	virtual ~LTPixelShader() = default;
 
 protected:
 
@@ -2448,6 +2452,7 @@ public:
 	//SetVectorArray Sets an array of vectors.
 	virtual LTRESULT SetVector(const char* szParam, float *fFloat) const = 0;  //4 floats
 	virtual LTRESULT SetVectorArray(const char* szParam, float *fFloat, int nCount) const = 0; // 4 floats * nCount
+	virtual ~LTEffectShader() = default;
 
 protected:
 	LTEffectShader():
