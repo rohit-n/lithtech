@@ -22,8 +22,8 @@ public:
 	ByteBuffer(const void *theData, unsigned long theLen, bool takeOwnership=false);
 	explicit ByteBuffer(const char *theStr);
 
-	const char* data() const { return this?mData:NULL; }
-	unsigned long length() const { return this?mDataLen:0; }
+	const char* data() const { return mData; }
+	unsigned long length() const { return mDataLen; }
 
 protected:
 	virtual ~ByteBuffer();
