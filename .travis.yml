@@ -21,23 +21,25 @@ script:
 matrix:
   allow_failures:
     - clang: 4.0
-    - clang: 5.0
+    - clang: 7.0
     - gcc: "6 32bit"
   include:
     - os: linux
       dist: trusty
-      gcc: 5
+      gcc: 8
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-5
+            - g++-8
             - cmake-data
             - cmake
             - libsdl2-dev
+            - libsdl2-image-dev
+            - libsdl2-mixer-dev
       env:
-        - MATRIX_EVAL="CC=gcc-5; CXX=g++-5"
+        - MATRIX_EVAL="CC=gcc-8; CXX=g++-8"
     - os: linux
       dist: trusty
       gcc: 6
@@ -50,6 +52,8 @@ matrix:
             - cmake-data
             - cmake
             - libsdl2-dev
+            - libsdl2-image-dev
+            - libsdl2-mixer-dev
       env:
         - MATRIX_EVAL="CC=gcc-6; CXX=g++-6"
     - os: linux
@@ -64,6 +68,8 @@ matrix:
             - cmake-data
             - cmake
             - libsdl2-dev
+            - libsdl2-image-dev
+            - libsdl2-mixer-dev
       env:
         - MATRIX_EVAL="CC=gcc-7; CXX=g++-7"
     - os: linux
@@ -80,7 +86,12 @@ matrix:
             - cmake-data
             - cmake
             - libsdl2-dev
+            - libsdl2-image-dev
+            - libsdl2-image-dev:i386
+            - libsdl2-mixer-dev
+            - libsdl2-mixer-dev:i386
             - libsdl2-2.0-0
+            - libsdl2-dev:i386
             - libsdl2-2.0-0:i386
             - libegl1-mesa-dev
             - libgles2-mesa-dev
@@ -100,23 +111,27 @@ matrix:
             - cmake-data
             - cmake
             - libsdl2-dev
+            - libsdl2-image-dev
+            - libsdl2-mixer-dev
       env:
         - MATRIX_EVAL="CC=clang-4.0; CXX=clang++-4.0"
     - os: linux
-      clang: 5.0
+      clang: 7.0
       dist: trusty
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-7.0
           packages:
-            - clang-5.0
+            - clang-7.0
             - cmake-data
             - cmake
             - libsdl2-dev
+            - libsdl2-image-dev
+            - libsdl2-mixer-dev
       env:
-        - MATRIX_EVAL="CC=clang-5.0; CXX=clang++-5.0"
+        - MATRIX_EVAL="CC=clang-7.0; CXX=clang++-7.0"
 
 
 before_install:
