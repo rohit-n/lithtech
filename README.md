@@ -1,4 +1,5 @@
 Travis-CI: [![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
+
 Gitlab: [![pipeline status](https://gitlab.com/Katana-Steel/lithtech/badges/linux-x86_64/pipeline.svg)](https://gitlab.com/Katana-Steel/lithtech/commits/linux-x86_64)
 
 lithtech
@@ -12,8 +13,6 @@ I found the GPL release of the Jupiter Engine and couldn't find anyone else who 
 
 Status
 ------
-Travis-CI: [![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
-Gitlab: [![pipeline status](https://gitlab.com/Katana-Steel/lithtech/badges/linux-x86_64/pipeline.svg)](https://gitlab.com/Katana-Steel/lithtech/commits/linux-x86_64)
 
 Currently the engine and NOLF2 game code will build with CMake.
 
