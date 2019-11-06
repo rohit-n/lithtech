@@ -804,16 +804,15 @@ bool AuthContext::SaveSecretList()
 void AuthContext::AppendLoginSecrets(WriteBuffer &theBuf) 
 {
 	AutoCrit aCrit(mDataCrit);
-	SecretList::iterator anItr = mSecretList.begin();
 
 	unsigned long aLenPos = theBuf.length();
-	unsigned char aNumSecrets = 0;
+	uint16_t aNumSecrets = 0;
 	theBuf.SkipBytes(1);
-	while(anItr!=mSecretList.end() && aNumSecrets<256)
+	for (const auto &secret : mSecretList)
 	{
-		theBuf.AppendBytes(anItr->mSecret->data(), anItr->mSecret->length());
-		aNumSecrets++;
-		++anItr;
+		theBuf.AppendBytes(secret.mSecret->data(), secret.mSecret->length());
+		if(++aNumSecrets >= 256)
+			break;
 	}
 
 	theBuf.SetByte(aLenPos,aNumSecrets);
