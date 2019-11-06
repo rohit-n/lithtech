@@ -1,3 +1,6 @@
+Travis-CI: [![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
+Gitlab: [![pipeline status](https://gitlab.com/Katana-Steel/lithtech/badges/linux-x86_64/pipeline.svg)](https://gitlab.com/Katana-Steel/lithtech/commits/linux-x86_64)
+
 lithtech
 ========
 
