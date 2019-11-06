@@ -226,9 +226,7 @@ LTRESULT sm_UpdateInBspStatus(LTObject *pObject)
 
 uint32 sm_GetNewObjectChangeFlags(LTObject *pObject)
 {
-    uint32 changeFlags;
-
-    changeFlags = CF_NEWOBJECT | CF_TELEPORT;
+    uint32 changeFlags = CF_NEWOBJECT | CF_TELEPORT;
 
     if (!pObject->m_Rotation.IsIdentity())
     {
@@ -275,7 +273,7 @@ uint32 sm_GetNewObjectChangeFlags(LTObject *pObject)
 		{
 			for(uint32 nCurrPiece = 0; nCurrPiece < MAX_PIECES_PER_MODEL / 32; nCurrPiece++)
 			{
-				if(ToModel(pObject)->m_HiddenPieces != 0)
+				if(ToModel(pObject)->m_HiddenPieces[nCurrPiece] != 0)
 				{
 					changeFlags |= CF_ATTACHMENTS;
 					break;
