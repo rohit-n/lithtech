@@ -9,16 +9,10 @@ I found the GPL release of the Jupiter Engine and couldn't find anyone else who 
 
 Status
 ------
-Currently the engine and NOLF2 game code will build.
+Travis-CI: [![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
+Gitlab: [![pipeline status](https://gitlab.com/Katana-Steel/lithtech/badges/linux-x86_64/pipeline.svg)](https://gitlab.com/Katana-Steel/lithtech/commits/linux-x86_64)
 
-There are a few reasons why I am implementing a new build system:
-* All code releases were either using VC++ 6 or Visual Studio 2003 (VC++ 7.1). Neither type of project file converted that well in VS2010.
-* Since the ultimate goal is a source port, I would like to be able to build the games on Linux and OS X as well. There was a homegrown converter for VC++ 7.1 project files to makefiles, but given then problems converting between versions of Visual Studio, I decided against it.
-* I don't want to require someone to use Visual Studio on Windows. It should at least be buildable by MinGW as well (if not OpenWatcom too).
-
-I can get NOLF2 running. Interestingly enough, a release build seems to run okay, but a debug build will trigger exceptions in the standard library. All the problem seem to have to do with Microsoft's secure CRT. Either things had slightly different semantics between compilers or certain iterator usages were technically not correct in the original code. I fixed maybe two of these. There are still probably another handful left. There also seems to be some differences in the NOLF2 retail data files and those supplied with the GPL release. I am not 100% certain of this, but I need to investigate more.
-
-I also started an effort to port the Shogo source (originally from a really old version of the engine) to the engine in the GPL release. I have made a *ton* of changes, but it still doesn't compile completely. I decided to focus on getting a single tree build and debug version of NOLF2 running first.
+Currently the engine and NOLF2 game code will build with CMake.
 
 TODO
 ----
@@ -55,6 +49,19 @@ There's a few options to maybe get the entirety of NOLF2 working with this code:
 2. Locate an old version of Maya or 3ds Max (version 3 or 4 of either) to use the retail game's import plugin for, and then this release's export plugin, to "convert" them to the new format. (haven't been able to find an old Maya or 3ds Max so far)
 3. Recreate the levels from scratch. Really give the entire game a proper remake. (beyond *my* capabilities)
 
+Builds on Windows
+-----------------
+
+There are a few reasons why I am implementing a new build system:
+* All code releases were either using VC++ 6 or Visual Studio 2003 (VC++ 7.1). Neither type of project file converted that well in VS2010.
+* Since the ultimate goal is a source port, I would like to be able to build the games on Linux and OS X as well. There was a homegrown converter for VC++ 7.1 project files to makefiles, but given then problems converting between versions of Visual Studio, I decided against it.
+* I don't want to require someone to use Visual Studio on Windows. It should at least be buildable by MinGW as well (if not OpenWatcom too).
+
+I can get NOLF2 running. Interestingly enough, a release build seems to run okay, but a debug build will trigger exceptions in the standard library. All the problem seem to have to do with Microsoft's secure CRT. Either things had slightly different semantics between compilers or certain iterator usages were technically not correct in the original code. I fixed maybe two of these. There are still probably another handful left. There also seems to be some differences in the NOLF2 retail data files and those supplied with the GPL release. I am not 100% certain of this, but I need to investigate more.
+
+I also started an effort to port the Shogo source (originally from a really old version of the engine) to the engine in the GPL release. I have made a *ton* of changes, but it still doesn't compile completely. I decided to focus on getting a single tree build and debug version of NOLF2 running first.
+
+
 Builds on linux
 ---------------
 [![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
@@ -77,8 +84,8 @@ Builds on linux
 - [x] Target rules for targets named WONAPI
 - [x] Target rules for targets named NOLF2_ClientFXDLL
 - [x] Target rules for targets named NOLF2_ClientRes
-- [ ] Target rules for targets named NOLF2_ClientShellDLL
-- [ ] Target rules for targets named NOLF2_ObjectDLL
+- [x] Target rules for targets named NOLF2_ClientShellDLL
+- [x] Target rules for targets named NOLF2_ObjectDLL
 - [x] Target rules for targets named NOLF2_ServerRes
 - [ ] Target rules for targets named FEAR_ClientFXDLL
 - [ ] Target rules for targets named FEAR_ClientShellDLL
