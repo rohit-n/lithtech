@@ -292,11 +292,11 @@ void CPlayRandomSoundFX::PlaySound()
 
 	if (GetProps()->m_nRand)
 	{
-		sprintf(sTmp, "%s%d.wav", GetProps()->m_sSoundName, rand() % GetProps()->m_nRand);
+		snprintf(sTmp, sizeof(sTmp), "%s%d.wav", GetProps()->m_sSoundName, rand() % GetProps()->m_nRand);
 	}
 	else
 	{
-		sprintf(sTmp, "%s.wav", GetProps()->m_sSoundName);
+		snprintf(sTmp, sizeof(sTmp), "%s.wav", GetProps()->m_sSoundName);
 	}
 
 	strcpy(psi.m_szSoundName, sTmp);

@@ -267,17 +267,17 @@ LTBOOL CBaseScreen::Init(int nScreenID)
 		szLoopFXName[0] = 0;
 		bFound = false;
 
-		sprintf(szAttName,"IntroFX%d",nFXNum);
+		snprintf(szAttName,sizeof(szAttName),"IntroFX%d",nFXNum);
 		if (g_pLayoutMgr->HasCustomValue((eScreenID)m_nScreenID,szAttName))
 		{
 			g_pLayoutMgr->GetScreenCustomString((eScreenID)m_nScreenID,szAttName,szIntroFXName,128);
 		}
-		sprintf(szAttName,"ShortIntroFX%d",nFXNum);
+		snprintf(szAttName,sizeof(szAttName),"ShortIntroFX%d",nFXNum);
 		if (g_pLayoutMgr->HasCustomValue((eScreenID)m_nScreenID,szAttName))
 		{
 			g_pLayoutMgr->GetScreenCustomString((eScreenID)m_nScreenID,szAttName,szShortFXName,128);
 		}
-		sprintf(szAttName,"LoopFX%d",nFXNum);
+		snprintf(szAttName,sizeof(szAttName),"LoopFX%d",nFXNum);
 		if (g_pLayoutMgr->HasCustomValue((eScreenID)m_nScreenID,szAttName))
 		{
 			g_pLayoutMgr->GetScreenCustomString((eScreenID)m_nScreenID,szAttName,szLoopFXName,128);
@@ -1627,7 +1627,7 @@ void CBaseScreen::CreateInterfaceSFX()
 
 
 
-	sprintf(szAttName,"Light%d",n);
+	snprintf(szAttName,sizeof(szAttName),"Light%d",n);
 	while (g_pLayoutMgr->HasCustomValue((eScreenID)m_nScreenID,szAttName))
 	{
 		g_pLayoutMgr->GetScreenCustomString((eScreenID)m_nScreenID,szAttName,szFXName,128);
@@ -1637,14 +1637,14 @@ void CBaseScreen::CreateInterfaceSFX()
 		}
 
 		n++;
-		sprintf(szAttName,"Light%d",n);
+		snprintf(szAttName,sizeof(szAttName),"Light%d",n);
 
 	}
 
 
 	n = 0;
 	g_ScaleFXMap.clear();
-	sprintf(szAttName,"ScaleName%d",n);
+	snprintf(szAttName,sizeof(szAttName),"ScaleName%d",n);
 	while (g_pLayoutMgr->HasCustomValue((eScreenID)m_nScreenID,szAttName))
 	{
 		g_pLayoutMgr->GetScreenCustomString((eScreenID)m_nScreenID,szAttName,szFXName,128);
@@ -1654,7 +1654,7 @@ void CBaseScreen::CreateInterfaceSFX()
 		}
 
 		n++;
-		sprintf(szAttName,"ScaleName%d",n);
+		snprintf(szAttName,sizeof(szAttName),"ScaleName%d",n);
 
 	}
 
@@ -1711,7 +1711,7 @@ void CBaseScreen::CreateInterfaceSFX()
 	g_pInterfaceMgr->SetSelectFX(szFXName);
 
 	n = 0;
-	sprintf(szAttName,"FX%d",n);
+	snprintf(szAttName,sizeof(szAttName),"FX%d",n);
 	while (g_pLayoutMgr->HasCustomValue((eScreenID)m_nScreenID,szAttName))
 	{
 		g_pLayoutMgr->GetScreenCustomString((eScreenID)m_nScreenID,szAttName,szFXName,128);
@@ -1726,7 +1726,7 @@ void CBaseScreen::CreateInterfaceSFX()
 
 		
 		n++;
-		sprintf(szAttName,"FX%d",n);
+		snprintf(szAttName,sizeof(szAttName),"FX%d",n);
 
 	}
 

@@ -1160,7 +1160,7 @@ void CCheatMgr::BuildGuid()
 		buildGuid.guid.d[i] = pGuidEncoded->guid.d[i] - GAMEGUID.guid.d[i];
 
 	char szGuid[256] = "";
-	sprintf( szGuid, "{ 0x%X, 0x%X, 0x%X, { 0x%X, 0x%X, 0x%X, 0x%X, 0x%X, 0x%X, 0x%X, 0x%X }}",
+	snprintf( szGuid, sizeof(szGuid), "{ 0x%X, 0x%X, 0x%X, { 0x%X, 0x%X, 0x%X, 0x%X, 0x%X, 0x%X, 0x%X, 0x%X }}",
 		buildGuid.guid.a, buildGuid.guid.b, buildGuid.guid.c, buildGuid.guid.d[0], 
 		buildGuid.guid.d[1], buildGuid.guid.d[2], buildGuid.guid.d[3], buildGuid.guid.d[4], 
 		buildGuid.guid.d[5], buildGuid.guid.d[6], buildGuid.guid.d[7] );
@@ -1223,12 +1223,12 @@ void CCheatMgr::GimmeGun( CParsedMsg const &cMsg )
 	{
 		SendCheatMessage( CHEAT_GIMMEGUN, pWeapon->nId );
 
-		sprintf( szMessage, "Giving weapon '%s' ID: %i", pWeapon->szName, pWeapon->nId );
+		snprintf( szMessage, sizeof(szMessage), "Giving weapon '%s' ID: %i", pWeapon->szName, pWeapon->nId );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 	else
 	{
-		sprintf( szMessage, "Weapon '%s' does not exist!", szWeaponName );
+		snprintf( szMessage, sizeof(szMessage), "Weapon '%s' does not exist!", szWeaponName );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 
@@ -1271,12 +1271,12 @@ void CCheatMgr::GimmeMod( CParsedMsg const &cMsg )
 	{
 		SendCheatMessage( CHEAT_GIMMEMOD, pMod->nId );
 
-		sprintf( szMessage, "Giving mod '%s' ID: %i", pMod->szName, pMod->nId );
+		snprintf( szMessage, sizeof(szMessage), "Giving mod '%s' ID: %i", pMod->szName, pMod->nId );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 	else
 	{
-		sprintf( szMessage, "Mod '%s' does not exist!", szModName );
+		snprintf( szMessage, sizeof(szMessage), "Mod '%s' does not exist!", szModName );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 }
@@ -1318,12 +1318,12 @@ void CCheatMgr::GimmeGear( CParsedMsg const &cMsg )
 	{
 		SendCheatMessage( CHEAT_GIMMEGEAR, pGear->nId );
 
-		sprintf( szMessage, "Giving gear '%s' ID: %i", pGear->szName, pGear->nId );
+		snprintf( szMessage, sizeof(szMessage), "Giving gear '%s' ID: %i", pGear->szName, pGear->nId );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 	else
 	{
-		sprintf( szMessage, "Gear '%s' does not exist!", szGearName );
+		snprintf( szMessage, sizeof(szMessage), "Gear '%s' does not exist!", szGearName );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 }
@@ -1365,12 +1365,12 @@ void CCheatMgr::GimmeAmmo( CParsedMsg const &cMsg )
 	{
 		SendCheatMessage( CHEAT_GIMMEAMMO, pAmmo->nId );
 
-		sprintf( szMessage, "Giving ammo '%s' ID: %i", pAmmo->szName, pAmmo->nId );
+		snprintf( szMessage, sizeof(szMessage), "Giving ammo '%s' ID: %i", pAmmo->szName, pAmmo->nId );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 	else
 	{
-		sprintf( szMessage, "Ammo '%s' does not exist!", szAmmoName );
+		snprintf( szMessage, sizeof(szMessage), "Ammo '%s' does not exist!", szAmmoName );
 		g_pChatMsgs->AddMessage( szMessage, kMsgCheatConfirm );
 	}
 }	

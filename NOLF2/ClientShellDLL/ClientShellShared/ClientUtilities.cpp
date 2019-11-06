@@ -99,7 +99,7 @@ void EndTimingCounter(const char *msg, ...)
 	char pMsg[256];
 	va_list marker;
 	va_start(marker, msg);
-	int nSuccess = vsprintf(pMsg, msg, marker);
+	int nSuccess = vsnprintf(pMsg,sizeof(pMsg), msg, marker);
 	va_end(marker);
 
 	if (nSuccess < 0) return;
@@ -200,7 +200,7 @@ void WriteConsoleString(char const* sKey, char const* sValue)
 	{
 		char sTemp[256];
 #ifndef _WIN32
-        sprintf(sTemp, "+%s \"%s\"", sKey, sValue);
+        snprintf(sTemp, sizeof(sTemp), "+%s \"%s\"", sKey, sValue);
 #else
         wsprintf(sTemp, "+%s \"%s\"", sKey, sValue);
 #endif
@@ -214,7 +214,7 @@ void WriteConsoleInt(char const* sKey, int nValue)
 	{
 		char sTemp[256];
 #ifndef _WIN32
-        sprintf(sTemp, "+%s %i", sKey, nValue);
+        snprintf(sTemp, sizeof(sTemp), "+%s %i", sKey, nValue);
 #else
 		wsprintf(sTemp, "+%s %i", sKey, nValue);
 #endif
@@ -227,7 +227,7 @@ void WriteConsoleBool(char const* sKey, int bValue)
     if (g_pLTClient)
 	{
 		char sTemp[256];
-        sprintf(sTemp, "+%s %i", sKey, (bValue ? 1 : 0));
+        snprintf(sTemp, sizeof(sTemp), "+%s %i", sKey, (bValue ? 1 : 0));
         g_pLTClient->RunConsoleString(sTemp);
 	}
 }
@@ -237,7 +237,7 @@ void WriteConsoleFloat(char const* sKey, LTFLOAT fValue)
     if (g_pLTClient)
 	{
 		char sTemp[256];
-		sprintf(sTemp, "+%s %f", sKey, fValue);
+		snprintf(sTemp, sizeof(sTemp), "+%s %f", sKey, fValue);
         g_pLTClient->RunConsoleString(sTemp);
 	}
 }

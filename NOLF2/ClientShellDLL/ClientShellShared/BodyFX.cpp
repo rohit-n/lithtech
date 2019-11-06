@@ -740,7 +740,7 @@ bool CBodyFX::HandleDeathFXKey( HLOCALOBJ hObj, ArgList* pArgList )
 
 	// Get the FX name
 	char szFX[512];
-	sprintf(szFX,"DEATHFX_%s_%s",szModelName,pArgList->argv[1]);
+	snprintf(szFX, sizeof(szFX),"DEATHFX_%s_%s",szModelName,pArgList->argv[1]);
 
 	// create the effect
 	bool bResult;

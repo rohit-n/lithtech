@@ -165,7 +165,7 @@ LTBOOL CDamageFXMgr::Init(const char* szAttributeFile)
 	// Read in the properties for each Damage FX type...
 
 	int nNum = 0;
-	sprintf( s_aTagName, "%s%d", DMGFXMGR_TAG, nNum );
+	snprintf( s_aTagName, sizeof(s_aTagName), "%s%d", DMGFXMGR_TAG, nNum );
 
 	while( m_buteMgr.Exist( s_aTagName ))
 	{
@@ -185,7 +185,7 @@ LTBOOL CDamageFXMgr::Init(const char* szAttributeFile)
 		}
 
 		++nNum;
-		sprintf( s_aTagName, "%s%d", DMGFXMGR_TAG, nNum );
+		snprintf( s_aTagName, sizeof(s_aTagName), "%s%d", DMGFXMGR_TAG, nNum );
 	}
 
 	g_vtEnableDamageFX.Init( g_pLTClient, "EnableDamageFX", LTNULL, 1.0f );
@@ -674,13 +674,13 @@ LTBOOL DAMAGEFX::Init( CButeMgr &ButeMgr, char *aTagName )
 	m_szBodyFXName				= GetString( ButeMgr, aTagName, DMGFXMGR_BODYFXNAME, DMGFXMGR_MAX_NAME_LEN );
 
 	m_nNumSprinkles = 0;
-	sprintf( s_aAttributeName, "%s%d", DM_SPRINKLES_TAG, m_nNumSprinkles );
+	snprintf( s_aAttributeName, sizeof(s_aAttributeName), "%s%d", DM_SPRINKLES_TAG, m_nNumSprinkles );
 	while( ButeMgr.Exist( aTagName, s_aAttributeName ) && m_nNumSprinkles < MAX_SPRINKLE_TYPES )
 	{
 		m_aszSprinkleName[m_nNumSprinkles] = GetString( ButeMgr, aTagName, s_aAttributeName, DMGFXMGR_MAX_NAME_LEN );
 
 		++m_nNumSprinkles;
-		sprintf( s_aAttributeName, "%s%d", DM_SPRINKLES_TAG, m_nNumSprinkles );
+		snprintf( s_aAttributeName, sizeof(s_aAttributeName), "%s%d", DM_SPRINKLES_TAG, m_nNumSprinkles );
 	}
 	
 	m_fTintRampUpTm		= (LTFLOAT)ButeMgr.GetDouble( aTagName, DMGFXMGR_TINTRAMPUPTIME );
@@ -725,7 +725,7 @@ LTBOOL DAMAGEFX::Init( CButeMgr &ButeMgr, char *aTagName )
 
 	// Init the VarTrack for easy testing...
 
-	sprintf( m_szVarTrackName, "Test%sFX", m_szName );
+	snprintf( m_szVarTrackName, sizeof(m_szVarTrackName), "Test%sFX", m_szName );
 
 	m_vtTestFX.Init( g_pLTClient, m_szVarTrackName, LTNULL, 0.0f );
 

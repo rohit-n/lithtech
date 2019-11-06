@@ -102,53 +102,53 @@ LTBOOL CClientButeMgr::Init(const char* szAttributeFile)
 	// Determine how many cheat attributes there are...
 
 	m_nNumCheatAttributes = 0;
-	sprintf(s_aAttName, "%s%d", CBMGR_CHEATS_ATTRIBUTE_NAME, m_nNumCheatAttributes);
+	snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_CHEATS_ATTRIBUTE_NAME, m_nNumCheatAttributes);
 
 	while (m_buteMgr.Exist(CBMGR_CHEATS_TAG, s_aAttName))
 	{
 		m_nNumCheatAttributes++;
-		sprintf(s_aAttName, "%s%d", CBMGR_CHEATS_ATTRIBUTE_NAME, m_nNumCheatAttributes);
+		snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_CHEATS_ATTRIBUTE_NAME, m_nNumCheatAttributes);
 	}
 
 	m_nNumSingleWorldPaths = 0;
-	sprintf(s_aAttName,"%s%d",CBMGR_WORLD_SINGLE_PATH, m_nNumSingleWorldPaths);
+	snprintf(s_aAttName, sizeof(s_aAttName),"%s%d",CBMGR_WORLD_SINGLE_PATH, m_nNumSingleWorldPaths);
 	while (m_buteMgr.Exist(CBMGR_WORLD_TAG, s_aAttName))
 	{
 		m_nNumSingleWorldPaths++;
-		sprintf(s_aAttName,"%s%d",CBMGR_WORLD_SINGLE_PATH, m_nNumSingleWorldPaths);
+		snprintf(s_aAttName, sizeof(s_aAttName),"%s%d",CBMGR_WORLD_SINGLE_PATH, m_nNumSingleWorldPaths);
 	}
 
 	m_nNumMultiWorldPaths = 0;
-	sprintf(s_aAttName,"%s%d",CBMGR_WORLD_MULTI_PATH, m_nNumMultiWorldPaths);
+	snprintf(s_aAttName, sizeof(s_aAttName),"%s%d",CBMGR_WORLD_MULTI_PATH, m_nNumMultiWorldPaths);
 	while (m_buteMgr.Exist(CBMGR_WORLD_TAG, s_aAttName))
 	{
 		m_nNumMultiWorldPaths++;
-		sprintf(s_aAttName,"%s%d",CBMGR_WORLD_MULTI_PATH, m_nNumMultiWorldPaths);
+		snprintf(s_aAttName, sizeof(s_aAttName),"%s%d",CBMGR_WORLD_MULTI_PATH, m_nNumMultiWorldPaths);
 	}
 
 
 	// Determine how many debug key attributes there are...
 
 	m_nNumDebugKeys = 0;
-	sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, m_nNumDebugKeys);
+	snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, m_nNumDebugKeys);
 
 	while (m_buteMgr.Exist(s_aTagName))
 	{
 		m_nNumDebugKeys++;
-		sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, m_nNumDebugKeys);
+		snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, m_nNumDebugKeys);
 	}
 
 	m_aNumDebugLevels = new int[m_nNumDebugKeys];
 	memset(m_aNumDebugLevels, 0, sizeof(int)*m_nNumDebugKeys);
 	for( int i = 0; i < m_nNumDebugKeys; ++i )
 	{
-		sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, i );
-		sprintf(s_aAttName, "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_STRING, m_aNumDebugLevels[i] );
+		snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, i );
+		snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_STRING, m_aNumDebugLevels[i] );
 
 		while (m_buteMgr.Exist(s_aTagName, s_aAttName))
 		{
 			++m_aNumDebugLevels[i];
-			sprintf(s_aAttName, "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_STRING, m_aNumDebugLevels[i] );
+			snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_STRING, m_aNumDebugLevels[i] );
 		}
 	}
 
@@ -156,10 +156,10 @@ LTBOOL CClientButeMgr::Init(const char* szAttributeFile)
 	m_nNumGlowMappings = 0;
 	while(1)
 	{
-		sprintf(s_aAttName, "%s%d", CBMGR_GLOW_MAP_RENDERSTYLE, m_nNumGlowMappings);
+		snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_GLOW_MAP_RENDERSTYLE, m_nNumGlowMappings);
 		if( m_buteMgr.Exist(CBMGR_GLOW_RENDERSTYLE_MAP, s_aAttName))
 		{
-			sprintf(s_aAttName, "%s%d", CBMGR_GLOW_MAP_RENDERSTYLETO, m_nNumGlowMappings);
+			snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_GLOW_MAP_RENDERSTYLETO, m_nNumGlowMappings);
 			if(m_buteMgr.Exist(CBMGR_GLOW_RENDERSTYLE_MAP, s_aAttName))
 			{
 				m_nNumGlowMappings++;
@@ -207,7 +207,7 @@ void CClientButeMgr::GetCheat(uint8 nCheatNum, char *pBuf, uint16 nBufLen)
 	pBuf[0] = LTNULL;
 	if (nCheatNum < m_nNumCheatAttributes)
 	{
-		sprintf(s_aAttName, "%s%d", CBMGR_CHEATS_ATTRIBUTE_NAME, nCheatNum);
+		snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_CHEATS_ATTRIBUTE_NAME, nCheatNum);
 		m_buteMgr.GetString(CBMGR_CHEATS_TAG, s_aAttName, "", pBuf, nBufLen);
 	}
 
@@ -547,12 +547,12 @@ void CClientButeMgr::GetWorldPath(uint8 nPath, char* pBuf, int nBufLen, LTBOOL b
 	if (bSingle)
 	{
 		if (nPath > m_nNumSingleWorldPaths) return;
-		sprintf(s_aAttName,"%s%d",CBMGR_WORLD_SINGLE_PATH, nPath);
+		snprintf(s_aAttName, sizeof(s_aAttName),"%s%d",CBMGR_WORLD_SINGLE_PATH, nPath);
 	}
 	else
 	{
 		if (nPath > m_nNumMultiWorldPaths) return;
-		sprintf(s_aAttName,"%s%d",CBMGR_WORLD_MULTI_PATH, nPath);
+		snprintf(s_aAttName, sizeof(s_aAttName),"%s%d",CBMGR_WORLD_MULTI_PATH, nPath);
 	}
 
 
@@ -597,7 +597,7 @@ void CClientButeMgr::GetDebugName(uint8 nDebugKey, char * pBuf, uint16 nBufLen)
 {
 	if (nDebugKey < m_nNumDebugKeys)
 	{
-		sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
+		snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
 		m_buteMgr.GetString(s_aTagName, CBMGR_DEBUGKEYS_ATTRIBUTE_NAME, "", pBuf, nBufLen);
 	}
 }
@@ -616,7 +616,7 @@ int CClientButeMgr::GetDebugKeyId(uint8 nDebugKey)
 
 	if (nDebugKey < m_nNumDebugKeys)
 	{
-		sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
+		snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
 		nResult = m_buteMgr.GetInt(s_aTagName, CBMGR_DEBUGKEYS_ATTRIBUTE_KEY, -1 );
 	}
 
@@ -637,7 +637,7 @@ int CClientButeMgr::GetDebugModifierId(uint8 nDebugKey)
 
 	if (nDebugKey < m_nNumDebugKeys)
 	{
-		sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
+		snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
 		nResult = m_buteMgr.GetInt(s_aTagName, CBMGR_DEBUGKEYS_ATTRIBUTE_MODIFIER, -1 );
 	}
 
@@ -656,11 +656,11 @@ void CClientButeMgr::GetDebugString(uint8 nDebugKey, uint8 nDebugLevel, char * p
 {
 	if (nDebugKey < m_nNumDebugKeys)
 	{
-		sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
+		snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
 
 		if( nDebugLevel < GetNumDebugLevels(nDebugKey) )
 		{
-			sprintf(s_aAttName, "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_STRING, nDebugLevel);
+			snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_STRING, nDebugLevel);
 			m_buteMgr.GetString(s_aTagName, s_aAttName, "", pBuf, nBufLen);
 		}
 	}
@@ -678,11 +678,11 @@ void CClientButeMgr::GetDebugTitle(uint8 nDebugKey, uint8 nDebugLevel, char * pB
 {
 	if (nDebugKey < m_nNumDebugKeys)
 	{
-		sprintf(s_aTagName, "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
+		snprintf(s_aTagName, sizeof(s_aTagName), "%s%d", CBMGR_DEBUGKEYS_TAG, nDebugKey);
 
 		if( nDebugLevel < GetNumDebugLevels(nDebugKey) )
 		{
-			sprintf(s_aAttName, "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_TITLE, nDebugLevel);
+			snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_DEBUGKEYS_ATTRIBUTE_TITLE, nDebugLevel);
 			m_buteMgr.GetString(s_aTagName, s_aAttName, "", pBuf, nBufLen);
 		}
 	}
@@ -706,9 +706,9 @@ void CClientButeMgr::GetNoGlowRS(char* pBuf, uint16 nBufLen)
 
 void CClientButeMgr::GetGlowMappingRS(uint32 nMapping, char* pMapBuf, uint16 nMapLen, char* pMapToBuf, uint16 nMapToLen)
 {
-	sprintf(s_aAttName, "%s%d", CBMGR_GLOW_MAP_RENDERSTYLE, nMapping);
+	snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_GLOW_MAP_RENDERSTYLE, nMapping);
 	m_buteMgr.GetString(CBMGR_GLOW_RENDERSTYLE_MAP, s_aAttName, "", pMapBuf, nMapLen);
 
-	sprintf(s_aAttName, "%s%d", CBMGR_GLOW_MAP_RENDERSTYLETO, nMapping);
+	snprintf(s_aAttName, sizeof(s_aAttName), "%s%d", CBMGR_GLOW_MAP_RENDERSTYLETO, nMapping);
 	m_buteMgr.GetString(CBMGR_GLOW_RENDERSTYLE_MAP, s_aAttName, "", pMapToBuf, nMapToLen);
 }

@@ -3082,7 +3082,7 @@ void CClientWeapon::InitAnimations( bool bAllowSelectOverride )
 
 	for ( i = 0; i < WM_MAX_IDLE_ANIS; ++i )
 	{
-		sprintf( buf, "%s%d", ns_szIdleAnimationBasename, i );
+		snprintf( buf, sizeof(buf), "%s%d", ns_szIdleAnimationBasename, i );
 		m_nIdleAnis[ i ] = g_pLTClient->GetAnimIndex( m_hObject, buf );
 	}
 
@@ -3090,11 +3090,11 @@ void CClientWeapon::InitAnimations( bool bAllowSelectOverride )
 	{
 		if ( i > 0 )
 		{
-			sprintf( buf, "Fire%d", i );
+			snprintf( buf, sizeof(buf), "Fire%d", i );
 		}
 		else
 		{
-			sprintf( buf, "Fire" );
+			snprintf( buf, sizeof(buf), "Fire" );
 		}
 
 		m_nFireAnis[ i ] = g_pLTClient->GetAnimIndex( m_hObject, buf );
@@ -3102,7 +3102,7 @@ void CClientWeapon::InitAnimations( bool bAllowSelectOverride )
 
 	for ( i = 0; i < WM_MAX_ALTIDLE_ANIS; ++i )
 	{
-		sprintf( buf, "%s%d", ns_szAltIdleAnimationBasename, i );
+		snprintf( buf, sizeof(buf), "%s%d", ns_szAltIdleAnimationBasename, i );
 		m_nAltIdleAnis[ i ] = g_pLTClient->GetAnimIndex( m_hObject, buf );
 	}
 
@@ -3110,11 +3110,11 @@ void CClientWeapon::InitAnimations( bool bAllowSelectOverride )
 	{
 		if ( i > 0 )
 		{
-			sprintf( buf, "%s%d", ns_szAltFireAnimationBasename, i );
+			snprintf( buf, sizeof(buf), "%s%d", ns_szAltFireAnimationBasename, i );
 		}
 		else
 		{
-			sprintf( buf, "%s", ns_szAltFireAnimationName );
+			snprintf( buf, sizeof(buf), "%s", ns_szAltFireAnimationName );
 		}
 
 		m_nAltFireAnis[ i ] = g_pLTClient->GetAnimIndex( m_hObject, buf );

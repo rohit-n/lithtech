@@ -593,10 +593,10 @@ bool ClientConnectionMgr::OnMessage(uint8 messageID, ILTMessage_Read *pMsg)
 			{
 				char aAddrBuffer[16];
 				sprintf(aAddrBuffer, "%d.%d.%d.%d", 
-					(uint32)m_aCurMessageSourceAddr[0], 
-					(uint32)m_aCurMessageSourceAddr[1], 
-					(uint32)m_aCurMessageSourceAddr[2], 
-					(uint32)m_aCurMessageSourceAddr[3]);
+					(uint32)(m_aCurMessageSourceAddr[0] & 0x000000ff),
+					(uint32)(m_aCurMessageSourceAddr[1] & 0x000000ff),
+					(uint32)(m_aCurMessageSourceAddr[2] & 0x000000ff),
+					(uint32)(m_aCurMessageSourceAddr[3] & 0x000000ff));
 				return GetServerDir()->HandleNetMessage(*CLTMsgRef_Read(pMsg->SubMsg(pMsg->Tell())), aAddrBuffer, m_nCurMessageSourcePort);
 			}
 			else
