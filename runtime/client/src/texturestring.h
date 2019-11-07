@@ -25,10 +25,10 @@ public:
 	~CTextureString();
 
 	//called to create a string given a string and an associated font
-	LTRESULT	Create(const char* pszString, const CFontInfo& Font);
+	LTRESULT	Create(const texture_string_type_t* pszString, const CFontInfo& Font);
 
 	//called to create a string given a string and an existing texture string to create it from
-	LTRESULT	CreateSubstring(const char* pszString, const CTextureString& CreateFrom);
+	LTRESULT	CreateSubstring(const texture_string_type_t* pszString, const CTextureString& CreateFrom);
 
 	//frees everything associated with this string. This discards all characters, image data, etc.
 	void		FreeData();
@@ -47,7 +47,7 @@ public:
 	LTRect2n						GetExtents() const				{ return m_rExtents; }
 
 	//called to access the string associated with this
-	const char*				GetString() const				{ return m_pszString; }
+	const texture_string_type_t*				GetString() const				{ return m_pszString; }
 
 	//called to access the associated texture image reference. Note that if this is to be held onto
 	//this should be stored in an image reference
@@ -66,14 +66,14 @@ private:
 
 	//internal creation called once a string and a bitmap font image have been properly
 	//setup
-	LTRESULT	InternalCreate(const char* pszString, CTextureStringImage* pTextureImage);
+	LTRESULT	InternalCreate(const texture_string_type_t* pszString, CTextureStringImage* pTextureImage);
 
 	//called to update the extents of the string
 	void		UpdateExtents();
 
 	//called to allocate a string. This will allocate the characters, the string, and handle copying
 	//them over
-	bool	AllocateString(const char* pszString);
+	bool	AllocateString(const texture_string_type_t* pszString);
 
 	//frees all string data allocated by the allocate string
 	void	FreeString();
@@ -122,7 +122,7 @@ private:
 
 	//a flat copy of the string. This allows for easier debugging, and also faster access to straight
 	//string data
-	char*				m_pszString;
+	texture_string_type_t*				m_pszString;
 
 };
 

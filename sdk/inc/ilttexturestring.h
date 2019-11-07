@@ -20,6 +20,11 @@
 #	include "ilttexinterface.h"
 #endif
 
+#ifdef __LINUX
+typedef char texture_string_type_t;
+#else
+typedef wchar_t texture_string_type_t;
+#endif
 
 // These mimic the wingdi.h defines not wanting to include windows.h here windows defines are without the LT prefix
 
@@ -73,11 +78,18 @@ public:
 		m_nStyle(0),
 		m_lfCharSet(LTDEFAULT_CHARSET)
 	{
-		LTStrCpy(m_szTypeface, "", LTARRAYSIZE(m_szTypeface));
+		LTStrCpy(m_szTypeface,
+#ifdef __LINUX
+			"",
+#else
+			L"",
+#endif
+			LTARRAYSIZE(m_szTypeface));
 	}
 
 	//a constructor that allows the specification of the parameters
-	CFontInfo(const char * pszTypeface, uint32 nHeight, uint8 lfCharSet = LTDEFAULT_CHARSET, uint32 nStyle = 0) :
+	CFontInfo(const texture_string_type_t * pszTypeface, uint32 nHeight, uint8 lfCharSet = LTDEFAULT_CHARSET, uint32 nStyle = 0) :
+
 		m_nHeight(nHeight),
 		m_nStyle(nStyle),
 		m_lfCharSet(lfCharSet)
@@ -98,7 +110,8 @@ public:
 	//comes from windows limits that state that a font face can only be 32 characters including
 	//the null terminator.
 	enum	{ knMaxTypefaceLen	= 32	};
-	char	m_szTypeface[knMaxTypefaceLen];
+
+	texture_string_type_t	m_szTypeface[knMaxTypefaceLen];
 
 	//the height of this font in pixels. The font is guaranteed not to go higher than this
 	uint32	m_nHeight;
@@ -154,12 +167,12 @@ public:
 	//given a unicode string, this will create a texture string that contains all the letters
 	//within the string and can be used for rendering. On failure it will return an invalid texture
 	//string handle. This will use all the font parameters specified to determine the size
-	virtual HTEXTURESTRING	CreateTextureString(const char* pszString, const CFontInfo& Font) = 0;
+	virtual HTEXTURESTRING	CreateTextureString(const texture_string_type_t* pszString, const CFontInfo& Font) = 0;
 
 	//given an existing texture string this will create a new string using the original source string.
 	//This will fail if the source string does not contain all the glyphs necessary to render the desired
 	//string
-	virtual HTEXTURESTRING	CreateTextureSubstring(const char* pszString, HTEXTURESTRING hSrcString) = 0;
+	virtual HTEXTURESTRING	CreateTextureSubstring(const texture_string_type_t* pszString, HTEXTURESTRING hSrcString) = 0;
 
 	//-----------------------------
 	// String Formatting
@@ -171,11 +184,11 @@ public:
 
 	//given a string, this will change the text and font associated with the string. This will discard
 	//any formatting data such as word wrap.
-	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const char* pszString, const CFontInfo& Font) = 0;
+	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const texture_string_type_t* pszString, const CFontInfo& Font) = 0;
 
 	//given a string, this will recreate it as a substring. This will lose any other formatting data such
 	//as word wrap.
-	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const char* pszString, HTEXTURESTRING hSrcTexture) = 0;
+	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const texture_string_type_t* pszString, HTEXTURESTRING hSrcTexture) = 0;
 
 	//-----------------------------
 	// Property Access
@@ -189,7 +202,7 @@ public:
 	virtual LTRESULT		GetStringLength(HTEXTURESTRING hString, uint32* pnLength) = 0;
 
 	//called to access the string associated with a texture string
-	virtual LTRESULT		GetString(HTEXTURESTRING hString, char* pszBuffer, uint32 nBufferLen) = 0;
+	virtual LTRESULT		GetString(HTEXTURESTRING hString, texture_string_type_t* pszBuffer, uint32 nBufferLen) = 0;
 
 	//called to access the font associated with a texture string
 	virtual LTRESULT		GetFont(HTEXTURESTRING hString, CFontInfo& Font) = 0;
