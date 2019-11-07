@@ -13,7 +13,12 @@ I found the GPL release of the Jupiter Engine and couldn't find anyone else who 
 Status
 ------
 
-Currently the engine and NOLF2 game code will build with CMake.
+Currently the engine and NOLF2 game code will build with CMake to generate the project.
+
+Windows screenshot:
+
+![nolf2 windows](https://cdn.discordapp.com/attachments/270406768750886912/642060349767680012/nolf2.jpg)
+
 
 Requirements
 ------------
