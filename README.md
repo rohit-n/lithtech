@@ -15,6 +15,18 @@ Status
 
 Currently the engine and NOLF2 game code will build with CMake.
 
+Requirements
+------------
+
+- cmake
+- gcc or clang (Linux)
+- ms vs2017 (windows only)
+- SDL2
+- SDL2 image
+- SDL2 mixer
+- dx9 sdk (windows only)
+- ninja (optional)
+
 Quick how to get building
 -------------------------
 
@@ -28,14 +40,13 @@ Ninja above can be replaced with what makes sense on your platform.
 
 TODO
 ----
-* Have a way to build the engine with any or all of the game source code. (I think most of the infrastructure for this is in place.)
 * Fix the secure standard library exceptions so that a Debug build under VS2010 will run.
 * Port/adapt all the game code to run on the GPL engine. Each game was written to a different version of the engine. So, theoretically this is possible, but it could take a substantial amount of work.
 * Remove the Windows dependencies. The engine is heavily oriented towards Windows (even though there is a bit of Linux code).
     * Replace the usage of MFC with wxWidgets in the tools. (MFC and wxWidgets are close enough that it shouldn't be too painful.)
     * Replace DirectInput and other Windows specific code with SDL.
     * Create a new audio driver based on SDL and/or OpenAL.
-    * Create a new OpenGL renderer.
+    * Create a new OpenGL or Vulkan renderer.
 * Long term, it might be cool to bring back something similar to the renderer DLLs that Shogo used. In this version of the engine, the renderer is statically linked to the engine.
 
 Games I want to support and the order to work on them
@@ -51,15 +62,15 @@ These are all the Lithtech I am aware of that had a public source release. If th
 
 Recent Developments
 ===================
-Hai, MWisBest here.
+After trying things out, I've managed to setup an automated build test with Travis-CI
+from github, and I keep a mirror on gitlab which also automatically builds Lithtech
+engine and and supporting libraries.
 
-It turns out that the NOLF2 assets included with the "GPL" release are indeed different than the retail NOLF2 assets. This code is technically working OK in its current state, but only with those "GPL" assets; the problem is that the "GPL" assets aren't complete. They really only include the first part of the first level (world) of the game for the campaign. The old (retail) versions of the WORLD files do not work directly with this newer Lithtech engine build.
+On GitLab two builds are happening 1 for gcc and 1 for clang, to get a diversity in
+build tools used. Each are done with a docker build env which has latest stable cmake,
+and up to date GCC and Clang, at the time of writing.
 
-There's a few options to maybe get the entirety of NOLF2 working with this code:
-
-1. Figure out the difference between formats and rework the engine to support both. (very unlikely)
-2. Locate an old version of Maya or 3ds Max (version 3 or 4 of either) to use the retail game's import plugin for, and then this release's export plugin, to "convert" them to the new format. (haven't been able to find an old Maya or 3ds Max so far)
-3. Recreate the levels from scratch. Really give the entire game a proper remake. (beyond *my* capabilities)
+- Katana-Steel
 
 Builds on Windows
 -----------------
@@ -82,3 +93,17 @@ The CRes.dll or Client Resources was replaced by libDynRes which currently only 
 The RC file is parsed by a python script which generates a single source C++ file that inturn is compiled into a dynamic library.
 
 and generally stubbed out every function/class needed to compile the engine.
+
+
+Past work
+=========
+Hai, MWisBest here.
+
+It turns out that the NOLF2 assets included with the "GPL" release are indeed different than the retail NOLF2 assets. This code is technically working OK in its current state, but only with those "GPL" assets; the problem is that the "GPL" assets aren't complete. They really only include the first part of the first level (world) of the game for the campaign. The old (retail) versions of the WORLD files do not work directly with this newer Lithtech engine build.
+
+There's a few options to maybe get the entirety of NOLF2 working with this code:
+
+1. Figure out the difference between formats and rework the engine to support both. (very unlikely)
+2. Locate an old version of Maya or 3ds Max (version 3 or 4 of either) to use the retail game's import plugin for, and then this release's export plugin, to "convert" them to the new format. (haven't been able to find an old Maya or 3ds Max so far)
+3. Recreate the levels from scratch. Really give the entire game a proper remake. (beyond *my* capabilities)
+
