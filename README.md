@@ -66,29 +66,10 @@ I also started an effort to port the Shogo source (originally from a really old 
 Builds on linux
 ---------------
 [![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
-- [x] Target rules for targets named Lib_ZLib
-- [x] Target rules for targets named Lib_Lith
-- [x] Target rules for targets named Lib_StdLith
-- [x] Target rules for targets named LIB_LTMem
-- [x] Target rules for targets named Lib_RezMgr
-- [x] Target rules for targets named Lib_UI
-- [x] Target rules for targets named Lib_Info
-- [x] Target rules for targets named Lib_ILTSound
-- [x] Target rules for targets named DLL_Server
-- [x] Target rules for targets named EXE_Lithtech
-- [x] Target rules for targets named MFCStub
-- [x] Target rules for targets named ButeMgr
-- [x] Target rules for targets named CryptMgr
-- [x] Target rules for targets named RegMgr
-- [x] Target rules for targets named LTGUIMgr
-- [x] Target rules for targets named ServerDir
-- [x] Target rules for targets named WONAPI
-- [x] Target rules for targets named NOLF2_ClientFXDLL
-- [x] Target rules for targets named NOLF2_ClientRes
-- [x] Target rules for targets named NOLF2_ClientShellDLL
-- [x] Target rules for targets named NOLF2_ObjectDLL
-- [x] Target rules for targets named NOLF2_ServerRes
-- [ ] Target rules for targets named FEAR_ClientFXDLL
-- [ ] Target rules for targets named FEAR_ClientShellDLL
-- [x] Target rules for targets named Test_RegMgr
 
+Since Linux doesn't have a global registry systems, the RegMgr was reimplemented with a JSON file as the backend.
+
+The CRes or Client Resources was replaced by libDynRes which currently only supports compiling strings(stringtable) from a Windows style rc file.
+The RC file is parsed by a python script which generates a single source C++ file that inturn is compiled into a dynamic library.
+
+and generally stubbed out every function/class needed to compile the engine.
