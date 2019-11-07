@@ -24,7 +24,6 @@
 #define __STDARG_H__
 #endif
 
-
 //  --------------------------------------------------------------------------
 // 	CUI Debugging tools
 //  --------------------------------------------------------------------------
@@ -37,7 +36,11 @@
 
 	If __DEBUG and _DEBUG are not defined, CUI_PRINT resolves to a comment.
 */
+#if _MSC_VER >= 1300
+#define CUI_PRINT(x, ...) CUIDebug::DebugPrint(x, __VA_ARGS__)
+#else
 #define CUI_PRINT(x, ...) CUIDebug::DebugPrint(x __VA_OPT(,) __VA_ARGS__)
+#endif
 
 
 /*!
@@ -56,7 +59,12 @@
 
 	If __DEBUG and _DEBUG are not defined, CUI_DBG resolves to a comment.
 */
+#if _MSC_VER >= 1300
+#define CUI_DBG(x, ...) CUIDebug::DebugPrint("%s: ", this->GetClassName()); CUIDebug::DebugPrint(x, __VA_ARGS__)
+#else
 #define CUI_DBG(x, ...) CUIDebug::DebugPrint("%s: ", this->GetClassName()); CUIDebug::DebugPrint(x __VA_OPT(,) __VA_ARGS__)
+#endif
+
 
 
 /*!
@@ -71,7 +79,12 @@
 	to be sucessful, even though 2 functions are being called and the conditional
 	does not enclose a new code block in curly braces '{}'.
 */
+#if _MSC_VER >= 1300
+#define CUI_ERR(x, ...) CUIDebug::DebugPrint("Error in %s at line %i:\n    ", __FILE__, __LINE__); CUIDebug::DebugPrint(x, __VA_ARGS__)
+#else
 #define CUI_ERR(x, ...) CUIDebug::DebugPrint("Error in %s at line %i:\n    ", __FILE__, __LINE__); CUIDebug::DebugPrint(x __VA_OPT(,) __VA_ARGS__)
+#endif
+
 
 
 /*!
