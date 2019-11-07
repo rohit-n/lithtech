@@ -15,6 +15,17 @@ Status
 
 Currently the engine and NOLF2 game code will build with CMake.
 
+Quick how to get building
+-------------------------
+
+```bash
+mkdir build
+cd build
+cmake -DJSON_BuildTests=off -G 'Ninja' ..
+cmake --build .
+```
+Ninja above can be replaced with what makes sense on your platform. 
+
 TODO
 ----
 * Have a way to build the engine with any or all of the game source code. (I think most of the infrastructure for this is in place.)
@@ -65,11 +76,9 @@ I also started an effort to port the Shogo source (originally from a really old 
 
 Builds on linux
 ---------------
-[![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
-
 Since Linux doesn't have a global registry systems, the RegMgr was reimplemented with a JSON file as the backend.
 
-The CRes or Client Resources was replaced by libDynRes which currently only supports compiling strings(stringtable) from a Windows style rc file.
+The CRes.dll or Client Resources was replaced by libDynRes which currently only supports compiling strings(stringtable) from a Windows style rc file.
 The RC file is parsed by a python script which generates a single source C++ file that inturn is compiled into a dynamic library.
 
 and generally stubbed out every function/class needed to compile the engine.
