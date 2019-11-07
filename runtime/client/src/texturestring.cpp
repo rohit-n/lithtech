@@ -18,7 +18,7 @@
 //given a string and an index into that string that the current character is on, this
 //will determine if that current character is a word break (this takes the full string
 //so that it can perform multiple character checks in certain languages)
-static bool CanBreakLineAt(const char* pszString, uint32 nIndex)
+static bool CanBreakLineAt(const texture_string_type_t* pszString, uint32 nIndex)
 {
 	//assume english for now
 	return (isspace(pszString[nIndex]) != 0);
@@ -26,16 +26,16 @@ static bool CanBreakLineAt(const char* pszString, uint32 nIndex)
 
 //given a string and an index, this will determine if it is a hard line break, or a forced line break.
 // (such as '\n')
-static bool IsHardLineBreak(const char* pszString, uint32 nIndex)
+static bool IsHardLineBreak(const texture_string_type_t* pszString, uint32 nIndex)
 {
 	//only handle the '\n' character for now
-	return (pszString[nIndex] == (char)'\n');
+	return (pszString[nIndex] == (texture_string_type_t)'\n');
 }
 
 //given a string, a row ending position, and a row starting position, this will scan backwards from
 //the row ending and return the first character that can be used as a line break. If no break can
 //be found, it will break at the last character
-static uint32 FindLineBreak(const char* pszString, uint32 nRowStart, uint32 nRowEnd)
+static uint32 FindLineBreak(const texture_string_type_t* pszString, uint32 nRowStart, uint32 nRowEnd)
 {
 	//run backwards starting at the end and find the first split, but don't bother to check
 	//the first character as a split as that would cause a completely empty row
@@ -68,7 +68,7 @@ CTextureString::~CTextureString()
 }
 
 //called to create a string given a string and an associated font
-LTRESULT CTextureString::Create(const char* pszString, const CFontInfo& Font)
+LTRESULT CTextureString::Create(const texture_string_type_t* pszString, const CFontInfo& Font)
 {
 	//free any existing string data
 	FreeData();
@@ -108,7 +108,7 @@ LTRESULT CTextureString::Create(const char* pszString, const CFontInfo& Font)
 }
 
 //called to create a string given a string and an existing texture string to create it from
-LTRESULT CTextureString::CreateSubstring(const char* pszString, const CTextureString& CreateFrom)
+LTRESULT CTextureString::CreateSubstring(const texture_string_type_t* pszString, const CTextureString& CreateFrom)
 {
 	//free any existing string data
 	FreeData();
@@ -119,7 +119,7 @@ LTRESULT CTextureString::CreateSubstring(const char* pszString, const CTextureSt
 
 //internal creation called once a string and a bitmap font image have been properly
 //setup
-LTRESULT CTextureString::InternalCreate(const char* pszString, CTextureStringImage* pTextureImage)
+LTRESULT CTextureString::InternalCreate(const texture_string_type_t* pszString, CTextureStringImage* pTextureImage)
 {
 	//first off setup any string data
 	if(!AllocateString(pszString))
@@ -147,7 +147,7 @@ LTRESULT CTextureString::InternalCreate(const char* pszString, CTextureStringIma
 	for(uint32 nCurrChar = 0; nCurrChar < m_nNumCharacters; nCurrChar++)
 	{
 		//cache some information
-		char cChar					= pszString[nCurrChar];
+		texture_string_type_t cChar					= pszString[nCurrChar];
 		CTextureStringChar& TexChar		= m_pCharacters[nCurrChar];
 
 		//and now setup the texture character to an initial position and associate it with a glyph
@@ -363,7 +363,7 @@ void CTextureString::Free()
 
 //called to allocate a string. This will allocate the characters, the string, and handle copying
 //them over
-bool CTextureString::AllocateString(const char* pszString)
+bool CTextureString::AllocateString(const texture_string_type_t* pszString)
 {
 	//make sure we don't already have a string allocated
 	FreeString();
@@ -392,7 +392,7 @@ bool CTextureString::AllocateString(const char* pszString)
 
 	//allocate the new buffer of characters
 	m_pCharacters = Allocator.AllocateObjects<CTextureStringChar>(m_nNumCharacters);
-	m_pszString = Allocator.AllocateObjects<char>(m_nNumCharacters + 1);
+	m_pszString = Allocator.AllocateObjects<texture_string_type_t>(m_nNumCharacters + 1);
 
 	LTStrCpy(m_pszString, pszString, m_nNumCharacters + 1);
 

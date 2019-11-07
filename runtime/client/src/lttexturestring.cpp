@@ -44,7 +44,7 @@ LTRESULT CLTTextureString::UnregisterCustomFontFile(HCUSTOMFONTFILE hCustomFontF
 
 //-----------------------------
 // String Creation
-HTEXTURESTRING CLTTextureString::CreateTextureString(const char* pszString, const CFontInfo& Font)
+HTEXTURESTRING CLTTextureString::CreateTextureString(const texture_string_type_t* pszString, const CFontInfo& Font)
 {
 	//parameter check
 	if(!pszString)
@@ -70,7 +70,7 @@ HTEXTURESTRING CLTTextureString::CreateTextureString(const char* pszString, cons
 	return pNewString;
 }
 
-HTEXTURESTRING CLTTextureString::CreateTextureSubstring(const char* pszString, HTEXTURESTRING hSrcString)
+HTEXTURESTRING CLTTextureString::CreateTextureSubstring(const texture_string_type_t* pszString, HTEXTURESTRING hSrcString)
 {
 	//parameter check
 	if(!pszString || !hSrcString)
@@ -109,7 +109,7 @@ LTRESULT CLTTextureString::WordWrapString(HTEXTURESTRING hString, uint32 nWidth)
 	return LT_OK;
 }
 
-LTRESULT CLTTextureString::RecreateTextureString(HTEXTURESTRING hString, const char* pszString, const CFontInfo& Font)
+LTRESULT CLTTextureString::RecreateTextureString(HTEXTURESTRING hString, const texture_string_type_t* pszString, const CFontInfo& Font)
 {
 	if(!hString || !pszString)
 		return LT_INVALIDPARAMS;
@@ -117,7 +117,7 @@ LTRESULT CLTTextureString::RecreateTextureString(HTEXTURESTRING hString, const c
 	return hString->Create(pszString, Font);
 }
 
-LTRESULT CLTTextureString::RecreateTextureSubstring(HTEXTURESTRING hString, const char* pszString, HTEXTURESTRING hSrcTexture)
+LTRESULT CLTTextureString::RecreateTextureSubstring(HTEXTURESTRING hString, const texture_string_type_t* pszString, HTEXTURESTRING hSrcTexture)
 {
 	if(!hString || !pszString || !hSrcTexture)
 		return LT_INVALIDPARAMS;
@@ -147,13 +147,16 @@ LTRESULT CLTTextureString::GetStringLength(HTEXTURESTRING hString, uint32* pnLen
 	return LT_OK;
 }
 
-LTRESULT CLTTextureString::GetString(HTEXTURESTRING hString, char* pszBuffer, uint32 nBufferLen)
+LTRESULT CLTTextureString::GetString(HTEXTURESTRING hString, texture_string_type_t* pszBuffer, uint32 nBufferLen)
 {
 	if(!hString || !pszBuffer || (nBufferLen == 0))
 		return LT_INVALIDPARAMS;
-
+#ifdef __LINUX
 	strncpy(pszBuffer, hString->GetString(), nBufferLen);
-	pszBuffer[nBufferLen - 1] = (char)'\0';
+#else
+	wcsncpy(pszBuffer, hString->GetString(), nBufferLen);
+#endif
+	pszBuffer[nBufferLen - 1] = (texture_string_type_t)'\0';
 	return LT_OK;
 }
 

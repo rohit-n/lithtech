@@ -32,20 +32,20 @@ public:
 
 	//-----------------------------
 	// String Creation
-	virtual HTEXTURESTRING	CreateTextureString(const char* pszString, const CFontInfo& Font);
-	virtual HTEXTURESTRING	CreateTextureSubstring(const char* pszString, HTEXTURESTRING hSrcTexture);
+	virtual HTEXTURESTRING	CreateTextureString(const texture_string_type_t* pszString, const CFontInfo& Font);
+	virtual HTEXTURESTRING	CreateTextureSubstring(const texture_string_type_t* pszString, HTEXTURESTRING hSrcTexture);
 
 	//-----------------------------
 	// String Formatting
 	virtual LTRESULT		WordWrapString(HTEXTURESTRING hString, uint32 nWidth);
-	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const char* pszString, const CFontInfo& Font);
-	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const char* pszString, HTEXTURESTRING hSrcTexture);
+	virtual LTRESULT		RecreateTextureString(HTEXTURESTRING hString, const texture_string_type_t* pszString, const CFontInfo& Font);
+	virtual LTRESULT		RecreateTextureSubstring(HTEXTURESTRING hString, const texture_string_type_t* pszString, HTEXTURESTRING hSrcTexture);
 
 	//-----------------------------
 	// Property Access
 	virtual LTRESULT		GetStringExtents(HTEXTURESTRING hString, LTRect2n& rExtents);
 	virtual LTRESULT		GetStringLength(HTEXTURESTRING hString, uint32* pnLength);
-	virtual LTRESULT		GetString(HTEXTURESTRING hString, char* pszBuffer, uint32 nBufferLen);
+	virtual LTRESULT		GetString(HTEXTURESTRING hString, texture_string_type_t* pszBuffer, uint32 nBufferLen);
 	virtual LTRESULT		GetFont(HTEXTURESTRING hString, CFontInfo& Font);
 	virtual LTRESULT		GetTextureImage(HTEXTURESTRING hString, HTEXTURE& hTexture);
 	virtual LTRESULT		GetCharRect(HTEXTURESTRING hString, uint32 nCharIndex,
