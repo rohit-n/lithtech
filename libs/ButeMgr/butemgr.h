@@ -31,6 +31,7 @@
 #	include <iosfwd>
 #	include <strstream>
 #	include <iostream>
+#	include <fstream>
 #elif defined(__LINUX)
 #   include <unordered_set>
 #   include <unordered_map>
@@ -668,8 +669,10 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, int decryptCode,
 {
 	if (!pData)
 		return false;
+	std::streamsize len = size;
+	const char* buf1 = (const char*)pData;
 #if _MSC_VER >= 1300 && !defined(__clang__)
-	std::istrstream IStream{(char*)pData, size};
+	std::istrstream IStream(buf1, len);
 #elif defined(__LINUX)
 	std::istringstream IStream{std::string{(char*)pData, size}};
 #else
@@ -687,7 +690,7 @@ inline bool CButeMgr::Parse(void* pData, unsigned long size, const char* cryptKe
 {
 	if (!pData)
 		return false;
-	char* buf1 = (char*)pData;
+	const char* buf1 = (const char*)pData;
 #if _MSC_VER >= 1300 && !defined(__clang__)
 	std::streamsize len = size;
 	std::istrstream Iss(buf1, len);

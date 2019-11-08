@@ -5374,7 +5374,7 @@ S32	CDx8SoundSys::DecompressADPCM( LTSOUNDINFO* pInfo, void** ppOutData, U32* pu
 */
 }
 
-S32	CDx8SoundSys::DecompressASI( void* pInData, U32 uiInSize,const char* sFilename_ext, void** ppWav, U32* puiWavSize, LTLENGTHYCB fnCallback )
+S32	CDx8SoundSys::DecompressASI( void* pInData, U32 uiInSize, char* sFilename_ext, void** ppWav, U32* puiWavSize, LTLENGTHYCB fnCallback )
 {
 	bool bSuccess = false;
 
