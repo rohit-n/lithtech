@@ -394,7 +394,7 @@ const char *IServerFileMgr::GetUsedFilename(UsedFile *pFile)
         return pFile->GetFilename();
     }
     else {
-        return nullptr;
+        return "";
     }
 }
 
