@@ -21,6 +21,8 @@ Windows screenshot:
 
 ![LT on Linux](https://imgur.com/LOpCNfa.png)
 
+![debug nolf2 windows](https://cdn.discordapp.com/attachments/270406768750886912/642412574725636167/nolf2_vs.png)
+
 Requirements
 ------------
 
