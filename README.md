@@ -19,6 +19,7 @@ Windows screenshot:
 
 ![nolf2 windows](https://cdn.discordapp.com/attachments/270406768750886912/642060349767680012/nolf2.jpg)
 
+![LT on Linux](https://imgur.com/LOpCNfa.png)
 
 Requirements
 ------------
