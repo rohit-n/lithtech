@@ -1,3 +1,6 @@
+Travis[![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
+GL[![pipeline status](https://gitlab.com/Katana-Steel/lithtech/badges/linux-x86_64/pipeline.svg)](https://gitlab.com/Katana-Steel/lithtech/pipelines)
+
 lithtech
 ========
 
@@ -9,21 +12,49 @@ I found the GPL release of the Jupiter Engine and couldn't find anyone else who 
 
 Status
 ------
-Travis-CI: [![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
-Gitlab: [![pipeline status](https://gitlab.com/Katana-Steel/lithtech/badges/linux-x86_64/pipeline.svg)](https://gitlab.com/Katana-Steel/lithtech/commits/linux-x86_64)
 
-Currently the engine and NOLF2 game code will build with CMake.
+Currently the engine and NOLF2 game code will build with CMake to generate the project.
+
+Windows screenshot:
+
+![nolf2 windows](https://cdn.discordapp.com/attachments/270406768750886912/642060349767680012/nolf2.jpg)
+
+![LT on Linux](https://imgur.com/LOpCNfa.png)
+
+![debug nolf2 windows](https://cdn.discordapp.com/attachments/270406768750886912/642412574725636167/nolf2_vs.png)
+
+Requirements
+------------
+
+- cmake
+- gcc or clang (Linux)
+- ms vs2017 (windows only)
+- SDL2
+- SDL2 image
+- SDL2 mixer
+- dx9 sdk (windows only)
+- ninja (optional)
+
+Quick how to get building
+-------------------------
+
+```bash
+mkdir build
+cd build
+cmake -DJSON_BuildTests=off -G 'Ninja' ..
+cmake --build .
+```
+Ninja above can be replaced with what makes sense on your platform. 
 
 TODO
 ----
-* Have a way to build the engine with any or all of the game source code. (I think most of the infrastructure for this is in place.)
 * Fix the secure standard library exceptions so that a Debug build under VS2010 will run.
 * Port/adapt all the game code to run on the GPL engine. Each game was written to a different version of the engine. So, theoretically this is possible, but it could take a substantial amount of work.
 * Remove the Windows dependencies. The engine is heavily oriented towards Windows (even though there is a bit of Linux code).
     * Replace the usage of MFC with wxWidgets in the tools. (MFC and wxWidgets are close enough that it shouldn't be too painful.)
     * Replace DirectInput and other Windows specific code with SDL.
     * Create a new audio driver based on SDL and/or OpenAL.
-    * Create a new OpenGL renderer.
+    * Create a new OpenGL or Vulkan renderer.
 * Long term, it might be cool to bring back something similar to the renderer DLLs that Shogo used. In this version of the engine, the renderer is statically linked to the engine.
 
 Games I want to support and the order to work on them
@@ -39,15 +70,15 @@ These are all the Lithtech I am aware of that had a public source release. If th
 
 Recent Developments
 ===================
-Hai, MWisBest here.
+After trying things out, I've managed to setup an automated build test with Travis-CI
+from github, and I keep a mirror on gitlab which also automatically builds Lithtech
+engine and and supporting libraries.
 
-It turns out that the NOLF2 assets included with the "GPL" release are indeed different than the retail NOLF2 assets. This code is technically working OK in its current state, but only with those "GPL" assets; the problem is that the "GPL" assets aren't complete. They really only include the first part of the first level (world) of the game for the campaign. The old (retail) versions of the WORLD files do not work directly with this newer Lithtech engine build.
+On GitLab two builds are happening 1 for gcc and 1 for clang, to get a diversity in
+build tools used. Each are done with a docker build env which has latest stable cmake,
+and up to date GCC and Clang, at the time of writing.
 
-There's a few options to maybe get the entirety of NOLF2 working with this code:
-
-1. Figure out the difference between formats and rework the engine to support both. (very unlikely)
-2. Locate an old version of Maya or 3ds Max (version 3 or 4 of either) to use the retail game's import plugin for, and then this release's export plugin, to "convert" them to the new format. (haven't been able to find an old Maya or 3ds Max so far)
-3. Recreate the levels from scratch. Really give the entire game a proper remake. (beyond *my* capabilities)
+- Katana-Steel
 
 Builds on Windows
 -----------------
@@ -64,30 +95,23 @@ I also started an effort to port the Shogo source (originally from a really old 
 
 Builds on linux
 ---------------
-[![Build Status](https://travis-ci.org/Katana-Steel/lithtech.svg?branch=linux-x86_64)](https://travis-ci.org/Katana-Steel/lithtech)
-- [x] Target rules for targets named Lib_ZLib
-- [x] Target rules for targets named Lib_Lith
-- [x] Target rules for targets named Lib_StdLith
-- [x] Target rules for targets named LIB_LTMem
-- [x] Target rules for targets named Lib_RezMgr
-- [x] Target rules for targets named Lib_UI
-- [x] Target rules for targets named Lib_Info
-- [x] Target rules for targets named Lib_ILTSound
-- [x] Target rules for targets named DLL_Server
-- [x] Target rules for targets named EXE_Lithtech
-- [x] Target rules for targets named MFCStub
-- [x] Target rules for targets named ButeMgr
-- [x] Target rules for targets named CryptMgr
-- [x] Target rules for targets named RegMgr
-- [x] Target rules for targets named LTGUIMgr
-- [x] Target rules for targets named ServerDir
-- [x] Target rules for targets named WONAPI
-- [x] Target rules for targets named NOLF2_ClientFXDLL
-- [x] Target rules for targets named NOLF2_ClientRes
-- [x] Target rules for targets named NOLF2_ClientShellDLL
-- [x] Target rules for targets named NOLF2_ObjectDLL
-- [x] Target rules for targets named NOLF2_ServerRes
-- [ ] Target rules for targets named FEAR_ClientFXDLL
-- [ ] Target rules for targets named FEAR_ClientShellDLL
-- [x] Target rules for targets named Test_RegMgr
+Since Linux doesn't have a global registry systems, the RegMgr was reimplemented with a JSON file as the backend.
+
+The CRes.dll or Client Resources was replaced by libDynRes which currently only supports compiling strings(stringtable) from a Windows style rc file.
+The RC file is parsed by a python script which generates a single source C++ file that inturn is compiled into a dynamic library.
+
+and generally stubbed out every function/class needed to compile the engine.
+
+
+Past work
+=========
+Hai, MWisBest here.
+
+It turns out that the NOLF2 assets included with the "GPL" release are indeed different than the retail NOLF2 assets. This code is technically working OK in its current state, but only with those "GPL" assets; the problem is that the "GPL" assets aren't complete. They really only include the first part of the first level (world) of the game for the campaign. The old (retail) versions of the WORLD files do not work directly with this newer Lithtech engine build.
+
+There's a few options to maybe get the entirety of NOLF2 working with this code:
+
+1. Figure out the difference between formats and rework the engine to support both. (very unlikely)
+2. Locate an old version of Maya or 3ds Max (version 3 or 4 of either) to use the retail game's import plugin for, and then this release's export plugin, to "convert" them to the new format. (haven't been able to find an old Maya or 3ds Max so far)
+3. Recreate the levels from scratch. Really give the entire game a proper remake. (beyond *my* capabilities)
 
