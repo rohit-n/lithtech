@@ -130,6 +130,8 @@ CClientFXDB::CClientFXDB()
 	m_pfnSetAppFocus		= NULL;
 	m_pfnDeleteFX			= NULL;
 	m_pfnSetCreateFunction	= NULL;
+	m_pfnCreatePropList     = nullptr;
+	m_pfnFreePropList       = nullptr;
 
 }
 
