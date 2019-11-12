@@ -60,6 +60,10 @@ static inline void* GetProcAddress(void *h, const char *fn_name) {
 	return ::dlsym(h, fn_name);
 }
 
+static inline int FreeLibrary(void *handle) {
+	return ::dlclose(handle);
+}
+
 #endif
 
 #endif
