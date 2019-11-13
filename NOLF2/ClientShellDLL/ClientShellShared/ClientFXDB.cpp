@@ -122,14 +122,14 @@ static void SetupKey(FX_KEY* pKey, FX_PROP* pPropList, uint32 nNumProps)
 //-----------------------------------------------------------------
 CClientFXDB::CClientFXDB()
 {
-	m_nNumEffectTypes		= 0;
-	m_pEffectTypes			= NULL;
-	m_hDLLInst				= NULL;
+	m_nNumEffectTypes       = 0;
+	m_pEffectTypes          = nullptr;
+	m_hDLLInst              = nullptr;
 
-	m_pfnSetPlayer			= NULL;
-	m_pfnSetAppFocus		= NULL;
-	m_pfnDeleteFX			= NULL;
-	m_pfnSetCreateFunction	= NULL;
+	m_pfnSetPlayer          = nullptr;
+	m_pfnSetAppFocus        = nullptr;
+	m_pfnDeleteFX           = nullptr;
+	m_pfnSetCreateFunction	= nullptr;
 	m_pfnCreatePropList     = nullptr;
 	m_pfnFreePropList       = nullptr;
 
