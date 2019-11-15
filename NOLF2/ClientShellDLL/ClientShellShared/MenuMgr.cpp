@@ -65,13 +65,9 @@ LTBOOL CMenuMgr::Init()
 	m_MenuArray.push_back(&m_MenuPlayer);
 
 	//init menus
-	MenuArray::iterator iter = m_MenuArray.begin();
-	while (iter != m_MenuArray.end())
-	{
-		if (!(*iter)->Init())
+	for (auto &&menu : m_MenuArray)
+		if (!menu->Init())
 			return LTFALSE;
-		iter++;
-	}
 
 	m_fSlideInTime	= g_pLayoutMgr->GetMenuSlideInTime();
 	m_fSlideOutTime = g_pLayoutMgr->GetMenuSlideOutTime();
@@ -112,11 +108,11 @@ LTBOOL CMenuMgr::Init()
 	CUIFont* pFont = g_pInterfaceResMgr->GetFont(fontFace);
 	
 	LTIntPt offset(nBarSpacing,(size.y-fontSize)/2);
-	for (uint8 i =0; i < m_MenuArray.size(); i++)
+	uint8 i = 0;
+	for (auto &pMenu : m_MenuArray )
 	{
 		CLTGUITextCtrl *pCtrl = debug_new(CLTGUITextCtrl);
-		CBaseMenu *pMenu = m_MenuArray[i];
-		pCtrl->Create(pMenu->GetTitle(),i,0,pFont,fontSize,&m_MenuBar);
+		pCtrl->Create(pMenu->GetTitle(),i++,0,pFont,fontSize,&m_MenuBar);
 		pCtrl->SetColors(g_nSelectColor,argbBlack,argbWhite);
 		pCtrl->SetParam1(pMenu->GetMenuID());
 		m_MenuBar.AddControl(pCtrl,offset);
