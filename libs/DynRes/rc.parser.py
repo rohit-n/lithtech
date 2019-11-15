@@ -59,20 +59,29 @@ def getIncludes(base, paths, includes):
         if exists(u'/'.join([base, i])):
             inc = u'/'.join([base, i])
         if len(inc) < 1:
-            print(u'not found: {0}'.format(i))
+            notice(u'not found: {0}'.format(i))
             continue
         if u'.h' in i.lower():
-            print(u'including: {0}'.format(inc))
+            notice(u'including: {0}'.format(inc))
             parseH(inc)
         if u'.rc' in i.lower():
-            print(u'including: {0}'.format(inc))
+            notice(u'including: {0}'.format(inc))
             ret_incl.extend(parseRC(inc))
     return ret_incl
 
 
+def notice(msg):
+    global verbose
+    if verbose:
+        print(msg)
+
+
+verbose = False
 main_rc = u''
 paths = [u'.']
 for p in argv:
+    if '-v' in p:
+        verbose = True
     if p.lower().endswith(u'rc'):
         main_rc = p
         continue
