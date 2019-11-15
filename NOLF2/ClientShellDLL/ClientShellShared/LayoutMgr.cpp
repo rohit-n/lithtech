@@ -707,12 +707,15 @@ uint8 CLayoutMgr::GetScreenFontFace(eScreenID screenId)
 uint8 CLayoutMgr::GetScreenFontSize(eScreenID screenId)
 {
 	const char* pTag = g_pInterfaceMgr->GetScreenMgr()->GetScreenName(screenId);
+	uint8 size = 0;
 	if (m_buteMgr.Exist(pTag,LO_SCREEN_ITEM_SIZE))
 	{
-		return GetInt(pTag, LO_SCREEN_ITEM_SIZE);
+		size = GetInt(pTag, LO_SCREEN_ITEM_SIZE);
 	}
 	else
-		return GetInt(LO_DEFAULT_TAG, LO_SCREEN_ITEM_SIZE);
+		size = GetInt(LO_DEFAULT_TAG, LO_SCREEN_ITEM_SIZE);
+	return (size==0) ? 12 : size;
+
 }
 
 LTRect   CLayoutMgr::GetScreenPageRect(eScreenID screenId)
@@ -1019,7 +1022,8 @@ void CLayoutMgr::GetFontName(int nFont, char* pszFontFile, int nFontFileBufLen,
 uint8 CLayoutMgr::GetFontSize(int nFont)
 {
 	sprintf(s_aAttName, "FontSize%d", nFont);
-	return (uint8)GetInt("Fonts", s_aAttName);
+	uint8 size = (uint8)GetInt("Fonts", s_aAttName);
+	return (size == 0) ? 12 : size;
 }
 
 
@@ -2202,7 +2206,8 @@ uint8 CLayoutMgr::GetDialogFontFace()
 
 uint8 CLayoutMgr::GetDialogFontSize()
 {
-	return (uint8)GetInt(LO_MISC_TAG, LO_MISC_DLG_FONT_SIZE);
+	uint8 size = (uint8)GetInt(LO_MISC_TAG, LO_MISC_DLG_FONT_SIZE);
+	return (size == 0) ? 24 : size;
 }
 
 LTFLOAT  CLayoutMgr::GetDeathDelay()
@@ -2401,12 +2406,14 @@ uint8 CLayoutMgr::GetMenuFontFace(eMenuID menuId)
 uint8 CLayoutMgr::GetMenuFontSize(eMenuID menuId)
 {
 	const char* pTag = g_pInterfaceMgr->GetMenuMgr()->GetMenuName(menuId);
+	uint8 size = 0;
 	if (menuId != MENU_ID_NONE && m_buteMgr.Exist(pTag,LO_MENU_FONT_SIZE))
 	{
-		return (uint8)GetInt(pTag, LO_MENU_FONT_SIZE);
+		size = (uint8)GetInt(pTag, LO_MENU_FONT_SIZE);
 	}
 	else
-		return (uint8)GetInt(LO_DEFAULT_MENU_TAG, LO_MENU_FONT_SIZE);
+		size = (uint8)GetInt(LO_DEFAULT_MENU_TAG, LO_MENU_FONT_SIZE);
+	return (size==0) ? 12 : size;
 
 }
 
@@ -2424,12 +2431,14 @@ uint8 CLayoutMgr::GetMenuTitleFontFace(eMenuID menuId)
 uint8 CLayoutMgr::GetMenuTitleFontSize(eMenuID menuId)
 {
 	const char* pTag = g_pInterfaceMgr->GetMenuMgr()->GetMenuName(menuId);
+	uint8 size = 0;
 	if (menuId != MENU_ID_NONE && m_buteMgr.Exist(pTag,LO_MENU_TITLE_FONT_SIZE))
 	{
-		return (uint8)GetInt(pTag, LO_MENU_TITLE_FONT_SIZE);
+		size = (uint8)GetInt(pTag, LO_MENU_TITLE_FONT_SIZE);
 	}
 	else
-		return (uint8)GetInt(LO_DEFAULT_MENU_TAG, LO_MENU_TITLE_FONT_SIZE);
+		size = (uint8)GetInt(LO_DEFAULT_MENU_TAG, LO_MENU_TITLE_FONT_SIZE);
+	return (size==0) ? 12 : size;
 }
 
 
