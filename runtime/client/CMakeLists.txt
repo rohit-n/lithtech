@@ -196,6 +196,7 @@ else(WIN32)
 	set(exec_src
 	../kernel/mem/src/sys/linux/de_memory.cpp
 	../render_b/src/sys/sdl/sdltexinterface.cpp
+	../render_b/src/sys/sdl/sdldrawprim.cpp
 	src/sys/linux/customfontfilemgr.cpp
 	src/sys/linux/texturestringimage.cpp
 	../kernel/io/src/sys/linux/linuxfile.cpp
