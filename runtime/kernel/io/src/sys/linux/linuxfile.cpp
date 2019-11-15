@@ -444,7 +444,7 @@ ILTStream* df_Open(HLTFileTree* hTree, const char *pName, int openMode)
 		return NULL;
 
 	if(pTree->m_TreeType == RezFileTree) {
-		CRezItm* pRezItm = pTree->m_pRezMgr->GetRezFromDosPath(pName);
+		CRezItm* pRezItm = pTree->m_pRezMgr->GetRezFromUnixPath(pName);
 		if (pRezItm == LTNULL) return LTNULL;
 			// Use fp to setup the stream.
 		RezFileStream *pRezStream = g_RezFileStreamBank.Allocate();

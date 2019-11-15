@@ -609,6 +609,30 @@ CRezItm* CRezDir::GetRez(REZNAME sRes, REZTYPE nType) {
 
 
 //---------------------------------------------------------------------------------------------------
+CRezItm* CRezDir::GetRezFromUnixName(char* sUnixName)
+{
+    size_t nLen = strlen(sUnixName);
+    char *fname = new char[(nLen+1)];
+    char *ext = nullptr;
+    strncpy(fname, sUnixName, nLen);
+    // get extention
+    for(int i=nLen-1;i >= 0; --i) {
+      if(fname[i] == '.') {
+          if(strlen(&fname[i+1]) <= 5) {
+              fname[i] = '\0';
+              ext = &(fname[i+1]);
+          }
+          break;
+      }
+    }
+    REZTYPE nType = 0;
+    if(ext)
+        nType = m_pRezMgr->StrToType(ext);
+    CRezItm *ret = GetRez(fname, nType);
+    delete[] fname;
+    return ret;
+}
+
 CRezItm* CRezDir::GetRezFromDosName(char* sDosName) {
   ASSERT(sDosName != NULL);
 //  ASSERT(strlen(sDosName) < 13);
@@ -2162,6 +2186,72 @@ CRezItm* CRezDir::GetRezFromDosPath(const char* sPath)
 	return(pDir->GetRezFromDosName(sRez));
 }
 
+// [blg]
+//---------------------------------------------------------------------------------------------------
+CRezItm* CRezDir::GetRezFromUnixPath(const char* sPath)
+{
+	char	sDir[1024];
+	char	sRez[1024];
+
+
+	// Strip off leading slash...
+
+	int len = (int)strlen(sPath);
+
+	if (len >= 1023) return NULL;
+
+	if (len > 1)
+	{
+		if (!IsGoodChar(sPath[0]))
+		{
+			sPath = &sPath[1];
+			len--;
+		}
+	}
+
+
+	// Strip off the rez name...
+
+	int i   = len - 1;
+
+	while (IsGoodChar(sPath[i]))
+	{
+		i--;
+		if (i < 0) break;
+	}
+
+	if (i == len) return(NULL);
+
+	strncpy(sRez, &sPath[i+1], 1023);
+	sRez[1023] = '\0';
+
+
+	// If we were only given a rez name, try to get it...
+
+	if (i <= 1)
+	{
+		return(GetRezFromUnixName(sRez));
+	}
+
+
+	// Copy everything except for the rez name...
+
+	strncpy(sDir, sPath, i);
+	sDir[i] = '\0';
+
+
+	// Find the directory for this path...
+
+	CRezDir* pDir = GetDirFromPath(sDir);
+
+	if (!pDir) return(NULL);
+
+
+	// Try to get the rez from the dir we just got...
+
+	return(pDir->GetRezFromUnixName(sRez));
+}
+
 
 // [blg]
 //---------------------------------------------------------------------------------------------------
@@ -2238,6 +2328,11 @@ CRezItm* CRezMgr::GetRezFromPath(const char* sPath, REZTYPE type)
 CRezItm* CRezMgr::GetRezFromDosPath(const char* sPath)
 {
 	return(GetRootDir()->GetRezFromDosPath(sPath));
+}
+
+CRezItm* CRezMgr::GetRezFromUnixPath(const char* sPath)
+{
+	return(GetRootDir()->GetRezFromUnixPath(sPath));
 }
 
 //---------------------------------------------------------------------------------------------------

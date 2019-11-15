@@ -170,8 +170,10 @@ public:
 
 	CRezItm*	GetRez(REZNAME sRes, REZTYPE Type);		            // get a resource item in this directory by name
     CRezItm*    GetRezFromDosName(char* sDosname);                  // gets a resource from an old style dos file name which includes the type in the extension
+    CRezItm*    GetRezFromUnixName(char* sDosname);                  // gets a resource from an old style dos file name which includes the type in the extension
 	CRezItm*	GetRezFromPath(const char* sPath, REZTYPE type);	// gets a resource item from a full path and type
 	CRezItm*	GetRezFromDosPath(const char* sPath);				// gets a resource item from a full path and extension
+	CRezItm*	GetRezFromUnixPath(const char* sPath);				// gets a resource item from a full path and extension
 
 	BOOL		Load(BOOL LoadAllSubDirs = FALSE);                  // Load all resource in this directory
 	BOOL		UnLoad(BOOL UnLoadAllSubDirs = FALSE);              // Unload all resources in this directory
@@ -253,6 +255,7 @@ public:
 	// functions for accessing RezMgr with full paths
 	CRezItm*	GetRezFromPath(const char* sPath, REZTYPE type);	// gets a resource item from a full path and type
 	CRezItm*	GetRezFromDosPath(const char* sPath);				// gets a resource item from a full path and extension
+	CRezItm*	GetRezFromUnixPath(const char* sPath);				// gets a resource item from a full path and extension
 	CRezDir*	GetDirFromPath(const char* pPath);					// Returns a directory based on a full path
 
 	// function to modify how path access for RezMgr works
