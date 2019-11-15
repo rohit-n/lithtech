@@ -213,7 +213,9 @@ void CClientFXDB::Term()
 			}
 		}
 
-		debug_delete( pGroupNode->m_Data );		
+		pGroupNode->m_Data->Term();
+		debug_delete( pGroupNode->m_Data );	
+		pGroupNode->m_Data = nullptr;	
 		pGroupNode = pGroupNode->m_pNext;
 	}
 	m_collGroupFX.RemoveAll();
