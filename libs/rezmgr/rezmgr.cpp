@@ -614,15 +614,13 @@ CRezItm* CRezDir::GetRezFromUnixName(char* sUnixName)
     size_t nLen = strlen(sUnixName);
     char *fname = new char[(nLen+1)];
     char *ext = nullptr;
-    strncpy(fname, sUnixName, nLen);
-    // get extention
-    for(int i=nLen-1;i >= 0; --i) {
-      if(fname[i] == '.') {
-          if(strlen(&fname[i+1]) <= 5) {
-              fname[i] = '\0';
-              ext = &(fname[i+1]);
-          }
-          break;
+    fname[nLen] = '\0';
+    for(int16_t i=nLen-1;i>=0;--i) {
+      fname[i] = toupper(sUnixName[i]);
+      if(!ext && sUnixName[i] == '.')
+      {
+        ext = &fname[i+1];
+        fname[i] = '\0';
       }
     }
     REZTYPE nType = 0;
