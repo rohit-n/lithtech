@@ -88,14 +88,14 @@ public:
 		return LT_ERROR;
 	}
 
-	unsigned long       m_FileLen;		// Stored when the file is opened.
-	unsigned long       m_SeekOffset;	// Seek offset (used in rezfiles) (NOTE: in a rezmgr rez file this is the current position inside the resource).
-	FILE*               m_pFile;
-	struct FileTree_t*  m_pTree;
-	int                 m_ErrorStatus;
-	unsigned long       m_nNumReadCalls;
-	unsigned long       m_nTotalBytesRead;
-	CRezItm*            m_pRezItm;
+	unsigned			m_FileLen;		// Stored when the file is opened.
+	unsigned long		m_SeekOffset;	// Seek offset (used in rezfiles) (NOTE: in a rezmgr rez file this is the current position inside the resource).
+	FILE*				m_pFile;
+	struct FileTree_t*	m_pTree;
+	int					m_ErrorStatus;
+	unsigned long		m_nNumReadCalls;
+	unsigned long		m_nTotalBytesRead;
+	CRezItm*			m_pRezItm;
 };
 
 
@@ -365,7 +365,7 @@ int df_GetFileInfo(HLTFileTree* hTree, const char *pName, LTFindInfo *pInfo)
 		dirent** namelist;
 		if ((numMatches = scandir(fullName, &namelist, 0, alphasort)) > 0)
 		{
-		        for (int iMatch = 0; iMatch < numMatches; ++iMatch)
+				for (int iMatch = 0; iMatch < numMatches; ++iMatch)
 			{
 				if (namelist[iMatch]->d_type != DT_DIR)
 				{
@@ -521,7 +521,7 @@ struct UnixTreeSearch
 			}
 			pEntry = readdir64(this->m_pDir);
 		}
-        if(found) 
+		if(found)
 			fillFileInfo(pEntry, pInfo);
 		return found;
 	};
@@ -551,7 +551,7 @@ static void cleanUnixTreeSearch(LTFindInfo *pInfo)
 	UnixTreeSearch *search = reinterpret_cast<UnixTreeSearch*>(pInfo->m_pInternal);
 	if(search != nullptr) 
 		delete search;
-	
+
 	pInfo->m_pInternal = nullptr;
 }
 
@@ -572,16 +572,54 @@ struct RezSearch
 	CRezDir* pCurDir=nullptr;
 	CRezDir* pCurSubDir=nullptr;
 	CRezMgr* pRez;
-    RezSearch(CRezMgr *mgr) : pRez(mgr) {};
+	RezSearch(CRezMgr *mgr) : pRez(mgr) {};
 	bool init(const char *pDir) {
 		pCurDir = pRez->GetDirFromPath(pDir);
 		if (!pCurDir)
 			return false;
-        return true;
+			pCurType = pCurDir->GetFirstType();
+		if(pCurType)
+			pCurItm = pCurDir->GetFirstItem(pCurType);
+		if(pCurItm)
+			return true;
+		pCurSubDir = pCurDir->GetFirstSubDir();
+		if(pCurSubDir)
+			return true;
+		return false;
+	};
+	void GetNext(){
+		if(pCurItm) {
+			pCurItm = pCurDir->GetNextItem(pCurItm);
+			if(!pCurItm) {
+				pCurType = pCurDir->GetNextType(pCurType);
+				if(pCurType)
+					pCurItm = pCurDir->GetFirstItem(pCurType);
+			}
+		}
+		if(!pCurItm) {
+			pCurSubDir = (pCurSubDir) ? pCurDir->GetNextSubDir(pCurSubDir): pCurDir->GetFirstSubDir();
+		}
 	};
 	bool GetNextFile(LTFindInfo *pInfo)	{
-		return false;
-	}
+		if(pCurItm) {
+			char ext[]={0,0,0,0};
+			pRez->TypeToStr(pCurItm->GetType(), ext);
+			LTStrCpy(pInfo->m_Name, pCurItm->GetName(), sizeof(pInfo->m_Name)-4);
+			LTStrCat(pInfo->m_Name, ".", sizeof(pInfo->m_Name));
+			LTStrCat(pInfo->m_Name, ext, sizeof(pInfo->m_Name));
+			pInfo->m_Date = pCurItm->GetTime();
+			pInfo->m_Size = pCurItm->GetSize();
+			pInfo->m_Type = FILE_TYPE;
+		} else if (pCurSubDir) {
+			LTStrCpy(pInfo->m_Name, pCurSubDir->GetDirName(), sizeof(pInfo->m_Name));
+			pInfo->m_Date = pCurSubDir->GetTime();
+			pInfo->m_Size = 0;
+			pInfo->m_Type = DIRECTORY_TYPE;
+		}
+		bool ret = ((pCurItm) || (pCurSubDir));
+		GetNext();
+		return ret;
+	};
 };
 
 static void cleanRezSearch(LTFindInfo *pInfo)
@@ -603,126 +641,6 @@ static bool findNextRezMgr(CRezMgr *pRez, const char *pDirName, LTFindInfo *pInf
 			return false; // this will call clean Rez and delete the searcher
 	} 
 	return search->GetNextFile(pInfo);
-/*	{
-		// If this is the first call to FindNext then set everything up
-		if(pInfo->m_pInternal == LTNULL)
-		{
-			// find the directory
-			pRezDir = pRez->GetDirFromPath(pDirName);
-			if(pRezDir == LTNULL)
-			{
-				return 0;
-			}
-
-			// get the first type
-			pRezTyp = pRezDir->GetFirstType();
-			if (pRezTyp != LTNULL)
-			{
-				// get the first item
-				pRezItm = pRezDir->GetFirstItem(pRezTyp);
-			}
-			else 
-			{ 
-				pRezItm = LTNULL;
-			}
-
-			// if there were no files then get the first sub directory
-			if (pRezItm == LTNULL)
-			{
-				pRezSubDir = pRezDir->GetFirstSubDir();
-				if (pRezSubDir == LTNULL)
-				{
-					return 0;
-				}
-			}
-			else pRezSubDir = LTNULL;
-
-			// allocate the finddata structure
-			LT_MEM_TRACK_ALLOC(pFindData = (LTFindData*)dalloc(sizeof(LTFindData)),LT_MEM_TYPE_FILE);
-			pInfo->m_pInternal = pFindData;
-
-			// fill in the members of the finddata structure
-			pFindData->m_pTree = pTree;
-			pFindData->m_pCurDir = pRezDir;
-			pFindData->m_pCurTyp = pRezTyp;
-			pFindData->m_pCurItm = pRezItm;
-			pFindData->m_pCurSubDir = pRezSubDir;
-		}
-
-		// If this is not the first call then just get the next entry (or if at end clean up)
-		else
-		{
-			pFindData = (LTFindData*)pInfo->m_pInternal;
-
-			// are we searching for items
-			if (pFindData->m_pCurItm != LTNULL)
-			{
-				pFindData->m_pCurItm = pFindData->m_pCurDir->GetNextItem(pFindData->m_pCurItm);
-				
-				// if we are finished with all the items of this type go to the next
-				while(pFindData->m_pCurItm == LTNULL)
-				{
-					pFindData->m_pCurTyp = pFindData->m_pCurDir->GetNextType(pFindData->m_pCurTyp);
-
-					// if we are done with all the types then we need to switch to checking sub directories
-					if (pFindData->m_pCurTyp == LTNULL)
-					{
-						pFindData->m_pCurSubDir = pFindData->m_pCurDir->GetFirstSubDir();
-						if (pFindData->m_pCurSubDir == LTNULL)
-						{
-							dfree(pInfo->m_pInternal);
-							pInfo->m_pInternal = LTNULL;
-							return 0;
-						}
-						break;
-					}
-
-					// get the first item of this type
-					else pFindData->m_pCurItm = pFindData->m_pCurDir->GetFirstItem(pFindData->m_pCurTyp);
-				}
-			}
-
-			// otherwise we are searching for sub directories
-			else
-			{
-				pFindData->m_pCurSubDir = pFindData->m_pCurDir->GetNextSubDir(pFindData->m_pCurSubDir);
-				if (pFindData->m_pCurSubDir == LTNULL)
-				{
-					dfree(pInfo->m_pInternal);
-					pInfo->m_pInternal = LTNULL;
-					return 0;
-				}
-			}
-		}
-
-		// is this a resource item
-		if (pFindData->m_pCurItm != LTNULL)
-		{
-			LTStrCpy(pInfo->m_Name, pFindData->m_pCurItm->GetName(), sizeof(pInfo->m_Name)-4);
-			pTree->m_pRezMgr->TypeToStr(pFindData->m_pCurItm->GetType(),sItemType);
-			LTStrCat(pInfo->m_Name, ".", sizeof(pInfo->m_Name));
-			LTStrCat(pInfo->m_Name, sItemType, sizeof(pInfo->m_Name));
-			pInfo->m_Date = pFindData->m_pCurItm->GetTime();
-			pInfo->m_Type = FILE_TYPE;
-			pInfo->m_Size = pFindData->m_pCurItm->GetSize();
-		}
-
-		// is this a sub directory
-		else if (pFindData->m_pCurSubDir != LTNULL)
-		{
-			LTStrCpy(pInfo->m_Name, pFindData->m_pCurSubDir->GetDirName(), sizeof(pInfo->m_Name));
-			pInfo->m_Date = pFindData->m_pCurSubDir->GetTime();
-			pInfo->m_Type = DIRECTORY_TYPE;
-			pInfo->m_Size = 0;
-		}
-
-		else
-		{
-			return 0; // THIS SHOULD NEVER HAPPEN!
-		}
-
-		return 1;
-	} */
 }
 
 
@@ -746,7 +664,7 @@ int df_FindNext(HLTFileTree* hTree, const char *pDirName, LTFindInfo *pInfo)
 		if(findNextRezMgr(pTree->m_pRezMgr, pDirName, pInfo))
 			return 1;
 		else
-		    cleanRezSearch(pInfo);
+			cleanRezSearch(pInfo);
 			return 0;
 	}
 	return 0;
