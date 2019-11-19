@@ -40,15 +40,21 @@ bool cis_RendererIsHere(RenderStruct *pStruct)
 bool cis_RendererGoingAway()
 {return false;}
 
+static HSURFACE cis_CreateSurface(uint32 w, uint32 h)
+{
+    return (HSURFACE)SDL_CreateRGBSurface(0, w, h,32,0,0,0,0);
+}
+
 LTRESULT cis_DeleteSurface(HSURFACE hSurface)
 {
+    SDL_FreeSurface((SDL_Surface*)hSurface);
     return LT_OK; // rkj STUB
 }
 
 HSURFACE
 cis_CreateSurfaceFromPcx(LoadedBitmap *pBitmap)
 {
-    return nullptr;
+    return cis_CreateSurface(32, 32);
 }
 
 static HSURFACE
@@ -62,8 +68,82 @@ static HSURFACE cis_GetScreenSurface()
     return nullptr;
 }
 
-static void cis_GetSurfaceDimentions(HSURFACE, uint32 *x, uint32 *y)
+static void cis_GetSurfaceDimentions(HSURFACE surface, uint32 *x, uint32 *y)
 {
+    if(!surface)
+        return;
+    SDL_Surface *s = (SDL_Surface*)surface;
+    *x = s->w;
+    *y = s->h;
+}
+static LTRESULT cis_SetSurfaceAlpha(HSURFACE surface, float alpha)
+{
+    SDL_SetSurfaceAlphaMod((SDL_Surface*)surface, (0xff && (255.0f * alpha)));
+    return LT_OK;
+}
+
+static HLTCOLOR cis_CreateColor(float r, float g, float b, bool bTransparent)
+{
+	if(bTransparent)
+	{
+		return SETRGB_FT(r,g,b);
+	}
+	else
+	{
+		return SETRGB_F(r,g,b);
+	}
+}
+
+static LTRESULT cis_FillRect(HSURFACE surface, LTRect *rc, HLTCOLOR color)
+{
+    if(!surface)
+        return LT_ERROR;
+    SDL_Surface *s = (SDL_Surface *)surface;
+    rc->Init(0, 0, s->w, s->h);
+    return LT_OK;
+}
+
+static LTRESULT cis_OptimizeSurface(HSURFACE surface, HLTCOLOR trans)
+{
+    return LT_OK;
+}
+
+static LTRESULT
+cis_DrawSurfaceOnSurface(HSURFACE dest, HSURFACE src, LTRect *rc, int px, int py, HLTCOLOR transparent)
+{
+    return LT_OK;
+}
+
+static LTRESULT
+cis_RenderObjects(HLOCALOBJ, HLOCALOBJ*, int count, float fTime)
+{
+    return LT_OK;
+}
+
+static LTRESULT
+cis_ClearScreen(LTRect*,uint32,LTRGB*)
+{
+    return LT_OK;
+}
+
+static LTRESULT
+cis_FlipScreen(uint32)
+{
+    return LT_OK;
+}
+
+/* Start3D
+StartOptimized2D
+EndOptimized2D  should be 3 functions */
+static LTRESULT
+cis_GraphicStub()
+{
+    return LT_OK; // because I cheat.... and It's rarely checked.
+}
+static LTRESULT
+cis_GraphicStubEnd(uint32)
+{
+    return LT_OK; // because I cheat.... and It's rarely checked.
 }
 
 void cis_Init()
@@ -72,5 +152,21 @@ void cis_Init()
     ilt_client->CreateSurfaceFromBitmap = cis_CreateSurfaceFromBitmap;
     ilt_client->DeleteSurface = cis_DeleteSurface;
     ilt_client->GetScreenSurface = cis_GetScreenSurface;
+    ilt_client->CreateSurface = cis_CreateSurface;
     ilt_client->GetSurfaceDims = cis_GetSurfaceDimentions;
+    ilt_client->SetSurfaceAlpha = cis_SetSurfaceAlpha;
+    ilt_client->OptimizeSurface = cis_OptimizeSurface;
+    ilt_client->FillRect = cis_FillRect;
+    ilt_client->SetupColor1 = cis_CreateColor;
+    ilt_client->SetupColor2 = cis_CreateColor;
+    ilt_client->ClearScreen = cis_ClearScreen;
+    ilt_client->FlipScreen = cis_FlipScreen;
+    ilt_client->Start3D = cis_GraphicStub;// ();
+    ilt_client->StartOptimized2D = cis_GraphicStub;//();
+    ilt_client->DrawSurfaceToSurfaceTransparent = cis_DrawSurfaceOnSurface;//(ilt_client->GetScreenSurface(), m_hSurfCursor, LTNULL,
+    ilt_client->EndOptimized2D = cis_GraphicStub;//();
+    ilt_client->End3D = cis_GraphicStubEnd;//(END3D_CANDRAWCONSOLE);
+
+    ilt_client->RenderObjects = cis_RenderObjects;
+
 }
