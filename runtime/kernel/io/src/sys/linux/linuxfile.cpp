@@ -383,7 +383,7 @@ int df_GetFileInfo(HLTFileTree* hTree, const char *pName, LTFindInfo *pInfo)
 	}
 	else
 	{
-		pRezItm = pTree->m_pRezMgr->GetRezFromDosPath(pName);
+		pRezItm = pTree->m_pRezMgr->GetRezFromUnixPath(pName);
 		if (pRezItm != LTNULL)
 		{
 			strncpy(pInfo->m_Name, pRezItm->GetName(), sizeof(pInfo->m_Name)-1);
