@@ -1066,7 +1066,7 @@ void CClientFXMgr::ShutdownClientFX(CLIENTFX_LINK *pLink)
 }
 
 void CClientFXMgr::ShutdownClientFX(CLIENTFX_INSTANCE *pFxGroup)
-{	
+{
 	CLinkListNode<CLIENTFX_INSTANCE *> *pActiveNode = m_collActiveGroupFX.GetHead();
 
 	//setup the callback in case any create effects as they are destroyed

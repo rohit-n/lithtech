@@ -20,7 +20,11 @@ class CButeMgr;
 
 #define DEFAULT_CAMPAIGN	".default"
 #define DEFAULT_CAMPAIGN_FILE	"default_campaign.txt"
+#ifndef __LINUX
 #define PROFILE_DIR "Profiles\\"
+#else
+#define PROFILE_DIR "Profiles/"
+#endif
 #define PROFILE_EXT ".txt"
 
 #define MAX_PROFILE_NAME	16

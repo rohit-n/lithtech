@@ -331,7 +331,7 @@ LTBOOL CUserProfile::Init(const std::string& profileName, LTBOOL bCreate)
 {
 	std::string fn = GetProfileFile( profileName.c_str( ));
 	std::string dfn = PROFILE_DIR;
-	dfn += "default.prf";
+	dfn += "Default.prf";
 
 	g_vtMouseMinSensitivity.Init(g_pLTClient, "MouseSensitivityMin", NULL, 0.0);
 	g_vtMouseMaxSensitivity.Init(g_pLTClient, "MouseSensitivityMax", NULL, 10.0);
