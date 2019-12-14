@@ -122,14 +122,16 @@ static void SetupKey(FX_KEY* pKey, FX_PROP* pPropList, uint32 nNumProps)
 //-----------------------------------------------------------------
 CClientFXDB::CClientFXDB()
 {
-	m_nNumEffectTypes		= 0;
-	m_pEffectTypes			= NULL;
-	m_hDLLInst				= NULL;
+	m_nNumEffectTypes       = 0;
+	m_pEffectTypes          = nullptr;
+	m_hDLLInst              = nullptr;
 
-	m_pfnSetPlayer			= NULL;
-	m_pfnSetAppFocus		= NULL;
-	m_pfnDeleteFX			= NULL;
-	m_pfnSetCreateFunction	= NULL;
+	m_pfnSetPlayer          = nullptr;
+	m_pfnSetAppFocus        = nullptr;
+	m_pfnDeleteFX           = nullptr;
+	m_pfnSetCreateFunction	= nullptr;
+	m_pfnCreatePropList     = nullptr;
+	m_pfnFreePropList       = nullptr;
 
 }
 
@@ -358,14 +360,13 @@ bool CClientFXDB::LoadFxDll()
 void CClientFXDB::UnloadFxDll()
 {
 
-#ifdef WIN32
-
 	if (!m_hDLLInst) 
 		return;
 
 	// Free the library
 	::FreeLibrary(m_hDLLInst);
 
+#ifdef WIN32
 	if (strlen(sDLLTmpFile))
 	{
 		HMODULE hMod = ::GetModuleHandle(sDLLTmpFile);
@@ -377,15 +378,16 @@ void CClientFXDB::UnloadFxDll()
 			sDLLTmpFile[0] = 0;
 		}
 	}
+#endif
 	
 	//make sure to invalidate our hooks into the DLL
-	m_hDLLInst				= NULL;
-	m_pfnSetPlayer			= NULL;
-	m_pfnSetAppFocus		= NULL;
-	m_pfnDeleteFX			= NULL;
-	m_pfnSetCreateFunction	= NULL;
-
-#endif
+	m_hDLLInst              = nullptr;
+	m_pfnSetPlayer          = nullptr;
+	m_pfnSetAppFocus        = nullptr;
+	m_pfnDeleteFX           = nullptr;
+	m_pfnSetCreateFunction  = nullptr;
+	m_pfnCreatePropList     = nullptr;
+	m_pfnFreePropList       = nullptr;
 
 }
 
