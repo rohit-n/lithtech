@@ -85,10 +85,6 @@ bool           RenderStruct::DestroyRenderObject(CRenderObject* pObject)
 {
     return this->m_pRender->DestroyRenderObject(pObject);
 }
-bool           RenderStruct::SetLightGroupColor(uint32 nID, const LTVector &vColor)
-{
-    return this->m_pRender->SetLightGroupColor(nID,vColor);
-}
 LTRESULT       RenderStruct::SetOccluderEnabled(uint32 nID, bool bEnabled)
 {
     return this->m_pRender->SetOccluderEnabled(nID,bEnabled);

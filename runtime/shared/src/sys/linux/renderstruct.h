@@ -153,7 +153,8 @@ struct RenderStruct {
 		// Load rendering data from the specified stream
 		// Change the color of a lightgroup in the currently loaded world
 		// Returns false if a world isn't loaded
-        bool SetLightGroupColor(uint32 nID, const LTVector &vColor);
+        bool            (*SetLightGroupColor)(uint32 nID, const LTVector &vColor);
+
 		// Change/query the state of an occluder in the currently loaded world
 		// Returns LT_NOTFOUND if the ID isn't found or LT_NOTINWORLD if a world isn't loaded
 		LTRESULT SetOccluderEnabled(uint32 nID, bool bEnabled);
