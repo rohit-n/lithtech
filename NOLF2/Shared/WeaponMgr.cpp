@@ -2252,8 +2252,14 @@ void AMMO::InitMembers( CButeMgr &buteMgr, char *aTagName )
 	nSelectionAmount      = buteMgr.GetInt( aTagName, WMGR_AMMO_SELECTIONAMOUNT, nSelectionAmount );
 	nInstDamage           = buteMgr.GetInt( aTagName, WMGR_AMMO_INSTDAMAGE, nInstDamage );
 	pszValue = buteMgr.GetString( aTagName, WMGR_AMMO_INSTDAMAGETYPE, "" );
-	if( pszValue[0] )
-		eInstDamageType       = StringToDamageType( pszValue );
+	if (pszValue[0])
+	{
+		eInstDamageType = StringToDamageType(pszValue);
+	}
+	else
+	{
+		eInstDamageType = (DamageType)buteMgr.GetInt(aTagName, WMGR_AMMO_INSTDAMAGETYPE, 0);
+	}
 	nAreaDamage           = buteMgr.GetInt( aTagName, WMGR_AMMO_AREADAMAGE, nAreaDamage );
 	pszValue = buteMgr.GetString( aTagName, WMGR_AMMO_AREADAMAGETYPE, "" );
 	if( pszValue[0] )
