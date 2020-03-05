@@ -153,9 +153,9 @@ int RunClientApp()
     SDL_GetDisplayBounds(0, &screenRect);
 
 	pGlob->m_window = SDL_CreateWindow(pGlob->m_WndCaption, SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
+		SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_OPENGL);
     if(!pGlob->m_window){
-        std::cout << "Can't setup minimal SDL2 window\n";
+        std::cout << "Can't setup minimal SDL2 window\n" << SDL_GetError() << '\n';
 
         g_pClientMgr->Term();
         delete g_pClientMgr;

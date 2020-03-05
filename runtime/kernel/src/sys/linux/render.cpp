@@ -67,7 +67,7 @@ LTRESULT r_InitRender(RMode *pMode, const char *window_name)
     SDL_Window *window = g_ClientGlob.m_window;
 	SDL_DestroyWindow(window);
 	window = SDL_CreateWindow(window_name, SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, pMode->m_Width, pMode->m_Height, 0);
+		SDL_WINDOWPOS_UNDEFINED, pMode->m_Width, pMode->m_Height, SDL_WINDOW_OPENGL);
 	g_ClientGlob.m_window = window;
 
 	// not really needed... as we will dynamically link OpenGL and Vulkan

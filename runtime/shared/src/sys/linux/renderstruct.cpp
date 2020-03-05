@@ -38,9 +38,13 @@ int RenderStruct::Init(RenderStructInit * pInit)
 #endif
         {
             this->m_pRender = &oglrdr;
+            oglrdr.m_Width = this->m_Width;
+            oglrdr.m_Height = this->m_Height;
+            oglrdr.m_bInitted = true;
             this->ReadConsoleVariables = &(oglReadConsoleVariables);
         }
 	pInit->m_RendererVersion = LTRENDER_VERSION;
+    this->m_bInitted = true;
 	return 0;
 }
 

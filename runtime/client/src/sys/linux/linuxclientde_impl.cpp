@@ -5,6 +5,8 @@
 #include "console.h"
 #include "bindmgr.h"
 #include "linuxclientde_impl.h"
+#include "renderstruct.h"
+#include "render.h"
 
 //the ILTClient game interface
 static ILTClient *ilt_client;
@@ -115,9 +117,11 @@ cis_DrawSurfaceOnSurface(HSURFACE dest, HSURFACE src, LTRect *rc, int px, int py
 }
 
 static LTRESULT
-cis_RenderObjects(HLOCALOBJ, HLOCALOBJ*, int count, float fTime)
+cis_RenderObjects(HLOCALOBJ cam, HLOCALOBJ *objs, int count, float fTime)
 {
-    return LT_OK;
+    if(g_pClientMgr->Render((CameraInstance*)cam, DRAWMODE_OBJECTLIST, objs, count, fTime))
+        return LT_OK;
+    RETURN_ERROR(1, RenderObjects, LT_ERROR);
 }
 
 static LTRESULT
@@ -141,9 +145,17 @@ cis_GraphicStub()
     return LT_OK; // because I cheat.... and It's rarely checked.
 }
 static LTRESULT
-cis_GraphicStubEnd(uint32)
+cis_End3D(uint32)
 {
+    r_GetRenderStruct()->DeleteContext(nullptr);
     return LT_OK; // because I cheat.... and It's rarely checked.
+}
+
+static LTRESULT
+cis_Start3D()
+{
+    r_GetRenderStruct()->CreateContext();
+    return LT_OK;
 }
 
 void cis_Init()
@@ -161,11 +173,11 @@ void cis_Init()
     ilt_client->SetupColor2 = cis_CreateColor;
     ilt_client->ClearScreen = cis_ClearScreen;
     ilt_client->FlipScreen = cis_FlipScreen;
-    ilt_client->Start3D = cis_GraphicStub;// ();
+    ilt_client->Start3D = cis_Start3D;// ();
     ilt_client->StartOptimized2D = cis_GraphicStub;//();
     ilt_client->DrawSurfaceToSurfaceTransparent = cis_DrawSurfaceOnSurface;//(ilt_client->GetScreenSurface(), m_hSurfCursor, LTNULL,
     ilt_client->EndOptimized2D = cis_GraphicStub;//();
-    ilt_client->End3D = cis_GraphicStubEnd;//(END3D_CANDRAWCONSOLE);
+    ilt_client->End3D = cis_End3D;//(END3D_CANDRAWCONSOLE);
 
     ilt_client->RenderObjects = cis_RenderObjects;
 
