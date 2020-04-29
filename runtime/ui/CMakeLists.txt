@@ -46,6 +46,7 @@ if(ENABLE_D3D)
 		src/sys/d3d/cuidebug.cpp)
 	include_directories(sys/d3d)
 endif(ENABLE_D3D)
+find_package(SDL2 REQUIRED)
 
 include_directories(src
 	../../sdk/inc
@@ -53,7 +54,7 @@ include_directories(src
 	../shared/src
 	../kernel/src
 	../kernel/mem/src
-	/usr/include/SDL2)
+	${SDL2_INCLUDE_DIRS})
 
 if(WIN32)
 	set(libsources ${libsources}

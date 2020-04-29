@@ -69,6 +69,7 @@ add_subdirectory(libs/ltmem)							# LIB_LTMem
 add_subdirectory(libs/rezmgr)							# LIB_RezMgr
 
 if(LINUX)
+    set(JSON_BuildTests off)
     add_subdirectory(libs/DynRes)
     add_subdirectory(json)
 endif(LINUX)

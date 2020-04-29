@@ -1,5 +1,8 @@
 project(LIB_LTMem)
 
+find_package(PkgConfig REQUIRED)
+find_package(SDL2 REQUIRED)
+
 add_library(${PROJECT_NAME} STATIC
 	ltmem.cpp
 	ltmemdebug.cpp
@@ -13,7 +16,7 @@ include_directories(../../sdk/inc
 	../../runtime/kernel/src
 	../stdlith
 	../../runtime/kernel/mem/src
-	/usr/include/SDL2)
+	${SDL2_INCLUDE_DIRS})
 
 if(LINUX)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-fpermissive -fPIC")

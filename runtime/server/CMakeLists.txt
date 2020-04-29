@@ -149,6 +149,7 @@ include_directories(src
 	../ui/src
 	../controlfilemgr)
 
+
 if(NOT MSVC)	# FIXME: this is a hack for geomroutines.h:309
 	include_directories(../../tools/PreProcessor)
 endif(NOT MSVC)
@@ -157,9 +158,10 @@ if(WIN32)
 	include_directories(../kernel/src/sys/win
 		../shared/src/sys/win)
 else(WIN32)
+	find_package(SDL2 REQUIRED)
 	include_directories(../kernel/src/sys/linux
 		../shared/src/sys/linux
-		/usr/include/SDL2)
+		${SDL2_INCLUDE_DIRS})
 endif(WIN32)
 
 if(ENABLE_D3D)
