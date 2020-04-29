@@ -261,10 +261,13 @@ if(WIN32)
 		LIB_D3DRender
 		winmm)
 else(WIN32)
+	find_package(SDL2 REQUIRED)
+
 	include_directories(../kernel/src/sys/linux
 		../shared/src/sys/linux
-		/usr/include/SDL2)
+		${SDL2_INCLUDE_DIRS})
 	set(libs ${libs}
+	    ${SDL2_LIBRARIES}
 	    dl
 		pthread)
 

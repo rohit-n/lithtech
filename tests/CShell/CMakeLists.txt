@@ -2,8 +2,7 @@ project(Test_CShell)
 cmake_minimum_required(VERSION 3.1)
 
 include(FindPkgConfig)
-
-pkg_check_modules(SDL2 REQUIRED sdl2)
+find_package(SDL2 REQUIRED)
 
 set(exec_src
     src/shell.cpp)
