@@ -34,7 +34,11 @@ struct SLinuxMatrix {
 // Device Specific versions of the structs...
 #define DDVector3			SLinuxVector
 #define DDVector			SLinuxVector
+#ifndef USE_DXVK
 #define DDMatrix			SLinuxMatrix
+#else
+#define DDMatrix			D3DMATRIX
+#endif
 #define DDColor			        SLinuxColorDef	
 
 // ACCESSORS
