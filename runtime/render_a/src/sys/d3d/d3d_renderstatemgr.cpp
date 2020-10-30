@@ -260,11 +260,11 @@ bool CD3DRenderStateMgr::SetRenderStyleStates(CD3DRenderStyle* pRenderStyle, uin
 				LTMatrix mInvWorld = g_ViewParams.m_mInvView;
 				mInvWorld.Transpose();
 				mInvWorld = *((LTMatrix*)RenderPass.TextureStages[iTexStage].UVTransform_Matrix) * mInvWorld;
-				PD3DDEVICE->SetTransform(nTransform, (D3DXMATRIX*)&mInvWorld);
+				PD3DDEVICE->SetTransform(nTransform, (D3DMATRIX*)&mInvWorld);
 			}
 			else
 			{
-				PD3DDEVICE->SetTransform(nTransform, (D3DXMATRIX*)RenderPass.TextureStages[iTexStage].UVTransform_Matrix);
+				PD3DDEVICE->SetTransform(nTransform, (D3DMATRIX*)RenderPass.TextureStages[iTexStage].UVTransform_Matrix);
 			}
 		}
 		else
@@ -287,9 +287,10 @@ bool CD3DRenderStateMgr::SetRenderStyleStates(CD3DRenderStyle* pRenderStyle, uin
 
 void CD3DRenderStateMgr::SetBumpEnvMapMatrix(uint32 BumpEnvMapStage)
 {
+#ifdef RENDERSTUB
 	D3DVIEWPORT9 vp; PD3DDEVICE->GetViewport(&vp);
 
-	D3DXMATRIX VS; ZeroMemory(&VS, sizeof(D3DMATRIX));
+	D3DMATRIX VS; memset(&VS, 0, sizeof(D3DMATRIX));
 	VS._11	= (float)vp.Width/2;						// Create view scaling matrix:
 	VS._22	= -(float)(vp.Height/2);					// | Width/2    0           0          0 |
 	VS._33	= (float)(vp.MaxZ - vp.MinZ);				// | 0          -Height/2   0          0 |
@@ -298,10 +299,10 @@ void CD3DRenderStateMgr::SetBumpEnvMapMatrix(uint32 BumpEnvMapStage)
 	VS._43	= (float)vp.MinZ;
 	VS._44	= 1.0f;
 
-	D3DXMATRIX mat, mat2, mat3;							// Generate D3D pipeline's model to screen transformation.
-	D3DXMatrixMultiply(&mat,  (D3DXMATRIX*)&m_Proj,  &VS);
-	D3DXMatrixMultiply(&mat2, (D3DXMATRIX*)&m_View,  &mat);
-	D3DXMatrixMultiply(&mat3, (D3DXMATRIX*)&m_World[0], &mat2);
+	D3DMATRIX mat, mat2, mat3;							// Generate D3D pipeline's model to screen transformation.
+	D3DMatrixMultiply(&mat,  (D3DXMATRIX*)&m_Proj,  &VS);
+	D3DMatrixMultiply(&mat2, (D3DXMATRIX*)&m_View,  &mat);
+	D3DMatrixMultiply(&mat3, (D3DXMATRIX*)&m_World[0], &mat2);
 
 	D3DXVECTOR3 v(0.0f,0.0f,0.0f);						// Transform X (1, 0, 0) and Y (0, 1, 0) vectors to screen space for this transformation.
 	D3DXVECTOR4 res; D3DXVec3Transform(&res, &v, &mat3);
@@ -327,4 +328,5 @@ void CD3DRenderStateMgr::SetBumpEnvMapMatrix(uint32 BumpEnvMapStage)
 	PD3DDEVICE->SetTextureStageState(BumpEnvMapStage, D3DTSS_BUMPENVMAT01, F2UINT32(0.25f * (-sinthetau)));
 	PD3DDEVICE->SetTextureStageState(BumpEnvMapStage, D3DTSS_BUMPENVMAT10, F2UINT32(0.25f * sinthetau));
 	PD3DDEVICE->SetTextureStageState(BumpEnvMapStage, D3DTSS_BUMPENVMAT11, F2UINT32(0.25f * costhetau));
+#endif
 }
