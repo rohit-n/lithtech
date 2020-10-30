@@ -9,10 +9,13 @@
 #include "d3d_device.h"
 #include "d3d_draw.h"
 #include "d3d_rendershader_glow.h"
+#include "d3d_rendershader_dynamiclight.h"
+#include "d3d_viewparams.h"
 #include "iaggregateshader.h"
 #include "texturescriptinstance.h"
 #include "texturescriptmgr.h"
 #include "rendererframestats.h"
+#include "rendererconsolevars.h"
 #include "renderstruct.h"
 #include "sprite.h"
 #include <algorithm>
@@ -119,7 +122,7 @@ public:
 
 			aVBSizes.reserve(16);
 
-			TSectionList::iterator iFinger = m_aSections.begin();
+			typename TSectionList::iterator iFinger = m_aSections.begin();
 			for (; iFinger != m_aSections.end(); ++iFinger)
 			{
 				CInternalSection &cCurSection = *iFinger;
@@ -338,7 +341,7 @@ public:
 		{
 			// Update the textures for this renderblock
 			CRenderBlockData &cRB = m_aRenderBlocks[nRenderBlock];
-			CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
+			typename CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
 			for (; iCurSection != cRB.m_aSections.end(); ++iCurSection)
 			{
 				m_aSections[*iCurSection].UpdateTexture();
@@ -412,7 +415,7 @@ public:
 
 		bool bChangeSection = true;
 
-		TSectionList::iterator iCurSection = m_aSections.begin();
+		typename TSectionList::iterator iCurSection = m_aSections.begin();
 
 		for (;;)
 		{
@@ -452,7 +455,7 @@ public:
 			uint32 nEndVertex = iCurSection->m_nEndVertex;
 
 			// Queue up any continguous sections
-			TSectionList::iterator iFirstSection = iCurSection;
+			typename TSectionList::iterator iFirstSection = iCurSection;
 			for (++iCurSection; iCurSection != m_aSections.end(); ++iCurSection)
 			{
 				if ((!iCurSection->m_bQueuedForRender) ||
@@ -535,7 +538,7 @@ protected:
 
 		// Draw more triangles.
 		CRenderBlockData &cRB = m_aRenderBlocks[nRenderBlock];
-		CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
+		typename CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
 		for (; iCurSection != cRB.m_aSections.end(); ++iCurSection)
 		{
 			CInternalSection &cSection = m_aSections[*iCurSection];
@@ -571,7 +574,7 @@ protected:
 
 			// Draw the diffuse color & fill in the Z-Buffer
 			CRenderBlockData &cRB = m_aRenderBlocks[nRenderBlock];
-			CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
+			typename CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
 			for (; iCurSection != cRB.m_aSections.end(); ++iCurSection)
 			{
 				CInternalSection &cSection = m_aSections[*iCurSection];
@@ -637,7 +640,7 @@ protected:
 			}
 
 			CRenderBlockData &cRB = m_aRenderBlocks[nRenderBlock];
-			CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
+			typename CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
 			for (; iCurSection != cRB.m_aSections.end(); ++iCurSection)
 			{
 				CInternalSection &cSection = m_aSections[*iCurSection];
@@ -726,7 +729,7 @@ protected:
 		bool bCurAlphaTest = nOldAlphaTest != 0;
 
 		CRenderBlockData &cRB = m_aRenderBlocks[nRenderBlock];
-		CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
+		typename CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
 		for (; iCurSection != cRB.m_aSections.end(); ++iCurSection)
 		{
 			CInternalSection &cSection = m_aSections[*iCurSection];
@@ -768,7 +771,7 @@ protected:
 	void QueueRenderBlock(uint32 nRenderBlock)
 	{
 		CRenderBlockData &cRB = m_aRenderBlocks[nRenderBlock];
-		CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
+		typename CRenderBlockData::TSectionIndexList::iterator iCurSection = cRB.m_aSections.begin();
 		for (; iCurSection != cRB.m_aSections.end(); ++iCurSection)
 		{
 			m_aSections[*iCurSection].m_bQueuedForRender = true;
@@ -793,8 +796,8 @@ protected:
 				return NULL;
 			}
 
-			TSectionList::iterator iCurSection = m_aSections.begin() + m_aPreviewRenderBlocks[nRenderBlock];
-			TSectionList::iterator iEndSection = (nRenderBlock < (m_aPreviewRenderBlocks.size() - 1))
+			typename TSectionList::iterator iCurSection = m_aSections.begin() + m_aPreviewRenderBlocks[nRenderBlock];
+			typename TSectionList::iterator iEndSection = (nRenderBlock < (m_aPreviewRenderBlocks.size() - 1))
 				? (m_aSections.begin() + m_aPreviewRenderBlocks[nRenderBlock + 1]) : m_aSections.end();
 			for (; iCurSection != iEndSection; ++iCurSection)
 			{
@@ -889,8 +892,8 @@ protected:
 	// Mark the section breaks
 	virtual void MarkSectionBreaks()
 	{
-		TSectionList::iterator iCurSection = m_aSections.begin();
-		TSectionList::iterator iPrevSection = m_aSections.end();
+		typename TSectionList::iterator iCurSection = m_aSections.begin();
+		typename TSectionList::iterator iPrevSection = m_aSections.end();
 		for (; iCurSection != m_aSections.end(); ++iCurSection)
 		{
 			iCurSection->m_bSectionBreak =
@@ -989,7 +992,7 @@ private:
 		aSortedSections.reserve(m_aSections.size());
 
 		// Put them in order
-		TIndexList::iterator iCurIndex = aSortIndices.begin();
+		typename TIndexList::iterator iCurIndex = aSortIndices.begin();
 		CInternalSection is;
 		for (; iCurIndex != aSortIndices.end(); ++iCurIndex)
 		{
@@ -1008,7 +1011,7 @@ private:
 		m_aSections.swap(aSortedSections);
 
 		// We don't need you any more
-		m_aPreviewRenderBlocks.swap(TRenderBlockPreviewList());
+		m_aPreviewRenderBlocks.clear();
 	}
 
 	// Actually unlock the IB & VB's, which is delayed until it actually starts rendering
@@ -1027,7 +1030,7 @@ private:
 			(*iCurVB)->Unlock();
 		}
 
-		m_aLockedVertices.swap(TLockedVertexList());
+		m_aLockedVertices.clear();
 
 		// Unlock the IB
 		m_pIB->Unlock();
@@ -1173,6 +1176,7 @@ protected:
 		// called before the texture is used while rendering
 		void UpdateTexture()
 		{
+#ifdef RENDERSTUB
 			for (uint32 nCurrSpr = 0; nCurrSpr < CRBSection::kNumTextures; nCurrSpr++)
 			{
 				// See if we even have a sprite
@@ -1196,6 +1200,7 @@ protected:
 					SetTexture(LTNULL);
 				}
 			}
+#endif
 		}
 
 		uint32 m_nSectionIndex;
