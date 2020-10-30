@@ -318,6 +318,9 @@ D3DFORMAT CTextureManager::QueryDDFormat1(BPPIdent BPP, uint32 iFlags)
 
 bool CTextureManager::ConvertTexDataToDD(uint8* pSrcData, PFormat* SrcFormat, uint32 SrcWidth, uint32 SrcHeight, uint8* pDstData, PFormat* DstFormat, BPPIdent eDstType, uint32 nDstFlags, uint32 DstWidth, uint32 DstHeight)
 {
+#ifdef __LINUX
+	return true;
+#else
  	D3DFORMAT D3DSrcFormat = d3d_PFormatToD3DFormat(SrcFormat); assert(D3DSrcFormat != D3DFMT_UNKNOWN);
 	D3DFORMAT D3DDstFormat = QueryDDFormat1(eDstType, nDstFlags); assert(D3DDstFormat != D3DFMT_UNKNOWN);
 	
@@ -354,10 +357,14 @@ bool CTextureManager::ConvertTexDataToDD(uint8* pSrcData, PFormat* SrcFormat, ui
 		return false;
 
 	return true;
+#endif
 }
 
 bool CTextureManager::UploadRTexture(TextureData* pSrcTexture, uint32 iSrcLvl, RTexture* pDstTexture, uint32 iDstLvl)
 {
+#ifdef __LINUX
+	return true;
+#else
 	TextureMipData* pSrcMip = &pSrcTexture->m_Mips[iSrcLvl];
 	PFormat SrcFormat; 
 	pSrcTexture->SetupPFormat(&SrcFormat);
@@ -422,6 +429,7 @@ bool CTextureManager::UploadRTexture(TextureData* pSrcTexture, uint32 iSrcLvl, R
 	}
 
 	return true;
+#endif
 }
 
 // This sets up pTexture with all the Direct3D stuff it needs and copies
