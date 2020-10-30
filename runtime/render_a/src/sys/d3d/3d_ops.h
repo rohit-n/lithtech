@@ -129,8 +129,13 @@ D3DMATRIX* D3DMatrixPerspectiveFovLH(D3DMATRIX* out, float fovy, float aspect, f
 void D3DMatrixIdentity(D3DMATRIX* out);
 
 LTMatrix LTMatrixFromD3DMatrix(D3DMATRIX* in);
+D3DMATRIX D3DMatrixFromLTMatrix(LTMatrix mat);
 
+//replacement for D3DXMatrixMultiply
 D3DMATRIX* D3DMatrixMultiply(D3DMATRIX* in, D3DMATRIX* m1, D3DMATRIX* m2);
+
+//replacement for D3DXMatrixTranspose
+D3DMATRIX* D3DMatrixTranspose(D3DMATRIX* out, D3DMATRIX* in);
 
 inline void d3d_SetupTransformation(const LTVector *pPos, float *pRotation, LTVector *pScale, LTMatrix *pMat)
 {
