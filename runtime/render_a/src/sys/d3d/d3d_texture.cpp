@@ -362,9 +362,6 @@ bool CTextureManager::ConvertTexDataToDD(uint8* pSrcData, PFormat* SrcFormat, ui
 
 bool CTextureManager::UploadRTexture(TextureData* pSrcTexture, uint32 iSrcLvl, RTexture* pDstTexture, uint32 iDstLvl)
 {
-#ifdef __LINUX
-	return true;
-#else
 	TextureMipData* pSrcMip = &pSrcTexture->m_Mips[iSrcLvl];
 	PFormat SrcFormat; 
 	pSrcTexture->SetupPFormat(&SrcFormat);
@@ -373,6 +370,9 @@ bool CTextureManager::UploadRTexture(TextureData* pSrcTexture, uint32 iSrcLvl, R
 
 	if (pDstTexture->IsCubeMap()) 
 	{
+#ifdef __LINUX
+		return true;
+#else
 		// Cube map texture...
 		LPDIRECT3DCUBETEXTURE9 pD3DDstTexture = pDstTexture->m_pD3DCubeTexture;
 
@@ -400,36 +400,28 @@ bool CTextureManager::UploadRTexture(TextureData* pSrcTexture, uint32 iSrcLvl, R
 				return false; 
 	
 			pSrcData += pSrcMip->m_dataSize;
-		} 
+		}
+#endif
 	}
 	else 
 	{
 		// Normal texture..
 		LPDIRECT3DTEXTURE9 pD3DDstTexture = pDstTexture->m_pD3DTexture;
 
-		LPDIRECT3DSURFACE9 pDstSurface = NULL; 
-		pD3DDstTexture->GetSurfaceLevel(iDstLvl,&pDstSurface);
-		if (!pDstSurface) return false;
-
-		uint8* pSrcData = pSrcMip->m_Data; 
-		uint32 SrcPitch = GetPitch(D3DSrcFormat,pSrcMip->m_Width);
-		
-		RECT SrcRect; 
-		SrcRect.left = 0; 
-		SrcRect.top = 0; 
-		SrcRect.right = pSrcMip->m_Width; 
-		SrcRect.bottom =  pSrcMip->m_Height;
+		uint8* pSrcData = pSrcMip->m_Data;
+		RECT* pRect = NULL;
 
 		HRESULT hResult;
-		LT_MEM_TRACK_ALLOC(hResult = D3DXLoadSurfaceFromMemory(pDstSurface,NULL,NULL,pSrcData,D3DSrcFormat,SrcPitch,NULL,&SrcRect,D3DX_FILTER_NONE,0), LT_MEM_TYPE_RENDERER);
-		
-		pDstSurface->Release();
-		if (hResult != D3D_OK) 
-			return false; 
+		D3DLOCKED_RECT LockedRect;
+		pD3DDstTexture->LockRect(iSrcLvl, &LockedRect, pRect, 0);
+		memcpy(LockedRect.pBits, pSrcData, pSrcMip->m_dataSize);
+		hResult = pD3DDstTexture->UnlockRect(iSrcLvl);
+
+		if (hResult != D3D_OK)
+			return false;
 	}
 
 	return true;
-#endif
 }
 
 // This sets up pTexture with all the Direct3D stuff it needs and copies
