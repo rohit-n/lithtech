@@ -318,7 +318,8 @@ D3DFORMAT CTextureManager::QueryDDFormat1(BPPIdent BPP, uint32 iFlags)
 
 bool CTextureManager::ConvertTexDataToDD(uint8* pSrcData, PFormat* SrcFormat, uint32 SrcWidth, uint32 SrcHeight, uint8* pDstData, PFormat* DstFormat, BPPIdent eDstType, uint32 nDstFlags, uint32 DstWidth, uint32 DstHeight)
 {
-#ifdef __LINUX
+#if 1
+	memcpy(pDstData, pSrcData, DstWidth * DstHeight * DstFormat->GetBytesPerPixel());
 	return true;
 #else
  	D3DFORMAT D3DSrcFormat = d3d_PFormatToD3DFormat(SrcFormat); assert(D3DSrcFormat != D3DFMT_UNKNOWN);
