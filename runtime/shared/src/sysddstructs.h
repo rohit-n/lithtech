@@ -14,9 +14,9 @@
 #define __SYSDDSTRUCTS_H__
 
 // This is a redirector to get the system dependent include
-#ifdef __LINUX
+#if defined(__LINUX) && !defined(USE_DXVK)
 #include "sys/linux/linuxddstructs.h"
-#elif _WIN32
+#else
 #include "sys/win/d3dddstructs.h"
 #endif
 
