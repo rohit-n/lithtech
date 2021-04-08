@@ -36,20 +36,18 @@ static bool StartClient(ClientGlob *pGlob)
 {
     pGlob->m_bHost = command_line_args->FindArgDash("host") != NULL;
     pGlob->m_pWorldName = command_line_args->FindArgDash("world");
+    uint32 nResTrees = 0;
 
-    std::deque<std::string> resTrees;
-        // Add the default engine resource...
+    const char *resTrees[MAX_RESTREES];
+    // Add the default engine resource...
     if (!g_CV_NoDefaultEngineRez)
 	{
-        resTrees.emplace_back("engine.rez");
+        resTrees[nResTrees++] = "engine.rez";
     }
-	resTrees.emplace_back("game.rez");
-	resTrees.emplace_back("game2.rez");
-	resTrees.emplace_back("sound.rez");
 
-	std::vector<const char*> oldResTree;
-	for (auto&& str : resTrees)
-        oldResTree.push_back(str.c_str());
+	resTrees[nResTrees++] = "game.rez";
+	resTrees[nResTrees++] = "game2.rez";
+	resTrees[nResTrees++] = "sound.rez";
 
     if (command_line_args->FindArgDash("noinput"))
 	{
@@ -91,7 +89,7 @@ static bool StartClient(ClientGlob *pGlob)
 #endif  // USE_ABSTRACT_SOUND_INTERFACES
 
     uint32 initStartTime = timeGetTime();
-    if (g_pClientMgr->Init(&oldResTree[0], oldResTree.size(), nNumConfigFiles, pszConfigFiles) != LT_OK) {
+    if (g_pClientMgr->Init(resTrees, nResTrees, nNumConfigFiles, pszConfigFiles) != LT_OK) {
         return false;
     }
 
