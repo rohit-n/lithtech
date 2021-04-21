@@ -860,6 +860,9 @@ FX_REF* CClientFXDB::FindFX(const char *sName)
 
 int32 CClientFXDB::FindFXID(const char *sName)
 {
+	if (!sName) // can't compare a nullptr
+		return -1;
+
 	for(uint32 nCurrEffect = 0; nCurrEffect < m_nNumEffectTypes; nCurrEffect++)
 	{
 		if (!stricmp(sName, m_pEffectTypes[nCurrEffect].m_sName)) 
