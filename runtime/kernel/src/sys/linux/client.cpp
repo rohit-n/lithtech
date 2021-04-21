@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <iostream>
-#include <deque>
+#include <vector>
 #include <SDL_syswm.h>
 
 //holder for command line argument mgr interface.
@@ -36,39 +36,6 @@ static bool StartClient(ClientGlob *pGlob)
 {
     pGlob->m_bHost = command_line_args->FindArgDash("host") != NULL;
     pGlob->m_pWorldName = command_line_args->FindArgDash("world");
-    uint32 nResTrees = 0;
-
-    const char *resTrees[MAX_RESTREES];
-    // Add the default engine resource...
-    if (!g_CV_NoDefaultEngineRez)
-	{
-        resTrees[nResTrees++] = "engine.rez";
-    }
-
-	resTrees[nResTrees++] = "game.rez";
-	resTrees[nResTrees++] = "game2.rez";
-	resTrees[nResTrees++] = "sound.rez";
-
-    if (command_line_args->FindArgDash("noinput"))
-	{
-        pGlob->m_bInputEnabled = false;
-    }
-
-	//the configuration files that we need to load (they are loaded in order, so the later in
-	//the lists override the earlier in the lists)
-	static const uint32 knMaxConfigFiles = 16;
-	const char* pszConfigFiles[knMaxConfigFiles];
-	uint32 nNumConfigFiles = 0;
-
-	//see what the name of the autoexec configuration file is
-    const char* pszAutoExecFileName = command_line_args->FindArgDash("config");
-    pszConfigFiles[nNumConfigFiles] = (pszAutoExecFileName) ? pszAutoExecFileName : "autoexec.cfg";
-	nNumConfigFiles++;
-
-	//see what the name of the display configuration file is
-	const char* pszDisplayFileName = command_line_args->FindArgDash("display");
-    pszConfigFiles[nNumConfigFiles] = (pszDisplayFileName) ? pszDisplayFileName : "display.cfg";
-	nNumConfigFiles++;
 
 #ifdef USE_ABSTRACT_SOUND_INTERFACES
 
@@ -88,8 +55,37 @@ static bool StartClient(ClientGlob *pGlob)
 
 #endif  // USE_ABSTRACT_SOUND_INTERFACES
 
+    std::vector<const char*> resTree{MAX_RESTREES};
+    // Add the default engine resource...
+    if (!g_CV_NoDefaultEngineRez)
+    {
+        resTree.push_back("engine.rez");
+    }
+
+    resTree.push_back("game.rez");
+    resTree.push_back("game2.rez");
+    resTree.push_back("sound.rez");
+
+    if (command_line_args->FindArgDash("noinput"))
+    {
+        pGlob->m_bInputEnabled = false;
+    }
+
+	//the configuration files that we need to load (they are loaded in order, so the later in
+	//the lists override the earlier in the lists)
+    static const uint32 knMaxConfigFiles = 16;
+    std::vector<const char*> pszConfigFiles{knMaxConfigFiles};
+
+	//see what the name of the autoexec configuration file is
+    const char* pszAutoExecFileName = command_line_args->FindArgDash("config");
+    pszConfigFiles.push_back( (pszAutoExecFileName) ? pszAutoExecFileName : "autoexec.cfg");
+
+	//see what the name of the display configuration file is
+    const char* pszDisplayFileName = command_line_args->FindArgDash("display");
+    pszConfigFiles.push_back( (pszDisplayFileName) ? pszDisplayFileName : "display.cfg");
+
     uint32 initStartTime = timeGetTime();
-    if (g_pClientMgr->Init(resTrees, nResTrees, nNumConfigFiles, pszConfigFiles) != LT_OK) {
+    if (g_pClientMgr->Init(resTree.data(), resTree.size(), pszConfigFiles.size(), pszConfigFiles.data()) != LT_OK) {
         return false;
     }
 
