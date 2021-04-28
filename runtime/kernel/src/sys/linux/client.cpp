@@ -55,7 +55,8 @@ static bool StartClient(ClientGlob *pGlob)
 
 #endif  // USE_ABSTRACT_SOUND_INTERFACES
 
-    std::vector<const char*> resTree{MAX_RESTREES};
+    std::vector<const char*> resTree{};
+    resTree.reserve(MAX_RESTREES);
     // Add the default engine resource...
     if (!g_CV_NoDefaultEngineRez)
     {
@@ -74,7 +75,8 @@ static bool StartClient(ClientGlob *pGlob)
 	//the configuration files that we need to load (they are loaded in order, so the later in
 	//the lists override the earlier in the lists)
     static const uint32 knMaxConfigFiles = 16;
-    std::vector<const char*> pszConfigFiles{knMaxConfigFiles};
+    std::vector<const char*> pszConfigFiles{};
+    pszConfigFiles.reserve(knMaxConfigFiles);
 
 	//see what the name of the autoexec configuration file is
     const char* pszAutoExecFileName = command_line_args->FindArgDash("config");
