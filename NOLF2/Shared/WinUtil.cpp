@@ -283,26 +283,72 @@ DWORD CWinUtil::WinWritePrivateProfileString (const char* lpAppName, const char*
 #ifndef __LINUX
 	return WritePrivateProfileString (lpAppName, lpKeyName, lpString, lpFileName);
 #else
-    // format app.key=str
 	if (lpAppName == NULL || lpKeyName == NULL || lpString == NULL)
 	{
 		return 1;
 	}
-	std::string lookup{lpAppName};
-	lookup += ".";
-	lookup += lpKeyName;
-	std::string line;
-	std::fstream conf{lpFileName, std::ios_base::app|std::ios_base::in|std::ios_base::out};
-	while(!conf.eof()) {
-		conf >> line;
-		if(line.substr(0, lookup.size()) ==  lookup) {
-		    conf.seekp(conf.tellg());
-		    conf.seekp(-line.size(), std::ios_base::cur);
-			break;
+
+	FILE* fp = fopen(lpFileName, "rb");
+	unsigned int i;
+	char* buf, *line;
+	long size;
+	if(fp == NULL)
+	{
+		fp = fopen(lpFileName, "w");
+		fwrite("[", 1, 1, fp);
+		fwrite(lpAppName, strlen(lpAppName), 1, fp);
+		fwrite("]\n", 2, 1, fp);
+		fwrite(lpKeyName, strlen(lpKeyName), 1, fp);
+		fwrite("=", 1, 1, fp);
+		fwrite(lpString, strlen(lpString), 1, fp);
+		fclose(fp);
+		return 0;
+	}
+
+	fseek(fp, 0, SEEK_END);
+	size = ftell(fp);
+
+	buf = new char[size + 1];
+
+	fseek(fp, 0, SEEK_SET);
+	fread(buf, 1, size, fp);
+	fclose(fp);
+
+	buf[size] = '\0';
+
+	fp = fopen(lpFileName, "w");
+
+	line = buf;
+	for (i = 0; i <= size; i++)
+	{
+		if (buf[i] == '\n' || i == size)
+		{
+			buf[i] = '\0';
+
+			if (strncmp(line, lpKeyName, strlen(lpKeyName)))
+			{
+				if (strlen(line) > 0)
+				{
+					fwrite(line, strlen(line), 1, fp);
+					fwrite("\n", 1, 1, fp);
+				}
+			}
+
+			line += strlen(line) + 1;
+			if (i < size)
+			{
+				buf[i] = '\n';
+			}
 		}
 	}
-	conf << lookup << "=" << lpString << '\n';
-	conf.flush();
+
+	fwrite(lpKeyName, strlen(lpKeyName), 1, fp);
+	fwrite("=", 1, 1, fp);
+	fwrite(lpString, strlen(lpString), 1, fp);
+	fclose(fp);
+
+	delete [] buf;
+
 	return 0;
 #endif
 }
