@@ -23,24 +23,24 @@ matrix:
     - clang: 4.0
     - clang: 7.0
     - gcc: "6 32bit"
-    - gcc: 8
+    - gcc: 9
   include:
     - os: linux
-      dist: trusty
+      dist: bionic
       gcc: 8
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-8
+            - g++-9
             - cmake-data
             - cmake
             - libsdl2-dev
             - libsdl2-image-dev
             - libsdl2-mixer-dev
       env:
-        - MATRIX_EVAL="CC=gcc-8; CXX=g++-8"
+        - MATRIX_EVAL="CC=gcc-9; CXX=g++-9"
     - os: linux
       dist: trusty
       gcc: 6
