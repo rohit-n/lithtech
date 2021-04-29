@@ -369,12 +369,14 @@ LTRESULT SendEmptyServerMsg(uint32 nMsgID, uint32 nFlags)
 #define FORMAT_MESSAGE_FROM_STRING 0
 static void FormatMessage(int flags, char* source, int message_id, int language_id, char* dest, int len, va_list* args)
 {
-	char* vals, *ptr, *dst_ptr;
-	int vali, bytes_left, add_len;
+	char* vals, *ptr, *dst_ptr, needle[3];
+	int vali, bytes_left, add_len, arg_index;
 	size_t i, source_len;
+	char* string_args[9]{};
+	int num_args = 0;
+	bytes_left = len - 1;
 	source_len = strlen(source);
 	dst_ptr = dest;
-	bytes_left = len - 1;
 
 	if (flags != FORMAT_MESSAGE_FROM_STRING)
 	{
@@ -386,50 +388,52 @@ static void FormatMessage(int flags, char* source, int message_id, int language_
 	{
 		if (source[i] == '%')
 		{
-			ptr = source + i + 2; //no string exceeds 9 arguments, so assume 1 digit
+			num_args++;
+			if (i > 0 && source[i - 1] == '%')
+			{
+				num_args -= 2;
+			}
+		}
+	}
+
+	if (num_args > 9)
+	{
+		assert(!"ERROR: only up to 9 arguments are handled");
+		return;
+	}
+
+	for (i = 0; i < num_args; i++)
+	{
+		sprintf(needle, "%%%i", i + 1);
+		needle[2] = '\0';
+		ptr = strstr(source, needle);
+		if (ptr)
+		{
+			ptr = ptr + 2; //no string exceeds 9 arguments, so assume 1 digit
 			if (!strncmp(ptr, "!d!", 3))
 			{
 				vali = va_arg(*args, int);
 				add_len = snprintf(NULL, 0, "%i", vali);
-
-				if (bytes_left - add_len < 0)
-				{
-					snprintf(dst_ptr, bytes_left, "%i", vali);
-					dst_ptr = dst_ptr + bytes_left;
-					bytes_left = 0;
-					break;
-				}
-				else
-				{
-					sprintf(dst_ptr, "%i", vali);
-					dst_ptr = dst_ptr + add_len;
-					bytes_left -= add_len;
-				}
-
-				i += 4;
+				string_args[i] = new char[add_len + 1];
+				sprintf(string_args[i], "%i", vali);
+				string_args[i][add_len] = '\0';
 			}
 			else if (!strncmp(ptr, "!s!", 3))
 			{
 				vals = va_arg(*args, char*);
 				add_len = strlen(vals);
-
-				if (bytes_left - add_len < 0)
-				{
-					strncpy(dst_ptr, vals, bytes_left);
-					dst_ptr = dst_ptr + bytes_left;
-					bytes_left = 0;
-					break;
-				}
-				else
-				{
-					strcpy(dst_ptr, vals);
-					dst_ptr = dst_ptr + add_len;
-				}
-
-				bytes_left -= add_len;
-				i += 4;
+				string_args[i] = new char[add_len + 1];
+				strcpy(string_args[i], vals);
+				string_args[i][add_len] = '\0';
 			}
-			else
+		}
+	}
+
+	for (i = 0; i < source_len; i++)
+	{
+		if (source[i] == '%')
+		{
+			if (i < source_len - 1 && (source[i + 1] < '0' || source[i + 1] > '9'))
 			{
 				*dst_ptr = source[i];
 				dst_ptr++;
@@ -439,7 +443,29 @@ static void FormatMessage(int flags, char* source, int message_id, int language_
 				{
 					break;
 				}
+				continue;
 			}
+			ptr = source + i;
+			sscanf(ptr, "%%%i", &arg_index);
+			arg_index--;
+			vals = string_args[arg_index];
+			add_len = strlen(vals);
+
+			if (bytes_left - add_len < 0)
+			{
+				strncpy(dst_ptr, vals, bytes_left);
+				dst_ptr = dst_ptr + bytes_left;
+				bytes_left = 0;
+				break;
+			}
+			else
+			{
+				strcpy(dst_ptr, vals);
+				dst_ptr = dst_ptr + add_len;
+			}
+
+			bytes_left -= add_len;
+			i += 4;
 		}
 		else
 		{
@@ -452,6 +478,16 @@ static void FormatMessage(int flags, char* source, int message_id, int language_
 			}
 		}
 	}
+
+	for (i = 0; i < 9; i++)
+	{
+		if (string_args[i] != NULL)
+		{
+			delete [] string_args[i];
+			string_args[i] = NULL;
+		}
+	}
+
 	*dst_ptr = '\0';
 	dest[len - 1] = '\0';
 }
