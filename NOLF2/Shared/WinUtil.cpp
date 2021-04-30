@@ -278,6 +278,14 @@ DWORD CWinUtil::WinGetPrivateProfileString (const char* lpAppName, const char* l
 #endif
 }
 
+#include <vector>
+struct IniApp
+{
+	std::string app_name;
+	std::vector<std::string> keys;
+};
+
+
 DWORD CWinUtil::WinWritePrivateProfileString (const char* lpAppName, const char* lpKeyName, const char* lpString, const char* lpFileName)
 {
 #ifndef __LINUX
@@ -288,21 +296,49 @@ DWORD CWinUtil::WinWritePrivateProfileString (const char* lpAppName, const char*
 	{
 		return 1;
 	}
-	std::string lookup{lpAppName};
-	lookup += ".";
-	lookup += lpKeyName;
-	std::string line;
 	std::fstream conf{lpFileName, std::ios_base::app|std::ios_base::in|std::ios_base::out};
-	while(!conf.eof()) {
-		conf >> line;
-		if(line.substr(0, lookup.size()) ==  lookup) {
-		    conf.seekp(conf.tellg());
-		    conf.seekp(-line.size(), std::ios_base::cur);
-			break;
-		}
+	// we've asked to append to the file, so if our write position and read
+	// then it was newly created and we write our app/key
+	if (conf.tellp() == conf.tellg()){
+		conf << '[' << lpAppName << "]\n";
+		conf << lpKeyName << '=' << lpString << '\n';
+		return 0;
 	}
-	conf << lookup << "=" << lpString << '\n';
-	conf.flush();
+
+	std::string line;
+	std::string app_name{lpAppName};
+	std::string key_name{lpKeyName};
+	std::vector<IniApp> apps{};
+	apps.reserve(6);
+	while(!conf.eof()) {
+		std::getline(conf, line);
+		if (line.length() > 0 && line.at(0) == '[') {
+			apps.push_back(IniApp{line.substr(1, line.length()-2),{}});
+			apps.back().keys.reserve(8);
+			if(apps.back().app_name == app_name)
+				apps.back().keys.emplace_back(key_name + "=" + lpString);
+			continue;
+		}
+		auto &app = apps.back();
+		auto eq = line.find('=');
+		if (eq == std::string::npos)
+			continue;
+		
+		if(app.app_name == app_name && line.substr(0, key_name.length()) == key_name)
+			continue;
+		
+		app.keys.push_back(line);
+	}
+	conf.close();
+	// now write the new profile with the added
+	conf.open(lpFileName, std::ios_base::out|std::ios_base::trunc);
+	for (auto &app : apps){
+		conf << '[' << app.app_name << "]\n";
+		for(auto &key : app.keys)
+			conf << key << '\n';
+		conf << '\n';
+	}
+	conf.close();
 	return 0;
 #endif
 }
