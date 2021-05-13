@@ -20,7 +20,8 @@ gcc 7:
     - cmake --build .
   artifacts:
     paths:
-      - build
+      - build/OUT
+      - build/*/*/lib*
     expire_in: 2 days
 clang 5:
   image: "registry.gitlab.com/katana-steel/lithtech/clang"
@@ -33,7 +34,8 @@ clang 5:
     - cmake --build .
   artifacts:
     paths:
-      - build
+      - build/OUT
+      - build/*/*/lib*
     expire_in: 2 days
 
 testing:
