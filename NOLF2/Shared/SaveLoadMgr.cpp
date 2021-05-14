@@ -220,7 +220,7 @@ bool CSaveLoadMgr::ReadContinueINI( char* pszSaveKey, uint32 nSaveKeySize, char*
 {
 
 	// Get the continue ini string.  This has the key, dir and savefile that was used for the last save.
-	char szIniString[SLMGR_MAX_INISTR_LEN];
+	char szIniString[SLMGR_MAX_INISTR_LEN]{};
 	CWinUtil::WinGetPrivateProfileString( GAME_NAME, CONTINUE_INIKEY, "", szIniString, ARRAY_LEN( szIniString ), 
 		GetSaveINIFile( ));
 
@@ -307,7 +307,7 @@ bool CSaveLoadMgr::ReadSaveINI( const char *pKey, char* pszSaveTitle, uint32 nSa
 		return false;
 	}
 	
-	char szIniString[MAX_PATH*2];
+	char szIniString[MAX_PATH*2]{};
 	CWinUtil::WinGetPrivateProfileString( GAME_NAME, pKey, "", szIniString, ARRAY_LEN( szIniString ), 
 		GetSaveINIFile( ));
 

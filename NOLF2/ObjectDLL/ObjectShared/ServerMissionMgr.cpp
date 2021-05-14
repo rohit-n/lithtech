@@ -1069,8 +1069,8 @@ bool CServerMissionMgr::SetupCampaign( char const* pszCampaignName )
 	}
 
 	// Read the missionid's for this campaign.
-	char szMissionId[4];
-	char szCampaignIndexKeyName[32];
+	char szMissionId[4]{};
+	char szCampaignIndexKeyName[32]{};
 	int nCampaignIndex = 0;
 	while( 1 )
 	{
@@ -1096,7 +1096,7 @@ bool CServerMissionMgr::SetupCampaign( char const* pszCampaignName )
 	}
 
 	// Get the looping flag.
-	char szLoop[4];
+	char szLoop[4]{};
 	CWinUtil::WinGetPrivateProfileString( "MissionList", "LoopMissions", "0", szLoop, 
 		ARRAY_LEN( szLoop ), pszCampaignFile );
 	m_bLoopCampaign = !!atoi( szLoop );

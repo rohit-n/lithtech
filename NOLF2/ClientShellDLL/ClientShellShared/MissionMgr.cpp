@@ -119,7 +119,7 @@ bool CMissionMgr::StartGameNew( )
 	if( IsMultiplayerGame( ))
 	{
 		// Get the first mission to play from the missions file.
-		char szMission[4];
+		char szMission[4]{};
 		CUserProfile* pUserProfile = g_pProfileMgr->GetCurrentProfile( );
 		char const* pszCampaignFile = GetCampaignFile( pUserProfile->m_ServerGameOptions );
 		if (!CWinUtil::FileExist( pszCampaignFile ))

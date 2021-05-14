@@ -297,12 +297,12 @@ void CScreenHostLevels::LoadMissionList()
 
 	if (!m_pSelMissions) return;
 
-	char szString[256];
+	char szString[256]{};
 	CWinUtil::WinGetPrivateProfileString( "MissionList", "LoopMissions", "0", szString, ARRAY_LEN( szString ), m_sCampaignFile.c_str());
 
 	m_bLoopMissions = ( atoi(szString) > 0 );
 
-	char szKey[64];
+	char szKey[64]{};
 	uint8 numMissions = 0;
 	do
 	{
