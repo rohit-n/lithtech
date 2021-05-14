@@ -367,7 +367,6 @@ LTRESULT SendEmptyServerMsg(uint32 nMsgID, uint32 nFlags)
 #ifndef _WIN32
 
 #include <string_view>
-#include <charconv>
 #include <algorithm>
 #include <vector>
 
@@ -439,10 +438,9 @@ static void FormatMessage(int flags, char* source, int message_id, int language_
 	{
 		if (src.at(i) == '%' && src.at(i+1) != '%')
 		{
-			auto a = src.substr(i+1, 1);    //no string exceeds 9 arguments, so assume 1 digit
-			int arg_num{};
-			std::from_chars(a.data(), a.data()+a.size(), arg_num);
-			a = s_args.at(--arg_num); //zero based vector
+			auto a = src.substr(i+1, 1);       //no string exceeds 9 arguments, so assume 1 digit
+			int arg_num = atoi(a.data()) - 1;  //zero based vector index
+			a = s_args.at(arg_num); 
 			if (bytes_left >= a.length()) {
 				strcpy(dst_ptr, a.data());
 				bytes_left -= a.length();
