@@ -41,6 +41,7 @@ clang 5:
     expire_in: 2 days
 
 testing:
+  image: "registry.gitlab.com/katana-steel/lithtech/gcc"
   stage: test
   script:
     - cd build
