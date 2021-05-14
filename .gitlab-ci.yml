@@ -33,6 +33,7 @@ clang 5:
     - cd build
     - cmake -G Ninja -DJSON_BuildTests=off ..
     - cmake --build .
+  allow_failure: true 
   artifacts:
     paths:
       - build/OUT
