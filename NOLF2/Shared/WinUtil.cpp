@@ -278,7 +278,6 @@ DWORD CWinUtil::WinGetPrivateProfileString (const char* lpAppName, const char* l
 #endif
 }
 
-#include <vector>
 struct IniApp
 {
 	std::string app_name;
@@ -323,10 +322,10 @@ DWORD CWinUtil::WinWritePrivateProfileString (const char* lpAppName, const char*
 		auto eq = line.find('=');
 		if (eq == std::string::npos)
 			continue;
-		
+
 		if(app.app_name == app_name && line.substr(0, key_name.length()) == key_name)
 			continue;
-		
+
 		app.keys.push_back(line);
 	}
 	conf.close();
