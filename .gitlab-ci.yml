@@ -22,6 +22,7 @@ gcc 7:
     paths:
       - build/OUT
       - build/*/*/lib*
+      - build/*/*/*/lib* 
     expire_in: 2 days
 clang 5:
   image: "registry.gitlab.com/katana-steel/lithtech/clang"
