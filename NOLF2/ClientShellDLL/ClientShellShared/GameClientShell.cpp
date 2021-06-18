@@ -373,7 +373,7 @@ void CmdFn(int argc, const char **argv)
 	}
 
 	// Send message to server...
-	char *buf = new char(CommandLineLength(argc,argv)+3);
+	char *buf = new char[CommandLineLength(argc,argv)+3];
 	sprintf(buf, "%s", argv[0]);
 	for (int i=1; i < argc; i++)
 	{
@@ -384,7 +384,7 @@ void CmdFn(int argc, const char **argv)
 	}
 
     HSTRING hstrCmd = g_pLTClient->CreateString(buf);
-	delete buf;
+	delete [] buf;
 	CAutoMessage cMsg;
 	cMsg.Writeuint8(MID_CONSOLE_COMMAND);
 	cMsg.WriteHString(hstrCmd);
