@@ -1,5 +1,7 @@
 project(LIB_D3DRender)
 
+find_package(SDL2 REQUIRED)
+
 add_library(${PROJECT_NAME} STATIC
 	../shadows/d3dshadowtexture.cpp
 	3d_ops.cpp
@@ -95,7 +97,8 @@ include_directories(.
 	../../../../client/src
 	../../../../world/src
 	../../../../model/src
-	../../../../lithtemplate)
+	../../../../lithtemplate
+	${SDL2_INCLUDE_DIRS})
 
 set_property(TARGET ${PROJECT_NAME}
 	PROPERTY COMPILE_DEFINITIONS_DEBUG D3D_DEBUG_INFO)

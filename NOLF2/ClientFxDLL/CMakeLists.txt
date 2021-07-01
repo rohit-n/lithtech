@@ -2,9 +2,10 @@
 project(NOLF2_ClientFXDLL)
 cmake_minimum_required(VERSION 3.1)
 
+find_package(SDL2 REQUIRED)
+
 if(LINUX)
 include(FindPkgConfig)
-find_package(SDL2 REQUIRED)
 endif(LINUX)
 
 add_library(${PROJECT_NAME} SHARED

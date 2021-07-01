@@ -1,5 +1,7 @@
 project(LIB_UI)
 
+find_package(SDL2 REQUIRED)
+
 set(libsources
 	src/cuibase.cpp
 	src/cuibase_impl.cpp

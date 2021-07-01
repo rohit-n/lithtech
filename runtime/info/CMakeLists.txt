@@ -1,5 +1,7 @@
 project(LIB_Info)
 
+find_package(SDL2 REQUIRED)
+
 set(libsources
 	src/outputredir.cpp)
 

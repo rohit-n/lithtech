@@ -152,7 +152,9 @@ if(BUILD_TOOLS)
     add_subdirectory(tools/LithRez)			# TOOLS_LithRez
 endif(BUILD_TOOLS)
 
+if(NOT WIN32)
 add_subdirectory(tests/RegMgr)
 add_subdirectory(tests/CShell)
 add_subdirectory(tests/DynRes)
 add_subdirectory(tests/DynResDLL)
+endif(NOT WIN32)

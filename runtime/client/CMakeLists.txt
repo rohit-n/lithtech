@@ -228,6 +228,8 @@ else(WIN32)
     ${exec_src})
 endif(WIN32)
 
+find_package(SDL2 REQUIRED)
+
 include_directories(src
 	../../sdk/inc
 	../../sdk/inc/physics
@@ -251,7 +253,8 @@ include_directories(src
 	../render_b/src
 	../ui/src
 	../controlfilemgr
-	../server/src)
+	../server/src
+	${SDL2_INCLUDE_DIRS})
 
 if(WIN32)
 	include_directories(../kernel/src/sys/win
@@ -261,13 +264,9 @@ if(WIN32)
 		LIB_D3DRender
 		winmm)
 else(WIN32)
-	find_package(SDL2 REQUIRED)
-
 	include_directories(../kernel/src/sys/linux
-		../shared/src/sys/linux
-		${SDL2_INCLUDE_DIRS})
+		../shared/src/sys/linux)
 	set(libs ${libs}
-	    ${SDL2_LIBRARIES}
 	    dl
 		pthread)
 
@@ -288,7 +287,7 @@ if(ENABLE_DIRECTX)	# FIXME: set to find DirectX path
 			ddraw
 			d3dx9
 			d3d9
-			DxErr9
+			DxErr
 			dxguid
 			dplayx
 			dinput8
@@ -304,7 +303,7 @@ set(libs ${libs}
 	LIB_Info
 	LIB_ILTSound
 	LIB_UI
-    SDL2)
+    ${SDL2_LIBRARIES})
 
 
 if(ENABLE_OPENGL)
