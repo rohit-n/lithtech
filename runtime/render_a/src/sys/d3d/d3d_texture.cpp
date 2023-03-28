@@ -10,6 +10,7 @@
 #include "colorops.h"
 #include "rendererframestats.h"
 
+
 // Globals.
 CTextureManager			g_TextureManager;
 FormatMgr				g_FormatMgr;
@@ -361,81 +362,112 @@ bool CTextureManager::ConvertTexDataToDD(uint8* pSrcData, PFormat* SrcFormat, ui
 #endif
 }
 
+namespace {
+struct tex {
+	uint32 iSrcLvl;
+	uint32 iDstLvl;
+	TextureMipData *pSrcMip;
+	D3DFORMAT D3DSrcFormat;
+	CTextureManager *ctm;
+};
+
+struct cube_tex : public tex {
+	LPDIRECT3DCUBETEXTURE9 pD3DDstTexture;
+	D3DCUBEMAP_FACES i;
+};
+struct norm_tex : public tex {
+	LPDIRECT3DTEXTURE9 pD3DDstTexture;
+};
+
+HRESULT copyCubeTexture(const cube_tex& t )
+{
+	D3DLOCKED_RECT LockedRect;
+	uint8* pSrcData = t.pSrcMip->m_Data + (t.i * t.pSrcMip->m_dataSize);
+	RECT SrcRect;
+	SrcRect.left	= 0;
+	SrcRect.top		= 0;
+	SrcRect.right	= t.pSrcMip->m_Width;
+	SrcRect.bottom	= t.pSrcMip->m_Height;
+#ifdef _WINDOWS
+	uint32 SrcPitch = t.ctm->GetPitch(t.D3DSrcFormat,t.pSrcMip->m_Width);
+	LPDIRECT3DSURFACE9 pDstSurface = nullptr;
+	t.pD3DDstTexture->GetCubeMapSurface(t.i,t.iDstLvl,&pDstSurface);
+	if (!pDstSurface)
+		return S_FALSE;
+	HRESULT hResult;
+	LT_MEM_TRACK_ALLOC(hResult = D3DXLoadSurfaceFromMemory(pDstSurface,NULL,NULL,pSrcData,t.D3DSrcFormat,SrcPitch,NULL,&SrcRect,D3DX_FILTER_NONE,0), LT_MEM_TYPE_RENDERER);
+
+	pDstSurface->Release();
+	return hResult;
+#else
+	t.pD3DDstTexture->LockRect(t.i, t.iSrcLvl, &LockedRect, &SrcRect, 0);
+	memcpy(LockedRect.pBits, pSrcData, t.pSrcMip->m_dataSize);
+	return t.pD3DDstTexture->UnlockRect(t.i, t.iSrcLvl);
+#endif
+
+}
+
+HRESULT copyNormalTexture(const norm_tex& t)
+{
+	D3DLOCKED_RECT LockedRect;
+	uint8* pSrcData = t.pSrcMip->m_Data;
+	RECT SrcRect;
+	SrcRect.left	= 0;
+	SrcRect.top		= 0;
+	SrcRect.right	= t.pSrcMip->m_Width;
+	SrcRect.bottom	= t.pSrcMip->m_Height;
+#ifdef _WINDOWS
+	uint32 SrcPitch = t.ctm->GetPitch(t.D3DSrcFormat,t.pSrcMip->m_Width);
+	LPDIRECT3DSURFACE9 pDstSurface = nullptr;
+	t.pD3DDstTexture->GetSurfaceLevel(t.iDstLvl,&pDstSurface);
+	if (!pDstSurface) 
+		return S_FALSE;
+
+	HRESULT hResult;
+	LT_MEM_TRACK_ALLOC(hResult = D3DXLoadSurfaceFromMemory(pDstSurface,NULL,NULL,pSrcData,t.D3DSrcFormat,SrcPitch,NULL,&SrcRect,D3DX_FILTER_NONE,0), LT_MEM_TYPE_RENDERER);
+
+	pDstSurface->Release();
+	return hResult;
+#else
+	t.pD3DDstTexture->LockRect(t.iSrcLvl, &LockedRect, &SrcRect, 0);
+	memcpy(LockedRect.pBits, pSrcData, t.pSrcMip->m_dataSize);
+	return t.pD3DDstTexture->UnlockRect(t.iSrcLvl);
+#endif
+}
+
+}
+
 bool CTextureManager::UploadRTexture(TextureData* pSrcTexture, uint32 iSrcLvl, RTexture* pDstTexture, uint32 iDstLvl)
 {
-	TextureMipData* pSrcMip = &pSrcTexture->m_Mips[iSrcLvl];
 	PFormat SrcFormat;
 	HRESULT hResult;
 	pSrcTexture->SetupPFormat(&SrcFormat);
-	D3DFORMAT D3DSrcFormat = QueryDDFormat1(pSrcTexture->m_Header.GetBPPIdent(), pSrcTexture->m_Header.m_IFlags);
-#ifndef _WINDOWS
-	RECT* pRect = nullptr;
-	D3DLOCKED_RECT LockedRect;
-#endif
+	tex t_i{
+		iSrcLvl,
+		iDstLvl,
+		&pSrcTexture->m_Mips[iSrcLvl],
+		QueryDDFormat1(pSrcTexture->m_Header.GetBPPIdent(), pSrcTexture->m_Header.m_IFlags),
+		this
+	};
 
 	if (pDstTexture->IsCubeMap())
 	{
 		// Cube map texture...
-		LPDIRECT3DCUBETEXTURE9 pD3DDstTexture = pDstTexture->m_pD3DCubeTexture;
-
-		uint8* pSrcData = pSrcMip->m_Data;
-		uint32 SrcPitch = GetPitch(D3DSrcFormat,pSrcMip->m_Width);
-
-		RECT SrcRect;
-		SrcRect.left	= 0;
-		SrcRect.top		= 0;
-		SrcRect.right	= pSrcMip->m_Width;
-		SrcRect.bottom	= pSrcMip->m_Height;
-
+		cube_tex t{t_i};
+		t.pD3DDstTexture = pDstTexture->m_pD3DCubeTexture;
 		for (uint32 i = 0; i < 6; ++i)
 		{
-#ifdef _WINDOWS
-			LPDIRECT3DSURFACE9 pDstSurface = nullptr;
-
-			pD3DDstTexture->GetCubeMapSurface((D3DCUBEMAP_FACES)i,iDstLvl,&pDstSurface);
-			if (!pDstSurface)
+			t.i = (D3DCUBEMAP_FACES)i;
+			if (copyCubeTexture(t) != D3D_OK)
 				return false;
-
-			hResult = D3DXLoadSurfaceFromMemory(pDstSurface,NULL,NULL,pSrcData,D3DSrcFormat,SrcPitch,NULL,&SrcRect,D3DX_FILTER_NONE,0);
-
-			uint32 iRefCnt = pDstSurface->Release();
-#else
-			pD3DDstTexture->LockRect((D3DCUBEMAP_FACES)i, iSrcLvl, &LockedRect, pRect, 0);
-			memcpy(LockedRect.pBits, pSrcData, pSrcMip->m_dataSize);
-			hResult = pD3DDstTexture->UnlockRect((D3DCUBEMAP_FACES)i, iSrcLvl);
-#endif
-			if (hResult != D3D_OK)
-				return false;
-			pSrcData += pSrcMip->m_dataSize;
 		}
 	}
 	else
 	{
 		// Normal texture..
-		LPDIRECT3DTEXTURE9 pD3DDstTexture = pDstTexture->m_pD3DTexture;
-		uint8* pSrcData = pSrcMip->m_Data;
-#ifdef _WINDOWS
-		LPDIRECT3DSURFACE9 pDstSurface = nullptr;
-		pD3DDstTexture->GetSurfaceLevel(iDstLvl,&pDstSurface);
-		if (!pDstSurface) return false;
-
-		uint32 SrcPitch = GetPitch(D3DSrcFormat,pSrcMip->m_Width);
-
-		RECT SrcRect;
-		SrcRect.left = 0;
-		SrcRect.top = 0;
-		SrcRect.right = pSrcMip->m_Width;
-		SrcRect.bottom =  pSrcMip->m_Height;
-
-		LT_MEM_TRACK_ALLOC(hResult = D3DXLoadSurfaceFromMemory(pDstSurface,NULL,NULL,pSrcData,D3DSrcFormat,SrcPitch,NULL,&SrcRect,D3DX_FILTER_NONE,0), LT_MEM_TYPE_RENDERER);
-
-		pDstSurface->Release();
-#else
-		pD3DDstTexture->LockRect(iSrcLvl, &LockedRect, pRect, 0);
-		memcpy(LockedRect.pBits, pSrcData, pSrcMip->m_dataSize);
-		hResult = pD3DDstTexture->UnlockRect(iSrcLvl);
-#endif
-		if (hResult != D3D_OK)
+		norm_tex t{t_i};
+		t.pD3DDstTexture = pDstTexture->m_pD3DTexture;
+		if (copyNormalTexture(t) != D3D_OK)
 			return false;
 	}
 
