@@ -265,6 +265,9 @@ LTRESULT dsi_SetRenderMode(RMode *pMode, const char *pName)
 
     memcpy(&currentMode, &g_RMode, sizeof(RMode));
 
+    //Done to prevent DXVK from hanging
+    SDL_Delay(100);
+
     // Try to set the new mode.
     if (r_InitRender(pMode, pName) != LT_OK) {
         // Ok, try to restore the old mode.
