@@ -747,7 +747,7 @@ void CScreenHost::CreateDefaultCampaign()
 	}
 
 	char szString[256];
-	char szNum[4];
+	char szNum[11];
 
 	sprintf(szNum, "%d", (IsCoopMultiplayerGameType() ? 0 : 1) );
 	CWinUtil::WinWritePrivateProfileString( "MissionList", "LoopMissions", szNum, sFN.c_str());

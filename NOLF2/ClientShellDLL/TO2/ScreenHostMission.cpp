@@ -561,7 +561,7 @@ void CScreenHostMission::NewCampaign(const std::string& campaignName)
 
 
 	char szString[256];
-	char szNum[4];
+	char szNum[11];
 
 	CWinUtil::WinWritePrivateProfileString( "MissionList", "LoopMissions", "0", fn.c_str());
 

@@ -223,7 +223,7 @@ void CHUDRadio::UpdateLayout()
 		}
 		else
 		{
-			char szTmp[4];
+			char szTmp[5];
 			sprintf(szTmp,"%d.",i+1);
 			m_pText[i] = debug_new(CLTGUIColumnCtrl);
 			m_pText[i]->Create(LTNULL,LTNULL,m_pFont,m_nFontSize,LTNULL);
