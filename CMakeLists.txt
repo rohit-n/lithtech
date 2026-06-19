@@ -54,6 +54,10 @@ if (ENABLE_OPENAL AND NOT WIN32)
 	pkg_check_modules(MPG123 REQUIRED libmpg123)
 endif()
 
+if (ENABLE_OPENAL AND ENABLE_DIRECTMUSIC)
+	message( FATAL_ERROR "Cannot enable OpenAL and DirectMusic." )
+endif()
+
 if(ENABLE_D3D)
     add_definitions(-D__D3D -D__D3DREND)
 endif(ENABLE_D3D)
