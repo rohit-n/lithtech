@@ -18,7 +18,7 @@
 #include "SFXMsgIds.h"
 #include "TemplateList.h"
 #include "BankedList.h"
-#include "iltcustomdraw.h"
+#include "iltdrawprim.h"
 
 struct PLFXCREATESTRUCT : public SFXCREATESTRUCT
 {
@@ -79,7 +79,7 @@ inline PLFXCREATESTRUCT::PLFXCREATESTRUCT()
     bLinesShareNormal       = LTTRUE;
 	pTexture				= LTNULL;
 	dwTexAddr				= LTTEXADDR_WRAP;
-	dwColorOp				= LTOP_MODULATE;
+	dwColorOp				= DRAWPRIM_MODULATE;
 
 	vInnerColorStart.Init();
 	vInnerColorEnd.Init();

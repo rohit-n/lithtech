@@ -44,14 +44,14 @@ inline VBCREATESTRUCT::VBCREATESTRUCT()
 
 inline void VBCREATESTRUCT::Read(HMESSAGEREAD hMessage)
 {
-	bFogEnable  = (LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage);
-	fFogFarZ	= g_pLTClient->ReadFromMessageFloat(hMessage);
-	fFogNearZ	= g_pLTClient->ReadFromMessageFloat(hMessage);
-	g_pLTClient->ReadFromMessageVector(hMessage, &vFogColor);
-	g_pLTClient->ReadFromMessageVector(hMessage, &vTintColor);
-	g_pLTClient->ReadFromMessageVector(hMessage, &vLightAdd);
-	nSoundFilterId	 = g_pLTClient->ReadFromMessageByte(hMessage);
-	bCanPlayMoveSnds = g_pLTClient->ReadFromMessageByte(hMessage);
+	bFogEnable = hMessage->Readbool();
+	fFogFarZ = hMessage->Readfloat();
+	fFogNearZ = hMessage->Readfloat();
+	vFogColor = hMessage->ReadLTVector();
+	vTintColor = hMessage->ReadLTVector();
+	vLightAdd = hMessage->ReadLTVector();
+	nSoundFilterId = hMessage->Readuint8();
+	bCanPlayMoveSnds = hMessage->Readbool();
 }
 
 class CVolumeBrushFX : public CSpecialFX
@@ -103,8 +103,9 @@ class CVolumeBrushFX : public CSpecialFX
 			{
 				if (IsLiquid((ContainerCode)code))
 				{
-                    uint32 dwFlags = pClientDE->GetObjectFlags(m_hServerObject);
-					pClientDE->SetObjectFlags(m_hServerObject, dwFlags | FLAG_RAYHIT);
+					uint32 dwFlags = 0;
+					g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Flags, dwFlags);
+					g_pCommonLT->SetObjectFlags(m_hServerObject, OFT_Flags, dwFlags | FLAG_RAYHIT, FLAGMASK_ALL);
 				}
 			}
 

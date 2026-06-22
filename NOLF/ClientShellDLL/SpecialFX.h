@@ -43,7 +43,7 @@ class CSpecialFX
 		{
 			if (m_pClientDE && m_hObject)
 			{
-				m_pClientDE->DeleteObject(m_hObject);
+				m_pClientDE->RemoveObject(m_hObject);
                 m_hObject = LTNULL;
 			}
 		}

@@ -28,6 +28,19 @@
 
 #define DEFAULT_STAIRSTEP_HEIGHT	32.0
 
+#define LTF_JUSTIFY_RIGHT 0
+#define LTF_JUSTIFY_LEFT 1
+#define LTF_JUSTIFY_CENTER 2
+#define LTF_INCLUDE_ALL 0
+
+#define LTTEXADDR_WRAP 0
+
+typedef ILTMessage_Read* HMESSAGEREAD;
+typedef ILTMessage_Write* HMESSAGEWRITE;
+typedef ILTDrawPrim ILTCustomDraw;
+typedef ANIMTRACKERID LTAnimTracker;
+#define CLTGUIFont CUIFont
+
 // Externs
 
 extern ILTMath*  g_pMathLT;
@@ -92,7 +105,7 @@ extern CGameClientShell* g_pGameClientShell;
 extern CGameServerShell* g_pGameServerShell;
 #endif
 
-inline LTBOOL ObjListFilterFn(HOBJECT hTest, void *pUserData)
+inline bool ObjListFilterFn(HOBJECT hTest, void *pUserData)
 {
 	// Filters out objects for a raycast.  pUserData is a list of HOBJECTS terminated
 	// with a NULL HOBJECT.
@@ -100,10 +113,10 @@ inline LTBOOL ObjListFilterFn(HOBJECT hTest, void *pUserData)
 	while(hList && *hList)
 	{
 		if(hTest == *hList)
-            return LTFALSE;
+            return false;
 		++hList;
 	}
-    return LTTRUE;
+    return true;
 }
 
 inline LTBOOL IsMultiplayerGame()

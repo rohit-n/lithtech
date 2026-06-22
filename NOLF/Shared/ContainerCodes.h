@@ -17,6 +17,8 @@
 
 #define MAX_CONTAINER_VISCOSITY 5000.0f
 
+extern ILTCommon* g_pCommonLT;
+
 enum ContainerCode {
 	CC_NO_CONTAINER=0,
 	CC_WATER,
@@ -60,7 +62,7 @@ inline ContainerCode GetContainerCode(ILTCSBase *pInterface, LTVector vPos)
 	if (dwNum > 0 && objList[0])
 	{
 #ifdef _CLIENTBUILD
-        g_pLTClient->GetObjectUserFlags(objList[0], &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(objList[0], OFT_User, dwUserFlags);
 #else
         dwUserFlags = g_pLTServer->GetObjectUserFlags(objList[0]);
 #endif

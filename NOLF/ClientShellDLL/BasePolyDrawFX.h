@@ -36,7 +36,7 @@ class CBasePolyDrawFX : public CSpecialFX
 			{
 				if (s_hCanvasObj)
 				{
-                    g_pLTClient->DeleteObject(s_hCanvasObj);
+                    g_pLTClient->RemoveObject(s_hCanvasObj);
                     s_hCanvasObj = LTNULL;
 				}
 			}

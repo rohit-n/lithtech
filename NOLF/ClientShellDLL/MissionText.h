@@ -8,9 +8,9 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-
+#ifdef RKN_FIXME
 #include "LithFontMgr.h"
-
+#endif
 class CMissionText
 {
 public:
@@ -48,9 +48,10 @@ private:
     LTFLOAT              m_fAlpha;
 
     HLTSOUND            m_hSound;
+#ifdef RKN_FIXME
 	LITHFONTDRAWDATA	m_lfDrawData;
 	LITHFONTSAVEDATA	m_lfSaveData;
-
+#endif
     LTIntPt              m_pos;
 
     LTBOOL               m_bScrolling;

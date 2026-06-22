@@ -7,6 +7,12 @@
 
 #include "ltguimgr.h"
 
+typedef struct
+{
+	int m_nVKeyCode;
+	uint32 m_dwMessageID;
+} LTGUIKeyMessage;
+
 class CMessageBoxCtrl : public CLTGUICommandHandler
 {
 public:
@@ -107,7 +113,7 @@ protected:
 	int							m_nMouseDownItemSel;		// The button index that is selected from the current mouse down message
 
 	CMoArray<LTGUIKeyMessage>	m_keyBindings;		// Array of key bindings
-	CMoArray<LTGUITextButton>	m_textButtonArray;	// Array of "text buttons" for the message box
+	CMoArray<CLTGUIButton>	m_textButtonArray;	// Array of "text buttons" for the message box
 
 	int							m_nSelection;
 

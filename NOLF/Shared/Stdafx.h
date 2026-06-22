@@ -25,9 +25,24 @@
 #include "ilttransform.h"
 #include "iltphysics.h"
 #include "iltmath.h"
+#include "ltobjectcreate.h"
 
 #include "Factory.h"
 
 #include "CommonUtilities.h"
+#include "AutoMessage.h"
+
+inline uint32 GetObjectType(HOBJECT hObj)
+{
+	ASSERT(g_pCommonLT);
+
+	uint32 nObjType;
+
+	uint32 nResult = g_pCommonLT->GetObjectType(hObj, &nObjType);
+
+	ASSERT(nResult == LT_OK);
+
+	return nObjType;
+}
 
 #endif // __STDAFX_H__

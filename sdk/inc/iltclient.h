@@ -3782,6 +3782,10 @@ Used for: Misc.
 */
     LTRESULT (*QueryGraphicDevice)(LTGraphicsCaps* pCaps);
 
+// Functions for NOLF1 compatibility.
+    void (*AlignRotation)(LTRotation* rot, LTVector* forward, LTVector* dir);
+    void (*GetRotationVectors)(LTRotation* rot, LTVector* up, LTVector* right, LTVector* forward);
+
 protected:
     #ifdef LITHTECH_ESD
     ILTRealAudioMgr     *m_pRealAudioMgr;

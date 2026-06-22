@@ -29,9 +29,9 @@ public:
 	void		Render ( HSURFACE hDestSurf );
 
 	// Width/Height calculations
-	int			GetWidth ( );
+	uint16			GetWidth ( );
 	int			GetArrowOffset ( ) {return m_nArrowOffset;}
-	int			GetHeight ( );
+	uint16			GetHeight ( );
 
 	// Call this if you wish to enable highlighting the item that is under the mouse
 	// cursor and changing selection when the mouse is moved.

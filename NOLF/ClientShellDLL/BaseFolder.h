@@ -9,16 +9,19 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "LTGUIMgr.h"
+#include "ltguimgr.h"
 #include "BitmapCtrl.h"
 #include "GroupCtrl.h"
 #include "ListCtrl.h"
+#ifdef RKN_FIXME
 #include "SliderCtrl.h"
 #include "CycleCtrl.h"
+#endif
 #include "stdlith.h"
 #include "BaseScaleFX.h"
+#ifdef RKN_FIXME
 #include "StaticTextCtrl.h"
-
+#endif
 
 #define MAX_INT_ATTACHMENTS 5
 struct INT_ATTACH
@@ -43,9 +46,9 @@ class CPageBreakCtrl : public CLTGUICtrl
 {
 public:
 	void	Render ( HSURFACE hDestSurf ) {}
-	int		GetWidth ( ) {return 0; }
-	int		GetHeight ( ) {return 0; }
-    uint32  GetID() { return m_dwCommandID; }
+	uint16		GetWidth ( ) {return 0; }
+	uint16		GetHeight ( ) {return 0; }
+    uint32  GetID() { return m_nCommandID; }
 
 };
 
@@ -159,48 +162,48 @@ public:
 
 	//default font for items is the large font
 	// These AddXXX() functions call CreateXXX() and then add the control to the FreeControl list
-    CLTGUITextItemCtrl*     AddTextItem(HSTRING hString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
-    CLTGUITextItemCtrl*     AddTextItem(int stringID, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
-    CLTGUITextItemCtrl*     AddTextItem(char *pString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
-    CStaticTextCtrl*        AddStaticTextItem(HSTRING hString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
-    CStaticTextCtrl*        AddStaticTextItem(int stringID, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed = LTFALSE,  CLTGUIFont *pFont = LTNULL);
-    CStaticTextCtrl*        AddStaticTextItem(char *pString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed = LTFALSE,  CLTGUIFont *pFont = LTNULL);
+    CLTGUITextCtrl*     AddTextItem(HSTRING hString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
+    CLTGUITextCtrl*     AddTextItem(int stringID, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
+    CLTGUITextCtrl*     AddTextItem(char *pString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
+    CLTGUITextCtrl*        AddStaticTextItem(HSTRING hString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
+    CLTGUITextCtrl*        AddStaticTextItem(int stringID, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed = LTFALSE,  CLTGUIFont *pFont = LTNULL);
+    CLTGUITextCtrl*        AddStaticTextItem(char *pString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed = LTFALSE,  CLTGUIFont *pFont = LTNULL);
     CLTGUIEditCtrl*         AddEditCtrl(HSTRING hDescription, uint32 commandID, int helpID, char *pBuffer, int nBufferSize, int nTextOffset = 25, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
     CLTGUIEditCtrl*         AddEditCtrl(int nDescriptionID, uint32 commandID, int helpID, char *pBuffer, int nBufferSize, int nTextOffset = 25, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
     CLTGUIEditCtrl*         AddEditCtrl(char *pszDescription, uint32 commandID, int helpID, char *pBuffer, int nBufferSize, int nTextOffset = 25, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
-    CCycleCtrl*             AddCycleItem(HSTRING hText, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CCycleCtrl*             AddCycleItem(int stringID,  int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CCycleCtrl*             AddCycleItem(char *pString, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CToggleCtrl*            AddToggle(HSTRING hText, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CToggleCtrl*            AddToggle(int stringID, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CToggleCtrl*            AddToggle(char *pString, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CSliderCtrl*            AddSlider(HSTRING hText, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
-    CSliderCtrl*            AddSlider(int stringID,  int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
-    CSliderCtrl*            AddSlider(char *pString, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
-    CLTGUIColumnTextCtrl*   AddColumnText(DWORD dwCommandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, DWORD dwParam1 = 0, DWORD dwParam2 = 0);
+    CLTGUICycleCtrl*             AddCycleItem(HSTRING hText, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUICycleCtrl*             AddCycleItem(int stringID,  int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUICycleCtrl*             AddCycleItem(char *pString, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUIToggle*            AddToggle(HSTRING hText, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUIToggle*            AddToggle(int stringID, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUIToggle*            AddToggle(char *pString, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUISlider*            AddSlider(HSTRING hText, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
+    CLTGUISlider*            AddSlider(int stringID,  int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
+    CLTGUISlider*            AddSlider(char *pString, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
+    CLTGUIColumnCtrl*   AddColumnText(DWORD dwCommandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, DWORD dwParam1 = 0, DWORD dwParam2 = 0);
 
 	CGroupCtrl*				AddGroup(int nWidth , int nHeight, int helpID);
 
 	// These CreateXXX() create controls but do not add them to any list
-    CLTGUITextItemCtrl*     CreateTextItem(HSTRING hString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
-    CLTGUITextItemCtrl*     CreateTextItem(int stringID, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
-    CLTGUITextItemCtrl*     CreateTextItem(char *pString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
-    CStaticTextCtrl*        CreateStaticTextItem(HSTRING hString, uint32 commandID, int helpID, int width, int height = 0, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
-    CStaticTextCtrl*        CreateStaticTextItem(int stringID, uint32 commandID, int helpID, int width, int height = 0, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
-    CStaticTextCtrl*        CreateStaticTextItem(char *pString, uint32 commandID, int helpID, int width, int height = 0, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
+    CLTGUITextCtrl*     CreateTextItem(HSTRING hString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
+    CLTGUITextCtrl*     CreateTextItem(int stringID, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
+    CLTGUITextCtrl*     CreateTextItem(char *pString, uint32 commandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, int *pnValue=LTNULL);
+    CLTGUITextCtrl*        CreateStaticTextItem(HSTRING hString, uint32 commandID, int helpID, int width, int height = 0, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
+    CLTGUITextCtrl*        CreateStaticTextItem(int stringID, uint32 commandID, int helpID, int width, int height = 0, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
+    CLTGUITextCtrl*        CreateStaticTextItem(char *pString, uint32 commandID, int helpID, int width, int height = 0, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
     CLTGUIEditCtrl*         CreateEditCtrl(HSTRING hDescription, uint32 commandID, int helpID, char *pBuffer, int nBufferSize, int nTextOffset = 25, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
     CLTGUIEditCtrl*         CreateEditCtrl(int nDescriptionID, uint32 commandID, int helpID, char *pBuffer, int nBufferSize, int nTextOffset = 25, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
     CLTGUIEditCtrl*         CreateEditCtrl(char *pszDescription, uint32 commandID, int helpID, char *pBuffer, int nBufferSize, int nTextOffset = 25, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL);
-    CCycleCtrl*             CreateCycleItem(HSTRING hText, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CCycleCtrl*             CreateCycleItem(int stringID,   int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CCycleCtrl*             CreateCycleItem(char *pString, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CToggleCtrl*            CreateToggle(HSTRING hText, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CToggleCtrl*            CreateToggle(int stringID, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CToggleCtrl*            CreateToggle(char *pString, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
-    CSliderCtrl*            CreateSlider(HSTRING hText, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
-    CSliderCtrl*            CreateSlider(int stringID,  int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
-    CSliderCtrl*            CreateSlider(char *pString, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
-    CLTGUIColumnTextCtrl*   CreateColumnText(DWORD dwCommandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, DWORD dwParam1 = 0, DWORD dwParam2 = 0);
+    CLTGUICycleCtrl*             CreateCycleItem(HSTRING hText, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUICycleCtrl*             CreateCycleItem(int stringID,   int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUICycleCtrl*             CreateCycleItem(char *pString, int helpID, int nHeaderWidth, int nSpacerWidth=25, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUIToggle*            CreateToggle(HSTRING hText, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUIToggle*            CreateToggle(int stringID, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUIToggle*            CreateToggle(char *pString, int helpID, int nRightColumnOffset, LTBOOL *pbValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont=LTNULL);
+    CLTGUISlider*            CreateSlider(HSTRING hText, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
+    CLTGUISlider*            CreateSlider(int stringID,  int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
+    CLTGUISlider*            CreateSlider(char *pString, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue=LTNULL, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont =LTNULL);
+    CLTGUIColumnCtrl*   CreateColumnText(DWORD dwCommandID, int helpID, LTBOOL bFixed = LTFALSE, CLTGUIFont *pFont = LTNULL, DWORD dwParam1 = 0, DWORD dwParam2 = 0);
 	CGroupCtrl*				CreateGroup(int nWidth , int nHeight, int helpID);
 
 
@@ -314,9 +317,9 @@ protected:
 
 	CBitmapCtrl			*m_pUpArrow;
 	CBitmapCtrl			*m_pDownArrow;
-	CLTGUITextItemCtrl	*m_pBack;
-	CLTGUITextItemCtrl	*m_pMain;
-	CLTGUITextItemCtrl	*m_pContinue;
+	CLTGUITextCtrl	*m_pBack;
+	CLTGUITextCtrl	*m_pMain;
+	CLTGUITextCtrl	*m_pContinue;
 	
 
     LTIntPt      m_UpArrowPos;
@@ -346,45 +349,45 @@ protected:
 
 };
 
-inline  CLTGUITextItemCtrl* CBaseFolder::AddTextItem(HSTRING hString, uint32 commandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, int *pnValue)
+inline  CLTGUITextCtrl* CBaseFolder::AddTextItem(HSTRING hString, uint32 commandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, int *pnValue)
 {
-	CLTGUITextItemCtrl* pCtrl = CreateTextItem(hString, commandID, helpID, bFixed, pFont, pnValue);
+	CLTGUITextCtrl* pCtrl = CreateTextItem(hString, commandID, helpID, bFixed, pFont, pnValue);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline  CLTGUITextItemCtrl* CBaseFolder::AddTextItem(int stringID, uint32 commandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, int *pnValue)
+inline  CLTGUITextCtrl* CBaseFolder::AddTextItem(int stringID, uint32 commandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, int *pnValue)
 {
-	CLTGUITextItemCtrl* pCtrl = CreateTextItem(stringID, commandID, helpID, bFixed, pFont, pnValue);
+	CLTGUITextCtrl* pCtrl = CreateTextItem(stringID, commandID, helpID, bFixed, pFont, pnValue);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline  CLTGUITextItemCtrl* CBaseFolder::AddTextItem(char *pString, uint32 commandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, int *pnValue)
+inline  CLTGUITextCtrl* CBaseFolder::AddTextItem(char *pString, uint32 commandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, int *pnValue)
 {
-	CLTGUITextItemCtrl* pCtrl = CreateTextItem(pString, commandID, helpID, bFixed, pFont, pnValue);
+	CLTGUITextCtrl* pCtrl = CreateTextItem(pString, commandID, helpID, bFixed, pFont, pnValue);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
 
-inline  CStaticTextCtrl* CBaseFolder::AddStaticTextItem(HSTRING hString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed, CLTGUIFont *pFont)
+inline  CLTGUITextCtrl* CBaseFolder::AddStaticTextItem(HSTRING hString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CStaticTextCtrl* pCtrl = CreateStaticTextItem(hString, commandID, helpID, width, height, bFixed, pFont);
+	CLTGUITextCtrl* pCtrl = CreateStaticTextItem(hString, commandID, helpID, width, height, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline  CStaticTextCtrl* CBaseFolder::AddStaticTextItem(int stringID, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed, CLTGUIFont *pFont)
+inline  CLTGUITextCtrl* CBaseFolder::AddStaticTextItem(int stringID, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CStaticTextCtrl* pCtrl = CreateStaticTextItem(stringID, commandID, helpID, width, height, bFixed, pFont);
+	CLTGUITextCtrl* pCtrl = CreateStaticTextItem(stringID, commandID, helpID, width, height, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline  CStaticTextCtrl* CBaseFolder::AddStaticTextItem(char *pString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed, CLTGUIFont *pFont)
+inline  CLTGUITextCtrl* CBaseFolder::AddStaticTextItem(char *pString, uint32 commandID, int helpID, int width, int height, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CStaticTextCtrl* pCtrl = CreateStaticTextItem(pString, commandID, helpID, width, height, bFixed, pFont);
+	CLTGUITextCtrl* pCtrl = CreateStaticTextItem(pString, commandID, helpID, width, height, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
@@ -412,74 +415,74 @@ inline  CLTGUIEditCtrl*     CBaseFolder::AddEditCtrl(char *pszDescription, uint3
 	return pCtrl;
 }
 
-inline	CCycleCtrl*			CBaseFolder::AddCycleItem(HSTRING hText, int helpID, int nHeaderWidth, int nSpacerWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont)
+inline	CLTGUICycleCtrl*			CBaseFolder::AddCycleItem(HSTRING hText, int helpID, int nHeaderWidth, int nSpacerWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CCycleCtrl*	pCtrl = CreateCycleItem(hText, helpID, nHeaderWidth, nSpacerWidth, pnValue, bFixed, pFont);
+	CLTGUICycleCtrl*	pCtrl = CreateCycleItem(hText, helpID, nHeaderWidth, nSpacerWidth, pnValue, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline	CCycleCtrl*			CBaseFolder::AddCycleItem(int stringID,	int helpID, int nHeaderWidth, int nSpacerWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont)
+inline	CLTGUICycleCtrl*			CBaseFolder::AddCycleItem(int stringID,	int helpID, int nHeaderWidth, int nSpacerWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CCycleCtrl*	pCtrl = CreateCycleItem(stringID, helpID, nHeaderWidth, nSpacerWidth, pnValue, bFixed, pFont);
+	CLTGUICycleCtrl*	pCtrl = CreateCycleItem(stringID, helpID, nHeaderWidth, nSpacerWidth, pnValue, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline	CCycleCtrl*			CBaseFolder::AddCycleItem(char *pString, int helpID, int nHeaderWidth, int nSpacerWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont)
+inline	CLTGUICycleCtrl*			CBaseFolder::AddCycleItem(char *pString, int helpID, int nHeaderWidth, int nSpacerWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CCycleCtrl*	pCtrl = CreateCycleItem(pString, helpID, nHeaderWidth, nSpacerWidth, pnValue, bFixed, pFont);
-	if (pCtrl)
-		AddFreeControl(pCtrl);
-	return pCtrl;
-}
-
-inline  CToggleCtrl*        CBaseFolder::AddToggle(HSTRING hText, int helpID, int nRightColumnOffset, LTBOOL *pbValue, LTBOOL bFixed, CLTGUIFont *pFont)
-{
-	CToggleCtrl* pCtrl = CreateToggle(hText, helpID, nRightColumnOffset, pbValue, bFixed, pFont);
-	if (pCtrl)
-		AddFreeControl(pCtrl);
-	return pCtrl;
-}
-inline  CToggleCtrl*        CBaseFolder::AddToggle(int stringID, int helpID, int nRightColumnOffset, LTBOOL *pbValue, LTBOOL bFixed, CLTGUIFont *pFont)
-{
-	CToggleCtrl* pCtrl = CreateToggle(stringID, helpID, nRightColumnOffset, pbValue, bFixed, pFont);
-	if (pCtrl)
-		AddFreeControl(pCtrl);
-	return pCtrl;
-}
-inline  CToggleCtrl*        CBaseFolder::AddToggle(char *pString, int helpID, int nRightColumnOffset, LTBOOL *pbValue, LTBOOL bFixed, CLTGUIFont *pFont)
-{
-	CToggleCtrl* pCtrl = CreateToggle(pString, helpID, nRightColumnOffset, pbValue, bFixed, pFont);
+	CLTGUICycleCtrl*	pCtrl = CreateCycleItem(pString, helpID, nHeaderWidth, nSpacerWidth, pnValue, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
 
-inline	CSliderCtrl*		CBaseFolder::AddSlider(HSTRING hText, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont )
+inline  CLTGUIToggle*        CBaseFolder::AddToggle(HSTRING hText, int helpID, int nRightColumnOffset, LTBOOL *pbValue, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CSliderCtrl* pCtrl = CBaseFolder::CreateSlider(hText, helpID, nSliderOffset, nSliderWidth, pnValue, bFixed, pFont );
+	CLTGUIToggle* pCtrl = CreateToggle(hText, helpID, nRightColumnOffset, pbValue, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline	CSliderCtrl*		CBaseFolder::AddSlider(int stringID,  int helpID, int nSliderOffset, int nSliderWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont )
+inline  CLTGUIToggle*        CBaseFolder::AddToggle(int stringID, int helpID, int nRightColumnOffset, LTBOOL *pbValue, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CSliderCtrl* pCtrl = CBaseFolder::CreateSlider(stringID, helpID, nSliderOffset, nSliderWidth, pnValue, bFixed, pFont );
+	CLTGUIToggle* pCtrl = CreateToggle(stringID, helpID, nRightColumnOffset, pbValue, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline	CSliderCtrl*		CBaseFolder::AddSlider(char *pString, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont )
+inline  CLTGUIToggle*        CBaseFolder::AddToggle(char *pString, int helpID, int nRightColumnOffset, LTBOOL *pbValue, LTBOOL bFixed, CLTGUIFont *pFont)
 {
-	CSliderCtrl* pCtrl = CBaseFolder::CreateSlider(pString, helpID, nSliderOffset, nSliderWidth, pnValue, bFixed, pFont );
+	CLTGUIToggle* pCtrl = CreateToggle(pString, helpID, nRightColumnOffset, pbValue, bFixed, pFont);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;
 }
-inline	CLTGUIColumnTextCtrl*	CBaseFolder::AddColumnText(DWORD dwCommandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, DWORD dwParam1, DWORD dwParam2)
+
+inline	CLTGUISlider*		CBaseFolder::AddSlider(HSTRING hText, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont )
 {
-	CLTGUIColumnTextCtrl* pCtrl = CBaseFolder::CreateColumnText(dwCommandID, helpID, bFixed, pFont, dwParam1, dwParam2);
+	CLTGUISlider* pCtrl = CBaseFolder::CreateSlider(hText, helpID, nSliderOffset, nSliderWidth, pnValue, bFixed, pFont );
+	if (pCtrl)
+		AddFreeControl(pCtrl);
+	return pCtrl;
+}
+inline	CLTGUISlider*		CBaseFolder::AddSlider(int stringID,  int helpID, int nSliderOffset, int nSliderWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont )
+{
+	CLTGUISlider* pCtrl = CBaseFolder::CreateSlider(stringID, helpID, nSliderOffset, nSliderWidth, pnValue, bFixed, pFont );
+	if (pCtrl)
+		AddFreeControl(pCtrl);
+	return pCtrl;
+}
+inline	CLTGUISlider*		CBaseFolder::AddSlider(char *pString, int helpID, int nSliderOffset, int nSliderWidth, int *pnValue, LTBOOL bFixed, CLTGUIFont *pFont )
+{
+	CLTGUISlider* pCtrl = CBaseFolder::CreateSlider(pString, helpID, nSliderOffset, nSliderWidth, pnValue, bFixed, pFont );
+	if (pCtrl)
+		AddFreeControl(pCtrl);
+	return pCtrl;
+}
+inline	CLTGUIColumnCtrl*	CBaseFolder::AddColumnText(DWORD dwCommandID, int helpID, LTBOOL bFixed, CLTGUIFont *pFont, DWORD dwParam1, DWORD dwParam2)
+{
+	CLTGUIColumnCtrl* pCtrl = CBaseFolder::CreateColumnText(dwCommandID, helpID, bFixed, pFont, dwParam1, dwParam2);
 	if (pCtrl)
 		AddFreeControl(pCtrl);
 	return pCtrl;

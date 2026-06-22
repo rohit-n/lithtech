@@ -73,7 +73,7 @@ class CSoundFX : public CSpecialFX
 		{
 			if (m_hSnd)
 			{
-				g_pLTClient->KillSoundLoop(m_hSnd);
+				g_pLTClient->SoundMgr()->KillSoundLoop(m_hSnd);
 				m_hSnd = LTNULL;
 			}
 		}

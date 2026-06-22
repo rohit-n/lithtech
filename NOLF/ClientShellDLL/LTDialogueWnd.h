@@ -17,6 +17,7 @@
 #include "Timer.h"
 #include "LTDecisionWnd.h"
 #include "CSDefs.h"
+#include "AutoMessage.h"
 
 #define DIALOGUEWND_COMMAND_CHAR	'^'
 
@@ -80,8 +81,9 @@ public:
 
 	CLTDecisionWnd*	GetDecisionWnd() { return &m_DecisionWnd; }
 	void	SetImmediateDecisions(BOOL bSet = TRUE) { m_bImmediateDecisions = bSet; }
+#ifdef RKN_FIXME
 	void	SetDrawData(LITHFONTDRAWDATA* plfdd) { memcpy(&m_lfdd,plfdd,sizeof(LITHFONTDRAWDATA)); }
-
+#endif
 protected:
 
     void    SetAlpha(LTFLOAT fAlpha);
@@ -102,9 +104,10 @@ protected:
 	CRect		m_rcTotal;
 	BOOL		m_bImmediateDecisions;
 	BOOL		m_bFrame;
+#ifdef RKN_FIXME
 	LITHFONTDRAWDATA m_lfdd;
 	LITHFONTSAVEDATA m_lfsd;
-
+#endif
 	CLTSurfaceArray m_collFrames;
 	CDWordArray m_collDialogueIDs;
 };
@@ -133,17 +136,17 @@ inline void CLTDialogueWnd::DoneShowing(uint8 bySelection, DWORD dwSelection)
 	// Notify the server that we're done showing
 	if (bySelection)
 	{
-		HMESSAGEWRITE hMessage;
-        hMessage = g_pLTClient->StartMessage(CSM_DIALOGUE_DONE_SELECTION);
-        g_pLTClient->WriteToMessageByte(hMessage,bySelection);
-        g_pLTClient->WriteToMessageDWord(hMessage,dwSelection);
-        g_pLTClient->EndMessage(hMessage);
+		CAutoMessage cMsg;
+		cMsg.Writeuint8(CSM_DIALOGUE_DONE_SELECTION);
+		cMsg.Writeuint8(bySelection);
+		cMsg.Writeuint32(dwSelection);
+		g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 	}
 	else
 	{
-		HMESSAGEWRITE hMessage;
-        hMessage = g_pLTClient->StartMessage(CSM_DIALOGUE_DONE);
-        g_pLTClient->EndMessage(hMessage);
+		CAutoMessage cMsg;
+		cMsg.Writeuint8(CSM_DIALOGUE_DONE);
+		g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 	}
 
 	if(!m_bMore)

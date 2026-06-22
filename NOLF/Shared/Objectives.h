@@ -90,11 +90,11 @@ struct ObjectivesList
 	{
 		if (!hWrite) return;
 
-        pInterface->WriteToMessageByte(hWrite, nNumObjectives);
+		hWrite->Writeuint8(nNumObjectives);
 
 		for (int i=0; i < nNumObjectives; i++)
 		{
-            pInterface->WriteToMessageDWord(hWrite, dwObjectives[i]);
+			hWrite->Writeuint32(dwObjectives[i]);
 		}
 	}
 
@@ -102,11 +102,11 @@ struct ObjectivesList
 	{
 		if (!hRead) return;
 
-        nNumObjectives = pInterface->ReadFromMessageByte(hRead);
+		nNumObjectives = hRead->Readuint8();
 
 		for (int i=0; i < nNumObjectives; i++)
 		{
-            dwObjectives[i] = pInterface->ReadFromMessageDWord(hRead);
+			dwObjectives[i] = hRead->Readuint32();
 		}
 	}
 

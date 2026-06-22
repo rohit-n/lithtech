@@ -16,6 +16,8 @@
 #include "SoundTypes.h"
 #include "GameButeMgr.h"
 #include "ltbasedefs.h"
+#include "iclientshell.h"
+#include "iltsoundmgr.h"
 
 // #defines...
 

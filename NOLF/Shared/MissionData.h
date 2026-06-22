@@ -21,14 +21,14 @@ class CAmmoData
 
     inline void WriteToMessage(ILTCSBase *pInterface, HMESSAGEWRITE hWrite)
 	{
-        pInterface->WriteToMessageFloat(hWrite, (LTFLOAT)m_nID);
-        pInterface->WriteToMessageFloat(hWrite, (LTFLOAT)m_nCount);
+		hWrite->Writefloat((LTFLOAT)m_nID);
+		hWrite->Writefloat((LTFLOAT)m_nCount);
 	}
 
     inline void ReadFromMessage(ILTCSBase *pInterface, HMESSAGEREAD hRead)
 	{
-        m_nID    = (int) pInterface->ReadFromMessageFloat(hRead);
-        m_nCount = (int) pInterface->ReadFromMessageFloat(hRead);
+		m_nID = (int)hRead->Readfloat();
+		m_nCount = (int)hRead->Readfloat();
 	}
 
 	int		m_nID;
@@ -44,12 +44,12 @@ class CWeaponData
 
     inline void WriteToMessage(ILTCSBase *pInterface, HMESSAGEWRITE hWrite)
 	{
-        pInterface->WriteToMessageFloat(hWrite, (LTFLOAT)m_nID);
+		hWrite->Writefloat((LTFLOAT)m_nID);
 	}
 
     inline void ReadFromMessage(ILTCSBase *pInterface, HMESSAGEREAD hRead)
 	{
-        m_nID = (int) pInterface->ReadFromMessageFloat(hRead);
+		m_nID = (int)hRead->Readfloat();
 	}
 
 	int		m_nID;
@@ -64,12 +64,12 @@ class CModData
 
     inline void WriteToMessage(ILTCSBase *pInterface, HMESSAGEWRITE hWrite)
 	{
-        pInterface->WriteToMessageFloat(hWrite, (LTFLOAT)m_nID);
+		hWrite->Writefloat((LTFLOAT)m_nID);
 	}
 
     inline void ReadFromMessage(ILTCSBase *pInterface, HMESSAGEREAD hRead)
 	{
-        m_nID = (int) pInterface->ReadFromMessageFloat(hRead);
+		m_nID = (int)hRead->Readfloat();
 	}
 
 	int		m_nID;
@@ -84,12 +84,12 @@ class CGearData
 
     inline void WriteToMessage(ILTCSBase *pInterface, HMESSAGEWRITE hWrite)
 	{
-        pInterface->WriteToMessageFloat(hWrite, (LTFLOAT)m_nID);
+		hWrite->Writefloat((LTFLOAT)m_nID);
 	}
 
     inline void ReadFromMessage(ILTCSBase *pInterface, HMESSAGEREAD hRead)
 	{
-        m_nID       = (int) pInterface->ReadFromMessageFloat(hRead);
+		m_nID = (int)hRead->Readfloat();
 	}
 
 	int		m_nID;

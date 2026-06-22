@@ -14,7 +14,9 @@
 
 // Includes
 #include "LTWnd.h"
+#ifdef RKN_FIXME
 #include "LithFontDefs.h"
+#endif
 
 class CLTGUIFont;
 
@@ -38,19 +40,20 @@ public:
 	virtual void OnMouseLeave();
     void         SetSelectable(LTBOOL bSelect) {m_bSelectable = bSelect;}
     void         Select(LTBOOL bSelect);
-
+#ifdef RKN_FIXME
 	void SetDrawData(LITHFONTDRAWDATA* plfdd) { memcpy(&m_lfdd,plfdd,sizeof(LITHFONTDRAWDATA)); }
 	LITHFONTDRAWDATA* GetDrawData() { return &m_lfdd; }
 	LITHFONTSAVEDATA* GetSaveData() { return &m_lfsd; }
-
+#endif
 	void SetFont(CLTGUIFont* pFont);
 
 protected:
 	CString m_csText;
 	CLTGUIFont* m_pFont;
+#ifdef RKN_FIXME
 	LITHFONTDRAWDATA m_lfdd;
 	LITHFONTSAVEDATA m_lfsd;
-
+#endif
     LTBOOL m_bSelectable;
     LTBOOL m_bSelected;
 
