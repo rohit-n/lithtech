@@ -67,13 +67,13 @@ inline T Min( T a, T b)
 {
     return a < b ? a : b;
 }
-
+#if 0
 template< class T >
 inline T Max( T a, T b)
 {
     return a > b ? a : b;
 }
-
+#endif
 template< class T >
 inline T Clamp( T val, T min, T max )
 {

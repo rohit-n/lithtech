@@ -74,7 +74,7 @@ LTBOOL CBulletTrailFX::Update()
 		if (dwNum > 0 && objList[0])
 		{
             uint32 dwUserFlags;
-			m_pClientDE->GetObjectUserFlags(objList[0], &dwUserFlags);
+			g_pCommonLT->GetObjectFlags(objList[0], OFT_User, dwUserFlags);
 
 			if (dwUserFlags & USRFLG_VISIBLE)
 			{

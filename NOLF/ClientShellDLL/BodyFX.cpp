@@ -52,7 +52,7 @@ CBodyFX::~CBodyFX()
 
 	if ( m_hServerObject )
 	{
-		g_pModelLT->RemoveTracker(m_hServerObject, &m_TwitchTracker);
+		g_pModelLT->RemoveTracker(m_hServerObject, m_TwitchTracker);
 	}
 }
 
@@ -91,7 +91,7 @@ LTBOOL CBodyFX::Init(SFXCREATESTRUCT* psfxCreateStruct)
 
 	m_bs = *((BODYCREATESTRUCT*)psfxCreateStruct);
 
-	g_pModelLT->AddTracker(m_bs.hServerObj, &m_TwitchTracker);
+	g_pModelLT->AddTracker(m_bs.hServerObj, m_TwitchTracker);
 
     return LTTRUE;
 }
@@ -108,8 +108,9 @@ LTBOOL CBodyFX::CreateObject(ILTClient* pClientDE)
 {
     if (!CSpecialFX::CreateObject(pClientDE) || !m_hServerObject) return LTFALSE;
 
-    uint32 dwCFlags = m_pClientDE->GetObjectClientFlags(m_hServerObject);
-	m_pClientDE->SetObjectClientFlags(m_hServerObject, dwCFlags | CF_NOTIFYMODELKEYS | CF_INSIDERADIUS);
+	uint32 dwCFlags = 0;
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Client, dwCFlags);
+	g_pCommonLT->SetObjectFlags(m_hServerObject, OFT_Client, dwCFlags | CF_NOTIFYMODELKEYS, FLAGMASK_ALL);
 
 //  uint32 dwCFlags = m_pClientDE->GetObjectClientFlags(m_hServerObject);
 //	m_pClientDE->SetObjectClientFlags(m_hServerObject, dwCFlags | CF_NOTIFYMODELKEYS);
@@ -158,7 +159,7 @@ void CBodyFX::UpdateFade()
     uint32 dwListSize = 0;
     uint32 dwNumAttach = 0;
 
-    g_pLTClient->GetAttachments(m_hServerObject, attachList, 20, &dwListSize, &dwNumAttach);
+	g_pCommonLT->GetAttachments(m_hServerObject, attachList, 20, dwListSize, dwNumAttach);
 	int nNum = dwNumAttach <= dwListSize ? dwNumAttach : dwListSize;
 
 	m_fFaderTime = Max<LTFLOAT>(0.0f, m_fFaderTime - g_pGameClientShell->GetFrameTime());
@@ -183,7 +184,7 @@ LTBOOL CBodyFX::OnServerMessage(HMESSAGEREAD hMessage)
 {
     if (!CSpecialFX::OnServerMessage(hMessage)) return LTFALSE;
 
-    uint8 nMsgId = g_pLTClient->ReadFromMessageByte(hMessage);
+	uint8 nMsgId = hMessage->Readuint8();
 
 	switch(nMsgId)
 	{
@@ -198,16 +199,16 @@ LTBOOL CBodyFX::OnServerMessage(HMESSAGEREAD hMessage)
     return LTTRUE;
 }
 
-LTBOOL GroundFilterFn(HOBJECT hObj, void *pUserData)
+bool GroundFilterFn(HOBJECT hObj, void *pUserData)
 {
-	return ( IsMainWorld(hObj) || (OT_WORLDMODEL == g_pLTClient->GetObjectType(hObj)) );
+	return ( IsMainWorld(hObj) || (OT_WORLDMODEL == GetObjectType(hObj)) );
 }
 
 void CBodyFX::OnModelKey(HLOCALOBJ hObj, ArgList *pArgs)
 {
 	if (!m_hServerObject || !hObj || !pArgs || !pArgs->argv || pArgs->argc == 0) return;
 
-	char* pKey = pArgs->argv[0];
+	const char* pKey = pArgs->argv[0];
 	if (!pKey) return;
 
 	LTBOOL bSlump = !_stricmp(pKey, "NOISE");
@@ -230,7 +231,7 @@ void CBodyFX::OnModelKey(HLOCALOBJ hObj, ArgList *pArgs)
 
         if (g_pLTClient->IntersectSegment(&IQuery, &IInfo))
 		{
-			if (IInfo.m_hPoly && IInfo.m_hPoly != INVALID_HPOLY)
+			if (IInfo.m_hPoly != INVALID_HPOLY)
 			{
 				eSurface = (SurfaceType)GetSurfaceType(IInfo.m_hPoly);
 			}
@@ -292,7 +293,8 @@ void CBodyFX::UpdateMarker()
 		return;
 	}
 
-    uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hServerObject);
+	uint32 dwFlags = 0;
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Flags, dwFlags);
 	if (!(dwFlags & FLAG_VISIBLE))
 	{
 		RemoveMarker();
@@ -376,7 +378,7 @@ void CBodyFX::RemoveMarker()
 {
 	if (!m_hMarker) return;
 
-	g_pLTClient->DeleteObject(m_hMarker);
+	g_pLTClient->RemoveObject(m_hMarker);
 	m_hMarker = LTNULL;
 
 }
