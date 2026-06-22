@@ -27,6 +27,7 @@
 #include "MsgIDs.h"
 #include "PlayerShared.h"
 #include "VolumeBrushFX.h"
+#include "iltsoundmgr.h"
 
 extern CGameClientShell* g_pGameClientShell;
 extern CClientButeMgr* g_pClientButeMgr;
@@ -83,7 +84,7 @@ namespace
 //
 // ----------------------------------------------------------------------- //
 
-LTBOOL CCharacterFX::Init(HLOCALOBJ hServObj, HMESSAGEREAD hMessage)
+LTBOOL CCharacterFX::Init(HLOCALOBJ hServObj, ILTMessage_Read* hMessage)
 {
     if (!CSpecialFX::Init(hServObj, hMessage)) return LTFALSE;
     if (!hMessage) return LTFALSE;
@@ -120,7 +121,7 @@ LTBOOL CCharacterFX::Init(SFXCREATESTRUCT* psfxCreateStruct)
 
 	for ( int iAnimTracker = 0 ; iAnimTracker < m_cs.nTrackers ; iAnimTracker++ )
 	{
-		g_pModelLT->AddTracker(m_hServerObject, &m_aAnimTrackers[iAnimTracker]);
+		g_pModelLT->AddTracker(m_hServerObject, m_aAnimTrackers[iAnimTracker]);
 	}
 
 	// Init the node controller
@@ -171,17 +172,17 @@ CCharacterFX::~CCharacterFX()
 
 	for ( int iAnimTracker = 0 ; iAnimTracker < m_cs.nTrackers ; iAnimTracker++ )
 	{
-		g_pModelLT->RemoveTracker(m_hServerObject, &m_aAnimTrackers[iAnimTracker]);
+		g_pModelLT->RemoveTracker(m_hServerObject, m_aAnimTrackers[iAnimTracker]);
 	}
 
 	if (m_hDialogueSnd)
 	{
-		g_pLTClient->KillSound(m_hDialogueSnd);
+		g_pLTClient->SoundMgr()->KillSound(m_hDialogueSnd);
 	}
 
 	if (m_hVehicleSound)
 	{
-		g_pLTClient->KillSound(m_hVehicleSound);
+		g_pLTClient->SoundMgr()->KillSound(m_hVehicleSound);
 	}
 }
 
@@ -250,8 +251,9 @@ LTBOOL CCharacterFX::CreateObject(ILTClient* pClientDE)
 	m_BreathTimer.Start(g_vtBreathTime.GetFloat());
 
 	// NOTE: Since we only use node control for the mouth now, we can safely use CF_INSIDERADIUS
-    uint32 dwCFlags = m_pClientDE->GetObjectClientFlags(m_hServerObject);
-	dwCFlags |= CF_NOTIFYMODELKEYS | CF_INSIDERADIUS;
+	uint32 dwCFlags;
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Client, dwCFlags);
+	dwCFlags |= CF_NOTIFYMODELKEYS;
 
 	// Set up MoveMgr's point to us, if applicable...
 
@@ -267,11 +269,14 @@ LTBOOL CCharacterFX::CreateObject(ILTClient* pClientDE)
 		{
 			dwCFlags |= CF_DONTSETDIMS;
 		}
-		uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hServerObject) | FLAG_SOLID | ((IsMultiplayerGame()) ? (FLAG_STAIRSTEP | FLAG_GRAVITY) : 0);
-		g_pLTClient->SetObjectFlags(m_hServerObject, dwFlags);
+		uint32 tmp;
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Flags, tmp);
+		uint32 dwFlags = tmp | FLAG_SOLID | ((IsMultiplayerGame()) ? (FLAG_STAIRSTEP | FLAG_GRAVITY) : 0);
+		g_pCommonLT->SetObjectFlags(m_hServerObject, OFT_Flags, dwFlags, FLAGMASK_ALL);
 	}
 
-	m_pClientDE->SetObjectClientFlags(m_hServerObject, dwCFlags);
+	g_pCommonLT->SetObjectFlags(m_hServerObject, OFT_Client, dwCFlags, FLAGMASK_ALL);
+
 
     return LTTRUE;
 }
@@ -291,7 +296,7 @@ LTBOOL CCharacterFX::Update()
 	// See if our server side object is active
 
 	uint32 dwUserFlags;
-	g_pLTClient->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 
 	if ( !(dwUserFlags & USRFLG_GAMEBASE_ACTIVE) )
 	{
@@ -300,7 +305,8 @@ LTBOOL CCharacterFX::Update()
 
 	// Make us solid if our ai usrflg solid is set
 
-    uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hServerObject);
+	uint32 dwFlags = 0;
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Flags, dwFlags);
 
 	if ( dwUserFlags & USRFLG_AI_CLIENT_SOLID )
 	{
@@ -311,7 +317,7 @@ LTBOOL CCharacterFX::Update()
 		dwFlags &= ~FLAG_SOLID;
 	}
 
-    g_pLTClient->SetObjectFlags(m_hServerObject, dwFlags);
+	g_pCommonLT->SetObjectFlags(m_hServerObject, OFT_Flags, dwFlags, FLAG_SOLID);
 
 	// Update
 
@@ -364,7 +370,7 @@ LTBOOL CCharacterFX::Update()
 
 
     uint32 dwUsrFlags;
-	m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwUsrFlags);
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUsrFlags);
 
 	// Update 1.002 [KLS] calculate if we're under on the client so
 	// we don't have to send this info from the server...
@@ -500,7 +506,7 @@ LTBOOL CCharacterFX::Update()
 	{
 		uint32 nAnim;
 		if (m_cs.nDimsTracker < m_cs.nTrackers)
-			g_pModelLT->GetCurAnim(&m_aAnimTrackers[m_cs.nDimsTracker], nAnim);
+			g_pModelLT->GetCurAnim(m_hServerObject, m_aAnimTrackers[m_cs.nDimsTracker], nAnim);
 		else
 			nAnim = g_pLTClient->GetModelAnimation(m_hServerObject);
 		LTVector vDims;
@@ -524,7 +530,7 @@ void CCharacterFX::UpdateDamageFX()
 	if (!m_hServerObject) return;
 
     uint32 dwUsrFlags;
-	m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwUsrFlags);
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUsrFlags);
 
 	if (dwUsrFlags & USRFLG_CHAR_BLEEDING || g_vtTestBleedingFX.GetFloat() > 0.0f)
 	{
@@ -601,10 +607,10 @@ void CCharacterFX::UpdateDamageFX()
 //
 // ----------------------------------------------------------------------- //
 
-void CCharacterFX::HandleDialogueMsg(HMESSAGEREAD hMessage)
+void CCharacterFX::HandleDialogueMsg(ILTMessage_Read* hMessage)
 {
-    HSTRING hSound = g_pLTClient->ReadFromMessageHString(hMessage);
-    LTFLOAT fRadius = g_pLTClient->ReadFromMessageFloat(hMessage);
+	HSTRING hSound = hMessage->ReadHString();
+    LTFLOAT fRadius = hMessage->Readfloat();
 
 	char szSound[128];
 	*szSound = 0;
@@ -617,7 +623,7 @@ void CCharacterFX::HandleDialogueMsg(HMESSAGEREAD hMessage)
 
 	if (m_hDialogueSnd)
 	{
-		g_pLTClient->KillSound(m_hDialogueSnd);
+		g_pLTClient->SoundMgr()->KillSound(m_hDialogueSnd);
         m_hDialogueSnd = LTNULL;
 
         g_pInterfaceMgr->ClearSubtitle();
@@ -638,9 +644,9 @@ void CCharacterFX::HandleDialogueMsg(HMESSAGEREAD hMessage)
 //
 // ----------------------------------------------------------------------- //
 
-void CCharacterFX::HandleTauntMsg(HMESSAGEREAD hMessage)
+void CCharacterFX::HandleTauntMsg(ILTMessage_Read* hMessage)
 {
-    uint32 nTauntID = g_pLTClient->ReadFromMessageDWord(hMessage);
+    uint32 nTauntID = hMessage->Readuint32();
 	PlayTaunt(nTauntID, LTFALSE);
 }
 
@@ -658,7 +664,7 @@ void CCharacterFX::UpdateSounds()
 	{
 		if (g_pLTClient->IsDone(m_hDialogueSnd))
 		{
-			g_pLTClient->KillSound(m_hDialogueSnd);
+			g_pLTClient->SoundMgr()->KillSound(m_hDialogueSnd);
 		 m_hDialogueSnd = LTNULL;
 
 			if (m_bSubtitle)
@@ -1189,8 +1195,7 @@ void CCharacterFX::UpdateCigaretteFX()
 	{
 		// Update fx...
 
-        uint32 dwFlags = g_pLTClient->GetObjectFlags(hObj);
-        g_pLTClient->SetObjectFlags(hObj, dwFlags | FLAG_VISIBLE);
+		g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, FLAG_VISIBLE, FLAG_VISIBLE);
 		g_pLTClient->SetObjectPos(hObj, &vPos);
 	}
 
@@ -1287,8 +1292,7 @@ void CCharacterFX::RemoveCigaretteFX()
 	HOBJECT hObj = m_CigaretteModel.GetObject();
 	if (hObj)
 	{
-        uint32 dwFlags = g_pLTClient->GetObjectFlags(hObj);
-        g_pLTClient->SetObjectFlags(hObj, dwFlags & ~FLAG_VISIBLE);
+		g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, 0, FLAG_VISIBLE);
 	}
 
 }
@@ -1447,7 +1451,7 @@ void CCharacterFX::OnModelKey(HLOCALOBJ hObj, ArgList *pArgs)
 {
 	if (!hObj || !pArgs || !pArgs->argv || pArgs->argc == 0) return;
 
-	char* pKey = pArgs->argv[0];
+	const char* pKey = pArgs->argv[0];
 	if (!pKey) return;
 
 	if (g_vtModelKey.GetFloat() > 0.0f)
@@ -1499,7 +1503,7 @@ void CCharacterFX::DoFootStepKey(HLOCALOBJ hObj, LTBOOL bForceSound)
     if (m_cs.bIsPlayer)
     {
         uint32 dwFlags;
-	    m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwFlags);
 
         if (dwFlags & USRFLG_PLAYER_MOTORCYCLE)
 		{
@@ -1586,7 +1590,7 @@ void CCharacterFX::DoFootStepKey(HLOCALOBJ hObj, LTBOOL bForceSound)
 	if (m_pClientDE->IntersectSegment(&iQuery, &iInfo))
 	{
 		if (IsMainWorld(iInfo.m_hObject) ||
-			g_pLTClient->GetObjectType(iInfo.m_hObject) == OT_WORLDMODEL)
+			GetObjectType(iInfo.m_hObject) == OT_WORLDMODEL)
 		{
 			if (m_eLastSurface == ST_UNKNOWN)
 			{
@@ -1821,7 +1825,8 @@ void CCharacterFX::CreateVehicleTrail(CPolyLineFX* pTrail, LTVector vDir,
 		pTrail->CreateObject(m_pClientDE);
 
         LTRotation rRot;
-		m_pClientDE->AlignRotation(&rRot, &vF, &vDir);
+		rRot = LTRotation(vDir, vF);
+
 		pTrail->SetRot(rRot);
 	}
 	else
@@ -1885,7 +1890,7 @@ void CCharacterFX::UpdateOnVehicle()
     if (!m_cs.bIsPlayer) return;
 
     uint32 dwFlags;
-    m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwFlags);
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwFlags);
 
     m_bOnVehicle = ((dwFlags & USRFLG_PLAYER_MOTORCYCLE) ||
         (dwFlags & USRFLG_PLAYER_SNOWMOBILE));
@@ -1908,7 +1913,7 @@ void CCharacterFX::UpdateOnVehicle()
 	}
 	else if (m_hVehicleSound)
 	{
-		g_pLTClient->KillSound(m_hVehicleSound);
+		g_pLTClient->SoundMgr()->KillSound(m_hVehicleSound);
 		m_hVehicleSound = LTNULL;
 	}
 
@@ -2037,12 +2042,12 @@ void CCharacterFX::UpdateMultiVehicleSounds()
 
 			LTVector vPos;
 			g_pLTClient->GetObjectPos(m_hServerObject, &vPos);
-			g_pLTClient->SetSoundPosition(m_hVehicleSound, &vPos);
+			((ILTClientSoundMgr*)g_pLTClient->SoundMgr())->SetSoundPosition(m_hVehicleSound, &vPos);
 		}
 	}
 	else if (m_hVehicleSound)
 	{
-		g_pLTClient->KillSound(m_hVehicleSound);
+		g_pLTClient->SoundMgr()->KillSound(m_hVehicleSound);
 		m_hVehicleSound = LTNULL;
 
 		// Play turn-off sound
@@ -2062,17 +2067,17 @@ void CCharacterFX::UpdateMultiVehicleSounds()
 //
 // ----------------------------------------------------------------------- //
 
-LTBOOL CCharacterFX::OnServerMessage(HMESSAGEREAD hMessage)
+LTBOOL CCharacterFX::OnServerMessage(ILTMessage_Read* hMessage)
 {
     if (!CSpecialFX::OnServerMessage(hMessage)) return LTFALSE;
 
-    uint8 nMsgId = g_pLTClient->ReadFromMessageByte(hMessage);
+	uint8 nMsgId = hMessage->Readuint8();
 
 	switch(nMsgId)
 	{
 		case CFX_CROSSHAIR_MSG:
 		{
-			m_cs.eCrosshairCharacterClass = (CharacterClass)g_pLTClient->ReadFromMessageByte(hMessage);
+			m_cs.eCrosshairCharacterClass = (CharacterClass)hMessage->Readuint8();
 		}
 		break;
 
@@ -2099,33 +2104,33 @@ LTBOOL CCharacterFX::OnServerMessage(HMESSAGEREAD hMessage)
 
 		case CFX_RESET_TRACKER:
 		{
-            uint8 iTracker = g_pLTClient->ReadFromMessageByte(hMessage);
+            uint8 iTracker = hMessage->Readuint8();
 			if ( iTracker == 0 )
 			{
                 g_pLTClient->ResetModelAnimation(m_hServerObject);
 			}
 			else
 			{
-				g_pModelLT->ResetAnim(&m_aAnimTrackers[iTracker-1]);
+				g_pModelLT->ResetAnim(m_hServerObject, m_aAnimTrackers[iTracker-1]);
 			}
 		}
 		break;
 
 		case CFX_STEALTH_MSG:
 		{
-            m_cs.fStealthPercent = g_pLTClient->ReadFromMessageFloat(hMessage);
+            m_cs.fStealthPercent = hMessage->Readfloat();
 		}
 		break;
 
 		case CFX_CLIENTID_MSG:
 		{
-            m_cs.nClientID = g_pLTClient->ReadFromMessageByte(hMessage);
+            m_cs.nClientID = hMessage->Readuint8();
 		}
 		break;
 
 		case CFX_CHAT_MSG:
 		{
-            m_cs.SetChatting((LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage));
+            m_cs.SetChatting((LTBOOL)hMessage->Readuint8());
 		}
 		break;
 
@@ -2307,7 +2312,7 @@ HLTSOUND CCharacterFX::PlayLipSyncSound(char* szSound, LTFLOAT fRadius, LTBOOL &
 	if (bSubtitle && hSound)
 	{
 		LTFLOAT fDuration = -1.0f;
-		g_pLTClient->GetSoundDuration(hSound, &fDuration);
+		g_pLTClient->SoundMgr()->GetSoundDuration(hSound, fDuration);
 		g_pInterfaceMgr->ShowSubtitle(nStringId, vPos, fRadius, fDuration);
 	}
 
@@ -2432,16 +2437,15 @@ void CCharacterFX::UpdateBreathFX()
 //
 // ----------------------------------------------------------------------- //
 
-void CCharacterFX::HandleZipcordMsg(HMESSAGEREAD hMessage)
+void CCharacterFX::HandleZipcordMsg(ILTMessage_Read* hMessage)
 {
-    uint8 nZipState = g_pLTClient->ReadFromMessageByte(hMessage);
+    uint8 nZipState = hMessage->Readuint8();
 
 	switch (nZipState)
 	{
 		case ZC_ON :
 		{
-            LTVector vEndPos;
-            g_pLTClient->ReadFromMessageVector(hMessage, &vEndPos);
+			LTVector vEndPos = hMessage->ReadLTVector();
 
 			TurnOnZipCord(vEndPos);
 		}
@@ -2575,7 +2579,12 @@ void CCharacterFX::UpdateZipCordFX()
 	}
 
 	pls.pTexture			= "sfx\\test\\zipcord.dtx";
+#ifdef RKN_FIXME
     pls.dwTexAddr           = LTTEXADDR_CLAMP;
+#else
+	pls.dwTexAddr = 0;
+	__debugbreak();
+#endif
     pls.vInnerColorStart    = LTVector(255, 255, 255);
 	pls.vInnerColorEnd		= pls.vInnerColorStart;
 	pls.vOuterColorStart	= pls.vInnerColorStart;
@@ -2614,12 +2623,20 @@ void CCharacterFX::UpdateZipCordFX()
 		if (bFirstPerson)
 		{
 			//dwFlags |= FLAG_REALLYCLOSE;
+#ifdef RKN_FIXME
 			dwFlags2 |= FLAG2_PORTALINVISIBLE;
+#else
+			__debugbreak();
+#endif
 		}
 		else
 		{
 			//dwFlags &= ~FLAG_REALLYCLOSE;
+#ifdef RKN_FIXME
 			dwFlags2 &= ~FLAG2_PORTALINVISIBLE;
+#else
+			__debugbreak();
+#endif
 		}
 
 		m_ZipCord.SetFlags(dwFlags);
@@ -2651,7 +2668,8 @@ void CCharacterFX::UpdateMarkerFX()
 {
 	if (!m_pClientDE || !m_hServerObject) return;
 
-    uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hServerObject);
+	uint32 dwFlags = 0;
+	g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Flags, dwFlags);
 	if (!(dwFlags & FLAG_VISIBLE))
 	{
 		RemoveMarkerFX();
@@ -2741,7 +2759,7 @@ void CCharacterFX::CreateTeamFX()
 	if (m_hMarker)
 	{
 		m_pClientDE->Common()->SetObjectFilenames(m_hMarker, &createStruct);
-		m_pClientDE->SetObjectFlags(m_hMarker, createStruct.m_Flags);
+		g_pCommonLT->SetObjectFlags(m_hMarker, OFT_Flags, createStruct.m_Flags, FLAGMASK_ALL);
 
 	}
 	else
@@ -2784,7 +2802,7 @@ void CCharacterFX::CreateChatFX()
 	if (m_hMarker)
 	{
 		m_pClientDE->Common()->SetObjectFilenames(m_hMarker, &createStruct);
-		m_pClientDE->SetObjectFlags(m_hMarker, createStruct.m_Flags);
+		g_pCommonLT->SetObjectFlags(m_hMarker, OFT_Flags, createStruct.m_Flags, FLAGMASK_ALL);
 
 	}
 	else
@@ -2811,7 +2829,7 @@ void CCharacterFX::RemoveMarkerFX()
 {
 	if (!m_hMarker) return;
 
-	g_pLTClient->DeleteObject(m_hMarker);
+	g_pLTClient->RemoveObject(m_hMarker);
 	m_hMarker = LTNULL;
 	m_eMarkerState = MS_UNKNOWN;
 
