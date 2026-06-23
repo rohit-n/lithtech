@@ -14,7 +14,7 @@
 #include "LeashFX.h"
 #include "iltclient.h"
 #include "SFXMgr.h"
-#include "iltcustomdraw.h"
+#include "iltdrawprim.h"
 #include "GameClientShell.h"
 #include "DynamicLightFX.h"
 #include "GameButes.h"
@@ -56,12 +56,12 @@ LTBOOL CLeashFX::Init(HLOCALOBJ hServObj, HMESSAGEREAD hMessage)
 
 	lfx.hServerObj = hServObj;
 
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lfx.vStartPos));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lfx.vEndPos));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lfx.vLeashColor));
+	lfx.vStartPos = hMessage->ReadLTVector();
+	lfx.vEndPos = hMessage->ReadLTVector();
+	lfx.vLeashColor = hMessage->ReadLTVector();
 
-    lfx.fLeashSize      = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lfx.cSegments       = g_pLTClient->ReadFromMessageByte(hMessage);
+	lfx.fLeashSize = hMessage->Readfloat();
+    lfx.cSegments       = hMessage->Readuint8();
 
 	return Init(&lfx);
 }
@@ -161,13 +161,13 @@ LTBOOL CLeashFX::Draw(ILTCustomDraw *pDraw)
 
     LTVector vU, vR, vF;
     g_pLTClient->GetRotationVectors(&rRot, &vU, &vR, &vF);
-
+#if 0
     LTVertex verts[4];
 
 	for (int i=0; i < m_cs.cSegments; i++)
 	{
 	}
-
+#endif
     return LTTRUE;
 }
 
@@ -200,7 +200,7 @@ LTBOOL CLeashFX::Update()
 	if (m_hServerObject)
 	{
         uint32 dwUserFlags;
-        g_pLTClient->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 
 		if (!(dwUserFlags & USRFLG_VISIBLE))
 		{
