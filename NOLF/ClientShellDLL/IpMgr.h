@@ -36,7 +36,7 @@ public:
 	CIp() { Clear(); }
 	~CIp() { Term(); }
 
-	BOOL				Init(char* sIp);
+	BOOL				Init(const char* sIp);
 	void				Term();
 	void				Clear();
 
@@ -65,9 +65,9 @@ public:
 	BOOL				GetAllIpString(char* sBuf, int nBufSize);
 	CIp*				GetIp(int i);
 
-	BOOL				ExistIp(char* sIp);
+	BOOL				ExistIp(const char* sIp);
 
-	BOOL				AddIp(char* sIp);
+	BOOL				AddIp(const char* sIp);
 	BOOL				AddIpFromEditControl(HWND hEdit, HWND hList = NULL);
 
 	BOOL				RemoveIp(char* sIp);
