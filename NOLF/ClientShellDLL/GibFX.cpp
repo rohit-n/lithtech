@@ -222,7 +222,7 @@ LTBOOL CGibFX::Update()
 				{
 					if (m_hGib[i])
 					{
-						m_pClientDE->DeleteObject(m_hGib[i]);
+						m_pClientDE->RemoveObject(m_hGib[i]);
                         m_hGib[i] = LTNULL;
 					}
 				}
@@ -308,7 +308,7 @@ LTBOOL CGibFX::UpdateEmitter(MovingObject* pObject)
 		pObject->m_vLastPos = pObject->m_vPos;
 		pObject->m_vPos = vNewPos;
 
-        if (m_pClientDE->GetPointStatus(&vNewPos) == LT_OUTSIDE)
+        if (g_pCommonLT->GetPointStatus(&vNewPos) == LT_OUTSIDE)
 		{
 			pObject->m_dwPhysicsFlags |= MO_RESTING;
 			pObject->m_vPos = pObject->m_vLastPos;
@@ -887,7 +887,7 @@ void CGibFX::RemoveAllFX()
 	{
 		if (m_hGib[i])
 		{
-			m_pClientDE->DeleteObject(m_hGib[i]);
+			m_pClientDE->RemoveObject(m_hGib[i]);
             m_hGib[i] = LTNULL;
 		}
 		if (m_pGibTrail[i])

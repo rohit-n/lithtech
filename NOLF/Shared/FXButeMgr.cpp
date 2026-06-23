@@ -3527,7 +3527,7 @@ CSpecialFX* CFXButeMgr::CreateSoundFX(SOUNDFX* pSoundFX, LTVector vPos,
 
 	SNDCREATESTRUCT snd;
 
-	snd.bLocal		= vPos.Equals(LTVector(0,0,0)) ? LTTRUE : LTFALSE;
+	snd.bLocal		= vPos.NearlyEquals(LTVector(0,0,0)) ? LTTRUE : LTFALSE;
 	snd.bLoop		= pSoundFX->bLoop;
 	snd.fPitchShift	= pSoundFX->fPitchShift;
 	snd.fRadius		= pSoundFX->fRadius;

@@ -117,7 +117,7 @@ class CParticleExplosionFX : public CBaseParticleSystemFX
 			{
 				if (m_hDebris[i] && m_pClientDE)
 				{
-					m_pClientDE->DeleteObject(m_hDebris[i]);
+					m_pClientDE->RemoveObject(m_hDebris[i]);
 				}
 			}
 		}
