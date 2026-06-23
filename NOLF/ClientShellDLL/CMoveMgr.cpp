@@ -427,7 +427,7 @@ void CMoveMgr::UpdateNormalControlFlags()
 		if (!bFreeMovement && hPlayerObj)
 		{
 			uint32 dwUsrFlags;
-			g_pLTClient->GetObjectUserFlags(hPlayerObj, &dwUsrFlags);
+			g_pCommonLT->GetObjectFlags(hPlayerObj, OFT_User, dwUsrFlags);
 			if (dwUsrFlags & USRFLG_PLAYER_DUCK)
 			{
 				m_dwControlFlags |= BC_CFLG_DUCK;
@@ -591,7 +591,8 @@ void CMoveMgr::UpdateInLiquid(CContainerInfo *pInfo)
     LTVector curAccel;
 	g_pPhysicsLT->GetAcceleration(m_hObject, &curAccel);
 
-    uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hObject);
+	uint32 dwFlags = 0;
+	g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, dwFlags);
 
 	// Handle floating around on the surface...
 
@@ -600,7 +601,7 @@ void CMoveMgr::UpdateInLiquid(CContainerInfo *pInfo)
         LTBOOL bMoving = ((curAccel.Mag() > 0.01f) || (vVel.Mag() > 0.01f));
 
 		// Disable gravity.
-		g_pLTClient->SetObjectFlags(m_hObject, dwFlags & ~FLAG_GRAVITY);
+		g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags & ~FLAG_GRAVITY, FLAGMASK_ALL);
 
 		if (bMoving)  // Turn off y acceleration and velocity
 		{
@@ -617,7 +618,7 @@ void CMoveMgr::UpdateInLiquid(CContainerInfo *pInfo)
 	}
 	else if (bHeadInLiquid)
 	{
-		g_pLTClient->SetObjectFlags(m_hObject, dwFlags & ~FLAG_GRAVITY);
+		g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags & ~FLAG_GRAVITY, FLAGMASK_ALL);
 
 		curAccel.y += pInfo->m_fGravity;
 	}
@@ -639,8 +640,9 @@ void CMoveMgr::UpdateOnLadder(CContainerInfo *pInfo)
 {
     m_bBodyOnLadder = LTTRUE;
 
-    uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hObject);
-	g_pLTClient->SetObjectFlags(m_hObject, dwFlags & ~FLAG_GRAVITY);
+	uint32 dwFlags = 0;
+	g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, dwFlags);
+	g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags & ~FLAG_GRAVITY, FLAGMASK_ALL);
 }
 
 
@@ -678,16 +680,17 @@ void CMoveMgr::UpdateOnGround()
 
 		if (!m_bJumped && m_bFalling)
 		{
-            HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-            g_pLTClient->WriteToMessageByte(hMessage, CP_MOTION_STATUS);
-            g_pLTClient->WriteToMessageByte(hMessage, MS_LANDED);
-            g_pLTClient->EndMessage(hMessage);
+			CAutoMessage cMsg;
+			cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+			cMsg.Writeuint8(CP_MOTION_STATUS);
+			cMsg.Writeuint8(MS_LANDED);
+			g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 		}
 
         m_bFalling = LTFALSE;
 
 		m_eStandingOnSurface = ST_UNKNOWN;
-		if (Info.m_hPoly && Info.m_hPoly != INVALID_HPOLY)
+		if (Info.m_hPoly != INVALID_HPOLY)
 		{
 			m_hStandingOnPoly    = Info.m_hPoly;
 			m_eStandingOnSurface = GetSurfaceType(Info.m_hPoly);
@@ -702,7 +705,7 @@ void CMoveMgr::UpdateOnGround()
 		// may move)...
 
         uint32 dwUserFlags;
-        g_pLTClient->GetObjectUserFlags(Info.m_hObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(Info.m_hObject, OFT_User, dwUserFlags);
 
 		if (dwUserFlags & USRFLG_MOVEABLE)
 		{
@@ -798,10 +801,11 @@ void CMoveMgr::UpdateOnGround()
 
 		// Tell the server we're falling...
 
-        HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-        g_pLTClient->WriteToMessageByte(hMessage, CP_MOTION_STATUS);
-        g_pLTClient->WriteToMessageByte(hMessage, MS_FALLING);
-        g_pLTClient->EndMessage(hMessage);
+		CAutoMessage cMsg;
+		cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+		cMsg.Writeuint8(CP_MOTION_STATUS);
+		cMsg.Writeuint8(MS_FALLING);
+		g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 	}
 }
 
@@ -909,14 +913,15 @@ void CMoveMgr::HandleFallLand(LTFLOAT fDistFell)
 			{
 				LTVector vDir(0, 1, 0); // Ground caused damage...
 
-				HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-				g_pLTClient->WriteToMessageByte(hMessage, CP_DAMAGE);
-				g_pLTClient->WriteToMessageByte(hMessage, DT_CRUSH);
-				g_pLTClient->WriteToMessageFloat(hMessage, fDamage);
-				g_pLTClient->WriteToMessageVector(hMessage, &vDir);
-				g_pLTClient->WriteToMessageByte(hMessage, 0);
-				g_pLTClient->WriteToMessageObject(hMessage, g_pLTClient->GetClientObject());
-				g_pLTClient->EndMessage(hMessage);
+				CAutoMessage cMsg;
+				cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+				cMsg.Writeuint8(CP_DAMAGE);
+				cMsg.Writeuint8(DT_CRUSH);
+				cMsg.Writefloat(fDamage);
+				cMsg.WriteLTVector(vDir);
+				cMsg.Writeuint8(0);
+				cMsg.WriteObject(g_pLTClient->GetClientObject());
+				g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 			}
 
 			// Tweak camera...
@@ -1409,12 +1414,15 @@ void CMoveMgr::UpdateContainerMotion()
 
 	// Normally we have gravity on, but the containers might turn it off.
 
-    uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hObject) | FLAG_GRAVITY;
+	uint32 dwFlags = 0;
+	g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, dwFlags);
+	dwFlags |= FLAG_GRAVITY;
 	if (g_pGameClientShell->IsSpectatorMode() || m_bZipCordOn)
 	{
 		dwFlags &= ~FLAG_GRAVITY;
 	}
-	g_pLTClient->SetObjectFlags(m_hObject, dwFlags);
+
+	g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags, FLAGMASK_ALL);
 
 
 	m_eBodyContainerCode = CC_NO_CONTAINER;
@@ -1519,10 +1527,11 @@ void CMoveMgr::UpdateStartMotion(LTBOOL bForce)
 	if (bForce)
 	{
         uint8 nStatus = m_bJumped ? MS_JUMPED : MS_LANDED;
-        HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-        g_pLTClient->WriteToMessageByte(hMessage, CP_MOTION_STATUS);
-        g_pLTClient->WriteToMessageByte(hMessage, nStatus);
-        g_pLTClient->EndMessage(hMessage);
+		CAutoMessage cMsg;
+		cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+		cMsg.Writeuint8(CP_MOTION_STATUS);
+		cMsg.Writeuint8(nStatus);
+		g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 
 		// Play the jump sound for this client so the sound isnt't
 		// lagged in multiplayer...
@@ -1644,7 +1653,7 @@ void CMoveMgr::UpdatePlayerAnimation()
 	// Make sure we are playing the animation corresponding to the dims...
 	if (m_pCharFX && m_pCharFX->m_cs.nDimsTracker < m_pCharFX->m_cs.nTrackers)
 	{
-		g_pModelLT->GetCurAnim(&(m_pCharFX->m_aAnimTrackers[m_pCharFX->m_cs.nDimsTracker]), modelAnim);
+		g_pModelLT->GetCurAnim(m_pCharFX->GetServerObj(), m_pCharFX->m_cs.nDimsTracker, modelAnim);
 	}
 
 	//  See if we should use the main anim...
@@ -1663,8 +1672,8 @@ void CMoveMgr::UpdatePlayerAnimation()
 		// we change animations but it doesn't do collision detection (and we don't want
 		// it to) so we may end up clipping into the world so we set it to a small cube
 		// and resize the dims with collision detection.
-		curFlags = g_pLTClient->GetObjectFlags(m_hObject);
-		g_pLTClient->SetObjectFlags(m_hObject, (curFlags|FLAG_GOTHRUWORLD) & ~FLAG_SOLID);
+		g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, curFlags);
+		g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, FLAG_GOTHRUWORLD, FLAG_GOTHRUWORLD | FLAG_SOLID);
 
 		g_pLTClient->SetModelAnimation(m_hObject, modelAnim);
 
@@ -1681,7 +1690,7 @@ void CMoveMgr::UpdatePlayerAnimation()
 			offset.y += .01f; // Fudge factor
 		}
 
-		g_pLTClient->SetObjectFlags(m_hObject, curFlags);
+		g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, curFlags, FLAGMASK_ALL);
 
 		// This makes you small before setting the dims so you don't clip thru stuff.
 
@@ -1727,16 +1736,16 @@ void CMoveMgr::ResetDims(LTVector *pOffset)
 	// Don't do stair stepping when we change the dims...
 
     uint32 dwFlags;
-    g_pLTClient->Common()->GetObjectFlags(m_hObject, OFT_Flags, dwFlags);
+	g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, dwFlags);
 	dwFlags &= ~FLAG_STAIRSTEP;
-    g_pLTClient->Common()->SetObjectFlags(m_hObject, OFT_Flags, dwFlags);
+	g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags, FLAGMASK_ALL);
 
 	// Use normal box physics when changing dims (works better)...
 
     uint32 dwFlags2;
-    g_pLTClient->Common()->GetObjectFlags(m_hObject, OFT_Flags2, dwFlags2);
+	g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags2, dwFlags2);
 	dwFlags2 &= ~FLAG2_PLAYERCOLLIDE;
-    g_pLTClient->Common()->SetObjectFlags(m_hObject, OFT_Flags2, dwFlags2);
+	g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags2, dwFlags2, FLAGMASK_ALL);
 
 	smallDims.Init(0.5f, 0.5f, 0.5f);
 
@@ -1764,12 +1773,12 @@ void CMoveMgr::ResetDims(LTVector *pOffset)
 	// Okay, enough of that, back to player physics...
 
 	dwFlags2 |= FLAG2_PLAYERCOLLIDE;
-    g_pLTClient->Common()->SetObjectFlags(m_hObject, OFT_Flags2, dwFlags2);
+	g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags2, dwFlags2, FLAGMASK_ALL);
 
 	// Turn it back on ;)
 
     dwFlags |= FLAG_STAIRSTEP;
-    g_pLTClient->Common()->SetObjectFlags(m_hObject, OFT_Flags, dwFlags);
+	g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags, FLAGMASK_ALL);
 }
 
 // ----------------------------------------------------------------------- //
@@ -1845,7 +1854,7 @@ void CMoveMgr::SetClientObjNonsolid()
 
 	if(hObj = g_pLTClient->GetClientObject())
 	{
-		g_pLTClient->SetObjectFlags(hObj, g_pLTClient->GetObjectFlags(hObj)|FLAG_CLIENTNONSOLID);
+		g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, FLAG_CLIENTNONSOLID, FLAG_CLIENTNONSOLID);
 	}
 }
 
@@ -2008,25 +2017,25 @@ void CMoveMgr::OnPhysicsUpdate(HMESSAGEREAD hRead)
 {
 	if (!g_pLTClient || !hRead) return;
 
-    uint16 changeFlags = g_pLTClient->ReadFromMessageWord(hRead);
+	uint16 changeFlags = hRead->Readuint16();
 
 	// See if our container state changed...
 
 	if (changeFlags & PSTATE_CONTAINERTYPE)
 	{
-		m_nContainers = g_pLTClient->ReadFromMessageByte(hRead);
+		m_nContainers = (uint32)hRead->Readuint8();
 		if (m_nContainers >= MAX_TRACKED_CONTAINERS) return;
 
 		for (DWORD i=0; i < m_nContainers; i++)
 		{
-			m_Containers[i].m_ContainerCode = (ContainerCode)g_pLTClient->ReadFromMessageByte(hRead);
-			g_pLTClient->ReadFromMessageVector(hRead, &m_Containers[i].m_Current);
-			m_Containers[i].m_fGravity = g_pLTClient->ReadFromMessageFloat(hRead);
-			m_Containers[i].m_fViscosity = g_pLTClient->ReadFromMessageFloat(hRead);
-			m_Containers[i].m_bHidden = g_pLTClient->ReadFromMessageByte(hRead);
+			m_Containers[i].m_ContainerCode = (ContainerCode)hRead->Readuint8();
+			m_Containers[i].m_Current = hRead->ReadLTVector();
+			m_Containers[i].m_fGravity = hRead->Readfloat();
+			m_Containers[i].m_fViscosity = hRead->Readfloat();
+			m_Containers[i].m_bHidden = hRead->Readuint8();
 		}
 
-        LTFLOAT fCoeff = g_pLTClient->ReadFromMessageFloat(hRead);
+        LTFLOAT fCoeff = hRead->Readfloat();
 		g_pPhysicsLT->SetFrictionCoefficient(m_hObject, fCoeff);
 	}
 
@@ -2036,16 +2045,16 @@ void CMoveMgr::OnPhysicsUpdate(HMESSAGEREAD hRead)
 	{
 		if (m_hObject)
 		{
-			g_pLTClient->DeleteObject(m_hObject);
+			g_pLTClient->RemoveObject(m_hObject);
             m_hObject = LTNULL;
 		}
 
 		ObjectCreateStruct theStruct;
 		INIT_OBJECTCREATESTRUCT(theStruct);
 
-		hRead->ReadStringFL(theStruct.m_Filename, sizeof(theStruct.m_Filename));
-		hRead->ReadStringFL(theStruct.m_SkinNames[0], sizeof(theStruct.m_SkinNames[0]));
-		hRead->ReadStringFL(theStruct.m_SkinNames[1], sizeof(theStruct.m_SkinNames[1]));
+		hRead->ReadString(theStruct.m_Filename, sizeof(theStruct.m_Filename));
+		hRead->ReadString(theStruct.m_SkinNames[0], sizeof(theStruct.m_SkinNames[0]));
+		hRead->ReadString(theStruct.m_SkinNames[1], sizeof(theStruct.m_SkinNames[1]));
 
 		// Save off if we are using one of the Cate models or not...
 
@@ -2075,8 +2084,9 @@ void CMoveMgr::OnPhysicsUpdate(HMESSAGEREAD hRead)
 
 		if (m_hObject)
 		{
-            uint32 dwCFlags = g_pLTClient->GetObjectClientFlags(m_hObject);
-			g_pLTClient->SetObjectClientFlags(m_hObject, dwCFlags | CF_DONTSETDIMS);
+			uint32 dwCFlags = 0;
+			g_pCommonLT->GetObjectFlags(m_hObject, OFT_Client, dwCFlags);
+			g_pCommonLT->SetObjectFlags(m_hObject, OFT_Client, dwCFlags | CF_DONTSETDIMS, FLAGMASK_ALL);
 		}
 	}
 
@@ -2085,7 +2095,7 @@ void CMoveMgr::OnPhysicsUpdate(HMESSAGEREAD hRead)
 	if (changeFlags & PSTATE_GRAVITY)
 	{
         LTVector vGravity;
-		g_pLTClient->ReadFromMessageVector(hRead, &vGravity);
+		vGravity = hRead->ReadLTVector();
 		g_pPhysicsLT->SetGlobalForce(vGravity);
 
 		m_fGravity = vGravity.y;
@@ -2095,19 +2105,19 @@ void CMoveMgr::OnPhysicsUpdate(HMESSAGEREAD hRead)
 
 	if (changeFlags & PSTATE_SPEEDS)
 	{
-		m_fWalkVel = g_pLTClient->ReadFromMessageFloat(hRead);
-		m_fRunVel = g_pLTClient->ReadFromMessageFloat(hRead);
-		m_fSwimVel = g_pLTClient->ReadFromMessageFloat(hRead);
-		m_fJumpVel = g_pLTClient->ReadFromMessageFloat(hRead);
-		m_fZipCordVel = g_pLTClient->ReadFromMessageFloat(hRead);
+		m_fWalkVel = hRead->Readfloat();
+		m_fRunVel = hRead->Readfloat();
+		m_fSwimVel = hRead->Readfloat();
+		m_fJumpVel = hRead->Readfloat();
+		m_fZipCordVel = hRead->Readfloat();
 
-		m_fMoveAccelMultiplier = m_fMoveMultiplier = g_pLTClient->ReadFromMessageFloat(hRead);
+		m_fMoveAccelMultiplier = m_fMoveMultiplier = hRead->Readfloat();
 
-		m_fBaseMoveAccel = g_pLTClient->ReadFromMessageFloat(hRead);
-		m_fJumpMultiplier = g_pLTClient->ReadFromMessageFloat(hRead);
-		m_fLadderVel = g_pLTClient->ReadFromMessageFloat(hRead);
+		m_fBaseMoveAccel = hRead->Readfloat();
+		m_fJumpMultiplier = hRead->Readfloat();
+		m_fLadderVel = hRead->Readfloat();
 
-        LTFLOAT fCoeff = g_pLTClient->ReadFromMessageFloat(hRead);
+        LTFLOAT fCoeff = hRead->Readfloat();
 		g_pPhysicsLT->SetFrictionCoefficient(m_hObject, fCoeff);
 	}
 
@@ -2115,7 +2125,7 @@ void CMoveMgr::OnPhysicsUpdate(HMESSAGEREAD hRead)
 
 	if (changeFlags & PSTATE_PHYSICS_MODEL)
 	{
-		PlayerPhysicsModel eModel = (PlayerPhysicsModel) g_pLTClient->ReadFromMessageByte(hRead);
+		PlayerPhysicsModel eModel = (PlayerPhysicsModel) hRead->Readuint8();
 		m_pVehicleMgr->SetPhysicsModel(eModel);
 	}
 }
@@ -2141,10 +2151,12 @@ LTRESULT CMoveMgr::OnObjectMove(HOBJECT hObj, LTBOOL bTeleport, LTVector *pPos)
 
 	if (!bTeleport && hObj != hClientObj && hObj != m_hObject)
 	{
-        uint32 type = g_pLTClient->GetObjectType(hObj);
+        uint32 type = GetObjectType(hObj);
 		if (type == OT_WORLDMODEL)
 		{
-			if (g_pLTClient->GetObjectFlags(hObj) & FLAG_SOLID)
+			uint32 dwFlags = 0;
+			g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+			if (dwFlags & FLAG_SOLID)
 			{
 				pPhysics->MovePushObjects(hObj, *pPos, &m_hObject, 1);
 			}
@@ -2174,10 +2186,12 @@ LTRESULT CMoveMgr::OnObjectRotate(HOBJECT hObj, LTBOOL bTeleport, LTRotation *pN
 	// can carry/push the player object around.
 	if (!bTeleport && hObj != hClientObj && hObj != m_hObject)
 	{
-		uint32 type = g_pLTClient->GetObjectType(hObj);
+		uint32 type = GetObjectType(hObj);
 		if (type == OT_WORLDMODEL)
 		{
-			if (g_pLTClient->GetObjectFlags(hObj) & FLAG_SOLID)
+			uint32 dwFlags = 0;
+			g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+			if (dwFlags & FLAG_SOLID)
 			{
 				pPhysics->RotatePushObjects(hObj, *pNewRot, &m_hObject, 1);
 			}
@@ -2256,10 +2270,10 @@ void CMoveMgr::SetSpectatorMode(LTBOOL bSet)
 		vPos.y += 50;
 		g_pPhysicsLT->MoveObject(m_hObject, &vPos, MOVEOBJECT_TELEPORT);
 
-		curFlags = g_pLTClient->GetObjectFlags(m_hObject);
+		g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, curFlags);
 		curFlags |= FLAG_GOTHRUWORLD;
 		curFlags &= ~FLAG_SOLID;
-		g_pLTClient->SetObjectFlags(m_hObject, curFlags);
+		g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, curFlags, FLAGMASK_ALL);
 
 		vZero.Init();
 		g_pPhysicsLT->SetVelocity(m_hObject, &vZero);
@@ -2267,10 +2281,10 @@ void CMoveMgr::SetSpectatorMode(LTBOOL bSet)
 	}
 	else
 	{
-		curFlags = g_pLTClient->GetObjectFlags(m_hObject);
+		g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, curFlags);
 		curFlags &= ~FLAG_GOTHRUWORLD;
 		curFlags |= FLAG_SOLID;
-		g_pLTClient->SetObjectFlags(m_hObject, curFlags);
+		g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, curFlags, FLAGMASK_ALL);
 	}
 }
 
@@ -2287,7 +2301,7 @@ void CMoveMgr::OnServerForcePos(HMESSAGEREAD hRead)
 {
  	if (!g_pLTClient || !g_pPhysicsLT) return;
 
- 	m_ClientMoveCode = g_pLTClient->ReadFromMessageByte(hRead);
+	m_ClientMoveCode = hRead->Readuint8();
 
 	// Teleport to where it says.
 	if (m_hObject)
@@ -2300,7 +2314,7 @@ void CMoveMgr::OnServerForcePos(HMESSAGEREAD hRead)
 		LTVector vPos, vCurDims;
 		LTVector vTempDims(0.5f, 0.5f, 0.5f);
 
-		g_pLTClient->ReadFromMessageVector(hRead, &vPos);
+		vPos = hRead->ReadLTVector();
 
 		g_pPhysicsLT->GetObjectDims(m_hObject, &vCurDims);
 		g_pPhysicsLT->SetObjectDims(m_hObject, &vTempDims, 0);
@@ -2346,12 +2360,12 @@ void CMoveMgr::WritePositionInfo(HMESSAGEWRITE hWrite)
 		myVel.Init();
 	}
 
-	g_pLTClient->WriteToMessageByte(hWrite, m_ClientMoveCode);
-	g_pLTClient->WriteToMessageVector(hWrite, &myPos);
-	g_pLTClient->WriteToMessageVector(hWrite, &myVel);
-    g_pLTClient->WriteToMessageByte(hWrite, (uint8)m_bOnGround);
-    g_pLTClient->WriteToMessageByte(hWrite, (uint8)m_eStandingOnSurface);
-    g_pLTClient->WriteToMessageDWord(hWrite, (uint32)m_hStandingOnPoly);
+	hWrite->Writeuint8(m_ClientMoveCode);
+	hWrite->WriteLTVector(myPos);
+	hWrite->WriteLTVector(myVel);
+	hWrite->Writeuint8((uint8)m_bOnGround);
+	hWrite->Writeuint8((uint8)m_eStandingOnSurface);
+	hWrite->WriteType(m_hStandingOnPoly);
 }
 
 
@@ -2499,11 +2513,12 @@ void CMoveMgr::TurnOnZipCord(HOBJECT hHookObj)
 
 		// Tell the server the zipcord is  on...
 
-        HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-        g_pLTClient->WriteToMessageByte(hMessage, CP_ZIPCORD);
-        g_pLTClient->WriteToMessageByte(hMessage, ZC_ON);
-        g_pLTClient->WriteToMessageVector(hMessage, &m_vZipCordPos);
-        g_pLTClient->EndMessage(hMessage);
+		CAutoMessage cMsg;
+		cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+		cMsg.Writeuint8(CP_ZIPCORD);
+		cMsg.Writeuint8(ZC_ON);
+		cMsg.WriteLTVector(m_vZipCordPos);
+		g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 
 		// Start the zip-cord sound...
 
@@ -2532,17 +2547,18 @@ void CMoveMgr::TurnOffZipCord()
 
 		// Tell the server the zipcord is no longer on...
 
-        HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-        g_pLTClient->WriteToMessageByte(hMessage, CP_ZIPCORD);
-        g_pLTClient->WriteToMessageByte(hMessage, ZC_OFF);
-        g_pLTClient->EndMessage(hMessage);
+		CAutoMessage cMsg;
+		cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+		cMsg.Writeuint8(CP_ZIPCORD);
+		cMsg.Writeuint8(ZC_OFF);
+		g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 
 
 		// Stop the zipcord sound...
 
 		if (m_hZipcordSnd)
 		{
-			g_pLTClient->KillSoundLoop(m_hZipcordSnd);
+			g_pLTClient->SoundMgr()->KillSoundLoop(m_hZipcordSnd);
 			m_hZipcordSnd = LTNULL;
 		}
 	}
@@ -2561,7 +2577,8 @@ void CMoveMgr::OnTouchNotify(CollisionInfo *pInfo, float forceMag)
 {
 	if (!pInfo->m_hObject) return;
 
-    uint32 dwFlags = g_pLTClient->GetObjectFlags(pInfo->m_hObject);
+	uint32 dwFlags = 0;
+	g_pCommonLT->GetObjectFlags(pInfo->m_hObject, OFT_Flags, dwFlags);
 	if (!(dwFlags & FLAG_SOLID)) return;
 
 	if (m_pVehicleMgr->IsVehiclePhysics())
@@ -2584,8 +2601,8 @@ void CMoveMgr::Load(HMESSAGEREAD hRead)
 	if (!hRead) return;
 
 	m_vSavedVel.Init();
-	g_pLTClient->ReadFromMessageVector(hRead, &m_vSavedVel);
-	m_fLastOnGroundY = g_pLTClient->ReadFromMessageFloat(hRead);
+	m_vSavedVel = hRead->ReadLTVector();
+	m_fLastOnGroundY = hRead->Readfloat();
 
 	m_bLoading = LTTRUE;
 }
@@ -2612,8 +2629,8 @@ void CMoveMgr::Save(HMESSAGEWRITE hWrite)
 		g_pPhysicsLT->GetVelocity(m_hObject, &myVel);
 	}
 
-	g_pLTClient->WriteToMessageVector(hWrite, &myVel);
-	g_pLTClient->WriteToMessageFloat(hWrite, m_fLastOnGroundY);
+	hWrite->WriteLTVector(myVel);
+	hWrite->Writefloat(m_fLastOnGroundY);
 }
 
 
