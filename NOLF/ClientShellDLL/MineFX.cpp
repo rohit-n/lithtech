@@ -143,8 +143,9 @@ LTBOOL CMineFX::Update()
 		{
 			// Update fx...
 
-            uint32 dwFlags = g_pLTClient->GetObjectFlags(hObj);
-            g_pLTClient->SetObjectFlags(hObj, dwFlags | FLAG_VISIBLE);
+			uint32 dwFlags = 0;
+			g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 
 
@@ -182,8 +183,9 @@ LTBOOL CMineFX::Update()
 		HOBJECT hObj = m_RadiusModel.GetObject();
 		if (hObj)
 		{
-            uint32 dwFlags = g_pLTClient->GetObjectFlags(hObj);
-            g_pLTClient->SetObjectFlags(hObj, dwFlags & ~FLAG_VISIBLE);
+			uint32 dwFlags = 0;
+			g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 	}
 

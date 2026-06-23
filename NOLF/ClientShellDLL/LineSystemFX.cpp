@@ -152,11 +152,12 @@ LTBOOL CLineSystemFX::CreateObject(ILTClient *pClientDE)
 	if (bRet && m_hObject && m_hServerObject)
 	{
         uint32 dwUserFlags;
-		pClientDE->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 		if (!(dwUserFlags & USRFLG_VISIBLE))
 		{
-            uint32 dwFlags = pClientDE->GetObjectFlags(m_hObject);
-			pClientDE->SetObjectFlags(m_hObject, dwFlags & ~FLAG_VISIBLE);
+			uint32 dwFlags = 0;
+			g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 	}
 
@@ -198,19 +199,20 @@ LTBOOL CLineSystemFX::Update()
 	if (m_hServerObject)
 	{
         uint32 dwUserFlags;
-		m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 
-        uint32 dwFlags = m_pClientDE->GetObjectFlags(m_hObject);
+		uint32 dwFlags = 0;
+		g_pCommonLT->GetObjectFlags(m_hObject, OFT_Flags, dwFlags);
 
 		if (!(dwUserFlags & USRFLG_VISIBLE))
 		{
-			m_pClientDE->SetObjectFlags(m_hObject, dwFlags & ~FLAG_VISIBLE);
+			g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 			m_fLastTime = fTime;
             return LTTRUE;
 		}
 		else
 		{
-			m_pClientDE->SetObjectFlags(m_hObject, dwFlags | FLAG_VISIBLE);
+			g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 	}
 
