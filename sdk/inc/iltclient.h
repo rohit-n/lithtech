@@ -3785,6 +3785,7 @@ Used for: Misc.
 // Functions for NOLF1 compatibility.
     void (*AlignRotation)(LTRotation* rot, LTVector* forward, LTVector* dir);
     void (*GetRotationVectors)(LTRotation* rot, LTVector* up, LTVector* right, LTVector* forward);
+    void (*RotateAroundAxis)(LTRotation* rot, LTVector* axis, float angle);
 
 protected:
     #ifdef LITHTECH_ESD

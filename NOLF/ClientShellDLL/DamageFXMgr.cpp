@@ -319,7 +319,7 @@ void CDamageFXMgr::StopBleedingFX(LTBOOL bFade)
 	{
 		if (m_hBleedingSound)
 		{
-			g_pLTClient->KillSound(m_hBleedingSound);
+			g_pLTClient->SoundMgr()->KillSound(m_hBleedingSound);
 			m_hBleedingSound = LTNULL;
 		}
         m_bBleeding = LTFALSE;
@@ -351,7 +351,7 @@ void CDamageFXMgr::StopPoisonFX(LTBOOL bFade)
 		m_bPoisonFade = bFade;
 		if (m_hPoisonSound)
 		{
-			g_pLTClient->KillSound(m_hPoisonSound);
+			g_pLTClient->SoundMgr()->KillSound(m_hPoisonSound);
 			m_hPoisonSound = LTNULL;
 		}
 
@@ -382,7 +382,7 @@ void CDamageFXMgr::StopStunFX(LTBOOL bFade)
         m_bStun = LTFALSE;
 		if (m_hStunSound)
 		{
-			g_pLTClient->KillSound(m_hStunSound);
+			g_pLTClient->SoundMgr()->KillSound(m_hStunSound);
 			m_hStunSound = LTNULL;
 		}
 
@@ -433,7 +433,7 @@ void CDamageFXMgr::StopSleepingFX(LTBOOL bFade)
 		m_bSleepingFade = bFade;
 		if (m_hSleepingSound)
 		{
-			g_pLTClient->KillSound(m_hSleepingSound);
+			g_pLTClient->SoundMgr()->KillSound(m_hSleepingSound);
 			m_hSleepingSound = LTNULL;
 		}
 		if (!bFade)
@@ -466,7 +466,7 @@ void CDamageFXMgr::StopBurnFX(LTBOOL bFade)
 		m_bBurnFade = bFade;
 		if (m_hBurnSound)
 		{
-			g_pLTClient->KillSound(m_hBurnSound);
+			g_pLTClient->SoundMgr()->KillSound(m_hBurnSound);
 			m_hBurnSound = LTNULL;
 		}
 
@@ -500,7 +500,7 @@ void CDamageFXMgr::StopElectrocuteFX(LTBOOL bFade)
 		m_bElectrocuteFade = bFade;
 		if (m_hElectrocuteSound)
 		{
-			g_pLTClient->KillSound(m_hElectrocuteSound);
+			g_pLTClient->SoundMgr()->KillSound(m_hElectrocuteSound);
 			m_hElectrocuteSound = LTNULL;
 		}
 
@@ -529,7 +529,7 @@ void CDamageFXMgr::StopChokeFX(LTBOOL bFade)
 		m_bChokeFade = bFade;
 		if (m_hChokeSound)
 		{
-			g_pLTClient->KillSound(m_hChokeSound);
+			g_pLTClient->SoundMgr()->KillSound(m_hChokeSound);
 			m_hChokeSound = LTNULL;
 		}
 
