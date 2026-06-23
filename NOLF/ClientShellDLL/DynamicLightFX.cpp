@@ -78,7 +78,7 @@ LTBOOL CDynamicLightFX::CreateObject(ILTClient *pClientDE)
 
 	if (m_hObject)
 	{
-		m_pClientDE->SetObjectFlags(m_hObject, m_dwFlags);
+		g_pCommonLT->SetObjectFlags(m_hObject, OFT_Flags, m_dwFlags, FLAGMASK_ALL);
 		m_pClientDE->SetObjectPos(m_hObject, &m_vPos);
 	}
 	else
