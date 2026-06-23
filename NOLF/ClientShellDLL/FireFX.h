@@ -69,7 +69,7 @@ class CFireFX : public CSpecialFX
 		{
 			if (m_hSound)
 			{
-                g_pLTClient->KillSound(m_hSound);
+                g_pLTClient->SoundMgr()->KillSound(m_hSound);
 			}
 		}
 

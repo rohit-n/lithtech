@@ -14,7 +14,7 @@
 #include "FireFX.h"
 #include "RandomSparksFX.h"
 #include "GameClientShell.h"
-#include "iltcustomdraw.h"
+#include "iltdrawprim.h"
 
 #define FFX_DEFAULT_RADIUS					100.0f
 #define	FFX_MIN_RADIUS						20.0f
@@ -51,19 +51,19 @@ LTBOOL CFireFX::Init(HLOCALOBJ hServObj, HMESSAGEREAD hMessage)
 
 	FIRECREATESTRUCT fire;
 	fire.hServerObj		= hServObj;
-    fire.fRadius        = g_pLTClient->ReadFromMessageFloat(hMessage);
-    fire.fSoundRadius   = g_pLTClient->ReadFromMessageFloat(hMessage);
-    fire.fLightRadius   = g_pLTClient->ReadFromMessageFloat(hMessage);
-    fire.fLightPhase    = g_pLTClient->ReadFromMessageFloat(hMessage);
-    fire.fLightFreq     = g_pLTClient->ReadFromMessageFloat(hMessage);
-    g_pLTClient->ReadFromMessageVector(hMessage, &(fire.vLightOffset));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(fire.vLightColor));
-    fire.bCreateSmoke   = (LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage);
-    fire.bCreateLight   = (LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage);
-    fire.bCreateSparks  = (LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage);
-    fire.bCreateSound   = (LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage);
-    fire.bBlackSmoke    = (LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage);
-    fire.bSmokeOnly     = (LTBOOL)g_pLTClient->ReadFromMessageByte(hMessage);
+    fire.fRadius        = hMessage->Readfloat();
+    fire.fSoundRadius   = hMessage->Readfloat();
+    fire.fLightRadius   = hMessage->Readfloat();
+    fire.fLightPhase    = hMessage->Readfloat();
+    fire.fLightFreq     = hMessage->Readfloat();
+	fire.vLightOffset = hMessage->ReadLTVector();
+	fire.vLightColor = hMessage->ReadLTVector();
+    fire.bCreateSmoke   = (LTBOOL)hMessage->Readuint8();
+    fire.bCreateLight   = (LTBOOL)hMessage->Readuint8();
+    fire.bCreateSparks  = (LTBOOL)hMessage->Readuint8();
+    fire.bCreateSound   = (LTBOOL)hMessage->Readuint8();
+    fire.bBlackSmoke    = (LTBOOL)hMessage->Readuint8();
+    fire.bSmokeOnly     = (LTBOOL)hMessage->Readuint8();
 
 	return Init(&fire);
 }
@@ -118,7 +118,7 @@ LTBOOL CFireFX::CreateObject(ILTClient* pClientDE)
 
 	// Get our initial pos...
 
-	if (m_cs.vPos.Equals(vZero) && m_hServerObject)
+	if (m_cs.vPos.NearlyEquals(vZero) && m_hServerObject)
     {
         g_pLTClient->GetObjectPos(m_hServerObject, &(m_cs.vPos));
 	}
@@ -175,10 +175,12 @@ LTBOOL CFireFX::CreateObject(ILTClient* pClientDE)
             return LTFALSE;
 		}
         g_pLTClient->FreeString(sm.hstrTexture);
-
+#ifdef RKN_FIXME
         dwFlags = g_pLTClient->GetObjectFlags(m_Smoke1.GetObject());
         g_pLTClient->SetObjectFlags(m_Smoke1.GetObject(), dwFlags | FLAG_NOGLOBALLIGHTSCALE);
-
+#else
+		__debugbreak();
+#endif
 		m_Smoke1.Update();
 	}
 
@@ -220,10 +222,12 @@ LTBOOL CFireFX::CreateObject(ILTClient* pClientDE)
 		{
             return LTFALSE;
 		}
-
+#ifdef RKN_FIXME
         dwFlags = g_pLTClient->GetObjectFlags(m_Fire1.GetObject());
         g_pLTClient->SetObjectFlags(m_Fire1.GetObject(), dwFlags | FLAG_NOGLOBALLIGHTSCALE);
-
+#else
+		__debugbreak();
+#endif
 		m_Fire1.Update();
         g_pLTClient->FreeString(sm.hstrTexture);
 
@@ -259,10 +263,12 @@ LTBOOL CFireFX::CreateObject(ILTClient* pClientDE)
 		{
             return LTFALSE;
 		}
-
+#ifdef RKN_FIXME
         dwFlags = g_pLTClient->GetObjectFlags(m_Fire2.GetObject());
         g_pLTClient->SetObjectFlags(m_Fire2.GetObject(), dwFlags | FLAG_NOGLOBALLIGHTSCALE);
-
+#else
+		__debugbreak();
+#endif
 		m_Fire2.Update();
         g_pLTClient->FreeString(sm.hstrTexture);
 
@@ -358,13 +364,13 @@ LTBOOL CFireFX::Update()
 	if (m_hServerObject)
 	{
         uint32 dwUserFlags;
-		m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 
 		if (!(dwUserFlags & USRFLG_VISIBLE))
 		{
 			if (m_hSound)
 			{
-                g_pLTClient->KillSound(m_hSound);
+				g_pLTClient->SoundMgr()->KillSound(m_hSound);
                 m_hSound = LTNULL;
 			}
 

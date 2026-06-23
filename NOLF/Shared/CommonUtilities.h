@@ -34,6 +34,7 @@
 #define LTF_INCLUDE_ALL 0
 
 #define LTTEXADDR_WRAP 0
+#define LTTEXADDR_CLAMP 1
 
 typedef ILTMessage_Read* HMESSAGEREAD;
 typedef ILTMessage_Write* HMESSAGEWRITE;

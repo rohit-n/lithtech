@@ -34,20 +34,21 @@ VarTrack	g_cvarFLNumSegments;
 VarTrack	g_cvarFLMinBeamLen;
 VarTrack	g_cvarFLServerUpdateTime;
 
-static LTBOOL NonSolidFilterFn(HOBJECT hTest, void *pUserData)
+static bool NonSolidFilterFn(HOBJECT hTest, void *pUserData)
 {
 	if (ObjListFilterFn(hTest, pUserData))
 	{
 		// Ignore non-solid objects (even if ray-hit is true)...
 
-		uint32 dwFlags = g_pLTClient->GetObjectFlags(hTest);
+		uint32 dwFlags = 0;
+		g_pCommonLT->GetObjectFlags(hTest, OFT_Flags, dwFlags);
 
 		if (!(dwFlags & FLAG_SOLID))
 		{
-			return LTFALSE;
+			return false;
 		}
 	}
-    return LTTRUE;
+    return true;
 }
 
 // ----------------------------------------------------------------------- //
@@ -83,7 +84,7 @@ CFlashLight::~CFlashLight()
 {
 	if (m_hLight)
 	{
-        g_pLTClient->DeleteObject(m_hLight);
+        g_pLTClient->RemoveObject(m_hLight);
         m_hLight = LTNULL;
 	}
 }
@@ -103,18 +104,20 @@ void CFlashLight::TurnOn()
 	if (m_hLight)
 	{
         m_bOn = LTTRUE;
-        uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hLight);
-        g_pLTClient->SetObjectFlags(m_hLight, dwFlags | FLAG_VISIBLE);
+		uint32 dwFlags = 0;
+		g_pCommonLT->GetObjectFlags(m_hLight, OFT_Flags, dwFlags);
+		g_pCommonLT->SetObjectFlags(m_hLight, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 
 		dwFlags = m_LightBeam.GetFlags();
 		m_LightBeam.SetFlags(dwFlags | FLAG_VISIBLE);
 
 		if ( UpdateServer() )
 		{
-			HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-			g_pLTClient->WriteToMessageByte(hMessage, CP_FLASHLIGHT);
-			g_pLTClient->WriteToMessageByte(hMessage, FL_ON);
-			g_pLTClient->EndMessage(hMessage);
+			CAutoMessage cMsg;
+			cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+			cMsg.Writeuint8(CP_FLASHLIGHT);
+			cMsg.Writeuint8(FL_ON);
+			g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 		}
 	}
 }
@@ -132,18 +135,21 @@ void CFlashLight::TurnOff()
 	if (m_hLight)
 	{
         m_bOn = LTFALSE;
-        uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hLight);
-        g_pLTClient->SetObjectFlags(m_hLight, dwFlags & ~FLAG_VISIBLE);
+		uint32 dwFlags = 0;
+		g_pCommonLT->GetObjectFlags(m_hLight, OFT_Flags, dwFlags);
+		g_pCommonLT->SetObjectFlags(m_hLight, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 
 		dwFlags = m_LightBeam.GetFlags();
 		m_LightBeam.SetFlags(dwFlags & ~FLAG_VISIBLE);
 
 		if ( UpdateServer() )
 		{
-			HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-			g_pLTClient->WriteToMessageByte(hMessage, CP_FLASHLIGHT);
-			g_pLTClient->WriteToMessageByte(hMessage, FL_OFF);
-			g_pLTClient->EndMessage(hMessage);
+			CAutoMessage cMsg;
+			cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+			cMsg.Writeuint8(CP_FLASHLIGHT);
+			cMsg.Writeuint8(FL_OFF);
+			g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
+
 		}
 	}
 }
@@ -235,11 +241,12 @@ void CFlashLight::Update()
 
 		if ( UpdateServer() )
 		{
-			HMESSAGEWRITE hMessage = g_pLTClient->StartMessage(MID_PLAYER_CLIENTMSG);
-			g_pLTClient->WriteToMessageByte(hMessage, CP_FLASHLIGHT);
-			g_pLTClient->WriteToMessageByte(hMessage, FL_UPDATE);
-			g_pLTClient->WriteToMessageCompVector(hMessage, &vEndPos);
-			g_pLTClient->EndMessage(hMessage);
+			CAutoMessage cMsg;
+			cMsg.Writeuint8(MID_PLAYER_CLIENTMSG);
+			cMsg.Writeuint8(CP_FLASHLIGHT);
+			cMsg.Writeuint8(FL_UPDATE);
+			cMsg.WriteCompLTVector(vEndPos);
+			g_pLTClient->SendToServer(cMsg.Read(), MESSAGE_GUARANTEED);
 		}
 	}
 
@@ -459,7 +466,8 @@ void CFlashLightAI::Update()
 	if ( !m_hAI ) return;
 
 	uint32 dwUsrFlags = 0;
-	if ( LT_OK == g_pLTClient->GetObjectUserFlags(m_hAI, &dwUsrFlags) && (dwUsrFlags & USRFLG_AI_FLASHLIGHT) )
+	uint32 dwFlags = 0;
+	if ( LT_OK == g_pCommonLT->GetObjectFlags(m_hAI, OFT_User, dwUsrFlags) && (dwUsrFlags & USRFLG_AI_FLASHLIGHT) )
 	{
 		TurnOn();
 	}

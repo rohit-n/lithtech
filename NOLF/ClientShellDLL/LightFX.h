@@ -13,7 +13,26 @@
 
 #include "SpecialFX.h"
 #include "ClientServerShared.h"
-#include "iltlightanim.h"
+//#include "iltlightanim.h"
+#define INVALID_LIGHT_ANIM NULL
+#define LIGHTANIMFRAME_NONE 0
+typedef void* HLIGHTANIM;
+
+ typedef struct
+ {
+	 float m_fLightRadius;
+	 LTVector m_vLightPos;
+	 LTVector m_vLightColor;
+	 int m_iFrames[2];
+	 float m_fBlendPercent;
+ } LAInfo;
+
+ class ILTLightAnim
+ {
+ public:
+	 void GetLightAnimInfo(HLIGHTANIM hLightAnim, LAInfo info) {}
+	 void SetLightAnimInfo(HLIGHTANIM hLightAnim, LAInfo info) {}
+ };
 
 
 struct LIGHTCREATESTRUCT : public SFXCREATESTRUCT
