@@ -15,7 +15,7 @@ namespace
 }
 
 
-void ListClientFn(int argc, char **argv)
+void ListClientFn(int argc, const char **argv)
 {
 	CClientInfoMgr *pCIMgr = g_pInterfaceMgr->GetClientInfoMgr();
 	if (pCIMgr)
@@ -30,7 +30,7 @@ void ListClientFn(int argc, char **argv)
 
 }
 
-void AddClientFn(int argc, char **argv)
+void AddClientFn(int argc, const char **argv)
 {
 	HSTRING hstrName = LTNULL; 
 	uint32 nID = 0;
@@ -62,9 +62,9 @@ void AddClientFn(int argc, char **argv)
 
 }
 
-void AddABunchFn(int argc, char **argv)
+void AddABunchFn(int argc, const char **argv)
 {
-	char szNames[15][16] = 
+	const char szNames[15][16] = 
 	{
 		"aaa", "bbb", "ccc",
 		"ddd", "eee", "fff",
@@ -72,7 +72,7 @@ void AddABunchFn(int argc, char **argv)
 		"jjj", "kkk", "lll",
 		"mmm", "nnn", "ooo",
 	};
-	char *pName = &szNames[0][0];
+	const char *pName = &szNames[0][0];
 	for (int i = 0; i < 15;i++)
 	{
 		
@@ -82,7 +82,7 @@ void AddABunchFn(int argc, char **argv)
 }
 
 
-void RemoveClientFn(int argc, char **argv)
+void RemoveClientFn(int argc, const char **argv)
 {
 	HSTRING hstrName = LTNULL; 
 	uint32 nID = 0;
@@ -103,7 +103,7 @@ void RemoveClientFn(int argc, char **argv)
 }
 
 
-void AddFragFn(int argc, char **argv)
+void AddFragFn(int argc, const char **argv)
 {
 	uint32 nID = 0;
 	int nFragCount =0;
@@ -601,7 +601,7 @@ char* CClientInfoMgr::GetPlayerName (uint32 nID)
 	CLIENT_INFO* ptr = m_pClients;
 	while (ptr)
 	{
-		if (ptr->nID == nID) return g_pLTClient->GetStringData (ptr->hstrName);
+		if (ptr->nID == nID) return (char*)g_pLTClient->GetStringData (ptr->hstrName);
 		ptr = ptr->pNext;
 	}
 	
@@ -663,7 +663,7 @@ void CClientInfoMgr::UpdateFragDisplay ()
 		m_hFragString = g_pLTClient->CreateString(strPlayer);
 		m_hTeamColor = kWhite;
 	}
-
+#ifdef RKN_FIXME
 	int nPos = 4;
 	if (m_hTeamScore)
 	{
@@ -686,6 +686,9 @@ void CClientInfoMgr::UpdateFragDisplay ()
 		m_FragPos.x = sz.x+4;
 		m_FragPos.y = nPos;
 	}
+#else
+	__debugbreak();
+#endif
 }
 
 
@@ -707,7 +710,7 @@ void CClientInfoMgr::Draw (LTBOOL bDrawSingleFragCount, LTBOOL bDrawAllFragCount
 	g_pLTClient->GetSurfaceDims (hScreen, &nScreenWidth, &nScreenHeight);
 
 	CLTGUIFont *pFont = g_pInterfaceResMgr->GetMsgForeFont();
-
+#ifdef RKN_FIXME
 	// should we draw our frag count?
 	if (bDrawSingleFragCount)
 	{
@@ -728,7 +731,9 @@ void CClientInfoMgr::Draw (LTBOOL bDrawSingleFragCount, LTBOOL bDrawAllFragCount
 			pFont->Draw(m_hFragString,hScreen,nScreenWidth-m_FragPos.x,m_FragPos.y,LTF_JUSTIFY_LEFT,m_hTeamColor);	
 		}
 	}
-
+#else
+	__debugbreak();
+#endif
 	// should we draw all the frag counts?
 
 	if (bDrawAllFragCounts)
@@ -736,7 +741,12 @@ void CClientInfoMgr::Draw (LTBOOL bDrawSingleFragCount, LTBOOL bDrawAllFragCount
 		int nHeight[2] = {0,0};
 		int nClients = 0;
 		int nTeams[2] = {0,0};
+#ifdef RKN_FIXME
 		int nLineHeight = pFont->GetHeight() + VERT_SPACING;
+#else
+		int nLineHeight = 32;
+		__debugbreak();
+#endif
 
 		int nMaxHeight = nScreenHeight - 16;
 
@@ -800,12 +810,15 @@ void CClientInfoMgr::Draw (LTBOOL bDrawSingleFragCount, LTBOOL bDrawAllFragCount
 			{
 				if (!filled[1])
 				{
+#ifdef RKN_FIXME
 					// Ok.. draw.
 					pFont->Draw(pClient->hstrName,hScreen,nX2+1,nY2+1,LTF_JUSTIFY_LEFT);	
 					pFont->Draw(pClient->hstrName,hScreen,nX2,nY2,LTF_JUSTIFY_LEFT,hColor);
 					pFont->Draw(str,hScreen,nTab2+1,nY2+1,LTF_JUSTIFY_RIGHT);	
 					pFont->Draw(str,hScreen,nTab2,nY2,LTF_JUSTIFY_RIGHT,hColor);
-
+#else
+					__debugbreak();
+#endif
 
 					nY2 += nLineHeight;
 					if (nY2 + nLineHeight > (int)nMaxHeight)
@@ -818,11 +831,14 @@ void CClientInfoMgr::Draw (LTBOOL bDrawSingleFragCount, LTBOOL bDrawAllFragCount
 			else if (!filled[0])
 			{
 				// Ok.. draw.
+#ifdef RKN_FIXME
 				pFont->Draw(pClient->hstrName,hScreen,nX+1,nY+1,LTF_JUSTIFY_LEFT);	
 				pFont->Draw(str,hScreen,nTab+1,nY+1,LTF_JUSTIFY_RIGHT);	
 				pFont->Draw(pClient->hstrName,hScreen,nX,nY,LTF_JUSTIFY_LEFT,hColor);
 				pFont->Draw(str,hScreen,nTab,nY,LTF_JUSTIFY_RIGHT,hColor);
-
+#else
+				__debugbreak();
+#endif
 				nY += nLineHeight;
 				if (nY + nLineHeight > (int)nMaxHeight)
 				{

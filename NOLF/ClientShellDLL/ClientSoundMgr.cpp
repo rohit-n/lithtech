@@ -167,7 +167,7 @@ HLTSOUND CClientSoundMgr::PlaySound(PlaySoundInfo & psi)
 		g_vtSoundPlayOnlyIfHeard.GetFloat())
 	{
 		LTVector vListenerPos;
-		LTBOOL bListenerInClient;
+		bool bListenerInClient;
 		LTRotation rRot;
 		g_pLTClient->GetListener(&bListenerInClient, &vListenerPos, &rRot);
 
@@ -178,13 +178,9 @@ HLTSOUND CClientSoundMgr::PlaySound(PlaySoundInfo & psi)
 		}
 	}
 
-	LTRESULT hResult = g_pLTClient->PlaySound(&psi);
+	LTRESULT hResult = g_pLTClient->SoundMgr()->PlaySound(&psi, hSnd);
 
-	if (hResult == LT_OK)
-	{
-		hSnd = psi.m_hSound;
-	}
-	else
+	if (hResult != LT_OK)
 	{
 		_ASSERT(LTFALSE);
 		m_pInterface->CPrint("ERROR in CClientSoundMgr::PlaySound() - Couldn't play sound '%s'", psi.m_szSoundName);
