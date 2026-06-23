@@ -14,7 +14,7 @@
 #include "LightningFX.h"
 #include "iltclient.h"
 #include "SFXMgr.h"
-#include "iltcustomdraw.h"
+#include "iltdrawprim.h"
 #include "GameClientShell.h"
 #include "DynamicLightFX.h"
 #include "GameButes.h"
@@ -39,36 +39,36 @@ LTBOOL CLightningFX::Init(HLOCALOBJ hServObj, HMESSAGEREAD hMessage)
 
 	lcs.hServerObj = hServObj;
 	lcs.lfx.hServerObj = hServObj;
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lcs.lfx.vStartPos));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lcs.lfx.vEndPos));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lcs.vLightColor));
+	lcs.lfx.vStartPos = hMessage->ReadLTVector();
+	lcs.lfx.vEndPos = hMessage->ReadLTVector();
+	lcs.vLightColor = hMessage->ReadLTVector();
 
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lcs.lfx.vInnerColorStart));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lcs.lfx.vInnerColorEnd));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lcs.lfx.vOuterColorStart));
-    g_pLTClient->ReadFromMessageVector(hMessage, &(lcs.lfx.vOuterColorEnd));
+	lcs.lfx.vInnerColorStart = hMessage->ReadLTVector();
+	lcs.lfx.vInnerColorEnd = hMessage->ReadLTVector();
+	lcs.lfx.vOuterColorStart = hMessage->ReadLTVector();
+	lcs.lfx.vOuterColorEnd = hMessage->ReadLTVector();
 
-    lcs.lfx.fAlphaStart     = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.lfx.fAlphaEnd       = g_pLTClient->ReadFromMessageFloat(hMessage);
+    lcs.lfx.fAlphaStart     = hMessage->Readfloat();
+    lcs.lfx.fAlphaEnd       = hMessage->Readfloat();
 
-    lcs.lfx.fMinWidth       = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.lfx.fMaxWidth       = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.lfx.fLifeTime       = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.lfx.fAlphaLifeTime  = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.fMinDelayTime		= g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.fMaxDelayTime		= g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.lfx.fPerturb        = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.fLightRadius        = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.fSoundRadius        = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lcs.lfx.nWidthStyle     = g_pLTClient->ReadFromMessageByte(hMessage);
-    lcs.lfx.nNumSegments    = g_pLTClient->ReadFromMessageByte(hMessage);
-    lcs.bOneTimeOnly        = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lcs.bDynamicLight       = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lcs.bPlaySound          = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lcs.lfx.bAdditive       = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lcs.lfx.bMultiply       = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
+    lcs.lfx.fMinWidth       = hMessage->Readfloat();
+    lcs.lfx.fMaxWidth       = hMessage->Readfloat();
+    lcs.lfx.fLifeTime       = hMessage->Readfloat();
+    lcs.lfx.fAlphaLifeTime  = hMessage->Readfloat();
+    lcs.fMinDelayTime		= hMessage->Readfloat();
+    lcs.fMaxDelayTime		= hMessage->Readfloat();
+    lcs.lfx.fPerturb        = hMessage->Readfloat();
+    lcs.fLightRadius        = hMessage->Readfloat();
+    lcs.fSoundRadius        = hMessage->Readfloat();
+    lcs.lfx.nWidthStyle     = hMessage->Readuint8();
+    lcs.lfx.nNumSegments    = hMessage->Readuint8();
+    lcs.bOneTimeOnly        = (LTBOOL) hMessage->Readuint8();
+    lcs.bDynamicLight       = (LTBOOL) hMessage->Readuint8();
+    lcs.bPlaySound          = (LTBOOL) hMessage->Readuint8();
+    lcs.lfx.bAdditive       = (LTBOOL) hMessage->Readuint8();
+    lcs.lfx.bMultiply       = (LTBOOL) hMessage->Readuint8();
 
-	m_hstrTexture			= g_pLTClient->ReadFromMessageHString(hMessage);
+	m_hstrTexture			= hMessage->ReadHString();
 
 	return Init(&lcs);
 }
@@ -214,8 +214,9 @@ void CLightningFX::HandleFirstTime()
 {
 	if (m_hLight)
 	{
-        uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hLight);
-        g_pLTClient->SetObjectFlags(m_hLight, dwFlags | FLAG_VISIBLE);
+		uint32 dwFlags = 0;
+		g_pCommonLT->GetObjectFlags(m_hLight, OFT_Flags, dwFlags);
+		g_pCommonLT->SetObjectFlags(m_hLight, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 	}
 
 	if (m_cs.bPlaySound)
@@ -268,7 +269,7 @@ LTBOOL CLightningFX::Update()
 	if (m_hServerObject)
 	{
         uint32 dwUserFlags;
-        g_pLTClient->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 
 		if (!(dwUserFlags & USRFLG_VISIBLE))
 		{
@@ -276,8 +277,9 @@ LTBOOL CLightningFX::Update()
 
 			if (m_hLight)
 			{
-				uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hLight);
-				g_pLTClient->SetObjectFlags(m_hLight, dwFlags & ~FLAG_VISIBLE);
+				uint32 dwFlags = 0;
+				g_pCommonLT->GetObjectFlags(m_hLight, OFT_Flags, dwFlags);
+				g_pCommonLT->SetObjectFlags(m_hLight, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 			}
 
             return LTTRUE;
@@ -311,8 +313,9 @@ LTBOOL CLightningFX::Update()
 
 		if (m_hLight)
 		{
-            uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hLight);
-            g_pLTClient->SetObjectFlags(m_hLight, dwFlags & ~FLAG_VISIBLE);
+			uint32 dwFlags = 0;
+			g_pCommonLT->GetObjectFlags(m_hLight, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(m_hLight, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 
         return LTTRUE;  // not yet...
@@ -334,8 +337,9 @@ LTBOOL CLightningFX::Update()
 	{
 		if (m_hLight)
 		{
-            uint32 dwFlags = g_pLTClient->GetObjectFlags(m_hLight);
-            g_pLTClient->SetObjectFlags(m_hLight, dwFlags & ~FLAG_VISIBLE);
+			uint32 dwFlags = 0;
+			g_pCommonLT->GetObjectFlags(m_hLight, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(m_hLight, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 	}
 

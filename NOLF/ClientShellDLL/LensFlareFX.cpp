@@ -63,23 +63,23 @@ LTBOOL LENSFLARECREATESTRUCT::InitFromMessage(LENSFLARECREATESTRUCT & lens,
 {
     if (!hMessage) return LTFALSE;
 
-    lens.bInSkyBox          = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lens.bCreateSprite      = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lens.bSpriteOnly        = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lens.bUseObjectAngle    = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lens.bSpriteAdditive    = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lens.fSpriteOffset      = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fMinAngle          = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fMinSpriteAlpha    = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fMaxSpriteAlpha    = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fMinSpriteScale    = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fMaxSpriteScale    = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.hstrSpriteFile     = g_pLTClient->ReadFromMessageHString(hMessage);
-    lens.bBlindingFlare     = (LTBOOL) g_pLTClient->ReadFromMessageByte(hMessage);
-    lens.fBlindObjectAngle  = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fBlindCameraAngle  = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fMinBlindScale     = g_pLTClient->ReadFromMessageFloat(hMessage);
-    lens.fMaxBlindScale     = g_pLTClient->ReadFromMessageFloat(hMessage);
+    lens.bInSkyBox          = (LTBOOL) hMessage->Readuint8();
+    lens.bCreateSprite      = (LTBOOL) hMessage->Readuint8();
+    lens.bSpriteOnly        = (LTBOOL) hMessage->Readuint8();
+    lens.bUseObjectAngle    = (LTBOOL) hMessage->Readuint8();
+    lens.bSpriteAdditive    = (LTBOOL) hMessage->Readuint8();
+    lens.fSpriteOffset      = hMessage->Readfloat();
+    lens.fMinAngle          = hMessage->Readfloat();
+    lens.fMinSpriteAlpha    = hMessage->Readfloat();
+    lens.fMaxSpriteAlpha    = hMessage->Readfloat();
+    lens.fMinSpriteScale    = hMessage->Readfloat();
+    lens.fMaxSpriteScale    = hMessage->Readfloat();
+    lens.hstrSpriteFile     = hMessage->ReadHString();
+    lens.bBlindingFlare     = (LTBOOL) hMessage->Readuint8();
+    lens.fBlindObjectAngle  = hMessage->Readfloat();
+    lens.fBlindCameraAngle  = hMessage->Readfloat();
+    lens.fMinBlindScale     = hMessage->Readfloat();
+    lens.fMaxBlindScale     = hMessage->Readfloat();
 
     return LTTRUE;
 }
@@ -136,7 +136,7 @@ LTBOOL CLensFlareFX::CreateObject(ILTClient* pClientDE)
 	m_pClientDE->GetObjectPos(m_hServerObject, &(createStruct.m_Pos));
 	createStruct.m_ObjectType = OT_SPRITE;
 
-	char* pFilename = m_pClientDE->GetStringData(m_cs.hstrSpriteFile);
+	const char* pFilename = m_pClientDE->GetStringData(m_cs.hstrSpriteFile);
     if (!pFilename) return LTFALSE;
 
 	SAFE_STRCPY(createStruct.m_Filename, pFilename);
@@ -173,14 +173,14 @@ LTBOOL CLensFlareFX::Update()
 	if (m_hServerObject)
 	{
         uint32 dwUserFlags;
-		m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 
 		if (!(dwUserFlags & USRFLG_VISIBLE))
 		{
 			if (m_hFlare)
 			{
-				dwFlags = m_pClientDE->GetObjectFlags(m_hFlare);
-				m_pClientDE->SetObjectFlags(m_hFlare, dwFlags & ~FLAG_VISIBLE);
+				g_pCommonLT->GetObjectFlags(m_hFlare, OFT_Flags, dwFlags);
+				g_pCommonLT->SetObjectFlags(m_hFlare, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 			}
 
             return LTTRUE;
@@ -189,8 +189,8 @@ LTBOOL CLensFlareFX::Update()
 		{
 			if (m_hFlare)
 			{
-				dwFlags = m_pClientDE->GetObjectFlags(m_hFlare);
-				m_pClientDE->SetObjectFlags(m_hFlare, dwFlags | FLAG_VISIBLE);
+				g_pCommonLT->GetObjectFlags(m_hFlare, OFT_Flags, dwFlags);
+				g_pCommonLT->SetObjectFlags(m_hFlare, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 			}
 		}
 	}
@@ -246,15 +246,15 @@ LTBOOL CLensFlareFX::Update()
 	{
 		if (fCameraAngle < (90.0f - fMinAngle))
 		{
-			dwFlags = m_pClientDE->GetObjectFlags(m_hServerObject);
-			m_pClientDE->SetObjectFlags(m_hServerObject, dwFlags & ~FLAG_VISIBLE);
+			g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(m_hServerObject, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 		else
 		{
 			// Set Server object's color...
 
-			dwFlags = m_pClientDE->GetObjectFlags(m_hServerObject);
-			m_pClientDE->SetObjectFlags(m_hServerObject, dwFlags | FLAG_VISIBLE);
+			g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(m_hServerObject, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 
             LTFLOAT r, g, b, a;
             LTFLOAT fVal = (fCameraAngle + fMinAngle - 90.0f)/fMinAngle;
@@ -270,12 +270,12 @@ LTBOOL CLensFlareFX::Update()
 	{
 		if (fSpriteAngle < (90.0f - fMinAngle))
 		{
-			dwFlags = m_pClientDE->GetObjectFlags(m_hFlare);
-			m_pClientDE->SetObjectFlags(m_hFlare, dwFlags & ~FLAG_VISIBLE);
+			g_pCommonLT->GetObjectFlags(m_hFlare, OFT_Flags, dwFlags);
+			g_pCommonLT->SetObjectFlags(m_hFlare, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 		}
 		else
 		{
-			dwFlags = m_pClientDE->GetObjectFlags(m_hFlare);
+			g_pCommonLT->GetObjectFlags(m_hFlare, OFT_Flags, dwFlags);
 
 			if (m_cs.bBlindingFlare)
 			{
@@ -286,7 +286,7 @@ LTBOOL CLensFlareFX::Update()
 				dwFlags |= FLAG_SPRITEBIAS;
 			}
 
-			m_pClientDE->SetObjectFlags(m_hFlare, dwFlags | FLAG_VISIBLE);
+			g_pCommonLT->SetObjectFlags(m_hFlare, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 
             LTFLOAT fVal = (fSpriteAngle + fMinAngle - 90.0f)/fMinAngle;
 
@@ -336,7 +336,8 @@ LTBOOL CLensFlareFX::Update()
 				{
 					// Update the no-z flare if possible...
 
-                    uint32 dwFlags = m_pClientDE->GetObjectFlags(m_hFlare);
+					uint32 dwFlags = 0;
+					g_pCommonLT->GetObjectFlags(m_hFlare, OFT_Flags, dwFlags);
 
 					// Make sure there is a clear path from the flare to the camera...
 
@@ -373,7 +374,7 @@ LTBOOL CLensFlareFX::Update()
 						dwFlags |= FLAG_SPRITE_NOZ;
 					}
 
-					m_pClientDE->SetObjectFlags(m_hFlare, dwFlags);
+					g_pCommonLT->SetObjectFlags(m_hFlare, OFT_Flags, dwFlags, FLAGMASK_ALL);
 				}
 			}
 		}

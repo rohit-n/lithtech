@@ -89,7 +89,7 @@ class CLightningFX : public CSpecialFX
 			{
 				if (m_hLight)
 				{
-                    g_pLTClient->DeleteObject(m_hLight);
+                    g_pLTClient->RemoveObject(m_hLight);
 				}
 
 				if (m_hstrTexture)

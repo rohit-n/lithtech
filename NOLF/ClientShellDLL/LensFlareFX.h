@@ -74,7 +74,7 @@ class CLensFlareFX : public CSpecialFX
 		{
 			if (m_hFlare)
 			{
-				m_pClientDE->DeleteObject(m_hFlare);
+				m_pClientDE->RemoveObject(m_hFlare);
 			}
 
 			if (m_cs.hstrSpriteFile)
