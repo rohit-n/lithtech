@@ -3786,6 +3786,7 @@ Used for: Misc.
     void (*AlignRotation)(LTRotation* rot, LTVector* forward, LTVector* dir);
     void (*GetRotationVectors)(LTRotation* rot, LTVector* up, LTVector* right, LTVector* forward);
     void (*RotateAroundAxis)(LTRotation* rot, LTVector* axis, float angle);
+    void (*SetupEuler)(LTRotation* rot, float pitch, float yaw, float roll);
 
 protected:
     #ifdef LITHTECH_ESD

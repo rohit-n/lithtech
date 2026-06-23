@@ -484,7 +484,7 @@ LTBOOL CDebrisFX::UpdateEmitter(MovingObject* pObject, LTBOOL & bRemove,
 		pObject->m_vLastPos = pObject->m_vPos;
 		pObject->m_vPos = vNewPos;
 
-        if (m_pClientDE->GetPointStatus(&vNewPos) == LT_OUTSIDE)
+        if (g_pCommonLT->GetPointStatus(&vNewPos) == LT_OUTSIDE)
 		{
 			pObject->m_dwPhysicsFlags |= MO_RESTING;
 			pObject->m_vPos = pObject->m_vLastPos;
@@ -599,7 +599,7 @@ void CDebrisFX::RemoveDebris(int i)
 	// Delete the handle if we can/need to
 	if (pTracker->m_hDebris && m_pClientDE)
 	{
-		m_pClientDE->DeleteObject(pTracker->m_hDebris);
+		m_pClientDE->RemoveObject(pTracker->m_hDebris);
         pTracker->m_hDebris = LTNULL;
 	}
 
