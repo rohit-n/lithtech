@@ -194,7 +194,7 @@ void CLaserBeam::Update(LTVector vBeamStartPos, LTRotation* pRDirRot,
 	if (iInfo.m_hObject && bDetect)
 	{
         uint32 dwUsrFlgs = 0;
-        g_pLTClient->GetObjectUserFlags(iInfo.m_hObject, &dwUsrFlgs);
+		g_pCommonLT->GetObjectFlags(iInfo.m_hObject, OFT_User, dwUsrFlgs);
 
 		if (dwUsrFlgs & USRFLG_CHARACTER)
 		{
@@ -255,7 +255,11 @@ void CLaserBeam::Update(LTVector vBeamStartPos, LTRotation* pRDirRot,
 		if (b3rdPerson)
 		{
 			dwFlags &= ~FLAG_REALLYCLOSE;
+#ifdef RKN_FIXME
 			dwFlags2 &= ~FLAG2_PORTALINVISIBLE;
+#else
+			__debugbreak();
+#endif
 		}
 		else
 		{
@@ -264,7 +268,11 @@ void CLaserBeam::Update(LTVector vBeamStartPos, LTRotation* pRDirRot,
 				dwFlags |= FLAG_REALLYCLOSE;
                 pls.bUseObjectRotation = LTTRUE;
 			}
+#ifdef RKN_FIXME
 			dwFlags2 |= FLAG2_PORTALINVISIBLE;
+#else
+			__debugbreak();
+#endif
 		}
 
 		m_LightBeam.SetFlags(dwFlags);

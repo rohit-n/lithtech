@@ -33,7 +33,7 @@ struct BSCREATESTRUCT : public SFXCREATESTRUCT
     LTFLOAT     fFinalAlpha;
     LTFLOAT     fMinRotateVel;
     LTFLOAT     fMaxRotateVel;
-	char*		pFilename;
+	const char*		pFilename;
 	char*		pSkin;
 	char*		pSkin2;
     uint32      dwFlags;

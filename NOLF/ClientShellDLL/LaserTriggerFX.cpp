@@ -145,7 +145,7 @@ LTBOOL CLaserTriggerFX::Update()
 	if (m_hServerObject)
 	{
         uint32 dwUserFlags;
-		m_pClientDE->GetObjectUserFlags(m_hServerObject, &dwUserFlags);
+		g_pCommonLT->GetObjectFlags(m_hServerObject, OFT_User, dwUserFlags);
 
 		if (!(dwUserFlags & USRFLG_VISIBLE))
 		{
@@ -159,15 +159,15 @@ LTBOOL CLaserTriggerFX::Update()
 				HOBJECT hObj = m_StartSprite.GetObject();
 				if (hObj)
 				{
-                    dwFlags = g_pLTClient->GetObjectFlags(hObj);
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags & ~FLAG_VISIBLE);
+					g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 
 				hObj = m_EndSprite.GetObject();
 				if (hObj)
 				{
-                    dwFlags = g_pLTClient->GetObjectFlags(hObj);
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags & ~FLAG_VISIBLE);
+					g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 			}
 
@@ -185,15 +185,15 @@ LTBOOL CLaserTriggerFX::Update()
 				HOBJECT hObj = m_StartSprite.GetObject();
 				if (hObj)
 				{
-                    dwFlags = g_pLTClient->GetObjectFlags(hObj);
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags | FLAG_VISIBLE);
+					g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 
 				hObj = m_EndSprite.GetObject();
 				if (hObj)
 				{
-                    dwFlags = g_pLTClient->GetObjectFlags(hObj);
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags | FLAG_VISIBLE);
+					g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 			}
 		}
@@ -233,14 +233,14 @@ LTBOOL CLaserTriggerFX::Update()
 
                 g_pLTClient->SetObjectPos(hObj, &(m_pls.vStartPos));
 
-                dwFlags = g_pLTClient->GetObjectFlags(hObj);
+				g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
 				if (bShowSprites)
 				{
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags | FLAG_VISIBLE);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 				else
 				{
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags & ~FLAG_VISIBLE);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 			}
 
@@ -251,14 +251,14 @@ LTBOOL CLaserTriggerFX::Update()
 
                 g_pLTClient->SetObjectPos(hObj, &(m_pls.vEndPos));
 
-                dwFlags = g_pLTClient->GetObjectFlags(hObj);
+				g_pCommonLT->GetObjectFlags(hObj, OFT_Flags, dwFlags);
 				if (bShowSprites)
 				{
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags | FLAG_VISIBLE);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags | FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 				else
 				{
-                    g_pLTClient->SetObjectFlags(hObj, dwFlags & ~FLAG_VISIBLE);
+					g_pCommonLT->SetObjectFlags(hObj, OFT_Flags, dwFlags & ~FLAG_VISIBLE, FLAGMASK_ALL);
 				}
 			}
 		}
