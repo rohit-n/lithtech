@@ -120,19 +120,16 @@ HSURFACE CropSurface ( HSURFACE hSurf, HLTCOLOR hBorderColor )
 
     if (!hSurf) return LTNULL;
 
-    ILTClient* pClientDE = g_pGameClientShell->GetClientDE();
-	if (!pClientDE) return hSurf;
-
     uint32 nWidth, nHeight;
-	pClientDE->GetSurfaceDims (hSurf, &nWidth, &nHeight);
+	g_pLTClient->GetSurfaceDims(hSurf, &nWidth, &nHeight);
 
     LTRect rcBorders;
     memset (&rcBorders, 0, sizeof (LTRect));
-	pClientDE->GetBorderSize (hSurf, hBorderColor, &rcBorders);
+	g_pLTClient->GetBorderSize(hSurf, hBorderColor, &rcBorders);
 
 	if (rcBorders.left == 0 && rcBorders.top == 0 && rcBorders.right == 0 && rcBorders.bottom == 0) return hSurf;
 
-	HSURFACE hCropped = pClientDE->CreateSurface (nWidth - rcBorders.left - rcBorders.right, nHeight - rcBorders.top - rcBorders.bottom);
+	HSURFACE hCropped = g_pLTClient->CreateSurface (nWidth - rcBorders.left - rcBorders.right, nHeight - rcBorders.top - rcBorders.bottom);
 	if (!hCropped) return hSurf;
 
     LTRect rcSrc;
@@ -141,9 +138,9 @@ HSURFACE CropSurface ( HSURFACE hSurf, HLTCOLOR hBorderColor )
 	rcSrc.right = nWidth - rcBorders.right;
 	rcSrc.bottom = nHeight - rcBorders.bottom;
 
-	pClientDE->DrawSurfaceToSurface (hCropped, hSurf, &rcSrc, 0, 0);
+	g_pLTClient->DrawSurfaceToSurface (hCropped, hSurf, &rcSrc, 0, 0);
 
-	pClientDE->DeleteSurface (hSurf);
+	g_pLTClient->DeleteSurface (hSurf);
 
 	return hCropped;
 }
@@ -202,7 +199,7 @@ void GetConsoleString(char* sKey, char* sDest, char* sDefault)
         HCONSOLEVAR hVar = g_pLTClient->GetConsoleVar(sKey);
 		if (hVar)
 		{
-            char* sValue = g_pLTClient->GetVarValueString(hVar);
+            const char* sValue = g_pLTClient->GetVarValueString(hVar);
 			if (sValue)
 			{
 				strcpy(sDest, sValue);

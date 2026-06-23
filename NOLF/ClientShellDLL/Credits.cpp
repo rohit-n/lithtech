@@ -79,7 +79,17 @@ LTBOOL CCredit::Init(char* sBuf)
 
 	char sString[256];
 	int  i = 0;
+#if 1
+	std::stringstream stream{ sBuf };
 
+	while (stream.getline(sString, 256))
+	{
+		std::string s{ sString };
+		if (s.length() < 1)
+			continue;
+		AddString(sString);
+	}
+#else
 	while (*sBuf)
 	{
 		if ((*sBuf == '\n') || (*sBuf == '\r') || (*sBuf == '\0'))
@@ -104,7 +114,7 @@ LTBOOL CCredit::Init(char* sBuf)
 
 	sString[i] = '\0';
 	if (strlen(sString) > 0) AddString(sString);
-
+#endif
 	CreateSurface();	
 
 
@@ -154,7 +164,7 @@ LTBOOL CCredit::AddString(char* sString)
 
 	// Check if this is a special command string...
 
-	if (_mbsnbcmp((const unsigned char*)sString, (const unsigned char*)">TIME:", 6) == 0)
+	if (strncmp(sString, ">TIME:", 6) == 0)
 	{
 		if (_mbstrlen(sString) > 6)
 		{
@@ -162,31 +172,31 @@ LTBOOL CCredit::AddString(char* sString)
 			return(LTTRUE);
 		}
 	}
-	else if (_mbsnbcmp((const unsigned char*)sString, (const unsigned char*)">POS:UL", 7) == 0)
+	else if (strncmp(sString, ">POS:UL", 7) == 0)
 	{
 		m_Pos = s_PositionUL;
 		m_ePosition = CP_UL;
 		return(LTTRUE);
 	}
-	else if (_mbsnbcmp((const unsigned char*)sString, (const unsigned char*)">POS:UR", 7) == 0)
+	else if (strncmp(sString, ">POS:UR", 7) == 0)
 	{
 		m_Pos = s_PositionUR;
 		m_ePosition = CP_UR;
 		return(LTTRUE);
 	}
-	else if (_mbsnbcmp((const unsigned char*)sString, (const unsigned char*)">POS:LR", 7) == 0)
+	else if (strncmp(sString, ">POS:LR", 7) == 0)
 	{
 		m_Pos = s_PositionLR;
 		m_ePosition = CP_LR;
 		return(LTTRUE);
 	}
-	else if (_mbsnbcmp((const unsigned char*)sString, (const unsigned char*)">POS:LL", 7) == 0)
+	else if (strncmp(sString, ">POS:LL", 7) == 0)
 	{
 		m_Pos = s_PositionLL;
 		m_ePosition = CP_LL;
 		return(LTTRUE);
 	}
-	else if (_mbsnbcmp((const unsigned char*)sString, (const unsigned char*)">BIG", 4) == 0)
+	else if (strncmp(sString, ">BIG", 4) == 0)
 	{
 		m_bBig = LTTRUE;
 		return(LTTRUE);
@@ -228,7 +238,11 @@ void CCredit::CreateSurface()
 
 	for (i = 0; i < m_cStrings; i++)
 	{
+#ifdef RKN_FIXME
 		strSz = pFont->GetTextExtents(m_aStrings[i]);
+#else
+		__debugbreak();
+#endif
 		sz.y += strSz.y;
 		sz.x = Max(sz.x,strSz.x);
 	}
@@ -266,13 +280,16 @@ void CCredit::CreateSurface()
 		x = sz.x; 
 		break;
 	}
+#ifdef RKN_FIXME
 	int y = 0;
 	for (i = 0; i < m_cStrings; i++)
 	{
 		pFont->Draw(m_aStrings[i], m_hSurface,x,y,nJustify,kWhite);
 		y += pFont->GetHeight();
 	}
-
+#else
+	__debugbreak();
+#endif
 	g_pLTClient->OptimizeSurface(m_hSurface,backColor);
 
 }
@@ -817,7 +834,7 @@ void CCredits::Update()
 
 	if (m_bClearScreen)
 	{
-		g_pLTClient->ClearScreen(NULL, CLEARSCREEN_SCREEN);
+		g_pLTClient->ClearScreen(NULL, CLEARSCREEN_SCREEN, 0);
 	}
 
 
@@ -899,11 +916,11 @@ void CCredits::AddCredits()
 	while (*sBuf)
 	{
 
-		if (*sBuf == '#' && *((char*)_mbsinc((const unsigned char*)sBuf)) == '#')
+		if (*sBuf == '#' && *(sBuf + 1) == '#')
 		{
 			sCredit[i] = '\0';
 
-			if (_mbsnbcmp((const unsigned char*)sCredit, (const unsigned char*)">END", 4) == 0)	// end?
+			if (strncmp(sCredit, ">END", 4) == 0)	// end?
 			{
 				return;
 			}
@@ -911,17 +928,15 @@ void CCredits::AddCredits()
 			AddCredit(sCredit);
 			i = 0;
 
-			sBuf = (char*)_mbsinc((const unsigned char*)sBuf);
-			sBuf = (char*)_mbsinc((const unsigned char*)sBuf);
+			sBuf += 2;
 
 			while (*sBuf != '\0' && ((*sBuf == '\n') || (*sBuf == '\r'))) sBuf++;
 		}
 		else
 		{
-			int nCount = _mbsnbcnt((const unsigned char*)sBuf,1);
-			memcpy(&sCredit[i], sBuf, nCount);
-			i += nCount;
-			sBuf = (char*)_mbsinc((const unsigned char*)sBuf);
+			memcpy(&sCredit[i], sBuf, 1);
+			i++;
+			sBuf++;
 		}
 	}
 }
